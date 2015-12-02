@@ -1,0 +1,6 @@
+Requirements
+============
+Ahmad Khayyat <akhayyat@kfupm.edu.sa>
+v1.0, November 2015: Initial version.
+
+TODO: complete as a template for a project's requirements document.

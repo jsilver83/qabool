@@ -1,0 +1,9 @@
+Developer Guide
+===============
+Ahmad Khayyat <akhayyat@kfupm.edu.sa>
+v1.0, November 2015: Initial version.
+
+TODO: complete as a template for the developer documentation of a
+project. Developer documentation helps other developers understand the
+inner workings of the system, and guides them through modifying and/or
+adding its features.
