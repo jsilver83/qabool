@@ -1,0 +1,5 @@
+syntax: glob
+
+docs/1-initial-requirements.{html,xml}
+docs/3-srs.{html,xml}
+docs/4-design.{html,xml}
