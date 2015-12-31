@@ -1,13 +1,17 @@
-OUTPUTS := 1-initial-requirements.html  \
-           1-initial-requirements.xml   \
-           2-detailed-requirements.html \
-           2-detailed-requirements.xml  \
-           3-srs.html                   \
-           3-srs.xml                    \
-           4-design.html                \
-           4-design.xml
+HTML := 1-initial-requirements.html  \
+        2-detailed-requirements.html \
+        3-srs.html                   \
+        4-design.html
 
-all: $(OUTPUTS)
+PDF :=  1-initial-requirements.pdf  \
+        2-detailed-requirements.pdf \
+        3-srs.pdf                   \
+        4-design.pdf
+
+all: html pdf
+
+html: $(HTML)
+pdf: $(PDF)
 
 %.html: %.adoc
 	asciidoctor -a toc -a data-uri -d book $<
@@ -15,7 +19,10 @@ all: $(OUTPUTS)
 %.xml: %.adoc
 	asciidoctor -b docbook -d book -a data-uri! $<
 
-clean:
-	rm -f $(OUTPUTS)
+%.pdf: %.xml
+	@echo "PDF output is not implemented yet"
 
-.PHONY: all clean
+clean:
+	rm -f $(HTML) $(PDF)
+
+.PHONY: all clean html pdf
