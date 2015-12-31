@@ -1,5 +1,7 @@
 OUTPUTS := 1-initial-requirements.html  \
            1-initial-requirements.xml   \
+           2-detailed-requirements.html \
+           2-detailed-requirements.xml  \
            3-srs.html                   \
            3-srs.xml                    \
            4-design.html                \
