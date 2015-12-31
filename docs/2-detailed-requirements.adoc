@@ -96,8 +96,8 @@ available.>
 <Each requirement should be uniquely identified with a sequence number
 or a meaningful tag of some kind.>
 
-- REQ-1 :: <details>
-- REQ-2 :: <details>
+REQ-1 :: <details>
+REQ-2 :: <details>
 
 
 == Other Nonfunctional Requirements
