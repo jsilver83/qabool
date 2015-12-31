@@ -2,15 +2,7 @@
 FIRST-NAME LAST-NAME <EMAIL>; SECOND-AUTHOR; ...
 VERSION, DATE, VERSION DESCIPTION
 
-.Proprietary Information
-
-This document is the property of Information Technology Center (ITC),
-King Fahd University of Petroleum and Minerals, Kingdom of Saudi
-Arabia, and is assigned the classification rating of Internal.
-
-The contents of this document are proprietary information and may not
-be distributed or disclosed, published or copied without the ITC's
-written permission.
+include::proprietary-information.adoc[]
 
 == Introduction
 
