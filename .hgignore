@@ -1,6 +1,7 @@
 syntax: glob
 
-docs/1-initial-requirements.{html,xml}
-docs/2-detailed-requirements.{html,xml}
-docs/3-srs.{html,xml}
-docs/4-design.{html,xml}
+docs/1-initial-requirements.{html,xml,pdf}
+docs/2-detailed-requirements.{html,xml,pdf}
+docs/3-charter.{html,xml,pdf}
+docs/4-srs.{html,xml,pdf}
+docs/5-design.{html,xml,pdf}
