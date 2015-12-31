@@ -2,7 +2,7 @@
 FIRST-NAME LAST-NAME <EMAIL>; SECOND-AUTHOR; ...
 VERSION, DATE, VERSION DESCIPTION
 
-include::proprietary-information.adoc[]
+include::includes/proprietary-information.adoc[]
 
 == Product Scope
 
