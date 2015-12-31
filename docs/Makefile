@@ -16,7 +16,7 @@ html: $(HTML)
 pdf: $(PDF)
 
 %.html: %.adoc
-	asciidoctor -a toc -a sectnums -a data-uri -d book $<
+	asciidoctor -a toc -a sectnums -a icons=font -a data-uri -d book $<
 
 %.xml: %.adoc
 	asciidoctor -b docbook -d book -a data-uri! $<
