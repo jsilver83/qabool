@@ -19,10 +19,13 @@ pdf: $(PDF)
 	asciidoctor -a toc -a sectnums -a icons=font -a data-uri -d book $<
 
 %.xml: %.adoc
-	asciidoctor -b docbook -d book -a data-uri! $<
+	asciidoctor -b docbook -d article -a data-uri! $<
 
-%.pdf: %.xml
-	@echo "PDF output is not implemented yet"
+# %.pdf: %.xml
+# 	~/local/software/asciidoctor-fopub/fopub $<
+
+%.pdf: %.adoc
+	asciidoctor-pdf -a toc -a sectnums -a icons=font -a pdf-stylesdir=. -a pdf-style=itc -d article $<
 
 clean:
 	rm -f $(HTML) $(PDF)
