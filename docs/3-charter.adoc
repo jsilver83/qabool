@@ -28,24 +28,14 @@ Finally, creating several type of reports for different purposes in business int
 This system will provide many facilities to students and admission office department
 like
 
-* accept the agreements before registration
 * student registration,
-* login,
-* change password,
-* forget password,
 * calculate GPA,
-* student dashboard,
-* student results,
-* student confirmation,
+* student dashboard, student results, student confirmation,
 * assign KFUPM ID to the students,
 * complete student information,
 * upload required documents,
-* re-upload required documents,
-* accept withdrawal agreement,
 * withdrawal form,
-* print medical report,
-* print admission letters,
-* print two letters belong to student housing,
+* print documents medical report, admission letters and two letters belong to student housing,
 * searching for roommate,
 * help desk for the application administrator,
 * help the admission office to calculate and take cut-off based on student GPAs

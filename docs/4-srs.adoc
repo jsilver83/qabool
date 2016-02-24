@@ -8,14 +8,33 @@ include::includes/proprietary-information.adoc[]
 
 === Purpose and Intended Audience
 
-< Clearly state the purpose of this document and its intended
-audiences. Note that this subsection does not describe the project. >
+The purpose of this document is to give a detailed description
+of the requirements for _Student Admission System_.
+It will contain all the details of the requested functionality as well as the wireframes
+that will be used in designing the system. This document is intended to be proposed to
+department of admission office for approval. It will also be used as a reference for
+the development team while developing the first version of the system.
 
 === Product Scope
 
-_Admission System_ allows students to apply at KFUPM. The system should be bilingual.
-Students can access the system during registration period only.
-It also covers administrators functionality for data manipulation.
+_Student Admission System_ allows students to apply at KFUPM.
+This system will provide many facilities to students and admission office department
+like
+
+* student registration,
+* calculate GPA,
+* student dashboard, student results, student confirmation,
+* assign KFUPM ID to the students,
+* complete student information,
+* upload required documents,
+* withdrawal form,
+* print documents medical report, admission letters and two letters belong to student housing,
+* searching for roommate,
+* help desk for the application administrator,
+* help the admission office to calculate and take cut-off based on student GPAs
+using business intelligence (BI)
+* Above all, the business intelligence (BI) will provide different type of reports for
+student affairs, registrar office, information technology center and admission office.
 
 === Definitions, Acronyms, and Abbreviations
 
@@ -43,7 +62,6 @@ and its main functionality. The external interface requirements will be discusse
 The functional requirements of the system will discussed in detail in Section 4.
 Section 5 explains the other nonfunctional requirements of the system.
 
-
 == Overall Description
 
 === Product Perspective
@@ -60,17 +78,15 @@ and reports.
 * Calculate student GPA
 * Student login & check admission status
 * Confirmation (only for accepted student by admission office)
-* Student withdrawal and the agreements(after confirmation the student
+* Student withdrawal and the agreements (after confirmation the student
   can withdrawal anytime)
 * Complete student information (Form 2)
 * Upload & Re-upload required documents
-* Print admission letter
-* Print medical report
-* Print two letters that belong to student housing
+* Print student documents like admission letter, medical report and two letters that belong to student housing
 
 ==== Application Administrator Functions
 
-* View reports and statistics
+* View different type of reports and statistics
 * Reset students passwords
 * Check and manipulate students' entered data
 * Check and manipulate students' uploaded documents
@@ -84,33 +100,33 @@ and reports.
 * Denied students report
 * Withdrawn students report
 
-==== Process
+==== Business Process
 
 [[context]]
 .Business process
 image::images/admProcess.svg[]
 
 === User Classes and Characteristics
-NOTE: TODO: Bassam
 
-<Identify the various user classes that you anticipate will use this
-product. User classes may be differentiated based on frequency of use,
-subset of product functions used, technical expertise, security or
-privilege levels, educational level, or experience. Describe the
-pertinent characteristics of each user class. Certain requirements may
-pertain only to certain user classes. Distinguish the most important
-user classes for this product from those who are less important to
-satisfy.>
+There are two major types of users that interact with the system.
 
-< Describe the characteristics of the intended users in terms of
-experience and technical expertise. At a minimum, give the
-characteristics of the interface for each class of users, that is,
-screen formats, page/window layouts, content of reports or menus. How
-should the system appear to the user? How detailed should error
-messages be? If you are using prototyping, sample interfaces may be
-provided but make clear what principles are required to allow
-consistent modifications. Sample user interfaces may be placed in an
-Appendix to this volume. >
+Student::
+The student must have the basic understanding how to use the system to register,
+login, see the result in the dashboard, upload required documents and print important documents.
+
+Application Administrator::
+Application administrator must have the basic understanding how to use the system to
+manage and filter student list using BI, manipulate students' uploaded documents and data entered.
+
+Student affairs::
+They must have the basic understanding how to use (BI) in order to view different type of reports.
+
+Registrar::
+They must have the basic understanding how to use (BI) in order to view different type of reports.
+
+
+Information technology center:: View report list of
+They must have the basic understanding how to use (BI) in order to view different type of reports.
 
 === Operating Environment
 
@@ -126,7 +142,7 @@ None.
 
 === Assumptions and Dependencies
 
-_Admission System_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
+_Student Admission System_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
 tests data.
 
 === User Interfaces
@@ -296,6 +312,7 @@ REQ-2 :: <details>
 == Other Nonfunctional Requirements
 
 [[PerReq]]
+
 === Performance Requirements
 
 * The web application should be hosted on a cloud service that should guarantee
