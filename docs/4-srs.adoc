@@ -13,24 +13,22 @@ audiences. Note that this subsection does not describe the project. >
 
 === Product Scope
 
-< Brief overview of the project. Tell the name of the product to be
-created. Explain what it will do in general terms. If needed, tell
-what it will not do. Describe the need, context, and rationale for the
-system. Discuss how it fits into the overall business or strategic
-objectives of the organization. Describe previous versions of the
-software (if any) and the relationship with the proposed version . If
-a separate vision and scope document is available, refer to it rather
-than duplicating its contents here. The explicit functionality of the
-project is described in the sections below. >
+_Admission System_ allows students to apply at KFUPM. The system should be bilingual.
+Students can access the system during registration period only.
+It also covers administrators functionality for data manipulation.
 
 === Definitions, Acronyms, and Abbreviations
 
 [horizontal]
 KFUPM::	King Fahd University of Petroleum & Minerals
-ITC::	Information technology center
-ADIS::	Administrative information system
-BI:: Business intelligence
-SMS:: Short message service
+ITC::	Information Technology Center
+ADIS::	Administrative Information System
+BI:: Business Intelligence
+SMS:: Short Message Service
+GSB:: Government Service Bus
+Qiyas:: a government entity that conducts admission exams for Saudi universities
+Quadrat:: a test conducted by Qiyas to measure a student's skills aptitude level
+Tahsili:: a test conducted by Qiyas to asses a student's academic achievement level
 
 
 === References
@@ -39,7 +37,7 @@ None.
 
 === Overview of Document
 
-The document is organized as follows. Section 2 gives an overall
+This document is organized as follows: Section 2 gives an overall
 description of the system, including the characteristics of its users
 and its main functionality. The external interface requirements will be discussed in Section 3.
 The functional requirements of the system will discussed in detail in Section 4.
@@ -47,54 +45,50 @@ Section 5 explains the other nonfunctional requirements of the system.
 
 
 == Overall Description
-NOTE: TODO: Joud
 
 === Product Perspective
 
-_Admission_ system allows the students to apply at KFUPM through a web browser
-and support multilingual. The students can access the system during registration period only.
-It also, cover application administrators for data manipulation.
+This system is supposed to be an improvement of an already existing legacy system.
+The admission department requested changes to the process and some additional functionalities
+and reports.
 
 === Product Functions
 
-Student functions
+==== Student Functions
 
-* Student: Student registration with Initial agreements
-* Student: Calculate student GPA
-* Student: Student login
-* Student: Student dashboard
-* Student: Student results
-* Student: Confirmation (only for accepted student by admission office)
-* Student: Student withdrawal and the agreements(after confirmation the student
+* Student registration with Initial agreements
+* Calculate student GPA
+* Student login & check admission status
+* Confirmation (only for accepted student by admission office)
+* Student withdrawal and the agreements(after confirmation the student
   can withdrawal anytime)
-* Student: Assign KFUPM ID to students who confirmed
-* Student: Complete student information
-* Student: Upload required documents
-* Student: Re-upload the documents (if missing something)
-* Student: Print admission letter
-* Student: Print medical report
-* Student: Print two letters belong to student housing
-* Log out
+* Complete student information (Form 2)
+* Upload & Re-upload required documents
+* Print admission letter
+* Print medical report
+* Print two letters that belong to student housing
 
-Application administrator functions
+==== Application Administrator Functions
 
-NOTE: TODO: Joud plz list all BI reports and administrator dashboard here
+* View reports and statistics
+* Reset students passwords
+* Check and manipulate students' entered data
+* Check and manipulate students' uploaded documents
+* Manipulate cut-off points to determine admission criterion
+* Manipulate students' status
 
-* Login
-* BI: System Statistics Report
-* BI:
-* Log out
+==== BI Reports
 
-<Summarize the major functions the product must perform or must let
-the user perform. Details will be provided in Section 3, so only a
-high level summary (such as a bullet list) is needed here. Organize
-the functions to make them understandable to any reader of the SRS. A
-picture of the major groups of related requirements and how they
-relate, such as a top level data flow diagram or object class diagram,
-is often effective.>
+* Statistics report
+* Students report (with filters based on high-school GPA, status, nationality, and city)
+* Denied students report
+* Withdrawn students report
 
-<BPMN 2.0 or any other explanatory workflow diagrams can be used here
-to describe the overall functions of the product.>
+==== Process
+
+[[context]]
+.Business process
+image::images/admProcess.svg[]
 
 === User Classes and Characteristics
 NOTE: TODO: Bassam
@@ -120,79 +114,106 @@ Appendix to this volume. >
 
 === Operating Environment
 
-None.
+The system is web-based. All functions shall be available through a web browser.
 
 === Design and Implementation Constraints
-None.
-<Describe any items or issues that will limit the options available to
-the developers. These might include: corporate or regulatory policies;
-hardware limitations (timing requirements, memory requirements);
-interfaces to other applications; specific technologies, tools, and
-databases to be used; parallel operations; language requirements;
-communications protocols; security considerations; design conventions
-or programming standards (for example, if the customer’s organization
-will be responsible for maintaining the delivered software).>
 
-<Remember that this section is for the user (stakeholders). A full set
-of non-functional requirements for the developer is contained in
-section 5.>
+None.
 
 === User Documentation
 
 None.
 
 === Assumptions and Dependencies
-NOTE: TODO: Joud put some information about the yesser?!
 
-
-<List any assumed factors (as opposed to known facts) that could
-affect the requirements stated in the SRS. These could include
-third-party or commercial components that you plan to use, issues
-around the development or operating environment, or constraints. The
-project could be affected if these assumptions are incorrect, are not
-shared, or change. Also identify any dependencies the project has on
-external factors, such as software components that you intend to reuse
-from another project, unless they are already documented elsewhere
-(for example, in the vision and scope document or the project plan).>
-
-
-== External Interface Requirements
+_Admission System_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
+tests data.
 
 === User Interfaces
 
-NOTE: TODO: Joud
+[[context]]
+.Agreement 1
+image::images/agreement1.png[]
 
-<Describe the logical characteristics of each interface between the
-software product and the users. This may include sample screen images,
-any GUI standards or product family style guides that are to be
-followed, screen layout constraints, standard buttons and functions
-(e.g., help) that will appear on every screen, keyboard shortcuts,
-error message display standards, and so on. Define the software
-components for which a user interface is needed. Details of the user
-interface design should be documented in a separate user interface
-specification.>
+[[context]]
+.Registration Form
+image::images/form1.png[]
 
-<High-level wireframes for all user interfaces should be presented
-here.>
+[[context]]
+.Login Form
+image::images/login.png[]
+
+[[context]]
+.Forgot Password Form
+image::images/forgot.png[]
+
+[[context]]
+.Landing Page/Student Dashboard
+image::images/dashboard.png[]
+
+[[context]]
+.Confirmation Agreement
+image::images/agreement2.png[]
+
+[[context]]
+.Upload Documents Form
+image::images/documents.png[]
+
+[[context]]
+.Admitted Student Dashboard
+image::images/dashboard2.png[]
+
+[[context]]
+.Admitted Student Agreement 1
+image::images/agreement3.png[]
+
+[[context]]
+.Admitted Student Agreement 2
+image::images/agreement4.png[]
+
+[[context]]
+.Admitted Student Agreement 3
+image::images/agreement5.png[]
+
+[[context]]
+.Admitted Student Agreement 4
+image::images/agreement6.png[]
+
+[[context]]
+.Admitted Student Agreement 5
+image::images/agreement7.png[]
+
+[[context]]
+.Admitted Student Form (for Student Affairs)
+image::images/form2.png[]
+
+[[context]]
+.Admitted Student Form (for Student Affairs) pt2
+image::images/form22.png[]
+
+[[context]]
+.Print Documents for Admitted Students
+image::images/printDocs.png[]
+
+[[context]]
+.Print Admission Letter
+image::images/admLetter.png[]
+
+[[context]]
+.Print Medical Letter
+image::images/medLetter.png[]
+
+[[context]]
+.Withdrawal Form
+image::images/withdraw.png[]
 
 === Hardware Interfaces
 
 None
 
 === Software Interfaces
-NOTE: TODO: Joud
 
-<Describe the connections between this product and other specific
-software components (name and version), including databases, operating
-systems, tools, libraries, and integrated commercial
-components. Identify the data items or messages coming into the system
-and going out and describe the purpose of each. Describe the services
-needed and the nature of communications. Refer to documents that
-describe detailed application programming interface
-protocols. Identify data that will be shared across software
-components. If the data sharing mechanism must be implemented in a
-specific way (for example, use of a global data area in a multitasking
-operating system), specify this as an implementation constraint.>
+NOTE: TBD
 
 === Communications Interfaces
 
@@ -274,89 +295,55 @@ REQ-2 :: <details>
 
 == Other Nonfunctional Requirements
 
+[[PerReq]]
 === Performance Requirements
-** The website should host on cloud server that can provide adequate response time.
-** The software must support 50,000+ requesters which will on a busy day generate
-20,000 interaction.
-** The system response time must be less than 10 seconds for the user interface.
 
-<If there are performance requirements for the product under various
-circumstances, state them here and explain their rationale, to help
-the developers understand the intent and make suitable design
-choices. Specify the timing relationships for real time systems. Make
-such requirements as specific as possible. You may need to state
-performance requirements for individual functional requirements or
-features.>
+* The web application should be hosted on a cloud service that should guarantee
+99.9% uptime. In addition, The response time must be less than 5 seconds for all
+ users' interactions
+* The web application must support 1,000+ concurrent requesters which will on
+a busy day generate 10,000+ interaction.
 
 === Safety Requirements
+
 None.
-<Specify those requirements that are concerned with possible loss,
-damage, or harm that could result from the use of the product. Define
-any safeguards or actions that must be taken, as well as actions that
-must be prevented. Refer to any external policies or regulations that
-state safety issues that affect the product’s design or use. Define
-any safety certifications that must be satisfied.>
 
 === Security Requirements
-None.
-<Specify any requirements regarding security or privacy issues
-surrounding use of the product or protection of the data used or
-created by the product. Define any user identity authentication
-requirements. Refer to any external policies or regulations containing
-security issues that affect the product. Define any security or
-privacy certifications that must be satisfied.>
+
+Since this system handles sensitive and mission-critical data, it should provide
+tight data security that shall prevent direct and unauthorized access. Penetration testing
+should be conducted (by third-party if possible) to assure that.
 
 === Software Quality Attributes
 
-None.
-<Specify any additional quality characteristics for the product that
-will be important to either the customers or the developers. Some to
-consider are: adaptability, availability, correctness, flexibility,
-interoperability, maintainability, portability, reliability,
-reusability, robustness, testability, and usability. Write these to be
-specific, quantitative, and verifiable when possible. At the least,
-clarify the relative preferences for various attributes, such as ease
-of use over ease of learning.>
+==== Portability
 
-===  Business Rules
+The web application should work on all major hand-held devices including
+smart-phones and tablets. This should be achieved by using responsive user interface
+that shall scale gracefully according to display screen size.
 
-[horizontal]
-Developers and designers:: could change the design layout of the website and modify the code.
-Students:: they can register, login to the system, submit the forms, confirm, upload required documents and
-print documents.
-Moderators:: they are supporting students who forget the password, changing
-student email and verify uploaded student documents.
-Application Administrator:: ......
+==== Reliability & Availability
 
-<List any operating principles about the product, such as which
-individuals or roles can perform which functions under specific
-circumstances. These are not functional requirements in themselves,
-but they may imply certain functional requirements to enforce the
-rules.>
+Since this system is mission-critical to KFUPM, it should be hosted on reliable
+hosting service that can fulfill <<PerReq,Performance Requirements>> stated above.
+Moreover, system data must be backed up every day twice and the backup copies should be
+stored at different physical location for disaster recovery.
+
+==== Scalability
+
+This system will be hosted on a cloud service to provide better performance. Hence,
+the system should be designed and implemented to be cloud-ready. Stress testing should
+be conducted (by third part if possible) to assure this.
+
+==== Usability
+
+Since this web application will be used by a large number of end-users from various
+backgrounds, it should be user-friendly. The screen layouts should be trivial.
+Field names should be clear and unambiguous and hints/tips should be
+provided inline to explain complicated tasks required from users whenever necessary.
 
 == Other Requirements
 
-*	The system data must be backed up every day and the backup copies stored in
- another server at different location for disaster recovery.
-*	The system should provide data security that will prevent direct and
- unauthorized access (add, update, delete, query).
-
-<Define any other requirements not covered elsewhere in the SRS. This
-might include database requirements, internationalization
-requirements, legal requirements, reuse objectives for the project,
-and so on. Add any new sections that are pertinent to the project.>
-
-[appendix]
-== Analysis Models
-
-<Optionally, include any pertinent analysis models, such as data flow
-diagrams, class diagrams, state-transition diagrams, or
-entity-relationship diagrams.>
-
-[appendix]
-== To Be Determined List
-
-<Collect a numbered list of the TBD (to be determined) references that
-remain in the SRS so they can be tracked to closure.>
-
-Source: http://www.frontiernet.net/~kwiegers/process_assets/srs_template.doc
+The web application should have bilingual user interface that can be used to
+switch the display language at any time by the end-user. The layout should change
+according to the display language between RTL and LTR.
