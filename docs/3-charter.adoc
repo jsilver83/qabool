@@ -6,13 +6,13 @@ include::includes/proprietary-information.adoc[]
 
 == Project Title
 
-Student Admission System
+Qubool
 
 == Project Justifications
 
 The project is needed to manage student registration who want to apply and study at KFUPM.
 Currently, there is a system on adm.kfupm.edu.sa developed
-in asp.net and it needs some enhancements to cover all type of reports.
+in asp.net and it needs to change the process and some additional functionalities and reports.
 
 == Project Objectives
 
