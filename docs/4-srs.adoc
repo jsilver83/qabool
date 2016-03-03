@@ -93,13 +93,13 @@ be the registration phase and it will be open to all high-school students as fol
 
 [[context]]
 .Phase 1 process
-image::images/AdmissionBP-1.png[]
+image::images/AdmissionBP-1.svg[]
 
 Phase 2 will be for admission results as follows:
 
 [[context]]
 .Phase 2 process
-image::images/AdmissionBP-2.png[]
+image::images/AdmissionBP-2.svg[]
 
 === User Classes and Characteristics
 
