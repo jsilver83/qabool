@@ -1,5 +1,5 @@
-= Project Charter for PROJECT-NAME
-FIRST-NAME LAST-NAME <EMAIL>; SECOND-AUTHOR; ...
+= Project Charter for Qubool
+Bassam Almaaesh <almaaesh@kfupm.edu.sa>; Abdullah Joud <joud@kfupm.edu.sa>;
 VERSION, DATE, VERSION DESCIPTION
 
 include::includes/proprietary-information.adoc[]

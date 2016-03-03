@@ -1,5 +1,5 @@
-= Software Requirements Specification for PROJECT-NAME
-FIRST-NAME LAST-NAME <EMAIL>; SECOND-AUTHOR; ...
+= Software Requirements Specification for Qubool
+Abdullah Joud <joud@kfupm.edu.sa>; Bassam Almaaesh <almaaesh@kfupm.edu.sa>;
 VERSION, DATE, VERSION DESCIPTION
 
 include::includes/proprietary-information.adoc[]
@@ -9,32 +9,17 @@ include::includes/proprietary-information.adoc[]
 === Purpose and Intended Audience
 
 The purpose of this document is to give a detailed description
-of the requirements for _Student Admission System_.
-It will contain all the details of the requested functionality as well as the wireframes
+of the requirements for _Qubool_.
+It will contain all the details of the requested functionality as well as the wire-frames
 that will be used in designing the system. This document is intended to be proposed to
 department of admission office for approval. It will also be used as a reference for
 the development team while developing the first version of the system.
 
 === Product Scope
 
-_Student Admission System_ allows students to apply at KFUPM.
-This system will provide many facilities to students and admission office department
-like
-
-* student registration,
-* calculate GPA,
-* student dashboard, student results, student confirmation,
-* assign KFUPM ID to the students,
-* complete student information,
-* upload required documents,
-* withdrawal form,
-* print documents medical report, admission letters and two letters belong to student housing,
-* searching for roommate,
-* help desk for the application administrator,
-* help the admission office to calculate and take cut-off based on student GPAs
-using business intelligence (BI)
-* Above all, the business intelligence (BI) will provide different type of reports for
-student affairs, registrar office, information technology center and admission office.
+_Qubool_ shall enable students to apply to enroll at KFUPM.
+This system will cover the whole admission life-cycle from student application
+to admission to orientation and housing.
 
 === Definitions, Acronyms, and Abbreviations
 
@@ -49,7 +34,6 @@ Qiyas:: a government entity that conducts admission exams for Saudi universities
 Quadrat:: a test conducted by Qiyas to measure a student's skills aptitude level
 Tahsili:: a test conducted by Qiyas to asses a student's academic achievement level
 
-
 === References
 
 None.
@@ -58,75 +42,87 @@ None.
 
 This document is organized as follows: Section 2 gives an overall
 description of the system, including the characteristics of its users
-and its main functionality. The external interface requirements will be discussed in Section 3.
-The functional requirements of the system will discussed in detail in Section 4.
-Section 5 explains the other nonfunctional requirements of the system.
+and its main functionality. The external interface requirements will be
+discussed in Section 3. The functional requirements of the system will
+discussed in detail in Section 4. Section 5 explains the other nonfunctional
+requirements of the system.
 
 == Overall Description
 
 === Product Perspective
 
 This system is supposed to be an improvement of an already existing legacy system.
-The admission department requested changes to the process and some additional functionalities
-and reports.
+The admission department requested changes to the process and some additional
+functionalities and reports.
 
 === Product Functions
 
 ==== Student Functions
 
-* Student registration with Initial agreements
-* Calculate student GPA
-* Student login & check admission status
-* Confirmation (only for accepted student by admission office)
-* Student withdrawal and the agreements (after confirmation the student
-  can withdrawal anytime)
-* Complete student information (Form 2)
+* Registration with initial agreement
+* Calculate GPA
+* Login & dashboard
+* Confirmation (only for accepted students by admission office)
+* Withdrawal and agreement (after confirmation the student
+  can withdraw anytime)
+* Complete information (Form 2)
 * Upload & Re-upload required documents
-* Print student documents like admission letter, medical report and two letters that belong to student housing
+* Print documents like admission letter, medical report and two letters that
+belong to student housing
 
-==== Application Administrator Functions
+==== Administrator Functions
 
-* View different type of reports and statistics
+* View general statistics and reports
 * Reset students passwords
-* Check and manipulate students' entered data
-* Check and manipulate students' uploaded documents
-* Manipulate cut-off points to determine admission criterion
-* Manipulate students' status
+* Manipulate denied students list
+* Check and manipulate students' entered info & uploaded documents
+* Manipulate cut-off points to determine admission criteria
+* Manipulate students' status (accepted, rejected, withdrawn, ... etc)
 
 ==== BI Reports
 
-* Statistics report
+* General statistics
 * Students report (with filters based on high-school GPA, status, nationality, and city)
 * Denied students report
 * Withdrawn students report
 
 ==== Business Process
 
+There are two distinct phases in the admission process at KFUPM. Phase 1 will
+be the registration phase and it will be open to all high-school students as follows:
+
 [[context]]
-.Business process
-image::images/admProcess.svg[]
+.Phase 1 process
+image::images/AdmissionBP-1.svg[]
+
+Phase 2 will be for admission results as follows:
+
+[[context]]
+.Phase 2 process
+image::images/AdmissionBP-2.svg[]
 
 === User Classes and Characteristics
 
 There are two major types of users that interact with the system.
 
 Student::
-The student must have the basic understanding how to use the system to register,
-login, see the result in the dashboard, upload required documents and print important documents.
+The student can register, login, check the result in the dashboard,
+upload required documents and print important documents.
 
-Application Administrator::
-Application administrator must have the basic understanding how to use the system to
-manage and filter student list using BI, manipulate students' uploaded documents and data entered.
+Admission Administrator::
+Admission Administrator can manage and filter students list, manipulate students'
+uploaded documents and data entered.
+
+Reviewer::
+Reviewer can review entered students' information and documents and correct
+mistakes if any.
 
 Student affairs::
-They must have the basic understanding how to use (BI) in order to view different type of reports.
+Student affairs department will have access to some BI reports only.
 
 Registrar::
-They must have the basic understanding how to use (BI) in order to view different type of reports.
-
-
-Information technology center:: View report list of
-They must have the basic understanding how to use (BI) in order to view different type of reports.
+Like Student affairs department, Registrar office will have access to some BI
+reports only.
 
 === Operating Environment
 
@@ -142,86 +138,8 @@ None.
 
 === Assumptions and Dependencies
 
-_Student Admission System_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
+_Qubool_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
 tests data.
-
-=== User Interfaces
-
-[[context]]
-.Agreement 1
-image::images/agreement1.png[]
-
-[[context]]
-.Registration Form
-image::images/form1.png[]
-
-[[context]]
-.Login Form
-image::images/login.png[]
-
-[[context]]
-.Forgot Password Form
-image::images/forgot.png[]
-
-[[context]]
-.Landing Page/Student Dashboard
-image::images/dashboard.png[]
-
-[[context]]
-.Confirmation Agreement
-image::images/agreement2.png[]
-
-[[context]]
-.Upload Documents Form
-image::images/documents.png[]
-
-[[context]]
-.Admitted Student Dashboard
-image::images/dashboard2.png[]
-
-[[context]]
-.Admitted Student Agreement 1
-image::images/agreement3.png[]
-
-[[context]]
-.Admitted Student Agreement 2
-image::images/agreement4.png[]
-
-[[context]]
-.Admitted Student Agreement 3
-image::images/agreement5.png[]
-
-[[context]]
-.Admitted Student Agreement 4
-image::images/agreement6.png[]
-
-[[context]]
-.Admitted Student Agreement 5
-image::images/agreement7.png[]
-
-[[context]]
-.Admitted Student Form (for Student Affairs)
-image::images/form2.png[]
-
-[[context]]
-.Admitted Student Form (for Student Affairs) pt2
-image::images/form22.png[]
-
-[[context]]
-.Print Documents for Admitted Students
-image::images/printDocs.png[]
-
-[[context]]
-.Print Admission Letter
-image::images/admLetter.png[]
-
-[[context]]
-.Print Medical Letter
-image::images/medLetter.png[]
-
-[[context]]
-.Withdrawal Form
-image::images/withdraw.png[]
 
 === Hardware Interfaces
 
@@ -241,72 +159,128 @@ These notifications include:
 students when the withdrawal has been submitted to admission.
 
 == Functional Requirements
-NOTE: TODO: Joud
 
-<This template illustrates organizing the functional requirements for
-the product by system features (functional requirement by functional
-requirement), the major services provided by the product. You may
-prefer to organize this section by use case, mode of operation, user
-class, object class, functional hierarchy, or combinations of these,
-whatever makes the most logical sense for your product.>
-
-=== Functional Requirement 1
-
-<Don’t really say “Functional Requirement 1.” State the feature name
-in just a few words. List each functionality of the system in full
-detail using full use case descriptions. See Use Case Description
-document. The organization of this chapter should facilitate the
-correct design of the system and support validation testing. Each use
-case must include validity checks on inputs, the sequence of
-operations, and responses to abnormal situations.
-
-State Transition Diagrams may be used effectively to describe
-complicated sequences of operations. It is essential that this section
-be as clear as possible.
-
-Each item here is explicitly cross-referenced back to section
-3.1. Each item here must be uniquely identified to allow backward
-references from the design and testing documents. When those documents
-are finished, forward references to their specific sections are added
-here. >
+=== Student Registration
 
 ID: FR1
 
 ==== Description and Priority
-NOTE: TODO: Joud and Bassam
 
-<Provide a short description of the feature and indicate whether it is
-of High, Medium, or Low priority. You could also include specific
-priority component ratings, such as benefit, penalty, cost, and risk
-(each rated on a relative scale from a low of 1 to a high of 9).>
+The student will fill the registration which is the first step in the application
+process.
+
+Priority: High
 
 ==== Stimulus/Response Sequences
-NOTE: TODO: Joud and Bassam
 
-<List the sequences of user actions and system responses that
-stimulate the behavior defined for this feature. These will correspond
-to the dialog elements associated with use cases.>
-
-<Full use case descriptions can be used here>
+The student will fill the registration form which contains required fields like
+credentials, email, mobile and the year he graduated from high-school.
+After that. he will be sent an email and SMS as confirmation of receiving his
+registration. He can then periodically login and see his application status in dashboard.
 
 ==== Functional Requirements
 
-<Itemize the detailed functional requirements associated with this
-feature. These are the software capabilities that must be present in
-order for the user to carry out the services provided by the feature,
-or to execute the use case. Include how the product should respond to
-anticipated error conditions or invalid inputs. Requirements should be
-concise, complete, unambiguous, verifiable, and necessary. Use “TBD”
-as a placeholder to indicate when necessary information is not yet
-available.>
+REQ-1 :: Fill registration form
+REQ-2 :: Receive confirmation of application submission through SMS and email which
+will contain his application ID
+REQ-3 :: Login to student dashboard
 
-<Each requirement should be uniquely identified with a sequence number
-or a meaningful tag of some kind.>
+=== Reset Password
 
-REQ-1 :: <details>
-REQ-2 :: <details>
+ID: FR2
 
-=== Functional Requirement 2 (and so on)
+==== Description and Priority
+
+If the student forgets his password, he can use the reset password form to resolve that.
+
+Priority: High
+
+==== Stimulus/Response Sequences
+
+If the student forgets his password, he can fill a form which will help him reset it.
+He needs to provide 3 correct answers out of the following:
+
+* Application ID
+* Email
+* Mobile
+* Graduation year (from high-school)
+
+==== Functional Requirements
+
+REQ-1 :: Fill password reset form
+
+=== Admission Confirmation
+
+ID: FR3
+
+==== Description and Priority
+
+If the the applicants meets the admission criteria, he will be notified
+(outside the system) that he is partially admitted into KFUPM. He then has to
+login and confirm the desire to study at KFUPM. He also has to fill in more
+required info and upload required documents. After that he can view and print
+various important documents like admission letter and medical checkup letter.
+
+Priority: High
+
+==== Stimulus/Response Sequences
+
+If the student is admitted into KFUPM, he has to login and confirm his desire to
+study at KFUPM after going through the agreement. He will form 2 which contains
+required information by the admission office. He also has to upload required
+documents. He also has to fill form 3 which contains required information by
+student affairs. After that, he can view and print admission letter that contains his
+KFUPM ID and instructions on orientation week. Next, he can view and print the
+medical checkup letter. He can also view and print instructions and guidelines
+to orientation year and student housing in KFUPM.
+
+==== Functional Requirements
+
+REQ-1 :: Read agreement and confirm desire to study at KFUPM
+REQ-2 :: Fill admission office form (form2)
+REQ-3 :: Upload required documents depending on the student type:
+
+* Students in general has to upload these:
+** Personal photo
+** government ID (for Saudis) or Iqama (for non-Saudis)
+** Highscool certificate
+** Muqarrarat certificate (for Muqarrarat students only)
+
+* Non-Saudi students from Saudi mothers
+** Saudi mother's government ID
+** Student birth certificate
+
+* Non-Saudi students (in general)
+** Passport
+
+REQ-4 :: Fill student affairs form (form3)
+REQ-5 :: View and print following documents:
+* Admission letter (includes KFUPM ID)
+* Medical checkup letter
+* Orientation year guide
+* Student housing guidelines
+
+=== Withdraw
+
+ID: FR4
+
+==== Description and Priority
+
+After the student confirms his desire to study at KFUPM, he can (if he wants)
+withdraw his application at any time later on. Withdrawal is final and irreversible.
+
+Priority: High
+
+==== Stimulus/Response Sequences
+
+IF the admitted and confirmed student wishes to withdraw from KFUPM, he has to
+go through the agreement and then fill the withdrawal form. After that, his status
+is changed to withdrawn in the dashboard.
+
+==== Functional Requirements
+
+REQ-1 :: Read withdrawal agreement
+REQ-2 :: Fill withdrawal form
 
 
 == Other Nonfunctional Requirements
