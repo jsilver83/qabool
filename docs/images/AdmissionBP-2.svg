@@ -1018,7 +1018,7 @@
 		</g>
 		<g id="shape22-237" v:mID="22" v:groupContext="shape" v:layerMember="0" transform="translate(581.102,-233.43)">
 			<title>Process.22</title>
-			<desc>Verify student information and documents</desc>
+			<desc>Review and verify student information and documents</desc>
 			<v:custProps>
 				<v:cp v:nameU="Cost" v:lbl="Cost" v:prompt="" v:type="7" v:format="@" v:sortKey="" v:invis="false" v:ask="false"
 						v:langID="1033" v:cal="0"/>
@@ -1051,8 +1051,8 @@
 				<rect x="0" y="552.756" width="70.8661" height="42.5197" class="st11"/>
 			</g>
 			<rect x="0" y="552.756" width="70.8661" height="42.5197" class="st12"/>
-			<text x="12.39" y="566.82" class="st13" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Verify student <tspan
-						x="9.09" dy="1.2em" class="st17">information and </tspan><tspan x="17.24" dy="1.2em" class="st17">documents</tspan></text>		</g>
+			<text x="6.63" y="566.82" class="st13" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Review and verify <tspan
+						x="2.67" dy="1.2em" class="st17">student information </tspan><tspan x="10.21" dy="1.2em" class="st17">and documents</tspan></text>		</g>
 		<g id="shape26-245" v:mID="26" v:groupContext="shape" v:layerMember="1" transform="translate(651.969,-247.603)">
 			<title>Dynamic connector.26</title>
 			<v:userDefs>

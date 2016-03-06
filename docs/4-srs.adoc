@@ -101,6 +101,12 @@ Phase 2 will be for admission results as follows:
 .Phase 2 process
 image::images/AdmissionBP-2.svg[]
 
+The process for phase 1 & 2 will be as follows:
+
+[[context]]
+.Process for phase 1 & 2
+image::images/QuboolProcess.svg[]
+
 === User Classes and Characteristics
 
 There are two major types of users that interact with the system.
@@ -111,18 +117,20 @@ upload required documents and print important documents.
 
 Admission Administrator::
 Admission Administrator can manage and filter students list, manipulate students'
-uploaded documents and data entered.
+uploaded documents and data entered. Also, he can access to all BI reports and assign user level to the users.
 
 Reviewer::
-Reviewer can review entered students' information and documents and correct
-mistakes if any.
+Reviewer can review and verify entered students' information and documents and
+correct mistakes if any.
+
+Application administrator::
+Application administrator can assign and define the roles
 
 Student affairs::
 Student affairs department will have access to some BI reports only.
 
 Registrar::
-Like Student affairs department, Registrar office will have access to some BI
-reports only.
+Registrar office department will have access to some BI reports only.
 
 === Operating Environment
 
@@ -286,6 +294,13 @@ REQ-2 :: Fill withdrawal form
 == Other Nonfunctional Requirements
 
 [[PerReq]]
+
+== Future Enhancement
+NOTE: This part (Future enhancement) should be here!
+
+. Interactive cut-off criteria to be developed.
+. Integrate KFUPM ID assigned to the student.
+. The system is modified in future as per the owner requirement.
 
 === Performance Requirements
 
