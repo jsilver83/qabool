@@ -93,19 +93,25 @@ be the registration phase and it will be open to all high-school students as fol
 
 [[context]]
 .Phase 1 process
-image::images/AdmissionBP-1.svg[]
+image::images/bp1.png[]
 
 Phase 2 will be for admission results as follows:
 
 [[context]]
 .Phase 2 process
-image::images/AdmissionBP-2.svg[]
+image::images/bp2.png[]
 
 The process for phase 1 & 2 will be as follows:
 
 [[context]]
-.Process for phase 1 & 2
-image::images/QuboolProcess.svg[]
+.Process for admitted student 2
+image::images/bp3.png[]
+
+
+== Future Enhancement
+. Interactive cut-off criteria to be developed.
+. Integrate KFUPM ID assigned to the student.
+. The system is modified in future as per the owner requirement.
 
 === User Classes and Characteristics
 
@@ -124,7 +130,7 @@ Reviewer can review and verify entered students' information and documents and
 correct mistakes if any.
 
 Application administrator::
-Application administrator can assign and define the roles
+Application administrator can assign and define the roles.
 
 Student affairs::
 Student affairs department will have access to some BI reports only.
@@ -294,13 +300,6 @@ REQ-2 :: Fill withdrawal form
 == Other Nonfunctional Requirements
 
 [[PerReq]]
-
-== Future Enhancement
-NOTE: This part (Future enhancement) should be here!
-
-. Interactive cut-off criteria to be developed.
-. Integrate KFUPM ID assigned to the student.
-. The system is modified in future as per the owner requirement.
 
 === Performance Requirements
 
