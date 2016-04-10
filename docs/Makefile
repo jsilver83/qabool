@@ -15,7 +15,7 @@ all: html pdf
 html: $(HTML)
 pdf: $(PDF)
 
-%.html: %.adoc
+%.html: %.adoc docinfo.html
 	asciidoctor -n -a toc=left -a sectnums -a icons=font -a data-uri -d book $<
 
 %.xml: %.adoc

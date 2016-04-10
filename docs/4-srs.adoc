@@ -1,6 +1,7 @@
 = Software Requirements Specification for Qubool
 Abdullah Joud <joud@kfupm.edu.sa>; Bassam Almaaesh <almaaesh@kfupm.edu.sa>;
 VERSION, DATE, VERSION DESCIPTION
+:docinfo1:
 
 include::includes/proprietary-information.adoc[]
 
@@ -352,3 +353,89 @@ provided inline to explain complicated tasks required from users whenever necess
 The web application should have bilingual user interface that can be used to
 switch the display language at any time by the end-user. The layout should change
 according to the display language between RTL and LTR.
+
+[appendix]
+== Agreements
+
+=== Phase 1 Agreements
+
+Before creating an account in phase 1.
+
+==== English Version
+
+
+==================================================
+Dear student,
+
+Assalamu Alaikum
+
+WARNING: TODO: Translate the following paragraph to English!
+
+يطيب لعمادة القبول والتسجيل بجامعة الملك فهد للبترول والمعادن أن تهنئك بالقبول
+في الجامعة للعام الدراسي 1436/1437هـ متمنين لك حياة دراسية موفقة، ونود أن نؤكد
+على أهمية النقاط التالية:
+
+- Accuracy and validity of all data entered is under the full responsibility of
+  the student.
+
+- Personal data must be entered with precision and secretariat.
+
+- Admission office will receive students’ scores directly from the Ministry of
+  Education and the National Center for Measurement and Evaluation (Qiyas).
+  
+- The registration period from Sunday, June 7, 2015 (2:00 pm) to Thursday, June
+  18, 2015 (9:00 pm).
+  
+- Admission results will be announced on Wednesday June 24, 2015 (12:00 pm).
+
+- Candidates will receive text message on their mobile phone (the registered
+  number).
+  
+- Applicant is recommended to frequently visit the admission website to know the
+  admission result and any updated instructions.
+  
+- Nominated applicants have to complete phase two of the online application and
+  upload the required documents during the period of: Wednesday, June 24, 2015
+  (12:00 pm) to Saturday, June 27, 2015 (6:00 pm).
+  
+==================================================
+
+
+==== Arabic Version
+
+[.arabic]
+==================================================
+
+عزيزي الطالب
+
+السلام عليكم ورحمة الله وبركاته
+
+يطيب لعمادة القبول والتسجيل بجامعة الملك فهد للبترول والمعادن أن تهنئك بالقبول
+في الجامعة للعام الدراسي 1436/1437هـ متمنين لك حياة دراسية موفقة، كما نود أن
+نؤكد على أهمية النقاط التالية:
+
+- التأكد من دقة وصحة جميع البيانات المدخلة حيث ان ذلك يقع تحت مسؤولية الطالب
+  الكاملة.
+  
+- ادخال جميع البيانات الشخصية بكل دقة وأمانة.
+
+- تحصل ادارة القبول على نتائج الطالب في الثانوية و اختبارات القدرات و التحصيلي
+  من وزارة التعليم و من المركز الوطني للقياس والتقويم مباشرة.
+  
+- فترة التسجيل من الساعة 2 ظهر يوم الأحد 20 شعبان 1436هـ الموافق 7 يونيو 2015م
+  إلى الساعة 9 مساء يوم الخميس 1 رمضان 1436هـ الموافق 18 يونيو 2015م.
+  
+- تعلن نتائج المرشحين للقبول 12 ظهر يوم الأربعاء 7 رمضان 1436هـ الموافق 24 يونيو
+  2015م.
+  
+- ترسل نتائج القبول للمتقدمين على الجوال المسجل في النموذج الالكتروني.
+
+- يعتبر الموقع الالكتروني لادارة القبول المرجع الرئيس للإعلان عن درجة القبول و
+  التعليمات المستجدة و بذلك تقع على المتقدم مسؤولية متابعة الموقع الالكتروني.
+  
+- في حال تم قبول ترشيح الطالب للجامعة ولديه الرغبة الكاملة في الدراسة بها، يجب
+  عليه أن يؤكد ذلك وأن يستكمال البيانات اللازمة من خلال الموقع الالكتروني لإدارة
+  القبول في الفترة من 12 ظهر يوم الأربعاء 7 رمضان 1436هـ الموافق 24 يونيو 2015م
+  إلى الساعة 6 مساء يوم السبت 10 رمضان 1436هـ الموافق 27 يونيو 2015م.
+  
+==================================================
