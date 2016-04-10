@@ -1,4 +1,4 @@
-= Project Charter for Qubool
+= Project Charter for Qabool
 Bassam Almaaesh <almaaesh@kfupm.edu.sa>; Abdullah Joud <joud@kfupm.edu.sa>;
 VERSION, DATE, VERSION DESCIPTION
 
@@ -6,7 +6,7 @@ include::includes/proprietary-information.adoc[]
 
 == Project Title
 
-Qubool
+Qabool
 
 == Project Justifications
 

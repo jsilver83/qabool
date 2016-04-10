@@ -1,4 +1,4 @@
-= Software Requirements Specification for Qubool
+= Software Requirements Specification for Qabool
 Abdullah Joud <joud@kfupm.edu.sa>; Bassam Almaaesh <almaaesh@kfupm.edu.sa>;
 VERSION, DATE, VERSION DESCIPTION
 :docinfo1:
@@ -10,7 +10,7 @@ include::includes/proprietary-information.adoc[]
 === Purpose and Intended Audience
 
 The purpose of this document is to give a detailed description
-of the requirements for _Qubool_.
+of the requirements for _Qabool_.
 It will contain all the details of the requested functionality as well as the wire-frames
 that will be used in designing the system. This document is intended to be proposed to
 department of admission office for approval. It will also be used as a reference for
@@ -18,7 +18,7 @@ the development team while developing the first version of the system.
 
 === Product Scope
 
-_Qubool_ shall enable students to apply to enroll at KFUPM.
+_Qabool_ shall enable students to apply to enroll at KFUPM.
 This system will cover the whole admission life-cycle from student application
 to admission to orientation and housing.
 
@@ -153,7 +153,7 @@ None.
 
 === Assumptions and Dependencies
 
-_Qubool_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
+_Qabool_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
 tests data.
 
 === Hardware Interfaces
