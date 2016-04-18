@@ -405,26 +405,29 @@ WARNING: TODO: Translate the following paragraph to English!
 في الجامعة للعام الدراسي 1436/1437هـ متمنين لك حياة دراسية موفقة، ونود أن نؤكد
 على أهمية النقاط التالية:
 
-- Accuracy and validity of all data entered is under the full responsibility of
-  the student.
+- You, the student, are fully responsible for the accuracy and validity of all
+  of the information that you will provide in this application.
 
-- Admission office will receive students’ scores directly from the Ministry of
-  Education and the National Center for Measurement and Evaluation (Qiyas).
+- The university's admission office will receive your scores directly from the
+  Ministry of Education and the National Center for Measurement and Evaluation
+  (Qiyas).
   
-- The registration period from Sunday, June 7, 2015 (2:00 pm) to Thursday, June
-  18, 2015 (9:00 pm).
+- The registration period starts on Sunday June 7, 2016 at 2:00 pm, and ends on
+  Thursday June 18, 2016 at 9:00 pm.
   
-- Admission results will be announced on Wednesday June 24, 2015 (12:00 pm).
+- Candidates will be announced on Wednesday June 24, 2016 at 12:00 pm.
 
-- Candidates will receive text message on their mobile phone (the registered
-  number).
+- Candidates will receive text messages on their mobile phones using the mobile
+  phone numbers entered in this application.
   
-- Applicant is recommended to frequently visit the admission website to know the
-  admission result and any updated instructions.
+- The university's admission website is the main official source for admission
+  application results, and for up-to-date application instructions. It is,
+  therefore, your responsibility to check it frequently.
   
-- Nominated applicants have to complete phase two of the online application and
-  upload the required documents during the period of: Wednesday, June 24, 2015
-  (12:00 pm) to Saturday, June 27, 2015 (6:00 pm).
+- Upon receiving their candidacy notice, candidates who wish to study at the
+  university must confirm their application, complete it online, and upload the
+  required documents starting from Wednesday June 24, 2016 at 12:00 pm, and
+  before 6:00 pm of Saturday June 27, 2016.
   
 ==================================================
 
@@ -442,25 +445,26 @@ WARNING: TODO: Translate the following paragraph to English!
 في الجامعة للعام الدراسي 1436/1437هـ متمنين لك حياة دراسية موفقة، كما نود أن
 نؤكد على أهمية النقاط التالية:
 
-- التأكد من دقة وصحة جميع البيانات المدخلة حيث ان ذلك يقع تحت مسؤولية الطالب
-  الكاملة.
+- التأكد من دقة وصحة جميع البيانات المدخلة مسؤولية الطالب الكاملة.
   
-- تحصل ادارة القبول على نتائج الطالب في الثانوية و اختبارات القدرات و التحصيلي
-  من وزارة التعليم و من المركز الوطني للقياس والتقويم مباشرة.
+- تحصل إدارة القبول بالجامعة على نتائج الطالب للمرحلة الثانوية ونتائج اختبار
+  القدرات و الاختبار التحصيلي من وزارة التعليم ومن المركز الوطني للقياس والتقويم
+  مباشرة.
   
-- فترة التسجيل من الساعة 2 ظهر يوم الأحد 20 شعبان 1436هـ الموافق 7 يونيو 2015م
-  إلى الساعة 9 مساء يوم الخميس 1 رمضان 1436هـ الموافق 18 يونيو 2015م.
+- تبدأ فترة التسجيل من الساعة 2 ظهر يوم الأحد 20 شعبان 1436هـ الموافق 7 يونيو
+  2015م، وتنتهي الساعة 9 مساء يوم الخميس 1 رمضان 1436هـ الموافق 18 يونيو 2015م.
   
-- تعلن نتائج المرشحين للقبول 12 ظهر يوم الأربعاء 7 رمضان 1436هـ الموافق 24 يونيو
-  2015م.
+- تعلن نتائج المرشحين للقبول الساعة 12 ظهر يوم الأربعاء 7 رمضان 1436هـ الموافق
+  24 يونيو 2015م.
   
-- ترسل نتائج القبول للمتقدمين على الجوال المسجل في النموذج الالكتروني.
+- سيتم إعلام المرشحين للقبول بترشيحم عبر رسائل الجوال باستخدام رقم هاتف الجوال
+  المدخل في النموذج الإلكتروني.
 
-- يعتبر الموقع الالكتروني لادارة القبول المرجع الرئيس للإعلان عن درجة القبول و
-  التعليمات المستجدة و بذلك تقع على المتقدم مسؤولية متابعة الموقع الالكتروني.
+- يعتبر الموقع الإلكتروني لإدارة القبول المرجع الرئيس للإعلان عن القبول وعن
+  التعليمات المستجدة. لذلك فعلى المتقدم مسؤولية متابعة الموقع الإلكتروني.
   
 - في حال تم قبول ترشيح الطالب للجامعة ولديه الرغبة الكاملة في الدراسة بها، يجب
-  عليه أن يؤكد ذلك وأن يستكمال البيانات اللازمة من خلال الموقع الالكتروني لإدارة
+  عليه أن يؤكد ذلك وأن يستكمل البيانات اللازمة من خلال الموقع الإلكتروني لإدارة
   القبول في الفترة من 12 ظهر يوم الأربعاء 7 رمضان 1436هـ الموافق 24 يونيو 2015م
   إلى الساعة 6 مساء يوم السبت 10 رمضان 1436هـ الموافق 27 يونيو 2015م.
   
