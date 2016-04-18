@@ -408,8 +408,6 @@ WARNING: TODO: Translate the following paragraph to English!
 - Accuracy and validity of all data entered is under the full responsibility of
   the student.
 
-- Personal data must be entered with precision and secretariat.
-
 - Admission office will receive students’ scores directly from the Ministry of
   Education and the National Center for Measurement and Evaluation (Qiyas).
   
@@ -447,8 +445,6 @@ WARNING: TODO: Translate the following paragraph to English!
 - التأكد من دقة وصحة جميع البيانات المدخلة حيث ان ذلك يقع تحت مسؤولية الطالب
   الكاملة.
   
-- ادخال جميع البيانات الشخصية بكل دقة وأمانة.
-
 - تحصل ادارة القبول على نتائج الطالب في الثانوية و اختبارات القدرات و التحصيلي
   من وزارة التعليم و من المركز الوطني للقياس والتقويم مباشرة.
   
