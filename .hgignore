@@ -7,3 +7,5 @@ docs/4-srs.{html,xml,pdf}
 docs/5-design.{html,xml,pdf}
 
 *.pyc
+secret.txt
+db.sqlite3
