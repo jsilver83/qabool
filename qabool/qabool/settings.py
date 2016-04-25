@@ -15,24 +15,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Generate a SECRET_KEY on first use
-# https://gist.github.com/ndarville/3452907
-try:
-    SECRET_KEY
-except NameError:
-    SECRET_FILE = os.path.join(BASE_DIR, 'secret.txt')
-    try:
-        SECRET_KEY = open(SECRET_FILE).read().strip()
-    except IOError:
-        try:
-            import random
-            SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
-            with open(SECRET_FILE, 'w') as secret:
-                secret.write(SECRET_KEY)
-        except IOError:
-            Exception('Please create a %s file with random characters \
-            to generate your secret key!' % SECRET_FILE)
+# Development SECRET_KEY. Must be overridden in local_settings.py
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'tzb6lrxanv9^ne46ig%u^l16-yzw6*v!s2kn2ien9v)@e21ja+'
 
 DEBUG = True
 

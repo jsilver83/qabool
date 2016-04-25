@@ -1,3 +1,7 @@
+# To generate a secret key:
+# import random, string; SECRET_KEY = ''.join([random.SystemRandom().choice("{}{}{}".format(string.ascii_letters, string.digits, string.punctuation)) for i in range(50)]); print(SECRET_KEY)
+qabool_secret_key: "{{ vault_qabool_secret_key }}"
+
 qabool_database_engine: django.db.backends.postgresql
 qabool_database_name: qabool
 qabool_database_user: qabool
