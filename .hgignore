@@ -9,3 +9,4 @@ docs/5-design.{html,xml,pdf}
 *.pyc
 secret.txt
 db.sqlite3
+local_settings.py

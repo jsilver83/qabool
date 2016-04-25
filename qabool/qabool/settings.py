@@ -134,6 +134,6 @@ STATIC_URL = '/static/'
 
 # Override settings using environment-specific settings, if any
 try:
-    from local_settings import *
+    from qabool.local_settings import *
 except ImportError:
-    pass
+    print('local_settings.py not found')
