@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Qabool</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}  <a href="{% url 'logout' %}">[logout]</a></p>
+    {% else %}
+        <p>Welcome, Guest <a href="{% url 'login' %}">[login]</a></p>
+    {% endif %}
+    <hr/>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>

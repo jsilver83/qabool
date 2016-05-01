@@ -37,8 +37,8 @@ class Student(User):
         null=True,
         limit_choices_to={'show_flag':True},
     )
-    saudi_mother = models.BooleanField()
-    birthday = models.DateField()
+    saudi_mother = models.NullBooleanField()
+    birthday = models.DateField(null=True)
     birthday_ah = models.CharField(max_length=50)
     hs_graduation_year_id = models.ForeignKey(
         'GraduationYear',
@@ -49,9 +49,13 @@ class Student(User):
     mobile = models.CharField(max_length=50)
     guardian_mobile = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
-    kfupm_id = models.PositiveIntegerField(unique=True)
-    updated_on = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey(User, related_name='modified_students')
+    kfupm_id = models.PositiveIntegerField(unique=True, null=True)
+    updated_on = models.DateTimeField(auto_now=True, null=True)
+    updated_by = models.ForeignKey(
+        User,
+        related_name='modified_students',
+        null=True,
+    )
 
     def get_actual_student_status(self):
         return "to be implemented"
