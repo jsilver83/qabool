@@ -4,7 +4,7 @@ from .models import *
 from reversion.admin import VersionAdmin
 # Register your models here.
 
-class StudentAdmin(VersionAdmin):
+class UserAdmin(VersionAdmin):
     list_display = ('first_name', 'username', 'email', 'status_message_id')
 
 class RegistrationStatusMessageAdmin(admin.ModelAdmin):
@@ -18,4 +18,4 @@ admin.site.register(DeniedStudent)
 admin.site.register(GraduationYear)
 admin.site.register(Agreement)
 admin.site.register(AdmissionSemester)
-admin.site.register(Student, StudentAdmin)
+admin.site.register(User, UserAdmin)
