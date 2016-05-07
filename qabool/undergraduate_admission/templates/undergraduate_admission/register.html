@@ -1,0 +1,18 @@
+{% extends 'base-sidebar.html' %}
+{% load i18n %}
+{% load l10n %}
+{% load floppyforms %}
+
+{% block subcontent %}
+<h3>To get started, please set up an account so you can return to the site to work on your application at any time.</h3>
+Already applied for admission? <a href="#"><u>Log in</u></a> to review your application.
+<hr>
+<form action="{% url 'register' %}" method="post" class="form-horizontal">
+    {% csrf_token %}
+    <!--{{ form.as_p }}-->
+    {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+   <hr>
+   <input type="submit" class="btn btn-primary" value="{% trans 'Apply for Admission' %}" />
+</form>
+
+{% endblock subcontent %}

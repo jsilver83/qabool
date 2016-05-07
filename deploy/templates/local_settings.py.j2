@@ -1,0 +1,16 @@
+SECRET_KEY = '{{ qabool_secret_key }}'
+
+DATABASES = {
+    'default': {
+        'ENGINE': '{{ qabool_database_engine }}',
+        'NAME': '{{ qabool_database_name }}',
+        'USER': '{{ qabool_database_user }}',
+        'PASSWORD': '{{ qabool_database_password }}',
+        'HOST': '{{ qabool_database_host }}',
+        'PORT': '{{ qabool_database_port }}',
+    }
+}
+
+DEBUG = {{ qabool_debug }}
+
+ALLOWED_HOSTS = ['{{ inventory_hostname }}']

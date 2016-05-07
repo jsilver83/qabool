@@ -1,0 +1,25 @@
+{% extends "base-sidebar.html" %}
+{% load i18n %}
+{% load l10n %}
+{% load floppyforms %}
+
+{% block subcontent %}
+
+  <button type="button" class="btn btn-primary btn-lg btn-block"><strong>Apply for Admission</strong></button><br>
+
+  <div class="login-or">
+    <hr class="hr-or">
+    <span class="span-or">or</span>
+  </div>
+
+  <h3>Review your Application</h3>
+  Please login below to review your application for admission<br><br>
+
+    <form role="form" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+    <input type="submit" class="btn btn-primary" value="{% trans 'Login' %}" />
+    <input type="hidden" name="next" value="/" />
+    </form>
+
+{% endblock subcontent %}

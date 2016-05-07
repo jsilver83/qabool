@@ -1,0 +1,107 @@
+= Initial Requirements Document for PROJECT-NAME
+FIRST-NAME LAST-NAME <EMAIL>; SECOND-AUTHOR; ...
+VERSION, DATE, VERSION DESCIPTION
+
+include::includes/proprietary-information.adoc[]
+
+== Client Information
+
+. Name, department and contact information of client representatives
+who were contacted to fill-in this document.
+
+. Who will actually sign-off the requirements and overall request?
+
+. Who is the Subject Matter Expert (SME)?
+
+. Who will be the end users?
+
+
+== Client Needs
+
+. What is the actual need of client (i.e. what problem the application will solve)?
+
+
+== Client Requirements
+
+. What are the high-level functional requirements as per the following
+areas:
+
+.. Data
+
+.. Access (from inside/outside KFUPM)
+
+.. Is the process already defined and documented?
+- [ ] Yes
+- [ ] No
+
+.. Security
+
+.. Storage
+
+.. Frequency of usage
+
+.. Expected number of concurrent users
+
+.. Any other requirements
+
+
+== Client Expectations
+
+. What are the client's expectations?
+
+
+== Related Systems and Integrations
+
+. Is the request related to any existing system?
+
+. Is there any specific preference of the client regarding the
+system/application to be used? e.g. e-Business, Banner, or any other
+existing system.
+
+. Will the application/solution involve integration or data exchange
+with other applications?
+
+
+== Constraints
+
+. When does the client need the solution/application to be delivered?
+Mention the expected date.
+
+. Is there any _binding_ deadline for request completion, such as
+already scheduled launch event? If yes, mention the date and event
+name.
+
+. Are there any limitations regarding the environment in which the
+application will be deployed?
+
+. Any other constraints.
+
+
+== Recommendations and Justifications
+
+=== Existing vs. New System
+
+Can the request be satisfied using an existing system or is a new
+system is required?
+
+.Recommendation
+
+- [x] Use an existing satellite system
+- [ ] Use an existing enterprise system
+- [ ] Develop a new solution
+
+.Justification
+
+Justify the above recommendation here.
+
+=== System Recommendations
+
+Would you like to recommend any system at this stage?
+
+.Recommendation
+
+List recommendations here.
+
+.Justification
+
+Justify the recommendations here.

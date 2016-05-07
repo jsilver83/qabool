@@ -1,0 +1,11 @@
+syntax: glob
+
+docs/1-initial-requirements.{html,xml,pdf}
+docs/2-detailed-requirements.{html,xml,pdf}
+docs/3-charter.{html,xml,pdf}
+docs/4-srs.{html,xml,pdf}
+docs/5-design.{html,xml,pdf}
+
+*.pyc
+db.sqlite3
+local_settings.py

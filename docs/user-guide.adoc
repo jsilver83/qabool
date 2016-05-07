@@ -1,0 +1,8 @@
+User Guide
+===============
+Ahmad Khayyat <akhayyat@kfupm.edu.sa>
+v1.0, November 2015: Initial version.
+
+TODO: complete as a template for the user documentation of a
+project. User documentation documents every aspect of how the system
+is intended to be used by its end users, including all user roles.

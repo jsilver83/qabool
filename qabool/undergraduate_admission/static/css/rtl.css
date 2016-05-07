@@ -1,0 +1,29 @@
+/* Global Styles */
+
+@font-face {
+	font-family: 'Hacen Tunisia Lt';
+	src: url('../fonts/Hacen Tunisia Lt.eot');
+	src: local('☺'), url('../fonts/Hacen Tunisia Lt.woff') format('woff'), url('../fonts/Hacen Tunisia Lt.ttf') format('truetype'), url('../fonts/Hacen Tunisia Lt.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+html, body {font-family:'Hacen Tunisia Lt'; height: 100%; direction:rtl; text-align:right;}
+.h4, .h5, .h6, h4, h5, h6 {font-family: 'Hacen Tunisia Lt';}
+h4{line-height:23px;}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {float: right;}
+.col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9 {float: right;}
+.col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {float: right;}
+.nav {list-style: outside none none; margin-bottom: 0; padding-right: 0;}
+.checkbox label, .radio label {cursor: pointer; font-weight: 400; margin-bottom: 0; min-height: 20px; padding-right: 20px;}
+.checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"], .radio input[type="radio"], .radio-inline input[type="radio"] {margin-right: -20px;}
+.form-horizontal .control-label {margin-bottom: 0; padding-top: 7px; text-align: left;}
+.media-left, .media > .pull-left {padding-left: 25px;}
+.ug-logo{float:right;}
+.hdr-pic-ar {left: 0px !important; position: absolute; z-index: 999;}
+@media(max-width:991px) {
+.hdr-pic-ar{display:none;}	
+}
+/* multiple steps */
+.bs-wizard > .bs-wizard-step:first-child > .progress {right: 50%;}
+.progress-bar {float: right;}
+
