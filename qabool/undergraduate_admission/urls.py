@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib.auth.views import login, logout
 
 from . import views
@@ -6,9 +6,10 @@ from . import views
 urlpatterns = [
     url(
         r'^login/$',
-        login,
+        # login,
+        views.index,
         name='login',
-        kwargs={'template_name': 'undergraduate_admission/login.html'}
+        # kwargs={'template_name': 'undergraduate_admission/login.html'}
     ),
     url(
         r'^logout/$',
@@ -17,5 +18,7 @@ urlpatterns = [
         kwargs={'next_page': '/'}
     ),
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
-    url(r'^$', views.IndexView, name='index'),
+    url(r'^studentarea/$', views.student_area, name='student_area'),
+    url(r'^regsitrationsuccess/$', views.registration_success, name='regsitration_success'),
+    url(r'^$', views.index, name='index'),
 ]

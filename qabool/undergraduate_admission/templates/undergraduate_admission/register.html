@@ -1,4 +1,4 @@
-{% extends 'base_sidebar.html' %}
+{% extends 'base-sidebar.html' %}
 {% load i18n %}
 {% load l10n %}
 {% load floppyforms %}
@@ -8,84 +8,11 @@
 Already applied for admission? <a href="#"><u>Log in</u></a> to review your application.
 <hr>
 <form action="{% url 'register' %}" method="post" class="form-horizontal">
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">ID Number *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="ID Number">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Repeat ID Number *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Repeat ID Number">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Password *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Password">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Repeat Password *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Repeat Password">-->
-      <!--</div>-->
-      <!--<small>Your password should be 6-16 characters. </small>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Phone Number *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Phone Number">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Repeat Phone number *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Repeat Phone Number">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Email address *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Email address">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Repeat Email address *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Repeat Email address">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Nationality *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<select class="form-control">-->
-            <!--<option>Nationality</option>-->
-            <!--<option>2</option>-->
-            <!--<option>3</option>-->
-            <!--<option>4</option>-->
-            <!--<option>5</option>-->
-         <!--</select>-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Graduation Year *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Graduation Year">-->
-      <!--</div>-->
-   <!--</div>-->
-   <!--<div class="form-group form-group">-->
-      <!--<label class="col-sm-3 control-label" for="formGroupInput">Type the text *</label>-->
-      <!--<div class="col-sm-5">-->
-         <!--<input class="form-control" type="text" id="formGroupInput" placeholder="Type the text">-->
-      <!--</div>-->
-   <!--</div>-->
     {% csrf_token %}
     <!--{{ form.as_p }}-->
     {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
    <hr>
-   <input type="submit" class="btn btn-primary" value="Apply for Admission" />
+   <input type="submit" class="btn btn-primary" value="{% trans 'Apply for Admission' %}" />
 </form>
 
 {% endblock subcontent %}

@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.utils import translation
 
 class User(AbstractUser):
     semester = models.ForeignKey(
@@ -47,6 +47,9 @@ class User(AbstractUser):
     mobile = models.CharField(null=True, blank=False, max_length=50)
     guardian_mobile = models.CharField(null=True, blank=False, max_length=50)
     phone = models.CharField(null=True, max_length=50)
+    high_school_gpa = models.FloatField(null=True, blank=True)
+    qudrat_score = models.FloatField(null=True, blank=True)
+    tahsili_score = models.FloatField(null=True, blank=True)
     kfupm_id = models.PositiveIntegerField(unique=True, null=True)
     updated_on = models.DateTimeField(auto_now=True, null=True)
     updated_by = models.ForeignKey(
@@ -56,18 +59,18 @@ class User(AbstractUser):
     )
 
     def get_actual_student_status(self):
-        return "to be implemented"
+        return self.status_message
 
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
         self._meta.get_field('username').verbose_name = 'Government ID'
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name + ' (' + self.username + ')'
+        return self.first_name + ' ' + self.last_name #+ ' (' + self.username + ')'
 
     class Meta:
-        verbose_name = "student"
-        verbose_name_plural = "students"
+        verbose_name = "user"
+        verbose_name_plural = "users"
 
 
 class AdmissionSemester(models.Model):
@@ -76,6 +79,9 @@ class AdmissionSemester(models.Model):
     phase1_end_date = models.DateTimeField(null=True)
     phase2_start_date = models.DateTimeField(null=True)
     phase2_end_date = models.DateTimeField(null=True)
+    high_school_gpa_weight = models.FloatField(null=True, blank=False)
+    qudrat_score_weight = models.FloatField(null=True, blank=False)
+    tahsili_score_weight = models.FloatField(null=True, blank=False)
 
     def __str__(self):
         return self.semester_name
@@ -106,7 +112,7 @@ class RegistrationStatusMessage(models.Model):
     )
 
     def __str__(self):
-        return self.status.status_ar + " " + self.status_message_ar
+        return self.status.status_ar + " -  " + self.status_message_ar
 
 
 class City(models.Model):
@@ -167,7 +173,7 @@ class GraduationYear(models.Model):
         ordering=['-display_order']
 
     def __str__(self):
-        return self.graduation_year_ar
+        return self.graduation_year_ar + ' (' + self.graduation_year_en + ')'
 
 
 class Nationality(models.Model):
@@ -176,14 +182,22 @@ class Nationality(models.Model):
     show_flag = models.BooleanField()
     display_order = models.PositiveSmallIntegerField()
 
+    @property
+    def nationality(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.nationality_ar
+        else:
+            return self.nationality_en
+
     def __str__(self):
-        return self.nationality_ar
+        return self.nationality
 
     class Meta:
         ordering=['-display_order']
         verbose_name_plural = 'nationalities'
 
-# TODO:Agreement(header and footer) and Agreement Items
+
 class Agreement(models.Model):
     semester = models.ForeignKey(
         'AdmissionSemester',
@@ -191,16 +205,32 @@ class Agreement(models.Model):
         blank=False,
         null=True,
     )
-    agreement_type = models.CharField(max_length=100)
+    agreement_type = models.CharField(max_length=100, null=True, blank=False)
+    agreement_header_ar = models.TextField(max_length=2000, null=True, blank=True)
+    agreement_header_en = models.TextField(max_length=2000, null=True, blank=True)
+    agreement_footer_ar = models.TextField(max_length=2000, null=True, blank=True)
+    agreement_footer_en = models.TextField(max_length=2000, null=True, blank=True)
+
+    def __str__(self):
+        return self.agreement_type
+
+
+class AgreementItem(models.Model):
+    semester = models.ForeignKey(
+        'Agreement',
+        on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+    )
     agreement_text_ar = models.CharField(max_length=2000)
     agreement_text_en = models.CharField(max_length=2000)
     show_flag = models.BooleanField()
     display_order = models.PositiveSmallIntegerField()
     updated_on = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey(User, related_name='agreements_modified')
+    updated_by = models.ForeignKey(User, related_name='agreements_modified', null=True, blank=True)
 
     def __str__(self):
         return self.agreement_text_en
 
     class Meta:
-        ordering=['-display_order']
+        ordering=['semester', '-display_order']
