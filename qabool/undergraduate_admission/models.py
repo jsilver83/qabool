@@ -97,8 +97,16 @@ class RegistrationStatus(models.Model):
     status_ar = models.CharField(max_length=50)
     status_en = models.CharField(max_length=50)
 
+    @property
+    def registration_status(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.status_ar
+        else:
+            return self.status_en
+
     def __str__(self):
-        return self.status_ar
+        return self.registration_status
 
 
 class RegistrationStatusMessage(models.Model):
@@ -111,8 +119,16 @@ class RegistrationStatusMessage(models.Model):
         null=True,
     )
 
+    @property
+    def registration_status_message(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.status_message_ar
+        else:
+            return self.status_message_en
+
     def __str__(self):
-        return self.status.status_ar + " -  " + self.status_message_ar
+        return self.status.registration_status + ". " + self.registration_status_message
 
 
 class City(models.Model):
@@ -121,8 +137,16 @@ class City(models.Model):
     show_flag = models.BooleanField()
     display_order = models.PositiveSmallIntegerField()
 
+    @property
+    def city(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.city_name_ar
+        else:
+            return self.city_name_en
+
     def __str__(self):
-        return self.city_name_ar
+        return self.city
 
     class Meta:
         ordering=['-display_order']
@@ -172,8 +196,16 @@ class GraduationYear(models.Model):
     class Meta:
         ordering=['-display_order']
 
+    @property
+    def graduation_year(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.graduation_year_ar
+        else:
+            return self.graduation_year_en
+
     def __str__(self):
-        return self.graduation_year_ar + ' (' + self.graduation_year_en + ')'
+        return self.graduation_year
 
 
 class Nationality(models.Model):
@@ -211,16 +243,33 @@ class Agreement(models.Model):
     agreement_footer_ar = models.TextField(max_length=2000, null=True, blank=True)
     agreement_footer_en = models.TextField(max_length=2000, null=True, blank=True)
 
+    @property
+    def agreement_header(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.agreement_header_ar
+        else:
+            return self.agreement_header_en
+
+    @property
+    def agreement_footer(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.agreement_footer_ar
+        else:
+            return self.agreement_footer_en
+
     def __str__(self):
-        return self.agreement_type
+        return self.agreement_header
 
 
 class AgreementItem(models.Model):
-    semester = models.ForeignKey(
+    agreement = models.ForeignKey(
         'Agreement',
         on_delete=models.CASCADE,
         blank=False,
         null=True,
+        related_name = 'items',
     )
     agreement_text_ar = models.CharField(max_length=2000)
     agreement_text_en = models.CharField(max_length=2000)
@@ -229,8 +278,16 @@ class AgreementItem(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey(User, related_name='agreements_modified', null=True, blank=True)
 
+    @property
+    def agreement_item(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.agreement_text_ar
+        else:
+            return self.agreement_text_en
+
     def __str__(self):
-        return self.agreement_text_en
+        return self.agreement_item
 
     class Meta:
-        ordering=['semester', '-display_order']
+        ordering=['agreement', '-display_order']

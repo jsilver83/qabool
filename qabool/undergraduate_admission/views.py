@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login, authenticate
 
-from .models import User, RegistrationStatusMessage, AdmissionSemester
+from .models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
 from .forms import RegistrationForm, MyAuthenticationForm
 
 
@@ -32,12 +32,26 @@ def index(request, template_name='undergraduate_admission/login.html'):
     return render(request, 'undergraduate_admission/login.html', {'form': form})
 
 
+def initial_agreement(request):
+    if request.method == 'POST':
+        request.session['agreed'] = True
+        return redirect(reverse('register'))
+
+    agreement = get_object_or_404(Agreement, agreement_type='INITIAL')
+    return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement})
+
+
 class RegisterView(CreateView):
     model = User
     context_object_name = "user"
     template_name = 'undergraduate_admission/register.html'
     # success_url = reverse_lazy("login")
     form_class = RegistrationForm
+
+    # def get(self, request):request
+    #     agreed = request.session.get('agreed')
+    #     if agreed is None:
+    #         return redirect(reverse('initial_agreement'))
 
     def form_valid(self, form):
         regMsg = RegistrationStatusMessage.objects.get(pk=1) #for status 1 'application submitted'

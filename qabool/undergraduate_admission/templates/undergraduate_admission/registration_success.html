@@ -1,29 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'base-sidebar.html' %}
 {% load i18n %}
 {% load l10n %}
 
-{% block content %}
- <div class="container">
-    <div class="row">
-       <div class="col-lg-12">
-            <div class="panel panel-default bg-grey">
-               <div class="panel-body">
-                  <div class="row">
-                     <!--<div class="col-lg-2">-->
-                        <!--<img src="http://placehold.it/170x180">-->
-                     <!--</div>-->
-                     <div class="col-lg-8">
-                        <h4>{{ user }}</h4>
-                        <strong>Registration ID:</strong> {{ user.id }}<br>
-                        <strong>Government ID:</strong> {{ user.username }}<br>
-                        <strong>Application Status:</strong>
-                         <span class="text-info">{{ user.get_actual_student_status }}</span>
-                        <hr>
-                     </div>
-                  </div>
-               </div>
-            </div>
-       </div>
+{% block subcontent %}
+<div class="panel panel-default bg-grey">
+   <div class="panel-body">
+      <div class="row">
+         <!--<div class="col-lg-2">-->
+            <!--<img src="http://placehold.it/170x180">-->
+         <!--</div>-->
+         <div class="col-lg-12">
+            <h4>{{ user }}</h4>
+            <strong>{% trans 'Registration ID' %}:</strong> {{ user.id }}<br>
+            <strong>{% trans 'Government ID' %}:</strong> {{ user.username }}<br>
+             <strong>{% trans 'Mobile' %}:</strong> {{ user.username }}<br>
+            <strong>{% trans 'Application Status' %}:</strong>
+             <span class="text-info">{{ user.get_actual_student_status }}</span>
+            <hr>
+         </div>
+      </div>
    </div>
 </div>
-{% endblock content %}
+{% endblock subcontent %}

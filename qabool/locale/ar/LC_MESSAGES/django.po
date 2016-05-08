@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 17:04+0300\n"
+"POT-Creation-Date: 2016-05-08 16:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,68 +27,111 @@ msgstr "اﻻنجليزية"
 msgid "Arabic"
 msgstr "العربية"
 
-#: undergraduate_admission/forms.py:13
+#: undergraduate_admission/forms.py:25
 msgid "The two email fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms.py:14
+#: undergraduate_admission/forms.py:26
 msgid "The two government ID fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms.py:15
+#: undergraduate_admission/forms.py:27
 msgid "The two mobile fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms.py:16
+#: undergraduate_admission/forms.py:28
 msgid "You have been denied from applying for the following reason(s): "
 msgstr ""
 
-#: undergraduate_admission/forms.py:17
+#: undergraduate_admission/forms.py:29
 msgid ""
 "The Email entered is associated with another applicant. Please use a "
 "different Email"
 msgstr ""
 
-#: undergraduate_admission/forms.py:22
+#: undergraduate_admission/forms.py:34
 #, fuzzy
 #| msgid "Email Address"
 msgid "Email Address Confirmation"
 msgstr "البريد الالكتروني"
 
-#: undergraduate_admission/forms.py:24
+#: undergraduate_admission/forms.py:36
 msgid "Enter the same email address as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms.py:28
+#: undergraduate_admission/forms.py:40
 #, fuzzy
 #| msgid "Government ID"
 msgid "Government ID Confirmation"
 msgstr "رقم الهوية أو اﻹقامة"
 
-#: undergraduate_admission/forms.py:30
+#: undergraduate_admission/forms.py:42
 msgid "Enter the same government ID as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms.py:34
+#: undergraduate_admission/forms.py:46
 msgid "Mobile Confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms.py:37
+#: undergraduate_admission/forms.py:49
 msgid "Enter the same mobile number as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms.py:47
+#: undergraduate_admission/forms.py:59
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:15
 msgid "Government ID"
 msgstr "رقم الهوية أو اﻹقامة"
 
-#: undergraduate_admission/forms.py:60
+#: undergraduate_admission/forms.py:76
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr ""
 
-#: undergraduate_admission/forms.py:61
+#: undergraduate_admission/forms.py:86
 msgid "Minimum length is 8. Use both numbers and characters."
+msgstr ""
+
+#: undergraduate_admission/templates/base-sidebar.html:7
+msgid ""
+"\n"
+"           <h4>FAQs</h4>\n"
+"          - <a href=\"#\">Should I take the SAT Subject test?</a><br>\n"
+"          - <a href=\"#\">What about additional evaluators?</a><br>\n"
+"          - <a href=\"#\">What are the guidelines for home-schooled "
+"applicants?</a><br><br>\n"
+"          <i class=\"fa fa-arrow-circle-right\"></i> <a href=\"#\">Read "
+"more</a>\n"
+"          <br><br>\n"
+"          <h4>Need Help?</h4>\n"
+"          Call Admissions Office<br>\n"
+"          <strong>Phone:</strong> +966 (13) 860 2901<br>\n"
+"          <strong>Fax:</strong> +966 (13) 860 2722<br>\n"
+"          <strong>Email:</strong> <a href=\"mailto:admissions@kfupm.edu.sa"
+"\">admissions@kfupm.edu.sa</a><br>\n"
+"          <strong>Website:</strong> <a href=\"http://www.kfupm.edu.sa/"
+"admissions\">www.kfupm.edu.sa/admissions</a>\n"
+"           "
 msgstr ""
 
 #: undergraduate_admission/templates/base.html:20
 msgid "<!--replalce with lang.css-->"
 msgstr "<link href='/static/css/rtl.css' rel='stylesheet'>"
+
+#: undergraduate_admission/templates/undergraduate_admission/login.html:21
+msgid "Login"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/register.html:15
+msgid "Apply for Admission"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:14
+msgid "Registration ID"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:16
+msgid "Mobile"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:17
+msgid "Application Status"
+msgstr ""

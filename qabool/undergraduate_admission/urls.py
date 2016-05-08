@@ -20,5 +20,6 @@ urlpatterns = [
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
     url(r'^studentarea/$', views.student_area, name='student_area'),
     url(r'^regsitrationsuccess/$', views.registration_success, name='regsitration_success'),
+    url(r'^initialagreement/$', views.initial_agreement, name='initial_agreement'),
     url(r'^$', views.index, name='index'),
 ]

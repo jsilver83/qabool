@@ -1,0 +1,11 @@
+{% extends 'base-sidebar.html' %}
+
+{% block subcontent %}
+{{ agreement.agreement_header }}
+<br>
+<ul>
+    {% for agree in agreement.items.all %}
+    <li>{{ agree }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
