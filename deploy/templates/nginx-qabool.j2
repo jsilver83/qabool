@@ -1,0 +1,23 @@
+server {
+    # create a hostname for the virtual host.
+    server_name {{ inventory_hostname }};
+    charset     utf-8;
+
+    # (optional)
+    access_log /var/log/nginx/qabool-access.log;
+    error_log /var/log/nginx/qabool-error.log;
+
+    # max upload size
+    #client_max_body_size 75M;
+
+    # serve up the static assests via nginx and not python.
+    location /static {
+        alias {{ static_files_dir }};
+    }
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/run/uwsgi/app/qabool/socket;
+    }
+}
+
