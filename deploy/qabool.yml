@@ -1,5 +1,7 @@
 - name: Deploy Qabool
   hosts: qabool
+  become: yes
+  become_user: root
 
   vars:
     install_dir: /opt/qabool
@@ -16,6 +18,7 @@
         - python3-virtualenv
         - virtualenvwrapper
         - gettext
+        - nginx-full
 
     - name: Create appilcation user
       user: name=qabool system=yes
@@ -24,7 +27,11 @@
       hg:
         repo: http://hg.itc.kfupm.edu.sa/apps/qabool
         dest: "{{ install_dir }}"
-        revision: stable
+        #revision: stable
+
+    - name: Set file permissions
+      file:
+        path: "{{ install_dir }}"
         owner: root
         group: qabool
         mode: 0640
