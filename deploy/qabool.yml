@@ -20,6 +20,8 @@
         - virtualenvwrapper
         - gettext
         - nginx-full
+        - uwsgi
+        - uwsgi-plugin-python3
 
     - name: Create appilcation user
       user: name=qabool system=yes
@@ -71,10 +73,63 @@
         path: "{{ static_files_dir }}"
         state: directory
         owner: root
-        group: qabool
+        group: www-data
         mode: "u=rwX,g=rX,o="
 
     - name: Collect static assets
       command: "{{ venv_dir }}/bin/python manage.py collectstatic --no-input"
       args:
         chdir: "{{ install_dir }}/qabool"
+
+    - name: Configure app server (uwsgi)
+      template:
+        src: uwsgi-qabool.ini.j2
+        dest: /etc/uwsgi/apps-available/qabool.ini
+        owner: root
+        group: root
+        mode: 0644
+      notify: Reload app server (uwsgi)
+
+    - name: Enable app server configuration
+      file:
+        src: /etc/uwsgi/apps-available/qabool.ini
+        dest: /etc/uwsgi/apps-enabled/qabool.ini
+        state: link
+        owner: root
+        group: root
+      notify: Reload app server (uwsgi)
+
+    - name: Start app server (uwsgi)
+      service: name=uwsgi state=started
+
+    - name: Configure webserver
+      template:
+        src: nginx-qabool.j2
+        dest: /etc/nginx/sites-available/qabool
+        owner: root
+        group: root
+        mode: 0644
+      notify: Reload webserver
+
+    - name: Enable webserver configuration
+      file:
+        src: /etc/nginx/sites-available/qabool
+        dest: /etc/nginx/sites-enabled/qabool
+        state: link
+        owner: root
+        group: root
+      notify: Reload webserver
+
+    - name: Disable default webserver site
+      file: path=/etc/nginx/sites-enabled/default state=absent
+      notify: Reload webserver
+
+    - name: Start webserver
+      service: name=nginx state=started
+
+  handlers:
+    - name: Reload app server (uwsgi)
+      service: name=uwsgi state=restarted
+
+    - name: Reload webserver
+      service: name=nginx state=reloaded
