@@ -135,7 +135,7 @@ class City(models.Model):
     city_name_ar = models.CharField(max_length=100)
     city_name_en = models.CharField(max_length=100)
     show_flag = models.BooleanField()
-    display_order = models.PositiveSmallIntegerField()
+    display_order = models.PositiveSmallIntegerField(null=True)
 
     @property
     def city(self):
@@ -191,7 +191,7 @@ class GraduationYear(models.Model):
     graduation_year_ar = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     show_flag = models.BooleanField()
-    display_order = models.PositiveSmallIntegerField()
+    display_order = models.PositiveSmallIntegerField(null=True)
 
     class Meta:
         ordering=['-display_order']
@@ -212,7 +212,7 @@ class Nationality(models.Model):
     nationality_ar = models.CharField(max_length=50)
     nationality_en = models.CharField(max_length=50)
     show_flag = models.BooleanField()
-    display_order = models.PositiveSmallIntegerField()
+    display_order = models.PositiveSmallIntegerField(null=True)
 
     @property
     def nationality(self):
@@ -226,7 +226,7 @@ class Nationality(models.Model):
         return self.nationality
 
     class Meta:
-        ordering=['-display_order']
+        ordering=['display_order', 'nationality_en']
         verbose_name_plural = 'nationalities'
 
 
@@ -274,7 +274,7 @@ class AgreementItem(models.Model):
     agreement_text_ar = models.CharField(max_length=2000)
     agreement_text_en = models.CharField(max_length=2000)
     show_flag = models.BooleanField()
-    display_order = models.PositiveSmallIntegerField()
+    display_order = models.PositiveSmallIntegerField(null=True)
     updated_on = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey(User, related_name='agreements_modified', null=True, blank=True)
 
