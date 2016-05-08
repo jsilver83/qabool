@@ -9,3 +9,4 @@ docs/5-design.{html,xml,pdf}
 *.pyc
 db.sqlite3
 local_settings.py
+qabool/locale/ar/LC_MESSAGES/django.mo

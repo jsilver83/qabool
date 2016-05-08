@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     'undergraduate_admission',
     'reversion',
     'captcha',
-    'floppyforms_bootstrap3',
     'floppyforms',
 
     'django.contrib.admin',
@@ -138,7 +137,6 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'undergraduate_admission.User'
 
-RECAPTCHA_PUBLIC_KEY = ''
 NOCAPTCHA = True
 RECAPTCHA_USE_SSL = True
 
