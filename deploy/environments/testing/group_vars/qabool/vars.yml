@@ -10,3 +10,6 @@ qabool_database_host: postgres.test.kfupm.edu.sa
 qabool_database_port': 5432
 
 qabool_debug: False
+
+qabool_recaptcha_public_key: 6LfFoR4TAAAAAG5sUY388qie8DvVgUvFS211Spt-
+qabool_recaptcha_private_key: "{{ vault_qabool_recaptcha_private_key }}"

@@ -1,5 +1,10 @@
 - name: Deploy Qabool
-  hosts: qabool.kfupm.edu.sa
+  hosts: qabool
+
+  vars:
+    install_dir: /opt/qabool
+    venv_dir: /opt/qabool_venv
+
   tasks:
     - name: Install required software packages
       apt: pkg="{{ item }}" state=installed
@@ -10,6 +15,7 @@
         - python3-dev
         - python3-virtualenv
         - virtualenvwrapper
+        - gettext
 
     - name: Create appilcation user
       user: name=qabool system=yes
@@ -17,20 +23,37 @@
     - name: Get the application code
       hg:
         repo: http://hg.itc.kfupm.edu.sa/apps/qabool
-        dest: /opt/qabool
-        force: yes
+        dest: "{{ install_dir }}"
         revision: stable
+        owner: root
+        group: qabool
+        mode: 0640
 
     - name: Create virtualenv
       pip:
-        virtualenv: /opt/qabool_venv
+        virtualenv: "{{ venv_dir }}"
         virtualenv_python: python3
-        requirements: /opt/qabool/qabool/requirements.txt
+        requirements: "{{ install_dir }}/qabool/requirements.txt"
 
     - name: Configure application
       template:
         src: local_settings.py.j2
-        dest: /opt/qabool/qabool/qabool/local_settings.py
+        dest: "{{ install_dir }}/qabool/qabool/local_settings.py"
         owner: root
         group: qabool
         mode: 0640
+
+    - name: Migrate database
+      command: "{{ venv_dir }}/bin/python manage.py migrate"
+      args:
+        chdir: "{{ install_dir }}/qabool"
+
+    - name: Compile translation messages
+      command: "{{ venv_dir }}/bin/python manage.py compilemessages --locale ar"
+      args:
+        chdir: "{{ install_dir }}/qabool"
+
+    - name: Load initial data (fixtures)
+      command: "{{ venv_dir }}/bin/python manage.py loaddata initial-data.json"
+      args:
+        chdir: "{{ install_dir }}/qabool"
