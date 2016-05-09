@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import translation
 
+
 class User(AbstractUser):
     semester = models.ForeignKey(
         'AdmissionSemester',
@@ -169,7 +170,7 @@ class DeniedStudent(models.Model):
     trials_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.student_name + ' ' + self.government_id
+        return self.student_name + ' (' + self.government_id + ')'
 
     @staticmethod
     def check_if_student_is_denied(govid):
@@ -184,6 +185,16 @@ class DeniedStudent(models.Model):
             denied.save()
 
             return denied.message
+
+
+class DistinguishedStudent(models.Model):
+    government_id = models.CharField(max_length=12)
+    student_name = models.CharField(max_length=400)
+    city = models.CharField(max_length=400)
+    attended = models.NullBooleanField()
+
+    def __str__(self):
+        return self.student_name + ' (' + self.government_id + ')'
 
 
 class GraduationYear(models.Model):
@@ -236,6 +247,7 @@ class Agreement(models.Model):
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
+        related_name='agreement'
     )
     agreement_type = models.CharField(max_length=100, null=True, blank=False)
     agreement_header_ar = models.TextField(max_length=2000, null=True, blank=True)
