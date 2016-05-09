@@ -21,162 +21,92 @@ msgstr ""
 
 #: qabool/settings.py:125
 msgid "English"
-msgstr ""
+msgstr "انجليزي"
 
 #: qabool/settings.py:126
 msgid "Arabic"
-msgstr ""
+msgstr "عربي"
 
 #: undergraduate_admission/forms.py:19 undergraduate_admission/forms.py:89
 msgid "Captcha"
-msgstr ""
+msgstr "رمز التحقق"
 
 #: undergraduate_admission/forms.py:25
 msgid "The two email fields didn't match."
-msgstr ""
+msgstr "حقل البريد الالكتروني غير متطابق."
 
 #: undergraduate_admission/forms.py:26
 msgid "The two government ID fields didn't match."
-msgstr ""
+msgstr "حقل الهوية الوطنية أو الإقامة غير متطابق."
 
 #: undergraduate_admission/forms.py:27
 msgid "The two mobile fields didn't match."
-msgstr ""
+msgstr "حقل رقم الجوال غير متطابق"
 
 #: undergraduate_admission/forms.py:28
 msgid "You have been denied from applying for the following reason(s): "
-msgstr ""
+msgstr "لقد تم حرمانك من التسجيل في الجامعة للأسباب التالية:"
 
 #: undergraduate_admission/forms.py:29
 msgid ""
 "The Email entered is associated with another applicant. Please use a "
 "different Email"
-msgstr ""
+msgstr "لقد تم استخدام البريد الإلكتروني من قبل طالب آخر. الرجاء إدخال بريد إلكتروني جديد"
 
 #: undergraduate_admission/forms.py:36
 msgid "Email Address Confirmation"
-msgstr ""
+msgstr "تأكيد عنوان البريد الإلكتروني"
 
 #: undergraduate_admission/forms.py:38
 msgid "Enter the same email address as before, for verification"
-msgstr ""
+msgstr "إعادة إدخال البريد الإلكتروني وذلك للتحقق"
 
 #: undergraduate_admission/forms.py:42
 msgid "Government ID Confirmation"
-msgstr ""
+msgstr "تأكيد الهوية الوطنية أو الإقامة"
 
 #: undergraduate_admission/forms.py:44
 msgid "Enter the same government ID as before, for verification"
-msgstr ""
+msgstr "إعادة إدخال الهوية الوطنية أو الإقامة وذلك للتحقق"
 
 #: undergraduate_admission/forms.py:48
 msgid "Mobile Confirmation"
-msgstr ""
+msgstr "تأكيد رقم الجوال"
 
 #: undergraduate_admission/forms.py:51
 msgid "Enter the same mobile number as before, for verification"
-msgstr ""
+msgstr "إعادة إدخال رقم الجوال وذلك للتحقق"
 
 #: undergraduate_admission/forms.py:61
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:21
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:18
 msgid "Government ID"
-msgstr ""
+msgstr "الهوية الوطنية أو الإقامة"
 
 #: undergraduate_admission/forms.py:78
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
-msgstr ""
+msgstr "رقم الهوية الوطنية للسعوديين ، ورقم الإقامة لغير السعوديين."
 
 #: undergraduate_admission/forms.py:86
 msgid "Minimum length is 8. Use both numbers and characters."
-msgstr ""
-
-#: undergraduate_admission/templates/base-sidebar.html:8
-msgid ""
-"\n"
-"\t\t\t<div class=\"media\">\n"
-"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-calendar fa-2x\"></i></"
-"div>\n"
-"\t\t\t\t<div class=\"media-body\">\n"
-"\t\t\t\t\t<h4 class=\"media-heading text-uppercase\"><strong>Important "
-"Dates</strong></h4>\n"
-"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> "
-"<strong>Registration:</strong> 01 May 2016\n"
-"\t\t\t\t\tto 10 May 2016<br>\n"
-"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <strong>Results:"
-"</strong> 10 May 2016 to\n"
-"\t\t\t\t\t20 May 2016<br>\n"
-"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> "
-"<strong>Admission Confirmation:</strong>\n"
-"\t\t\t\t\t20 May 2016 to 25 May 2016<br>\n"
-"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <strong>Print "
-"Admission letter:</strong>\n"
-"\t\t\t\t\t29 May 2016\n"
-"\t\t\t\t</div>\n"
-"\t\t\t</div>\n"
-"\t\t\t<div class=\"media\">\n"
-"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-question-circle fa-2x\"></"
-"i></div>\n"
-"\t\t\t\t<div class=\"media-body\">\n"
-"\t\t\t\t\t<h4 class=\"media-heading\"><strong>FAQs</strong></h4>\n"
-"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <a href=\"#"
-"\">Should I take the SAT Subject\n"
-"\t\t\t\t\ttest?</a><br>\n"
-"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <a href=\"#"
-"\">What about additional\n"
-"\t\t\t\t\tevaluators?</a><br>\n"
-"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <a href=\"#"
-"\">What are the guidelines for\n"
-"\t\t\t\t\thome-schooled applicants?</a><br><br>\n"
-"\t\t\t\t\t<i class=\"fa fa-bars\"></i> <a href=\"#\">Read more</a>\n"
-"\t\t\t\t</div>\n"
-"\t\t\t</div>\n"
-"\t\t\t<div class=\"media\">\n"
-"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-info-circle fa-2x\"></i></"
-"div>\n"
-"\t\t\t\t<div class=\"media-body\">\n"
-"\t\t\t\t\t<h4 class=\"media-heading text-uppercase\"><strong>Need Help?</"
-"strong></h4>\n"
-"\t\t\t\t\tCall Admissions Office<br>\n"
-"\t\t\t\t\t<strong>Phone:</strong> +966 (13) 860 2901<br>\n"
-"\t\t\t\t\t<strong>Fax:</strong> +966 (13) 860 2722<br>\n"
-"\t\t\t\t\t<strong>Email:</strong> <a href=\"mailto:admissions@kfupm.edu.sa"
-"\">admissions@kfupm.edu.sa</a><br>\n"
-"\t\t\t\t\t<strong>Website:</strong> <a\n"
-"\t\t\t\t\t\thref=\"http://www.kfupm.edu.sa/admissions\">www.kfupm.edu.sa/"
-"admissions</a>\n"
-"\t\t\t\t</div>\n"
-"\t\t\t</div>\n"
-"\t\t\t"
-msgstr ""
-
-#: undergraduate_admission/templates/base.html:71
-msgid ""
-"\n"
-"\t\t\t\t&copy; Undergraduate Admissions, King Fahd University of Petroleum "
-"&amp; Minerals<br>\n"
-"\t\t\t\tDhahran, 31261 | Saudi Arabia | +966 (13) 860 2901<br>\n"
-"\t\t\t\t<a href=\"http://admin.kfupm.edu.sa/\">adm.kfupm.edu.sa</a>\n"
-"\t\t\t\t<br><br>\n"
-"\t\t\t\t"
-msgstr ""
+msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
 
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:17
 msgid "I have read all of the above terms and conditions for applying to KFUPM"
-msgstr ""
+msgstr "لقد تم قراءة جميع الإقرارات وشروط التسجيل في جامعة الملك فهد للبترول والمعادن"
 
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:22
 msgid "I accep all the above terms and conditions"
-msgstr ""
+msgstr "أوافق على جميع الشروط و الأحكام أعلاه."
 
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:25
 msgid "I agree"
-msgstr ""
+msgstr "موافق"
 
 #: undergraduate_admission/templates/undergraduate_admission/login.html:7
 #: undergraduate_admission/templates/undergraduate_admission/register.html:15
 msgid "Apply for Admission"
-msgstr ""
+msgstr "تقديم طلب تسجيل"
 
 #: undergraduate_admission/templates/undergraduate_admission/login.html:15
 msgid ""
@@ -184,10 +114,12 @@ msgid ""
 "<h3>Review your Application</h3>\n"
 "Please login below to review your application for admission<br><br>\n"
 msgstr ""
+"\n"
+"<h3>مراجعة حالة الطلب</h3>\nالرجاء الدخول لمراجعة طلبك<br><br>\n"
 
 #: undergraduate_admission/templates/undergraduate_admission/login.html:23
 msgid "Login"
-msgstr ""
+msgstr "الدخول"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:6
 msgid ""
@@ -199,20 +131,25 @@ msgid ""
 "to login to the system to check your application status regularly</p>\n"
 "</div>\n"
 msgstr ""
+"\n"
+"<div class=\"alert alert-success\" role=\"alert\">\n"
+"\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> نجاح</h4>\n"
+"\t<p>لقد تم إرسال طلبك بنجاح ، الرجاء مراجعة الرابط أدناه.  للدخول على النظام لمراجعة حالة الطلب بشكل دوري</p>\n"
+"</div>\n"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:20
 msgid "Application ID"
-msgstr ""
+msgstr "رمز الطلب"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:22
 msgid "Mobile"
-msgstr ""
+msgstr "رقم الجوال"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:23
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:19
 msgid "Application Status"
-msgstr ""
+msgstr "حالة الطلب"
 
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:17
 msgid "Registration ID"
-msgstr ""
+msgstr "رمز التسجيل"
