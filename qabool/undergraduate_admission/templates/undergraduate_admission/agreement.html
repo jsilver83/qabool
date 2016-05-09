@@ -1,11 +1,27 @@
 {% extends 'base-sidebar.html' %}
+{% load i18n %}
 
 {% block subcontent %}
 {{ agreement.agreement_header }}
-<br>
+<br><br>
 <ul>
-    {% for agree in agreement.items.all %}
-    <li>{{ agree }}</li>
-    {% endfor %}
+	{% for item in items %}
+	<li>{{ item|safe }}</li>
+	{% endfor %}
 </ul>
-{% endblock %}
+
+<form method="post">
+	{% csrf_token %}
+	<div class="checkbox">
+		<label>
+			<input type="checkbox"> {% trans 'I have read all of the above terms and conditions for applying to KFUPM' %}
+		</label>
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox"> {% trans 'I accep all the above terms and conditions' %}
+		</label>
+	</div>
+	<input type="submit" class="btn btn-primary" value="{% trans 'I agree' %}"/>
+</form>
+{% endblock subcontent %}

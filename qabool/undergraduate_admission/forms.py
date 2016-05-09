@@ -1,5 +1,6 @@
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.utils import translation
 
 from captcha.fields import ReCaptchaField
 import floppyforms.__future__ as forms
@@ -11,12 +12,11 @@ class MyAuthenticationForm(AuthenticationForm):
     captcha = ReCaptchaField()
 
     def __init__(self, *args, **kwargs):
-        lang = kwargs.pop('lang')
+        # lang = kwargs.pop('lang')
         super(MyAuthenticationForm, self).__init__(self, *args, **kwargs)
-        # self.fields['captcha'].attrs = {'lang':'en'} #DIDN'T WORK
-        self.fields['captcha'] = ReCaptchaField(label='', attrs={'lang': lang})
         self.fields['username'].widget = forms.TextInput(attrs = {'required': ''})
         self.fields['password'].widget = forms.PasswordInput(attrs = {'required': ''})
+        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
 
 class RegistrationForm(UserCreationForm):
@@ -29,7 +29,9 @@ class RegistrationForm(UserCreationForm):
             'email_not_unique': _("The Email entered is associated with another applicant. Please use a different Email"),
         }
     )
-    # captcha = ReCaptchaField()
+
+    captcha = ReCaptchaField()
+
     email2 = forms.EmailField(
         label=_('Email Address Confirmation'),
         required=True,
@@ -74,19 +76,17 @@ class RegistrationForm(UserCreationForm):
 
         help_texts = {
             'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),
-            # 'password1': _('Minimum length is 8. Use both numbers and characters.')
         }
         # initial = {'username': _('Government ID')}
 
     def __init__(self, *args, **kwargs):
-        # lang = kwargs.pop('lang')
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
         self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
         self.fields['password1'].widget = forms.PasswordInput(attrs = {'required':''})
         self.fields['password2'].widget = forms.PasswordInput(attrs = {'required':''})
-        # self.fields['captcha'] = ReCaptchaField(label='', attrs={'lang': lang})
+        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
     def clean_data(self):
         super(RegistrationForm, self).clean_data(self)

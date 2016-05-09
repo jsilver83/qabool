@@ -4,22 +4,24 @@
 {% load floppyforms %}
 
 {% block subcontent %}
+<a href="{% url 'register' %}" class="btn btn-primary btn-lg btn-block"><strong>{% trans 'Apply for Admission' %}</strong></a>
+<br>
 
-  <a href="{% url 'register' %}" class="btn btn-primary btn-lg btn-block"><strong>Apply for Admission</strong></a><br>
+<div class="login-or">
+	<hr class="hr-or">
+	<span class="span-or">or</span>
+</div>
 
-  <div class="login-or">
-    <hr class="hr-or">
-    <span class="span-or">or</span>
-  </div>
+{% blocktrans %}
+<h3>Review your Application</h3>
+Please login below to review your application for admission<br><br>
+{% endblocktrans %}
 
-  <h3>Review your Application</h3>
-  Please login below to review your application for admission<br><br>
-
-    <form role="form" method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-    <input type="submit" class="btn btn-primary" value="{% trans 'Login' %}" />
-    <input type="hidden" name="next" value="/" />
-    </form>
+<form role="form" method="post" action="{% url 'login' %}">
+	{% csrf_token %}
+	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	<input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>
+	<input type="hidden" name="next" value="/"/>
+</form>
 
 {% endblock subcontent %}

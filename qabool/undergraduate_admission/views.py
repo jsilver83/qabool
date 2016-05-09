@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.views.generic.edit import CreateView
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login, authenticate
 
@@ -16,18 +16,18 @@ def index(request, template_name='undergraduate_admission/login.html'):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
-            # if user.is_active:
+            if user.is_active:
                 login(request, user)
 
                 if user.is_superuser:
                     return redirect('/admin')
                 else:
-                    return redirect('student_area')
+                    return redirect(reverse('student_area'))
 
         else:
-            form = MyAuthenticationForm(request.POST, lang=request.LANGUAGE_CODE)
+            form = MyAuthenticationForm(request.POST)
     else:
-        form = MyAuthenticationForm(lang=request.LANGUAGE_CODE)
+        form = MyAuthenticationForm()
 
     return render(request, 'undergraduate_admission/login.html', {'form': form})
 
@@ -37,8 +37,13 @@ def initial_agreement(request):
         request.session['agreed'] = True
         return redirect(reverse('register'))
 
-    agreement = get_object_or_404(Agreement, agreement_type='INITIAL')
-    return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement})
+    sem = AdmissionSemester.get_phase1_active_semester()
+    agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
+    agreement_items = agreement.items.all()
+    # if not agreement:
+    #     raise Http404
+    # else:
+    return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement, 'items': agreement_items})
 
 
 class RegisterView(CreateView):
@@ -48,13 +53,15 @@ class RegisterView(CreateView):
     # success_url = reverse_lazy("login")
     form_class = RegistrationForm
 
-    # def get(self, request):request
-    #     agreed = request.session.get('agreed')
-    #     if agreed is None:
-    #         return redirect(reverse('initial_agreement'))
+    def get(self, request):
+        agreed = request.session.get('agreed')
+        if agreed is None:
+            return redirect(reverse('initial_agreement'))
+        else:
+            return render(request, self.template_name, {'form': self.form_class})
 
     def form_valid(self, form):
-        regMsg = RegistrationStatusMessage.objects.get(pk=1) #for status 1 'application submitted'
+        reg_msg = RegistrationStatusMessage.objects.get(pk=1) #for status 1 'application submitted'
         sem = AdmissionSemester.get_phase1_active_semester()
         usr = User.objects.create_user(form.cleaned_data['username'],
                                        form.cleaned_data['email'],
@@ -62,23 +69,16 @@ class RegisterView(CreateView):
                                        first_name=form.cleaned_data['first_name'],
                                        last_name=form.cleaned_data['last_name'],
                                        high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
-                                       status_message=regMsg,
+                                       status_message=reg_msg,
                                        semester = sem,
                                        nationality = form.cleaned_data['nationality'],
                                        saudi_mother=form.cleaned_data['saudi_mother'],
                                        mobile=form.cleaned_data['mobile'],
                                        guardian_mobile=form.cleaned_data['guardian_mobile'],)
         print (form.cleaned_data)
-        # return redirect(self.success_url)
-        # return render(self.request, 'undergraduate_admission/registration_success.html', context={'user': usr})
         self.request.session['user'] = usr.id
-        success_url = reverse('regsitration_success')#, context={'user': usr})
+        success_url = reverse('registration_success')
         return redirect(success_url)
-
-
-def student_area(request):
-    # user = User.objects.create_user('john7', 'lennon@thebeatles.com', 'johnpassword')
-    return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user})
 
 
 def registration_success(request):
@@ -89,3 +89,8 @@ def registration_success(request):
     else:
         # return redirect(reverse(RegisterView.as_view()))
         return redirect('register')
+
+
+def student_area(request):
+    # user = User.objects.create_user('john7', 'lennon@thebeatles.com', 'johnpassword')
+    return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user})

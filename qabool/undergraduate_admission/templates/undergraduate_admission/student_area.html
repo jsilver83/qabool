@@ -14,15 +14,15 @@
                      </div>
                      <div class="col-lg-10">
                         <h4>{{ user }}</h4>
-                        <strong>Registration ID:</strong> {{ user.id }}<br>
-                        <strong>Government ID:</strong> {{ user.username }}<br>
-                        <strong>Application Status:</strong>
+                        <strong>{% trans 'Registration ID' %}:</strong> {{ user.id }}<br>
+                        <strong>{% trans 'Government ID' %}:</strong> {{ user.username }}<br>
+                        <strong>{% trans 'Application Status' %}:</strong>
                          <span class="text-info">{{ user.get_actual_student_status }}</span>
                         <hr>
                         <p>
                            <!--<a href="#" class="btn btn-primary">Complete Application</a>-->
                            <!--<a href="#" class="btn btn-default">Print Documents</a>-->
-                           <a href="#" class="btn btn-danger">Withdraw Application</a>
+                           <!--<a href="#" class="btn btn-danger">Withdraw Application</a>-->
                         </p>
                      </div>
                   </div>

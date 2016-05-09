@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-08 16:54+0300\n"
+"POT-Creation-Date: 2016-05-09 12:36+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,13 +19,17 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: qabool/settings.py:126
+#: qabool/settings.py:125
 msgid "English"
-msgstr "اﻻنجليزية"
+msgstr ""
 
-#: qabool/settings.py:127
+#: qabool/settings.py:126
 msgid "Arabic"
-msgstr "العربية"
+msgstr ""
+
+#: undergraduate_admission/forms.py:19 undergraduate_admission/forms.py:89
+msgid "Captcha"
+msgstr ""
 
 #: undergraduate_admission/forms.py:25
 msgid "The two email fields didn't match."
@@ -49,40 +53,37 @@ msgid ""
 "different Email"
 msgstr ""
 
-#: undergraduate_admission/forms.py:34
-#, fuzzy
-#| msgid "Email Address"
-msgid "Email Address Confirmation"
-msgstr "البريد الالكتروني"
-
 #: undergraduate_admission/forms.py:36
+msgid "Email Address Confirmation"
+msgstr ""
+
+#: undergraduate_admission/forms.py:38
 msgid "Enter the same email address as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms.py:40
-#, fuzzy
-#| msgid "Government ID"
-msgid "Government ID Confirmation"
-msgstr "رقم الهوية أو اﻹقامة"
-
 #: undergraduate_admission/forms.py:42
+msgid "Government ID Confirmation"
+msgstr ""
+
+#: undergraduate_admission/forms.py:44
 msgid "Enter the same government ID as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms.py:46
+#: undergraduate_admission/forms.py:48
 msgid "Mobile Confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms.py:49
+#: undergraduate_admission/forms.py:51
 msgid "Enter the same mobile number as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms.py:59
-#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:15
+#: undergraduate_admission/forms.py:61
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:21
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:18
 msgid "Government ID"
-msgstr "رقم الهوية أو اﻹقامة"
+msgstr ""
 
-#: undergraduate_admission/forms.py:76
+#: undergraduate_admission/forms.py:78
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr ""
 
@@ -90,48 +91,128 @@ msgstr ""
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr ""
 
-#: undergraduate_admission/templates/base-sidebar.html:7
+#: undergraduate_admission/templates/base-sidebar.html:8
 msgid ""
 "\n"
-"           <h4>FAQs</h4>\n"
-"          - <a href=\"#\">Should I take the SAT Subject test?</a><br>\n"
-"          - <a href=\"#\">What about additional evaluators?</a><br>\n"
-"          - <a href=\"#\">What are the guidelines for home-schooled "
-"applicants?</a><br><br>\n"
-"          <i class=\"fa fa-arrow-circle-right\"></i> <a href=\"#\">Read "
-"more</a>\n"
-"          <br><br>\n"
-"          <h4>Need Help?</h4>\n"
-"          Call Admissions Office<br>\n"
-"          <strong>Phone:</strong> +966 (13) 860 2901<br>\n"
-"          <strong>Fax:</strong> +966 (13) 860 2722<br>\n"
-"          <strong>Email:</strong> <a href=\"mailto:admissions@kfupm.edu.sa"
+"\t\t\t<div class=\"media\">\n"
+"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-calendar fa-2x\"></i></"
+"div>\n"
+"\t\t\t\t<div class=\"media-body\">\n"
+"\t\t\t\t\t<h4 class=\"media-heading text-uppercase\"><strong>Important "
+"Dates</strong></h4>\n"
+"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> "
+"<strong>Registration:</strong> 01 May 2016\n"
+"\t\t\t\t\tto 10 May 2016<br>\n"
+"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <strong>Results:"
+"</strong> 10 May 2016 to\n"
+"\t\t\t\t\t20 May 2016<br>\n"
+"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> "
+"<strong>Admission Confirmation:</strong>\n"
+"\t\t\t\t\t20 May 2016 to 25 May 2016<br>\n"
+"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <strong>Print "
+"Admission letter:</strong>\n"
+"\t\t\t\t\t29 May 2016\n"
+"\t\t\t\t</div>\n"
+"\t\t\t</div>\n"
+"\t\t\t<div class=\"media\">\n"
+"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-question-circle fa-2x\"></"
+"i></div>\n"
+"\t\t\t\t<div class=\"media-body\">\n"
+"\t\t\t\t\t<h4 class=\"media-heading\"><strong>FAQs</strong></h4>\n"
+"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <a href=\"#"
+"\">Should I take the SAT Subject\n"
+"\t\t\t\t\ttest?</a><br>\n"
+"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <a href=\"#"
+"\">What about additional\n"
+"\t\t\t\t\tevaluators?</a><br>\n"
+"\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <a href=\"#"
+"\">What are the guidelines for\n"
+"\t\t\t\t\thome-schooled applicants?</a><br><br>\n"
+"\t\t\t\t\t<i class=\"fa fa-bars\"></i> <a href=\"#\">Read more</a>\n"
+"\t\t\t\t</div>\n"
+"\t\t\t</div>\n"
+"\t\t\t<div class=\"media\">\n"
+"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-info-circle fa-2x\"></i></"
+"div>\n"
+"\t\t\t\t<div class=\"media-body\">\n"
+"\t\t\t\t\t<h4 class=\"media-heading text-uppercase\"><strong>Need Help?</"
+"strong></h4>\n"
+"\t\t\t\t\tCall Admissions Office<br>\n"
+"\t\t\t\t\t<strong>Phone:</strong> +966 (13) 860 2901<br>\n"
+"\t\t\t\t\t<strong>Fax:</strong> +966 (13) 860 2722<br>\n"
+"\t\t\t\t\t<strong>Email:</strong> <a href=\"mailto:admissions@kfupm.edu.sa"
 "\">admissions@kfupm.edu.sa</a><br>\n"
-"          <strong>Website:</strong> <a href=\"http://www.kfupm.edu.sa/"
-"admissions\">www.kfupm.edu.sa/admissions</a>\n"
-"           "
+"\t\t\t\t\t<strong>Website:</strong> <a\n"
+"\t\t\t\t\t\thref=\"http://www.kfupm.edu.sa/admissions\">www.kfupm.edu.sa/"
+"admissions</a>\n"
+"\t\t\t\t</div>\n"
+"\t\t\t</div>\n"
+"\t\t\t"
 msgstr ""
 
-#: undergraduate_admission/templates/base.html:20
-msgid "<!--replalce with lang.css-->"
-msgstr "<link href='/static/css/rtl.css' rel='stylesheet'>"
-
-#: undergraduate_admission/templates/undergraduate_admission/login.html:21
-msgid "Login"
+#: undergraduate_admission/templates/base.html:71
+msgid ""
+"\n"
+"\t\t\t\t&copy; Undergraduate Admissions, King Fahd University of Petroleum "
+"&amp; Minerals<br>\n"
+"\t\t\t\tDhahran, 31261 | Saudi Arabia | +966 (13) 860 2901<br>\n"
+"\t\t\t\t<a href=\"http://admin.kfupm.edu.sa/\">adm.kfupm.edu.sa</a>\n"
+"\t\t\t\t<br><br>\n"
+"\t\t\t\t"
 msgstr ""
 
+#: undergraduate_admission/templates/undergraduate_admission/agreement.html:17
+msgid "I have read all of the above terms and conditions for applying to KFUPM"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/agreement.html:22
+msgid "I accep all the above terms and conditions"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/agreement.html:25
+msgid "I agree"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/login.html:7
 #: undergraduate_admission/templates/undergraduate_admission/register.html:15
 msgid "Apply for Admission"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:14
-msgid "Registration ID"
+#: undergraduate_admission/templates/undergraduate_admission/login.html:15
+msgid ""
+"\n"
+"<h3>Review your Application</h3>\n"
+"Please login below to review your application for admission<br><br>\n"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:16
+#: undergraduate_admission/templates/undergraduate_admission/login.html:23
+msgid "Login"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:6
+msgid ""
+"\n"
+"<div class=\"alert alert-success\" role=\"alert\">\n"
+"\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> "
+"Success</h4>\n"
+"\t<p>Your application was submitted successfully. Please use the link below "
+"to login to the system to check your application status regularly</p>\n"
+"</div>\n"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:20
+msgid "Application ID"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:22
 msgid "Mobile"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:17
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:23
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:19
 msgid "Application Status"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:17
+msgid "Registration ID"
 msgstr ""

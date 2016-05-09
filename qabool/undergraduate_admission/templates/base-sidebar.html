@@ -3,27 +3,54 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-       <div class="col-lg-4">
-          {% blocktrans %}
-           <h4>FAQs</h4>
-          - <a href="#">Should I take the SAT Subject test?</a><br>
-          - <a href="#">What about additional evaluators?</a><br>
-          - <a href="#">What are the guidelines for home-schooled applicants?</a><br><br>
-          <i class="fa fa-arrow-circle-right"></i> <a href="#">Read more</a>
-          <br><br>
-          <h4>Need Help?</h4>
-          Call Admissions Office<br>
-          <strong>Phone:</strong> +966 (13) 860 2901<br>
-          <strong>Fax:</strong> +966 (13) 860 2722<br>
-          <strong>Email:</strong> <a href="mailto:admissions@kfupm.edu.sa">admissions@kfupm.edu.sa</a><br>
-          <strong>Website:</strong> <a href="http://www.kfupm.edu.sa/admissions">www.kfupm.edu.sa/admissions</a>
-           {% endblocktrans %}
-       </div>
-       <div class="col-lg-7 pull-right">
-           {% block subcontent %}
-           {% endblock subcontent %}
-       </div>
-    </div>
- </div>
+	<div class="row">
+		<div class="col-lg-4">
+			{% blocktrans %}
+			<div class="media">
+				<div class="media-left"><i class="fa fa-calendar fa-2x"></i></div>
+				<div class="media-body">
+					<h4 class="media-heading text-uppercase"><strong>Important Dates</strong></h4>
+					<i class="fa fa-check" aria-hidden="true"></i> <strong>Registration:</strong> 01 May 2016
+					to 10 May 2016<br>
+					<i class="fa fa-check" aria-hidden="true"></i> <strong>Results:</strong> 10 May 2016 to
+					20 May 2016<br>
+					<i class="fa fa-check" aria-hidden="true"></i> <strong>Admission Confirmation:</strong>
+					20 May 2016 to 25 May 2016<br>
+					<i class="fa fa-check" aria-hidden="true"></i> <strong>Print Admission letter:</strong>
+					29 May 2016
+				</div>
+			</div>
+			<div class="media">
+				<div class="media-left"><i class="fa fa-question-circle fa-2x"></i></div>
+				<div class="media-body">
+					<h4 class="media-heading"><strong>FAQs</strong></h4>
+					<i class="fa fa-check" aria-hidden="true"></i> <a href="#">Should I take the SAT Subject
+					test?</a><br>
+					<i class="fa fa-check" aria-hidden="true"></i> <a href="#">What about additional
+					evaluators?</a><br>
+					<i class="fa fa-check" aria-hidden="true"></i> <a href="#">What are the guidelines for
+					home-schooled applicants?</a><br><br>
+					<i class="fa fa-bars"></i> <a href="#">Read more</a>
+				</div>
+			</div>
+			<div class="media">
+				<div class="media-left"><i class="fa fa-info-circle fa-2x"></i></div>
+				<div class="media-body">
+					<h4 class="media-heading text-uppercase"><strong>Need Help?</strong></h4>
+					Call Admissions Office<br>
+					<strong>Phone:</strong> +966 (13) 860 2901<br>
+					<strong>Fax:</strong> +966 (13) 860 2722<br>
+					<strong>Email:</strong> <a href="mailto:admissions@kfupm.edu.sa">admissions@kfupm.edu.sa</a><br>
+					<strong>Website:</strong> <a
+						href="http://www.kfupm.edu.sa/admissions">www.kfupm.edu.sa/admissions</a>
+				</div>
+			</div>
+			{% endblocktrans %}
+		</div>
+		<div class="col-lg-7 col-lg-offset-1 pull-right">
+			{% block subcontent %}
+			{% endblock subcontent %}
+		</div>
+	</div>
+</div>
 {% endblock content %}
