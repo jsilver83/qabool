@@ -31,6 +31,7 @@
         repo: http://hg.itc.kfupm.edu.sa/apps/qabool
         dest: "{{ install_dir }}"
         #revision: stable
+      notify: Restart app server (uwsgi)
 
     - name: Set file permissions
       file:
@@ -88,7 +89,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Reload app server (uwsgi)
+      notify: Restart app server (uwsgi)
 
     - name: Enable app server configuration
       file:
@@ -97,7 +98,7 @@
         state: link
         owner: root
         group: root
-      notify: Reload app server (uwsgi)
+      notify: Restart app server (uwsgi)
 
     - name: Start app server (uwsgi)
       service: name=uwsgi state=started
@@ -128,7 +129,7 @@
       service: name=nginx state=started
 
   handlers:
-    - name: Reload app server (uwsgi)
+    - name: Restart app server (uwsgi)
       service: name=uwsgi state=restarted
 
     - name: Reload webserver
