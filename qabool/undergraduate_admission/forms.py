@@ -9,14 +9,14 @@ from .models import User, DeniedStudent
 
 
 class MyAuthenticationForm(AuthenticationForm):
-    captcha = ReCaptchaField()
+    # captcha = ReCaptchaField()
 
     def __init__(self, *args, **kwargs):
         # lang = kwargs.pop('lang')
         super(MyAuthenticationForm, self).__init__(self, *args, **kwargs)
         self.fields['username'].widget = forms.TextInput(attrs = {'required': ''})
         self.fields['password'].widget = forms.PasswordInput(attrs = {'required': ''})
-        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+        # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
 
 class RegistrationForm(UserCreationForm):
@@ -30,7 +30,7 @@ class RegistrationForm(UserCreationForm):
         }
     )
 
-    captcha = ReCaptchaField()
+    # captcha = ReCaptchaField()
 
     email2 = forms.EmailField(
         label=_('Email Address Confirmation'),
@@ -86,7 +86,7 @@ class RegistrationForm(UserCreationForm):
         self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
         self.fields['password1'].widget = forms.PasswordInput(attrs = {'required':''})
         self.fields['password2'].widget = forms.PasswordInput(attrs = {'required':''})
-        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+        # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
     def clean_data(self):
         super(RegistrationForm, self).clean_data(self)
