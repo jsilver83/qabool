@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import translation
+from django.utils.translation import ugettext_lazy as _
 
 
 class User(AbstractUser):
@@ -34,9 +35,10 @@ class User(AbstractUser):
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
-        limit_choices_to={'show_flag':True},
+        limit_choices_to={'show_flag': True},
+        verbose_name=_('Nationality'),
     )
-    saudi_mother = models.NullBooleanField()
+    saudi_mother = models.NullBooleanField(verbose_name=_('Saudi Mother'))
     birthday = models.DateField(null=True)
     birthday_ah = models.CharField(null=True, max_length=50)
     high_school_graduation_year = models.ForeignKey(
@@ -44,9 +46,10 @@ class User(AbstractUser):
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
+        verbose_name=_('Graduation Year'),
     )
-    mobile = models.CharField(null=True, blank=False, max_length=50)
-    guardian_mobile = models.CharField(null=True, blank=False, max_length=50)
+    mobile = models.CharField(null=True, blank=False, max_length=50, verbose_name=_('Mobile'))
+    guardian_mobile = models.CharField(null=True, blank=False, max_length=50, verbose_name=_('Guardian Mobile'))
     phone = models.CharField(null=True, max_length=50)
     high_school_gpa = models.FloatField(null=True, blank=True)
     qudrat_score = models.FloatField(null=True, blank=True)
@@ -64,7 +67,7 @@ class User(AbstractUser):
 
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
-        self._meta.get_field('username').verbose_name = 'Government ID'
+        self._meta.get_field('username').verbose_name = _('Government ID')
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name #+ ' (' + self.username + ')'
@@ -272,7 +275,7 @@ class Agreement(models.Model):
             return self.agreement_footer_en
 
     def __str__(self):
-        return self.agreement_header
+        return self.agreement_type
 
 
 class AgreementItem(models.Model):

@@ -17,10 +17,19 @@
 Please login below to review your application for admission<br><br>
 {% endblocktrans %}
 
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <form role="form" method="post" action="{% url 'login' %}">
 	{% csrf_token %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-	<input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>
+	<input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="{% url 'forgot_password' %}">{% trans 'Forgot Password?' %}</a>
 	<input type="hidden" name="next" value="/"/>
 </form>
 

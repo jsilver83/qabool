@@ -29,7 +29,7 @@
 				<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>
 			</div>
 			<div class="pull-right">
-				<a href="/ar">عربي</a> | <a href="/en">English</a>
+				<a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a> | <a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>
 			</div>
 		</div>
 	</div>
@@ -40,9 +40,9 @@
 			<div class="col-lg-7">
 				<div class="ug-logo">
 					{% if LANGUAGE_CODE == 'ar' %}
-					<img class="img-responsive" src="{% static 'images/ug-logo-ar.png' %}" width="100%" alt="KFUPM Undergraduate Admission">
+					<a href="/"><img class="img-responsive" src="{% static 'images/ug-logo-ar.png' %}" width="100%" alt="KFUPM Undergraduate Admission"></a>
 					{% else %}
-					<img class="img-responsive" src="{% static 'images/ug-logo.png' %}" alt="KFUPM Undergraduate Admission">
+					<a href="/"><img class="img-responsive" src="{% static 'images/ug-logo.png' %}" alt="KFUPM Undergraduate Admission"></a>
 					{% endif %}
 				</div>
 			</div>
