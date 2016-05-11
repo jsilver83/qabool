@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^studentarea/$', views.student_area, name='student_area'),
     url(r'^registrationsuccess/$', views.registration_success, name='registration_success'),
     url(r'^initialagreement/$', views.initial_agreement, name='initial_agreement'),
+    url(r'^forgotpassword/$', views.forgot_password, name='forgot_password'),
     url(r'^$', views.index, name='index'),
 ]

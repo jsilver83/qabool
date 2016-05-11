@@ -27,3 +27,9 @@ h4{line-height:23px;}
 .bs-wizard > .bs-wizard-step:first-child > .progress {right: 50%;}
 .progress-bar {float: right;}
 
+
+/* ADDED BY JOUD */
+input[type=submit].btn{
+    margin-top: 15px;
+}
+/* END OF ADDED BY JOUD */

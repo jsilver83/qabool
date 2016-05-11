@@ -5,9 +5,11 @@ from django.views.generic.edit import CreateView
 from django.http import HttpResponse, Http404
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import login, authenticate
+from django.contrib import messages
+from django.utils.translation import ugettext_lazy as _
 
 from .models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
-from .forms import RegistrationForm, MyAuthenticationForm
+from .forms import RegistrationForm, MyAuthenticationForm, ForgotPasswordForm
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
@@ -35,6 +37,7 @@ def index(request, template_name='undergraduate_admission/login.html'):
 def initial_agreement(request):
     if request.method == 'POST':
         request.session['agreed'] = True
+        # request.session['agreed'].set_expiry(5)
         return redirect(reverse('register'))
 
     sem = AdmissionSemester.get_phase1_active_semester()
@@ -58,6 +61,7 @@ class RegisterView(CreateView):
         if agreed is None:
             return redirect(reverse('initial_agreement'))
         else:
+            # del request.session['agreed']
             return render(request, self.template_name, {'form': self.form_class})
 
     def form_valid(self, form):
@@ -89,6 +93,22 @@ def registration_success(request):
     else:
         # return redirect(reverse(RegisterView.as_view()))
         return redirect('register')
+
+
+def forgot_password(request):
+    form = ForgotPasswordForm(request.POST or None)
+
+    if request.method == 'POST':
+        # form = ForgotPasswordForm(request.POST or None)
+        if form.is_valid():
+            saved = form.save()
+            if saved:
+                messages.success(request, _('Password was reset successfully...'))
+                return redirect(reverse('index'))
+            else:
+                messages.error(request, _('Error resetting password. Make sure you enter the correct info.'))
+
+    return render(request, 'undergraduate_admission/forgot_password.html', {'form': form})
 
 
 def student_area(request):
