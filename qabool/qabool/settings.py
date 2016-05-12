@@ -139,6 +139,11 @@ MESSAGE_TAGS = {
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
+EMAIL_HOST = 'mail.kfupm.edu.sa'
+EMAIL_PORT = '587'
+EMAIL_USE_SSL = False
+EMAIL_USE_TLS = True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
