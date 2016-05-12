@@ -13,3 +13,7 @@ qabool_debug: False
 
 qabool_recaptcha_public_key: 6LfFoR4TAAAAAG5sUY388qie8DvVgUvFS211Spt-
 qabool_recaptcha_private_key: "{{ vault_qabool_recaptcha_private_key }}"
+
+sms_gateway_app_sid: "{{ vault_sms_gateway_app_sid }}"
+qabool_email_user: admissions@kfupm.edu.sa
+qabool_email_password: "{{ vault_qabool_email_password }}"

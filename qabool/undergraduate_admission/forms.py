@@ -143,9 +143,9 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'username2', 'password1', 'password2', 'first_name', 'last_name', 'email', 'email2',
-                  'high_school_graduation_year', 'nationality',
-                  'saudi_mother', 'mobile', 'mobile2', 'guardian_mobile']
+        fields = ['first_name', 'last_name', 'username', 'username2', 'mobile', 'mobile2',
+                  'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'nationality',
+                  'saudi_mother', 'password1', 'password2']
         labels = {
             'username': _('Government ID'),
         }

@@ -4,15 +4,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView
 from django.http import HttpResponse, Http404
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.mail import send_mail
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
+import requests
+
+from qabool import settings
 from .models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
 from .forms import RegistrationForm, MyAuthenticationForm, ForgotPasswordForm
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -65,22 +70,25 @@ class RegisterView(CreateView):
             return render(request, self.template_name, {'form': self.form_class})
 
     def form_valid(self, form):
-        reg_msg = RegistrationStatusMessage.objects.get(pk=1) #for status 1 'application submitted'
-        sem = AdmissionSemester.get_phase1_active_semester()
-        usr = User.objects.create_user(form.cleaned_data['username'],
-                                       form.cleaned_data['email'],
-                                       form.cleaned_data['password1'],
-                                       first_name=form.cleaned_data['first_name'],
-                                       last_name=form.cleaned_data['last_name'],
-                                       high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
-                                       status_message=reg_msg,
-                                       semester = sem,
-                                       nationality = form.cleaned_data['nationality'],
-                                       saudi_mother=form.cleaned_data['saudi_mother'],
-                                       mobile=form.cleaned_data['mobile'],
-                                       guardian_mobile=form.cleaned_data['guardian_mobile'],)
-        print (form.cleaned_data)
-        self.request.session['user'] = usr.id
+        reg_msg = RegistrationStatusMessage.objects.get(pk=1) # for status 1 'application submitted'
+        semester = AdmissionSemester.get_phase1_active_semester()
+        user = User.objects.create_user(form.cleaned_data['username'],
+                                        form.cleaned_data['email'],
+                                        form.cleaned_data['password1'],
+                                        first_name=form.cleaned_data['first_name'],
+                                        last_name=form.cleaned_data['last_name'],
+                                        high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
+                                        status_message=reg_msg,
+                                        semester=semester,
+                                        nationality=form.cleaned_data['nationality'],
+                                        saudi_mother=form.cleaned_data['saudi_mother'],
+                                        mobile=form.cleaned_data['mobile'],
+                                        guardian_mobile=form.cleaned_data['guardian_mobile'],)
+
+        SMS.send_sms_registration_success(user.mobile)
+        Email.send_email_registration_success(user.email)
+
+        self.request.session['user'] = user.id
         success_url = reverse('registration_success')
         return redirect(success_url)
 
@@ -114,3 +122,48 @@ def forgot_password(request):
 def student_area(request):
     # user = User.objects.create_user('john7', 'lennon@thebeatles.com', 'johnpassword')
     return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user})
+
+
+class Email:
+    email_messages = {
+        'registration_success': _('Your request has been successfully submitted and the Admission results will be '
+                                  'announced on Wednesday June 24, 2015 (12:00 pm) ... '
+                                  'Applicant is recommended to frequently visit the admission website to know the '
+                                  'admission result and any updated instructions. Admissions Office, King Fahd '
+                                  'University of Petroleum and Minerals')
+    }
+
+    @staticmethod
+    def send_email_registration_success(email):
+        sem = AdmissionSemester.get_phase1_active_semester()
+        agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
+        agreement_items = agreement.items.all()
+
+        send_mail('Subject here', SMS.sms_messages['registration_success'],
+                  'admissions@kfupm.edu.sa', [email], fail_silently=False,
+                  html_message=Email.email_messages['registration_success'] + agreement.agreement_header)
+
+
+class SMS:
+    sms_messages = {
+        'registration_success': _('Your request has been successfully submitted and the Admission results will be '
+                                  'announced on Wednesday June 24, 2015 (12:00 pm) ... '
+                                  'Applicant is recommended to frequently visit the admission website to know the '
+                                  'admission result and any updated instructions. Admissions Office, King Fahd '
+                                  'University of Petroleum and Minerals'),
+        'confirmation_message': _('TBA')
+    }
+
+    @staticmethod
+    def send_sms(mobile, body):
+        r = requests.post('http://api.unifonic.com/rest/Messages/Send',
+                          data = {'AppSid': settings.UNIFONIC_APP_SID,
+                                  'Recipient': mobile,
+                                  'Body': body,
+                                  'SenderID': 'KFUPM-ADM'})
+        return r
+
+    @staticmethod
+    def send_sms_registration_success(mobile):
+        SMS.send_sms(mobile, SMS.sms_messages['registration_success'])
+
