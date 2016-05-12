@@ -31,6 +31,7 @@
         repo: http://hg.itc.kfupm.edu.sa/apps/qabool
         dest: "{{ install_dir }}"
         #revision: stable
+        force: yes
 
     - name: Set file permissions
       file:
