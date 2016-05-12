@@ -144,6 +144,9 @@ EMAIL_PORT = '587'
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
 
+ADMINS = [('joud', 'joud@kfupm.edu.sa'), ('Dr. Ahmad Khayyat', 'akhayyat@kfupm.edu.sa'), ('almaaesh', 'almaaesh@kfupm.edu.sa')]
+SERVER_EMAIL = 'admissions@kfupm.edu.sa'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
