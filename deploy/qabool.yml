@@ -7,6 +7,8 @@
     install_dir: /opt/qabool
     venv_dir: /opt/qabool_venv
     static_files_dir: /opt/qabool_static_files
+    nginx_access_log: /var/log/nginx/qabool-access.log
+    nginx_error_log: /var/log/nginx/qabool-error.log
 
   tasks:
     - name: Install required software packages
@@ -114,6 +116,22 @@
         owner: root
         group: root
 
+    - name: Configure web server status site
+      copy:
+        src: files/nginx-server-status
+        dest: /etc/nginx/sites-available/server-status
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Enable web server status site
+      file:
+        src: /etc/nginx/sites-available/server-status
+        dest: /etc/nginx/sites-enabled/server-status
+        state: link
+        owner: root
+        group: root
+
     - name: Disable default webserver site
       file: path=/etc/nginx/sites-enabled/default state=absent
 
@@ -122,3 +140,27 @@
 
     - name: Restart webserver
       service: name=nginx state=restarted
+
+    # https://github.com/blacked/zbx_nginx_template
+    - name: Create zabbix scripts directory
+      file:
+        path: /etc/zabbix/scripts
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Install zabbix nginx monitoring script
+      template:
+        src: templates/zbx_nginx_stats.py.j2
+        dest: /etc/zabbix/scripts/zbx_nginx_stats.py
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Install cronjob for zabbix nginx monitoring script
+      cron:
+        name: zabbix-nginx
+        user: www-data
+        minute: '*/1'
+        job: /etc/zabbix/scripts/zbx_nginx_stats.py

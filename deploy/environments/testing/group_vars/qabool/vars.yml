@@ -17,3 +17,5 @@ qabool_recaptcha_private_key: "{{ vault_qabool_recaptcha_private_key }}"
 sms_gateway_app_sid: "{{ vault_sms_gateway_app_sid }}"
 qabool_email_user: admissions@kfupm.edu.sa
 qabool_email_password: "{{ vault_qabool_email_password }}"
+
+zabbix_server: 10.180.17.200
