@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
@@ -44,7 +45,19 @@ class User(AbstractUser):
         null=True,
         verbose_name=_('Graduation Year'),
     )
-    mobile = models.CharField(null=True, blank=False, max_length=50, verbose_name=_('Mobile'))
+    mobile = models.CharField(
+        null=True,
+        blank=False,
+        max_length=50,
+        verbose_name=_('Mobile'),
+        help_text=_('Mobile number should be of this format "966xxxxxxxxx" '),
+        validators=[
+            RegexValidator(
+                '^966\d{9}$',
+                message=_('You have entered an invalid mobile number')
+            ),
+        ]
+    )
     phone = models.CharField(null=True, max_length=50, verbose_name=_('Phone'))
     high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA'))
     qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'))
@@ -80,7 +93,19 @@ class User(AbstractUser):
     guardian_government_id = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Government ID'))
     guardian_relation = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Relation'))
     guardian_phone = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Phone'))
-    guardian_mobile = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Mobile'))
+    guardian_mobile = models.CharField(
+        null=True,
+        blank=True,
+        max_length=50,
+        verbose_name=_('Guardian Mobile'),
+        help_text=_('Guardian mobile should be different than own mobile'),
+        validators=[
+            RegexValidator(
+                '^966\d{9}$',
+                message=_('You have entered an invalid mobile number')
+            ),
+        ]
+    )
     guardian_email = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Email'))
     guardian_po_box = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian PO Box'))
     guardian_postal_code = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Postal Code'))
@@ -95,6 +120,7 @@ class User(AbstractUser):
     employer_name = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Employeer Name'))
     disability_needs = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Disability Type'))
     other_needs = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Other Disability'))
+    chronic_diseases = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Chronic Diseases'))
     relative_name = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Name'))
     relative_relation = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Relation'))
     relative_phone = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Mobile'))
@@ -186,6 +212,28 @@ class RegistrationStatusMessage(models.Model):
 
     def __str__(self):
         return self.status.registration_status + ". " + self.registration_status_message
+
+
+class Lookup(models.Model):
+    lookup_type = models.CharField(max_length=20, null=True, blank=False)
+    lookup_value_ar = models.CharField(max_length=100, null=True, blank=False)
+    lookup_value_en = models.CharField(max_length=100, null=True, blank=False)
+    show = models.BooleanField(verbose_name=_('Show'), default=True)
+    display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
+
+    @property
+    def lookup_value(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.lookup_value_ar
+        else:
+            return self.lookup_value_en
+
+    def __str__(self):
+        return self.lookup_value
+
+    class Meta:
+        ordering=['-display_order']
 
 
 class City(models.Model):
