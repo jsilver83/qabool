@@ -8,11 +8,56 @@
 Already applied for admission? <a href="#"><u>Log in</u></a> to review your application.
 <hr>
 <form action="{% url 'register' %}" method="post" class="form-horizontal">
-    {% csrf_token %}
-    <!--{{ form.as_p }}-->
-    {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-   <hr>
-   <input type="submit" class="btn btn-primary" value="{% trans 'Apply for Admission' %}" />
+	{% csrf_token %}
+	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	<div class="checkbox form-group">
+		<div class="col-sm-5">&nbsp;</div>
+		<label class="col-sm-7">
+			<input class="concurr" type="checkbox">&nbsp;{% trans 'I confirm that all entered info above are correct' %}
+		</label>
+	</div>
+	<div class="subBtn">
+		<hr>
+		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Apply for Admission' %}"/>
+	</div>
 </form>
-
 {% endblock subcontent %}
+
+{% block scripts %}
+<script>
+	$(function(){
+		$(".subBtn").hide();
+		$('.concurr').prop('checked', false);
+		$(".concurr").click(function(){
+            $(".subBtn").toggle();
+        });
+
+        $("form").attr("autocomplete","off");
+
+        $('input[type=text]').attr('autocomplete', 'off');
+
+        $('.nocopy').bind("cut copy paste",function(e) {
+          e.preventDefault();
+        });
+
+		sm($("#id_nationality").val());
+		$("#id_nationality").change(function(){
+            var vaa = $(this).prop('selectedIndex');
+            sm(vaa);
+        });
+	});
+
+	function sm(nat){
+		if(nat == 1){
+            $("#id_saudi_mother").parents(".form-group").hide();
+            $("#id_saudi_mother").val("1");
+            $("#id_saudi_mother").removeAttr("required");
+        }
+        else{
+            $("#id_saudi_mother").parents(".form-group").show();
+            $("#id_saudi_mother").val("3");
+            $("#id_saudi_mother").attr("required", "");
+        }
+	}
+</script>
+{% endblock scripts %}
