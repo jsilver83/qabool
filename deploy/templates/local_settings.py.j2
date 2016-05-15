@@ -13,7 +13,10 @@ DATABASES = {
 
 DEBUG = {{ qabool_debug }}
 
-ALLOWED_HOSTS = ['{{ inventory_hostname }}']
+ALLOWED_HOSTS = [
+    {% for url in qabool_urls %}'{{ url }}',{% endfor %}
+    '{{ ansible_default_ipv4.address }}',
+    '{{ load_balancer_ip }}']
 
 RECAPTCHA_PUBLIC_KEY = '{{ qabool_recaptcha_public_key }}'
 RECAPTCHA_PRIVATE_KEY = '{{ qabool_recaptcha_private_key }}'

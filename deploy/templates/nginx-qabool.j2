@@ -1,6 +1,6 @@
 server {
     # create a hostname for the virtual host.
-    server_name {{ inventory_hostname }};
+    server_name{% for url in qabool_urls %} {{ url }}{% endfor %};
     charset     utf-8;
 
     # (optional)
