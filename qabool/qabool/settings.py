@@ -145,6 +145,25 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
+
+# Logging
+# https://docs.djangoproject.com/en/1.9/topics/logging/
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+        },
+    },
+}
+
 SESSION_COOKIE_AGE = 1200 #20 mins
 
 MESSAGE_TAGS = {
