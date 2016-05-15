@@ -12,16 +12,29 @@
 
 <form method="post">
 	{% csrf_token %}
-	<div class="checkbox">
-		<label>
-			<input type="checkbox"> {% trans 'I have read all of the above terms and conditions for applying to KFUPM' %}
+
+	<div class="checkbox form-group">
+		<span {{ form.agree1.errors }}</span>
+		<label for="{{ form.agree1.id_for_label }}" class="col-sm-12">
+			{{ form.agree1 }}&nbsp;{{ form.agree1.label }}
 		</label>
 	</div>
-	<div class="checkbox">
-		<label>
-			<input type="checkbox"> {% trans 'I accep all the above terms and conditions' %}
+
+	<div class="checkbox form-group">
+		<span style="color:red">{{ form.agree1.errors }}</span>
+		<label for="{{ form.agree2.id_for_label }}" class="col-sm-12">
+			{{ form.agree2 }}&nbsp;{{ form.agree2.label }}
 		</label>
 	</div>
+
 	<input type="submit" class="btn btn-primary" value="{% trans 'I agree' %}"/>
 </form>
 {% endblock subcontent %}
+
+{% block scripts %}
+<script>
+	$(function(){
+		$("input[type=checkbox]").removeClass("form-control");
+	});
+</script>
+{% endblock scripts %}

@@ -1,4 +1,5 @@
 from django.contrib.auth import password_validation
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.utils import translation
@@ -6,7 +7,7 @@ from django.utils import translation
 from captcha.fields import ReCaptchaField
 import floppyforms.__future__ as forms
 
-from .models import User, DeniedStudent
+from .models import User, DeniedStudent, AdmissionSemester
 
 
 class MyAuthenticationForm(AuthenticationForm):
@@ -108,6 +109,27 @@ class ForgotPasswordForm(forms.ModelForm):
             return None
 
 
+class AgreementForm(forms.Form):
+    agree1 = forms.BooleanField(label=_('I have read all of the above terms and conditions for applying to KFUPM'))
+    agree2 = forms.BooleanField(label=_('I accep all the above terms and conditions'))
+
+    def clean_agree1(self):
+        agree1 = self.cleaned_data.get("agree1")
+
+        if not agree1:
+            raise forms.ValidationError(
+                message = _('You have to check this box')
+            )
+
+    def clean_agree2(self):
+        agree2 = self.cleaned_data.get("agree2")
+
+        if not agree2:
+            raise forms.ValidationError(
+                message = _('You have to check this box')
+            )
+
+
 class RegistrationForm(UserCreationForm):
     UserCreationForm.error_messages.update(
         {
@@ -115,7 +137,12 @@ class RegistrationForm(UserCreationForm):
             'govid_mismatch': _("The two government ID fields didn't match."),
             'mobile_mismatch': _("The two mobile fields didn't match."),
             'govid_denied': _("You have been denied from applying for the following reason(s): "),
-            'email_not_unique': _("The Email entered is associated with another applicant. Please use a different Email"),
+            'email_not_unique': _("The Email entered is associated with another applicant. "
+                                  "Please use a different Email"),
+            'mobile_not_unique': _("The Mobile entered is associated with another applicant. "
+                                   "Please use a different Mobile"),
+            'govid_invalid': _("You have entered an invalid Government ID"),
+            'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile")
         }
     )
 
@@ -124,8 +151,18 @@ class RegistrationForm(UserCreationForm):
     email2 = forms.EmailField(
         label=_('Email Address Confirmation'),
         required=True,
-        help_text= _('Enter the same email address as before, for verification'),
-        widget = forms.EmailInput(attrs = {'class':'nocopy'})
+        help_text=_('Enter the same email address as before, for verification'),
+        widget=forms.EmailInput(attrs={'class': 'nocopy'})
+    )
+    username = forms.CharField(
+        label=_('Government ID'),
+        help_text=_('National ID for Saudis, Iqama Number for non-Saudis.'),
+        validators=[
+            RegexValidator(
+                '^\d{10}$',
+                message=UserCreationForm.error_messages['govid_invalid']
+            ),
+        ]
     )
     username2 = forms.CharField(
         label=_('Government ID Confirmation'),
@@ -143,15 +180,18 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
+
         fields = ['first_name', 'last_name', 'username', 'username2', 'mobile', 'mobile2',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'nationality',
                   'saudi_mother', 'password1', 'password2']
-        labels = {
-            'username': _('Government ID'),
-        }
+        # CHOICES = (
+        #     # (None, "I do not know now"),
+        #     (True, _("Yes")),
+        #     (False, _("No")),
+        # )
+
         widgets = {
             # workaround since __init__ setting to required doesnt work
-            'username': forms.TextInput(attrs = {'required': ''}),
             'email': forms.TextInput(attrs = {'required': ''}),
             'first_name': forms.TextInput(attrs = {'required': ''}),
             'last_name': forms.TextInput(attrs = {'required': ''}),
@@ -161,11 +201,11 @@ class RegistrationForm(UserCreationForm):
                 'class': 'select2',}),
             'mobile': forms.TextInput(attrs = {'required': ''}),
             'guardian_mobile': forms.TextInput(attrs = {'required': ''}),
+            # 'saudi_mother': forms.RadioSelect(choices = CHOICES),
         }
-
-        help_texts = {
-            'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),
-        }
+        # help_texts = {
+        #     'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),
+        # }
         # initial = {'username': _('Government ID')}
 
     def __init__(self, *args, **kwargs):
@@ -203,7 +243,8 @@ class RegistrationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        found = User.objects.filter(email=email)
+        semester = AdmissionSemester.get_phase1_active_semester()
+        found = User.objects.filter(email=email, semester=semester)
         if email and found:
             raise forms.ValidationError(
                 self.error_messages['email_not_unique'],
@@ -221,6 +262,17 @@ class RegistrationForm(UserCreationForm):
             )
         return email2
 
+    def clean_mobile(self):
+        mobile = self.cleaned_data.get("mobile")
+        semester = AdmissionSemester.get_phase1_active_semester()
+        found = User.objects.filter(mobile=mobile, semester=semester)
+        if mobile and found:
+            raise forms.ValidationError(
+                self.error_messages['mobile_not_unique'],
+                code='mobile_not_unique',
+            )
+        return mobile
+
     def clean_mobile2(self):
         mobile1 = self.cleaned_data.get("mobile")
         mobile2 = self.cleaned_data.get("mobile2")
@@ -228,6 +280,16 @@ class RegistrationForm(UserCreationForm):
             raise forms.ValidationError(
                 self.error_messages['mobile_mismatch'],
                 code='mobile_mismatch',
+            )
+        return mobile2
+
+    def clean_guardian_mobile(self):
+        mobile1 = self.cleaned_data.get("mobile")
+        mobile2 = self.cleaned_data.get("guardian_mobile")
+        if mobile1 and mobile2 and mobile1 == mobile2:
+            raise forms.ValidationError(
+                self.error_messages['guardian_mobile_match'],
+                code='guardian_mobile_match',
             )
         return mobile2
 
