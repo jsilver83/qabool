@@ -31,6 +31,7 @@
         repo: http://hg.itc.kfupm.edu.sa/apps/qabool
         dest: "{{ install_dir }}"
         #revision: stable
+        force: yes
 
     - name: Set file permissions
       file:
@@ -117,7 +118,7 @@
       file: path=/etc/nginx/sites-enabled/default state=absent
 
     - name: Restart app server (uwsgi)
-      service: name=uwsgi state=started
+      service: name=uwsgi state=restarted
 
     - name: Restart webserver
-      service: name=nginx state=started
+      service: name=nginx state=restarted
