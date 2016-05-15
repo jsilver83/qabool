@@ -7,7 +7,8 @@
 	font-weight: normal;
 	font-style: normal;
 }
-html, body {font-family:'Hacen Tunisia Lt'; height: 100%; direction:rtl; text-align:right;}
+html, body {font-family:'KacstOfficeMedium'; height: 100%; direction:rtl; text-align:right;}
+html, body, p, ul{font-family:'KacstOfficeMedium'; font-size:16px; font-weight: normal; font-style: normal;}
 .h4, .h5, .h6, h4, h5, h6 {font-family: 'Hacen Tunisia Lt';}
 h4{line-height:23px;}
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {float: right;}
@@ -20,16 +21,7 @@ h4{line-height:23px;}
 .media-left, .media > .pull-left {padding-left: 25px;}
 .ug-logo{float:right;}
 .hdr-pic-ar {left: 0px !important; position: absolute; z-index: 999;}
-@media(max-width:991px) {
-.hdr-pic-ar{display:none;}	
-}
 /* multiple steps */
 .bs-wizard > .bs-wizard-step:first-child > .progress {right: 50%;}
 .progress-bar {float: right;}
 
-
-/* ADDED BY JOUD */
-input[type=submit].btn{
-    margin-top: 15px;
-}
-/* END OF ADDED BY JOUD */

@@ -25,15 +25,38 @@
 <div class="container-fluid" id="kfupm">
 	<div class="container">
 		<div class="row-fluid">
+			<!--<div class="pull-left">-->
+				<!--<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>-->
+			<!--</div>-->
 			<div class="pull-left">
-				<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>
+				<a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a>
+				<span class="text-muted"> | </span>
+				<a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>
 			</div>
 			<div class="pull-right">
-				<a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a> | <a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>
+				{% if user.is_authenticated %}
+				<!--<div class="pull-right">-->
+				<span class="text-welcome">{% trans 'Welcome' %}, {{ user.first_name }} </span>
+				&nbsp;<a style="color:white" href="{% url 'logout' %}" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}</a>
+				<!--</div>-->
+				{% endif %}
 			</div>
 		</div>
 	</div>
 </div>
+<!--<div class="container-fluid" id="kfupm">-->
+	<!--<div class="container">-->
+		<!--<div class="row-fluid">-->
+			<!--<div class="pull-left">-->
+				<!--<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>-->
+			<!--</div>-->
+			<!--<div class="pull-right">-->
+				<!--<a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a> | <a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>-->
+				 <!--&nbsp; <span class="text-welcome">Welcome, Ahmed </span> &nbsp;<button type="button" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+<!--</div>-->
 <div class="container-fluid header-bg">
 	<div class="container">
 		<div class="row">
@@ -77,11 +100,16 @@
 			</p>
 		</div>
 	</div>
-	<!-- /.row -->
 </div>
-<!-- jQuery -->
+
 <script src="{% static 'js/jquery.js' %}"></script>
-<!-- Bootstrap Core JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script>
+    $(function(){
+
+    });
+</script>
+{% block scripts %}
+{% endblock scripts %}
 </body>
 </html>

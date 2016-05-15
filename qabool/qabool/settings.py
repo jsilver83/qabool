@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.messages import constants as messages
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'qabool.middleware.force_default_language.ForceDefaultLanguageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -106,11 +108,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        # 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'TIMEOUT': 60,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
+    }
+}
+
+LOGIN_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'ar'
 
 TIME_ZONE = 'UTC'
 
@@ -123,8 +137,8 @@ USE_TZ = True
 TIME_ZONE = 'Asia/Riyadh'
 
 LANGUAGES = [
-    ('en', _('English')),
     ('ar', _('Arabic')),
+    ('en', _('English')),
 ]
 
 LOCALE_PATHS = (

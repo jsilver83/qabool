@@ -1,5 +1,6 @@
-
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.cache import cache_page
 
 from django.views.generic.edit import CreateView
 from django.http import HttpResponse, Http404
@@ -13,7 +14,8 @@ import requests
 
 from qabool import settings
 from .models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
-from .forms import RegistrationForm, MyAuthenticationForm, ForgotPasswordForm
+from .forms import RegistrationForm, MyAuthenticationForm, ForgotPasswordForm, AgreementForm
+from .utils import SMS, Email
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
@@ -36,22 +38,26 @@ def index(request, template_name='undergraduate_admission/login.html'):
     else:
         form = MyAuthenticationForm()
 
-    return render(request, 'undergraduate_admission/login.html', {'form': form})
+    return render(request, template_name, {'form': form})
 
 
+@cache_page(60 * 15)
 def initial_agreement(request):
+    form = AgreementForm(request.POST or None)
+
     if request.method == 'POST':
-        request.session['agreed'] = True
-        # request.session['agreed'].set_expiry(5)
-        return redirect(reverse('register'))
+        if form.is_valid():
+            request.session['agreed'] = True
+            return redirect(reverse('register'))
+        else:
+            messages.error(request, _('Error resetting password. Make sure you enter the correct info.'))
 
     sem = AdmissionSemester.get_phase1_active_semester()
     agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
     agreement_items = agreement.items.all()
-    # if not agreement:
-    #     raise Http404
-    # else:
-    return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement, 'items': agreement_items})
+    return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement,
+                                                                      'items': agreement_items,
+                                                                      'form': form,})
 
 
 class RegisterView(CreateView):
@@ -118,52 +124,9 @@ def forgot_password(request):
 
     return render(request, 'undergraduate_admission/forgot_password.html', {'form': form})
 
-
+@login_required
 def student_area(request):
     # user = User.objects.create_user('john7', 'lennon@thebeatles.com', 'johnpassword')
     return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user})
 
-
-class Email:
-    email_messages = {
-        'registration_success': _('Your request has been successfully submitted and the Admission results will be '
-                                  'announced on Wednesday June 24, 2015 (12:00 pm) ... '
-                                  'Applicant is recommended to frequently visit the admission website to know the '
-                                  'admission result and any updated instructions. Admissions Office, King Fahd '
-                                  'University of Petroleum and Minerals')
-    }
-
-    @staticmethod
-    def send_email_registration_success(email):
-        sem = AdmissionSemester.get_phase1_active_semester()
-        agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
-        agreement_items = agreement.items.all()
-
-        send_mail('Subject here', SMS.sms_messages['registration_success'],
-                  'admissions@kfupm.edu.sa', [email], fail_silently=False,
-                  html_message=Email.email_messages['registration_success'] + agreement.agreement_header)
-
-
-class SMS:
-    sms_messages = {
-        'registration_success': _('Your request has been successfully submitted and the Admission results will be '
-                                  'announced on Wednesday June 24, 2015 (12:00 pm) ... '
-                                  'Applicant is recommended to frequently visit the admission website to know the '
-                                  'admission result and any updated instructions. Admissions Office, King Fahd '
-                                  'University of Petroleum and Minerals'),
-        'confirmation_message': _('TBA')
-    }
-
-    @staticmethod
-    def send_sms(mobile, body):
-        r = requests.post('http://api.unifonic.com/rest/Messages/Send',
-                          data = {'AppSid': settings.UNIFONIC_APP_SID,
-                                  'Recipient': mobile,
-                                  'Body': body,
-                                  'SenderID': 'KFUPM-ADM'})
-        return r
-
-    @staticmethod
-    def send_sms_registration_success(mobile):
-        SMS.send_sms(mobile, SMS.sms_messages['registration_success'])
 
