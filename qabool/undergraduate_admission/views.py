@@ -48,7 +48,7 @@ def initial_agreement(request):
     if request.method == 'POST':
         if form.is_valid():
             request.session['agreed'] = True
-            return redirect(reverse('register'))
+            return redirect('register')
         else:
             messages.error(request, _('Error resetting password. Make sure you enter the correct info.'))
 
@@ -67,13 +67,12 @@ class RegisterView(CreateView):
     # success_url = reverse_lazy("login")
     form_class = RegistrationForm
 
-    def get(self, request):
+    def dispatch(self, request, *args, **kwargs):
         agreed = request.session.get('agreed')
         if agreed is None:
-            return redirect(reverse('initial_agreement'))
+            return redirect('initial_agreement')
         else:
-            # del request.session['agreed']
-            return render(request, self.template_name, {'form': self.form_class})
+            return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         reg_msg = RegistrationStatusMessage.objects.get(pk=1) # for status 1 'application submitted'
