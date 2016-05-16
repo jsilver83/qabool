@@ -1,4 +1,4 @@
-import datetime
+from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
@@ -171,7 +171,7 @@ class AdmissionSemester(models.Model):
 
     @staticmethod
     def get_phase1_active_semester():
-        now = datetime.datetime.now()
+        now = timezone.now()
         sem = AdmissionSemester.objects.filter(phase1_start_date__lte=now, phase1_end_date__gte=now).first()
         return sem
 
@@ -282,7 +282,7 @@ class DeniedStudent(models.Model):
         denied = activeSem.denied_students.filter(government_id = govid).first()
 
         if denied:
-            denied.last_trial_date = datetime.datetime.now()
+            denied.last_trial_date = timezone.now()
             if denied.trials_count is None:
                 denied.trials_count = 0
             denied.trials_count += 1
