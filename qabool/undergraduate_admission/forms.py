@@ -212,6 +212,7 @@ class RegistrationForm(UserCreationForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
+        self.fields['guardian_mobile'].required = True
         self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
         self.fields['password1'].widget = forms.PasswordInput(attrs = {'required':''})
         self.fields['password2'].widget = forms.PasswordInput(attrs = {'required':''})
@@ -292,31 +293,3 @@ class RegistrationForm(UserCreationForm):
                 code='guardian_mobile_match',
             )
         return mobile2
-
-
-# class RegisterForm2(UserCreationForm):
-#     mobile2 = forms.CharField(
-#         label=_('Mobile Confirmation'),
-#         max_length=50,
-#         required=True,
-#         widget = forms.TextInput(attrs = {'class':'nocopy'})
-#     )
-#
-#     class Meta:
-#         model = User
-#         fields = ['username', 'mobile', 'mobile2', 'guardian_mobile']
-#         labels = {
-#             'username': _('Government ID'),
-#         }
-#         widgets = {
-#             # workaround since __init__ setting to required doesnt work
-#             'username': forms.TextInput(attrs = {'required':''}),
-#             # 'mobile': forms.TextInput(attrs = {'required':''}),
-#         }
-#         # initial = {'username': _('Government ID')}
-#
-#     def __init__(self, *args, **kwargs):
-#         super(RegisterForm2, self).__init__(*args, **kwargs)
-#
-#         # for key in self.fields:
-#         self.fields['mobile'].required = True

@@ -69,8 +69,8 @@ class User(AbstractUser):
     family_name_ar = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Family Name (Arabic)'))
     first_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('First Name (English)'))
     second_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Second Name (English)'))
-    third_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Third Name (Arabic)'))
-    family_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Family Name (Arabic)'))
+    third_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Third Name (English)'))
+    family_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Family Name (English)'))
     mother_gov_id_file = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Mother Government ID'))
     birth_certificate = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Birth Date Certificate'))
     government_id_file = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Government ID File'))
@@ -101,7 +101,7 @@ class User(AbstractUser):
         help_text=_('Guardian mobile should be different than own mobile'),
         validators=[
             RegexValidator(
-                '^966\d{9}$',
+                '^9665\d{8}$',
                 message=_('You have entered an invalid mobile number')
             ),
         ]
@@ -149,7 +149,7 @@ class User(AbstractUser):
         self._meta.get_field('username').verbose_name = _('Government ID')
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name #+ ' (' + self.username + ')'
+        return self.first_name + ' ' + self.last_name # + ' (' + self.username + ')'
 
     class Meta:
         verbose_name = "user"
@@ -162,6 +162,7 @@ class AdmissionSemester(models.Model):
     phase1_end_date = models.DateTimeField(null=True, verbose_name=_('Phase 1 End Date'))
     phase2_start_date = models.DateTimeField(null=True, verbose_name=_('Phase 2 Start Date'))
     phase2_end_date = models.DateTimeField(null=True, verbose_name=_('Phase 2 End Date'))
+    # results_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Results Announcement Date'))
     high_school_gpa_weight = models.FloatField(null=True, blank=False, verbose_name=_('High School GPA Weight'))
     qudrat_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Qudrat Score Weight'))
     tahsili_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Tahsili Score Weight'))
@@ -179,6 +180,7 @@ class AdmissionSemester(models.Model):
 class RegistrationStatus(models.Model):
     status_ar = models.CharField(max_length=50, verbose_name=_('Status (Arabic)'))
     status_en = models.CharField(max_length=50, verbose_name=_('Status (English)'))
+    status_code = models.CharField(max_length=20, null=True, blank=False)
 
     @property
     def registration_status(self):
@@ -388,7 +390,7 @@ class AgreementItem(models.Model):
         null=True,
         related_name = 'items',
     )
-    agreement_text_ar = models.CharField(max_length=2000, verbose_name=_('Agreement Text (Arabic)'))
+    agreement_text_ar = models.CharField(max_length=2000, verbose_name=_('Agreement Text (Arabic)') )
     agreement_text_en = models.CharField(max_length=2000, verbose_name=_('Agreement Text (English)'))
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
