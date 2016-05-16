@@ -60,14 +60,12 @@ class IntitialAgreementTestCase(TestCase):
         self.assertEqual(response.resolver_match.func.__name__, 'initial_agreement')
         self.assertEqual(response.status_code, 200)
 
-
     def test_post_initialagreement_without_agree1_agree2(self):
         response = self.client.post('/en/initialagreement/', {'agree1': False, 'agree2': False})
         self.assertFormError(response, 'form', 'agree1', 'This field is required.')
         self.assertFormError(response, 'form', 'agree2', 'This field is required.')
         self.assertEqual(response.resolver_match.func.__name__, 'initial_agreement')
         self.assertEqual(response.status_code, 200)
-
 
     def test_post_initialagreement_after_agreeing(self):
         response = self.client.post('/en/initialagreement/', {'agree1': True, 'agree2': True}, follow=True)
