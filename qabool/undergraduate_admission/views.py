@@ -19,6 +19,8 @@ from .utils import SMS, Email
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
+    if request.method == 'GET' and request.user.is_authenticated():
+        return redirect(reverse('student_area'))
 
     if request.method == 'POST':
         username = request.POST['username']

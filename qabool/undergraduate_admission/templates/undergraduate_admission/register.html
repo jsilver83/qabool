@@ -5,7 +5,7 @@
 
 {% block subcontent %}
 <h3>To get started, please set up an account so you can return to the site to work on your application at any time.</h3>
-Already applied for admission? <a href="#"><u>Log in</u></a> to review your application.
+Already applied for admission? <a href="/"><u>Log in</u></a> to review your application.
 <hr>
 <form action="{% url 'register' %}" method="post" class="form-horizontal">
 	{% csrf_token %}
@@ -23,7 +23,12 @@ Already applied for admission? <a href="#"><u>Log in</u></a> to review your appl
 </form>
 {% endblock subcontent %}
 
+{% block styles %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+{% endblock styles %}
+
 {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
 <script>
 	$(function(){
 		$(".subBtn").hide();
@@ -31,6 +36,12 @@ Already applied for admission? <a href="#"><u>Log in</u></a> to review your appl
 		$(".concurr").click(function(){
             $(".subBtn").toggle();
         });
+
+        {% if LANGUAGE_CODE == 'ar' %}$(".select2").select2({
+		  dir: "rtl"
+		});
+		{% else %}
+		$(".select2").select2();{% endif %}
 
         $("form").attr("autocomplete","off");
 

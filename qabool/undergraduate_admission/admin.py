@@ -7,6 +7,19 @@ from reversion.admin import VersionAdmin
 
 class UserAdmin(VersionAdmin):
     list_display = ('username', 'first_name', 'email', 'status_message_id')
+    date_hierarchy = 'date_joined'
+    exclude = ('password',)
+
+
+class UserHelpDisk(User):
+    class Meta:
+        proxy = True
+
+
+class UserHelpDiskAdmin(VersionAdmin):
+    list_display = ('username', 'first_name', 'email', 'status_message_id')
+    date_hierarchy = 'date_joined'
+    exclude = ('password',)
 
 
 class RegistrationStatusMessageAdmin(admin.ModelAdmin):
@@ -22,3 +35,4 @@ admin.site.register(Agreement)
 admin.site.register(AgreementItem)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, UserAdmin)
+admin.site.register(UserHelpDisk, UserHelpDiskAdmin)
