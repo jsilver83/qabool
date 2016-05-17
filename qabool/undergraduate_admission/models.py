@@ -48,12 +48,12 @@ class User(AbstractUser):
     mobile = models.CharField(
         null=True,
         blank=False,
-        max_length=50,
+        max_length=12,
         verbose_name=_('Mobile'),
-        help_text=_('Mobile number should be of this format "966xxxxxxxxx" '),
+        help_text=_('Mobile number should be of this format "9665xxxxxxxx" '),
         validators=[
             RegexValidator(
-                '^966\d{9}$',
+                '^9665\d{8}$',
                 message=_('You have entered an invalid mobile number')
             ),
         ]
@@ -96,7 +96,7 @@ class User(AbstractUser):
     guardian_mobile = models.CharField(
         null=True,
         blank=True,
-        max_length=50,
+        max_length=12,
         verbose_name=_('Guardian Mobile'),
         help_text=_('Guardian mobile should be different than own mobile'),
         validators=[

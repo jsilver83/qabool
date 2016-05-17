@@ -156,23 +156,27 @@ class RegistrationForm(UserCreationForm):
     )
     username = forms.CharField(
         label=_('Government ID'),
+        max_length=11,
+        min_length=9,
         help_text=_('National ID for Saudis, Iqama Number for non-Saudis.'),
         validators=[
             RegexValidator(
-                '^\d{10}$',
+                '^\d{11}$',
                 message=UserCreationForm.error_messages['govid_invalid']
             ),
         ]
     )
     username2 = forms.CharField(
         label=_('Government ID Confirmation'),
+        max_length=11,
+        min_length=9,
         required=True,
         help_text= _('Enter the same government ID as before, for verification'),
         widget = forms.TextInput(attrs = {'class':'nocopy'})
     )
     mobile2 = forms.CharField(
         label=_('Mobile Confirmation'),
-        max_length=50,
+        max_length=12,
         required=True,
         help_text= _('Enter the same mobile number as before, for verification'),
         widget = forms.TextInput(attrs = {'class':'nocopy'})
@@ -184,11 +188,11 @@ class RegistrationForm(UserCreationForm):
         fields = ['first_name', 'last_name', 'username', 'username2', 'mobile', 'mobile2',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'nationality',
                   'saudi_mother', 'password1', 'password2']
-        # CHOICES = (
-        #     # (None, "I do not know now"),
-        #     (True, _("Yes")),
-        #     (False, _("No")),
-        # )
+        CHOICES = (
+            ('', "---"),
+            (True, _("Yes")),
+            (False, _("No")),
+        )
 
         widgets = {
             # workaround since __init__ setting to required doesnt work
@@ -201,7 +205,7 @@ class RegistrationForm(UserCreationForm):
                 'class': 'select2',}),
             'mobile': forms.TextInput(attrs = {'required': ''}),
             'guardian_mobile': forms.TextInput(attrs = {'required': ''}),
-            # 'saudi_mother': forms.RadioSelect(choices = CHOICES),
+            'saudi_mother': forms.Select(choices = CHOICES),
         }
         # help_texts = {
         #     'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),

@@ -42,3 +42,14 @@ h4{line-height:23px;}
 /* multiple steps */
 .bs-wizard > .bs-wizard-step:first-child > .progress {right: 50%;}
 .progress-bar {float: right;}
+
+/* added by joud and almaaesh */
+.phone-no{
+direction: ltr;
+unicode-bidi: bidi-override;
+}
+
+select, input{
+font-size: 110%!important;
+}
+/* end of add by j and a */
