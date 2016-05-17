@@ -390,8 +390,8 @@ class AgreementItem(models.Model):
         null=True,
         related_name = 'items',
     )
-    agreement_text_ar = models.CharField(max_length=2000, verbose_name=_('Agreement Text (Arabic)') )
-    agreement_text_en = models.CharField(max_length=2000, verbose_name=_('Agreement Text (English)'))
+    agreement_text_ar = models.TextField(max_length=2000, verbose_name=_('Agreement Text (Arabic)') )
+    agreement_text_en = models.TextField(max_length=2000, verbose_name=_('Agreement Text (English)'))
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
 
