@@ -4,8 +4,10 @@
 {% load floppyforms %}
 
 {% block subcontent %}
+{% blocktrans %}
 <h3>To get started, please set up an account so you can return to the site to work on your application at any time.</h3>
 Already applied for admission? <a href="/"><u>Log in</u></a> to review your application.
+{% endblocktrans %}
 <hr>
 <form action="{% url 'register' %}" method="post" class="form-horizontal">
 	{% csrf_token %}
@@ -61,12 +63,12 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 	function sm(nat){
 		if(nat == 1){
             $("#id_saudi_mother").parents(".form-group").hide();
-            $("#id_saudi_mother").val("1");
+            $("#id_saudi_mother").val("");
             $("#id_saudi_mother").removeAttr("required");
         }
         else{
             $("#id_saudi_mother").parents(".form-group").show();
-            $("#id_saudi_mother").val("3");
+            $("#id_saudi_mother").val("False");
             $("#id_saudi_mother").attr("required", "");
         }
 	}

@@ -25,7 +25,11 @@ class UserHelpDiskAdmin(VersionAdmin):
 class RegistrationStatusMessageAdmin(admin.ModelAdmin):
     list_display = ('status_message_ar', 'status_message_en', 'status_id')
 
-admin.site.register(Nationality)
+class NationalityAdmin(admin.ModelAdmin):
+    list_display = ('nationality_ar', 'nationality_en', 'show', 'display_order')
+    search_fields = ['nationality_en']
+
+admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(RegistrationStatus)
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
