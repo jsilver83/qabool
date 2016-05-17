@@ -2,11 +2,11 @@
 {% load i18n %}
 
 {% block subcontent %}
-{{ agreement.agreement_header }}
-<br><br>
+{{ agreement.agreement_header|linebreaks }}
+<br>
 <ul>
 	{% for item in items %}
-	<li>{{ item|safe }}</li>
+	<li>{{ item|safe|linebreaks }}</li>
 	{% endfor %}
 </ul>
 
