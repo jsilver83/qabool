@@ -10,3 +10,6 @@ docs/5-design.{html,xml,pdf}
 db.sqlite3
 local_settings.py
 qabool/locale/ar/LC_MESSAGES/django.mo
+*.retry
+.DS_Store
+*.mo
