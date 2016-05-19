@@ -17,9 +17,9 @@
    "model": "undergraduate_admission.graduationyear",
    "pk": 1,
    "fields": {
-      "graduation_year_en": "2016",
-      "graduation_year_ar": "1437",
-      "description": "1437-2016",
+      "graduation_year_en": "Last Year 2015",
+      "graduation_year_ar": "\u0627\u0644\u0639\u0627\u0645 \u0627\u0644\u0633\u0627\u0628\u0642 1436 \u0647\u0640",
+      "description": "1436-2015",
       "show": true,
       "display_order": 1000
    }
@@ -28,11 +28,22 @@
    "model": "undergraduate_admission.graduationyear",
    "pk": 2,
    "fields": {
-      "graduation_year_en": "2017",
-      "graduation_year_ar": "1438",
-      "description": "1438-2017",
+      "graduation_year_en": "Current Year 2016",
+      "graduation_year_ar": "\u0627\u0644\u0639\u0627\u0645 \u0627\u0644\u062d\u0627\u0644\u064a 1437 \u0647\u0640",
+      "description": "1437-2016",
       "show": true,
       "display_order": 2000
+   }
+},
+{
+   "model": "undergraduate_admission.graduationyear",
+   "pk": 3,
+   "fields": {
+      "graduation_year_en": "Other",
+      "graduation_year_ar": "\u0623\u062e\u0631\u0649",
+      "description": "Other",
+      "show": true,
+      "display_order": 0
    }
 },
 {
@@ -2410,8 +2421,8 @@
    "model": "undergraduate_admission.registrationstatusmessage",
    "pk": 1,
    "fields": {
-      "status_message_ar": "\u0633\u064a\u062a\u0645 \u0627\ufefb\u0639\ufefb\u0646 \u0639\u0646 \u0627\u0644\u0646\u062a\u0627\u0626\u062c \u0642\u0631\u064a\u0628\u0627.",
-      "status_message_en": "Results will be announced soon.",
+      "status_message_ar": "\u0633\u064a\u062a\u0645 \u0627\u0644\u0625\u0639\u0644\u0627\u0646 \u0639\u0646 \u0627\u0644\u0646\u062a\u0627\u0626\u062c \u064a\u0648\u0645 \u0627\u0644\u0623\u0631\u0628\u0639\u0627\u0621 10 \u0631\u0645\u0636\u0627\u0646 1437\u0647\u0640 \u0627\u0644\u0645\u0648\u0627\u0641\u0642 15 \u064a\u0648\u0646\u064a\u0648 2016.",
+      "status_message_en": "Results will be announced on Wed 15 June 2016.",
       "status": 1
    }
 },
