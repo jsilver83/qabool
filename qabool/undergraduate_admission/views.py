@@ -93,7 +93,7 @@ class RegisterView(CreateView):
                                         guardian_mobile=form.cleaned_data['guardian_mobile'],)
 
         SMS.send_sms_registration_success(user.mobile)
-        Email.send_email_registration_success(user.email)
+        Email.send_email_registration_success(user)
 
         self.request.session['user'] = user.id
         success_url = reverse('registration_success')
