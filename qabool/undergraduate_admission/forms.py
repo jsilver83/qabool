@@ -158,12 +158,12 @@ class RegistrationForm(UserCreationForm):
         max_length=11,
         min_length=9,
         help_text=_('National ID for Saudis, Iqama Number for non-Saudis.'),
-        validators=[
-            RegexValidator(
-                '^\d{9-11}$',
-                message=UserCreationForm.error_messages['govid_invalid']
-            ),
-        ]
+        # validators=[
+        #     RegexValidator(
+        #         '^\d{9-11}$',
+        #         message=UserCreationForm.error_messages['govid_invalid']
+        #     ),
+        # ]
     )
     username2 = forms.CharField(
         label=_('Government ID Confirmation'),
