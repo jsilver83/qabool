@@ -5,14 +5,10 @@ from django.views.decorators.cache import cache_page
 from django.views.generic.edit import CreateView
 from django.http import HttpResponse, Http404
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.core.mail import send_mail
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
-import requests
-
-from qabool import settings
 from .models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
 from .forms import RegistrationForm, MyAuthenticationForm, ForgotPasswordForm, AgreementForm
 from .utils import SMS, Email
@@ -90,7 +86,9 @@ class RegisterView(CreateView):
                                         nationality=form.cleaned_data['nationality'],
                                         saudi_mother=form.cleaned_data['saudi_mother'],
                                         mobile=form.cleaned_data['mobile'],
-                                        guardian_mobile=form.cleaned_data['guardian_mobile'],)
+                                        guardian_mobile=form.cleaned_data['guardian_mobile'],
+                                        student_notes=form.cleaned_data['student_notes'],
+                                        )
 
         SMS.send_sms_registration_success(user.mobile)
         Email.send_email_registration_success(user)
@@ -101,12 +99,11 @@ class RegisterView(CreateView):
 
 
 def registration_success(request):
-    userId = request.session.get('user')#request.session['user']
-    if userId is not None:
-        user = get_object_or_404(User, pk=userId)
+    user_id = request.session.get('user')
+    if user_id is not None:
+        user = get_object_or_404(User, pk=user_id)
         return render(request, 'undergraduate_admission/registration_success.html', context={'user': user})
     else:
-        # return redirect(reverse(RegisterView.as_view()))
         return redirect('register')
 
 
@@ -114,7 +111,6 @@ def forgot_password(request):
     form = ForgotPasswordForm(request.POST or None)
 
     if request.method == 'POST':
-        # form = ForgotPasswordForm(request.POST or None)
         if form.is_valid():
             saved = form.save()
             if saved:
@@ -127,7 +123,6 @@ def forgot_password(request):
 
 @login_required
 def student_area(request):
-    # user = User.objects.create_user('john7', 'lennon@thebeatles.com', 'johnpassword')
     return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user})
 
 

@@ -12,15 +12,15 @@ from undergraduate_admission.models import AdmissionSemester, Agreement
 class Email(object):
     email_messages = {
         'registration_success':
-            _('Dear %s,<br>Your request has been successfully submitted and the Admission results '
+            _('Dear %(student_name)s,<br>Your request has been successfully submitted and the Admission results '
                 'will be announced on Wednesday June 15, 2016 ... <br>'
                 '<h4>Registration Details</h4><hr>'
-                'Registration ID: %s<br>'
-                'Mobile: %s<br>'
-                'Registration Date: %s'
-                'You agreed to the following:%s'
+                'Registration ID: %(user_id)s<br>'
+                'Mobile: %(mobile)s<br>'
+                'Registration Date: %(reg_date)s<br><hr><br>'
+                'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
                 '<hr>You are recommended to frequently visit the admission website to know the '
-                'admission result and any updated instructions.<br><br> Admissions Office, King Fahd '
+                'admission result and any updated instructions.<br><br> Admissions Office, <br>King Fahd '
                 'University of Petroleum and Minerals'),
     }
 
@@ -30,12 +30,20 @@ class Email(object):
         agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
         agreement_items = agreement.items.all()
 
-        html_message = Email.email_messages['registration_success']%(user.first_name,
-                                                                     user.id,
-                                                                     user.mobile,
-                                                                     timezone.now().strftime('%x'),
-                                                                     agreement.agreement_header)
-        plain_message = Email.email_messages['registration_success']%(user.first_name, user.id, agreement.agreement_header)
+        a_items = ''
+        for a_item in agreement_items:
+            a_items += '<li>%s</li>'%(a_item)
+
+        html_message = Email.email_messages['registration_success']%(
+            {'student_name': user.first_name,
+             'user_id': user.id,
+             'mobile': user.mobile,
+             'reg_date': timezone.now().strftime('%x'),
+             'agree_header': agreement.agreement_header,
+             'agree_items': a_items,
+              })
+
+        plain_message = SMS.sms_messages['registration_success']
 
         send_mail(_('KFUPM Admission'), plain_message,
                   'admissions@kfupm.edu.sa', [user.email], fail_silently=True,
@@ -44,11 +52,10 @@ class Email(object):
 
 class SMS(object):
     sms_messages = {
-        'registration_success': _('Your request has been successfully submitted and the Admission results will be '
-                                  'announced on Wednesday June 24, 2015 (12:00 pm) ... '
-                                  'Applicant is recommended to frequently visit the admission website to know the '
-                                  'admission result and any updated instructions. Admissions Office, King Fahd '
-                                  'University of Petroleum and Minerals'),
+        'registration_success': _('Your request has been successfully submitted and the results will be '
+                                  'announced on Wednesday June 15, 2016 ... '
+                                  'And you are recommended to visit the admission website to know the '
+                                  'result and any updates. Admissions Office, KFUPM'),
         'confirmation_message': _('TBA'),
     }
 
@@ -63,5 +70,5 @@ class SMS(object):
 
     @staticmethod
     def send_sms_registration_success(mobile):
-        SMS.send_sms(mobile, SMS.sms_messages['registration_success'])
+        SMS.send_sms(mobile, '%s'%(SMS.sms_messages['registration_success'])) # unjustifiable workaround
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-18 10:58+0300\n"
-"PO-Revision-Date: 2016-05-19 09:17+0300\n"
+"POT-Creation-Date: 2016-05-19 12:07+0300\n"
+"PO-Revision-Date: 2016-05-19 12:10+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -19,6 +19,10 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Generator: Poedit 1.6.10\n"
 
+#: added by joud
+msgid "This password is too short. It must contain at least %(min_length)d character."
+msgstr "snsnlsdnlnsd %(min_length)d sfnsdlfnsdl"
+
 #: qabool/settings.py:140
 msgid "Arabic"
 msgstr "عربي"
@@ -28,11 +32,11 @@ msgid "English"
 msgstr "انجليزي"
 
 #: undergraduate_admission/forms.py:19 undergraduate_admission/forms.py:33
-#: undergraduate_admission/forms.py:158 undergraduate_admission/models.py:149
+#: undergraduate_admission/forms.py:157 undergraduate_admission/models.py:149
 #: undergraduate_admission/models.py:264 undergraduate_admission/models.py:297
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:25
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:14
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:46
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:48
 msgid "Government ID"
 msgstr "الهوية الوطنية أو هوية مقيم"
 
@@ -44,52 +48,56 @@ msgstr "كلمة المرور غير متطابقة"
 msgid "Registration Number"
 msgstr "رقم التسجيل"
 
-#: undergraduate_admission/forms.py:46
+#: undergraduate_admission/forms.py:45
 msgid "Password"
 msgstr "كلمة المرور"
 
-#: undergraduate_admission/forms.py:54
+#: undergraduate_admission/forms.py:48 undergraduate_admission/forms.py:223
+msgid "Minimum length is 8. Use both numbers and characters."
+msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
+
+#: undergraduate_admission/forms.py:53
 msgid "Password confirmation"
 msgstr "تأكيد كلمة المرور"
 
-#: undergraduate_admission/forms.py:57
+#: undergraduate_admission/forms.py:56 undergraduate_admission/forms.py:224
 msgid "Enter the same password as before, for verification"
 msgstr "أعد إدخال كلمة المرور السابقة وذلك للتحقق"
 
-#: undergraduate_admission/forms.py:66 undergraduate_admission/forms.py:161
+#: undergraduate_admission/forms.py:65 undergraduate_admission/forms.py:160
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr "رقم الهوية الوطنية للسعوديين ، ورقم هوية مقيم  لغير السعوديين."
 
-#: undergraduate_admission/forms.py:113
+#: undergraduate_admission/forms.py:112
 msgid "I have read all of the above terms and conditions for applying to KFUPM"
 msgstr ""
 "لقد تم قراءة جميع الإقرارات وشروط التسجيل في جامعة الملك فهد للبترول والمعادن"
 
-#: undergraduate_admission/forms.py:114
+#: undergraduate_admission/forms.py:113
 msgid "I accep all the above terms and conditions"
 msgstr "أوافق على جميع الشروط و الأحكام اعلاه."
 
-#: undergraduate_admission/forms.py:121 undergraduate_admission/forms.py:129
+#: undergraduate_admission/forms.py:120 undergraduate_admission/forms.py:128
 msgid "You have to check this box"
 msgstr "يجب عليك التأشير في المربع"
 
-#: undergraduate_admission/forms.py:136
+#: undergraduate_admission/forms.py:135
 msgid "The two email fields didn't match."
 msgstr "عنوان البريد الإلكتروني غير متطابق."
 
-#: undergraduate_admission/forms.py:137
+#: undergraduate_admission/forms.py:136
 msgid "The two government ID fields didn't match."
 msgstr "حقل الهوية الوطنية أو هوية مقيم  غير متطابق."
 
-#: undergraduate_admission/forms.py:138
+#: undergraduate_admission/forms.py:137
 msgid "The two mobile fields didn't match."
 msgstr "حقل رقم الجوال غير متطابق"
 
-#: undergraduate_admission/forms.py:139
+#: undergraduate_admission/forms.py:138
 msgid "You have been denied from applying for the following reason(s): "
 msgstr "لا يسمح لك  التسجيل في الجامعة للأسباب التالية:"
 
-#: undergraduate_admission/forms.py:140
+#: undergraduate_admission/forms.py:139
 msgid ""
 "The Email entered is associated with another applicant. Please use a "
 "different Email"
@@ -97,55 +105,51 @@ msgstr ""
 "لقد تم استخدام عنوان البريد الإلكتروني من قبل طالب آخر. الرجاء ادخال عنوان "
 "بريد إلكتروني جديد"
 
-#: undergraduate_admission/forms.py:142
+#: undergraduate_admission/forms.py:141
 msgid ""
 "The Mobile entered is associated with another applicant. Please use a "
 "different Mobile"
 msgstr "لقد تم استخدام رقم الجوال من قبل طالب آخر. الرجاء ادخال رقم جوال آخر"
 
-#: undergraduate_admission/forms.py:144
+#: undergraduate_admission/forms.py:143
 msgid "You have entered an invalid Government ID"
 msgstr "لقد ادخلت رقم هوية غير صحيح"
 
-#: undergraduate_admission/forms.py:145
+#: undergraduate_admission/forms.py:144
 msgid "You have entered the guardian mobile same as your own mobile"
 msgstr "لقد ادخلت رقم جوال ولي الأمر نفس رقم جوالك"
 
-#: undergraduate_admission/forms.py:152
+#: undergraduate_admission/forms.py:151
 msgid "Email Address Confirmation"
 msgstr "تأكيد  عنوان البريد الإلكتروني"
 
-#: undergraduate_admission/forms.py:154
+#: undergraduate_admission/forms.py:153
 msgid "Enter the same email address as before, for verification"
 msgstr "أعد إدخال عنوان البريد الإلكتروني السابق وذلك للتحقق"
 
-#: undergraduate_admission/forms.py:170
+#: undergraduate_admission/forms.py:169
 msgid "Government ID Confirmation"
 msgstr "تأكيد الهوية الوطنية أو هوية مقيم"
 
-#: undergraduate_admission/forms.py:174
+#: undergraduate_admission/forms.py:173
 msgid "Enter the same government ID as before, for verification"
 msgstr "أعد إدخال الهوية الوطنية أو هوية مقيم  وذلك للتحقق"
 
-#: undergraduate_admission/forms.py:178
+#: undergraduate_admission/forms.py:177
 msgid "Mobile Confirmation"
 msgstr "تأكيد رقم الجوال"
 
-#: undergraduate_admission/forms.py:181
+#: undergraduate_admission/forms.py:180
 msgid "Enter the same mobile number as before, for verification"
 msgstr "أعد إدخال رقم الجوال السابق  وذلك للتحقق"
 
-#: undergraduate_admission/forms.py:193
+#: undergraduate_admission/forms.py:192
 msgid "Yes"
 msgstr "نعم"
 
-#: undergraduate_admission/forms.py:194
+#: undergraduate_admission/forms.py:193
 msgid "No"
 msgstr "لا"
-
-#: undergraduate_admission/forms.py:220
-msgid "Minimum length is 8. Use both numbers and characters."
-msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
 
 #: undergraduate_admission/models.py:17
 msgid "Admission Semester"
@@ -160,7 +164,7 @@ msgid "Admission Note"
 msgstr "ملاحظة القبول"
 
 #: undergraduate_admission/models.py:35
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:70
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:72
 msgid "Nationality"
 msgstr "الجنسية"
 
@@ -177,14 +181,14 @@ msgid "Birthday Hijri"
 msgstr "تاريخ الميلاد بالهجري"
 
 #: undergraduate_admission/models.py:46
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:76
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:78
 msgid "Graduation Year"
 msgstr "سنة التخرج"
 
 #: undergraduate_admission/models.py:52
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:26
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:15
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:52
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:54
 msgid "Mobile"
 msgstr "رقم الجوال"
 
@@ -337,7 +341,7 @@ msgid "Guardian Phone"
 msgstr "هاتف ولي الأمر"
 
 #: undergraduate_admission/models.py:100
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:64
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:66
 msgid "Guardian Mobile"
 msgstr "رقم جوال ولي الأمر"
 
@@ -653,7 +657,6 @@ msgid ""
 "\t\t\t\t<div class=\"media-body\">\n"
 "\t\t\t\t\t<h4 class=\"media-heading text-uppercase\"><strong>Need Help?</"
 "strong></h4>\n"
-"\t\t\t\t\tCall Admissions Office<br>\n"
 "\t\t\t\t\t<strong>Phone:</strong> +966 (13) 860 2901<br>\n"
 "\t\t\t\t\t<strong>Fax:</strong> +966 (13) 860 2722<br>\n"
 "\t\t\t\t\t<strong>Email:</strong> <a href=\"mailto:admissions@kfupm.edu.sa"
@@ -702,7 +705,6 @@ msgstr ""
 "\t\t\t\t<div class=\"media-body\">\n"
 "\t\t\t\t\t<h4 class=\"media-heading text-uppercase\"><strong>هل تحتاج إلى "
 "مساعدة؟</strong></h4>\n"
-"\t\t\t\t\t مكتب القبول<br>\n"
 "\t\t\t\t\t<strong>هاتف:</strong> <span class=\"phone-no\"> +966 (13) 860 "
 "2901</span><br>\n"
 "\t\t\t\t\t<strong>فاكس:</strong> <span class=\"phone-no\"> +966 (13) 860 "
@@ -732,8 +734,8 @@ msgstr "خروج"
 #: undergraduate_admission/templates/base.html:98
 msgid ""
 "\n"
-"\t\t\t\t&copy; Undergraduate Admissions, King Fahd University of Petroleum "
-"&amp; Minerals<br>\n"
+"\t\t\t\t&copy; Admissions Office, King Fahd University of Petroleum &amp; "
+"Minerals<br>\n"
 "\t\t\t\tDhahran, 31261 | Saudi Arabia | +966 (13) 860 2901<br>\n"
 "\t\t\t\t<a href=\"http://www.kfupm.edu.sa/admissions\">www.kfupm.edu.sa/"
 "admissions</a>\n"
@@ -741,7 +743,7 @@ msgid ""
 "\t\t\t\t"
 msgstr ""
 "\n"
-"\t\t\t\t&copy; إدارة القبول والتسجيل<br>\n"
+"\t\t\t\t&copy; إدارة القبول<br>\n"
 "\t\t\t\tالظهران, 31261 | المملكة العربية السعودية | <span class=\"phone-no\">"
 "+966 (13) 860 2901</span><br>\n"
 "\t\t\t\t<a href=\"http://www.kfupm.edu.sa/admissions\">www.kfupm.edu.sa/"
@@ -850,12 +852,12 @@ msgid "Application Status"
 msgstr "حالة الطلب"
 
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:13
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:40
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:42
 msgid "Registration ID"
 msgstr "رقم  التسجيل"
 
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:16
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:58
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:60
 msgid "Email"
 msgstr "عنوان البريد اﻹلكتروني"
 
@@ -885,48 +887,53 @@ msgstr "في حال رغبتكم في الإنسحاب ، الرجاء الضغ�
 msgid "Withdraw Application"
 msgstr "اﻻنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:36
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:35
 msgid "Application Details"
 msgstr "تفاصيل الطلب"
 
-#: undergraduate_admission/utils.py:13
-#, fuzzy
-#| msgid ""
-#| "Your request has been successfully submitted and the Admission results "
-#| "will be announced on Wednesday June 24, 2015 (12:00 pm) ... Applicant is "
-#| "recommended to frequently visit the admission website to know the "
-#| "admission result and any updated instructions. Admissions Office, King "
-#| "Fahd University of Petroleum and Minerals"
+#: undergraduate_admission/utils.py:15
+#, python-format
 msgid ""
-"Your request has been successfully submitted and the Admission results will "
-"be announced on Wednesday June 15, 2016 ... Applicant is recommended to "
-"frequently visit the admission website to know the admission result and any "
-"updated instructions. Admissions Office, King Fahd University of Petroleum "
-"and Minerals"
-msgstr ""
-"تم استلام طلبك بنجاح وسوف تعلن النتائج يوم الأربعاء 10 رمضان 1437هـ ( حسب "
-"تقويم أم القرى ) الموافق 15 يونيو 2016م الساعة 12 ظهرا"
-
-#: undergraduate_admission/utils.py:36
-msgid ""
-"Your request has been successfully submitted and the Admission results will "
-"be announced on Wednesday June 24, 2015 (12:00 pm) ... Applicant is "
+"Dear %(student_name)s,<br>Your request has been successfully submitted and "
+"the Admission results will be announced on Wednesday June 15, 2016 ... "
+"<br><h4>Registration Details</h4><hr>Registration ID: %(user_id)s<br>Mobile: "
+"%(mobile)s<br>Registration Date: %(reg_date)s<br><hr><br>You agreed to the "
+"following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr>You are "
 "recommended to frequently visit the admission website to know the admission "
-"result and any updated instructions. Admissions Office, King Fahd University "
-"of Petroleum and Minerals"
+"result and any updated instructions.<br><br> Admissions Office, <br>King "
+"Fahd University of Petroleum and Minerals"
 msgstr ""
-"تم استلام طلبك بنجاح وسوف تعلن النتائج يوم الأربعاء 10 رمضان 1437هـ ( حسب "
-"تقويم أم القرى ) الموافق 15 يونيو 2016م الساعة 12 ظهرا"
+"<div style=\"direction:rtl\">عزيزي الطالب %(student_name)s,<br>تم استلام "
+"طلبك بنجاح وسيتم إعلان النتائج يوم اﻷربعاء 10 رمضان 1437 هـ حسب تقويم أم "
+"القرى  ... <br><h4>تفاصيل الطلب</h4><hr>رقم التسجيل: %(user_id)s<br>رقم "
+"الجوال: %(mobile)s<br>تاريخ التسجيل: %(reg_date)s<br><hr><br>الشروط و اﻷحكام:"
+"<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr>كما يجب عليك مراجعة "
+"موقع إدارة القبول الالكتروني لمتابعة طلبك باستمرار.<br><br> إدارة القبول, "
+"<br>جامعة الملك فهد للبترول والمعادن.</div>"
 
-#: undergraduate_admission/utils.py:41
+#: undergraduate_admission/utils.py:52
+msgid "KFUPM Admission"
+msgstr "إدارة القبول بجامعة الملك فهد للبترول والمعادن"
+
+#: undergraduate_admission/utils.py:59
+msgid ""
+"Your request has been successfully submitted and the results will be "
+"announced on Wednesday June 15, 2016 ... And you are recommended to visit "
+"the admission website to know the result and any updates. Admissions Office, "
+"KFUPM"
+msgstr ""
+"تم استلام طلبك بنجاح وسوف تعلن النتائج يوم الأربعاء 10 رمضان 1437هـ الموافق "
+"15 يونيو 2016م. إدارة القبول - جامعة الملك فهد للبترول والمعادن."
+
+#: undergraduate_admission/utils.py:63
 msgid "TBA"
 msgstr ""
 
-#: undergraduate_admission/views.py:55 undergraduate_admission/views.py:124
+#: undergraduate_admission/views.py:51 undergraduate_admission/views.py:118
 msgid "Error resetting password. Make sure you enter the correct info."
 msgstr "خطأ بتغيير كلمة المرور, الرجاء ادخال معلومات بشكل صحيحة"
 
-#: undergraduate_admission/views.py:121
+#: undergraduate_admission/views.py:115
 msgid "Password was reset successfully..."
 msgstr "لقد تم تغير كلمة المرور بنجاح"
 
