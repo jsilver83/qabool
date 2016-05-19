@@ -250,3 +250,11 @@ a.list-group-item:hover{
 .bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
+
+/* added by joud
+@media all and (mx-width: 500px){}
+    div.controls{
+    width: 100%
+    }
+}
+ end of add by joud */

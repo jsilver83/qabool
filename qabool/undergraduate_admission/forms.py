@@ -36,18 +36,17 @@ class ForgotPasswordForm(forms.ModelForm):
         # help_text= _('Enter the same mobile number as before, for verification'),
     )
 
-    id = forms.IntegerField(
+    id2 = forms.IntegerField(
         label=_('Registration Number'),
         required=True,
-        # help_text= _('Enter the same mobile number as before, for verification'),
     )
 
     password1 = forms.CharField(
         label=_('Password'),
         max_length=50,
         required=True,
-        # help_text= _('Enter the same mobile number as before, for verification'),
-        widget = forms.PasswordInput()
+        help_text= _('Minimum length is 8. Use both numbers and characters.'),
+        widget = forms.PasswordInput(),
     )
 
     password2 = forms.CharField(
@@ -55,12 +54,12 @@ class ForgotPasswordForm(forms.ModelForm):
         max_length=50,
         required=True,
         help_text= _('Enter the same password as before, for verification'),
-        widget = forms.PasswordInput()
+        widget = forms.PasswordInput(),
     )
 
     class Meta:
         model = User
-        fields = ['govid', 'id', 'email', 'mobile', 'password1', 'password2']
+        fields = ['govid', 'id2', 'email', 'mobile', 'password1', 'password2']
 
         help_texts = {
             'govid': _('National ID for Saudis, Iqama Number for non-Saudis.'),
@@ -87,7 +86,7 @@ class ForgotPasswordForm(forms.ModelForm):
         password = self.cleaned_data.get("password1")
         email = self.cleaned_data.get("email")
         mobile = self.cleaned_data.get("mobile")
-        id = self.cleaned_data.get("id")
+        id = self.cleaned_data.get("id2")
 
         # match 2 out of three values supplied by user
         try:
@@ -161,7 +160,7 @@ class RegistrationForm(UserCreationForm):
         help_text=_('National ID for Saudis, Iqama Number for non-Saudis.'),
         validators=[
             RegexValidator(
-                '^\d{11}$',
+                '^\d{9-11}$',
                 message=UserCreationForm.error_messages['govid_invalid']
             ),
         ]
@@ -218,6 +217,7 @@ class RegistrationForm(UserCreationForm):
         self.fields['last_name'].required = True
         self.fields['guardian_mobile'].required = True
         self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
+        self.fields['password2'].help_text = _('Enter the same password as before, for verification')
         self.fields['password1'].widget = forms.PasswordInput(attrs = {'required':''})
         self.fields['password2'].widget = forms.PasswordInput(attrs = {'required':''})
         # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})

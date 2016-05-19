@@ -14,7 +14,7 @@
 	{% csrf_token %}
 
 	<div class="checkbox form-group">
-		<span {{ form.agree1.errors }}</span>
+		<span style="color:red">{{ form.agree1.errors }}</span>
 		<label for="{{ form.agree1.id_for_label }}" class="col-sm-12">
 			{{ form.agree1 }}&nbsp;{{ form.agree1.label }}
 		</label>
@@ -26,8 +26,8 @@
 			{{ form.agree2 }}&nbsp;{{ form.agree2.label }}
 		</label>
 	</div>
-
-	<input type="submit" class="btn btn-primary" value="{% trans 'I agree' %}"/>
+	<br>&nbsp;<br>
+	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'I agree' %}"/>
 </form>
 {% endblock subcontent %}
 
