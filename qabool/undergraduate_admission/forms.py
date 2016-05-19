@@ -158,12 +158,12 @@ class RegistrationForm(UserCreationForm):
         max_length=11,
         min_length=9,
         help_text=_('National ID for Saudis, Iqama Number for non-Saudis.'),
-        # validators=[
-        #     RegexValidator(
-        #         '^\d{9-11}$',
-        #         message=UserCreationForm.error_messages['govid_invalid']
-        #     ),
-        # ]
+        validators=[
+            RegexValidator(
+                '^\d{9,11}$',
+                message=UserCreationForm.error_messages['govid_invalid']
+            ),
+        ]
     )
     username2 = forms.CharField(
         label=_('Government ID Confirmation'),
@@ -186,7 +186,7 @@ class RegistrationForm(UserCreationForm):
 
         fields = ['first_name', 'last_name', 'username', 'username2', 'mobile', 'mobile2',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'nationality',
-                  'saudi_mother', 'password1', 'password2']
+                  'saudi_mother', 'password1', 'password2', 'student_notes']
         CHOICES = (
             ('', "---"),
             (True, _("Yes")),
@@ -202,8 +202,12 @@ class RegistrationForm(UserCreationForm):
             'nationality': forms.Select(attrs = {
                 'required': '',
                 'class': 'select2',}),
-            'mobile': forms.TextInput(attrs = {'required': ''}),
-            'guardian_mobile': forms.TextInput(attrs = {'required': ''}),
+            'mobile': forms.TextInput(attrs = {'required': '',
+                                               'placeholder': '9665xxxxxxxx',
+                                               }),
+            'guardian_mobile': forms.TextInput(attrs = {'required': '',
+                                                       'placeholder': '9665xxxxxxxx',
+                                                       }),
             'saudi_mother': forms.Select(choices = CHOICES),
         }
         # help_texts = {

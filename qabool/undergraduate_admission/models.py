@@ -87,7 +87,7 @@ class User(AbstractUser):
     high_school_city = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('High School City'))
     high_school_certificate = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('High School Certificate'))
     courses_certificate = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Courses Certificate'))
-    student_notes = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Student Notes'))
+    student_notes = models.TextField(null=True,blank=True,max_length=500, verbose_name=_('Student Notes'))
     personal_picture = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Personal Picture'))
     guardian_name = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Name'))
     guardian_government_id = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Government ID'))
