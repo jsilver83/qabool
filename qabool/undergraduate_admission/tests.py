@@ -1,7 +1,8 @@
 from django.test import TestCase, Client
 
+from undergraduate_admission.forms.phase1_forms import AgreementForm
 from .models import Agreement
-from .forms import AgreementForm
+
 
 class IntitialAgreementTestCase(TestCase):
     def setUp(self):
