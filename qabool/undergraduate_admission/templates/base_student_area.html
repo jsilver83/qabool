@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load student_tags %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3">
+			{% student_info_commands %}
+		</div>
+		<div class="col-lg-9">
+			{% block subcontent %}
+			{% endblock subcontent %}
+		</div>
+	</div>
+</div>
+{% endblock content %}

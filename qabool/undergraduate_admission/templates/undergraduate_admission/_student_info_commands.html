@@ -1,0 +1,42 @@
+{% load i18n %}
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		{% if has_pic %}
+		{% if user.personal_picture %}
+		<img width="100%" src="{{ user.personal_picture }}">
+		{% else %}
+		<img width="100%" src="http://placehold.it/150x140">
+		{% endif %}
+		{% endif %}
+		<h4>{{ user }}</h4>
+		<!--<strong>{% trans 'Registration ID' %}:</strong> {{ user.id }}<br>-->
+		<!--<strong>{% trans 'Government ID' %}:</strong> {{ user.username }}<br>-->
+		<!--<strong>{% trans 'Mobile' %}:</strong> {{ user.mobile }}<br>-->
+		<!--<strong>{% trans 'Email' %}:</strong> {{ user.email }}-->
+		<dl>
+			<dt>{% trans 'Registration ID' %}</dt>
+			<dd>{{ user.id }}</dd>
+			<dt>{% trans 'Government ID' %}</dt>
+			<dd>{{ user.username }}</dd>
+			<dt>{% trans 'Mobile' %}</dt>
+			<dd>{{ user.mobile }}</dd>
+			<dt>{% trans 'Email' %}</dt>
+			<dd>{{ user.email }}</dd>
+		</dl>
+	</div>
+</div>
+<div class="list-group">
+	{% if can_confirm %}
+	<a href="#" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
+	{% endif %}
+	{% if can_print_docs %}
+	<a href="#" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
+	{% endif %}
+	<a href="#" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
+	<a href="#" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
+</div>
+{% if can_withdraw %}
+<span class="text-warning">{% trans "If you don't want to proceed with the application you can still withdraw your application by clicking below on the red button." %}</span><br><br>
+<a href="#" class="btn btn-withdraw btn-block"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
+{% endif %}
