@@ -143,7 +143,7 @@ h4{
 }
 
 dd, dt {
-    line-height: 3;
+    line-height: 1.5/*3 changed by joud */;
 }
 
 ol, ul {

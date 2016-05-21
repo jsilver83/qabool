@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 
 #: added by joud
-msgid "This password is too short. It must contain at least %(min_length)d character."
+msgid "This password is too short. It must contain at least %(min_length)d characters."
 msgstr "snsnlsdnlnsd %(min_length)d sfnsdlfnsdl"
 
 #: qabool/settings.py:140

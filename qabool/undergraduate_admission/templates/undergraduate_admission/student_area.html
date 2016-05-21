@@ -1,86 +1,60 @@
-{% extends 'base.html' %}
+{% extends 'base_student_area.html' %}
 {% load i18n %}
 {% load l10n %}
+{% load student_tags %}
 
-{% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-lg-3">
-			<!--<div class="panel panel-default">-->
-				<!--<div class="panel-body">-->
-					<!--<img width="100%" src="http://placehold.it/150x140">-->
-					<!--<h4>{{ user }}</h4>-->
-					<!--<strong>{% trans 'Registration ID' %}:</strong> {{ user.id }}<br>-->
-					<!--<strong>{% trans 'Government ID' %}:</strong> {{ user.username }}<br>-->
-					<!--&lt;!&ndash;<strong>{% trans 'Mobile' %}:</strong> {{ user.mobile }}<br>&ndash;&gt;-->
-					<!--&lt;!&ndash;<strong>{% trans 'Email' %}:</strong> {{ user.email }}&ndash;&gt;-->
-				<!--</div>-->
-			<!--</div>-->
-			<div class="list-group">
-				<!--<a href="#" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>-->
-				<!--<a href="#" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>-->
-				<a href="#" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
-				<a href="#" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
-			</div>
-			<!--<span class="text-warning">{% trans "If you don't want to proceed with the application you can still withdraw your application by clicking below on the red button." %}</span><br><br>-->
-			<!--<a href="#" class="btn btn-withdraw btn-block"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>-->
-		</div>
-		<div class="col-lg-9">
-			<div class="alert alert-info alert-dismissible fade in" role="alert">
-				<button class="close" aria-label="Close" data-dismiss="alert" type="button">
-					<span aria-hidden="true">×</span>
-				</button>
-				<strong>{{ user.get_actual_student_status }}</strong><br>
-			</div>
-			<h3>{% trans 'Application Details' %}</h3>
-			<hr>
-			<form class="form-horizontal">
-				<h3>{{ user }}</h3>
-				<div class="form-group form-group">
-					<label class="col-sm-3 control-label">{% trans 'Registration ID' %}</label>
-					<div class="col-sm-5">
-						<p class="form-control-static">{{ user.id }}</p>
-					</div>
-				</div>
-				<div class="form-group form-group">
-					<label class="col-sm-3 control-label">{% trans 'Government ID' %}</label>
-					<div class="col-sm-5">
-						<p class="form-control-static">{{ user.username }}</p>
-					</div>
-				</div>
-				<div class="form-group form-group">
-					<label class="col-sm-3 control-label">{% trans 'Mobile' %}</label>
-					<div class="col-sm-5">
-						<p class="form-control-static">{{ user.mobile }}</p>
-					</div>
-				</div>
-				<div class="form-group form-group">
-					<label class="col-sm-3 control-label">{% trans 'Email' %}</label>
-					<div class="col-sm-5">
-						<p class="form-control-static">{{ user.email }}</p>
-					</div>
-				</div>
-				<div class="form-group form-group">
-					<label class="col-sm-3 control-label">{% trans 'Guardian Mobile' %}</label>
-					<div class="col-sm-5">
-						<p class="form-control-static">{{ user.guardian_mobile }}</p>
-					</div>
-				</div>
-				<div class="form-group form-group">
-					<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>
-					<div class="col-sm-5">
-						<p class="form-control-static">{{ user.nationality }}</p>
-					</div>
-				</div>
-				<div class="form-group form-group">
-					<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>
-					<div class="col-sm-5">
-						<p class="form-control-static">{{ user.high_school_graduation_year }}</p>
-					</div>
-				</div>
-
-			</form>
+{% block subcontent %}
+<div class="alert alert-info alert-dismissible fade in" role="alert">
+	<button class="close" aria-label="Close" data-dismiss="alert" type="button">
+		<span aria-hidden="true">×</span>
+	</button>
+	<strong>{{ user.get_actual_student_status }}</strong><br>
+</div>
+<h3>{% trans 'Application Details' %}</h3>
+<hr>
+<form class="form-horizontal">
+	<h3>{{ user }}</h3>
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Registration ID' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.id }}</p>
 		</div>
 	</div>
-</div>
-{% endblock content %}
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Government ID' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.username }}</p>
+		</div>
+	</div>
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Mobile' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.mobile }}</p>
+		</div>
+	</div>
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Email' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.email }}</p>
+		</div>
+	</div>
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Guardian Mobile' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.guardian_mobile }}</p>
+		</div>
+	</div>
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.nationality }}</p>
+		</div>
+	</div>
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.high_school_graduation_year }}</p>
+		</div>
+	</div>
+</form>
+{% endblock subcontent %}

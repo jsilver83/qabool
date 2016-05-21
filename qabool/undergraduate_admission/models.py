@@ -144,6 +144,9 @@ class User(AbstractUser):
     def get_actual_student_status(self):
         return self.status_message
 
+    def get_student_phase(self):
+        return self.status_message.status.status_code
+
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
         self._meta.get_field('username').verbose_name = _('Government ID')
@@ -174,6 +177,12 @@ class AdmissionSemester(models.Model):
     def get_phase1_active_semester():
         now = timezone.now()
         sem = AdmissionSemester.objects.filter(phase1_start_date__lte=now, phase1_end_date__gte=now).first()
+        return sem
+
+    @staticmethod
+    def get_phase2_active_semester():
+        now = timezone.now()
+        sem = AdmissionSemester.objects.filter(phase2_start_date__lte=now, phase2_end_date__gte=now).first()
         return sem
 
 
