@@ -45,7 +45,7 @@ class RegistrationForm(UserCreationForm):
         }
     )
 
-    # captcha = ReCaptchaField()
+    captcha = ReCaptchaField()
 
     email2 = forms.EmailField(
         label=_('Email Address Confirmation'),
