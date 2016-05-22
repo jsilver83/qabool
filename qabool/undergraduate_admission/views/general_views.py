@@ -9,26 +9,24 @@ from undergraduate_admission.forms.general_forms import MyAuthenticationForm, Fo
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
+    form = MyAuthenticationForm(request.POST or None)
+
     if request.method == 'GET' and request.user.is_authenticated():
         return redirect(reverse('student_area'))
 
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
 
-                if user.is_superuser:
-                    return redirect('/admin')
-                else:
-                    return redirect(reverse('student_area'))
-
-        else:
-            form = MyAuthenticationForm(request.POST)
-    else:
-        form = MyAuthenticationForm()
+                    if user.is_superuser:
+                        return redirect('/admin')
+                    else:
+                        return redirect(reverse('student_area'))
 
     return render(request, template_name, {'form': form})
 
