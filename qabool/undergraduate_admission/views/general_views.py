@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render
 from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm
+from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, EditContactInfoForm
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
@@ -33,7 +33,6 @@ def index(request, template_name='undergraduate_admission/login.html'):
     return render(request, template_name, {'form': form})
 
 
-
 def forgot_password(request):
     form = ForgotPasswordForm(request.POST or None)
 
@@ -48,6 +47,23 @@ def forgot_password(request):
 
     return render(request, 'undergraduate_admission/forgot_password.html', {'form': form})
 
+
 @login_required
 def student_area(request):
     return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user})
+
+
+@login_required()
+def edit_contact_info(request):
+    form = EditContactInfoForm((request.POST or None), request=request, initial={'email':request.user.email, 'mobile':request.user.mobile})
+
+    if request.method == 'POST':
+        if form.is_valid():
+            saved = form.save()
+            if saved:
+                messages.success(request, _('Contact Info was updated successfully...'))
+                return redirect('edit_contact_info')
+            else:
+                messages.error(request, _('Error updating contact info. Try again later!'))
+
+    return render(request, 'undergraduate_admission/edit_contact_info.html', {'form': form})

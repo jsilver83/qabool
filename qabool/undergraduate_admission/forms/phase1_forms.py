@@ -1,4 +1,5 @@
-
+from captcha.fields import ReCaptchaField
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _, get_language
 import floppyforms.__future__ as forms
 from django.contrib.auth.forms import UserCreationForm
@@ -69,15 +70,15 @@ class RegistrationForm(UserCreationForm):
         max_length=11,
         min_length=9,
         required=True,
-        help_text= _('Enter the same government ID as before, for verification'),
-        widget = forms.TextInput(attrs = {'class':'nocopy'})
+        help_text=_('Enter the same government ID as before, for verification'),
+        widget=forms.TextInput(attrs = {'class':'nocopy'})
     )
     mobile2 = forms.CharField(
         label=_('Mobile Confirmation'),
         max_length=12,
         required=True,
-        help_text= _('Enter the same mobile number as before, for verification'),
-        widget = forms.TextInput(attrs = {'class':'nocopy'})
+        help_text=_('Enter the same mobile number as before, for verification'),
+        widget=forms.TextInput(attrs = {'class':'nocopy'})
     )
 
     class Meta:
@@ -123,7 +124,7 @@ class RegistrationForm(UserCreationForm):
         self.fields['password2'].help_text = _('Enter the same password as before, for verification')
         self.fields['password1'].widget = forms.PasswordInput(attrs = {'required':''})
         self.fields['password2'].widget = forms.PasswordInput(attrs = {'required':''})
-        # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
     def clean_data(self):
         super(RegistrationForm, self).clean_data(self)

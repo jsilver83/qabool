@@ -1,21 +1,114 @@
+from captcha.fields import ReCaptchaField
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import AuthenticationForm
 
-from undergraduate_admission.models import User
+from undergraduate_admission.models import User, AdmissionSemester
 import floppyforms.__future__ as forms
 
 
-class MyAuthenticationForm(AuthenticationForm):
-    # captcha = ReCaptchaField()
+class EditContactInfoForm(forms.ModelForm):
+    error_messages = {
+        'email_mismatch': _("The two email fields didn't match."),
+        'mobile_mismatch': _("The two mobile fields didn't match."),
+        'email_not_unique': _("The Email entered is associated with another applicant. "
+                              "Please use a different Email"),
+        'mobile_not_unique': _("The Mobile entered is associated with another applicant. "
+                               "Please use a different Mobile"),
+    }
+
+    email2 = forms.EmailField(
+        label=_('Email Address Confirmation'),
+        required=True,
+        help_text=_('Enter the same email address as before, for verification'),
+        widget=forms.EmailInput(attrs={'class': 'nocopy'})
+    )
+    mobile2 = forms.CharField(
+        label=_('Mobile Confirmation'),
+        max_length=12,
+        required=True,
+        help_text=_('Enter the same mobile number as before, for verification'),
+        widget=forms.TextInput(attrs = {'class':'nocopy'})
+    )
+
+    class Meta:
+        model = User
+        fields = ['email', 'email2', 'mobile', 'mobile2']
 
     def __init__(self, *args, **kwargs):
-        # lang = kwargs.pop('lang')
+        self.request = kwargs.pop('request', None)
+        super(EditContactInfoForm, self).__init__(*args, **kwargs)
+
+    def clean_data(self):
+        super(EditContactInfoForm, self).clean_data(self)
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        semester = AdmissionSemester.get_phase1_active_semester()
+        found = User.objects.filter(email=email, semester=semester).exclude(id=self.request.user.id)
+        if email and found:
+            raise forms.ValidationError(
+                self.error_messages['email_not_unique'],
+                code='email_not_unique',
+            )
+        return email
+
+    def clean_email2(self):
+        email1 = self.cleaned_data.get("email")
+        email2 = self.cleaned_data.get("email2")
+        if email1 and email2 and email1 != email2:
+            raise forms.ValidationError(
+                self.error_messages['email_mismatch'],
+                code='email_mismatch',
+            )
+        return email2
+
+    def clean_mobile(self):
+        mobile = self.cleaned_data.get("mobile")
+        semester = AdmissionSemester.get_phase1_active_semester()
+        found = User.objects.filter(mobile=mobile, semester=semester).exclude(id=self.request.user.id)
+        if mobile and found:
+            raise forms.ValidationError(
+                self.error_messages['mobile_not_unique'],
+                code='mobile_not_unique',
+            )
+        return mobile
+
+    def clean_mobile2(self):
+        mobile1 = self.cleaned_data.get("mobile")
+        mobile2 = self.cleaned_data.get("mobile2")
+        if mobile1 and mobile2 and mobile1 != mobile2:
+            raise forms.ValidationError(
+                self.error_messages['mobile_mismatch'],
+                code='mobile_mismatch',
+            )
+        return mobile2
+
+    def save(self):
+        email = self.cleaned_data.get("email")
+        mobile = self.cleaned_data.get("mobile")
+
+        user = self.request.user
+
+        if user is not None:
+            user.email = email
+            user.mobile = mobile
+            user.save()
+
+            return user
+        else:
+            return None
+
+
+class MyAuthenticationForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
         super(MyAuthenticationForm, self).__init__(self, *args, **kwargs)
         self.fields['username'].label = _('Government ID')
         self.fields['username'].widget = forms.TextInput(attrs={'required': ''})
         self.fields['password'].widget = forms.PasswordInput(attrs={'required': ''})
-        # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
 
 class ForgotPasswordForm(forms.ModelForm):
@@ -23,13 +116,10 @@ class ForgotPasswordForm(forms.ModelForm):
         'password_mismatch': _("The two password fields didn't match."),
     }
 
-    # captcha = ReCaptchaField()
-
     govid = forms.CharField(
         label=_('Government ID'),
         max_length=50,
         required=True,
-        # help_text= _('Enter the same mobile number as before, for verification'),
     )
 
     id2 = forms.IntegerField(
@@ -63,7 +153,7 @@ class ForgotPasswordForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ForgotPasswordForm, self).__init__(*args, **kwargs)
-        # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -82,17 +172,17 @@ class ForgotPasswordForm(forms.ModelForm):
         password = self.cleaned_data.get("password1")
         email = self.cleaned_data.get("email")
         mobile = self.cleaned_data.get("mobile")
-        id = self.cleaned_data.get("id2")
+        id2 = self.cleaned_data.get("id2")
 
         # match 2 out of three values supplied by user
         try:
             user = User.objects.get(username=username, email=email, mobile=mobile)
         except User.DoesNotExist:
             try:
-                user = User.objects.get(username=username, email=email, id=id)
+                user = User.objects.get(username=username, email=email, id=id2)
             except User.DoesNotExist:
                 try:
-                    user = User.objects.get(username=username, mobile=mobile, id=id)
+                    user = User.objects.get(username=username, mobile=mobile, id=id2)
                 except User.DoesNotExist:
                     user = None
 

@@ -33,8 +33,8 @@
 	{% if can_print_docs %}
 	<a href="#" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 	{% endif %}
-	<a href="#" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
-	<a href="#" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
+	<a href="{% url 'edit_contact_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
+	<a href="{% url 'change_password' %}" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
 </div>
 {% if can_withdraw %}
 <span class="text-warning">{% trans "If you don't want to proceed with the application you can still withdraw your application by clicking below on the red button." %}</span><br><br>

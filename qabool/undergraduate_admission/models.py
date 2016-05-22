@@ -137,7 +137,7 @@ class User(AbstractUser):
     withdrawal_reason = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Withdrawal Reason'))
     phase2_start_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Phase 2 Start Date'))
     phase2_end_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Phase 2 End Date'))
-    phase2_submit_date  = models.DateTimeField(null=True,blank=True, verbose_name=_('Phase 2 Submit Date'))
+    phase2_submit_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Phase 2 Submit Date'))
     verification_status = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Verification Status'))
     verification_notes = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Verification Note'))
 
@@ -145,7 +145,10 @@ class User(AbstractUser):
         return self.status_message
 
     def get_student_phase(self):
-        return self.status_message.status.status_code
+        try:
+            return self.status_message.status.status_code
+        except:
+            return 'REJECTED'
 
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
