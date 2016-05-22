@@ -1,13 +1,12 @@
-{% extends "base-sidebar.html" %}
+{% extends "base_student_area.html" %}
 {% load i18n %}
-{% load l10n %}
 {% load floppyforms %}
 
 {% block subcontent %}
 {% blocktrans %}
-<h3>Reset Your Password</h3>
-Fill the form below to reset your password<br>
-<small>You need to provide 2 correct values out of (email, mobile and registration number)</small><br><br>
+<h3>Edit Contact Info</h3>
+Fill the form below to update your contact info<br>
+<small>You still need to provide unique email and mobile ...</small><br><br>
 {% endblocktrans %}
 
 {% if messages %}
@@ -18,10 +17,11 @@ Fill the form below to reset your password<br>
 </div>
 {% endif %}
 
-<form role="form" method="post" action="{% url 'forgot_password' %}">
+<form role="form" method="post" action="{% url 'edit_contact_info' %}">
 	{% csrf_token %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Reset Password' %}"/>
+
+	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Update Contact Info' %}"/>
 </form>
 
 {% endblock subcontent %}
