@@ -32,7 +32,7 @@
       hg:
         repo: http://hg.itc.kfupm.edu.sa/apps/qabool
         dest: "{{ install_dir }}"
-        #revision: stable
+        revision: "{{ branch }}"
         force: yes
 
     - name: Set file permissions
