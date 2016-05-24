@@ -45,6 +45,9 @@ class Email(object):
 
         plain_message = SMS.sms_messages['registration_success']
 
+        if settings.DISABLE_EMAIL:
+            return None
+
         send_mail(_('KFUPM Admission'), plain_message,
                   'admissions@kfupm.edu.sa', [user.email], fail_silently=True,
                   html_message=html_message)
@@ -61,6 +64,9 @@ class SMS(object):
 
     @staticmethod
     def send_sms(mobile, body):
+        if settings.DISABLE_SMS:
+            return None
+
         r = requests.post('http://api.unifonic.com/rest/Messages/Send',
                           data = {'AppSid': settings.UNIFONIC_APP_SID,
                                   'Recipient': mobile,

@@ -194,6 +194,10 @@ AUTH_USER_MODEL = 'undergraduate_admission.User'
 NOCAPTCHA = True
 RECAPTCHA_USE_SSL = True
 
+DISABLE_SMS = False
+DISABLE_EMAIL = False
+DISABLE_CAPTCHA = True
+
 # Override settings using environment-specific settings, if any
 try:
     from qabool.local_settings import *
