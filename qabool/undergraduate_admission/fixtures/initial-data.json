@@ -2405,7 +2405,7 @@
    "fields": {
       "status_ar": "\u062a\u0645 \u0627\u0644\u062a\u0642\u062f\u064a\u0645 \u0628\u0646\u062c\u0627\u062d",
       "status_en": "Application submitted successfully",
-      "status_code": null
+      "status_code": "APPLIED"
    }
 },
 {
@@ -2414,7 +2414,34 @@
    "fields": {
       "status_ar": "\u0645\u0631\u0634\u062d \u0644\u0644\u0642\u0628\u0648\u0644",
       "status_en": "Partially admitted",
-      "status_code": null
+      "status_code": "PARTIALLY-ADMITTED"
+   }
+},
+{
+   "model": "undergraduate_admission.registrationstatus",
+   "pk": 3,
+   "fields": {
+      "status_ar": "\u0645\u0631\u0641\u0648\u0636",
+      "status_en": "Rejected",
+      "status_code": "REJECTED"
+   }
+},
+{
+   "model": "undergraduate_admission.registrationstatus",
+   "pk": 4,
+   "fields": {
+      "status_ar": "\u0645\u0642\u0628\u0648\u0644",
+      "status_en": "Admitted",
+      "status_code": "ADMITTED"
+   }
+},
+{
+   "model": "undergraduate_admission.registrationstatus",
+   "pk": 5,
+   "fields": {
+      "status_ar": "\u0645\u0646\u0633\u062d\u0628",
+      "status_en": "Withdrawn",
+      "status_code": "WITHDRAWN"
    }
 },
 {
@@ -2533,6 +2560,67 @@
       "agreement_text_en": "Attending introductory session is mandatory for all accepted students (according to the schedule for each student in his acceptance letter) during the period from Tuesday 23 August 2016 to Thursday 25 August 2016.",
       "show": true,
       "display_order": 300
+   }
+},
+{
+   "model": "auth.group",
+   "fields": {
+      "name": "admin",
+      "permissions": [
+         [
+            "add_deniedstudent",
+            "undergraduate_admission",
+            "deniedstudent"
+         ],
+         [
+            "change_deniedstudent",
+            "undergraduate_admission",
+            "deniedstudent"
+         ],
+         [
+            "delete_deniedstudent",
+            "undergraduate_admission",
+            "deniedstudent"
+         ],
+         [
+            "add_distinguishedstudent",
+            "undergraduate_admission",
+            "distinguishedstudent"
+         ],
+         [
+            "change_distinguishedstudent",
+            "undergraduate_admission",
+            "distinguishedstudent"
+         ],
+         [
+            "delete_distinguishedstudent",
+            "undergraduate_admission",
+            "distinguishedstudent"
+         ],
+         [
+            "change_nationality",
+            "undergraduate_admission",
+            "nationality"
+         ],
+         [
+            "change_userhelpdisk",
+            "undergraduate_admission",
+            "user"
+         ]
+      ]
+   }
+},
+{
+   "model": "auth.group",
+   "fields": {
+      "name": "help_desk",
+      "permissions": [
+         [
+            "change_userhelpdisk",
+            "undergraduate_admission",
+            "user"
+         ]
+      ]
    }
 }
 ]

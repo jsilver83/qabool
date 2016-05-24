@@ -9,6 +9,9 @@
     static_files_dir: /opt/qabool_static_files
     nginx_access_log: /var/log/nginx/qabool-access.log
     nginx_error_log: /var/log/nginx/qabool-error.log
+    disable_sms: False
+    disable_email: False
+    disable_captcha: False
 
   tasks:
     - name: Install required software packages

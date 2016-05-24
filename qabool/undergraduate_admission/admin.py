@@ -1,7 +1,7 @@
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
 from .models import *
-from reversion.admin import VersionAdmin
 # Register your models here.
 
 
@@ -11,15 +11,34 @@ class UserAdmin(VersionAdmin):
     exclude = ('password',)
 
 
-class UserHelpDisk(User):
+class HelpDiskForStudent(User):
     class Meta:
         proxy = True
 
 
-class UserHelpDiskAdmin(VersionAdmin):
+class HelpDiskForStudentAdmin(VersionAdmin):
+    list_display = ('username', 'first_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
+    date_hierarchy = 'date_joined'
+    fields = readonly_fields = ('username', 'first_name',
+                                'last_name', 'mobile', 'email',
+                                'nationality', 'saudi_mother', 'status_message',
+                                'date_joined', 'high_school_graduation_year')
+    search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar', 'nationality__nationality_en']
+
+    def get_queryset(self, request):
+        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
+        return qs
+
+
+class UserAuth(User):
+    class Meta:
+        proxy = True
+
+
+class UserAuthAdmin(admin.ModelAdmin):
     list_display = ('username', 'first_name', 'email', 'status_message_id')
     date_hierarchy = 'date_joined'
-    exclude = ('password',)
+    fields = ('first_name', 'last_name', 'mobile', 'is_staff', 'is_superuser', 'is_active', 'groups')
 
 
 class RegistrationStatusAdmin(admin.ModelAdmin):
@@ -31,12 +50,13 @@ class RegistrationStatusMessageAdmin(admin.ModelAdmin):
 
 
 class NationalityAdmin(admin.ModelAdmin):
-    list_display = ('nationality_ar', 'nationality_en', 'show', 'display_order')
+    list_display = ('id', 'nationality_ar', 'nationality_en', 'show', 'display_order')
     search_fields = ['nationality_en']
 
 
 class AgreementItemAdmin(admin.ModelAdmin):
     list_display = ('agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+
 
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
@@ -48,4 +68,5 @@ admin.site.register(Agreement)
 admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, UserAdmin)
-admin.site.register(UserHelpDisk, UserHelpDiskAdmin)
+admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
+admin.site.register(UserAuth, UserAuthAdmin)

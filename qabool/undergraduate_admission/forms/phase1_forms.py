@@ -5,6 +5,7 @@ import floppyforms.__future__ as forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 
+from qabool import settings
 from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User
 
 
@@ -44,8 +45,6 @@ class RegistrationForm(UserCreationForm):
             'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile")
         }
     )
-
-    captcha = ReCaptchaField()
 
     email2 = forms.EmailField(
         label=_('Email Address Confirmation'),
@@ -124,7 +123,9 @@ class RegistrationForm(UserCreationForm):
         self.fields['password2'].help_text = _('Enter the same password as before, for verification')
         self.fields['password1'].widget = forms.PasswordInput(attrs = {'required':''})
         self.fields['password2'].widget = forms.PasswordInput(attrs = {'required':''})
-        self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+
+        if not settings.DISABLE_CAPTCHA:
+            self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
 
     def clean_data(self):
         super(RegistrationForm, self).clean_data(self)

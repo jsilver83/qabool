@@ -150,6 +150,19 @@ class User(AbstractUser):
         except:
             return 'REJECTED'
 
+    def get_student_type(self):
+        student_type = 'S'
+
+        if self.nationality:
+            if self.nationality.nationality_en != 'Saudi Arabia' and self.saudi_mother:
+                student_type = 'M'
+            elif self.nationality.nationality_en != 'Saudi Arabia':
+                student_type = 'N'
+        else:
+            student_type = 'N/A'
+
+        return student_type
+
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
         self._meta.get_field('username').verbose_name = _('Government ID')
