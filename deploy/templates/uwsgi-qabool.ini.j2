@@ -1,13 +1,16 @@
 [uwsgi]
-processes = 10
+processes = 128
 chdir = {{ install_dir }}/qabool
 module = qabool.wsgi:application
 virtualenv = {{ venv_dir }}
 master = True
 vacuum = True
-max-requests = 5000
+#max-requests = 5000
 #harakiri = 20
 daemonize = /var/log/uwsgi/qabool.log
 uid = www-data
 gid = qabool
-#listen = 1000
+socket = /run/uwsgi/app/qabool/socket
+stats = /run/uwsgi/app/qabool/stats-socket
+listen = 10000
+cpu-affinity = 1
