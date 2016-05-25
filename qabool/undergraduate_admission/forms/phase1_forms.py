@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 
 from qabool import settings
-from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User
+from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup
 
 
 class AgreementForm(forms.Form):
@@ -18,7 +18,7 @@ class AgreementForm(forms.Form):
 
         if not agree1:
             raise forms.ValidationError(
-                message = _('You have to check this box')
+                message=_('You have to check this box')
             )
 
     def clean_agree2(self):
@@ -26,7 +26,7 @@ class AgreementForm(forms.Form):
 
         if not agree2:
             raise forms.ValidationError(
-                message = _('You have to check this box')
+                message=_('You have to check this box')
             )
 
 
@@ -70,23 +70,29 @@ class RegistrationForm(UserCreationForm):
         min_length=9,
         required=True,
         help_text=_('Enter the same government ID as before, for verification'),
-        widget=forms.TextInput(attrs = {'class':'nocopy'})
+        widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
     mobile2 = forms.CharField(
         label=_('Mobile Confirmation'),
         max_length=12,
         required=True,
         help_text=_('Enter the same mobile number as before, for verification'),
-        widget=forms.TextInput(attrs = {'class':'nocopy'})
+        widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
+
+    # high_school_system = forms.ModelChoiceField(
+    #     queryset=Lookup.objects.filter(show=True, lookup_type='HIGH_SCHOOL_TYPE'),
+    #     required=True,
+    # )
 
     class Meta:
         model = User
 
         fields = ['first_name', 'last_name', 'username', 'username2', 'mobile', 'mobile2',
-                  'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'nationality',
-                  'saudi_mother', 'password1', 'password2', 'student_notes']
-        CHOICES = (
+                  'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
+                  'nationality', 'saudi_mother', 'password1', 'password2', 'student_notes']
+
+        SAUDI_MOTHER_CHOICES = (
             ('', "---"),
             (True, _("Yes")),
             (False, _("No")),
@@ -94,20 +100,20 @@ class RegistrationForm(UserCreationForm):
 
         widgets = {
             # workaround since __init__ setting to required doesnt work
-            'email': forms.TextInput(attrs = {'required': ''}),
-            'first_name': forms.TextInput(attrs = {'required': ''}),
-            'last_name': forms.TextInput(attrs = {'required': ''}),
-            'high_school_graduation_year': forms.Select(attrs = {'required': ''}),
-            'nationality': forms.Select(attrs = {
+            'email': forms.TextInput(attrs={'required': ''}),
+            'first_name': forms.TextInput(attrs={'required': ''}),
+            'last_name': forms.TextInput(attrs={'required': ''}),
+            'high_school_graduation_year': forms.Select(attrs={'required': ''}),
+            'nationality': forms.Select(attrs={
                 'required': '',
                 'class': 'select2',}),
-            'mobile': forms.TextInput(attrs = {'required': '',
-                                               'placeholder': '9665xxxxxxxx',
-                                               }),
-            'guardian_mobile': forms.TextInput(attrs = {'required': '',
-                                                       'placeholder': '9665xxxxxxxx',
-                                                       }),
-            'saudi_mother': forms.Select(choices = CHOICES),
+            'mobile': forms.TextInput(attrs={'required': '',
+                                             'placeholder': '9665xxxxxxxx',
+                                             }),
+            'guardian_mobile': forms.TextInput(attrs={'required': '',
+                                                      'placeholder': '9665xxxxxxxx',
+                                                      }),
+            'saudi_mother': forms.Select(choices=SAUDI_MOTHER_CHOICES),
         }
         # help_texts = {
         #     'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),
@@ -121,8 +127,10 @@ class RegistrationForm(UserCreationForm):
         self.fields['guardian_mobile'].required = True
         self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
         self.fields['password2'].help_text = _('Enter the same password as before, for verification')
-        self.fields['password1'].widget = forms.PasswordInput(attrs = {'required':''})
-        self.fields['password2'].widget = forms.PasswordInput(attrs = {'required':''})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'required': ''})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'required': ''})
+        self.fields['high_school_system'].widget = forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
+        self.fields['high_school_system'].required = True
 
         if not settings.DISABLE_CAPTCHA:
             self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
@@ -202,5 +210,3 @@ class RegistrationForm(UserCreationForm):
                 code='guardian_mobile_match',
             )
         return mobile2
-
-

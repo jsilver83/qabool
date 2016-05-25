@@ -19,8 +19,10 @@ class Email(object):
                 'Mobile: %(mobile)s<br>'
                 'Registration Date: %(reg_date)s<br><hr><br>'
                 'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
-                '<hr>You are recommended to frequently visit the admission website to know the '
-                'admission result and any updated instructions.<br><br> Admissions Office, <br>King Fahd '
+                '<hr>'
+                # 'You are recommended to frequently visit the admission website to know the '
+                # 'admission result and any updated instructions.'
+                '<br><br> Admissions Office, <br>King Fahd '
                 'University of Petroleum and Minerals'),
     }
 

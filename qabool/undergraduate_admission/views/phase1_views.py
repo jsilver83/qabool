@@ -59,6 +59,7 @@ class RegisterView(CreateView):
                                         mobile=form.cleaned_data['mobile'],
                                         guardian_mobile=form.cleaned_data['guardian_mobile'],
                                         student_notes=form.cleaned_data['student_notes'],
+                                        high_school_system=form.cleaned_data['high_school_system'],
                                         )
 
         SMS.send_sms_registration_success(user.mobile)
