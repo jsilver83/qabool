@@ -9,6 +9,8 @@
     static_files_dir: /opt/qabool_static_files
     nginx_access_log: /var/log/nginx/qabool-access.log
     nginx_error_log: /var/log/nginx/qabool-error.log
+    nginx_worker_processes: 32
+    nginx_worker_connections: 10000
 
   tasks:
     - name: Install required software packages
@@ -102,6 +104,14 @@
 
     - name: Configure webserver
       template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Configure webserver site
+      template:
         src: nginx-qabool.j2
         dest: /etc/nginx/sites-available/qabool
         owner: root
@@ -164,3 +174,10 @@
         user: www-data
         minute: '*/1'
         job: /etc/zabbix/scripts/zbx_nginx_stats.py
+      when: zabbix_server is defined
+
+    - name: Uninstall cronjob for zabbix nginx monitoring
+      cron:
+        name: zabbix-nginx
+        state: absent
+      when: zabbix_server is undefined
