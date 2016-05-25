@@ -1,0 +1,25 @@
+qabool_urls:
+  - qabool-2.westeurope.cloudapp.azure.com
+#load_balancer_ip:
+
+# To generate a secret key:
+# import random, string; SECRET_KEY = ''.join([random.SystemRandom().choice("{}{}{}".format(string.ascii_letters, string.digits, string.punctuation)) for i in range(50)]); print(SECRET_KEY)
+qabool_secret_key: "{{ vault_qabool_secret_key }}"
+
+qabool_database_engine: django.db.backends.postgresql
+qabool_database_name: qabool
+qabool_database_user: qabool
+qabool_database_password: "{{ vault_qabool_database_password }}"
+qabool_database_host: 10.1.0.6
+qabool_database_port: 5432
+
+qabool_debug: False
+
+qabool_recaptcha_public_key: 6Leg7SATAAAAAINkEsDcbgOZnAmq6J3jUgw1kaeH
+qabool_recaptcha_private_key: "{{ vault_qabool_recaptcha_private_key }}"
+
+sms_gateway_app_sid: "{{ vault_sms_gateway_app_sid }}"
+qabool_email_user: admissions@kfupm.edu.sa
+qabool_email_password: "{{ vault_qabool_email_password }}"
+
+#zabbix_server:
