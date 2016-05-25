@@ -1,14 +1,20 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from reversion.admin import VersionAdmin
 
 from .models import *
 # Register your models here.
 
 
-class UserAdmin(VersionAdmin):
-    list_display = ('username', 'first_name', 'email', 'status_message_id')
+class UserAdmin(UserAdmin):
+    list_display = ('id', 'username', 'first_name', 'email', 'status_message_id')
     date_hierarchy = 'date_joined'
-    exclude = ('password',)
+    fieldsets = UserAdmin.fieldsets + (
+        ('Qabool Fileds', {
+            'fields': ('mobile','nationality', 'saudi_mother', 'status_message',
+                       'guardian_mobile', 'high_school_graduation_year'),
+        }),
+    )
 
 
 class HelpDiskForStudent(User):
@@ -22,23 +28,14 @@ class HelpDiskForStudentAdmin(VersionAdmin):
     fields = readonly_fields = ('username', 'first_name',
                                 'last_name', 'mobile', 'email',
                                 'nationality', 'saudi_mother', 'status_message',
+                                'guardian_mobile', 'id',
                                 'date_joined', 'high_school_graduation_year')
     search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar', 'nationality__nationality_en']
+    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
 
     def get_queryset(self, request):
         qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
         return qs
-
-
-class UserAuth(User):
-    class Meta:
-        proxy = True
-
-
-class UserAuthAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'email', 'status_message_id')
-    date_hierarchy = 'date_joined'
-    fields = ('first_name', 'last_name', 'mobile', 'is_staff', 'is_superuser', 'is_active', 'groups')
 
 
 class RegistrationStatusAdmin(admin.ModelAdmin):
@@ -58,6 +55,11 @@ class AgreementItemAdmin(admin.ModelAdmin):
     list_display = ('agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
 
 
+class LookupAdmin(admin.ModelAdmin):
+    list_display = ('lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
+    list_filter = ('lookup_type',)
+
+
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
@@ -69,4 +71,4 @@ admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, UserAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
-admin.site.register(UserAuth, UserAuthAdmin)
+admin.site.register(Lookup, LookupAdmin)

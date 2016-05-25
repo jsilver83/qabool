@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-22 12:39+0300\n"
-"PO-Revision-Date: 2016-05-19 12:10+0300\n"
+"POT-Creation-Date: 2016-05-25 13:49+0300\n"
+"PO-Revision-Date: 2016-05-25 13:50+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -27,18 +27,18 @@ msgstr "عربي"
 msgid "English"
 msgstr "انجليزي"
 
-#: undergraduate_admission/forms/general_forms.py:13
-#: undergraduate_admission/forms/phase1_forms.py:35
+#: undergraduate_admission/forms/general_forms.py:20
+#: undergraduate_admission/forms/phase1_forms.py:36
 msgid "The two email fields didn't match."
 msgstr "عنوان البريد الإلكتروني غير متطابق."
 
-#: undergraduate_admission/forms/general_forms.py:14
-#: undergraduate_admission/forms/phase1_forms.py:37
+#: undergraduate_admission/forms/general_forms.py:21
+#: undergraduate_admission/forms/phase1_forms.py:38
 msgid "The two mobile fields didn't match."
 msgstr "حقل رقم الجوال غير متطابق"
 
-#: undergraduate_admission/forms/general_forms.py:15
-#: undergraduate_admission/forms/phase1_forms.py:39
+#: undergraduate_admission/forms/general_forms.py:22
+#: undergraduate_admission/forms/phase1_forms.py:40
 msgid ""
 "The Email entered is associated with another applicant. Please use a "
 "different Email"
@@ -46,124 +46,124 @@ msgstr ""
 "لقد تم استخدام عنوان البريد الإلكتروني من قبل طالب آخر. الرجاء ادخال عنوان "
 "بريد إلكتروني جديد"
 
-#: undergraduate_admission/forms/general_forms.py:17
-#: undergraduate_admission/forms/phase1_forms.py:41
+#: undergraduate_admission/forms/general_forms.py:24
+#: undergraduate_admission/forms/phase1_forms.py:42
 msgid ""
 "The Mobile entered is associated with another applicant. Please use a "
 "different Mobile"
 msgstr "لقد تم استخدام رقم الجوال من قبل طالب آخر. الرجاء ادخال رقم جوال آخر"
 
-#: undergraduate_admission/forms/general_forms.py:22
-#: undergraduate_admission/forms/phase1_forms.py:51
+#: undergraduate_admission/forms/general_forms.py:29
+#: undergraduate_admission/forms/phase1_forms.py:50
 msgid "Email Address Confirmation"
 msgstr "تأكيد  عنوان البريد الإلكتروني"
 
-#: undergraduate_admission/forms/general_forms.py:24
-#: undergraduate_admission/forms/phase1_forms.py:53
+#: undergraduate_admission/forms/general_forms.py:31
+#: undergraduate_admission/forms/phase1_forms.py:52
 msgid "Enter the same email address as before, for verification"
 msgstr "أعد إدخال عنوان البريد الإلكتروني السابق وذلك للتحقق"
 
-#: undergraduate_admission/forms/general_forms.py:28
-#: undergraduate_admission/forms/phase1_forms.py:77
+#: undergraduate_admission/forms/general_forms.py:35
+#: undergraduate_admission/forms/phase1_forms.py:76
 msgid "Mobile Confirmation"
 msgstr "تأكيد رقم الجوال"
 
-#: undergraduate_admission/forms/general_forms.py:31
-#: undergraduate_admission/forms/phase1_forms.py:80
+#: undergraduate_admission/forms/general_forms.py:38
+#: undergraduate_admission/forms/phase1_forms.py:79
 msgid "Enter the same mobile number as before, for verification"
 msgstr "أعد إدخال رقم الجوال السابق  وذلك للتحقق"
 
-#: undergraduate_admission/forms/general_forms.py:108
-#: undergraduate_admission/forms/general_forms.py:120
-#: undergraduate_admission/forms/phase1_forms.py:57
-#: undergraduate_admission/models.py:155 undergraduate_admission/models.py:276
-#: undergraduate_admission/models.py:309
+#: undergraduate_admission/forms/general_forms.py:115
+#: undergraduate_admission/forms/general_forms.py:129
+#: undergraduate_admission/forms/phase1_forms.py:56
+#: undergraduate_admission/models.py:168 undergraduate_admission/models.py:301
+#: undergraduate_admission/models.py:334
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:14
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:25
 msgid "Government ID"
 msgstr "الهوية الوطنية أو هوية مقيم"
 
-#: undergraduate_admission/forms/general_forms.py:111
-#: undergraduate_admission/forms/general_forms.py:156
-#: undergraduate_admission/forms/phase1_forms.py:127
+#: undergraduate_admission/forms/general_forms.py:120
+#: undergraduate_admission/forms/general_forms.py:167
+#: undergraduate_admission/forms/phase1_forms.py:136
 msgid "Captcha"
 msgstr "رمز التحقق"
 
-#: undergraduate_admission/forms/general_forms.py:116
+#: undergraduate_admission/forms/general_forms.py:125
 msgid "The two password fields didn't match."
 msgstr "كلمة المرور غير متطابقة"
 
-#: undergraduate_admission/forms/general_forms.py:126
+#: undergraduate_admission/forms/general_forms.py:135
 msgid "Registration Number"
 msgstr "رقم التسجيل"
 
-#: undergraduate_admission/forms/general_forms.py:131
+#: undergraduate_admission/forms/general_forms.py:140
 msgid "Password"
 msgstr "كلمة المرور"
 
-#: undergraduate_admission/forms/general_forms.py:134
-#: undergraduate_admission/forms/phase1_forms.py:123
+#: undergraduate_admission/forms/general_forms.py:143
+#: undergraduate_admission/forms/phase1_forms.py:128
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
 
-#: undergraduate_admission/forms/general_forms.py:139
+#: undergraduate_admission/forms/general_forms.py:148
 msgid "Password confirmation"
 msgstr "تأكيد كلمة المرور"
 
-#: undergraduate_admission/forms/general_forms.py:142
-#: undergraduate_admission/forms/phase1_forms.py:124
+#: undergraduate_admission/forms/general_forms.py:151
+#: undergraduate_admission/forms/phase1_forms.py:129
 msgid "Enter the same password as before, for verification"
 msgstr "أعد إدخال كلمة المرور السابقة وذلك للتحقق"
 
-#: undergraduate_admission/forms/general_forms.py:151
-#: undergraduate_admission/forms/phase1_forms.py:60
+#: undergraduate_admission/forms/general_forms.py:160
+#: undergraduate_admission/forms/phase1_forms.py:59
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr "رقم الهوية الوطنية للسعوديين ، ورقم هوية مقيم  لغير السعوديين."
 
-#: undergraduate_admission/forms/phase1_forms.py:12
+#: undergraduate_admission/forms/phase1_forms.py:13
 msgid "I have read all of the above terms and conditions for applying to KFUPM"
 msgstr ""
 "لقد تم قراءة جميع الإقرارات وشروط التسجيل في جامعة الملك فهد للبترول والمعادن"
 
-#: undergraduate_admission/forms/phase1_forms.py:13
+#: undergraduate_admission/forms/phase1_forms.py:14
 msgid "I accep all the above terms and conditions"
 msgstr "أوافق على جميع الشروط و الأحكام اعلاه."
 
-#: undergraduate_admission/forms/phase1_forms.py:20
-#: undergraduate_admission/forms/phase1_forms.py:28
+#: undergraduate_admission/forms/phase1_forms.py:21
+#: undergraduate_admission/forms/phase1_forms.py:29
 msgid "You have to check this box"
 msgstr "يجب عليك التأشير في المربع"
 
-#: undergraduate_admission/forms/phase1_forms.py:36
+#: undergraduate_admission/forms/phase1_forms.py:37
 msgid "The two government ID fields didn't match."
 msgstr "حقل الهوية الوطنية أو هوية مقيم  غير متطابق."
 
-#: undergraduate_admission/forms/phase1_forms.py:38
+#: undergraduate_admission/forms/phase1_forms.py:39
 msgid "You have been denied from applying for the following reason(s): "
 msgstr "لا يسمح لك  التسجيل في الجامعة للأسباب التالية:"
 
-#: undergraduate_admission/forms/phase1_forms.py:43
+#: undergraduate_admission/forms/phase1_forms.py:44
 msgid "You have entered an invalid Government ID"
 msgstr "لقد ادخلت رقم هوية غير صحيح"
 
-#: undergraduate_admission/forms/phase1_forms.py:44
+#: undergraduate_admission/forms/phase1_forms.py:45
 msgid "You have entered the guardian mobile same as your own mobile"
 msgstr "لقد ادخلت رقم جوال ولي الأمر نفس رقم جوالك"
 
-#: undergraduate_admission/forms/phase1_forms.py:69
+#: undergraduate_admission/forms/phase1_forms.py:68
 msgid "Government ID Confirmation"
 msgstr "تأكيد الهوية الوطنية أو هوية مقيم"
 
-#: undergraduate_admission/forms/phase1_forms.py:73
+#: undergraduate_admission/forms/phase1_forms.py:72
 msgid "Enter the same government ID as before, for verification"
 msgstr "أعد إدخال الهوية الوطنية أو هوية مقيم  وذلك للتحقق"
 
-#: undergraduate_admission/forms/phase1_forms.py:92
+#: undergraduate_admission/forms/phase1_forms.py:97
 msgid "Yes"
 msgstr "نعم"
 
-#: undergraduate_admission/forms/phase1_forms.py:93
+#: undergraduate_admission/forms/phase1_forms.py:98
 msgid "No"
 msgstr "لا"
 
@@ -173,14 +173,14 @@ msgstr "فصل القبول"
 
 #: undergraduate_admission/models.py:24
 msgid "Message Status"
-msgstr "حالة الرسالة"
+msgstr "تفصيل حالة الطلب"
 
 #: undergraduate_admission/models.py:27
 msgid "Admission Note"
 msgstr "ملاحظة القبول"
 
 #: undergraduate_admission/models.py:35
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:34
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:40
 msgid "Nationality"
 msgstr "الجنسية"
 
@@ -197,7 +197,7 @@ msgid "Birthday Hijri"
 msgstr "تاريخ الميلاد بالهجري"
 
 #: undergraduate_admission/models.py:46
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:40
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:28
 msgid "Graduation Year"
 msgstr "سنة التخرج"
 
@@ -358,7 +358,7 @@ msgid "Guardian Phone"
 msgstr "هاتف ولي الأمر"
 
 #: undergraduate_admission/models.py:100
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:28
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:34
 msgid "Guardian Mobile"
 msgstr "رقم جوال ولي الأمر"
 
@@ -478,11 +478,11 @@ msgstr "منسحب لجامعة"
 msgid "Withdrawal Reason"
 msgstr "سبب الإنسجاب"
 
-#: undergraduate_admission/models.py:138 undergraduate_admission/models.py:169
+#: undergraduate_admission/models.py:138 undergraduate_admission/models.py:182
 msgid "Phase 2 Start Date"
 msgstr "بداية المرحلة الثانية"
 
-#: undergraduate_admission/models.py:139 undergraduate_admission/models.py:170
+#: undergraduate_admission/models.py:139 undergraduate_admission/models.py:183
 msgid "Phase 2 End Date"
 msgstr "نهاية المرحلة الثانية"
 
@@ -492,145 +492,145 @@ msgstr "تاريخ ارسال الطلب للمرحلة الثانية"
 
 #: undergraduate_admission/models.py:141
 msgid "Verification Status"
-msgstr "حالة الطلب"
+msgstr "حالة التأكد من الطلب"
 
 #: undergraduate_admission/models.py:142
 msgid "Verification Note"
-msgstr ""
+msgstr "ملاحظات (المسؤول عند التأكد)"
 
-#: undergraduate_admission/models.py:166
+#: undergraduate_admission/models.py:179
 msgid "Semester Name"
-msgstr ""
+msgstr "تفاصيل الفصل"
 
-#: undergraduate_admission/models.py:167
+#: undergraduate_admission/models.py:180
 msgid "Phase 1 Start Date"
 msgstr "بداية المرحلة الأولى"
 
-#: undergraduate_admission/models.py:168
+#: undergraduate_admission/models.py:181
 msgid "Phase 1 End Date"
 msgstr "نهاية المرحلة الأولى"
 
-#: undergraduate_admission/models.py:172
+#: undergraduate_admission/models.py:185
 msgid "High School GPA Weight"
 msgstr "وزن درجة الشهادة الثانوية"
 
-#: undergraduate_admission/models.py:173
+#: undergraduate_admission/models.py:186
 msgid "Qudrat Score Weight"
 msgstr "وزن درجة القدرات"
 
-#: undergraduate_admission/models.py:174
+#: undergraduate_admission/models.py:187
 msgid "Tahsili Score Weight"
 msgstr "وزن درجة التحصيلي"
 
-#: undergraduate_admission/models.py:193
+#: undergraduate_admission/models.py:206
 msgid "Status (Arabic)"
 msgstr "الحالة ( بالعربي )"
 
-#: undergraduate_admission/models.py:194
+#: undergraduate_admission/models.py:207
 msgid "Status (English)"
 msgstr "الحالة ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:210
+#: undergraduate_admission/models.py:223
 msgid "Registration Status Message AR"
 msgstr "رسالة حالة التسجيل ( بالعربي )"
 
-#: undergraduate_admission/models.py:211
+#: undergraduate_admission/models.py:224
 msgid "Registration Status Message EN"
 msgstr "رسالة حالة التسجيل ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:235 undergraduate_admission/models.py:256
-#: undergraduate_admission/models.py:322 undergraduate_admission/models.py:343
-#: undergraduate_admission/models.py:407
+#: undergraduate_admission/models.py:248 undergraduate_admission/models.py:281
+#: undergraduate_admission/models.py:347 undergraduate_admission/models.py:368
+#: undergraduate_admission/models.py:432
 msgid "Show"
 msgstr "اظهر"
 
-#: undergraduate_admission/models.py:236 undergraduate_admission/models.py:257
-#: undergraduate_admission/models.py:323 undergraduate_admission/models.py:344
-#: undergraduate_admission/models.py:408
+#: undergraduate_admission/models.py:249 undergraduate_admission/models.py:282
+#: undergraduate_admission/models.py:348 undergraduate_admission/models.py:369
+#: undergraduate_admission/models.py:433
 msgid "Display Order"
 msgstr "عرض الترتيب"
 
-#: undergraduate_admission/models.py:254
+#: undergraduate_admission/models.py:279
 msgid "City Name Arabic"
 msgstr "اسم المدينة ( بالعربي )"
 
-#: undergraduate_admission/models.py:255
+#: undergraduate_admission/models.py:280
 msgid "City Name English"
 msgstr "اسم المدينة ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:277 undergraduate_admission/models.py:310
+#: undergraduate_admission/models.py:302 undergraduate_admission/models.py:335
 msgid "Student Name"
 msgstr "اسم الطالب"
 
-#: undergraduate_admission/models.py:278
+#: undergraduate_admission/models.py:303
 msgid "Message"
 msgstr "الرسالة"
 
-#: undergraduate_admission/models.py:279
+#: undergraduate_admission/models.py:304
 msgid "University Code"
 msgstr "رمز الجامعة"
 
-#: undergraduate_admission/models.py:287
+#: undergraduate_admission/models.py:312
 msgid "Last Trial Date"
 msgstr "تاريخ آخر محاولة"
 
-#: undergraduate_admission/models.py:288
+#: undergraduate_admission/models.py:313
 msgid "Count Trial"
 msgstr "عدد المحاولات"
 
-#: undergraduate_admission/models.py:311
+#: undergraduate_admission/models.py:336
 msgid "City"
 msgstr "المدينة"
 
-#: undergraduate_admission/models.py:312
+#: undergraduate_admission/models.py:337
 msgid "Attended"
 msgstr "حضر"
 
-#: undergraduate_admission/models.py:319
+#: undergraduate_admission/models.py:344
 msgid "Graduation Year (English)"
 msgstr "سنة التخرج ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:320
+#: undergraduate_admission/models.py:345
 msgid "Graduation Year (Arabic)"
 msgstr "سنة التخرج ( بالعربي )"
 
-#: undergraduate_admission/models.py:321
+#: undergraduate_admission/models.py:346
 msgid "Description"
 msgstr "شرح"
 
-#: undergraduate_admission/models.py:341
+#: undergraduate_admission/models.py:366
 msgid "Nationality (Arabic)"
 msgstr "الجنسية ( بالعربي )"
 
-#: undergraduate_admission/models.py:342
+#: undergraduate_admission/models.py:367
 msgid "Nationality (English)"
 msgstr "الجنسية ( بالانجليزي )"
 
-#: undergraduate_admission/models.py:371
+#: undergraduate_admission/models.py:396
 msgid "Agreement Type"
 msgstr "نوع الموافقة"
 
-#: undergraduate_admission/models.py:372
+#: undergraduate_admission/models.py:397
 msgid "Agreement Header (Arabic)"
 msgstr "رأسية الموافقة ( بالعربي )"
 
-#: undergraduate_admission/models.py:373
+#: undergraduate_admission/models.py:398
 msgid "Agreement Header (English)"
 msgstr "رأسية الموافقة بالإنجليزي )"
 
-#: undergraduate_admission/models.py:374
+#: undergraduate_admission/models.py:399
 msgid "Agreement Footer (Arabic)"
 msgstr "اسفل  الموافقة ( بالعربي )"
 
-#: undergraduate_admission/models.py:375
+#: undergraduate_admission/models.py:400
 msgid "Agreement Footer (English)"
 msgstr "Agreement Footer (English)"
 
-#: undergraduate_admission/models.py:405
+#: undergraduate_admission/models.py:430
 msgid "Agreement Text (Arabic)"
 msgstr "نص الموافقة ( بالعربي )"
 
-#: undergraduate_admission/models.py:406
+#: undergraduate_admission/models.py:431
 msgid "Agreement Text (English)"
 msgstr "نص الموافقة ( بالإنجليزي )"
 
@@ -653,7 +653,7 @@ msgid ""
 "\t\t\t\t\tWed 15 to Thu 23 June 2016<br>\n"
 "\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> "
 "<strong>Orientation Week:</strong>\n"
-"\t\t\t\t\tTue 23 to Thu 25 August 2016\n"
+"\t\t\t\t\tMon 22 to Thu 25 August 2016\n"
 "\t\t\t\t</div>\n"
 "\t\t\t</div>\n"
 "\t\t\t<div class=\"media\">\n"
@@ -701,7 +701,7 @@ msgstr ""
 "\t\t\t\t\t الأربعاء 10 رمضان إلى الخميس 18 رمضان 1437هـ <br>\n"
 "\t\t\t\t\t<i class=\"fa fa-check\" aria-hidden=\"true\"></i> <strong>استقبال "
 "الطلاب (الأسبوع التعريفي):</strong>\n"
-"\t\t\t\t\t الثلاثاء 20 ذو القعدة إلى الخميس 22 ذو القعدة 1437هـ<br>\n"
+"\t\t\t\t\t اﻻثنين 19 ذو القعدة إلى الخميس 22 ذو القعدة 1437هـ<br>\n"
 "\t\t\t\t</div>\n"
 "\t\t\t</div>\n"
 "\t\t\t<div class=\"media\">\n"
@@ -728,7 +728,7 @@ msgstr ""
 "2722</span><br>\n"
 "\t\t\t\t\t<strong>البريد الالكتروني:</strong> <a href=\"mailto:"
 "admissions@kfupm.edu.sa\">admissions@kfupm.edu.sa</a><br>\n"
-"\t\t\t\t\t<strong>موقع إدارة القبول:</strong> <a\n"
+"\t\t\t\t\t <a\n"
 "\t\t\t\t\t\thref=\"http://www.kfupm.edu.sa/admissions\">www.kfupm.edu.sa/"
 "admissions</a>\n"
 "\t\t\t\t</div>\n"
@@ -806,7 +806,7 @@ msgid "Withdraw Application"
 msgstr "اﻻنسحاب"
 
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:30
-#: undergraduate_admission/templates/undergraduate_admission/change_password.html:24
+#: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
 #: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:24
 #: undergraduate_admission/templates/undergraduate_admission/login.html:31
@@ -819,14 +819,19 @@ msgid "I agree"
 msgstr "موافق"
 
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:6
+msgid ""
+"\n"
+"<h3>Change Password</h3>\n"
+msgstr ""
+"\n"
+"<h3>تغيير كلمة السر</h3>\n"
+
+#: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
+#: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
+msgid "Update Contact Info"
+msgstr "تعديل بيانات التواصل"
+
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:6
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "<h3>Reset Your Password</h3>\n"
-#| "Fill the form below to reset your password<br>\n"
-#| "<small>You need to provide 2 correct values out of (email, mobile and "
-#| "registration number)</small><br><br>\n"
 msgid ""
 "\n"
 "<h3>Edit Contact Info</h3>\n"
@@ -840,13 +845,6 @@ msgstr ""
 "<small>عليك أن تدخل قيمتين صحيحة من الحقول التالية ( عنوان البريد "
 "الإلكلتروني ، رقم الجوال أو رقم التسجيل) وذلك لاستعادة كلمة المرور</"
 "small><br><br>\n"
-
-#: undergraduate_admission/templates/undergraduate_admission/change_password.html:24
-#: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
-#, fuzzy
-#| msgid "Edit Contact Information"
-msgid "Update Contact Info"
-msgstr "تعديل بيانات التواصل"
 
 #: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:7
 msgid ""
@@ -905,8 +903,8 @@ msgid ""
 "your application.\n"
 msgstr ""
 "\n"
-"<h3>عليك بإنشاء حساب وتسجيل بياناتك حتى يتسنى لك الدخول للنظام ومتابعة طلبك."
-"</h3>\n"
+"<h3>عليك إنشاء حساب وتسجيل بياناتك حتى يتسنى لك الدخول للنظام ومتابعة طلبك.</"
+"h3>\n"
 "هل لديك حساب؟ <a href=\"/\"><u>تسجيل دخول</u></a> لمراجعة طلبك.\n"
 
 #: undergraduate_admission/templates/undergraduate_admission/register.html:18
@@ -927,8 +925,7 @@ msgstr ""
 "<div class=\"alert alert-success\" role=\"alert\">\n"
 "\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> "
 "نجاح</h4>\n"
-"\t<p>لقد تم إرسال طلبك بنجاح ، الرجاء مراجعة الرابط أدناه.  للدخول على "
-"النظام لمراجعة حالة الطلب بشكل دوري</p>\n"
+"\t<p>لقد تم إرسال طلبك بنجاح ، </p>\n"
 "</div>\n"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:24
@@ -950,24 +947,21 @@ msgid ""
 "the Admission results will be announced on Wednesday June 15, 2016 ... "
 "<br><h4>Registration Details</h4><hr>Registration ID: %(user_id)s<br>Mobile: "
 "%(mobile)s<br>Registration Date: %(reg_date)s<br><hr><br>You agreed to the "
-"following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr>You are "
-"recommended to frequently visit the admission website to know the admission "
-"result and any updated instructions.<br><br> Admissions Office, <br>King "
-"Fahd University of Petroleum and Minerals"
+"following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br><br> "
+"Admissions Office, <br>King Fahd University of Petroleum and Minerals"
 msgstr ""
 "<div style=\"direction:rtl\">عزيزي الطالب %(student_name)s,<br>تم استلام "
 "طلبك بنجاح وسيتم إعلان النتائج يوم اﻷربعاء 10 رمضان 1437 هـ حسب تقويم أم "
 "القرى  ... <br><h4>تفاصيل الطلب</h4><hr>رقم التسجيل: %(user_id)s<br>رقم "
 "الجوال: %(mobile)s<br>تاريخ التسجيل: %(reg_date)s<br><hr><br>الشروط و اﻷحكام:"
-"<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr>كما يجب عليك مراجعة "
-"موقع إدارة القبول الالكتروني لمتابعة طلبك باستمرار.<br><br> إدارة القبول, "
-"<br>جامعة الملك فهد للبترول والمعادن.</div>"
+"<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br><br> إدارة "
+"القبول, <br>جامعة الملك فهد للبترول والمعادن.</div>"
 
-#: undergraduate_admission/utils.py:48
+#: undergraduate_admission/utils.py:53
 msgid "KFUPM Admission"
 msgstr "إدارة القبول بجامعة الملك فهد للبترول والمعادن"
 
-#: undergraduate_admission/utils.py:55
+#: undergraduate_admission/utils.py:60
 msgid ""
 "Your request has been successfully submitted and the results will be "
 "announced on Wednesday June 15, 2016 ... And you are recommended to visit "
@@ -977,29 +971,80 @@ msgstr ""
 "تم استلام طلبك بنجاح وسوف تعلن النتائج يوم الأربعاء 10 رمضان 1437هـ الموافق "
 "15 يونيو 2016م. إدارة القبول - جامعة الملك فهد للبترول والمعادن."
 
-#: undergraduate_admission/utils.py:59
+#: undergraduate_admission/utils.py:64
 msgid "TBA"
 msgstr ""
 
-#: undergraduate_admission/views/general_views.py:43
+#: undergraduate_admission/views/general_views.py:41
 msgid "Password was reset successfully..."
 msgstr "لقد تم تغير كلمة المرور بنجاح"
 
-#: undergraduate_admission/views/general_views.py:46
+#: undergraduate_admission/views/general_views.py:44
 #: undergraduate_admission/views/phase1_views.py:22
 #: undergraduate_admission/views/phase2_views.py:17
 msgid "Error resetting password. Make sure you enter the correct info."
 msgstr "خطأ بتغيير كلمة المرور, الرجاء ادخال معلومات بشكل صحيحة"
 
-#: undergraduate_admission/views/general_views.py:64
-#, fuzzy
-#| msgid "Password was reset successfully..."
+#: undergraduate_admission/views/general_views.py:62
 msgid "Contact Info was updated successfully..."
 msgstr "لقد تم تغير كلمة المرور بنجاح"
 
-#: undergraduate_admission/views/general_views.py:67
+#: undergraduate_admission/views/general_views.py:65
 msgid "Error updating contact info. Try again later!"
-msgstr ""
+msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
+
+#~ msgid ""
+#~ "Please enter a correct %(username)s and password. Note that both fields "
+#~ "may be case-sensitive."
+#~ msgstr "الرجاء إدخال %(username)s و كلمة السر الصحيحين."
+
+#~ msgid "The password is too similar to the %(verbose_name)s."
+#~ msgstr "كلمة السر المدخلة مشابهة لـ %(verbose_name)."
+
+#~ msgid ""
+#~ "Your password can't be too similar to your other personal information."
+#~ msgstr "ﻻ يمكنك إدخال كلمة مرور مشابهة لاسمك أو هويتك"
+
+#~ msgid "This password is too common."
+#~ msgstr "كلمة السر المدخلة إعتيادية ومنتشرة."
+
+#~ msgid "Your password can't be a commonly used password."
+#~ msgstr "ﻻ يمكن استخدام كلمات سر معروفة ومنتشرة"
+
+#~ msgid "This password is entirely numeric."
+#~ msgstr "كلمة السر تحتوي على أرقام فقط"
+
+#~ msgid "Your password can't be entirely numeric."
+#~ msgstr "كلمة السر ﻻ يمكن أن تتكون من أرقام فقط"
+
+#~ msgid ""
+#~ "This password is too short. It must contain at least %(min_length)d "
+#~ "character."
+#~ msgid_plural ""
+#~ "This password is too short. It must contain at least %(min_length)d "
+#~ "characters."
+#~ msgstr[0] ""
+#~ "كلمة المرور قصيرة جدا. الرجاء إدخال على اﻷقل %(min_length)d حرفا."
+#~ msgstr[1] ""
+#~ "كلمة المرور قصيرة جدا. الرجاء إدخال على اﻷقل %(min_length)d حرفا."
+#~ msgstr[2] ""
+#~ "كلمة المرور قصيرة جدا. الرجاء إدخال على اﻷقل %(min_length)d حرفا."
+#~ msgstr[3] ""
+#~ "كلمة المرور قصيرة جدا. الرجاء إدخال على اﻷقل %(min_length)d حرفا."
+#~ msgstr[4] ""
+#~ "كلمة المرور قصيرة جدا. الرجاء إدخال على اﻷقل %(min_length)d حرفا."
+#~ msgstr[5] ""
+#~ "كلمة المرور قصيرة جدا. الرجاء إدخال على اﻷقل %(min_length)d حرفا."
+
+#~ msgid "Your password must contain at least %(min_length)d character."
+#~ msgid_plural ""
+#~ "Your password must contain at least %(min_length)d characters."
+#~ msgstr[0] "كلمة المرور يجب أن تحتوى على اﻷقل  %(min_length)d حرفا."
+#~ msgstr[1] "كلمة المرور يجب أن تحتوى على اﻷقل  %(min_length)d حرفا."
+#~ msgstr[2] "كلمة المرور يجب أن تحتوى على اﻷقل  %(min_length)d حرفا."
+#~ msgstr[3] "كلمة المرور يجب أن تحتوى على اﻷقل  %(min_length)d حرفا."
+#~ msgstr[4] "كلمة المرور يجب أن تحتوى على اﻷقل  %(min_length)d حرفا."
+#~ msgstr[5] "كلمة المرور يجب أن تحتوى على اﻷقل  %(min_length)d حرفا."
 
 #~ msgid ""
 #~ "This password is too short. It must contain at least %(min_length)d "

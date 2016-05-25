@@ -12,16 +12,22 @@
 <h3>{% trans 'Application Details' %}</h3>
 <hr>
 <form class="form-horizontal">
+	<!--<div class="form-group form-group">-->
+		<!--<label class="col-sm-3 control-label">{% trans 'Mobile' %}</label>-->
+		<!--<div class="col-sm-5">-->
+			<!--<p class="form-control-static">{{ user.mobile }}</p>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<div class="form-group form-group">-->
+		<!--<label class="col-sm-3 control-label">{% trans 'Email' %}</label>-->
+		<!--<div class="col-sm-5">-->
+			<!--<p class="form-control-static">{{ user.email }}</p>-->
+		<!--</div>-->
+	<!--</div>-->
 	<div class="form-group form-group">
-		<label class="col-sm-3 control-label">{% trans 'Mobile' %}</label>
+		<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>
 		<div class="col-sm-5">
-			<p class="form-control-static">{{ user.mobile }}</p>
-		</div>
-	</div>
-	<div class="form-group form-group">
-		<label class="col-sm-3 control-label">{% trans 'Email' %}</label>
-		<div class="col-sm-5">
-			<p class="form-control-static">{{ user.email }}</p>
+			<p class="form-control-static">{{ user.high_school_graduation_year }}</p>
 		</div>
 	</div>
 	<div class="form-group form-group">
@@ -36,11 +42,6 @@
 			<p class="form-control-static">{{ user.nationality }}</p>
 		</div>
 	</div>
-	<div class="form-group form-group">
-		<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>
-		<div class="col-sm-5">
-			<p class="form-control-static">{{ user.high_school_graduation_year }}</p>
-		</div>
-	</div>
+	
 </form>
 {% endblock subcontent %}

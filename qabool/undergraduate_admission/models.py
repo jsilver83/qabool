@@ -262,6 +262,18 @@ class Lookup(models.Model):
     class Meta:
         ordering=['-display_order']
 
+    @staticmethod
+    def get_lookup_choices(lookup_type):
+        choices = Lookup.objects.filter(
+            show=True,
+            lookup_type=lookup_type)
+        # lang = translation.get_language()
+        # if lang == "ar":
+        return [(o.lookup_value_ar, str(o)) for o in choices]
+        # else:
+        #     return [(o.lookup_value_ar, o.lookup_value_en) for o in choices]
+
+
 
 class City(models.Model):
     city_name_ar = models.CharField(max_length=100, verbose_name=_('City Name Arabic'))
