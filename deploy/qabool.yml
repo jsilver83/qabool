@@ -39,6 +39,7 @@
         dest: "{{ install_dir }}"
         revision: "{{ branch }}"
         force: yes
+      when: internal_server
 
     - name: Set file permissions
       file:

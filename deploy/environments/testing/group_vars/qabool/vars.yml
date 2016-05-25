@@ -1,3 +1,4 @@
+internal_server: yes
 branch: default
 qabool_urls:
   - qabool.test.kfupm.edu.sa
