@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,6 +12,7 @@ from undergraduate_admission.utils import SMS, Email
 
 
 @cache_page(60 * 15)
+@csrf_protect
 def initial_agreement(request):
     form = AgreementForm(request.POST or None)
 
@@ -19,7 +21,7 @@ def initial_agreement(request):
             request.session['agreed'] = True
             return redirect('register')
         else:
-            messages.error(request, _('Error resetting password. Make sure you enter the correct info.'))
+            messages.error(request, _('Error.'))
 
     sem = AdmissionSemester.get_phase1_active_semester()
     agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)

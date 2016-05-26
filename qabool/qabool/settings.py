@@ -196,7 +196,7 @@ RECAPTCHA_USE_SSL = True
 
 DISABLE_SMS = False
 DISABLE_EMAIL = False
-DISABLE_CAPTCHA = True
+DISABLE_CAPTCHA = False
 
 # Override settings using environment-specific settings, if any
 try:
