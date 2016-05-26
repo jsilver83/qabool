@@ -267,12 +267,11 @@ class Lookup(models.Model):
         choices = Lookup.objects.filter(
             show=True,
             lookup_type=lookup_type)
-        # lang = translation.get_language()
-        # if lang == "ar":
-        return [(o.lookup_value_ar, str(o)) for o in choices]
-        # else:
-        #     return [(o.lookup_value_ar, o.lookup_value_en) for o in choices]
 
+        ch = [(o.lookup_value_ar, o.lookup_value_ar) for o in choices]
+        ch.insert(0, ('', '---------'))
+
+        return ch
 
 
 class City(models.Model):

@@ -251,10 +251,8 @@ a.list-group-item:hover{
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
 
-/* added by joud
-@media all and (mx-width: 500px){}
-    div.controls{
-    width: 100%
-    }
+/* added by joud */
+select{
+    height: 45px!important;
 }
- end of add by joud */
+/* end of add by joud */
