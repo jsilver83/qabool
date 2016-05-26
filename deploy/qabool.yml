@@ -34,13 +34,30 @@
     - name: Create appilcation user
       user: name=qabool system=yes
 
-    - name: Get the application code
+    - name: Get the application code (internal server)
       hg:
         repo: http://hg.itc.kfupm.edu.sa/apps/qabool
         dest: "{{ install_dir }}"
         revision: "{{ branch }}"
         force: yes
       when: internal_server
+
+    - name: Clone the application code repository (external server)
+      local_action: command hg clone .. ssh://{{ inventory_hostname }}/{{install_dir}} -b {{ branch }}
+      become: no
+      when: not internal_server
+      ignore_errors: yes
+
+    - name: Push the application code (external server)
+      local_action: command hg push ssh://{{ inventory_hostname }}/{{install_dir}} -b {{ branch }}
+      become: no
+      when: not internal_server
+
+    - name: Update remote repository (external server)
+      command: hg update {{ branch }}
+      args:
+        chdir: "{{ install_dir }}"
+      when: not internal_server
 
     - name: Set file permissions
       file:

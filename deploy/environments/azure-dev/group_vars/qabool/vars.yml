@@ -1,5 +1,5 @@
 internal_server: no
-#branch: default
+branch: default
 qabool_urls:
   - qabool-2.westeurope.cloudapp.azure.com
 #load_balancer_ip:
