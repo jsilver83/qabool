@@ -23,7 +23,7 @@
 				<h4>{{ user }}</h4>
 				<strong>{% trans 'Application ID' %}:</strong> {{ user.id }}<br>
 				<strong>{% trans 'Government ID' %}:</strong> {{ user.username }}<br>
-				<strong>{% trans 'Mobile' %}:</strong> {{ user.username }}<br>
+				<strong>{% trans 'Mobile' %}:</strong> {{ user.mobile }}<br>
 				<strong>{% trans 'Application Status' %}:</strong>
 				<span class="text-info">{{ user.get_actual_student_status }}</span>
 				<hr>
