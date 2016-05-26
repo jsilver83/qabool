@@ -11,6 +11,7 @@
     nginx_error_log: /var/log/nginx/qabool-error.log
     nginx_worker_processes: 32
     nginx_worker_connections: 10000
+    sysctl_max_connections: 20000
     disable_sms: False
     disable_email: False
     disable_captcha: False
@@ -149,6 +150,14 @@
     - name: Disable default webserver site
       file: path=/etc/nginx/sites-enabled/default state=absent
 
+    - sysctl:
+        name: net.core.somaxconn
+        value: "{{ sysctl_max_connections }}"
+        sysctl_set: yes
+        sysctl_file: /etc/sysctl.d/50-somaxconn.conf
+        state: present
+        reload: yes
+
     - name: Restart app server (uwsgi)
       service: name=uwsgi state=restarted
 
@@ -171,6 +180,7 @@
         owner: root
         group: root
         mode: 0755
+      when: zabbix_server is defined
 
     - name: Install cronjob for zabbix nginx monitoring script
       cron:
