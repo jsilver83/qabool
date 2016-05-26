@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, EditContactInfoForm
+from undergraduate_admission.models import AdmissionSemester
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
@@ -28,7 +29,14 @@ def index(request, template_name='undergraduate_admission/login.html'):
                     else:
                         return redirect(reverse('student_area'))
 
-    return render(request, template_name, {'form': form})
+    phase1_active = False
+    if AdmissionSemester.check_if_phase1_is_active():
+        phase1_active = True
+
+    return render(request, template_name, {
+        'form': form,
+        'phase1_active': phase1_active,
+    })
 
 
 def forgot_password(request):

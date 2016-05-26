@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
@@ -15,6 +16,7 @@ class User(AbstractUser):
         null=True,
         related_name = 'applicants',
         verbose_name=_('Admission Semester'),
+        db_index=True,
     )
     status_message = models.ForeignKey(
         'RegistrationStatusMessage',
@@ -56,7 +58,8 @@ class User(AbstractUser):
                 '^9665\d{8}$',
                 message=_('You have entered an invalid mobile number')
             ),
-        ]
+        ],
+        db_index=True,
     )
     phone = models.CharField(null=True, max_length=50, verbose_name=_('Phone'))
     high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA'))
@@ -201,6 +204,22 @@ class AdmissionSemester(models.Model):
         sem = AdmissionSemester.objects.filter(phase2_start_date__lte=now, phase2_end_date__gte=now).first()
         return sem
 
+    @staticmethod
+    def check_if_phase1_is_active():
+        # cache if semester phase1 is active for 15 mins
+        if cache.get('phase1_active') is None:
+            sem = AdmissionSemester.get_phase1_active_semester()
+            if sem:
+                cache.set('phase1_active', True, 15*60)
+                return True
+            else:
+                return False
+        else:
+            if cache.get('phase1_active'):
+                return True
+            else:
+                return False
+
 
 class RegistrationStatus(models.Model):
     status_ar = models.CharField(max_length=50, verbose_name=_('Status (Arabic)'))
@@ -297,7 +316,7 @@ class City(models.Model):
 
 
 class DeniedStudent(models.Model):
-    government_id = models.CharField(max_length=12, verbose_name=_('Government ID'))
+    government_id = models.CharField(max_length=12, verbose_name=_('Government ID'), db_index=True)
     student_name = models.CharField(max_length=400, verbose_name=_('Student Name'))
     message = models.CharField(max_length=400, verbose_name=_('Message'))
     university_code = models.CharField(max_length=10, verbose_name=_('University Code'))
@@ -306,7 +325,8 @@ class DeniedStudent(models.Model):
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
-        related_name='denied_students'
+        related_name='denied_students',
+        db_index=True,
     )
     last_trial_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Last Trial Date'))
     trials_count = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Count Trial'))
