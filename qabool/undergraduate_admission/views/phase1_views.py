@@ -5,6 +5,7 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
 from django.utils.translation import ugettext_lazy as _
+from django.core.cache import cache
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm
 from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
@@ -39,6 +40,10 @@ class RegisterView(CreateView):
     form_class = RegistrationForm
 
     def dispatch(self, request, *args, **kwargs):
+        if not AdmissionSemester.check_if_phase1_is_active():
+            messages.error(self.request, _('Registration is closed...'))
+            return redirect('index')
+
         agreed = request.session.get('agreed')
         if agreed is None:
             return redirect('initial_agreement')

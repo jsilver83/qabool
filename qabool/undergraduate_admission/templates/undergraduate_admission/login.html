@@ -4,13 +4,19 @@
 {% load floppyforms %}
 
 {% block subcontent %}
-<a href="{% url 'register' %}" class="btn btn-primary btn-lg btn-block"><strong>{% trans 'Apply for Admission' %}</strong></a>
+
+{% if phase1_active %}
+<h3>{% trans 'New Application For Admission' %}</h3>
+<center>
+<a href="{% url 'register' %}" class="btn btn-primary btn-lg btn-admission" style=""><strong>{% trans 'Apply Now' %}</strong></a>
+</center>
 <br>
 
 <div class="login-or">
 	<hr class="hr-or">
-	<span class="span-or">{% trans 'or' %}</span>
+	<h4><span class="span-or">{% trans 'or' %}</span></h4>
 </div>
+{% endif %}
 
 {% blocktrans %}
 <h3>Review your Application</h3>
@@ -28,11 +34,11 @@ If you have applied before, you can login below to review your application for a
 <form role="form" method="post" action="{% url 'login' %}">
 	{% csrf_token %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-	<div class="{% trans 'btn-align' %}">
+	<!--<div class="{% trans 'btn-align' %}">-->
 		<br>
 		<input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="{% url 'forgot_password' %}">{% trans 'Forgot Password?' %}</a>
-	</div>
+	<!--</div>-->
 	<input type="hidden" name="next" value="/"/>
 </form>
 
