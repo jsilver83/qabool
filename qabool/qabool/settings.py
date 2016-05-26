@@ -143,6 +143,7 @@ LANGUAGES = [
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'custom_locale'),
 )
 
 
@@ -181,9 +182,6 @@ EMAIL_USE_TLS = True
 ADMINS = [('joud', 'joud@kfupm.edu.sa'), ('Dr. Ahmad Khayyat', 'akhayyat@kfupm.edu.sa'), ('almaaesh', 'almaaesh@kfupm.edu.sa')]
 SERVER_EMAIL = 'admissions@kfupm.edu.sa'
 
-# LOCALE_PATHS=[
-#     os.path.join(os.path.dirname(__file__), "locale"),
-# ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
