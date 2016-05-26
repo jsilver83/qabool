@@ -49,14 +49,17 @@ direction: ltr;
 unicode-bidi: bidi-override;
 }
 
-select, input{
+input{
 font-size: 100%!important;
 }
 
-#id_high_school_graduation_year{
-font-size: 70%!important;
+select{
+font-size: 90%!important;
 }
 
+/*#id_high_school_graduation_year{
+font-size: 70%!important;
+}*/
 
 /* Float devices */
 @media(max-width:1150px) {

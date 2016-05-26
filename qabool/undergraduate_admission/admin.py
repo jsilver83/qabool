@@ -60,6 +60,11 @@ class LookupAdmin(admin.ModelAdmin):
     list_filter = ('lookup_type',)
 
 
+class DistinguishedStudentAdmin(admin.ModelAdmin):
+    list_display = ('government_id', 'student_name', 'city', 'attended')
+    search_fields = ['government_id',]
+
+
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
@@ -72,3 +77,5 @@ admin.site.register(AdmissionSemester)
 admin.site.register(User, UserAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
+admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
+
