@@ -25,7 +25,7 @@ def initial_agreement(request):
 
     sem = AdmissionSemester.get_phase1_active_semester()
     agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
-    agreement_items = agreement.items.all()
+    agreement_items = agreement.items.filter(show=True)
     return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement,
                                                                       'items': agreement_items,
                                                                       'form': form,})
