@@ -42,6 +42,14 @@
 			<p class="form-control-static">{{ user.nationality }}</p>
 		</div>
 	</div>
+	{% if user.saudi_mother %}
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Saudi Mother' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{% trans 'Yes' %}</p>
+		</div>
+	</div>
+	{% endif %}
 	<div class="form-group form-group">
 		<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>
 		<div class="col-sm-5">

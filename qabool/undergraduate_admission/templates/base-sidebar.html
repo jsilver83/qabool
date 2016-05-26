@@ -4,46 +4,52 @@
 {% block content %}
 <div class="container">
 	<div class="row">
-		<div class="col-lg-5">
+		<div class="col-md-6 col-md-offset-1">
+			{% block subcontent %}
+			{% endblock subcontent %}
+			<br>&nbsp;<br>&nbsp;<br>
+		</div>
+		<div class="col-md-4 col-md-offset-1">
 			{% blocktrans %}
 			<div class="media">
 				<div class="media-left"><i class="fa fa-calendar fa-2x"></i></div>
 				<div class="media-body">
-					<h4 class="media-heading text-uppercase"><strong>Important Dates</strong></h4>
-					<i class="fa fa-check" aria-hidden="true"></i> <strong>Registration:</strong> Sun 29 May
-					to 07 June 2016<br>
-					<i class="fa fa-check" aria-hidden="true"></i> <strong>Results:</strong> Wed 15 June 2016<br>
-					<i class="fa fa-check" aria-hidden="true"></i> <strong>Admission Confirmation:</strong>
-					Wed 15 to Thu 23 June 2016<br>
-					<i class="fa fa-check" aria-hidden="true"></i> <strong>Orientation Week:</strong>
-					Mon 22 to Thu 25 August 2016
+					<h4 class="media-heading text-uppercase">Important Dates</h4>
+					<ul class="sidebar">
+						<li><strong>Registration:</strong> Sun 29 May to 07 June 2016</li>
+						<li><strong>Results:</strong> Wed 15 June 2016</li>
+						<li><strong>Admission Confirmation:</strong> Wed 15 to Thu 23 June 2016</li>
+						<li><strong>Orientation Week:</strong> Mon 22 to Thu 25 August 2016</li>
+					</ul>
 				</div>
 			</div>
 			<div class="media">
 				<div class="media-left"><i class="fa fa-question-circle fa-2x"></i></div>
 				<div class="media-body">
-					<h4 class="media-heading"><strong>FAQs</strong></h4>
-
-					<i class="fa fa-check"></i> <a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/
-					ar/ContentDetailsPage.aspx?CUSTOMID=12&LinkID=LinkV3" target="_blank">Click Here</a>
+					<h4 class="media-heading">FAQs</h4>
+					<ul class="sidebar">
+						<li><a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/
+					ar/QaboolCalculator.aspx" target="_blank">Qabool Calculator</a>
+						</li>
+						<li><a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/
+					ar/ContentDetailsPage.aspx?CUSTOMID=12&LinkID=LinkV3" target="_blank">More FAQs</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div class="media">
 				<div class="media-left"><i class="fa fa-info-circle fa-2x"></i></div>
 				<div class="media-body">
-					<h4 class="media-heading text-uppercase"><strong>Need Help?</strong></h4>
-					<strong>Phone:</strong> +966 (13) 860 2901<br>
-					<strong>Fax:</strong> +966 (13) 860 2722<br>
-					<strong>Email:</strong> <a href="mailto:admissions@kfupm.edu.sa">admissions@kfupm.edu.sa</a><br>
-					<strong>Website:</strong> <a
-						href="http://www.kfupm.edu.sa/admissions">www.kfupm.edu.sa/admissions</a>
+					<h4 class="media-heading text-uppercase">Need Help?</h4>
+					<ul class="sidebar">
+						<li><i class="fa fa-volume-control-phone"></i> +966 (13) 860 2901</li>
+						<li><i class="fa fa-fax"></i>  +966 (13) 860 2722</li>
+						<li><i class="fa fa-envelope"></i>  <a href="mailto:admissions@kfupm.edu.sa">admissions@kfupm.edu.sa</a></li>
+						<li><i class="fa fa-internet-explorer"></i>  <a href="http://www.kfupm.edu.sa/admissions">www.kfupm.edu.sa/admissions</a></li>
+					</ul>
 				</div>
 			</div>
 			{% endblocktrans %}
-		</div>
-		<div class="col-lg-6 col-lg-offset-1 pull-right">
-			{% block subcontent %}
-			{% endblock subcontent %}
 		</div>
 	</div>
 </div>

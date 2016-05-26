@@ -38,27 +38,17 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 		$(".concurr").click(function(){
             $(".subBtn").toggle();
         });
-
         {% if LANGUAGE_CODE == 'ar' %}$(".select2").select2({
 		  dir: "rtl"
 		});
 		{% else %}
 		$(".select2").select2();{% endif %}
-
-        $("form").attr("autocomplete","off");
-
-        $('input[type=text]').attr('autocomplete', 'off');
-
-        //$('.nocopy').bind("cut copy paste",function(e) {
-        $('input[type=text]').bind("cut copy paste",function(e) {
-          e.preventDefault();
-        });
-
 		sm($("#id_nationality").prop('selectedIndex'));
 		$("#id_nationality").change(function(){
             var vaa = $(this).prop('selectedIndex');
             sm(vaa);
         });
+        $("textarea").addClass("form-control");
 	});
 
 	function sm(nat){
