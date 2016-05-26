@@ -261,7 +261,7 @@ class RegistrationStatusMessage(models.Model):
 
 
 class Lookup(models.Model):
-    lookup_type = models.CharField(max_length=20, null=True, blank=False)
+    lookup_type = models.CharField(max_length=20, null=True, blank=False, db_index=True)
     lookup_value_ar = models.CharField(max_length=100, null=True, blank=False)
     lookup_value_en = models.CharField(max_length=100, null=True, blank=False)
     show = models.BooleanField(verbose_name=_('Show'), default=True)

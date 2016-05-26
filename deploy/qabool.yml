@@ -30,6 +30,7 @@
         - nginx-full
         - uwsgi
         - uwsgi-plugin-python3
+        - memcached
 
     - name: Create appilcation user
       user: name=qabool system=yes
