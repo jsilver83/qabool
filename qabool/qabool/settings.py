@@ -206,6 +206,10 @@ DISABLE_SMS = False
 DISABLE_EMAIL = False
 DISABLE_CAPTCHA = False
 
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_NOISE_FUNCTIONS = None
+CAPTCHA_LETTER_ROTATION = (-25,25)
+
 # Override settings using environment-specific settings, if any
 try:
     from qabool.local_settings import *

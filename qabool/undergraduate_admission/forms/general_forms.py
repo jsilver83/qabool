@@ -1,4 +1,5 @@
-from captcha.fields import ReCaptchaField
+from captcha.fields import CaptchaField
+# from captcha.fields import ReCaptchaField
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.contrib.auth import password_validation
@@ -14,6 +15,7 @@ class MyPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(MyPasswordChangeForm, self).__init__(*args, **kwargs)
+
 
 class EditContactInfoForm(forms.ModelForm):
     error_messages = {
@@ -117,7 +119,8 @@ class MyAuthenticationForm(AuthenticationForm):
         self.fields['password'].widget = forms.PasswordInput(attrs={'required': ''})
 
         if not settings.DISABLE_CAPTCHA:
-            self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+            # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+            self.fields['captcha'] = CaptchaField()
 
 
 class ForgotPasswordForm(forms.ModelForm):
@@ -164,7 +167,8 @@ class ForgotPasswordForm(forms.ModelForm):
         super(ForgotPasswordForm, self).__init__(*args, **kwargs)
 
         if not settings.DISABLE_CAPTCHA:
-            self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+            # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+            self.fields['captcha'] = CaptchaField()
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
