@@ -9,7 +9,7 @@
 Already applied for admission? <a href="/"><u>Log in</u></a> to review your application.
 {% endblocktrans %}
 <hr>
-<form action="{% url 'register' %}" method="post" class="form-horizontal">
+<form class="form-horizontal" action="{% url 'register' %}" method="post">
 	{% csrf_token %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
 	<div class="checkbox form-group">

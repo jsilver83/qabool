@@ -31,7 +31,7 @@ If you have applied before, you can login below to review your application for a
 </div>
 {% endif %}
 
-<form role="form" method="post" action="{% url 'login' %}">
+<form class="form-horizontal" role="form" method="post" action="{% url 'login' %}">
 	{% csrf_token %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
 	<!--<div class="{% trans 'btn-align' %}">-->
