@@ -17,7 +17,7 @@ Fill the form below to update your contact info<br>
 </div>
 {% endif %}
 
-<form role="form" method="post" action="{% url 'edit_contact_info' %}">
+<form class="form-horizontal" role="form" method="post" action="{% url 'edit_contact_info' %}">
 	{% csrf_token %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
 
