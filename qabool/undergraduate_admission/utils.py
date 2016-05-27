@@ -1,3 +1,4 @@
+import random
 import requests
 
 from django.core.mail import send_mail
@@ -79,4 +80,11 @@ class SMS(object):
     @staticmethod
     def send_sms_registration_success(mobile):
         SMS.send_sms(mobile, '%s'%(SMS.sms_messages['registration_success'])) # unjustifiable workaround
+
+
+def random_digit_challenge():
+    ret = u''
+    for i in range(6):
+        ret += str(random.randint(0,9))
+    return ret, ret
 

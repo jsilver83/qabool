@@ -287,7 +287,7 @@ class Lookup(models.Model):
             show=True,
             lookup_type=lookup_type)
 
-        ch = [(o.lookup_value_ar, o.lookup_value_ar) for o in choices]
+        ch = [(o.lookup_value_ar, str(o)) for o in choices]
         ch.insert(0, ('', '---------'))
 
         return ch
