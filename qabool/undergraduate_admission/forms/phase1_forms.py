@@ -135,7 +135,7 @@ class RegistrationForm(UserCreationForm):
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
-            self.fields['captcha'] = CaptchaField()
+            self.fields['captcha'] = CaptchaField(label=_('Captcha'))
 
     def clean_data(self):
         super(RegistrationForm, self).clean_data(self)
