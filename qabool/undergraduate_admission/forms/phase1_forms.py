@@ -1,5 +1,6 @@
-from captcha.fields import ReCaptchaField
-from django.utils import translation
+from captcha.fields import CaptchaField
+# from captcha.fields import ReCaptchaFieldfrom django.utils import translation
+
 from django.utils.translation import ugettext_lazy as _, get_language
 import floppyforms.__future__ as forms
 from django.contrib.auth.forms import UserCreationForm
@@ -133,7 +134,8 @@ class RegistrationForm(UserCreationForm):
         self.fields['high_school_system'].required = True
 
         if not settings.DISABLE_CAPTCHA:
-            self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+            # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+            self.fields['captcha'] = CaptchaField()
 
     def clean_data(self):
         super(RegistrationForm, self).clean_data(self)
