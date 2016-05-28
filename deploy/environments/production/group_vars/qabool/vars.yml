@@ -3,7 +3,6 @@ branch: stable
 qabool_urls:
   - qabool.kfupm.edu.sa
   - qabool-1.kfupm.edu.sa
-  - qaboolbeta.kfupm.edu.sa
 #load_balancer_ip: 10.142.5.244
 
 # To generate a secret key:
