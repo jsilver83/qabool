@@ -39,16 +39,17 @@ class RegisterView(CreateView):
     # success_url = reverse_lazy("login")
     form_class = RegistrationForm
 
-    def dispatch(self, request, *args, **kwargs):
+    # changed from "dispatch" to "get" so that it will check only when the user loads the form not when he submits
+    def get(self, request, *args, **kwargs):
         if not AdmissionSemester.check_if_phase1_is_active():
-            messages.error(self.request, _('Registration is closed...'))
+            messages.error(request, _('Registration is closed...'))
             return redirect('index')
 
         agreed = request.session.get('agreed')
         if agreed is None:
             return redirect('initial_agreement')
         else:
-            return super(RegisterView, self).dispatch(request, *args, **kwargs)
+            return super(RegisterView, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
         reg_msg = RegistrationStatusMessage.objects.get(pk=1) # for status 1 'application submitted'
