@@ -270,4 +270,8 @@ ol.sidebar, ul.sidebar {
     max-width:70%;
     font-size:110%
 }
+
+input[type=submit]{
+margin-top: 15px;
+}
 /* end of add by joud */
