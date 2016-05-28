@@ -789,7 +789,7 @@ msgstr ""
 #: undergraduate_admission/templates/base.html:12
 msgid ""
 "Undergraduate Admission | King Fahd University of Petroleum &amp; Minerals"
-msgstr "إدارة القبول ، جامعة الملك فهد للبترول والمعادن"
+msgstr "إدارة القبول | جامعة الملك فهد للبترول والمعادن"
 
 #: undergraduate_admission/templates/base.html:43
 msgid "Welcome"
@@ -813,7 +813,7 @@ msgid ""
 msgstr ""
 "\n"
 "\t\t\t\t&copy; إدارة القبول، جامعة الملك فهد للبترول والمعادن<br>\n"
-"\t\t\t\tالظهران, 31261 | المملكة العربية السعودية | <span class=\"phone-no\">"
+"\t\t\t\tالظهران، 31261 | المملكة العربية السعودية | <span class=\"phone-no\">"
 "+966 (13) 860 2901</span><br>\n"
 "\t\t\t\t<a href=\"http://www.kfupm.edu.sa/admissions\">www.kfupm.edu.sa/"
 "admissions</a>\n"
@@ -1018,7 +1018,7 @@ msgstr ""
 "القرى  ... <br><h4>تفاصيل الطلب</h4><hr>رقم التسجيل: %(user_id)s<br>رقم "
 "الجوال: %(mobile)s<br>تاريخ التسجيل: %(reg_date)s<br><hr><br>الشروط و اﻷحكام:"
 "<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br><br> إدارة "
-"القبول, <br>جامعة الملك فهد للبترول والمعادن.</div>"
+"القبول، <br>جامعة الملك فهد للبترول والمعادن.</div>"
 
 #: undergraduate_admission/utils.py:54
 msgid "KFUPM Admission"
@@ -1045,7 +1045,7 @@ msgstr "لقد تم تغير كلمة المرور بنجاح"
 #: undergraduate_admission/views/general_views.py:52
 #: undergraduate_admission/views/phase2_views.py:17
 msgid "Error resetting password. Make sure you enter the correct info."
-msgstr "خطأ بتغيير كلمة المرور, الرجاء ادخال معلومات بشكل صحيحة"
+msgstr "خطأ بتغيير كلمة المرور، فضلاً تأكد من صحة البيانات المدخلة."
 
 #: undergraduate_admission/views/general_views.py:70
 msgid "Contact Info was updated successfully..."
