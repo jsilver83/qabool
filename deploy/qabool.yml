@@ -31,6 +31,8 @@
         - uwsgi
         - uwsgi-plugin-python3
         - memcached
+        - libjpeg-dev
+        - libfreetype6-dev
 
     - name: Create appilcation user
       user: name=qabool system=yes
