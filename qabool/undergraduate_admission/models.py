@@ -55,7 +55,7 @@ class User(AbstractUser):
         help_text=_('Mobile number should be of this format "9665xxxxxxxx". Use English numerals only.'),
         validators=[
             RegexValidator(
-                '^9665\d{8}$',
+                '^(9665|٩٦٦٥)\d{8}$',
                 message=_('You have entered an invalid mobile number')
             ),
         ],
@@ -104,7 +104,7 @@ class User(AbstractUser):
         help_text=_('Guardian mobile should be different than own mobile'),
         validators=[
             RegexValidator(
-                '^9665\d{8}$',
+                '^(9665|٩٦٦٥)\d{8}$',
                 message=_('You have entered an invalid mobile number')
             ),
         ]

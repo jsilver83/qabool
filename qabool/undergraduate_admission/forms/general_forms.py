@@ -9,6 +9,8 @@ from qabool import settings
 from undergraduate_admission.models import User, AdmissionSemester
 import floppyforms.__future__ as forms
 
+from undergraduate_admission.utils import try_parse_int
+
 
 class MyPasswordChangeForm(PasswordChangeForm):
 
@@ -74,7 +76,7 @@ class EditContactInfoForm(forms.ModelForm):
         return email2
 
     def clean_mobile(self):
-        mobile = self.cleaned_data.get("mobile")
+        mobile = try_parse_int(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
         found = User.objects.filter(mobile=mobile, semester=semester).exclude(id=self.request.user.id)
         if mobile and found:
@@ -85,7 +87,7 @@ class EditContactInfoForm(forms.ModelForm):
         return mobile
 
     def clean_mobile2(self):
-        mobile1 = self.cleaned_data.get("mobile")
+        mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
         mobile2 = self.cleaned_data.get("mobile2")
         if mobile1 and mobile2 and mobile1 != mobile2:
             raise forms.ValidationError(
@@ -121,6 +123,10 @@ class MyAuthenticationForm(AuthenticationForm):
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
             self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
+
+    def clean_username(self):
+        username1 = try_parse_int(self.cleaned_data.get("username"))
+        return username1
 
 
 class ForgotPasswordForm(forms.ModelForm):
@@ -181,6 +187,9 @@ class ForgotPasswordForm(forms.ModelForm):
         self.instance.username = self.cleaned_data.get('username')
         password_validation.validate_password(self.cleaned_data.get('password2'), self.instance)
         return password2
+
+    def clean_username(self):
+        return try_parse_int(self.cleaned_data.get("username"))
 
     def save(self):
         username = self.cleaned_data.get("govid")

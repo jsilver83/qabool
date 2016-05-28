@@ -32,7 +32,6 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 
 {% block scripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
 <script>
 	$(function(){
@@ -52,9 +51,6 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
             sm(vaa);
         });
         $("textarea").addClass("form-control");
-
-        $("#id_username, #id_username2").mask("999999999?99");
-        $("#id_mobile, #id_mobile2, #id_guardian_mobile").mask("999999999999");
 	});
 
 	function sm(nat){
