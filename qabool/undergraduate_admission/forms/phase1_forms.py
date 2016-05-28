@@ -57,7 +57,7 @@ class RegistrationForm(UserCreationForm):
         label=_('Government ID'),
         max_length=11,
         min_length=9,
-        help_text=_('National ID for Saudis, Iqama Number for non-Saudis.'),
+        help_text=_('National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx'),
         validators=[
             RegexValidator(
                 '^\d{9,11}$',

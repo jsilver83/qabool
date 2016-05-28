@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 11:48+0300\n"
-"PO-Revision-Date: 2016-05-28 11:48+0300\n"
+"POT-Creation-Date: 2016-05-28 12:45+0300\n"
+"PO-Revision-Date: 2016-05-28 12:47+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -117,7 +117,6 @@ msgid "Enter the same password as before, for verification"
 msgstr "أعد إدخال كلمة المرور السابقة وذلك للتحقق"
 
 #: undergraduate_admission/forms/general_forms.py:163
-#: undergraduate_admission/forms/phase1_forms.py:60
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr "رقم الهوية الوطنية للسعوديين ، ورقم هوية مقيم  لغير السعوديين."
 
@@ -150,6 +149,14 @@ msgstr "لقد ادخلت رقم هوية غير صحيح"
 #: undergraduate_admission/forms/phase1_forms.py:46
 msgid "You have entered the guardian mobile same as your own mobile"
 msgstr "لقد ادخلت رقم جوال ولي الأمر نفس رقم جوالك"
+
+#: undergraduate_admission/forms/phase1_forms.py:60
+msgid ""
+"National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or "
+"2xxxxxxxxx"
+msgstr ""
+"رقم الهوية الوطنية للسعوديين ، ورقم هوية مقيم  لغير السعوديين. مثال "
+"1xxxxxxxxx أو 2xxxxxxxxx."
 
 #: undergraduate_admission/forms/phase1_forms.py:69
 msgid "Government ID Confirmation"
