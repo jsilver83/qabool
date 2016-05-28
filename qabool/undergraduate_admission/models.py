@@ -52,7 +52,7 @@ class User(AbstractUser):
         blank=False,
         max_length=12,
         verbose_name=_('Mobile'),
-        help_text=_('Mobile number should be of this format "9665xxxxxxxx" '),
+        help_text=_('Mobile number should be of this format "9665xxxxxxxx". Use English numerals only.'),
         validators=[
             RegexValidator(
                 '^9665\d{8}$',
