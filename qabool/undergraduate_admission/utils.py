@@ -82,6 +82,7 @@ class SMS(object):
         SMS.send_sms(mobile, '%s'%(SMS.sms_messages['registration_success'])) # unjustifiable workaround
 
 
+# a custom function to generate 6-digit captcha codes
 def random_digit_challenge():
     ret = u''
     for i in range(6):

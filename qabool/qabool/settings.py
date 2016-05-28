@@ -210,6 +210,8 @@ CAPTCHA_CHALLENGE_FUNCT = 'undergraduate_admission.utils.random_digit_challenge'
 # CAPTCHA_NOISE_FUNCTIONS = None
 CAPTCHA_LETTER_ROTATION = (-10,10)
 
+CSRF_FAILURE_VIEW = 'undergraduate_admission.views.general_views.csrf_failure'
+
 # Override settings using environment-specific settings, if any
 try:
     from qabool.local_settings import *
