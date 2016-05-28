@@ -8,6 +8,7 @@ from django.core.validators import RegexValidator
 
 from qabool import settings
 from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup
+from undergraduate_admission.utils import try_parse_int
 
 
 class AgreementForm(forms.Form):
@@ -142,7 +143,7 @@ class RegistrationForm(UserCreationForm):
         super(RegistrationForm, self).clean_data(self)
 
     def clean_username(self):
-        username1 = self.cleaned_data.get("username")
+        username1 = try_parse_int(self.cleaned_data.get("username"))
         denial = DeniedStudent.check_if_student_is_denied(username1)
 
         if denial:
@@ -153,8 +154,8 @@ class RegistrationForm(UserCreationForm):
         return username1
 
     def clean_username2(self):
-        username1 = self.cleaned_data.get("username")
-        username2 = self.cleaned_data.get("username2")
+        username1 = try_parse_int(self.cleaned_data.get("username"))
+        username2 = try_parse_int(self.cleaned_data.get("username2"))
         if username1 and username2 and username1 != username2:
             raise forms.ValidationError(
                 self.error_messages['govid_mismatch'],
@@ -184,7 +185,7 @@ class RegistrationForm(UserCreationForm):
         return email2
 
     def clean_mobile(self):
-        mobile = self.cleaned_data.get("mobile")
+        mobile = try_parse_int(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
         found = User.objects.filter(mobile=mobile, semester=semester)
         if mobile and found:
@@ -195,8 +196,9 @@ class RegistrationForm(UserCreationForm):
         return mobile
 
     def clean_mobile2(self):
-        mobile1 = self.cleaned_data.get("mobile")
-        mobile2 = self.cleaned_data.get("mobile2")
+        # same as username
+        mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
+        mobile2 = try_parse_int(self.cleaned_data.get("mobile2"))
         if mobile1 and mobile2 and mobile1 != mobile2:
             raise forms.ValidationError(
                 self.error_messages['mobile_mismatch'],
@@ -205,8 +207,9 @@ class RegistrationForm(UserCreationForm):
         return mobile2
 
     def clean_guardian_mobile(self):
-        mobile1 = self.cleaned_data.get("mobile")
-        mobile2 = self.cleaned_data.get("guardian_mobile")
+        # same as username
+        mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
+        mobile2 = try_parse_int(self.cleaned_data.get("guardian_mobile"))
         if mobile1 and mobile2 and mobile1 == mobile2:
             raise forms.ValidationError(
                 self.error_messages['guardian_mobile_match'],

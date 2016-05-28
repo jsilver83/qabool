@@ -17,8 +17,8 @@ def index(request, template_name='undergraduate_admission/login.html'):
 
     if request.method == 'POST':
         if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
