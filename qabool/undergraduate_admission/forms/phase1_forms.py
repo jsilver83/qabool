@@ -12,7 +12,7 @@ from undergraduate_admission.models import AdmissionSemester, DeniedStudent, Use
 
 class AgreementForm(forms.Form):
     agree1 = forms.BooleanField(label=_('I have read all of the above terms and conditions for applying to KFUPM'))
-    agree2 = forms.BooleanField(label=_('I accep all the above terms and conditions'))
+    agree2 = forms.BooleanField(label=_('I accept all the above terms and conditions'))
 
     def clean_agree1(self):
         agree1 = self.cleaned_data.get("agree1")
