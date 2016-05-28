@@ -120,7 +120,7 @@ class MyAuthenticationForm(AuthenticationForm):
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
-            self.fields['captcha'] = CaptchaField(label=_('Captcha'))
+            self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
 
 class ForgotPasswordForm(forms.ModelForm):
@@ -168,7 +168,7 @@ class ForgotPasswordForm(forms.ModelForm):
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
-            self.fields['captcha'] = CaptchaField(label=_('Captcha'))
+            self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
