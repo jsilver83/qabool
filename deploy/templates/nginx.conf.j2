@@ -1,6 +1,7 @@
 user www-data;
 worker_processes {{ nginx_worker_processes }};
 pid /run/nginx.pid;
+worker_rlimit_nofile 30000;
 
 events {
         worker_connections {{ nginx_worker_connections }};
