@@ -9,8 +9,9 @@
     static_files_dir: /opt/qabool_static_files
     nginx_access_log: /var/log/nginx/qabool-access.log
     nginx_error_log: /var/log/nginx/qabool-error.log
-    nginx_worker_processes: 32
+    nginx_worker_processes: 16
     nginx_worker_connections: 10000
+    uwsgi_processes: 64
     sysctl_max_connections: 20000
     disable_sms: False
     disable_email: False
