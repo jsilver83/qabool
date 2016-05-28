@@ -1,5 +1,5 @@
 [uwsgi]
-processes = 128
+processes = {{ uwsgi_processes }}
 chdir = {{ install_dir }}/qabool
 module = qabool.wsgi:application
 virtualenv = {{ venv_dir }}
