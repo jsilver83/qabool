@@ -57,7 +57,7 @@ class RegistrationForm(UserCreationForm):
         label=_('Government ID'),
         max_length=11,
         min_length=9,
-        help_text=_('National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx'),
+        help_text=_('National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx.  Use English numerals only.'),
         validators=[
             RegexValidator(
                 '^\d{9,11}$',
@@ -136,7 +136,7 @@ class RegistrationForm(UserCreationForm):
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
-            self.fields['captcha'] = CaptchaField(label=_('Captcha'))
+            self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
     def clean_data(self):
         super(RegistrationForm, self).clean_data(self)
