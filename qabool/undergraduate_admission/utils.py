@@ -20,9 +20,10 @@ class Email(object):
                 'Mobile: %(mobile)s<br>'
                 'Registration Date: %(reg_date)s<br><hr><br>'
                 'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
-                '<hr>'
+                '<hr><br>'
                 # 'You are recommended to frequently visit the admission website to know the '
                 # 'admission result and any updated instructions.'
+                'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . '
                 '<br><br> Admissions Office, <br>King Fahd '
                 'University of Petroleum and Minerals'),
     }
@@ -58,10 +59,9 @@ class Email(object):
 
 class SMS(object):
     sms_messages = {
-        'registration_success': _('Your request has been successfully submitted and the results will be '
-                                  'announced on Wednesday June 15, 2016 ... '
-                                  'And you are recommended to visit the admission website to know the '
-                                  'result and any updates. Admissions Office, KFUPM'),
+        'registration_success': _('Your request has been successfully submitted. '
+                                  'We appreciate your feedback:\nhttp://goo.gl/erw8HQ .\n'
+                                  'Admissions Office, KFUPM'),
         'confirmation_message': _('TBA'),
     }
 
@@ -88,4 +88,12 @@ def random_digit_challenge():
     for i in range(6):
         ret += str(random.randint(0,9))
     return ret, ret
+
+
+# safe parsing of integers
+def try_parse_int(str_to_int):
+    try:
+        return int(str_to_int)
+    except:
+        return 0
 
