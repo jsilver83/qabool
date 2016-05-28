@@ -73,3 +73,7 @@ def edit_contact_info(request):
                 messages.error(request, _('Error updating contact info. Try again later!'))
 
     return render(request, 'undergraduate_admission/edit_contact_info.html', {'form': form})
+
+
+def csrf_failure(request, reason=""):
+    return render(request, 'undergraduate_admission/csrf_failure.html')
