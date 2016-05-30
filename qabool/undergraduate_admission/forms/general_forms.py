@@ -19,7 +19,7 @@ class MyPasswordChangeForm(PasswordChangeForm):
         super(MyPasswordChangeForm, self).__init__(*args, **kwargs)
 
 
-class EditContactInfoForm(forms.ModelForm):
+class BaseContactForm(forms.ModelForm):
     error_messages = {
         'email_mismatch': _("The two email fields didn't match."),
         'mobile_mismatch': _("The two mobile fields didn't match."),
@@ -33,31 +33,43 @@ class EditContactInfoForm(forms.ModelForm):
         label=_('Email Address Confirmation'),
         required=True,
         help_text=_('Enter the same email address as before, for verification'),
-        widget=forms.EmailInput(attrs={'class': 'nocopy'})
+        widget=forms.EmailInput()
     )
     mobile2 = forms.CharField(
         label=_('Mobile Confirmation'),
         max_length=12,
         required=True,
         help_text=_('Enter the same mobile number as before, for verification'),
-        widget=forms.TextInput(attrs = {'class':'nocopy'})
+        widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
 
     class Meta:
         model = User
         fields = ['email', 'email2', 'mobile', 'mobile2']
+        widgets = {
+            'email': forms.TextInput(attrs={'required': ''}),
+            'mobile': forms.TextInput(attrs={'required': '',
+                                             'placeholder': '9665xxxxxxxx',
+                                             }),
+        }
 
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(EditContactInfoForm, self).__init__(*args, **kwargs)
+        self.user_id = -1
+        try:
+            request = kwargs.pop('request', None)
+            self.user_id = request.user.id
+        except:
+            pass
 
-    def clean_data(self):
-        super(EditContactInfoForm, self).clean_data(self)
+        print(self.user_id)
+
+        super(BaseContactForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
         semester = AdmissionSemester.get_phase1_active_semester()
-        found = User.objects.filter(email=email, semester=semester).exclude(id=self.request.user.id)
+        found = User.objects.filter(email=email, semester=semester).exclude(id=self.user_id)
         if email and found:
             raise forms.ValidationError(
                 self.error_messages['email_not_unique'],
@@ -78,7 +90,7 @@ class EditContactInfoForm(forms.ModelForm):
     def clean_mobile(self):
         mobile = try_parse_int(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
-        found = User.objects.filter(mobile=mobile, semester=semester).exclude(id=self.request.user.id)
+        found = User.objects.filter(mobile=mobile, semester=semester).exclude(id=self.user_id)
         if mobile and found:
             raise forms.ValidationError(
                 self.error_messages['mobile_not_unique'],
@@ -88,28 +100,13 @@ class EditContactInfoForm(forms.ModelForm):
 
     def clean_mobile2(self):
         mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
-        mobile2 = self.cleaned_data.get("mobile2")
+        mobile2 = try_parse_int(self.cleaned_data.get("mobile2"))
         if mobile1 and mobile2 and mobile1 != mobile2:
             raise forms.ValidationError(
                 self.error_messages['mobile_mismatch'],
                 code='mobile_mismatch',
             )
         return mobile2
-
-    def save(self):
-        email = self.cleaned_data.get("email")
-        mobile = self.cleaned_data.get("mobile")
-
-        user = self.request.user
-
-        if user is not None:
-            user.email = email
-            user.mobile = mobile
-            user.save()
-
-            return user
-        else:
-            return None
 
 
 class MyAuthenticationForm(AuthenticationForm):
@@ -125,8 +122,10 @@ class MyAuthenticationForm(AuthenticationForm):
             self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
     def clean_username(self):
-        username1 = try_parse_int(self.cleaned_data.get("username"))
-        return username1
+        return try_parse_int(self.cleaned_data.get("username"))
+
+    def clean(self):
+        return super(MyAuthenticationForm, self).clean()
 
 
 class ForgotPasswordForm(forms.ModelForm):

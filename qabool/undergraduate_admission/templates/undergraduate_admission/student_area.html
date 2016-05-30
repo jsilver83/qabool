@@ -9,21 +9,20 @@
 	</button>
 	<strong>{{ user.get_actual_student_status }}</strong><br>
 </div>
+
+{% if messages %}
+<br>
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+<br>
+{% endif %}
+
 <h3>{% trans 'Application Details' %}</h3>
 <hr>
 <form class="form-horizontal">
-	<!--<div class="form-group form-group">-->
-		<!--<label class="col-sm-3 control-label">{% trans 'Mobile' %}</label>-->
-		<!--<div class="col-sm-5">-->
-			<!--<p class="form-control-static">{{ user.mobile }}</p>-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--<div class="form-group form-group">-->
-		<!--<label class="col-sm-3 control-label">{% trans 'Email' %}</label>-->
-		<!--<div class="col-sm-5">-->
-			<!--<p class="form-control-static">{{ user.email }}</p>-->
-		<!--</div>-->
-	<!--</div>-->
 	<div class="form-group form-group">
 		<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>
 		<div class="col-sm-5">

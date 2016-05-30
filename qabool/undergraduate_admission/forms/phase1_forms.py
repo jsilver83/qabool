@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 
 from qabool import settings
+from undergraduate_admission.forms.general_forms import BaseContactForm
 from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup
 from undergraduate_admission.utils import try_parse_int
 
@@ -32,6 +33,35 @@ class AgreementForm(forms.Form):
             )
 
 
+class Phase1UserEditForm(BaseContactForm):
+    class Meta(BaseContactForm.Meta):
+        fields = BaseContactForm.Meta.fields + ['first_name', 'last_name', 'high_school_system',
+                                                'nationality', 'saudi_mother', 'student_notes']
+
+        SAUDI_MOTHER_CHOICES = (
+            ('', "---"),
+            (True, _("Yes")),
+            (False, _("No")),
+        )
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={'required': ''}),
+            'last_name': forms.TextInput(attrs={'required': ''}),
+            'high_school_graduation_year': forms.Select(attrs={'required': ''}),
+            'nationality': forms.Select(attrs={
+                'required': '',
+                'class': 'select2',}),
+            'saudi_mother': forms.Select(choices=SAUDI_MOTHER_CHOICES),
+            'high_school_system': forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(Phase1UserEditForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['high_school_system'].required = True
+
+
 class RegistrationForm(UserCreationForm):
     UserCreationForm.error_messages.update(
         {
@@ -52,7 +82,7 @@ class RegistrationForm(UserCreationForm):
         label=_('Email Address Confirmation'),
         required=True,
         help_text=_('Enter the same email address as before, for verification'),
-        widget=forms.EmailInput(attrs={'class': 'nocopy'})
+        widget=forms.EmailInput()
     )
     username = forms.CharField(
         label=_('Government ID'),
@@ -72,7 +102,7 @@ class RegistrationForm(UserCreationForm):
         min_length=9,
         required=True,
         help_text=_('Enter the same government ID as before, for verification'),
-        widget=forms.TextInput(attrs={'class': 'nocopy'})
+        # widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
     mobile2 = forms.CharField(
         label=_('Mobile Confirmation'),
@@ -127,20 +157,23 @@ class RegistrationForm(UserCreationForm):
         self.fields['email'].required = True
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
-        self.fields['guardian_mobile'].required = True
-        self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
-        self.fields['password2'].help_text = _('Enter the same password as before, for verification')
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'required': ''})
-        self.fields['password2'].widget = forms.PasswordInput(attrs={'required': ''})
         self.fields['high_school_system'].widget = forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         self.fields['high_school_system'].required = True
+        try: # to make this form reusable for edit info
+            self.fields['guardian_mobile'].required = True
+            self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
+            self.fields['password2'].help_text = _('Enter the same password as before, for verification')
+            self.fields['password1'].widget = forms.PasswordInput(attrs={'required': ''})
+            self.fields['password2'].widget = forms.PasswordInput(attrs={'required': ''})
+        except:
+            pass
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
             self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
-
-    def clean_data(self):
-        super(RegistrationForm, self).clean_data(self)
+    #
+    # def clean_data(self):
+    #     super(RegistrationForm, self).clean_data(self)
 
     def clean_username(self):
         username1 = try_parse_int(self.cleaned_data.get("username"))
@@ -196,7 +229,6 @@ class RegistrationForm(UserCreationForm):
         return mobile
 
     def clean_mobile2(self):
-        # same as username
         mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
         mobile2 = try_parse_int(self.cleaned_data.get("mobile2"))
         if mobile1 and mobile2 and mobile1 != mobile2:
@@ -207,7 +239,6 @@ class RegistrationForm(UserCreationForm):
         return mobile2
 
     def clean_guardian_mobile(self):
-        # same as username
         mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
         mobile2 = try_parse_int(self.cleaned_data.get("guardian_mobile"))
         if mobile1 and mobile2 and mobile1 == mobile2:
@@ -216,3 +247,27 @@ class RegistrationForm(UserCreationForm):
                 code='guardian_mobile_match',
             )
         return mobile2
+
+
+class EditInfoForm(RegistrationForm):
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'mobile', 'mobile2',
+                  'email', 'email2', 'high_school_graduation_year', 'high_school_system',
+                  'nationality', 'saudi_mother', 'student_notes']
+
+    # def __init__(self, *args, **kwargs):
+    #     super(EditInfoForm, self).__init__(*args, **kwargs)
+        # self.fields['email'].required = True
+        # self.fields['first_name'].required = True
+        # self.fields['last_name'].required = True
+        # self.fields['high_school_system'].widget = forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
+        # self.fields['high_school_system'].required = True
+        #
+        # if not settings.DISABLE_CAPTCHA:
+        #     # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+        #     self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
+
+
+
