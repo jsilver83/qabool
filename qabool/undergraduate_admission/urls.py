@@ -30,6 +30,7 @@ urlpatterns = [
         kwargs={'template_name': 'undergraduate_admission/change_password.html'},
     ),
     url(r'^confirm/$', phase2_views.phase2_step1, name='confirm'),
+    url(r'^editinfo/$', phase1_views.edit_info, name='edit_info'),
     url(r'^editcontactinfo/$', general_views.edit_contact_info, name='edit_contact_info'),
     url(r'^register/$', phase1_views.RegisterView.as_view(), name='register'),
     url(r'^studentarea/$', general_views.student_area, name='student_area'),

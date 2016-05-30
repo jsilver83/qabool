@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.decorators.cache import cache_page
@@ -7,7 +8,7 @@ from django.views.generic import CreateView
 from django.utils.translation import ugettext_lazy as _
 from django.core.cache import cache
 
-from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm
+from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm, EditInfoForm, Phase1UserEditForm
 from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
 from undergraduate_admission.utils import SMS, Email
 
@@ -85,3 +86,19 @@ def registration_success(request):
         return render(request, 'undergraduate_admission/registration_success.html', context={'user': user})
     else:
         return redirect('register')
+
+
+@login_required()
+def edit_info(request):
+    form = Phase1UserEditForm(request.POST or None, instance=request.user, request=request)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            saved = form.save()
+            if saved:
+                messages.success(request, _('Info was updated successfully...'))
+                return redirect('student_area')
+            else:
+                messages.error(request, _('Error updating info. Try again later!'))
+
+    return render(request, 'undergraduate_admission/edit_info.html', context={'form': form})
