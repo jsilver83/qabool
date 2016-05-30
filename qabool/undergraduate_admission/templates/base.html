@@ -115,6 +115,13 @@
         $('input, textarea').bind("cut copy paste",function(e) {
           e.preventDefault();
         });
+        try{
+	        {% if LANGUAGE_CODE == 'ar' %}$(".select2").select2({
+			  dir: "rtl"
+			});
+			{% else %}
+			$(".select2").select2();{% endif %}
+		}catch(e){}
     });
 </script>
 
