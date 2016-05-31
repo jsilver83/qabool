@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render
 from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, EditContactInfoForm
+from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
 from undergraduate_admission.models import AdmissionSemester
 
 
@@ -61,14 +61,14 @@ def student_area(request):
 
 @login_required()
 def edit_contact_info(request):
-    form = EditContactInfoForm((request.POST or None), request=request, initial={'email':request.user.email, 'mobile':request.user.mobile})
+    form = BaseContactForm((request.POST or None), request=request, instance=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
             saved = form.save()
             if saved:
                 messages.success(request, _('Contact Info was updated successfully...'))
-                return redirect('edit_contact_info')
+                return redirect('student_area')
             else:
                 messages.error(request, _('Error updating contact info. Try again later!'))
 
