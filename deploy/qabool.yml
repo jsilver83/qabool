@@ -34,6 +34,7 @@
         - memcached
         - libjpeg-dev
         - libfreetype6-dev
+        - rsync
 
     - name: Create appilcation user
       user: name=qabool system=yes
