@@ -12,12 +12,25 @@ Qabool Deployment
 
         create database qabool owner qabool;
 
+3. Set starting application ID:
+
+        SELECT setval('undergraduate_admission_user_id_seq', 5780);
+
 ## Optional Manual Steps
 
 1. Grant read access (`SELECT`) on all tables to `bi` database user while
    connected to the application's database, e.g. `qabool`:
 
         qabool=# grant select on all tables in schema public to bi;
+
+2. Database backup
+
+        sudo mkdir /backup
+        sudo chown postgres /backup
+
+        # postgres crontab
+        30  2   *   *   *    pg_dump --format=custom qabool > /backup/qabool-$(date +\%Y-\%m-\%d).pgdump
+
 
 ## TODO
 
