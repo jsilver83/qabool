@@ -6,13 +6,13 @@ from .models import *
 # Register your models here.
 
 
-class UserAdmin(UserAdmin):
+class UserAdmin(VersionAdmin, UserAdmin):
     list_display = ('id', 'username', 'first_name', 'email', 'status_message_id')
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
-        ('Qabool Fileds', {
-            'fields': ('mobile','nationality', 'saudi_mother', 'status_message',
-                       'guardian_mobile', 'high_school_graduation_year'),
+        ('Qabool Fields', {
+            'fields': ('mobile','nationality', 'saudi_mother', 'status_message', 'admission_note',
+                       'guardian_mobile', 'high_school_graduation_year', 'high_school_system',),
         }),
     )
 
@@ -78,4 +78,3 @@ admin.site.register(User, UserAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
-
