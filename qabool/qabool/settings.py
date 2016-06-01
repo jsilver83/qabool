@@ -48,6 +48,7 @@ if DEBUG:
     INSTALLED_APPS += ['debug_toolbar',]
 
 MIDDLEWARE_CLASSES = [
+    'reversion.middleware.RevisionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'qabool.middleware.force_default_language.ForceDefaultLanguageMiddleware',
