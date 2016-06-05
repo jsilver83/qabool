@@ -1,0 +1,109 @@
+{% extends 'base_student_area.html' %}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block subcontent %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="row bs-wizard" style="border-bottom:0;">
+			<div class="col-xs-4 bs-wizard-step complete"><!-- complete -->
+				<div class="text-center bs-wizard-stepnum">{% trans 'Step' %} 1</div>
+				<div class="progress">
+					<div class="progress-bar"></div>
+				</div>
+				<a href="#" class="bs-wizard-dot"></a>
+				<div class="bs-wizard-info text-center">
+					<div class="text-info-box">
+						<span class="tl-date-active">{% blocktrans %}Agree to Terms <br>&amp; Conditions{% endblocktrans %}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-4 bs-wizard-step active"><!-- active -->
+				<div class="text-center bs-wizard-stepnum">{% trans 'Step' %} 2</div>
+				<div class="progress">
+					<div class="progress-bar"></div>
+				</div>
+				<a href="#" class="bs-wizard-dot"></a>
+				<div class="bs-wizard-info text-center">
+					<div class="text-info-box">
+						<span class="tl-date-active">{% blocktrans %}Complete Profile and <br>Upload Documents{% endblocktrans %}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-4 bs-wizard-step disabled"><!-- disabled -->
+				<div class="text-center bs-wizard-stepnum">{% trans 'Step' %} 3</div>
+				<div class="progress">
+					<div class="progress-bar"></div>
+				</div>
+				<a href="#" class="bs-wizard-dot"></a>
+				<div class="bs-wizard-info text-center">
+					<div class="text-info-box">
+						<span class="tl-date-disabled">{% blocktrans %}Print your<br>Amission Letter{% endblocktrans %}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br>&nbsp;<br>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<br>&nbsp;<br>
+<div class="row">
+	<div class="col-lg-12">
+		<ul class="nav nav-tabs nav-justified">
+			<li class="{{ step1 }}" role="presentation"><a href="{% url 'personal_info' %}">{% trans 'Personal Info' %}</a></li>
+			<li class="{{ step2 }}" role="presentation"><a href="{% url 'guardian_contact' %}">{% trans 'Guardian Contact' %}</a></li>
+			<li class="{{ step3 }}" role="presentation"><a href="{% url 'relative_contact' %}">{% trans 'Relative Contact' %}</a></li>
+			<li class="{{ step4 }}" role="presentation"><a href="{% url 'upload_documents' %}">{% trans 'Documents' %}</a></li>
+		</ul>
+		<br><br>
+	</div>
+</div>
+
+<form method="post" class="form-horizontal" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% block form %}
+	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	{% endblock form %}
+	<br>&nbsp;<br>
+	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save and Next' %}"/>
+</form>
+<br><br><br>
+<hr>
+{% endblock subcontent %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css">
+{% endblock styles %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"
+		integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
+		crossorigin="anonymous"></script>
+
+<script>
+	$(function(){
+		$(".datepicker").datepicker({
+			dateFormat: 'yy-mm-dd',
+			changeMonth: true,
+			changeYear: true,
+			yearRange: "1990:2016",
+		});
+		$(".nav-tabs li").each(function(){
+			if($(this).hasClass("active")){
+				$(this).find("a").html("<strong>" + $(this).find("a").html() + "</strong>");
+			}
+		});
+		$("input[type=file]").removeClass("form-control");
+	});
+
+</script>
+{% endblock scripts %}
