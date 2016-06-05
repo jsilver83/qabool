@@ -36,7 +36,7 @@ urlpatterns += i18n_patterns(
 )
 
 # added for simple-captcha
-urlpatterns += patterns(
+urlpatterns += patterns('',
     url(r'^captcha/', include(captcha.urls)),
 )
 
