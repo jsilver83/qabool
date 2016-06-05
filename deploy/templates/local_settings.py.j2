@@ -16,7 +16,7 @@ DATABASES = {
     }
 }
 
-DEBUG = {{ qabool_debug }}
+# DEBUG = {{ qabool_debug }}
 
 ALLOWED_HOSTS = [
     {% for url in qabool_urls %}'{{ url }}',{% endfor %}
