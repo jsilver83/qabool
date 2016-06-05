@@ -61,6 +61,10 @@ class GuardianContactForm(forms.ModelForm):
                   'guardian_email', 'guardian_po_box', 'guardian_postal_code', 'guardian_city', 'guardian_job',
                   'guardian_employer']
 
+        widgets = {
+            'guardian_relation': forms.Select(choices= Lookup.get_lookup_choices('PERSON_RELATION')),
+        }
+
     def __init__(self, *args, **kwargs):
         super(GuardianContactForm, self).__init__(*args, **kwargs)
 
@@ -72,6 +76,10 @@ class RelativeContactForm(forms.ModelForm):
 
         fields = ['relative_name', 'relative_relation', 'relative_phone', 'relative_po_box',
                   'relative_po_stal_code', 'relative_city', 'relative_job', 'relative_employer']
+
+        widgets = {
+            'relative_relation': forms.Select(choices= Lookup.get_lookup_choices('PERSON_RELATION')),
+        }
 
     def __init__(self, *args, **kwargs):
         super(RelativeContactForm, self).__init__(*args, **kwargs)
