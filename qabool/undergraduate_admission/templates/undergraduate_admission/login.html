@@ -31,15 +31,13 @@ If you have applied before, you can login below to review your application for a
 </div>
 {% endif %}
 
-<form class="form-horizontal" role="form" method="post" action="{% url 'login' %}">
+<form class="form-horizontal" role="form" method="post">
 	{% csrf_token %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-	<!--<div class="{% trans 'btn-align' %}">-->
-		<br>
-		<input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="{% url 'forgot_password' %}">{% trans 'Forgot Password?' %}</a>
-	<!--</div>-->
-	<input type="hidden" name="next" value="/"/>
+	<br>
+	<input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="{% url 'forgot_password' %}">{% trans 'Forgot Password?' %}</a>
+	<input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 {% endblock subcontent %}

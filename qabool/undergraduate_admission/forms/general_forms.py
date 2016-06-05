@@ -124,9 +124,6 @@ class MyAuthenticationForm(AuthenticationForm):
     def clean_username(self):
         return try_parse_int(self.cleaned_data.get("username"))
 
-    def clean(self):
-        return super(MyAuthenticationForm, self).clean()
-
 
 class ForgotPasswordForm(forms.ModelForm):
     error_messages = {
