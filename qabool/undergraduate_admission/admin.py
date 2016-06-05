@@ -11,7 +11,7 @@ class UserAdmin(VersionAdmin, UserAdmin):
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
         ('Qabool Fields', {
-            'fields': ('mobile','nationality', 'saudi_mother', 'status_message', 'admission_note',
+            'fields': ('kfupm_id', 'mobile','nationality', 'saudi_mother', 'status_message', 'admission_note',
                        'guardian_mobile', 'high_school_graduation_year', 'high_school_system',),
         }),
     )
@@ -52,7 +52,8 @@ class NationalityAdmin(admin.ModelAdmin):
 
 
 class AgreementItemAdmin(admin.ModelAdmin):
-    list_display = ('agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+    list_display = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+    list_filter = ('agreement',)
 
 
 class LookupAdmin(admin.ModelAdmin):
@@ -65,11 +66,16 @@ class DistinguishedStudentAdmin(admin.ModelAdmin):
     search_fields = ['government_id',]
 
 
+class DeniedStudentAdmin(admin.ModelAdmin):
+    list_display = ('government_id', 'student_name', 'message', 'semester')
+    search_fields = ['government_id',]
+
+
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
-admin.site.register(DeniedStudent)
+admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear)
 admin.site.register(Agreement)
 admin.site.register(AgreementItem, AgreementItemAdmin)
