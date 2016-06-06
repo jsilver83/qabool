@@ -1,20 +1,33 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from import_export import resources
+from import_export.admin import ImportMixin, ImportExportMixin
 from reversion.admin import VersionAdmin
 
 from .models import *
 # Register your models here.
 
 
-class UserAdmin(VersionAdmin, UserAdmin):
+class UserResource(resources.ModelResource):
+
+    class Meta:
+        model = User
+        import_id_fields = ('username',)
+        fields = ('username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class UserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
     list_display = ('id', 'username', 'first_name', 'email', 'status_message_id')
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
         ('Qabool Fields', {
             'fields': ('kfupm_id', 'mobile','nationality', 'saudi_mother', 'status_message', 'admission_note',
-                       'guardian_mobile', 'high_school_graduation_year', 'high_school_system',),
+                       'guardian_mobile', 'high_school_graduation_year', 'high_school_system','high_school_gpa',),
         }),
     )
+    resource_class = UserResource
 
 
 class HelpDiskForStudent(User):
