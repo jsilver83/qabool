@@ -29,7 +29,7 @@ Qabool Deployment
         sudo chown postgres /backup
 
         # postgres crontab
-        30  2   *   *   *    pg_dump --format=custom qabool > /backup/qabool-$(date +\%Y-\%m-\%d).pgdump
+        30 2,8,14,20  *   *   *    pg_dump --format=custom qabool > /backup/qabool-$(date +\%Y.\%m.\%d-\%H.\%M).pgdump
 
 
 ## TODO
