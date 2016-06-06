@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'captcha',
     'floppyforms',
 
+    'import_export',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
