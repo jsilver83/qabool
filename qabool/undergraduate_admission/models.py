@@ -1,3 +1,5 @@
+import os
+
 from django.core.cache import cache
 from django.utils import timezone
 
@@ -6,6 +8,10 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+
+from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
+    upload_location_mother_govid, upload_location_passport, upload_location_certificate, upload_location_picture
+from undergraduate_admission.validators import validate_file_extension, validate_image_extension
 
 
 class User(AbstractUser):
@@ -66,36 +72,78 @@ class User(AbstractUser):
     qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'))
     tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'))
     kfupm_id = models.PositiveIntegerField(unique=True, null=True, verbose_name=_('KFUPM ID'))
-    first_name_ar = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('First Name (Arabic)'))
-    second_name_ar = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Second Name (Arabic)'))
-    third_name_ar = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Third Name (Arabic)'))
-    family_name_ar = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Family Name (Arabic)'))
-    first_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('First Name (English)'))
-    second_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Second Name (English)'))
-    third_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Third Name (English)'))
+    first_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('First Name (Arabic)'))
+    second_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Second Name (Arabic)'))
+    third_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Third Name (Arabic)'))
+    family_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Family Name (Arabic)'))
+    first_name_en = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('First Name (English)'))
+    second_name_en = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Second Name (English)'))
+    third_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (English)'))
     family_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Family Name (English)'))
-    mother_gov_id_file = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Mother Government ID'))
-    birth_certificate = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Birth Date Certificate'))
-    government_id_file = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Government ID File'))
-    government_id_issue = models.DateTimeField(null=True,blank=True, verbose_name=_('Government ID Issue Date'))
-    government_id_expiry = models.DateTimeField(null=True,blank=True, verbose_name=_('Government ID Expiry Date'))
-    government_id_place = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Place of Issue'))
-    passport_number = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Password Number'))
-    passport_place = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Passport Place of Issue '))
-    passport_expiry = models.DateTimeField(null=True,blank=True, verbose_name=_('Passport Expiry Date'))
-    passport_file = models.CharField(null=True,blank=True,max_length=100,verbose_name=_('Upload Passport'))
-    high_school_name = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('High School Name'))
-    high_school_system = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('High School System'))
-    high_school_province = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('High School Province'))
-    high_school_city = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('High School City'))
-    high_school_certificate = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('High School Certificate'))
-    courses_certificate = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Courses Certificate'))
-    student_notes = models.TextField(null=True,blank=True,max_length=500, verbose_name=_('Student Notes'))
-    personal_picture = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Personal Picture'))
-    guardian_name = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Name'))
-    guardian_government_id = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Government ID'))
-    guardian_relation = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Relation'))
-    guardian_phone = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Phone'))
+    mother_gov_id_file = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Mother Government ID'),
+        upload_to=upload_location_mother_govid,
+        validators=[validate_file_extension],
+    )
+    birth_certificate = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Birth Date Certificate'),
+        upload_to=upload_location_birth,
+        validators=[validate_file_extension],
+    )
+    government_id_file = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Government ID File'),
+        upload_to=upload_location_govid,
+        validators=[validate_file_extension],
+    )
+    government_id_issue = models.DateTimeField(null=True, blank=True, verbose_name=_('Government ID Issue Date'))
+    government_id_expiry = models.DateTimeField(null=True, blank=True, verbose_name=_('Government ID Expiry Date'))
+    government_id_place = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Place of Issue'))
+    passport_number = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Password Number'))
+    passport_place = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Passport Place of Issue '))
+    passport_expiry = models.DateTimeField(null=True, blank=True, verbose_name=_('Passport Expiry Date'))
+    passport_file = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Upload Passport'),
+        upload_to=upload_location_passport,
+        validators=[validate_file_extension],
+    )
+    high_school_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Name'))
+    high_school_system = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School System'))
+    high_school_province = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Province'))
+    high_school_city = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School City'))
+    high_school_certificate = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('High School Certificate'),
+        upload_to=upload_location_certificate,
+        validators=[validate_file_extension],
+    )
+    courses_certificate = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Courses Certificate'))
+    student_notes = models.TextField(null=True, blank=True, max_length=500, verbose_name=_('Student Notes'))
+    personal_picture = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Personal Picture'),
+        upload_to=upload_location_picture,
+        validators=[validate_image_extension],
+    )
+    guardian_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Name'))
+    guardian_government_id = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Government ID'))
+    guardian_relation = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Relation'))
+    guardian_phone = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Phone'))
     guardian_mobile = models.CharField(
         null=True,
         blank=True,
@@ -109,40 +157,46 @@ class User(AbstractUser):
             ),
         ]
     )
-    guardian_email = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Email'))
-    guardian_po_box = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian PO Box'))
-    guardian_postal_code = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Postal Code'))
-    guardian_city = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian City'))
-    guardian_job = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Work'))
-    guardian_employer = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Guardian Employer'))
-    blood_type = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Blood Type'))
-    student_address = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Student Address'))
-    social_status = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Social Status'))
-    kids_no = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Number of Kids'))
-    employment = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Employeement'))
-    employer_name = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Employeer Name'))
-    disability_needs = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Disability Type'))
-    other_needs = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Other Disability'))
+    guardian_email = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Email'))
+    guardian_po_box = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian PO Box'))
+    guardian_postal_code = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Guardian Postal Code'))
+    guardian_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian City'))
+    guardian_job = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Work'))
+    guardian_employer = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Employer'))
+    blood_type = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Blood Type'))
+    student_address = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Student Address'))
+    social_status = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Social Status'))
+    kids_no = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Number of Kids'))
+    employment = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Employeement'))
+    employer_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Employeer Name'))
+    disability_needs = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Disability Type'))
+    other_needs = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Other Disability'))
     chronic_diseases = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Chronic Diseases'))
-    relative_name = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Name'))
-    relative_relation = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Relation'))
-    relative_phone = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Mobile'))
-    relative_po_box = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative PO Box'))
-    relative_po_stal_code = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative PO Box'))
-    relative_city = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative City'))
-    relative_job = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Work'))
-    relative_employer = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Relative Employer'))
-    admission_letter_print_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Admission Letter Print Date'))
-    admission_letter_note = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Admission Letter Note'))
-    medical_report_print_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Medical Report Print Date'))
+    relative_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Name'))
+    relative_relation = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative Relation'))
+    relative_phone = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative Mobile'))
+    relative_po_box = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative PO Box'))
+    relative_po_stal_code = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative PO Box'))
+    relative_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative City'))
+    relative_job = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Work'))
+    relative_employer = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Employer'))
+    admission_letter_print_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Admission Letter Print Date'))
+    admission_letter_note = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Admission Letter Note'))
+    medical_report_print_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Medical Report Print Date'))
     withdrawal_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Withdrawal Date'))
-    withdrawal_university = models.CharField(null=True,blank=True,max_length=100, verbose_name=_('Withdrew To University'))
-    withdrawal_reason = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Withdrawal Reason'))
-    phase2_start_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Phase 2 Start Date'))
-    phase2_end_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Phase 2 End Date'))
-    phase2_submit_date = models.DateTimeField(null=True,blank=True, verbose_name=_('Phase 2 Submit Date'))
-    verification_status = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Verification Status'))
-    verification_notes = models.CharField(null=True,blank=True,max_length=500, verbose_name=_('Verification Note'))
+    withdrawal_university = models.CharField(null=True, blank=True,max_length=100, verbose_name=_('Withdrew To University'))
+    withdrawal_reason = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Withdrawal Reason'))
+    phase2_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Start Date'))
+    phase2_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 End Date'))
+    phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
+    verification_status = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Status'))
+    verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
+
+    def get_student_registration_status(self):
+        try:
+            return self.status_message.status
+        except AttributeError:  # admins don't have status
+            pass
 
     def get_actual_student_status(self):
         return self.status_message
@@ -199,9 +253,16 @@ class AdmissionSemester(models.Model):
         return sem
 
     @staticmethod
-    def get_phase2_active_semester():
+    def get_phase2_active_semester(user):
         now = timezone.now()
         sem = AdmissionSemester.objects.filter(phase2_start_date__lte=now, phase2_end_date__gte=now).first()
+
+        # if phase 2 expired globally but the student is given an exception
+        if not sem:
+            if user and user.phase2_start_date and user.phase2_end_date and \
+                                    user.phase2_start_date <= now <= user.phase2_end_date:
+                sem = user.semester
+
         return sem
 
     @staticmethod
@@ -279,7 +340,7 @@ class Lookup(models.Model):
         return self.lookup_value
 
     class Meta:
-        ordering=['-display_order']
+        ordering=['lookup_type',  '-display_order']
 
     @staticmethod
     def get_lookup_choices(lookup_type):

@@ -4,7 +4,7 @@
 	<div class="panel-body">
 		{% if has_pic %}
 		{% if user.personal_picture %}
-		<img width="100%" src="{{ user.personal_picture }}">
+		<img width="100%" src="{{ user.personal_picture.url }}">
 		{% else %}
 		<img width="100%" src="http://placehold.it/150x140">
 		{% endif %}
@@ -23,12 +23,14 @@
 			<dd>{{ user.mobile }}</dd>
 			<dt>{% trans 'Email' %}</dt>
 			<dd>{{ user.email }}</dd>
+			<dt>{% trans 'Registration Status' %}</dt>
+			<dd><h4 class="label label-{{ status_css_class }}">{{ user.get_student_registration_status }}</h4></dd>
 		</dl>
 	</div>
 </div>
 <div class="list-group">
 	{% if can_confirm %}
-	<a href="#" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
+	<a href="{% url 'confirm' %}" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 	{% endif %}
 	{% if can_print_docs %}
 	<a href="#" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
@@ -43,7 +45,9 @@
 	<br>
 	<a href="{% url 'logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}</a>
 </div>
+
 {% if can_withdraw %}
+<br><hr>
 <span class="text-warning">{% trans "If you don't want to proceed with the application you can still withdraw your application by clicking below on the red button." %}</span><br><br>
 <a href="#" class="btn btn-withdraw btn-block"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
 {% endif %}
