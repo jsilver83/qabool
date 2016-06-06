@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render
+from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
@@ -12,8 +13,8 @@ from undergraduate_admission.models import AdmissionSemester
 def index(request, template_name='undergraduate_admission/login.html'):
     form = MyAuthenticationForm(request.POST or None)
 
-    if request.method == 'GET' and request.user.is_authenticated():
-        return redirect(reverse('student_area'))
+    redirect_to = request.POST.get('next',
+                                   request.GET.get('next', ''))
 
     if request.method == 'POST':
         if form.is_valid():
@@ -24,10 +25,10 @@ def index(request, template_name='undergraduate_admission/login.html'):
                 if user.is_active:
                     login(request, user)
 
-                    if user.is_superuser:
-                        return redirect('/admin')
-                    else:
-                        return redirect(reverse('student_area'))
+                    if not is_safe_url(url=redirect_to, host=request.get_host()):
+                        redirect_to = reverse('student_area')
+
+                    return redirect(redirect_to)
 
     phase1_active = False
     if AdmissionSemester.check_if_phase1_is_active():
@@ -36,6 +37,7 @@ def index(request, template_name='undergraduate_admission/login.html'):
     return render(request, template_name, {
         'form': form,
         'phase1_active': phase1_active,
+        'next': redirect_to,
     })
 
 

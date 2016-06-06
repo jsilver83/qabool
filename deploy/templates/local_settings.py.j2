@@ -1,3 +1,8 @@
+import os
+
+from qabool.settings import BASE_DIR
+
+
 SECRET_KEY = '{{ qabool_secret_key }}'
 
 DATABASES = {
@@ -11,7 +16,7 @@ DATABASES = {
     }
 }
 
-DEBUG = {{ qabool_debug }}
+# DEBUG = {{ qabool_debug }}
 
 ALLOWED_HOSTS = [
     {% for url in qabool_urls %}'{{ url }}',{% endfor %}
@@ -30,4 +35,6 @@ EMAIL_HOST_PASSWORD = '{{ qabool_email_password }}'
 DISABLE_SMS = {{ disable_sms }}
 DISABLE_EMAIL = {{ disable_email }}
 DISABLE_CAPTCHA = {{ disable_captcha }}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_docs')
 
