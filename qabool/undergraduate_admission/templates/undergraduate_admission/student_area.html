@@ -3,12 +3,6 @@
 {% load l10n %}
 
 {% block subcontent %}
-<div class="alert alert-info alert-dismissible fade in" role="alert">
-	<button class="close" aria-label="Close" data-dismiss="alert" type="button">
-		<span aria-hidden="true">×</span>
-	</button>
-	<strong>{{ user.get_actual_student_status }}</strong><br>
-</div>
 
 {% if messages %}
 <br>
@@ -53,6 +47,15 @@
 		<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>
 		<div class="col-sm-5">
 			<p class="form-control-static">{{ user.high_school_system }}</p>
+		</div>
+	</div>
+
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Message Status' %}</label>
+		<div class="col-sm-8">
+			<div class="alert alert-info" role="alert">
+				<strong>{{ user.get_actual_student_status }}</strong><br>
+			</div>
 		</div>
 	</div>
 	
