@@ -11,19 +11,21 @@ class PersonalInfoForm(forms.ModelForm):
         model = User
 
         fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
-                  'second_name_en', 'third_name_en', 'family_name_en', 'phone', 'birthday', 'birthday_ah',
-                  'government_id_issue', 'government_id_expiry', 'government_id_place',
+                  'second_name_en', 'third_name_en', 'family_name_en', 'phone',
+                  'high_school_name', 'high_school_province', 'high_school_city',
+                  'birthday', 'birthday_ah',
+                  'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry',
                   'social_status', 'employment', 'employer_name',
                   'disability_needs', 'other_needs', 'chronic_diseases',
-                  'high_school_name', 'high_school_province', 'high_school_city']
+                  ]
 
         widgets = {
             # 'birthday': DateTimePicker(options={"format": "YYYY-MM-DD",
             #                                     "pickTime": False})
             'birthday': forms.DateInput(attrs={'class': 'datepicker'}),
             'birthday_ah': forms.DateInput(attrs={'placeholder': 'DD/MM/YYYY'}),
-            'government_id_issue': forms.DateInput(attrs={'class': 'datepicker'}),
+            # 'government_id_issue': forms.DateInput(attrs={'class': 'datepicker'}),
             'government_id_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
             'passport_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
             'social_status': forms.Select(choices= Lookup.get_lookup_choices('SOCIAL_STATUS')),
@@ -39,6 +41,10 @@ class PersonalInfoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PersonalInfoForm, self).__init__(*args, **kwargs)
+
+        # make all fields required
+        for field in self.fields:
+            self.fields[field].required = True
 
 
 # class EducationInfoForm(forms.ModelForm):
@@ -68,6 +74,10 @@ class GuardianContactForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GuardianContactForm, self).__init__(*args, **kwargs)
 
+        # make all fields required
+        for field in self.fields:
+            self.fields[field].required = True
+
 
 class RelativeContactForm(forms.ModelForm):
 
@@ -83,6 +93,10 @@ class RelativeContactForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(RelativeContactForm, self).__init__(*args, **kwargs)
+
+        # make all fields required
+        for field in self.fields:
+            self.fields[field].required = True
 
 
 class DocumentsForm(forms.ModelForm):
