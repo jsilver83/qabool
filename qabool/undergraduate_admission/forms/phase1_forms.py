@@ -12,9 +12,8 @@ from undergraduate_admission.models import AdmissionSemester, DeniedStudent, Use
 from undergraduate_admission.utils import try_parse_int
 
 
-class AgreementForm(forms.Form):
-    agree1 = forms.BooleanField(label=_('I have read all of the above terms and conditions for applying to KFUPM'))
-    agree2 = forms.BooleanField(label=_('I accept all the above terms and conditions'))
+class BaseAgreementForm(forms.Form):
+    agree1 = forms.BooleanField(label=_('I have read all of the above terms and conditions'))
 
     def clean_agree1(self):
         agree1 = self.cleaned_data.get("agree1")
@@ -23,6 +22,10 @@ class AgreementForm(forms.Form):
             raise forms.ValidationError(
                 message=_('You have to check this box')
             )
+
+
+class AgreementForm(BaseAgreementForm):
+    agree2 = forms.BooleanField(label=_('I accept all the above terms and conditions'))
 
     def clean_agree2(self):
         agree2 = self.cleaned_data.get("agree2")
