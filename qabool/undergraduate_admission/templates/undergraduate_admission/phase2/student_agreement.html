@@ -1,0 +1,116 @@
+{% extends 'base_student_area.html' %}
+{% load i18n %}
+{% load floppyforms %}
+{% load staticfiles %}
+
+{% block subcontent %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="row bs-wizard" style="border-bottom:0;">
+			<div class="col-xs-3 bs-wizard-step complete">
+				<div class="text-center bs-wizard-stepnum">{% trans 'Step' %} 1</div>
+				<div class="progress">
+					<div class="progress-bar"></div>
+				</div>
+				<a href="#" class="bs-wizard-dot"></a>
+				<div class="bs-wizard-info text-center">
+					<div class="text-info-box">
+						<span class="tl-date-active">{% trans 'Important Notes' %}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-3 bs-wizard-step complete">
+				<div class="text-center bs-wizard-stepnum">{% trans 'Step' %} 2</div>
+				<div class="progress">
+					<div class="progress-bar"></div>
+				</div>
+				<a href="#" class="bs-wizard-dot"></a>
+				<div class="bs-wizard-info text-center">
+					<div class="text-info-box">
+						<span class="tl-date-active">{% blocktrans %}Complete Profile and <br>Upload Documents{% endblocktrans %}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-3 bs-wizard-step active">
+				<div class="text-center bs-wizard-stepnum">{% trans 'Step' %} 3</div>
+				<div class="progress">
+					<div class="progress-bar"></div>
+				</div>
+				<a href="#" class="bs-wizard-dot"></a>
+				<div class="bs-wizard-info text-center">
+					<div class="text-info-box">
+						<span class="tl-date-active">{% blocktrans %}Agree to Terms <br>&amp; Conditions{% endblocktrans %}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-3 bs-wizard-step disabled">
+				<div class="text-center bs-wizard-stepnum">{% trans 'Step' %} 4</div>
+				<div class="progress">
+					<div class="progress-bar"></div>
+				</div>
+				<a href="#" class="bs-wizard-dot"></a>
+				<div class="bs-wizard-info text-center">
+					<div class="text-info-box">
+						<span class="tl-date-disabled">{% blocktrans %}Print your<br>Amission Letter{% endblocktrans %}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<br>&nbsp;<br>
+<div class="row">
+	<div class="col-lg-12">
+		<ul class="nav nav-tabs nav-justified">
+			<li class="{{ step1 }}" role="presentation"><a href="#">1- {% trans 'Agreement 1' %}</a></li>
+			<li class="{{ step2 }}" role="presentation"><a href="#">2- {% trans 'Agreement 2' %}</a></li>
+			<li class="{{ step3 }}" role="presentation"><a href="#">3- {% trans 'Agreement 3' %}</a></li>
+			<li class="{{ step4 }}" role="presentation"><a href="#">4- {% trans 'Agreement 4' %}</a></li>
+			<!--<li class="{{ step5 }}" role="presentation"><a href="#">5- {% trans 'Agreement 5' %}</a></li>-->
+		</ul>
+		<br><br>
+	</div>
+</div>
+
+{{ agreement.agreement_header|linebreaks }}
+<br>
+<ul>
+	{% for item in items %}
+	<li>{{ item|safe|linebreaks }}</li>
+	{% endfor %}
+</ul>
+<br>&nbsp;<br>
+<form method="post" class="form-horizontal" enctype="multipart/form-data">
+	{% csrf_token %}
+
+	<div class="checkbox form-group">
+		<span style="color:red">{{ form.agree1.errors }}</span>
+		<label for="{{ form.agree1.id_for_label }}" class="col-sm-12">
+			{{ form.agree1 }}&nbsp;{{ form.agree1.label }}
+		</label>
+	</div>
+
+	<div class="checkbox form-group">
+		<span style="color:red">{{ form.agree1.errors }}</span>
+		<label for="{{ form.agree2.id_for_label }}" class="col-sm-12">
+			{{ form.agree2 }}&nbsp;{{ form.agree2.label }}
+		</label>
+	</div>
+	<br>&nbsp;<br>
+	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'I agree' %}"/>
+</form>
+<br><br><br>
+<hr>
+{% endblock subcontent %}
+
+{% block scripts %}
+<script>
+	$(function(){
+		$("input[type=checkbox]").removeClass("form-control");
+	});
+</script>
+{% endblock scripts %}

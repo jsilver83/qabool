@@ -1,5 +1,8 @@
+import os
+
 import random
 import requests
+from django.core.exceptions import ValidationError
 
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
@@ -7,7 +10,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from qabool import settings
-from undergraduate_admission.models import AdmissionSemester, Agreement
+from undergraduate_admission.models import Agreement, AdmissionSemester
 
 
 class Email(object):
@@ -95,5 +98,11 @@ def try_parse_int(str_to_int):
     try:
         return int(str_to_int)
     except:
-        return 0
+        return -1
+
+
+
+
+
+
 
