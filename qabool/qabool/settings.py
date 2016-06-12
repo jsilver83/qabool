@@ -177,7 +177,8 @@ LOGGING = {
     },
 }
 
-SESSION_COOKIE_AGE = 1200 #20 mins
+SESSION_COOKIE_AGE = 2400  # 40 mins
+SESSION_SAVE_EVERY_REQUEST = True  # create "sliding" expiration
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
