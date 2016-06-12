@@ -30,6 +30,24 @@ class UserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
     resource_class = UserResource
 
 
+class Student(User):
+    class Meta:
+        proxy = True
+
+
+class StudentAdmin(VersionAdmin):
+    list_display = ('username', 'first_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
+    date_hierarchy = 'date_joined'
+    exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
+    readonly_fields = ('username', 'id', 'is_active', 'date_joined')
+    search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar', 'nationality__nationality_en']
+    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
+
+    def get_queryset(self, request):
+        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
+        return qs
+
+
 class HelpDiskForStudent(User):
     class Meta:
         proxy = True
@@ -94,6 +112,7 @@ admin.site.register(Agreement)
 admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, UserAdmin)
+admin.site.register(Student, StudentAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
