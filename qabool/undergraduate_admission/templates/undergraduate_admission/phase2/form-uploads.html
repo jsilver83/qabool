@@ -1,0 +1,19 @@
+{% extends 'undergraduate_admission/phase2/form.html' %}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block form-notes %}
+<div class="alert alert-warning" role="alert">
+	{% blocktrans %}
+	<strong>Important Note:</strong>
+	<p>Please upload clear scanned images with good quality. Allowed formats: pdf, jpg, jpeg,
+		png, bmp, gif. Max Size: 2 MB</p>
+	{% endblocktrans %}
+</div>
+{% endblock form-notes %}
+
+{% block form %}
+<div class="form-uploads">
+{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+</div>
+{% endblock form %}

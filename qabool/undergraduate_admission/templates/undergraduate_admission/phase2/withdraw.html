@@ -1,0 +1,41 @@
+{% extends 'base_student_area.html' %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load floppyforms %}
+
+{% block subcontent %}
+
+<h3>{% trans 'Withdrawal Form' %}</h3>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<hr>
+<form class="form-horizontal" method="post">
+	{% csrf_token %}
+	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	<div class="checkbox form-group">
+		<div class="col-sm-5">&nbsp;</div>
+		<label class="col-sm-7" style="color:red!important">
+			&nbsp;&nbsp;&nbsp;<input class="concurr" type="checkbox">&nbsp;{% trans 'You can NOT undo  if you withdraw now' %}
+		</label>
+	</div>
+	<div class="subBtn">
+		<!--<hr>-->
+		<br>
+		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}"
+		       onclick="return confirm('{% trans 'Are you SURE?' %}');"
+		       value="{% trans 'Withdraw' %}"/>
+	</div>
+</form>
+{% endblock subcontent %}
+
+{% block scripts %}
+<script src="{% static 'js/custom-register.js' %}"></script>
+{% endblock scripts %}

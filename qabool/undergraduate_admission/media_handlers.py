@@ -21,6 +21,8 @@ def upload_location_passport(instance, filename):
 def upload_location_certificate(instance, filename):
     return upload_location('certificate', instance, filename)
 
+def upload_location_courses(instance, filename):
+    return upload_location('certificate/courses', instance, filename)
 
 def upload_location_picture(instance, filename):
     return upload_location('picture', instance, filename)

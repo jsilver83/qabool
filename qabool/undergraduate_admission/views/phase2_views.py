@@ -3,15 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.forms.phase1_forms import AgreementForm
+from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
-    RelativeContactForm
-from undergraduate_admission.models import AdmissionSemester, Agreement
+    RelativeContactForm, WithdrawalForm
+from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage
 
 
 @login_required()
 def confirm(request):
-    form = AgreementForm(request.POST or None)
+    form = BaseAgreementForm(request.POST or None)
 
     if request.method == 'GET':
         # check if student is eligible
@@ -27,7 +27,7 @@ def confirm(request):
     sem = AdmissionSemester.get_phase2_active_semester(request.user)
     agreement = get_object_or_404(Agreement, agreement_type='CONFIRM', semester=sem)
     agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/agreement.html', {'agreement': agreement,
+    return render(request, 'undergraduate_admission/phase2/confirm.html', {'agreement': agreement,
                                                                              'items': agreement_items,
                                                                              'form': form,})
 
@@ -50,7 +50,7 @@ def personal_info(request):
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
-    return render(request, 'undergraduate_admission/phase2/form.html', {'form': form,
+    return render(request, 'undergraduate_admission/phase2/form-personal.html', {'form': form,
                                                                         'step1': 'active'})
 
 
@@ -94,7 +94,7 @@ def relative_contact(request):
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
-    return render(request, 'undergraduate_admission/phase2/form.html', {'form': form,
+    return render(request, 'undergraduate_admission/phase2/form-relative.html', {'form': form,
                                                                         'step3': 'active'})
 
 
@@ -112,9 +112,152 @@ def upload_documents(request):
             if saved:
                 messages.success(request, _('Documents were uploaded successfully...'))
                 request.session['upload_documents_completed'] = True
-                return redirect('upload_documents')
+                return redirect('student_agreement_1')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
-    return render(request, 'undergraduate_admission/phase2/form.html', {'form': form,
-                                                                        'step4': 'active'})
+    return render(request, 'undergraduate_admission/phase2/form-uploads.html', {'form': form,
+                                                                                'step4': 'active'})
+
+
+@login_required()
+def student_agreement_1(request):
+    form = AgreementForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            request.session['agreed1'] = True
+            return redirect('student_agreement_2')
+        else:
+            messages.error(request, _('Error.'))
+
+    sem = AdmissionSemester.get_phase2_active_semester(request.user)
+    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_1', semester=sem)
+    agreement_items = agreement.items.filter(show=True)
+    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
+                                                                                     'items': agreement_items,
+                                                                                     'form': form,
+                                                                                     'step1': 'active'})
+
+
+@login_required()
+def student_agreement_2(request):
+    form = AgreementForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            request.session['agreed2'] = True
+            return redirect('student_agreement_3')
+        else:
+            messages.error(request, _('Error.'))
+
+    sem = AdmissionSemester.get_phase2_active_semester(request.user)
+    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_2', semester=sem)
+    agreement_items = agreement.items.filter(show=True)
+    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
+                                                                                     'items': agreement_items,
+                                                                                     'form': form,
+                                                                                     'step2': 'active'})
+
+
+@login_required()
+def student_agreement_3(request):
+    form = AgreementForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            request.session['agreed3'] = True
+            return redirect('student_agreement_4')
+        else:
+            messages.error(request, _('Error.'))
+
+    sem = AdmissionSemester.get_phase2_active_semester(request.user)
+    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_3', semester=sem)
+    agreement_items = agreement.items.filter(show=True)
+    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
+                                                                                     'items': agreement_items,
+                                                                                     'form': form,
+                                                                                     'step3': 'active'})
+
+
+@login_required()
+def student_agreement_4(request):
+    form = AgreementForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            request.session['agreed5'] = True
+
+            reg_msg = RegistrationStatusMessage.objects.get(pk=4)  # for status 4 'admitted'
+
+            user = request.user
+            user.status_message = reg_msg
+            user.save()
+
+            return redirect('print_documents')
+        else:
+            messages.error(request, _('Error.'))
+
+    sem = AdmissionSemester.get_phase2_active_semester(request.user)
+    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_4', semester=sem)
+    agreement_items = agreement.items.filter(show=True)
+    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
+                                                                                     'items': agreement_items,
+                                                                                     'form': form,
+                                                                                     'step4': 'active'})
+
+
+@login_required()
+def print_documents(request):
+    return render(request, 'undergraduate_admission/phase2/print_documents.html')
+
+
+@login_required()
+def withdraw(request):
+    form = WithdrawalForm(request.POST or None, instance=request.user)
+
+    if request.method == "GET":
+        if request.user.get_student_phase() == 'WITHDRAWN':
+            return redirect("withdrawal_letter")
+
+    if request.method == 'POST':
+        if form.is_valid():
+            saved = form.save()
+            if saved:
+                messages.success(request, _('You have withdrawn from the university successfully...'))
+                return redirect('withdrawal_letter')
+            else:
+                messages.error(request, _('Error saving info. Try again later!'))
+
+    return render(request, 'undergraduate_admission/phase2/withdraw.html', {'form': form,})
+
+
+# @login_required()
+# def withdrawal_letter(request):
+#     user=request.user
+#
+#     return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user,})
+
+
+@login_required()
+def withdrawal_letter(request):
+
+    if request.method == "GET":
+        if request.user.get_student_phase() != 'WITHDRAWN':
+            return redirect("student_area")
+
+    user = request.user
+
+    return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user,})
+
+
+@login_required()
+def admission_letter(request):
+
+    if request.method == "GET":
+        if request.user.get_student_phase() != 'ADMITTED':
+            return redirect("student_area")
+
+    user = request.user
+
+    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})
