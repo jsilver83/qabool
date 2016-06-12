@@ -16,6 +16,8 @@ def index(request, template_name='undergraduate_admission/login.html'):
     redirect_to = request.POST.get('next',
                                    request.GET.get('next', ''))
 
+    if request.method == 'GET' and request.user.is_authenticated():return redirect(reverse('student_area'))
+
     if request.method == 'POST':
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -58,7 +60,15 @@ def forgot_password(request):
 
 @login_required
 def student_area(request):
-    return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user})
+    phase = request.user.get_student_phase()
+
+    show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
+
+    can_confirm = phase == 'PARTIALLY-ADMITTED'
+
+    return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user,
+                                                                                 'show_result': show_result,
+                                                                                 'can_confirm': can_confirm,})
 
 
 @login_required()

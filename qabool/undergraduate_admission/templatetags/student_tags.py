@@ -10,11 +10,15 @@ def student_info_commands(context):
     user = context['request'].user
     phase = user.get_student_phase()
     can_withdraw = phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED'
+    can_print_withdrawal_letter = phase == 'WITHDRAWN'
     can_print_docs = phase == 'ADMITTED'
     can_confirm = phase == 'PARTIALLY-ADMITTED'
     has_pic = phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED'
     can_edit_phase1_info = phase == 'APPLIED' and AdmissionSemester.check_if_phase1_is_active()
-    can_edit_contact_info = phase != 'REJECTED' and phase != 'WITHDRAWN' and not can_edit_phase1_info
+    can_edit_contact_info = phase != 'REJECTED'\
+                            and phase != 'WITHDRAWN' \
+                            and phase != 'ADMITTED' \
+                            and not can_edit_phase1_info
 
     status_css_class = 'info'
     if phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED':
@@ -35,4 +39,5 @@ def student_info_commands(context):
         'can_edit_phase1_info': can_edit_phase1_info,
         'can_edit_contact_info': can_edit_contact_info,
         'status_css_class': status_css_class,
+        'can_print_withdrawal_letter': can_print_withdrawal_letter,
     }

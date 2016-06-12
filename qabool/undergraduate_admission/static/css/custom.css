@@ -71,7 +71,7 @@ h4{
 }
 
 .form-group {
-    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .media-left, .media > .pull-left {
@@ -166,7 +166,7 @@ ol, ul {
 
 /* Responsive Styles */
 
-@media(max-width:1150px) {
+@media(max-width:1200px) {
 .hdr-pic, .hdr-pic-ar{display:none;}
 }
 
@@ -252,8 +252,18 @@ a.list-group-item:hover{
 /*END Form Wizard*/
 
 /* added by joud */
-select{
+select.form-control{
     height: 45px!important;
+}
+
+.controls ul {
+    list-style:none;
+    /*border-bottom: 1px solid #C6C6C6 !important;*/
+    width: 200px!important;
+}
+
+#id_chronic_diseases{
+    height:150px!important;
 }
 
 ol.sidebar, ul.sidebar {
@@ -273,5 +283,29 @@ ol.sidebar, ul.sidebar {
 
 input[type=submit]{
 margin-top: 15px;
+}
+
+.calendars{
+width:inherit!important;
+}
+
+.calendars-month{
+width:inherit!important;
+}
+
+a.calendars-cmd {
+    float: right;
+    direction: rtl;
+    text-align: center;
+    width: 33.33%;
+    display: inline-block;
+}
+
+/*.form-uploads div.form-group:nth-child(even) {
+background: rgba(153, 153, 153, 0.15) none repeat scroll 0% 0%;
+}*/
+
+.form-bordered .form-group{
+border-bottom: 1px solid #C6C6C6;
 }
 /* end of add by joud */
