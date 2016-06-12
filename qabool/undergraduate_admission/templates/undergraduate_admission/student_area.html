@@ -3,12 +3,6 @@
 {% load l10n %}
 
 {% block subcontent %}
-<div class="alert alert-info alert-dismissible fade in" role="alert">
-	<button class="close" aria-label="Close" data-dismiss="alert" type="button">
-		<span aria-hidden="true">×</span>
-	</button>
-	<strong>{{ user.get_actual_student_status }}</strong><br>
-</div>
 
 {% if messages %}
 <br>
@@ -55,6 +49,54 @@
 			<p class="form-control-static">{{ user.high_school_system }}</p>
 		</div>
 	</div>
+
+	{% if show_result and user.get_student_total%}
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Total' %}</label>
+		<div class="col-sm-5">
+			<p class="form-control-static">{{ user.get_student_total }} %</p>
+		</div>
+	</div>
+
+	{% if show_result and not user.high_school_gpa or not user.qudrat_score or not user.tahsili_score %}
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Missing Exams' %}</label>
+		<div class="col-sm-5">
+			<div class="alert alert-danger" role="alert">
+				<ul>
+				{% if not user.high_school_gpa %}
+				<li>{% trans 'Missing High School Score' %}</li>
+				{% endif %}
+				{% if not user.qudrat_score %}
+				<li>{% trans 'Missing Qudrat Score' %}</li>
+				{% endif %}
+				{% if not user.tahsili_score %}
+				<li>{% trans 'Missing Tahsili Score' %}</li>
+				{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% endif %}
+
+	<div class="form-group form-group">
+		<label class="col-sm-3 control-label">{% trans 'Message Status' %}</label>
+		<div class="col-sm-5">
+			<div class="alert alert-info" role="alert">
+				<strong>{{ user.get_actual_student_status|safe }}</strong><br>
+
+			</div>
+			{% if can_confirm %}
+				<a href="{% url 'confirm' %}" class="btn btn-success btn-lg btn-block">
+					<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
+			{% endif %}
+		</div>
+	</div>
+
+
+
+
 	
 </form>
 {% endblock subcontent %}

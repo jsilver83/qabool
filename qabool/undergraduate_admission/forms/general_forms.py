@@ -124,9 +124,6 @@ class MyAuthenticationForm(AuthenticationForm):
     def clean_username(self):
         return try_parse_int(self.cleaned_data.get("username"))
 
-    def clean(self):
-        return super(MyAuthenticationForm, self).clean()
-
 
 class ForgotPasswordForm(forms.ModelForm):
     error_messages = {
@@ -210,7 +207,7 @@ class ForgotPasswordForm(forms.ModelForm):
                     user = None
 
         if user is not None:
-            user.set_password(self.cleaned_data["password1"])
+            user.set_password(password)
             user.save()
             return user
         else:

@@ -1,0 +1,12 @@
+{% extends 'undergraduate_admission/phase2/form.html' %}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block form-notes %}
+<div class="alert alert-warning" role="alert">
+	{% blocktrans %}
+	<strong>Important Note:</strong>
+	<p>We received some of the information below from Ministry of Education and Qiyas.</p>
+	{% endblocktrans %}
+</div>
+{% endblock form-notes %}

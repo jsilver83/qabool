@@ -1,20 +1,51 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from import_export import resources
+from import_export.admin import ImportMixin, ImportExportMixin
 from reversion.admin import VersionAdmin
 
 from .models import *
 # Register your models here.
 
 
-class UserAdmin(UserAdmin):
+class UserResource(resources.ModelResource):
+
+    class Meta:
+        model = User
+        import_id_fields = ('username',)
+        fields = ('username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class UserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
     list_display = ('id', 'username', 'first_name', 'email', 'status_message_id')
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
-        ('Qabool Fileds', {
-            'fields': ('mobile','nationality', 'saudi_mother', 'status_message',
-                       'guardian_mobile', 'high_school_graduation_year'),
+        ('Qabool Fields', {
+            'fields': ('kfupm_id', 'mobile','nationality', 'saudi_mother', 'status_message', 'admission_note',
+                       'guardian_mobile', 'high_school_graduation_year', 'high_school_system','high_school_gpa',),
         }),
     )
+    resource_class = UserResource
+
+
+class Student(User):
+    class Meta:
+        proxy = True
+
+
+class StudentAdmin(VersionAdmin):
+    list_display = ('username', 'first_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
+    date_hierarchy = 'date_joined'
+    exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
+    readonly_fields = ('username', 'id', 'is_active', 'date_joined')
+    search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar', 'nationality__nationality_en']
+    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
+
+    def get_queryset(self, request):
+        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
+        return qs
 
 
 class HelpDiskForStudent(User):
@@ -52,7 +83,8 @@ class NationalityAdmin(admin.ModelAdmin):
 
 
 class AgreementItemAdmin(admin.ModelAdmin):
-    list_display = ('agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+    list_display = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+    list_filter = ('agreement',)
 
 
 class LookupAdmin(admin.ModelAdmin):
@@ -65,17 +97,22 @@ class DistinguishedStudentAdmin(admin.ModelAdmin):
     search_fields = ['government_id',]
 
 
+class DeniedStudentAdmin(admin.ModelAdmin):
+    list_display = ('government_id', 'student_name', 'message', 'semester')
+    search_fields = ['government_id',]
+
+
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
-admin.site.register(DeniedStudent)
+admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear)
 admin.site.register(Agreement)
 admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, UserAdmin)
+admin.site.register(Student, StudentAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
-

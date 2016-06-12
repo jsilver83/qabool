@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'captcha',
     'floppyforms',
 
+    'import_export',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'reversion.middleware.RevisionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'qabool.middleware.force_default_language.ForceDefaultLanguageMiddleware',
@@ -174,7 +177,8 @@ LOGGING = {
     },
 }
 
-SESSION_COOKIE_AGE = 1200 #20 mins
+SESSION_COOKIE_AGE = 2400  # 40 mins
+SESSION_SAVE_EVERY_REQUEST = True  # create "sliding" expiration
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
@@ -194,6 +198,7 @@ SERVER_EMAIL = 'admissions@kfupm.edu.sa'
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/uploaded_docs/'
 
 AUTH_USER_MODEL = 'undergraduate_admission.User'
 

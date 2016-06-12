@@ -1,0 +1,12 @@
+{% extends 'undergraduate_admission/phase2/form.html' %}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block form-notes %}
+<div class="alert alert-warning" role="alert">
+	{% blocktrans %}
+	<strong>Note:</strong>
+	<p>Contact information in case of an emergency.</p>
+	{% endblocktrans %}
+</div>
+{% endblock form-notes %}
