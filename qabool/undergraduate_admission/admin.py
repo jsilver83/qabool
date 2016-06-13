@@ -136,13 +136,14 @@ class LookupAdmin(ImportExportMixin, admin.ModelAdmin):
 class RegistrationStatusMessageResource(resources.ModelResource):
     class Meta:
         model = RegistrationStatusMessage
-        fields = ('status_message_ar', 'status_message_en', 'status_id', 'id')
+        import_id_fields = ('status_message_code',)
+        fields = ('status_message_ar', 'status_message_en', 'status_message_code', 'status_id', 'id')
         skip_unchanged = True
         report_skipped = True
 
 
 class RegistrationStatusMessageAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('status_message_ar', 'status_message_en', 'status_id', 'id')
+    list_display = ('status_message_ar', 'status_message_en', 'status_message_code', 'status_id', 'id')
     resource_class = RegistrationStatusMessageResource
 
 

@@ -37,7 +37,7 @@ class PersonalInfoForm(forms.ModelForm):
         fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
                   'second_name_en', 'third_name_en', 'family_name_en', 'phone',
                   'high_school_name', 'high_school_province', 'high_school_city',
-                  'birthday_ah', 'birthday',
+                  'birthday_ah', 'birthday', 'birth_place',
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry', 'social_status',
                   'is_employed', 'employer_name', # 'employment',
