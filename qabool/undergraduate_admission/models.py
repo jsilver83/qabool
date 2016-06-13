@@ -9,8 +9,8 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
-    upload_location_mother_govid, upload_location_passport, upload_location_certificate, upload_location_picture, \
-    upload_location_courses
+    upload_location_mother_govid, upload_location_passport, upload_location_certificate, \
+    upload_location_picture, upload_location_courses
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
 
 
@@ -31,9 +31,7 @@ class User(AbstractUser):
         null=True,
         verbose_name=_('Message Status'),
     )
-
     admission_note = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Admission Note'))
-
     nationality = models.ForeignKey(
         'Nationality',
         on_delete=models.SET_NULL,
@@ -44,7 +42,6 @@ class User(AbstractUser):
     )
     saudi_mother = models.NullBooleanField(verbose_name=_('Saudi Mother'))
     birthday = models.DateField(null=True, verbose_name=_('Birthday'))
-
     birthday_ah = models.CharField(null=True, max_length=50, verbose_name=_('Birthday Hijri'))
     high_school_graduation_year = models.ForeignKey(
         'GraduationYear',
@@ -181,8 +178,18 @@ class User(AbstractUser):
                     ' you need to bring clearance from your employer.')
     )
     employer_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Employer Name'))
+    is_disabled = models.BooleanField(
+        verbose_name=_('Do you have any disabilities?'),
+        default=False,
+        help_text=_('This will let us help you better and will not affect your acceptance chances.'),
+    )
     disability_needs = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Disability Type'))
     disability_needs_notes = models.TextField(null=True, blank=True, max_length=1000, verbose_name=_('Other Disability'))
+    is_diseased = models.BooleanField(
+        verbose_name=_('Do you have any chronic diseases?'),
+        default=False,
+        help_text=_('This will let us help you better and will not affect your acceptance chances.'),
+    )
     chronic_diseases = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Chronic Diseases'))
     chronic_diseases_notes = models.TextField(null=True, blank=True, max_length=1000, verbose_name=_('Chronic Diseases Notes'))
     relative_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Name'))
@@ -278,6 +285,7 @@ class AdmissionSemester(models.Model):
     high_school_gpa_weight = models.FloatField(null=True, blank=False, verbose_name=_('High School GPA Weight'))
     qudrat_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Qudrat Score Weight'))
     tahsili_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Tahsili Score Weight'))
+    cutoff_point = models.FloatField(null=True, blank=True, verbose_name=_('Cutoff Point'))
 
     def __str__(self):
         return self.semester_name
@@ -316,6 +324,19 @@ class AdmissionSemester(models.Model):
                 return True
             else:
                 return False
+
+
+class KFUPMIDsPool(models.Model):
+    semester = models.ForeignKey(
+        'AdmissionSemester',
+        on_delete=models.SET_NULL,
+        blank=False,
+        null=True,
+        related_name = 'semester_ids',
+        verbose_name=_('Admission Semester'),
+        db_index=True,
+    )
+    kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
 
 
 class RegistrationStatus(models.Model):
@@ -577,3 +598,8 @@ class AgreementItem(models.Model):
 
     class Meta:
         ordering=['agreement', '-display_order']
+
+
+# Auxiliary table in the database for BI reports
+class Aux1To100(models.Model):
+    counter = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('Counter'))
