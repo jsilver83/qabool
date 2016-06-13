@@ -20,7 +20,7 @@ class User(AbstractUser):
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
-        related_name = 'applicants',
+        related_name='applicants',
         verbose_name=_('Admission Semester'),
         db_index=True,
     )
@@ -43,6 +43,11 @@ class User(AbstractUser):
     saudi_mother = models.NullBooleanField(verbose_name=_('Saudi Mother'))
     birthday = models.DateField(null=True, blank=True, verbose_name=_('Birthday'))
     birthday_ah = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Birthday Hijri'))
+    birth_place = models.CharField(null=True,
+                                      blank=True,
+                                      max_length=100,
+                                      verbose_name=_('Birth Place'),
+                                      help_text=_('Country and city. e.g. Saudi Arabia Jeddah'))
     high_school_graduation_year = models.ForeignKey(
         'GraduationYear',
         on_delete=models.SET_NULL,
@@ -332,7 +337,7 @@ class KFUPMIDsPool(models.Model):
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
-        related_name = 'semester_ids',
+        related_name='semester_ids',
         verbose_name=_('Admission Semester'),
         db_index=True,
     )
@@ -342,7 +347,7 @@ class KFUPMIDsPool(models.Model):
 class RegistrationStatus(models.Model):
     status_ar = models.CharField(max_length=50, verbose_name=_('Status (Arabic)'))
     status_en = models.CharField(max_length=50, verbose_name=_('Status (English)'))
-    status_code = models.CharField(max_length=20, null=True, blank=False)
+    status_code = models.CharField(max_length=20, null=True, blank=False, unique=True,)
 
     @property
     def registration_status(self):
@@ -359,6 +364,7 @@ class RegistrationStatus(models.Model):
 class RegistrationStatusMessage(models.Model):
     status_message_ar = models.CharField(max_length=500, verbose_name=_('Registration Status Message AR'))
     status_message_en = models.CharField(max_length=500, verbose_name=_('Registration Status Message EN'))
+    status_message_code = models.CharField(max_length=20, null=True, blank=False, unique=True,)
     status = models.ForeignKey(
         'RegistrationStatus',
         on_delete=models.SET_NULL,
