@@ -41,8 +41,8 @@ class User(AbstractUser):
         verbose_name=_('Nationality'),
     )
     saudi_mother = models.NullBooleanField(verbose_name=_('Saudi Mother'))
-    birthday = models.DateField(null=True, verbose_name=_('Birthday'))
-    birthday_ah = models.CharField(null=True, max_length=50, verbose_name=_('Birthday Hijri'))
+    birthday = models.DateField(null=True, blank=True, verbose_name=_('Birthday'))
+    birthday_ah = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Birthday Hijri'))
     high_school_graduation_year = models.ForeignKey(
         'GraduationYear',
         on_delete=models.SET_NULL,
@@ -64,7 +64,7 @@ class User(AbstractUser):
         ],
         db_index=True,
     )
-    phone = models.CharField(null=True, max_length=50, verbose_name=_('Phone'))
+    phone = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Phone'))
     high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA'))
     qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'))
     tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'))
