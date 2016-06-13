@@ -11,7 +11,12 @@ from undergraduate_admission.models import AdmissionSemester, Agreement, Registr
 
 def is_phase2_eligible(user):
     phase = user.get_student_phase()
-    return phase == 'WITHDRAWN'
+    return phase == 'PARTIALLY-ADMITTED'
+
+
+def is_admitted(user):
+    phase = user.get_student_phase()
+    return phase == 'ADMITTED'
 
 
 @login_required()
@@ -240,7 +245,7 @@ def student_agreement_4(request):
 
 @login_required()
 def print_documents(request):
-    if request.method == 'GET' and not is_phase2_eligible(request.user):
+    if request.method == 'GET' and not is_admitted(request.user):
         return redirect('student_area')
 
     return render(request, 'undergraduate_admission/phase2/print_documents.html')
@@ -291,8 +296,7 @@ def withdrawal_letter(request):
 @login_required()
 def admission_letter(request):
 
-    if request.method == "GET":
-        if request.user.get_student_phase() != 'ADMITTED':
+    if request.method == "GET" and not is_admitted(request.user):
             return redirect("student_area")
 
     user = request.user
