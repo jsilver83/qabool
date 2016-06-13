@@ -13,7 +13,11 @@ class UserResource(resources.ModelResource):
     class Meta:
         model = User
         import_id_fields = ('username',)
-        fields = ('username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', )
+        fields = ('username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
+                  'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
+                  'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
+                  'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
+                  'high_school_province',)
         skip_unchanged = True
         report_skipped = True
 
@@ -73,23 +77,9 @@ class RegistrationStatusAdmin(admin.ModelAdmin):
     list_display = ('status_ar', 'status_en', 'status_code')
 
 
-class RegistrationStatusMessageAdmin(admin.ModelAdmin):
-    list_display = ('status_message_ar', 'status_message_en', 'status_id')
-
-
 class NationalityAdmin(admin.ModelAdmin):
     list_display = ('id', 'nationality_ar', 'nationality_en', 'show', 'display_order')
     search_fields = ['nationality_en']
-
-
-class AgreementItemAdmin(admin.ModelAdmin):
-    list_display = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
-    list_filter = ('agreement',)
-
-
-class LookupAdmin(admin.ModelAdmin):
-    list_display = ('lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
-    list_filter = ('lookup_type',)
 
 
 class DistinguishedStudentAdmin(admin.ModelAdmin):
@@ -100,6 +90,60 @@ class DistinguishedStudentAdmin(admin.ModelAdmin):
 class DeniedStudentAdmin(admin.ModelAdmin):
     list_display = ('government_id', 'student_name', 'message', 'semester')
     search_fields = ['government_id',]
+
+
+class KFUPMIDsPoolResource(resources.ModelResource):
+    class Meta:
+        model = KFUPMIDsPool
+        fields = ('semester', 'kfupm_id', )
+        skip_unchanged = True
+        report_skipped = True
+
+
+class KFUPMIDsPoolAdmin(ImportExportMixin, VersionAdmin):
+    list_display = ('semester', 'kfupm_id', )
+    resource_class = KFUPMIDsPoolResource
+
+
+class AgreementItemResource(resources.ModelResource):
+    class Meta:
+        model = AgreementItem
+        fields = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+        skip_unchanged = True
+        report_skipped = True
+
+
+class AgreementItemAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+    list_filter = ('agreement',)
+    resource_class = AgreementItemResource
+
+
+class LookupResource(resources.ModelResource):
+    class Meta:
+        model = Lookup
+        fields = ('lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
+        skip_unchanged = True
+        report_skipped = True
+
+
+class LookupAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
+    list_filter = ('lookup_type',)
+    resource_class = LookupResource
+
+
+class RegistrationStatusMessageResource(resources.ModelResource):
+    class Meta:
+        model = RegistrationStatusMessage
+        fields = ('status_message_ar', 'status_message_en', 'status_id', 'id')
+        skip_unchanged = True
+        report_skipped = True
+
+
+class RegistrationStatusMessageAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('status_message_ar', 'status_message_en', 'status_id', 'id')
+    resource_class = RegistrationStatusMessageResource
 
 
 admin.site.register(Nationality, NationalityAdmin)
@@ -116,3 +160,4 @@ admin.site.register(Student, StudentAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
+admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
