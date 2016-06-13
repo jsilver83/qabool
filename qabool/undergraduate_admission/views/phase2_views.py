@@ -9,13 +9,17 @@ from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, Documen
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage
 
 
+def is_phase2_eligible(user):
+    phase = user.get_student_phase()
+    return phase == 'WITHDRAWN'
+
+
 @login_required()
 def confirm(request):
     form = BaseAgreementForm(request.POST or None)
 
-    if request.method == 'GET':
-        # check if student is eligible
-        pass
+    if request.method == 'GET' and not is_phase2_eligible(request.user):
+        return redirect('student_area')
 
     if request.method == 'POST':
         if form.is_valid():
@@ -40,6 +44,9 @@ def personal_info(request):
 
     form = PersonalInfoForm(request.POST or None, instance=request.user)
 
+    if request.method == 'GET' and not is_phase2_eligible(request.user):
+        return redirect('student_area')
+
     if request.method == 'POST':
         if form.is_valid():
             saved = form.save()
@@ -56,9 +63,13 @@ def personal_info(request):
 
 @login_required()
 def guardian_contact(request):
-    # personal_info_completed = request.session.get('personal_info_completed')
-    # if personal_info_completed is None:
-    #     return redirect('personal_info')
+    if request.method == 'GET':
+        personal_info_completed = request.session.get('personal_info_completed')
+        if not personal_info_completed :
+            return redirect('personal_info')
+
+        if not is_phase2_eligible(request.user):
+            return redirect('student_area')
 
     form = GuardianContactForm(request.POST or None, instance=request.user)
 
@@ -78,9 +89,13 @@ def guardian_contact(request):
 
 @login_required()
 def relative_contact(request):
-    # guardian_contact_completed = request.session.get('guardian_contact_completed')
-    # if guardian_contact_completed is None:
-    #     return redirect('guardian_contact')
+    if request.method == 'GET':
+        guardian_contact_completed = request.session.get('guardian_contact_completed')
+        if not guardian_contact_completed:
+            return redirect('guardian_contact')
+
+        if not is_phase2_eligible(request.user):
+            return redirect('student_area')
 
     form = RelativeContactForm(request.POST or None, instance=request.user)
 
@@ -100,9 +115,13 @@ def relative_contact(request):
 
 @login_required()
 def upload_documents(request):
-    # relative_contact_completed = request.session.get('relative_contact_completed')
-    # if relative_contact_completed is None:
-    #     return redirect('relative_contact')
+    if request.method == 'GET':
+        relative_contact_completed = request.session.get('relative_contact_completed')
+        if not relative_contact_completed:
+            return redirect('relative_contact')
+
+        if not is_phase2_eligible(request.user):
+            return redirect('student_area')
 
     form = DocumentsForm(request.POST or None, request.FILES or None, instance=request.user)
 
@@ -122,6 +141,9 @@ def upload_documents(request):
 
 @login_required()
 def student_agreement_1(request):
+    if request.method == 'GET' and not is_phase2_eligible(request.user):
+        return redirect('student_area')
+
     form = AgreementForm(request.POST or None)
 
     if request.method == 'POST':
@@ -142,6 +164,9 @@ def student_agreement_1(request):
 
 @login_required()
 def student_agreement_2(request):
+    if request.method == 'GET' and not is_phase2_eligible(request.user):
+        return redirect('student_area')
+
     form = AgreementForm(request.POST or None)
 
     if request.method == 'POST':
@@ -162,6 +187,9 @@ def student_agreement_2(request):
 
 @login_required()
 def student_agreement_3(request):
+    if request.method == 'GET' and not is_phase2_eligible(request.user):
+        return redirect('student_area')
+
     form = AgreementForm(request.POST or None)
 
     if request.method == 'POST':
@@ -182,6 +210,9 @@ def student_agreement_3(request):
 
 @login_required()
 def student_agreement_4(request):
+    if request.method == 'GET' and not is_phase2_eligible(request.user):
+        return redirect('student_area')
+
     form = AgreementForm(request.POST or None)
 
     if request.method == 'POST':
@@ -209,6 +240,9 @@ def student_agreement_4(request):
 
 @login_required()
 def print_documents(request):
+    if request.method == 'GET' and not is_phase2_eligible(request.user):
+        return redirect('student_area')
+
     return render(request, 'undergraduate_admission/phase2/print_documents.html')
 
 
@@ -219,6 +253,9 @@ def withdraw(request):
     if request.method == "GET":
         if request.user.get_student_phase() == 'WITHDRAWN':
             return redirect("withdrawal_letter")
+
+        if request.user.get_student_phase() != 'ADMITTED':
+            return redirect('student_area')
 
     if request.method == 'POST':
         if form.is_valid():

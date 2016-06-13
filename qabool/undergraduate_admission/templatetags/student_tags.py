@@ -9,7 +9,7 @@ register = template.Library()
 def student_info_commands(context):
     user = context['request'].user
     phase = user.get_student_phase()
-    can_withdraw = phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED'
+    can_withdraw = phase == 'ADMITTED'  # or phase == 'PARTIALLY-ADMITTED'
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
     can_print_docs = phase == 'ADMITTED'
     can_confirm = phase == 'PARTIALLY-ADMITTED'
@@ -27,8 +27,8 @@ def student_info_commands(context):
         status_css_class = 'default'
     elif phase == 'REJECTED':
         status_css_class = 'danger'
-    else:
-        status_css_class = 'info'
+    # else:
+    #     status_css_class = 'info'
 
     return {
         'user': user,
