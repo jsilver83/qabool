@@ -18,18 +18,18 @@ class PersonalInfoForm(forms.ModelForm):
     #     help_text=_('It is required that applicant be unemployed to be full-time. In case you are currently employed,'
     #                 ' you need to bring clearance from your employer.')
     # )
-    is_disabled = forms.BooleanField(
-        label=_('Do you have any disabilities?'),
-        help_text=_('This will let us help you better and will not affect your acceptance chances.'),
-        required=True,
-        widget=forms.RadioSelect(choices= YES_NO_CHOICES),
-    )
-    is_diseased = forms.BooleanField(
-        label=_('Do you have any chronic diseases?'),
-        help_text=_('This will let us help you better and will not affect your acceptance chances.'),
-        required=True,
-        widget=forms.RadioSelect(choices= YES_NO_CHOICES),
-    )
+    # is_disabled = forms.BooleanField(
+    #     label=_('Do you have any disabilities?'),
+    #     help_text=_('This will let us help you better and will not affect your acceptance chances.'),
+    #     required=True,
+    #     widget=forms.RadioSelect(choices= YES_NO_CHOICES),
+    # )
+    # is_diseased = forms.BooleanField(
+    #     label=_('Do you have any chronic diseases?'),
+    #     help_text=_('This will let us help you better and will not affect your acceptance chances.'),
+    #     required=True,
+    #     widget=forms.RadioSelect(choices= YES_NO_CHOICES),
+    # )
 
     class Meta:
         model = User
@@ -61,6 +61,8 @@ class PersonalInfoForm(forms.ModelForm):
             'chronic_diseases': forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False)),
             'blood_type': forms.Select(choices=Lookup.get_lookup_choices('BLOOD_TYPE', False)),
             'is_employed': forms.RadioSelect(choices=YES_NO_CHOICES),
+            'is_disabled': forms.RadioSelect(choices=YES_NO_CHOICES),
+            'is_diseased': forms.RadioSelect(choices=YES_NO_CHOICES),
         }
         help_texts = {
             'phone': _('With country and area code. e.g. 966138602722'),
