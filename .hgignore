@@ -13,6 +13,7 @@ qabool/locale/ar/LC_MESSAGES/django.mo
 *.retry
 .DS_Store
 *.mo
+qabool/uploaded_docs
 qabool/.idea/.name
 qabool/.idea/codeStyleSettings.xml
 qabool/.idea/encodings.xml
