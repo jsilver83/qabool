@@ -122,7 +122,7 @@
         state: directory
         owner: qabool
         group: qabool
-        mode: 750
+        mode: 0750
 
     - name: Configure app server (uwsgi)
       template:
