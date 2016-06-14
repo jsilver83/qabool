@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from import_export import resources
-from import_export.admin import ImportMixin, ImportExportMixin
+from import_export.admin import ImportExportMixin
 from reversion.admin import VersionAdmin
 
 from .models import *
@@ -9,7 +9,6 @@ from .models import *
 
 
 class UserResource(resources.ModelResource):
-
     class Meta:
         model = User
         import_id_fields = ('username',)
@@ -22,8 +21,8 @@ class UserResource(resources.ModelResource):
         report_skipped = True
 
 
-class UserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
-    list_display = ('id', 'username', 'first_name', 'email', 'status_message_id')
+class MyUserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
+    list_display = ('id', 'username', 'kfupm_id', 'first_name', 'email', 'status_message_id')
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
         ('Qabool Fields', {
@@ -40,11 +39,12 @@ class Student(User):
 
 
 class StudentAdmin(VersionAdmin):
-    list_display = ('username', 'first_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
+    list_display = ('username', 'kfupm_id', 'first_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('username', 'id', 'is_active', 'date_joined')
-    search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar', 'nationality__nationality_en']
+    search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
+                     'nationality__nationality_en']
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
 
     def get_queryset(self, request):
@@ -58,14 +58,15 @@ class HelpDiskForStudent(User):
 
 
 class HelpDiskForStudentAdmin(VersionAdmin):
-    list_display = ('username', 'first_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
+    list_display = ('username', 'first_name', 'email', 'mobile', 'get_student_type', 'kfupm_id', 'status_message_id')
     date_hierarchy = 'date_joined'
     fields = readonly_fields = ('username', 'first_name',
                                 'last_name', 'mobile', 'email',
                                 'nationality', 'saudi_mother', 'status_message',
                                 'guardian_mobile', 'id',
-                                'date_joined', 'high_school_graduation_year')
-    search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar', 'nationality__nationality_en']
+                                'date_joined', 'high_school_graduation_year', 'kfupm_id')
+    search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar',
+                     'nationality__nationality_en', 'kfupm_id']
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
 
     def get_queryset(self, request):
@@ -101,7 +102,7 @@ class KFUPMIDsPoolResource(resources.ModelResource):
         report_skipped = True
 
 
-class KFUPMIDsPoolAdmin(ImportExportMixin, VersionAdmin):
+class KFUPMIDsPoolAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'kfupm_id', )
     resource_class = KFUPMIDsPoolResource
 
@@ -160,7 +161,7 @@ admin.site.register(GraduationYear)
 admin.site.register(Agreement)
 admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, MyUserAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
