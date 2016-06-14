@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
@@ -37,20 +38,22 @@ def confirm(request):
     agreement = get_object_or_404(Agreement, agreement_type='CONFIRM', semester=sem)
     agreement_items = agreement.items.filter(show=True)
     return render(request, 'undergraduate_admission/phase2/confirm.html', {'agreement': agreement,
-                                                                             'items': agreement_items,
-                                                                             'form': form,})
+                                                                           'items': agreement_items,
+                                                                           'form': form,})
 
 
 @login_required()
 def personal_info(request):
-    confirmed = request.session.get('confirmed')
-    if confirmed is None:
-        return redirect('confirm')
+    form = PersonalInfoForm(request.POST or None,
+                            instance=request.user,)
 
-    form = PersonalInfoForm(request.POST or None, instance=request.user)
+    if request.method == 'GET':
+        confirmed = request.session.get('confirmed')
+        if confirmed is None:
+            return redirect('confirm')
 
-    if request.method == 'GET' and not is_phase2_eligible(request.user):
-        return redirect('student_area')
+        if not is_phase2_eligible(request.user):
+            return redirect('student_area')
 
     if request.method == 'POST':
         if form.is_valid():
@@ -224,7 +227,8 @@ def student_agreement_4(request):
         if form.is_valid():
             request.session['agreed5'] = True
 
-            reg_msg = RegistrationStatusMessage.objects.get(pk=4)  # for status 4 'admitted'
+            # reg_msg = RegistrationStatusMessage.objects.get(pk=4)  # for status 4 'admitted'
+            reg_msg = RegistrationStatusMessage.get_status_admitted()
 
             user = request.user
             user.status_message = reg_msg
@@ -296,8 +300,12 @@ def withdrawal_letter(request):
 @login_required()
 def admission_letter(request):
 
-    if request.method == "GET" and not is_admitted(request.user):
+    if request.method == "GET":
+        if not is_admitted(request.user):
             return redirect("student_area")
+        if not request.user.admission_letter_print_date:
+            request.user.admission_letter_print_date = timezone.now()
+            request.user.save()
 
     user = request.user
 
