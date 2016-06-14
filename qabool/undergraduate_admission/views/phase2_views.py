@@ -313,13 +313,16 @@ def admission_letter(request):
 
 @login_required()
 def medical_letter(request):
-    # if request.method == "GET":
-    #     if not is_admitted(request.user):
-    #         return redirect("student_area")
-    #     if not request.user.medical_report_print_date:
-    #         request.user.medical_report_print_date = timezone.now()
-    #         request.user.save()
+    if request.method == "GET":
+        if not is_admitted(request.user):
+            return redirect("student_area")
+        if not request.user.medical_report_print_date:
+            request.user.medical_report_print_date = timezone.now()
+            request.user.save()
 
     user = request.user
+    # kfupm_id = KFUPMIDsPool.get_next_available_id()
+    # user.kfupm_id = kfupm_id
+    # user.save()
 
     return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user, })
