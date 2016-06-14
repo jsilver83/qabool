@@ -278,7 +278,7 @@ class User(AbstractUser):
         self._meta.get_field('username').verbose_name = _('Government ID')
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name # + ' (' + self.username + ')'
+        return self.get_student_full_name()
 
     class Meta:
         verbose_name = "user"
@@ -355,7 +355,7 @@ class KFUPMIDsPool(models.Model):
     def get_next_available_id():
         kid = KFUPMIDsPool.objects.exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
                                            .values_list('kfupm_id', flat=True)).order_by('?').first()
-        return kid
+        return kid.kfupm_id
 
 
 class RegistrationStatus(models.Model):
