@@ -343,6 +343,16 @@ class KFUPMIDsPool(models.Model):
     )
     kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
 
+    def __str__(self):
+        return str(self.kfupm_id)
+
+    @staticmethod
+    def get_next_available_id():
+        l = KFUPMIDsPool.objects.exclude(kfupm_id__in = User.objects.filter(kfupm_id__isnull=False)
+                                         .values_list('kfupm_id', flat=True)).order_by('?').first()
+        if not l:
+            return l.kfupm_id
+
 
 class RegistrationStatus(models.Model):
     status_ar = models.CharField(max_length=50, verbose_name=_('Status (Arabic)'))

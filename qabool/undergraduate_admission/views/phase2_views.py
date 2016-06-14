@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm
-from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage
+from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 
 
 def is_phase2_eligible(user):
@@ -227,10 +227,11 @@ def student_agreement_4(request):
         if form.is_valid():
             request.session['agreed5'] = True
 
-            # reg_msg = RegistrationStatusMessage.objects.get(pk=4)  # for status 4 'admitted'
             reg_msg = RegistrationStatusMessage.get_status_admitted()
+            kfupm_id = KFUPMIDsPool.get_next_available_id()
 
             user = request.user
+            user.kfupm_id = kfupm_id
             user.status_message = reg_msg
             user.save()
 
