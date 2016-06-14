@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
    <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,17 +48,15 @@
             <div class="row">
                <div class="col-lg-2"></div>
                <div class="col-lg-8">
-                 <h2>اخلاء طرف</h2>
-                 <div class="date">التاريخ: {{ user.withdrawal_date }}</div><br>
+                 <center><h2>اخلاء طرف</h2></center>
+                 <!--<div class="date">التاريخ: {{ user.withdrawal_date }}</div><br>-->
                  <div><strong>الطالب/ {{ user.get_student_full_name }}</strong></div>
                  <div><strong>رقم الهوية الوطنية/ {{ user.username }}</strong> </div><br>
                  
                  <p>
                  	السلام عليكم ورحمة الله وبركاته 
                     <br><br>
-
-تفيد إدارة القبول بعمادة القبول والتسجيل بجامعة الملك فهد للبترول والمعادن بالظهران بأن  
-
+تفيد إدارة القبول بعمادة القبول والتسجيل بجامعة الملك فهد للبترول والمعادن بالظهران بأن {{ user.get_student_full_name }}
                     <br><br>
                     
 قد أخلى طرفه من الجامعة وهو غير مسجل بها للعام الدراسي 1437/1438هـ، وقد أعطيت له هذه الشهادة بناءً على طلبه لتقديمها إلى من يهمه الأمر. 
@@ -72,7 +70,7 @@
                <div class="col-lg-2"></div>               
             </div>
             
-            <br><br><br><br>
+            <br><br>
             
             <div class="row">
             	<div class="col-lg-2"></div>                
@@ -84,21 +82,17 @@
                 </div>                                             
             	<div class="col-lg-2"></div>                
             </div>
-            
-            <div class="row">
-            	<div class="col-lg-12" align="center">
-                <br><br>
-عند حضورك للجامعة يجب عليك إحضار هذا الخطاب حيث إنه الاثبات الرسمي لقبولك                <br>
-				</div>
-            </div>
-
+            <!--<div class="row">-->
+            	<!--<div class="col-lg-12" align="center">-->
+                <!--<br><br>-->
+<!--عند حضورك للجامعة يجب عليك إحضار هذا الخطاب حيث إنه الاثبات الرسمي لقبولك                <br>-->
+				<!--</div>-->
+            <!--</div>-->
          	<div class="row">
             	<div class="col-lg-12">
                 	<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}" >
                 </div>
             </div>
-
          </div>
-         <br><br>
    </body>
 </html>
