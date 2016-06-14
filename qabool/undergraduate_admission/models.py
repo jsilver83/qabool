@@ -385,6 +385,13 @@ class RegistrationStatusMessage(models.Model):
         return self.status.registration_status + ".<br>" + self.registration_status_message
 
     @staticmethod
+    def get_status_applied():
+        try:
+            return RegistrationStatus.objects.get(status_code='APPLIED').status_messages.first()
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
     def get_status_withdrawn():
         try:
             return RegistrationStatus.objects.get(status_code='WITHDRAWN').status_messages.first()
@@ -393,10 +400,10 @@ class RegistrationStatusMessage(models.Model):
 
     @staticmethod
     def get_status_admitted():
-        # try:
-        return RegistrationStatus.objects.get(status_code='ADMITTED').status_messages.first()
-        # except ObjectDoesNotExist:
-        #     return
+        try:
+            return RegistrationStatus.objects.get(status_code='ADMITTED').status_messages.first()
+        except ObjectDoesNotExist:
+            return
 
 
 class Lookup(models.Model):

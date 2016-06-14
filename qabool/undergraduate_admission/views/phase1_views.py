@@ -53,7 +53,8 @@ class RegisterView(CreateView):
             return super(RegisterView, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        reg_msg = RegistrationStatusMessage.objects.get(pk=1) # for status 1 'application submitted'
+        # reg_msg = RegistrationStatusMessage.objects.get(pk=1) # for status 1 'application submitted'
+        reg_msg = RegistrationStatusMessage.get_status_applied()
         semester = AdmissionSemester.get_phase1_active_semester()
         user = User.objects.create_user(form.cleaned_data['username'],
                                         form.cleaned_data['email'],
