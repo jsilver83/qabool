@@ -7,6 +7,7 @@
     install_dir: /opt/qabool
     venv_dir: /opt/qabool_venv
     static_files_dir: /opt/qabool_static_files
+    upload_dir: /opt/qabool_uploaded_files
     nginx_access_log: /var/log/nginx/qabool-access.log
     nginx_error_log: /var/log/nginx/qabool-error.log
     nginx_worker_processes: 16
@@ -114,6 +115,14 @@
       command: "{{ venv_dir }}/bin/python manage.py collectstatic --no-input"
       args:
         chdir: "{{ install_dir }}/qabool"
+
+    - name: Create upload direcotory
+      file:
+        path: "{{ upload_dir }}"
+        state: directory
+        owner: qabool
+        group: qabool
+        mode: 750
 
     - name: Configure app server (uwsgi)
       template:
