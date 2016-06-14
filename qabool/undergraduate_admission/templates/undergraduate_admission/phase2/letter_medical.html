@@ -1,0 +1,284 @@
+{% load i18n %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Undergraduate Admission | King Fahd University of Petroleum &amp;Minerals</title>
+	<link rel="icon" href="images/favicon.png">
+	<!-- Bootstrap Core CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<!-- Custom CSS -->
+	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
+	<style media="print">
+		.noprint{
+		display:none!important;
+		}
+	</style>
+</head>
+<body>
+<div class="container-fluid noprint">
+
+	<div class="row">
+		<div class="col-lg-12"><br>
+			<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
+				<i class="fa fa-print" aria-hidden="true"></i> </a>
+			<a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
+		</div>
+	</div>
+
+	<hr>
+
+</div>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<img class="img-responsive" src="{% static 'images/letter-head.jpg' %}">
+			<h2 style="text-align:center">كشف طبي</h2><br>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<strong>اسم الطالب {{ user.get_student_full_name }}</strong><br><br>
+			<strong>الرقم الجامعي {{ user.kfupm_id }}</strong><br>
+			<br>
+			<p>سعادة مدير مستشفى / مستوصف الموقر<br>
+				السلام عليكم ورحمة الله وبركاته – وبعد <br>
+				نأمل إجراء الفحوص الطبية اللازمة للطالب الموضح اسمه أعلاه
+			</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-4">
+		</div>
+		<div class="col-lg-4" align="center">
+			<br>
+			<p><strong>وتقبلوا تحياتي</strong></p>
+		</div>
+		<div class="col-lg-4" align="center">
+			__________________________
+			<p><strong>مدير عام القبول</strong></p>
+		</div>
+	</div>
+	<br><br>
+
+	<div class="row">
+		<div class="col-xs-6">
+						<table class="table" border="1" cellspacing="0" cellpadding="0" width="550">
+							<tr>
+								<td colspan="2" class="table-title">نوع الفحص</td>
+								<td width="227" class="table-title">الطبيب</td>
+							</tr>
+							<tr>
+								<td width="131" class="table-sub-title"><strong>الأمراض الجراحية</strong></td>
+								<td width="234">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> سالب
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> موجب: وهي
+										</label>
+									</div>
+									..................................................<br>
+									..................................................<br>
+									..................................................
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+							<tr>
+								<td class="table-sub-title"><strong>التحاليل</strong></td>
+								<td>
+									البول<br><br>
+									السكر<br>
+									الزلال<br>
+									فصيلة الدم
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+							<tr>
+								<td class="table-sub-title"><strong>الأمراض النفسية</strong></td>
+								<td>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> سالب
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> موجب: وهي
+										</label>
+									</div>
+									..................................................<br>
+									..................................................<br>
+									..................................................
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+							<tr>
+								<td class="table-sub-title"><strong>الأمراض الأخرى</strong></td>
+								<td>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> سالب
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> موجب: وهي
+										</label>
+									</div>
+									..................................................<br>
+									..................................................<br>
+									..................................................
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+						</table>
+			</div>
+		<div class="col-xs-6">
+						<table class="table" border="1" cellspacing="0" cellpadding="0" width="550">
+							<tr>
+								<td colspan="2" class="table-title">نوع الفحص</td>
+								<td width="220" class="table-title">الطبيب</td>
+							</tr>
+							<tr>
+								<td width="75" height="130" class="table-sub-title"><strong>العينان</strong></td>
+								<td width="297">اليمنى  ...................<br>
+									اليسرى ...................
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+							<tr>
+								<td height="130" class="table-sub-title"><strong>الاذنان</strong></td>
+								<td>اليمنى  ...................<br>
+									اليسرى ..................
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+							<tr>
+								<td height="130" class="table-sub-title"><strong>الأمراض الباطنية</strong></td>
+								<td>
+									ضغط الدم<br><br>
+									القلب<br>
+									الرئيتان<br>
+									الكبد<br>
+									الطحال
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+							<tr>
+								<td height="130" class="table-sub-title"><strong>الأمراض</strong>
+									<strong>الصدرية</strong></td>
+								<td>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> سالب
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> موجب: وهي
+										</label>
+									</div>
+									..................................................<br>
+									..................................................<br>
+									..................................................
+								</td>
+								<td>
+									<p>الاسم ...................................</p>
+									<p>التوقيع ..................................</p>
+								</td>
+							</tr>
+						</table>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-2 pull-left">الموقر</div>
+		<div class="col-lg-10">
+			المكرم مدير عام القبول بجامعة الملك فهد للبترول والمعادن <br>
+			السلام عليكم ورحمة الله وبركاته – بعد<br>
+			أعيد إليكم التقرير الطبي. ولدى الكشف على الطالب / ..........................................................................................................................................................اتضح أنه<br>
+			<br><br>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-5">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox"> سليم
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox"> يحتاج إلى رعاية طبية
+				</label>
+			</div>
+
+			<br>
+
+			<strong>وتقبلوا تحياتي ،،،،</strong>
+		</div>
+		<div class="col-lg-2"></div>
+		<div class="col-lg-5">
+			<strong>مدير المستشفى / المتستوصف</strong><br>
+			الاسم: ......................................................................<br>
+			التوقيع: ....................................................................<br>
+			التاريخ: .................................................................... <br>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12" align="center">
+			<br><br>
+			عند حضورك للجامعة يجب عليك إحضار هذا الخطاب حيث إنه الاثبات الرسمي لقبولك <br>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}">
+		</div>
+	</div>
+
+</div>
+<br><br>
+</body>
+</html>

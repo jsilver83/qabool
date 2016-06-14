@@ -1,0 +1,15 @@
+.letterFooter{
+    bottom: -110px;
+    height: 110px;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+html,body{
+    height: 100%
+}
+
+.lastElement{
+    margin-bottom:110px;
+}

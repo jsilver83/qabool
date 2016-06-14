@@ -288,7 +288,6 @@ def withdraw(request):
 
 @login_required()
 def withdrawal_letter(request):
-
     if request.method == "GET":
         if request.user.get_student_phase() != 'WITHDRAWN':
             return redirect("student_area")
@@ -300,7 +299,6 @@ def withdrawal_letter(request):
 
 @login_required()
 def admission_letter(request):
-
     if request.method == "GET":
         if not is_admitted(request.user):
             return redirect("student_area")
@@ -310,4 +308,18 @@ def admission_letter(request):
 
     user = request.user
 
-    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})
+    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user, })
+
+
+@login_required()
+def medical_letter(request):
+    # if request.method == "GET":
+    #     if not is_admitted(request.user):
+    #         return redirect("student_area")
+    #     if not request.user.medical_report_print_date:
+    #         request.user.medical_report_print_date = timezone.now()
+    #         request.user.save()
+
+    user = request.user
+
+    return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user, })
