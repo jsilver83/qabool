@@ -95,7 +95,8 @@ class DeniedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
 class KFUPMIDsPoolResource(resources.ModelResource):
     class Meta:
         model = KFUPMIDsPool
-        fields = ('semester', 'kfupm_id', )
+        import_id_fields = ('id',)
+        fields = ('id', 'semester', 'kfupm_id', )
         skip_unchanged = True
         report_skipped = True
 
@@ -108,6 +109,7 @@ class KFUPMIDsPoolAdmin(ImportExportMixin, VersionAdmin):
 class AgreementItemResource(resources.ModelResource):
     class Meta:
         model = AgreementItem
+        import_id_fields = ('id',)
         fields = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
         skip_unchanged = True
         report_skipped = True
@@ -137,7 +139,8 @@ class LookupAdmin(ImportExportMixin, admin.ModelAdmin):
 class RegistrationStatusMessageResource(resources.ModelResource):
     class Meta:
         model = RegistrationStatusMessage
-        import_id_fields = ('status_message_code',)
+        import_id_fields = ('id',)
+        # import_id_fields = ('status_message_code',)
         fields = ('status_message_ar', 'status_message_en', 'status_message_code', 'status_id', 'id')
         skip_unchanged = True
         report_skipped = True
