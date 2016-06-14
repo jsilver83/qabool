@@ -73,21 +73,21 @@ class HelpDiskForStudentAdmin(VersionAdmin):
         return qs
 
 
-class RegistrationStatusAdmin(admin.ModelAdmin):
+class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('status_ar', 'status_en', 'status_code')
 
 
-class NationalityAdmin(admin.ModelAdmin):
+class NationalityAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('id', 'nationality_ar', 'nationality_en', 'show', 'display_order')
     search_fields = ['nationality_en']
 
 
-class DistinguishedStudentAdmin(admin.ModelAdmin):
+class DistinguishedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('government_id', 'student_name', 'city', 'attended')
     search_fields = ['government_id',]
 
 
-class DeniedStudentAdmin(admin.ModelAdmin):
+class DeniedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('government_id', 'student_name', 'message', 'semester')
     search_fields = ['government_id',]
 
