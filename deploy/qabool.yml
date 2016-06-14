@@ -120,7 +120,7 @@
       file:
         path: "{{ upload_dir }}"
         state: directory
-        owner: qabool
+        owner: www-data
         group: qabool
         mode: 0750
 
