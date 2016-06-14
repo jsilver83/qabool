@@ -31,6 +31,7 @@ urlpatterns = [
     ),
     url(r'^withdrawalletter/$', phase2_views.withdrawal_letter, name='withdrawal_letter'),
     url(r'^withdraw/$', phase2_views.withdraw, name='withdraw'),
+    url(r'^medicalletter/$', phase2_views.medical_letter, name='medical_letter'),
     url(r'^admissionletter/$', phase2_views.admission_letter, name='admission_letter'),
     url(r'^printdocuments/$', phase2_views.print_documents, name='print_documents'),
     # url(r'^studentagreement5/$', phase2_views.student_agreement_5, name='student_agreement_5'),

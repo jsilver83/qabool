@@ -231,7 +231,12 @@ class User(AbstractUser):
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
 
     def get_student_full_name(self):
-        return '%s %s'%(self.first_name, self.last_name)
+        if self.first_name_ar and self.second_name_ar and self.third_name_ar and self.family_name_ar:
+            return '%s %s %s %s'%(self.first_name_ar, self.second_name_ar, self.third_name_ar, self.family_name_ar)
+        elif self.first_name and self.last_name:
+            return '%s %s'%(self.first_name, self.last_name)
+        else:
+            return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
 
     def get_student_registration_status(self):
         try:
@@ -348,10 +353,9 @@ class KFUPMIDsPool(models.Model):
 
     @staticmethod
     def get_next_available_id():
-        l = KFUPMIDsPool.objects.exclude(kfupm_id__in = User.objects.filter(kfupm_id__isnull=False)
-                                         .values_list('kfupm_id', flat=True)).order_by('?').first()
-        if not l:
-            return l.kfupm_id
+        kid = KFUPMIDsPool.objects.exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
+                                           .values_list('kfupm_id', flat=True)).order_by('?').first()
+        return kid
 
 
 class RegistrationStatus(models.Model):

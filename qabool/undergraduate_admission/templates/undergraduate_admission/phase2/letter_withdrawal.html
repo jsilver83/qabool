@@ -3,90 +3,86 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-   <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <title>Undergraduate Admission | King Fahd University of Petroleum &amp;Minerals</title>
-      <link rel="icon" href="images/favicon.png">
-      <!-- Bootstrap Core CSS -->
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-      <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-      <!-- Custom CSS -->
-      <link href="{% static 'css/rtl.css' %}" rel="stylesheet">
-	   <style media="print">
-		   .noprint{
-		    display:none!important;
-		   }
-	   </style>
-   </head>
-   <body>
-      <div class="container-fluid noprint">
-		      
-         	<div class="row">
-            	<div class="col-lg-12"><br>
-	            	<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %} <i class="fa fa-print" aria-hidden="true"></i> </a>
-		            <a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
-    			</div>
-            </div>
-            
-            <hr>
-      
-	</div>      
-           
-         <div class="container">                    
-         
-         	<div class="row">
-            	<div class="col-lg-12">
-                	<img class="img-responsive" src="{% static 'images/letter-head.jpg' %}" >
-                </div>
-            </div>
-                   
-            <div class="row">
-               <div class="col-lg-2"></div>
-               <div class="col-lg-8">
-                 <center><h2>اخلاء طرف</h2></center>
-                 <!--<div class="date">التاريخ: {{ user.withdrawal_date }}</div><br>-->
-                 <div><strong>الطالب/ {{ user.get_student_full_name }}</strong></div>
-                 <div><strong>رقم الهوية الوطنية/ {{ user.username }}</strong> </div><br>
-                 
-                 <p>
-                 	السلام عليكم ورحمة الله وبركاته 
-                    <br><br>
-تفيد إدارة القبول بعمادة القبول والتسجيل في جامعة الملك فهد للبترول والمعادن بالظهران بأن الطالب {{ user.get_student_full_name }}
-                    <br><br>
-                    
-قد أخلى طرفه من الجامعة وهو غير مسجل بها للعام الدراسي 1438/1437هـ، وقد أعطيت له هذه الشهادة بناءً على طلبه لتقديمها إلى من يهمه الأمر.
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Undergraduate Admission | King Fahd University of Petroleum &amp;Minerals</title>
+	<link rel="icon" href="images/favicon.png">
+	<!-- Bootstrap Core CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<!-- Custom CSS -->
+	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
+	<style media="print">
+		.noprint{
+		display:none!important;
+		}
+	</style>
+</head>
+<body>
+<div class="container-fluid noprint">
 
-                    <br><br>
+	<div class="row">
+		<div class="col-lg-12"><br>
+			<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
+				<i class="fa fa-print" aria-hidden="true"></i> </a>
+			<a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
+		</div>
+	</div>
 
-                    <br><br>
-والله الموفق                    
-                 </p>                
-               </div>
-               <div class="col-lg-2"></div>               
-            </div>
-            
-            <br><br>
-            
-            <div class="row">
-            	<div class="col-lg-2"></div>                
-            	<div class="col-lg-4"></div>   
-            	<div class="col-lg-4" align="center">
-					<strong>معاوية بن أحمد زكي تاج/strong>
-                    <br>
-					<strong>مدير عام  القبول</strong>
-                </div>                                             
-            	<div class="col-lg-2"></div>                
-            </div>
-         	<div class="row">
-            	<div class="col-lg-12">
-                	<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}" >
-                </div>
-            </div>
-         </div>
-   </body>
+	<hr>
+
+</div>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<img class="img-responsive" src="{% static 'images/letter-head.jpg' %}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-2"></div>
+		<div class="col-lg-8">
+			<center><h2>اخلاء طرف</h2></center>
+			<!--<div class="date">التاريخ: {{ user.withdrawal_date }}</div><br>-->
+			<strong>اسم الطالب {{ user.get_student_full_name }}</strong><br><br>
+			<div><strong>رقم الهوية الوطنية/ {{ user.username }}</strong></div>
+			<br>
+			<p>
+				السلام عليكم ورحمة الله وبركاته
+				<br><br>
+				تفيد إدارة القبول بعمادة القبول والتسجيل في جامعة الملك فهد للبترول والمعادن بالظهران بأن الطالب {{ user.get_student_full_name }}
+				<br><br>
+				قد أخلى طرفه من الجامعة وهو غير مسجل بها للعام الدراسي 1438/1437هـ، وقد أعطيت له هذه الشهادة بناءً على طلبه لتقديمها إلى من يهمه الأمر.
+				<br><br>
+
+				<br><br>
+				والله الموفق
+			</p>
+		</div>
+		<div class="col-lg-2"></div>
+	</div>
+	<br><br>
+	<div class="row">
+		<div class="col-lg-2"></div>
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4" align="center">
+			<strong>معاوية بن أحمد زكي تاج</strong>
+			<br>
+			<strong>مدير عام القبول</strong>
+		</div>
+		<div class="col-lg-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}">
+		</div>
+	</div>
+</div>
+</body>
 </html>
