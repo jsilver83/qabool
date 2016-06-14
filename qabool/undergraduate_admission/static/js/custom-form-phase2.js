@@ -53,6 +53,12 @@ $(function(){
     $("input[name=is_diseased]").change(function(){
         diseases($(this).val());
     });
+
+//    $("input").change(function(){
+//        alert("test");
+//        alert($("#disability_needs").val());
+//    });
+//    alert("test");
 });
 
 function employed(value){
@@ -73,12 +79,12 @@ function employed(value){
 function disability(value){
     if(value == "True"){
         $(".field-disability_needs").parents(".form-group").show();
-        $("input[name=disability_needs]").attr("required", "");
+//        $("input[name=disability_needs]").attr("required", "");
         $(".field-disability_needs_notes").parents(".form-group").show();
     }
     else{
         $(".field-disability_needs").parents(".form-group").hide();
-        $("input[name=disability_needs]").removeAttr("required", "");
+//        $("input[name=disability_needs]").removeAttr("required", "");
         $(".field-disability_needs_notes").parents(".form-group").hide();
     }
 }
@@ -86,12 +92,12 @@ function disability(value){
 function diseases(value){
     if(value == "True"){
         $(".field-chronic_diseases").parents(".form-group").show();
-        $("input[name=chronic_diseases]").attr("required", "");
+//        $("input[name=chronic_diseases]").attr("required", "");
         $(".field-chronic_diseases_notes").parents(".form-group").show();
     }
     else{
         $(".field-chronic_diseases").parents(".form-group").hide();
-        $("input[name=chronic_diseases]").removeAttr("required", "");
+//        $("input[name=chronic_diseases]").removeAttr("required", "");
         $(".field-chronic_diseases_notes").parents(".form-group").hide();
     }
 }

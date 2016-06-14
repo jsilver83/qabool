@@ -52,10 +52,10 @@
 			<h2>خطــاب القبــول<br>
 				<small> للعام الدراسي 1437 / 1438هـ</small>
 			</h2>
-			<div class="date">التاريخ: 10 رمضان 1437هـ</div>
+			<div class="date">{% trans 'date' %}: {{ user.admission_letter_print_date }}</div>
 			<br>
-			<div><strong>المكرم الطالب / student name</strong></div>
-			<div><strong>الرقم الجامعي / kfupmid</strong></div>
+			<div><strong>{% trans 'Dear Student' %}/ {{ user.get_student_full_name }}</strong></div>
+			<div><strong>{% trans 'KFUPM ID' %} / {{ user.kfupm_id }}</strong></div>
 			<br>
 
 			<p>
