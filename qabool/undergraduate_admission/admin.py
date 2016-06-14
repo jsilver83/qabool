@@ -122,7 +122,8 @@ class AgreementItemAdmin(ImportExportMixin, admin.ModelAdmin):
 class LookupResource(resources.ModelResource):
     class Meta:
         model = Lookup
-        fields = ('lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
+        import_id_fields = ('id',)
+        fields = ('id', 'lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
         skip_unchanged = True
         report_skipped = True
 
