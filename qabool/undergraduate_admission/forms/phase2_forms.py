@@ -72,7 +72,9 @@ class PersonalInfoForm(forms.ModelForm):
         super(PersonalInfoForm, self).__init__(*args, **kwargs)
 
         print(self.instance.chronic_diseases)
-        self.fields['chronic_diseases'].queryset = (c[0] for c in self.instance.chronic_diseases)
+        # self.fields['chronic_diseases'].queryset = (c[0] for c in self.instance.chronic_diseases)
+        # self.fields['chronic_diseases'].widget =\
+        #     forms.ModelSelectMultiple(queryset=(c[0] for c in self.instance.chronic_diseases),),
 
         if self.instance.get_student_type() == 'S':
             del self.fields['passport_number']
@@ -171,7 +173,7 @@ class DocumentsForm(forms.ModelForm):
     class Meta:
         model = User
 
-        fields = ['personal_picture', 'high_school_certificate', 'government_id_file', 'courses_certificate',
+        fields = ['personal_picture', 'high_school_certificate', 'courses_certificate', 'government_id_file',
                   'mother_gov_id_file', 'passport_file', 'birth_certificate', ]
 
     def __init__(self, *args, **kwargs):
