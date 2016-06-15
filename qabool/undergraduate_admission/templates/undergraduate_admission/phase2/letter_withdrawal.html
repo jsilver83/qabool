@@ -21,11 +21,14 @@
 		.noprint{
 		display:none!important;
 		}
+		.ftr-fixed-btm{
+			position:fixed;
+			bottom:0px;
+		}
 	</style>
 </head>
 <body>
 <div class="container-fluid noprint">
-
 	<div class="row">
 		<div class="col-lg-12"><br>
 			<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
@@ -33,21 +36,21 @@
 			<a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
 		</div>
 	</div>
-
 	<hr>
-
 </div>
 
-<div class="container">
-
-	<div class="row">
-		<div class="col-lg-12">
-			<img class="img-responsive" src="{% static 'images/letter-head.jpg' %}">
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-2"></div>
-		<div class="col-lg-8">
+<table width="1000" style="text-align:right" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td><img class="img-responsive" src="{% static 'images/letter-head.jpg' %}"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
 			<center><h2>اخلاء طرف</h2></center>
 			<!--<div class="date">التاريخ: {{ user.withdrawal_date }}</div><br>-->
 			<strong>اسم الطالب {{ user.get_student_full_name }}</strong><br><br>
@@ -63,26 +66,15 @@
 
 				<br><br>
 				والله الموفق
-			</p>
-		</div>
-		<div class="col-lg-2"></div>
-	</div>
-	<br><br>
-	<div class="row">
-		<div class="col-lg-2"></div>
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4" align="center">
-			<strong>معاوية بن أحمد زكي تاج</strong>
-			<br>
-			<strong>مدير عام القبول</strong>
-		</div>
-		<div class="col-lg-2"></div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}">
-		</div>
-	</div>
-</div>
+			</p>    
+    </td>
+  </tr>
+  <tr>
+    <td><img width="200" src="{% static 'images/withdrawletter-signature.jpg' %}" /></td>
+  </tr>
+  <tr>
+    <td align="center" class="ftr-fixed-btm"><img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
+  </tr>
+</table>
 </body>
 </html>
