@@ -18,7 +18,7 @@
 	<!-- Custom CSS -->
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
-		html{font-size:120%}
+		html{font-size:110%}
 		.noprint{
 		display:none!important;
 		}
@@ -74,13 +74,13 @@
 				وفي حالة إنهائك لجميع متطلبات هذا البرنامج يحق لك مواصلة الدراسة في المرحلة الجامعية
 				(عليك الاطلاع على شروط اجتياز السنة التحضيرية)، ولإنهاء الإجراءات الخاصة بالطلاب المستجدين
 				يجب عليك الحضور إلى الجامعة في الموعد التالي:
-				<br><br>
+				<br>
 				{% if user.admission_letter_note %}
-				{{ user.admission_letter_note }}
+				<strong>{{ user.admission_letter_note }}</strong>
 				{% else %}
 				<strong style="color:red">ERROR: contact admins about this ASAP</strong>
 				{% endif %}
-				<br><br>
+				<br>
 				علماً بأن حضور جميع فعاليات البرنامج التعريفي – بما في اختبار تحديد المستوى
 				في اللغة الإنجليزية - إلزامي، وسوف يستمر البرنامج التعريفي حتى يوم الخميس 22
 				ذوالقعدة 1437هـ الموافق 22 اغسطس 2016م، وستبدأ الدراسة يوم الأحد 17 ذوالحجة 1437هـ
@@ -89,22 +89,10 @@
 		</td>
 	</tr>
 	<tr>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
 		<td><img class="pull-left" width="200" src="{% static 'images/admissionletter-signature.jpg' %}"/></td>
 	</tr>
 	<tr>
-		<td align="center">&nbsp;</td>
-	</tr>
-	<tr>
 		<td align="center">عند حضورك للجامعة يجب عليك إحضار هذا الخطاب حيث إنه الاثبات الرسمي لقبولك</td>
-	</tr>
-	<tr>
-		<td align="center">&nbsp;</td>
 	</tr>
 	<tr>
 		<td align="center" class="ftr-fixed-btm">
