@@ -57,6 +57,7 @@
 			<p class="form-control-static">{{ user.get_student_total }} %</p>
 		</div>
 	</div>
+	{% endif %}
 
 	{% if show_result and not user.high_school_gpa or not user.qudrat_score or not user.tahsili_score %}
 	<div class="form-group form-group">
@@ -77,7 +78,6 @@
 			</div>
 		</div>
 	</div>
-	{% endif %}
 	{% endif %}
 
 	<div class="form-group form-group">
