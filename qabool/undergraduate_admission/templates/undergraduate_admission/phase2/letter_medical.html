@@ -17,6 +17,7 @@
 	<!-- Custom CSS -->
 	<link href="css/rtl.css" rel="stylesheet">
 	<style media="print">
+		html{font-size:120%}
 		.noprint{
 		display:none!important;
 		}
@@ -37,7 +38,7 @@
 	</div>
 	<hr>
 </div>
-<table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td colspan="3" align="center" valign="top"><img src="{% static 'images/letter-head.jpg' %}"></td>
 	</tr>
@@ -62,8 +63,11 @@
 			السلام عليكم ورحمة الله وبركاته – وبعد <br>
 			نأمل إجراء الفحوص الطبية اللازمة للطالب الموضح اسمه أعلاه
 		</td>
-		<td>&nbsp;</td>
-		<td align="left" valign="top">الموقر</td>
+		<td></td>
+		<td align="left" valign="top"></td>
+	</tr>
+	<tr>
+		<td colspan="3" align="center" valign="top"><img class="pull-left" width="200" src="{% static 'images/withdrawletter-signature.jpg' %}"/></td>
 	</tr>
 	<tr>
 		<td align="center" valign="top">&nbsp;</td>
@@ -80,27 +84,27 @@
 		<td align="left" valign="middle">&nbsp;</td>
 	</tr>
 	<tr>
-		<td align="right" valign="top">المكرم مدير عام القبول بجامعة الملك فهد للبترول والمعادن <br>
+		<td align="right" valign="top">المكرم مدير عام القبول بجامعة الملك فهد للبترول والمعادن      الموقر<br>
 			السلام عليكم ورحمة الله وبركاته – بعد
 		</td>
 		<td>&nbsp;</td>
-		<td align="left" valign="middle">الموقر</td>
+		<td align="left" valign="middle"></td>
 	</tr>
 	<tr>
-		<td height="38" align="right" valign="top">أعيد إليكم التقرير الطبي. ولدى الكشف على الطالب /</td>
+		<td height="38" align="right" valign="top">أعيد إليكم التقرير الطبي. ولدى الكشف على الطالب اتضح أنه</td>
 		<td>&nbsp;</td>
-		<td align="left" valign="top">اتضح أنه</td>
+		<td align="left" valign="top"></td>
 	</tr>
 	<tr>
 		<td align="right" valign="top">
 			<div class="checkbox">
 				<label>
-					<input type="checkbox"> سليم
+					<input type="checkbox">&nbsp;&nbsp;&nbsp; سليم
 				</label>
 			</div>
 			<div class="checkbox">
 				<label>
-					<input type="checkbox"> يحتاج إلى رعاية طبية
+					<input type="checkbox">&nbsp; يحتاج إلى رعاية طبية
 				</label>
 			</div>
 		</td>
@@ -112,11 +116,7 @@
 			التاريخ: ....................................................................
 		</td>
 	</tr>
-	<tr>
-		<td align="right" valign="top">&nbsp;</td>
-		<td align="right" valign="top">&nbsp;</td>
-		<td align="center" valign="top"><img width="200" src="{% static 'images/withdrawletter-signature.jpg' %}"/></td>
-	</tr>
+
 	<tr>
 		<td colspan="3" align="center" valign="top"><img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
 	</tr>

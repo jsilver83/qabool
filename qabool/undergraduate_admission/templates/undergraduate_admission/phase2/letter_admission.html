@@ -18,6 +18,7 @@
 	<!-- Custom CSS -->
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
+		html{font-size:120%}
 		.noprint{
 		display:none!important;
 		}
@@ -38,7 +39,7 @@
 	</div>
 	<hr>
 </div>
-<table width="1000" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center">
 	<tr>
 		<td><img class="img-responsive" src="{% static 'images/letter-head.jpg' %}"></td>
 	</tr>
@@ -94,7 +95,7 @@
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td><img width="200" src="{% static 'images/admissionletter-signature.jpg' %}"/></td>
+		<td><img class="pull-left" width="200" src="{% static 'images/admissionletter-signature.jpg' %}"/></td>
 	</tr>
 	<tr>
 		<td align="center">&nbsp;</td>
