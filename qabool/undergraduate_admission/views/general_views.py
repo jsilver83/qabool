@@ -10,7 +10,7 @@ from undergraduate_admission.forms.general_forms import MyAuthenticationForm, Fo
 from undergraduate_admission.models import AdmissionSemester
 
 
-def index(request, template_name='undergraduate_admission/login(NO_LOGIN).html'):
+def index(request, template_name='undergraduate_admission/login.html'):
     form = MyAuthenticationForm(request.POST or None)
 
     redirect_to = request.POST.get('next',

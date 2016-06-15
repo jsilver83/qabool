@@ -63,11 +63,12 @@
 <h4>{% trans 'Print Documents' %}</h4>
 <br>
 <ul>
-	<li><a href="{% url 'admission_letter' %}" target="_blank">{% trans 'Admission Letter' %}</a></li>
-	<li><a href="{% url 'medical_letter' %}" target="_blank">{% trans 'Medical Checkup Letter' %}</a></li>
+	<li><h6><a href="{% url 'admission_letter' %}" target="_blank">{% trans 'Admission Letter' %}</a></h6></li>
+	<li><h6><a href="{% url 'medical_letter' %}" target="_blank">{% trans 'Medical Checkup Letter' %}</a></h6></li>
 </ul>
 <br>
-<p><a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Qabool/guide.pdf" target="_blank">{% trans 'Student Guide' %}</a></p>
+<h4><<a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Qabool/guide.pdf" target="_blank">
+	{% trans 'Student Guide' %}</a></h4>
 
 
 {% endblock subcontent %}
