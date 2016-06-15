@@ -18,6 +18,7 @@
 	<!-- Custom CSS -->
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
+		html{font-size:120%}
 		.noprint{
 		display:none!important;
 		}
@@ -39,7 +40,7 @@
 	<hr>
 </div>
 
-<table width="1000" style="text-align:right" border="0" cellspacing="0" cellpadding="0" align="center">
+<table width="100%" style="text-align:right" border="0" cellspacing="0" cellpadding="0" align="center">
   <tr>
     <td><img class="img-responsive" src="{% static 'images/letter-head.jpg' %}"></td>
   </tr>
@@ -59,9 +60,7 @@
 			<p>
 				السلام عليكم ورحمة الله وبركاته
 				<br><br>
-				تفيد إدارة القبول بعمادة القبول والتسجيل في جامعة الملك فهد للبترول والمعادن بالظهران بأن الطالب {{ user.get_student_full_name }}
-				<br><br>
-				قد أخلى طرفه من الجامعة وهو غير مسجل بها للعام الدراسي 1438/1437هـ، وقد أعطيت له هذه الشهادة بناءً على طلبه لتقديمها إلى من يهمه الأمر.
+				تفيد إدارة القبول بعمادة القبول والتسجيل في جامعة الملك فهد للبترول والمعادن بالظهران بأن الطالب قد أخلى طرفه من الجامعة وهو غير مسجل بها للعام الدراسي 1438/1437هـ، وقد أعطيت له هذه الشهادة بناءً على طلبه لتقديمها إلى من يهمه الأمر.
 				<br><br>
 
 				<br><br>
@@ -70,7 +69,7 @@
     </td>
   </tr>
   <tr>
-    <td><img width="200" src="{% static 'images/withdrawletter-signature.jpg' %}" /></td>
+    <td><img class="pull-left" width="200" src="{% static 'images/withdrawletter-signature.jpg' %}" /></td>
   </tr>
   <tr>
     <td align="center" class="ftr-fixed-btm"><img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
