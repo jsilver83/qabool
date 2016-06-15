@@ -3,7 +3,7 @@ $(function(){
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         changeYear: true,
-        yearRange: "1990:2016",
+        yearRange: "1980:2040",
     });
     $(".nav-tabs li").each(function(){
         if($(this).hasClass("active")){

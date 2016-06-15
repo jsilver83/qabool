@@ -314,8 +314,5 @@ def medical_letter(request):
             request.user.save()
 
     user = request.user
-    # kfupm_id = KFUPMIDsPool.get_next_available_id()
-    # user.kfupm_id = kfupm_id
-    # user.save()
 
     return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user, })

@@ -11,26 +11,6 @@ class PersonalInfoForm(forms.ModelForm):
         ('No', _("No")),
     )
 
-    # is_employed = forms.BooleanField(
-    #     label=_('Are You Employed?'),
-    #     required=True,
-    #     widget=forms.RadioSelect(choices=YES_NO_CHOICES),
-    #     help_text=_('It is required that applicant be unemployed to be full-time. In case you are currently employed,'
-    #                 ' you need to bring clearance from your employer.')
-    # )
-    # is_disabled = forms.BooleanField(
-    #     label=_('Do you have any disabilities?'),
-    #     help_text=_('This will let us help you better and will not affect your acceptance chances.'),
-    #     required=True,
-    #     widget=forms.RadioSelect(choices= YES_NO_CHOICES),
-    # )
-    # is_diseased = forms.BooleanField(
-    #     label=_('Do you have any chronic diseases?'),
-    #     help_text=_('This will let us help you better and will not affect your acceptance chances.'),
-    #     required=True,
-    #     widget=forms.RadioSelect(choices= YES_NO_CHOICES),
-    # )
-
     class Meta:
         model = User
 
