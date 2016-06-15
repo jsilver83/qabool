@@ -63,7 +63,8 @@ class PersonalInfoForm(forms.ModelForm):
 
         # make all fields required except for two fields
         for field in self.fields:
-            if field not in ['second_name_en', 'third_name_en', 'is_employed', 'employer_name', 'disability_needs_notes',
+            if field not in ['second_name_en', 'third_name_en', 'is_employed', 'is_disabled', 'is_diseased',
+                             'employer_name', 'disability_needs_notes',
                              'disability_needs', 'chronic_diseases', 'chronic_diseases_notes', ]:
                 self.fields[field].required = True
                 self.fields[field].widget.attrs.update(
