@@ -197,14 +197,20 @@ class User(AbstractUser):
         help_text=_('This will let us help you better and will not affect your acceptance chances.'),
     )
     disability_needs = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Disability Type'))
-    disability_needs_notes = models.TextField(null=True, blank=True, max_length=1000, verbose_name=_('Other Disability'))
+    disability_needs_notes = models.TextField(null=True,
+                                              blank=True,
+                                              max_length=1000,
+                                              verbose_name=_('Other Disability'))
     is_diseased = models.BooleanField(
         verbose_name=_('Do you have any chronic diseases?'),
         default=False,
         help_text=_('This will let us help you better and will not affect your acceptance chances.'),
     )
     chronic_diseases = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Chronic Diseases'))
-    chronic_diseases_notes = models.TextField(null=True, blank=True, max_length=1000, verbose_name=_('Chronic Diseases Notes'))
+    chronic_diseases_notes = models.TextField(null=True,
+                                              blank=True,
+                                              max_length=1000,
+                                              verbose_name=_('Chronic Diseases Notes'))
     relative_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Name'))
     relative_relation = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative Relation'))
     relative_phone = models.CharField(null=True,
@@ -213,7 +219,10 @@ class User(AbstractUser):
                                       verbose_name=_('Relative Mobile'),
                                       help_text=_('With country and area code. e.g. 966138602722'), )
     relative_po_box = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative PO Box'))
-    relative_po_stal_code = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Postal Code'))
+    relative_po_stal_code = models.CharField(null=True,
+                                             blank=True,
+                                             max_length=50,
+                                             verbose_name=_('Relative Postal Code'))
     relative_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative City'))
     relative_job = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Work'))
     relative_employer = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Employer'))
