@@ -101,7 +101,7 @@
       command: "{{ venv_dir }}/bin/python manage.py loaddata initial-data.json"
       args:
         chdir: "{{ install_dir }}/qabool"
-      when: loaddata
+      when: loaddata|bool
 
     - name: Create static files directory
       file:
