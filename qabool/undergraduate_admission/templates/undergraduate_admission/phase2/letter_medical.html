@@ -50,9 +50,9 @@
 		<td align="right" valign="top">&nbsp;</td>
 	</tr>
 	<tr>
-		<td width="626" align="right" valign="top"><strong>اسم الطالب:</strong></td>
+		<td width="626" align="right" valign="top"><strong>اسم الطالب: {{ user }}</strong></td>
 		<td width="53" valign="top">&nbsp;</td>
-		<td width="621" align="right" valign="top"><strong>:الرقم الجامعي:</strong></td>
+		<td width="621" align="right" valign="top"><strong>الرقم الجامعي: {{ user.kfupm_id }}</strong></td>
 	</tr>
 	<tr>
 		<td colspan="3">&nbsp;</td>
@@ -107,7 +107,7 @@
 		<td align="right" valign="top">&nbsp;</td>
 		<td align="right" valign="top">
 			<strong>مدير المستشفى / المتستوصف</strong><br>
-			الاسم: ......................................................................<br>
+			الاسم: {{ user }}<br>
 			التوقيع: ....................................................................<br>
 			التاريخ: ....................................................................
 		</td>

@@ -44,10 +44,10 @@ class User(AbstractUser):
     birthday = models.DateField(null=True, blank=True, verbose_name=_('Birthday'))
     birthday_ah = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Birthday Hijri'))
     birth_place = models.CharField(null=True,
-                                      blank=True,
-                                      max_length=100,
-                                      verbose_name=_('Birth Place'),
-                                      help_text=_('Country and city. e.g. Saudi Arabia Jeddah'))
+                                   blank=True,
+                                   max_length=100,
+                                   verbose_name=_('Birth Place'),
+                                   help_text=_('Country and city. e.g. Saudi Arabia Jeddah'))
     high_school_graduation_year = models.ForeignKey(
         'GraduationYear',
         on_delete=models.SET_NULL,
@@ -69,7 +69,11 @@ class User(AbstractUser):
         ],
         db_index=True,
     )
-    phone = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Phone'))
+    phone = models.CharField(null=True,
+                             blank=True,
+                             max_length=50,
+                             verbose_name=_('Phone'),
+                             help_text=_('With country and area code. e.g. 966138602722'), )
     high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA'))
     qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'))
     tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'))
@@ -152,7 +156,11 @@ class User(AbstractUser):
     guardian_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Name'))
     guardian_government_id = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Government ID'))
     guardian_relation = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Relation'))
-    guardian_phone = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Phone'))
+    guardian_phone = models.CharField(null=True,
+                                      blank=True,
+                                      max_length=50,
+                                      verbose_name=_('Guardian Phone'),
+                                      help_text=_('With country and area code. e.g. 966138602722'), )
     guardian_mobile = models.CharField(
         null=True,
         blank=True,
@@ -199,7 +207,11 @@ class User(AbstractUser):
     chronic_diseases_notes = models.TextField(null=True, blank=True, max_length=1000, verbose_name=_('Chronic Diseases Notes'))
     relative_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Name'))
     relative_relation = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative Relation'))
-    relative_phone = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative Mobile'))
+    relative_phone = models.CharField(null=True,
+                                      blank=True,
+                                      max_length=50,
+                                      verbose_name=_('Relative Mobile'),
+                                      help_text=_('With country and area code. e.g. 966138602722'), )
     relative_po_box = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative PO Box'))
     relative_po_stal_code = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Postal Code'))
     relative_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative City'))

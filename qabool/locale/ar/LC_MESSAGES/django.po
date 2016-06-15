@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-15 01:04+0300\n"
-"PO-Revision-Date: 2016-06-15 01:04+0300\n"
+"PO-Revision-Date: 2016-06-15 09:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -363,7 +363,7 @@ msgstr "رفع صورة الشهادة الثانوية"
 
 #: undergraduate_admission/models.py:139
 msgid "Courses Certificate"
-msgstr "رفع صورة شهادة المقررات إن وجد"
+msgstr "رفع صورة شهادة المقررات (إن وجدت)"
 
 #: undergraduate_admission/models.py:143
 msgid "Student Notes"
@@ -1207,7 +1207,7 @@ msgstr "في حالة انسحابك، سوف يلغى قبولك من الجا�
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/withdraw.html:33
 msgid "Are you SURE?"
-msgstr "هل أنت متأكد؟"
+msgstr "هل أنت متأكد من رغبتك باﻻنسحاب؟"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/withdraw.html:34
 msgid "Withdraw"
@@ -1329,7 +1329,7 @@ msgstr "خطأ بتغيير كلمة المرور، فضلاً تأكد من ص�
 
 #: undergraduate_admission/views/general_views.py:82
 msgid "Contact Info was updated successfully..."
-msgstr "لقد تم تعديل بيانات التواصل بنجاح"
+msgstr "لقد تم حفظ بيانات التواصل بنجاح"
 
 #: undergraduate_admission/views/general_views.py:85
 msgid "Error updating contact info. Try again later!"
@@ -1350,7 +1350,7 @@ msgstr "انتهى وقت التسجيل لهذا العام..."
 
 #: undergraduate_admission/views/phase1_views.py:100
 msgid "Info was updated successfully..."
-msgstr "لقد تم تعديل البيانات بنجاح"
+msgstr "لقد تم حفظ البيانات بنجاح"
 
 #: undergraduate_admission/views/phase1_views.py:103
 msgid "Error updating info. Try again later!"
@@ -1358,7 +1358,7 @@ msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المح�
 
 #: undergraduate_admission/views/phase2_views.py:62
 msgid "Personal Info was saved successfully..."
-msgstr "لقد تم تعديل البيانات الشخصية بنجاح"
+msgstr "لقد تم حفظ البيانات الشخصية بنجاح"
 
 #: undergraduate_admission/views/phase2_views.py:66
 #: undergraduate_admission/views/phase2_views.py:92
@@ -1370,11 +1370,11 @@ msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المح�
 
 #: undergraduate_admission/views/phase2_views.py:88
 msgid "Guardian Contact Info was saved successfully..."
-msgstr "لقد تم تعديل بيانات ولي اﻷمر بنجاح"
+msgstr "لقد تم حفظ بيانات ولي اﻷمر بنجاح"
 
 #: undergraduate_admission/views/phase2_views.py:114
 msgid "Relative Info was saved successfully..."
-msgstr "لقد تم تعديل معلومات القريب بنجاح"
+msgstr "لقد تم حفظ معلومات القريب بنجاح"
 
 #: undergraduate_admission/views/phase2_views.py:140
 msgid "Documents were uploaded successfully..."
