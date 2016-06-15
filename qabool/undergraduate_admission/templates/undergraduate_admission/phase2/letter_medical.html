@@ -17,7 +17,7 @@
 	<!-- Custom CSS -->
 	<link href="css/rtl.css" rel="stylesheet">
 	<style media="print">
-		html{font-size:120%}
+		html{font-size:110%}
 		.noprint{
 		display:none!important;
 		}
@@ -46,17 +46,9 @@
 		<td colspan="3" align="center" valign="top"><h3>كشف طبي</h3></td>
 	</tr>
 	<tr>
-		<td align="right" valign="top">&nbsp;</td>
-		<td valign="top">&nbsp;</td>
-		<td align="right" valign="top">&nbsp;</td>
-	</tr>
-	<tr>
 		<td width="626" align="right" valign="top"><strong>اسم الطالب: {{ user }}</strong></td>
 		<td width="53" valign="top">&nbsp;</td>
 		<td width="621" align="right" valign="top"><strong>الرقم الجامعي: {{ user.kfupm_id }}</strong></td>
-	</tr>
-	<tr>
-		<td colspan="3">&nbsp;</td>
 	</tr>
 	<tr>
 		<td align="right" valign="top">سعادة مدير مستشفى / مستوصف الموقر<br>
@@ -68,11 +60,6 @@
 	</tr>
 	<tr>
 		<td colspan="3" align="center" valign="top"><img class="pull-left" width="200" src="{% static 'images/withdrawletter-signature.jpg' %}"/></td>
-	</tr>
-	<tr>
-		<td align="center" valign="top">&nbsp;</td>
-		<td>&nbsp;</td>
-		<td align="left" valign="middle">&nbsp;</td>
 	</tr>
 	<tr>
 		<td colspan="3" align="center" valign="top"><img class="img-responsive" src="{% static 'images/form.png' %}" width="100%"/>
@@ -99,12 +86,12 @@
 		<td align="right" valign="top">
 			<div class="checkbox">
 				<label>
-					<input type="checkbox">&nbsp;&nbsp;&nbsp; سليم
+					<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; سليم
 				</label>
 			</div>
 			<div class="checkbox">
 				<label>
-					<input type="checkbox">&nbsp; يحتاج إلى رعاية طبية
+					<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; يحتاج إلى رعاية طبية
 				</label>
 			</div>
 		</td>
