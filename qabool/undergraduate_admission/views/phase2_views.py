@@ -279,13 +279,6 @@ def withdraw(request):
     return render(request, 'undergraduate_admission/phase2/withdraw.html', {'form': form,})
 
 
-# @login_required()
-# def withdrawal_letter(request):
-#     user=request.user
-#
-#     return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user,})
-
-
 @login_required()
 def withdrawal_letter(request):
     if request.method == "GET":

@@ -21,11 +21,14 @@
 		.noprint{
 		display:none!important;
 		}
+		.ftr-fixed-btm{
+		position:fixed;
+		bottom:0px;
+		}
 	</style>
 </head>
 <body>
 <div class="container-fluid noprint">
-
 	<div class="row">
 		<div class="col-lg-12"><br>
 			<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
@@ -33,22 +36,17 @@
 			<a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
 		</div>
 	</div>
-
 	<hr>
-
 </div>
-
-<div class="container">
-
-	<div class="row">
-		<div class="col-lg-12">
-			<img class="img-responsive" src="{% static 'images/letter-head.jpg' %}">
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-2"></div>
-		<div class="col-lg-8">
+<table width="1000" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center">
+	<tr>
+		<td><img class="img-responsive" src="{% static 'images/letter-head.jpg' %}"></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>
 			<center>
 				<h2>خطــاب القبــول<br>
 					<small> للعام الدراسي 1437 / 1438هـ</small>
@@ -87,37 +85,31 @@
 				ذوالقعدة 1437هـ الموافق 22 اغسطس 2016م، وستبدأ الدراسة يوم الأحد 17 ذوالحجة 1437هـ
 				الموافق 18 سبتمبر 2016م.
 			</p>
-		</div>
-		<div class="col-lg-2"></div>
-	</div>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td><img width="200" src="{% static 'images/admissionletter-signature.jpg' %}"/></td>
+	</tr>
+	<tr>
+		<td align="center">&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="center">عند حضورك للجامعة يجب عليك إحضار هذا الخطاب حيث إنه الاثبات الرسمي لقبولك</td>
+	</tr>
+	<tr>
+		<td align="center">&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="center" class="ftr-fixed-btm">
+			<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
+	</tr>
+</table>
 
-	<br><br>
-
-	<div class="row">
-		<div class="col-lg-2"></div>
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4" align="center">
-			<strong>د. سعد بن محمد الشهراني</strong>
-			<br>
-			<strong>عميد القبول والتسجيل</strong>
-		</div>
-		<div class="col-lg-2"></div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-12" align="center">
-			<br><br>
-			عند حضورك للجامعة يجب عليك إحضار هذا الخطاب حيث إنه الاثبات الرسمي لقبولك <br>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-12">
-			<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}">
-		</div>
-	</div>
-
-</div>
-<br><br>
 </body>
 </html>
