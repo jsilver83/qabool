@@ -48,6 +48,21 @@ class PersonalInfoForm(forms.ModelForm):
             'phone': _('With country and area code. e.g. 966138602722'),
         }
 
+    def clean(self):
+        cleaned_data = super(PersonalInfoForm, self).clean()
+        is_diseased = cleaned_data.get('is_diseased')
+        chronic_diseases = cleaned_data.get('chronic_diseases')
+        is_disabled = cleaned_data.get('is_disabled')
+        disability_needs = cleaned_data.get('disability_needs')
+
+        if is_diseased and not chronic_diseases:
+            raise forms.ValidationError(_('Chronic diseases list can not be empty'))
+
+        if is_disabled and not disability_needs:
+            raise forms.ValidationError(_('Disability type(s) can not be empty'))
+
+        return cleaned_data
+
     def __init__(self, *args, **kwargs):
         super(PersonalInfoForm, self).__init__(*args, **kwargs)
 
