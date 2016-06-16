@@ -22,12 +22,13 @@ class UserResource(resources.ModelResource):
 
 
 class MyUserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
-    list_display = ('id', 'username', 'kfupm_id', 'first_name', 'email', 'status_message_id')
+    list_display = ('id', 'username', 'kfupm_id', 'first_name', 'email', 'status_message_id', 'get_student_total')
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
         ('Qabool Fields', {
             'fields': ('kfupm_id', 'mobile','nationality', 'saudi_mother', 'status_message', 'admission_note',
-                       'guardian_mobile', 'high_school_graduation_year', 'high_school_system','high_school_gpa',),
+                       'guardian_mobile', 'high_school_graduation_year', 'high_school_system','high_school_gpa',
+                       'qudrat_score', 'tahsili_score', 'admission_letter_note', ),
         }),
     )
     resource_class = UserResource
@@ -64,7 +65,8 @@ class HelpDiskForStudentAdmin(VersionAdmin):
                                 'last_name', 'mobile', 'email',
                                 'nationality', 'saudi_mother', 'status_message',
                                 'guardian_mobile', 'id',
-                                'date_joined', 'high_school_graduation_year', 'kfupm_id')
+                                'date_joined', 'high_school_graduation_year', 'kfupm_id',
+                                'high_school_name', 'high_school_province', 'high_school_gpa', 'status_message')
     search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'kfupm_id']
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
