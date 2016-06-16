@@ -31,33 +31,9 @@ urlpatterns += i18n_patterns(
 )
 
 urlpatterns += patterns('',
-                        url(r'^captcha/', include(captcha.urls)),
+    url(r'^captcha/', include(captcha.urls)),
 
-                        url(r'^files/birth-certificate/(?P<pk>\d+)/$',
-                            phase2_views.BirthCertificate.as_view(),
-                            name='birth_certificate'),
-
-                        url(r'^files/high-school-certificate/(?P<pk>\d+)/$',
-                            phase2_views.HighSchoolCertificate.as_view(),
-                            name='high_school_certificate'),
-
-                        url(r'^files/gov-id-file/(?P<pk>\d+)/$',
-                            phase2_views.GovernmentIDFile.as_view(),
-                            name='gov_id_file'),
-
-                        url(r'^files/mother-gov-id-file/(?P<pk>\d+)/$',
-                            phase2_views.MotherGovernmentIDFile.as_view(),
-                            name='mother_gov_id_file'),
-
-                        url(r'^files/passport-file/(?P<pk>\d+)/$',
-                            phase2_views.PassportFile.as_view(),
-                            name='passport_file'),
-
-                        url(r'^files/personal-picture/(?P<pk>\d+)/$',
-                            phase2_views.PersonalPicture.as_view(),
-                            name='personal_picture'),
-
-                        url(r'^files/courses-certificate/(?P<pk>\d+)/$',
-                            phase2_views.CoursesCertificate.as_view(),
-                            name='courses_certificate'),
-                        )
+    url(r'^files/(?P<filetype>[\w\-]+)/(?P<pk>\d+)/$',
+        phase2_views.UserFileView.as_view(),
+        name='download_user_file'),
+)

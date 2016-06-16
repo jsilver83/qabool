@@ -6,8 +6,11 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic.base import View
+from django.http import Http404
 
-from django_downloadview import ObjectDownloadView
+# from django_downloadview import ObjectDownloadView
+from sendfile import sendfile
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
@@ -31,84 +34,21 @@ def is_withdrawn(user):
     return phase == 'WITHDRAWN'
 
 
-class UserFileView(LoginRequiredMixin, UserPassesTestMixin):
+class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
     raise_exception = True  # PermissionDenied
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.id == self.kwargs['pk']
+        return self.request.user.is_staff or self.request.user.id == int(self.kwargs['pk'])
 
-
-class BirthCertificate(UserFileView, ObjectDownloadView):
-    model = User
-    file_field = 'birth_certificate'
-
-
-class HighSchoolCertificate(UserFileView, ObjectDownloadView):
-    model = User
-    file_field = 'high_school_certificate'
-
-
-class GovernmentIDFile(UserFileView, ObjectDownloadView):
-    model = User
-    file_field = 'government_id_file'
-
-
-class MotherGovernmentIDFile(UserFileView, ObjectDownloadView):
-    model = User
-    file_field = 'mother_gov_id_file'
-
-
-class PassportFile(UserFileView, ObjectDownloadView):
-    model = User
-    file_field = 'passport_file'
-
-
-class PersonalPicture(UserFileView, ObjectDownloadView):
-    model = User
-    file_field = 'personal_picture'
-
-
-class CoursesCertificate(UserFileView, ObjectDownloadView):
-    model = User
-    file_field = 'courses_certificate'
-
-
-@login_required()
-def media_view(request, filename):
-    user = request.user
-    id = user.id
-    basename = filename.find('/')
-
-    if filename.startswith('govid/'):
-        if user.government_id_file == filename:
-            return redirect(reverse('government_id_file', args=(id,)))
-
-    elif filename.startswith('picture/'):
-        if user.personal_picture == filename:
-            return redirect(reverse('personal_picture', args=(id,)))
-
-    elif filename.startswith('certificate/courses'):
-        if user.courses_certificate == filename:
-            return redirect(reverse('courses_certificate', args=(id,)))
-
-    elif filename.startswith('certificate/'):
-        if user.high_school_certificate == filename:
-            return redirect(reverse('high_school_certificate', args=(id,)))
-
-    elif filename.startswith('birth/'):
-        if user.birth_certificate == filename:
-            return redirect(reverse('birth_certificate', args=(id,)))
-
-    elif filename.startswith('mother_govid/'):
-        if user.mother_gov_id_file == filename:
-            return redirect(reverse('mother_gov_id_file', args=(id,)))
-
-    elif filename.startswith('passport/'):
-        if user.passport_file == filename:
-            return redirect(reverse('passport_file', args=(id,)))
-
-    else:
-        raise PermissionDenied
+    def get(self, request, filetype, pk):
+        user = get_object_or_404(User, pk=pk)
+        try:
+            user_file = getattr(user, filetype)
+        except AttributeError:  # invalid filetype
+            raise Http404
+        if not user_file:       # file not uploaded
+            raise Http404
+        return sendfile(request, user_file.path)
 
 
 @login_required()
