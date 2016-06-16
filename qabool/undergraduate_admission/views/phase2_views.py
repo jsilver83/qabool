@@ -5,11 +5,15 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+from django_downloadview import ObjectDownloadView
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
+from undergraduate_admission.models import User
 
 
 def is_phase2_eligible(user):
@@ -25,6 +29,48 @@ def is_admitted(user):
 def is_withdrawn(user):
     phase = user.get_student_phase()
     return phase == 'WITHDRAWN'
+
+
+class UserFileView(LoginRequiredMixin, UserPassesTestMixin):
+    raise_exception = True  # PermissionDenied
+
+    def test_func(self):
+        return self.request.user.is_staff or self.request.user.id == self.kwargs['pk']
+
+
+class BirthCertificate(UserFileView, ObjectDownloadView):
+    model = User
+    file_field = 'birth_certificate'
+
+
+class HighSchoolCertificate(UserFileView, ObjectDownloadView):
+    model = User
+    file_field = 'high_school_certificate'
+
+
+class GovernmentIDFile(UserFileView, ObjectDownloadView):
+    model = User
+    file_field = 'government_id_file'
+
+
+class MotherGovernmentIDFile(UserFileView, ObjectDownloadView):
+    model = User
+    file_field = 'mother_gov_id_file'
+
+
+class PassportFile(UserFileView, ObjectDownloadView):
+    model = User
+    file_field = 'passport_file'
+
+
+class PersonalPicture(UserFileView, ObjectDownloadView):
+    model = User
+    file_field = 'personal_picture'
+
+
+class CoursesCertificate(UserFileView, ObjectDownloadView):
+    model = User
+    file_field = 'courses_certificate'
 
 
 @login_required()
