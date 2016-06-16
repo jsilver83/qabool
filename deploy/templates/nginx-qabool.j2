@@ -15,6 +15,11 @@ server {
         alias {{ static_files_dir }};
     }
 
+    location /files {
+        internal;
+        alias {{ upload_dir }};
+    }
+
     location / {
         include uwsgi_params;
         uwsgi_pass unix:/run/uwsgi/app/qabool/socket;

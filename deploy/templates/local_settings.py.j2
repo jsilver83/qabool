@@ -38,3 +38,6 @@ DISABLE_CAPTCHA = {{ disable_captcha }}
 
 MEDIA_ROOT = '{{ upload_dir }}'
 
+SENDFILE_BACKEND = 'sendfile.backends.nginx'
+SENDFILE_ROOT = '{{ upload_dir }}'
+SENDFILE_URL = '/files'

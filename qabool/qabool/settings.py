@@ -198,7 +198,6 @@ SERVER_EMAIL = 'admissions@kfupm.edu.sa'
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/uploaded_docs/'
 
 AUTH_USER_MODEL = 'undergraduate_admission.User'
 
