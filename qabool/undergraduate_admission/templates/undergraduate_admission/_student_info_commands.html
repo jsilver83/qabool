@@ -4,6 +4,7 @@
 	<div class="panel-body">
 		{% if has_pic %}
 		{% if user.personal_picture %}
+		<!--<img width="100%" src="{{ user.personal_picture.url }}">-->
 		<img width="100%" src="{{ user.personal_picture.url }}">
 		{% else %}
 		<img width="100%" src="http://placehold.it/150x140">

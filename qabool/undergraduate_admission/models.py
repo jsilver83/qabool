@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
@@ -250,6 +251,9 @@ class User(AbstractUser):
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
     verification_status = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Status'))
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
+
+    def get_personal_picture(self):
+        return reverse('personal_picture', args=(self.id,))
 
     def get_student_full_name(self):
         if self.first_name_ar and self.second_name_ar and self.third_name_ar and self.family_name_ar:
