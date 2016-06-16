@@ -22,7 +22,7 @@ class UserResource(resources.ModelResource):
 
 
 class MyUserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
-    list_display = ('id', 'username', 'kfupm_id', 'first_name', 'email', 'status_message_id', 'get_student_total')
+    list_display = ('id', 'username', 'kfupm_id', 'get_student_full_name', 'email', 'status_message_id', 'get_student_total')
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
         ('Qabool Fields', {
@@ -40,7 +40,7 @@ class Student(User):
 
 
 class StudentAdmin(VersionAdmin):
-    list_display = ('username', 'kfupm_id', 'first_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
+    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('username', 'id', 'is_active', 'date_joined')
@@ -53,20 +53,46 @@ class StudentAdmin(VersionAdmin):
         return qs
 
 
+class VerifyStudent(User):
+    class Meta:
+        proxy = True
+
+
+class VerifyStudentAdmin(VersionAdmin):
+    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
+                    'status_message_id', 'get_student_type', )
+    date_hierarchy = 'date_joined'
+    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality', )
+    fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
+              'is_active', 'date_joined', 'qudrat_score', 'tahsili_score', 'high_school_gpa',
+              'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
+              'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system', 'high_school_province',
+              'high_school_certificate', 'courses_certificate', 'birthday', 'birthday_ah', 'birth_place',
+              'birth_certificate', 'mother_gov_id_file', 'government_id_file', 'nationality', 'saudi_mother',
+              'passport_file', 'verification_status', 'verification_notes', )
+    readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
+                       'is_active', 'date_joined', 'qudrat_score', 'tahsili_score', 'high_school_gpa', )
+    search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
+                     'nationality__nationality_en']
+
+    def get_queryset(self, request):
+        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
+        return qs
+
+
 class HelpDiskForStudent(User):
     class Meta:
         proxy = True
 
 
 class HelpDiskForStudentAdmin(VersionAdmin):
-    list_display = ('username', 'first_name', 'email', 'mobile', 'get_student_type', 'kfupm_id', 'status_message_id')
+    list_display = ('username', 'get_student_full_name', 'email', 'mobile', 'get_student_type', 'kfupm_id', 'status_message_id')
     date_hierarchy = 'date_joined'
-    fields = readonly_fields = ('username', 'first_name',
-                                'last_name', 'mobile', 'email',
+    fields = readonly_fields = ('username', 'get_student_full_name', 'mobile', 'email',
                                 'nationality', 'saudi_mother', 'status_message',
                                 'guardian_mobile', 'id',
                                 'date_joined', 'high_school_graduation_year', 'kfupm_id',
-                                'high_school_name', 'high_school_province', 'high_school_gpa', 'status_message')
+                                'high_school_name', 'high_school_province', 'high_school_gpa',)
     search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'kfupm_id']
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
@@ -169,3 +195,4 @@ admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
+admin.site.register(VerifyStudent, VerifyStudentAdmin)
