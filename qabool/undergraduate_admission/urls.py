@@ -55,46 +55,4 @@ urlpatterns = [
     url(r'^initialagreement/$', phase1_views.initial_agreement, name='initial_agreement'),
     url(r'^forgotpassword/$', general_views.forgot_password, name='forgot_password'),
     url(r'^$', general_views.index, name='index'),
-
-    url(r'^file-birth/(?P<username>[a-zA-Z0-9_-]+)/$',
-        ObjectDownloadView.as_view(
-            model=User,
-            file_field='birth_certificate'),
-        name='birth_certificate'),
-
-    url(r'^file-certificate/(?P<username>[a-zA-Z0-9_-]+)/$',
-        ObjectDownloadView.as_view(
-            model=User,
-            file_field='high_school_certificate'),
-        name='high_school_certificate'),
-
-    url(r'^file-government_id/(?P<username>[a-zA-Z0-9_-]+)/$',
-        ObjectDownloadView.as_view(
-            model=User,
-            file_field='government_id_file'),
-        name='government_id_file'),
-
-    url(r'^file-mother_gov_id/(?P<username>[a-zA-Z0-9_-]+)/$',
-        ObjectDownloadView.as_view(
-            model=User,
-            file_field='mother_gov_id_file'),
-        name='mother_gov_id_file'),
-
-    url(r'^file-passport/(?P<username>[a-zA-Z0-9_-]+)/$',
-        ObjectDownloadView.as_view(
-            model=User,
-            file_field='passport_file'),
-        name='passport_file'),
-
-    url(r'^file-personal_picture/(?P<username>[a-zA-Z0-9_-]+)/$',
-        ObjectDownloadView.as_view(
-            model=User,
-            file_field='personal_picture'),
-        name='personal_picture'),
-
-    url(r'^file-courses_certificate/(?P<username>[a-zA-Z0-9_-]+)/$',
-        ObjectDownloadView.as_view(
-            model=User,
-            file_field='courses_certificate'),
-        name='courses_certificate'),
 ]
