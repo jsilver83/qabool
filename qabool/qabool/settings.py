@@ -214,6 +214,8 @@ CAPTCHA_LETTER_ROTATION = (-10,10)
 
 CSRF_FAILURE_VIEW = 'undergraduate_admission.views.general_views.csrf_failure'
 
+MEDIA_URL = '/uploaded_docs/'
+
 # Override settings using environment-specific settings, if any
 try:
     from qabool.local_settings import *
