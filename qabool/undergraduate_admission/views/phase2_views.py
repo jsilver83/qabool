@@ -1,3 +1,4 @@
+from django.conf.global_settings import MEDIA_ROOT
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
@@ -7,10 +8,10 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.base import View
-from django.http import Http404
+from django.http import Http404, HttpResponse
 
 # from django_downloadview import ObjectDownloadView
-from sendfile import sendfile
+from sendfile import sendfile, os
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
@@ -49,6 +50,45 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
         if not user_file:       # file not uploaded
             raise Http404
         return sendfile(request, user_file.path)
+
+
+@login_required()
+def media_view(request, filename):
+    user = request.user
+    id = user.id
+    absolute_file_name = os.path.join(MEDIA_ROOT, filename)
+
+    if filename.startswith('govid/'):
+        if user.government_id_file == filename:
+            return redirect(reverse('government_id_file', args=(id,)))
+
+    elif filename.startswith('picture/'):
+        if user.personal_picture == filename:
+            # return HttpResponse('%s'%absolute_file_name)
+            return sendfile(request, absolute_file_name)
+
+    elif filename.startswith('certificate/courses'):
+        if user.courses_certificate == filename:
+            return redirect(reverse('courses_certificate', args=(id,)))
+
+    elif filename.startswith('certificate/'):
+        if user.high_school_certificate == filename:
+            return redirect(reverse('high_school_certificate', args=(id,)))
+
+    elif filename.startswith('birth/'):
+        if user.birth_certificate == filename:
+            return redirect(reverse('birth_certificate', args=(id,)))
+
+    elif filename.startswith('mother_govid/'):
+        if user.mother_gov_id_file == filename:
+            return redirect(reverse('mother_gov_id_file', args=(id,)))
+
+    elif filename.startswith('passport/'):
+        if user.passport_file == filename:
+            return redirect(reverse('passport_file', args=(id,)))
+
+    else:
+        raise PermissionDenied
 
 
 @login_required()

@@ -36,4 +36,8 @@ urlpatterns += patterns('',
     url(r'^files/(?P<filetype>[\w\-]+)/(?P<pk>\d+)/$',
         phase2_views.UserFileView.as_view(),
         name='download_user_file'),
+
+    url(r'^uploaded_docs/(?P<filename>.*)/$',
+        phase2_views.media_view,
+        name='user_file'),
 )
