@@ -15,7 +15,7 @@ server {
         alias {{ static_files_dir }};
     }
 
-    location /files {
+    location /protected-files {
         internal;
         alias {{ upload_dir }};
     }
