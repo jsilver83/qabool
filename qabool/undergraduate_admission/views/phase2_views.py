@@ -59,38 +59,40 @@ def media_view(request, filename):
     id2 = user.id
     absolute_file_name = os.path.join(SENDFILE_ROOT, filename)
 
-    if filename.startswith('govid/'):
-        if user.government_id_file == filename:
-            return redirect(reverse('government_id_file', args=(id2,)))
-
-    elif filename.startswith('picture/'):
-        if user.personal_picture == filename:
-            # return HttpResponse('%s'%absolute_file_name)
-            # return sendfile(request, user.personal_picture.path)
-            return sendfile(request, absolute_file_name)
-
-    elif filename.startswith('certificate/courses'):
-        if user.courses_certificate == filename:
-            return redirect(reverse('courses_certificate', args=(id2,)))
-
-    elif filename.startswith('certificate/'):
-        if user.high_school_certificate == filename:
-            return redirect(reverse('high_school_certificate', args=(id2,)))
-
-    elif filename.startswith('birth/'):
-        if user.birth_certificate == filename:
-            return redirect(reverse('birth_certificate', args=(id2,)))
-
-    elif filename.startswith('mother_govid/'):
-        if user.mother_gov_id_file == filename:
-            return redirect(reverse('mother_gov_id_file', args=(id2,)))
-
-    elif filename.startswith('passport/'):
-        if user.passport_file == filename:
-            return redirect(reverse('passport_file', args=(id2,)))
-
+    if user.is_staff:
+        return sendfile(request, absolute_file_name)
     else:
-        raise PermissionDenied
+        if filename.startswith('govid/'):
+            if user.government_id_file == filename:
+                return sendfile(request, user.government_id_file.path)
+
+        elif filename.startswith('picture/'):
+            if user.personal_picture == filename:
+                # return HttpResponse('%s'%absolute_file_name)
+                return sendfile(request, user.personal_picture.path)
+
+        elif filename.startswith('certificate/courses'):
+            if user.courses_certificate == filename:
+                return sendfile(request, user.courses_certificate.path)
+
+        elif filename.startswith('certificate/'):
+            if user.high_school_certificate == filename:
+                return sendfile(request, user.high_school_certificate.path)
+
+        elif filename.startswith('birth/'):
+            if user.birth_certificate == filename:
+                return sendfile(request, user.birth_certificate.path)
+
+        elif filename.startswith('mother_govid/'):
+            if user.mother_gov_id_file == filename:
+                return sendfile(request, user.mother_gov_id_file.path)
+
+        elif filename.startswith('passport/'):
+            if user.passport_file == filename:
+                return sendfile(request, user.passport_file.path)
+
+        else:
+            raise PermissionDenied
 
 
 @login_required()
