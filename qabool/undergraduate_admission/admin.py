@@ -74,9 +74,7 @@ class VerifyStudentAdminForm(forms.ModelForm):
         self.fields['verification_notes'].widget = admin.widgets.AdminTextareaWidget()
 
 
-
 class VerifyStudentAdmin(VersionAdmin):
-
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
                     'status_message_id', 'get_student_type', )
     date_hierarchy = 'date_joined'
@@ -86,12 +84,14 @@ class VerifyStudentAdmin(VersionAdmin):
               'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
               'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
               'high_school_province', 'birthday', 'birthday_ah',
-              'nationality','saudi_mother', 'birth_place',
-              'personal_picture', 'high_school_certificate', 'courses_certificate',
-              'birth_certificate', 'mother_gov_id_file', 'government_id_file', 'passport_file',
-              'get_verification_status', 'verification_status', 'verification_notes', )
+              'nationality','saudi_mother', 'birth_place', 'government_id_expiry',
+              'personal_picture', 'government_id_file', 'high_school_certificate',
+              'courses_certificate', 'mother_gov_id_file', 'birth_certificate', 'passport_file',
+              'verification_documents_incomplete', 'get_verification_status', 'verification_status',
+              'verification_notes', )
     readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
-                       'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status', )
+                       'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status',
+                       'nationality','saudi_mother', )
     form = VerifyStudentAdminForm
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en']

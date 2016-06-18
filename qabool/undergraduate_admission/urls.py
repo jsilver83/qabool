@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^studentagreement3/$', phase2_views.student_agreement_3, name='student_agreement_3'),
     url(r'^studentagreement2/$', phase2_views.student_agreement_2, name='student_agreement_2'),
     url(r'^studentagreement1/$', phase2_views.student_agreement_1, name='student_agreement_1'),
+    url(r'^uploaddocumentsincomplete/$', phase2_views.upload_documents_for_incomplete,
+        name='upload_documents_incomplete'),
     url(r'^uploaddocuments/$', phase2_views.upload_documents, name='upload_documents'),
     url(r'^relativecontact/$', phase2_views.relative_contact, name='relative_contact'),
     url(r'^guardiancontact/$', phase2_views.guardian_contact, name='guardian_contact'),

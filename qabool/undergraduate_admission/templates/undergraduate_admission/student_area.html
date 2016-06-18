@@ -91,6 +91,15 @@
 				<a href="{% url 'confirm' %}" class="btn btn-success btn-lg btn-block">
 					<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 			{% endif %}
+
+			{% if can_re_upload_docs %}
+				<div class="alert alert-danger" role="alert">
+					<strong>{% trans 'Please re-upload files for the following reasons' %}:</strong><br>
+					{{ user.verification_status }}<br><br>
+				<a href="{% url 'upload_documents_incomplete' %}" class="btn btn-warning btn-lg btn-block">
+					<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Missing Documents' %}</a>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 
