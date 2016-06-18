@@ -13,6 +13,7 @@ from django.http import Http404, HttpResponse
 # from django_downloadview import ObjectDownloadView
 from sendfile import sendfile, os
 
+from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm
@@ -56,7 +57,7 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
 def media_view(request, filename):
     user = request.user
     id2 = user.id
-    absolute_file_name = os.path.join(MEDIA_ROOT, filename)
+    absolute_file_name = os.path.join(SENDFILE_ROOT, filename)
 
     if filename.startswith('govid/'):
         if user.government_id_file == filename:
@@ -65,7 +66,8 @@ def media_view(request, filename):
     elif filename.startswith('picture/'):
         if user.personal_picture == filename:
             # return HttpResponse('%s'%absolute_file_name)
-            return sendfile(request, user.personal_picture.path)
+            # return sendfile(request, user.personal_picture.path)
+            return sendfile(request, absolute_file_name)
 
     elif filename.startswith('certificate/courses'):
         if user.courses_certificate == filename:
