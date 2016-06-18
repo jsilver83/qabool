@@ -5,7 +5,23 @@ from undergraduate_admission.models import User, Lookup, RegistrationStatusMessa
 from django.utils.translation import ugettext_lazy as _, get_language
 
 
-class PersonalInfoForm(forms.ModelForm):
+# to save phase 2 submit date on all phase 2 forms
+class Phase2GenericForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['id', ]
+
+    def save(self, commit=True):
+        instance = super(Phase2GenericForm, self).save(commit=False)
+        instance.phase2_submit_date = timezone.now()
+        if commit:
+            instance.save()
+            return instance
+        else:
+            return instance
+
+
+class PersonalInfoForm(Phase2GenericForm):
     YES_NO_CHOICES = (
         ('True', _("Yes")),
         ('No', _("No")),
@@ -66,11 +82,6 @@ class PersonalInfoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PersonalInfoForm, self).__init__(*args, **kwargs)
 
-        print(self.instance.chronic_diseases)
-        # self.fields['chronic_diseases'].queryset = (c[0] for c in self.instance.chronic_diseases)
-        # self.fields['chronic_diseases'].widget =\
-        #     forms.ModelSelectMultiple(queryset=(c[0] for c in self.instance.chronic_diseases),),
-
         if self.instance.get_student_type() == 'S':
             del self.fields['passport_number']
             del self.fields['passport_place']
@@ -112,18 +123,7 @@ class PersonalInfoForm(forms.ModelForm):
                 )
 
 
-# class EducationInfoForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = User
-#
-#         fields = ['high_school_name', 'high_school_province', 'high_school_city']
-#
-#     def __init__(self, *args, **kwargs):
-#         super(EducationInfoForm, self).__init__(*args, **kwargs)
-
-
-class GuardianContactForm(forms.ModelForm):
+class GuardianContactForm(Phase2GenericForm):
 
     class Meta:
         model = User
@@ -144,7 +144,7 @@ class GuardianContactForm(forms.ModelForm):
             self.fields[field].required = True
 
 
-class RelativeContactForm(forms.ModelForm):
+class RelativeContactForm(Phase2GenericForm):
 
     class Meta:
         model = User
@@ -164,7 +164,7 @@ class RelativeContactForm(forms.ModelForm):
             self.fields[field].required = True
 
 
-class DocumentsForm(forms.ModelForm):
+class DocumentsForm(Phase2GenericForm):
 
     class Meta:
         model = User

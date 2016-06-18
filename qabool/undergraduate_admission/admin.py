@@ -1,3 +1,5 @@
+import floppyforms.__future__ as forms
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from import_export import resources
@@ -41,7 +43,8 @@ class Student(User):
 
 
 class StudentAdmin(VersionAdmin):
-    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile', 'status_message_id', 'get_student_type')
+    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile', 'status_message_id',
+                    'get_student_type')
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('username', 'id', 'is_active', 'date_joined')
@@ -59,20 +62,37 @@ class VerifyStudent(User):
         proxy = True
 
 
+class VerifyStudentAdminForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('id', ) # dummy but necessary syntactically
+
+    def __init__(self, *args, **kwargs):
+        super(VerifyStudentAdminForm, self).__init__(*args, **kwargs)
+        self.fields['verification_status'].widget = \
+            forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
+        self.fields['verification_notes'].widget = admin.widgets.AdminTextareaWidget()
+
+
+
 class VerifyStudentAdmin(VersionAdmin):
+
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
                     'status_message_id', 'get_student_type', )
     date_hierarchy = 'date_joined'
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality', )
-    fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
-              'is_active', 'date_joined', 'qudrat_score', 'tahsili_score', 'high_school_gpa',
-              'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
-              'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system', 'high_school_province',
-              'high_school_certificate', 'courses_certificate', 'birthday', 'birthday_ah', 'birth_place',
-              'birth_certificate', 'mother_gov_id_file', 'government_id_file', 'nationality', 'saudi_mother',
-              'passport_file', 'verification_status', 'verification_notes', )
+    fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
+              'is_active', 'date_joined', 'high_school_gpa',
+              'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
+              'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
+              'high_school_province', 'birthday', 'birthday_ah',
+              'nationality','saudi_mother', 'birth_place',
+              'personal_picture', 'high_school_certificate', 'courses_certificate',
+              'birth_certificate', 'mother_gov_id_file', 'government_id_file', 'passport_file',
+              'get_verification_status', 'verification_status', 'verification_notes', )
     readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
-                       'is_active', 'date_joined', 'qudrat_score', 'tahsili_score', 'high_school_gpa', )
+                       'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status', )
+    form = VerifyStudentAdminForm
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en']
 
