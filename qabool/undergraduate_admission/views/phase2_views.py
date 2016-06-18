@@ -8,9 +8,8 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.base import View
-from django.http import Http404, HttpResponse
+from django.http import Http404
 
-# from django_downloadview import ObjectDownloadView
 from sendfile import sendfile, os
 
 from qabool.local_settings import SENDFILE_ROOT
@@ -67,7 +66,6 @@ def media_view(request, filename):
 
         elif filename.startswith('picture/'):
             if user.personal_picture == filename:
-                # return HttpResponse('%s'%absolute_file_name)
                 return sendfile(request, user.personal_picture.path)
 
         elif filename.startswith('certificate/courses'):
