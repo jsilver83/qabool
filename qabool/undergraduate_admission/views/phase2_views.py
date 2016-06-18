@@ -55,37 +55,37 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
 @login_required()
 def media_view(request, filename):
     user = request.user
-    id = user.id
+    id2 = user.id
     absolute_file_name = os.path.join(MEDIA_ROOT, filename)
 
     if filename.startswith('govid/'):
         if user.government_id_file == filename:
-            return redirect(reverse('government_id_file', args=(id,)))
+            return redirect(reverse('government_id_file', args=(id2,)))
 
     elif filename.startswith('picture/'):
         if user.personal_picture == filename:
             # return HttpResponse('%s'%absolute_file_name)
-            return sendfile(request, absolute_file_name)
+            return sendfile(request, user.personal_picture.path)
 
     elif filename.startswith('certificate/courses'):
         if user.courses_certificate == filename:
-            return redirect(reverse('courses_certificate', args=(id,)))
+            return redirect(reverse('courses_certificate', args=(id2,)))
 
     elif filename.startswith('certificate/'):
         if user.high_school_certificate == filename:
-            return redirect(reverse('high_school_certificate', args=(id,)))
+            return redirect(reverse('high_school_certificate', args=(id2,)))
 
     elif filename.startswith('birth/'):
         if user.birth_certificate == filename:
-            return redirect(reverse('birth_certificate', args=(id,)))
+            return redirect(reverse('birth_certificate', args=(id2,)))
 
     elif filename.startswith('mother_govid/'):
         if user.mother_gov_id_file == filename:
-            return redirect(reverse('mother_gov_id_file', args=(id,)))
+            return redirect(reverse('mother_gov_id_file', args=(id2,)))
 
     elif filename.startswith('passport/'):
         if user.passport_file == filename:
-            return redirect(reverse('passport_file', args=(id,)))
+            return redirect(reverse('passport_file', args=(id2,)))
 
     else:
         raise PermissionDenied
