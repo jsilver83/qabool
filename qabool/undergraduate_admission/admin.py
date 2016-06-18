@@ -22,7 +22,8 @@ class UserResource(resources.ModelResource):
 
 
 class MyUserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
-    list_display = ('id', 'username', 'kfupm_id', 'get_student_full_name', 'email', 'status_message_id', 'get_student_total')
+    list_display = ('id', 'username', 'kfupm_id', 'get_student_full_name', 'email', 'get_student_total',
+                    'status_message_id', )
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
         ('Qabool Fields', {
@@ -92,7 +93,7 @@ class HelpDiskForStudentAdmin(VersionAdmin):
                                 'nationality', 'saudi_mother', 'status_message',
                                 'guardian_mobile', 'id',
                                 'date_joined', 'high_school_graduation_year', 'kfupm_id',
-                                'high_school_name', 'high_school_province', 'high_school_gpa',)
+                                'high_school_name', 'high_school_province', 'high_school_gpa', )
     search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'kfupm_id']
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
