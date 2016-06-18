@@ -1,5 +1,3 @@
-from django_downloadview import ObjectDownloadView
-
 from django.conf.urls import url, include
 from django.contrib.auth.views import login, logout, password_change, password_change_done
 
