@@ -18,6 +18,7 @@ from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, Documen
     RelativeContactForm, WithdrawalForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
+from undergraduate_admission.utils import SMS
 
 
 def is_phase2_eligible(user):
@@ -210,6 +211,27 @@ def upload_documents(request):
 
 
 @login_required()
+def upload_documents_for_incomplete(request):
+    # it is ok to come here unconditionally if uploaded docs are incomplete
+    if request.method == 'GET' and not request.user.verification_documents_incomplete:
+        return redirect('student_area')
+
+    form = DocumentsForm(request.POST or None, request.FILES or None, instance=request.user)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            saved = form.save()
+            if saved:
+                messages.success(request, _('Documents were uploaded successfully...'))
+                request.session['upload_documents_completed'] = True
+                return redirect('student_agreement_1')
+            else:
+                messages.error(request, _('Error saving info. Try again later!'))
+
+    return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
+
+
+@login_required()
 @user_passes_test(is_phase2_eligible)
 def student_agreement_1(request):
     form = AgreementForm(request.POST or None)
@@ -289,6 +311,8 @@ def student_agreement_4(request):
             user.status_message = reg_msg
             user.save()
 
+            SMS.send_sms_admitted(user.mobile)
+
             return redirect('print_documents')
         else:
             messages.error(request, _('Error.'))
@@ -324,6 +348,9 @@ def withdraw(request):
             saved = form.save()
             if saved:
                 messages.success(request, _('You have withdrawn from the university successfully...'))
+
+                SMS.send_sms_withdrawn(request.user.mobile)
+
                 return redirect('withdrawal_letter')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))

@@ -29,6 +29,14 @@ class Email(object):
                 'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . '
                 '<br><br> Admissions Office, <br>King Fahd '
                 'University of Petroleum and Minerals'),
+        # TODO: implement
+        'admitted_msg':
+            _('Dear Student, You have been admitted successfully and you have to attend the orientation'
+              'week as specified in the admission letter'),
+        # TODO: implement
+        'withdrawn_msg':
+            _('Dear Student, Your application has been withdrawn as per your request. We wish you luck '
+              'in your future...'),
     }
 
     @staticmethod
@@ -66,6 +74,12 @@ class SMS(object):
                                   'We appreciate your feedback:\nhttp://goo.gl/erw8HQ .\n'
                                   'Admissions Office, KFUPM'),
         'confirmation_message': _('TBA'),
+        'admitted_msg':
+            _('Dear Student, You have been admitted successfully and you have to attend the orientation'
+              'week as specified in the admission letter'),
+        'withdrawn_msg':
+            _('Dear Student, Your application has been withdrawn as per your request. We wish you luck '
+              'in your future...'),
     }
 
     @staticmethod
@@ -83,6 +97,14 @@ class SMS(object):
     @staticmethod
     def send_sms_registration_success(mobile):
         SMS.send_sms(mobile, '%s'%(SMS.sms_messages['registration_success'])) # unjustifiable workaround
+
+    @staticmethod
+    def send_sms_admitted(mobile):
+        SMS.send_sms(mobile, '%s'%(SMS.sms_messages['admitted_msg']))
+
+    @staticmethod
+    def send_sms_withdrawn(mobile):
+        SMS.send_sms(mobile, '%s'%(SMS.sms_messages['withdrawn_msg']))
 
 
 # a custom function to generate 6-digit captcha codes

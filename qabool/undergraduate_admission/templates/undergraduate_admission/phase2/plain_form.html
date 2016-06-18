@@ -1,0 +1,30 @@
+{% extends 'base_student_area.html' %}
+{% load i18n %}
+{% load floppyforms %}
+{% load staticfiles %}
+
+{% block subcontent %}
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% block form %}
+	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	{% endblock form %}
+	<br>&nbsp;<br>
+	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
+</form>
+<br><br><br>
+<hr>
+{% endblock subcontent %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/custom-form-phase2.js' %}"></script>
+{% endblock scripts %}

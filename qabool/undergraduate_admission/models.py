@@ -249,12 +249,12 @@ class User(AbstractUser):
     phase2_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Start Date'))
     phase2_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 End Date'))
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
+    verification_documents_incomplete = models.NullBooleanField(blank=True, verbose_name=_('Uploaded docs are incomplete?'),)
     verification_status = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Status'))
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
 
     def get_verification_status(self):
         return self.verification_status
-
     get_verification_status.short_description = _('Verification Status')
 
     def get_student_full_name(self):
@@ -264,7 +264,6 @@ class User(AbstractUser):
             return '%s %s'%(self.first_name, self.last_name)
         else:
             return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
-
     get_student_full_name.short_description = _('Full Name')
 
     def get_student_registration_status(self):

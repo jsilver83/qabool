@@ -66,9 +66,14 @@ def student_area(request):
 
     can_confirm = phase == 'PARTIALLY-ADMITTED'
 
-    return render(request, 'undergraduate_admission/student_area.html', context={'user': request.user,
-                                                                                 'show_result': show_result,
-                                                                                 'can_confirm': can_confirm,})
+    can_re_upload_docs = phase == 'ADMITTED' and request.user.verification_documents_incomplete
+
+    return render(request,
+                  'undergraduate_admission/student_area.html', context={'user': request.user,
+                                                                        'show_result': show_result,
+                                                                        'can_confirm': can_confirm,
+                                                                        'can_re_upload_docs': can_re_upload_docs,
+                                                                        })
 
 
 @login_required()

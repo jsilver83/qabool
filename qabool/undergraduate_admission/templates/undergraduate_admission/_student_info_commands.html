@@ -46,7 +46,7 @@
 	<!--<span class="text-warning">{% trans "If you don't want to proceed with the application you can still withdraw your application by clicking below on the red button." %}</span><br><br>-->
 	<!--<a href="#" class="btn btn-withdraw btn-block"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>-->
 	<!--<hr>-->
-	<a href="{% url 'withdraw' %}" class="list-group-item"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
+	<a style="color:#D9534F" href="{% url 'withdraw' %}" class="list-group-item"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
 	{% endif %}
 	<a href="{% url 'change_password' %}" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
 	<hr>
