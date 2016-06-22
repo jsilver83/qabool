@@ -1,37 +1,41 @@
 $(function(){
-    $(".datepicker").datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "1980:2040",
-    });
+    try{
+        $(".datepicker").datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1980:2040",
+        });
+    }catch(e){}
     $(".nav-tabs li").each(function(){
         if($(this).hasClass("active")){
             $(this).find("a").html("<strong>" + $(this).find("a").html() + "</strong>");
         }
     });
     $("input[type=file]").removeClass("form-control");
-    $(".hijri").calendarsPicker($.extend(
-        {calendar: $.calendars.instance('ummalqura', 'ar')},
-        $.calendarsPicker.regionalOptions['ar']));
-    $('.hijri').change(function() {
-        calendar = $.calendars.instance($(this).val());
-        var convert = function(value) {
-            return (!value || typeof value != 'object' ? value :
-                calendar.fromJD(value.toJD()));
-        };
-        $('.is-calendarsPicker').each(function() {
-            var current = $(this).calendarsPicker('option');
-            $(this).calendarsPicker('option', {calendar: calendar,
-                    onSelect: null, onChangeMonthYear: null,
-                    defaultDate: convert(current.defaultDate),
-                    minDate: convert(current.minDate),
-                    maxDate: convert(current.maxDate)}).
-                calendarsPicker('option',
-                    {onSelect: current.onSelect,
-                    onChangeMonthYear: current.onChangeMonthYear});
+    try{
+        $(".hijri").calendarsPicker($.extend(
+            {calendar: $.calendars.instance('ummalqura', 'ar')},
+            $.calendarsPicker.regionalOptions['ar']));
+        $('.hijri').change(function() {
+            calendar = $.calendars.instance($(this).val());
+            var convert = function(value) {
+                return (!value || typeof value != 'object' ? value :
+                    calendar.fromJD(value.toJD()));
+            };
+            $('.is-calendarsPicker').each(function() {
+                var current = $(this).calendarsPicker('option');
+                $(this).calendarsPicker('option', {calendar: calendar,
+                        onSelect: null, onChangeMonthYear: null,
+                        defaultDate: convert(current.defaultDate),
+                        minDate: convert(current.minDate),
+                        maxDate: convert(current.maxDate)}).
+                    calendarsPicker('option',
+                        {onSelect: current.onSelect,
+                        onChangeMonthYear: current.onChangeMonthYear});
+            });
         });
-    });
+    }catch(e){}
 
     $(".updateOnce").each(function(){
         if($(this).val().length > 0 && $(this).val() != null){

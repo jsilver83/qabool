@@ -194,6 +194,24 @@ class DocumentsForm(Phase2GenericForm):
         self.fields['courses_certificate'].required = False
 
 
+class WithdrawalProofForm(Phase2GenericForm):
+
+    class Meta:
+        model = User
+
+        fields = ['withdrawal_proof_letter', ]
+
+    def __init__(self, *args, **kwargs):
+        super(WithdrawalProofForm, self).__init__(*args, **kwargs)
+
+        # make all fields required
+        for field in self.fields:
+            self.fields[field].required = True
+            self.fields[field].help_text = \
+                _('Please upload clear scanned images with good quality. Allowed formats: '
+                  'pdf, jpg, jpeg, png, bmp, gif. Max Size: 2 MB')
+
+
 class WithdrawalForm(forms.ModelForm):
 
     class Meta:

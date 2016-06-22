@@ -2,6 +2,10 @@ import os
 from django.utils import timezone
 
 
+def upload_location_withdrawal_proof(instance, filename):
+    return upload_location('withdrawal_proof', instance, filename)
+
+
 def upload_location_govid(instance, filename):
     return upload_location('govid', instance, filename)
 

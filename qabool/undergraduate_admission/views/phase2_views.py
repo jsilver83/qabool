@@ -15,7 +15,7 @@ from sendfile import sendfile, os
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
-    RelativeContactForm, WithdrawalForm
+    RelativeContactForm, WithdrawalForm, WithdrawalProofForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS
@@ -88,6 +88,10 @@ def media_view(request, filename):
         elif filename.startswith('passport/'):
             if user.passport_file == filename:
                 return sendfile(request, user.passport_file.path)
+
+        elif filename.startswith('withdrawal_proof/'):
+            if user.withdrawal_proof_letter == filename:
+                return sendfile(request, user.withdrawal_proof_letter.path)
 
         else:
             raise PermissionDenied
@@ -225,6 +229,27 @@ def upload_documents_for_incomplete(request):
                 messages.success(request, _('Documents were uploaded successfully...'))
                 request.session['upload_documents_completed'] = True
                 return redirect('student_agreement_1')
+            else:
+                messages.error(request, _('Error saving info. Try again later!'))
+
+    return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
+
+
+@login_required()
+def upload_withdrawal_proof(request):
+    # it is ok to come here unconditionally if student has duplicate admission in other universities
+    if request.method == 'GET' and not request.user.status_message == RegistrationStatusMessage.get_status_duplicate():
+        return redirect('student_area')
+
+    form = WithdrawalProofForm(request.POST or None, request.FILES or None, instance=request.user)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            saved = form.save()
+            if saved:
+                messages.success(request, _('Documents were uploaded successfully...'))
+                request.session['upload_documents_completed'] = True
+                return redirect('student_area')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
