@@ -100,6 +100,16 @@
 					<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Missing Documents' %}</a>
 				</div>
 			{% endif %}
+
+			{% if can_upload_withdrawal_proof %}
+				<div class="alert alert-danger" role="alert">
+						{% trans 'Please upload proof that you have withdrawn from the other university(s)' %}:
+					<br><br>
+				<a href="{% url 'upload_withdrawal_proof' %}" class="btn btn-warning btn-lg btn-block">
+					<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Upload Withdrawal Proof' %}</a>
+				</div>
+			{% endif %}
+
 		</div>
 	</div>
 

@@ -7,7 +7,7 @@ from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
-from undergraduate_admission.models import AdmissionSemester
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
@@ -68,11 +68,15 @@ def student_area(request):
 
     can_re_upload_docs = phase == 'ADMITTED' and request.user.verification_documents_incomplete
 
+    can_upload_withdrawal_proof = request.user.status_message == RegistrationStatusMessage.get_status_duplicate()
+
     return render(request,
                   'undergraduate_admission/student_area.html', context={'user': request.user,
                                                                         'show_result': show_result,
                                                                         'can_confirm': can_confirm,
                                                                         'can_re_upload_docs': can_re_upload_docs,
+                                                                        'can_upload_withdrawal_proof':
+                                                                            can_upload_withdrawal_proof,
                                                                         })
 
 

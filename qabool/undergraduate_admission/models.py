@@ -1,6 +1,5 @@
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
@@ -11,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
     upload_location_mother_govid, upload_location_passport, upload_location_certificate, \
-    upload_location_picture, upload_location_courses
+    upload_location_picture, upload_location_courses, upload_location_withdrawal_proof
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
 
 
@@ -249,13 +248,23 @@ class User(AbstractUser):
     phase2_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Start Date'))
     phase2_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 End Date'))
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
-    verification_documents_incomplete = models.NullBooleanField(blank=True, verbose_name=_('Uploaded docs are incomplete?'),)
-    verification_status = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Status'))
+    verification_documents_incomplete = models.NullBooleanField(blank=True,
+                                                                verbose_name=_('Uploaded docs are incomplete?'),)
+    verification_status = models.CharField(null=True, blank=True, max_length=500,
+                                           verbose_name=_('Issues With Uploaded Docs'))
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
+    withdrawal_proof_letter = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Withdrawal Proof Letter'),
+        upload_to=upload_location_withdrawal_proof,
+        validators=[validate_file_extension],
+    )
 
     def get_verification_status(self):
         return self.verification_status
-    get_verification_status.short_description = _('Verification Status')
+    get_verification_status.short_description = _('Issues With Uploaded Docs')
 
     def get_student_full_name(self):
         if self.first_name_ar and self.second_name_ar and self.third_name_ar and self.family_name_ar:
@@ -444,6 +453,14 @@ class RegistrationStatusMessage(models.Model):
     def get_status_admitted():
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED').status_messages.first()
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_duplicate():
+        try:
+            return RegistrationStatus.objects.get(status_code='SUSPENDED')\
+                .status_messages.get(status_message_code='DUPLICATE')
         except ObjectDoesNotExist:
             return
 
