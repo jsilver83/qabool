@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-20 15:37+0300\n"
+"POT-Creation-Date: 2016-06-22 15:50+0300\n"
 "PO-Revision-Date: 2016-06-20 15:41+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1409,11 +1409,11 @@ msgid "Error updating contact info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
 #: undergraduate_admission/views/phase1_views.py:26
-#: undergraduate_admission/views/phase2_views.py:106
-#: undergraduate_admission/views/phase2_views.py:265
-#: undergraduate_admission/views/phase2_views.py:286
-#: undergraduate_admission/views/phase2_views.py:307
-#: undergraduate_admission/views/phase2_views.py:339
+#: undergraduate_admission/views/phase2_views.py:110
+#: undergraduate_admission/views/phase2_views.py:269
+#: undergraduate_admission/views/phase2_views.py:290
+#: undergraduate_admission/views/phase2_views.py:311
+#: undergraduate_admission/views/phase2_views.py:343
 msgid "Error."
 msgstr "خطأ"
 
@@ -1429,35 +1429,35 @@ msgstr "لقد تم حفظ البيانات بنجاح"
 msgid "Error updating info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
-#: undergraduate_admission/views/phase2_views.py:131
+#: undergraduate_admission/views/phase2_views.py:135
 msgid "Personal Info was saved successfully..."
 msgstr "لقد تم حفظ البيانات الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:135
-#: undergraduate_admission/views/phase2_views.py:159
-#: undergraduate_admission/views/phase2_views.py:183
-#: undergraduate_admission/views/phase2_views.py:207
-#: undergraduate_admission/views/phase2_views.py:229
-#: undergraduate_admission/views/phase2_views.py:250
-#: undergraduate_admission/views/phase2_views.py:377
+#: undergraduate_admission/views/phase2_views.py:139
+#: undergraduate_admission/views/phase2_views.py:163
+#: undergraduate_admission/views/phase2_views.py:187
+#: undergraduate_admission/views/phase2_views.py:211
+#: undergraduate_admission/views/phase2_views.py:233
+#: undergraduate_admission/views/phase2_views.py:254
+#: undergraduate_admission/views/phase2_views.py:381
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
-#: undergraduate_admission/views/phase2_views.py:155
+#: undergraduate_admission/views/phase2_views.py:159
 msgid "Guardian Contact Info was saved successfully..."
 msgstr "لقد تم حفظ بيانات ولي اﻷمر بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:179
+#: undergraduate_admission/views/phase2_views.py:183
 msgid "Relative Info was saved successfully..."
 msgstr "لقد تم حفظ معلومات القريب بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:203
-#: undergraduate_admission/views/phase2_views.py:225
-#: undergraduate_admission/views/phase2_views.py:246
+#: undergraduate_admission/views/phase2_views.py:207
+#: undergraduate_admission/views/phase2_views.py:229
+#: undergraduate_admission/views/phase2_views.py:250
 msgid "Documents were uploaded successfully..."
 msgstr "لقد تم حفظ المستندات المرفوعة بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:371
+#: undergraduate_admission/views/phase2_views.py:375
 msgid "You have withdrawn from the university successfully..."
 msgstr "لقد تم انسحابك من الجامعة بنجاح..."
 
