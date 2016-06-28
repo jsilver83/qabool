@@ -332,7 +332,8 @@ def student_agreement_4(request):
             kfupm_id = KFUPMIDsPool.get_next_available_id()
 
             user = request.user
-            user.kfupm_id = kfupm_id
+            if not user.kfupm_id:
+                user.kfupm_id = kfupm_id
             user.status_message = reg_msg
             user.save()
 
