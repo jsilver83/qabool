@@ -7,7 +7,6 @@ from import_export.admin import ImportExportMixin
 from reversion.admin import VersionAdmin
 
 from .models import *
-# Register your models here.
 
 
 class UserResource(resources.ModelResource):
@@ -19,7 +18,7 @@ class UserResource(resources.ModelResource):
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
                   'high_school_province', 'admission_letter_note', 'admission_note', 'government_id_place',
-                  'government_id_expiry', 'birth_place', )
+                  'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date', )
         skip_unchanged = True
         report_skipped = True
 
@@ -85,7 +84,7 @@ class VerifyStudentAdmin(VersionAdmin):
               'is_active', 'date_joined', 'high_school_gpa',
               'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
               'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
-              'high_school_province', 'birthday', 'birthday_ah',
+              'high_school_province', 'high_school_city', 'birthday', 'birthday_ah',
               'nationality','saudi_mother', 'birth_place', 'government_id_expiry',
               'personal_picture', 'government_id_file', 'high_school_certificate',
               'courses_certificate', 'mother_gov_id_file', 'birth_certificate', 'passport_file',
