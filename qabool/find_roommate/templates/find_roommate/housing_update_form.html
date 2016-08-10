@@ -32,28 +32,28 @@
 	<br><br>
 
 	{{ block.super }}
+
+{#	<form method="post" class="form-horizontal">#}
+{#		{% csrf_token %}#}
+{#		{{ form }}#}
+{#		<br>&nbsp;<br>#}
+{#		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>#}
+{#	</form>#}
 	<form method="post" class="form-horizontal">
+		{% form form using %}
 		{% csrf_token %}
-		{{ form }}
+		{% formconfig row using "floppyforms/rows/bootstrap3-horizontal.html" %}
+		{% formrow form.searchable %}
+		<div class="form_update">
+			{% formrow form.twitter form.facebook form.sleeping form.light form.room_temperature %}
+			{% formrow form.visits form.interests_and_hobbies %}
+		</div>
+		{% formconfig row using "floppyforms/rows/bootstrap3-horizontal-checkboxes.html" %}
+		{% formrow form.agree1 form.agree2 form.agree3 %}
 		<br>&nbsp;<br>
 		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
+		{% endform %}
 	</form>
-
-	{#	{% form form using %}#}
-	{#		<form method="post" action="{%  url 'housing_info_update' %}" class="form-horizontal">#}
-	{#			{% csrf_token %}#}
-	{#			{% formconfig row using "floppyforms/rows/bootstrap3-horizontal.html" %}#}
-	{#			{% formrow form.searchable %}#}
-	{#			<div class="form_update">#}
-	{#				{% formrow form.twitter form.facebook form.sleeping form.lighn form.room_temperature %}#}
-	{#				{% formrow form.visits form.interests_and_hobbies %}#}
-	{#				{% formconfig row using "floppyforms/rows/bootstrap3-horizontal-checkboxes.html" %}#}
-	{#				{% formrow form.agree1 form.agree2 form.agree3 %}#}
-	{#			</div>#}
-	{#			<br>&nbsp;<br>#}
-	{#			<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>#}
-	{#		</form>#}
-	{#	{% endform %}#}
 
 	<br><br><br>
 	<hr>
