@@ -261,6 +261,7 @@ class User(AbstractUser):
         upload_to=upload_location_withdrawal_proof,
         validators=[validate_file_extension],
     )
+    eligible_for_housing = models.NullBooleanField(verbose_name=_('Eligible For Housing'))
 
     def get_verification_status(self):
         return self.verification_status
@@ -309,6 +310,16 @@ class User(AbstractUser):
             return self.high_school_gpa * (semester.high_school_gpa_weight/100)\
                    + self.qudrat_score * (semester.qudrat_score_weight/100)\
                    + self.tahsili_score * (semester.tahsili_score_weight/100)
+
+    @staticmethod
+    def get_distinct_high_school_city(add_dashes=True):
+        choices = User.objects.order_by().distinct()
+
+        ch = [(o.high_school_city, o.high_school_city) for o in choices]
+        if add_dashes:
+            ch.insert(0, ('', '---------'))
+
+        return ch
 
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
