@@ -1,0 +1,76 @@
+{% extends 'find_roommate/base_housing.html' %}
+{% load i18n %}
+{% load floppyforms %}
+{% load staticfiles %}
+
+{% block subcontent %}
+	{% blocktrans %}
+	{% endblocktrans %}
+	<br><br>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<form id="searchfovrm" method="get" accept-charset="utf-8">
+		        {{ form }}
+				<br>
+				<button class="searchbutton" type="submit">
+				<i class="fa fa-search"></i> {% trans 'Search' %}
+				</button>
+		    </form>
+		</div>
+	</div>
+
+	<br><br>
+
+{% for student in page_obj %}
+	<table cellpadding="10" cellspacing="10">
+		<tr>
+			<td colspan="3"><h4>{{ student.user }}&nbsp;&nbsp;<small>{{ student.user.high_school_city }}-
+			{{ student.user.high_school_name }}</small></h4></td>
+		</tr>
+		<tr>
+			<td width="33%" rowspan="4"><img height="250px"
+			                     src="{% static 'images/stu.jpeg' %}"></td>
+			<td width="33%"><a><i class="fa fa-phone" aria-hidden="true"></i> {{ student.user.mobile }}</a></td>
+			<td width="33%">&nbsp;&nbsp;<b>{% trans 'Sleeping' %}:</b> {{ student.sleeping }}</td>
+
+		</tr>
+		<tr>
+			<td><a href="mailto:{{ student.user.email }}"><i class="fa fa-send" aria-hidden="true"></i>
+				{{ student.user.email }}</a></td>
+			<td>&nbsp;&nbsp;<b>{% trans 'Light' %}:</b> {{ student.light }}</td>
+		</tr>
+		<tr>
+			<td><a href="{{ student.facebook }}"><i class="fa fa-facebook" aria-hidden="true"></i>
+				{% trans 'Facebook' %}</a></td>
+			<td>&nbsp;&nbsp;<b>{% trans 'Room Temperature' %}:</b> {{ student.room_temperature }}</td>
+		</tr>
+		<tr>
+			<td><a href="{{ student.twitter }}"><i class="fa fa-twitter" aria-hidden="true"></i>
+				{% trans 'Twitter' %}</a></td>
+			<td>&nbsp;&nbsp;<b>{% trans 'Visits' %}:</b> {{ student.visits }}</td>
+		</tr>
+	</table>
+	<hr>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">{% trans 'Previous' %}</a>
+        {% endif %}
+
+        <span class="current">
+            {% trans 'Page' %} {{ page_obj.number }} {% trans 'of' %} {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{% trans 'Next' %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock subcontent %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+{% endblock scripts %}

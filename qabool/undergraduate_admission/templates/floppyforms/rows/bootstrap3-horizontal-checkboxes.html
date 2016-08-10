@@ -1,0 +1,20 @@
+{% load floppyforms %}{% block row %}{% for field in fields %}
+	<div class="checkbox form-group{% if field.errors %} has-error{% endif %}">
+		{% with classes=field.css_classes label=label|default:field.label help_text=help_text|default:field.help_text %}
+			{% block errors %}{% include "floppyforms/errors.html" with errors=field.errors %}{% endblock %}
+			{% block label %}{% if field|id %}
+				<label class="col-sm-12" for="{{ field|id }}">{% endif %}
+			{% if field|id %}
+				{% block field %}
+					{% block widget %}{% formfield field %}{% endblock %}
+					{% block hidden_fields %}{% for field in hidden_fields %}{{ field.as_hidden }}{% endfor %}{% endblock %}
+				{% endblock %}
+				&nbsp;&nbsp;{{ label }}{% if label|last not in ".:!?" %}{% endif %}
+				</label>{% endif %}
+			{% endblock %}
+			{% block help_text %}{% if field.help_text %}
+				<p class="help-block">{{ field.help_text }}</p>
+			{% endif %}{% endblock %}
+		{% endwith %}
+	</div>
+{% endfor %}{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'find_roommate/base_housing.html' %}
+{% load i18n %}
+{% load floppyforms %}
+{% load staticfiles %}
+
+{% block subcontent %}
+	{% blocktrans %}
+		<p>Dear new student.</p>
+		<p>Peace, mercy and blessings of God..</p>
+
+		<p>We welcome you to this special site with the help of freshmen students eligible for university accommodation
+			to search for a colleague adequate housing.</p>
+
+		<p>This site allows you to choose a fellow adequate housing, through the information that will appear to you
+			and other colleagues are also looking for a fellow for housing.</p>
+
+		<p>Site work method:</p>
+
+		<ul>
+			<li>The site gives you access to personal information, and additional all new students who are looking
+				for a colleague for housing.
+			</li>
+			<li>For more information you can communicate with those who are interested in housing with the private
+				means of communication.
+			</li>
+			<li>When agreeing with a colleague adequate housing, log back on this site, and choose not to
+				question (Are you looking for a fellow housing? *) So that your information is automatically
+				removed from the list of fellow seekers housing.
+			</li>
+		</ul>
+	{% endblocktrans %}
+	<br><br>
+
+	{{ block.super }}
+	<form method="post" class="form-horizontal">
+		{% csrf_token %}
+		{{ form }}
+		<br>&nbsp;<br>
+		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
+	</form>
+
+	{#	{% form form using %}#}
+	{#		<form method="post" action="{%  url 'housing_info_update' %}" class="form-horizontal">#}
+	{#			{% csrf_token %}#}
+	{#			{% formconfig row using "floppyforms/rows/bootstrap3-horizontal.html" %}#}
+	{#			{% formrow form.searchable %}#}
+	{#			<div class="form_update">#}
+	{#				{% formrow form.twitter form.facebook form.sleeping form.lighn form.room_temperature %}#}
+	{#				{% formrow form.visits form.interests_and_hobbies %}#}
+	{#				{% formconfig row using "floppyforms/rows/bootstrap3-horizontal-checkboxes.html" %}#}
+	{#				{% formrow form.agree1 form.agree2 form.agree3 %}#}
+	{#			</div>#}
+	{#			<br>&nbsp;<br>#}
+	{#			<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>#}
+	{#		</form>#}
+	{#	{% endform %}#}
+
+	<br><br><br>
+	<hr>
+{% endblock subcontent %}
