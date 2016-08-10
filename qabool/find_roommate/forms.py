@@ -57,20 +57,20 @@ class HousingInfoUpdateForm(forms.ModelForm):
 class HousingSearchForm(forms.Form):
     high_school_city = forms.CharField(
         # queryset = User.objects.order_by().values_list('high_school_city').distinct(),
-        widget = forms.Select(choices= User.get_distinct_high_school_city()),
-        required = False,
+        widget=forms.Select(choices= User.get_distinct_high_school_city()),
+        required=False,
         label=_('High School City'),
     )
     high_school_name = forms.CharField(required=False, label=_('High School Name'))
     light = forms.CharField(required=False,
                             label=_('Light'),
-                            widget=forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')), )
+                            widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')), )
     room_temperature = forms.CharField(required=False,
                                        label=_('Room Temperature'),
                                        widget=forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_AC')), )
     visits = forms.CharField(required=False,
                              label=_('Visits'),
-                             widget=forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_VISITS')), )
+                             widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_VISITS')), )
     sleeping = forms.CharField(required=False,
                                label=_('Sleeping'),
-                               widget=forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')), )
+                               widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')), )
