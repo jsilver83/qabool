@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -11,14 +11,24 @@ from find_roommate.models import HousingUser
 from undergraduate_admission.models import User
 
 
+def is_eligible_for_housing(user):
+    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing
+
+
+def is_eligible_for_roommate_search(user):
+    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing \
+           and user.housing_user.searchable
+
+
 @login_required()
-# @user_passes_test(is_eligible_for_housing)
+@user_passes_test(is_eligible_for_housing)
 def housing_info_update(request):
     housing_user, d = HousingUser.objects.get_or_create(user=request.user,defaults={'searchable': False,})
     form = HousingInfoUpdateForm(request.POST or None,
                                  instance=housing_user)
 
     if request.method == 'POST':
+
         if form.is_valid():
             saved = form.save()
             if saved:
@@ -33,7 +43,7 @@ def housing_info_update(request):
 
 
 @login_required()
-# @user_passes_test(is_eligible_for_housing)
+@user_passes_test(is_eligible_for_roommate_search)
 def housing_search(request):
     if request.GET:
         form = HousingSearchForm(request.GET)

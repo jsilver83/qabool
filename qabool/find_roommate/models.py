@@ -10,6 +10,7 @@ class HousingUser(models.Model):
         User,
         on_delete=models.CASCADE,
         primary_key=True,
+        related_name='housing_user',
     )
     facebook = models.URLField(null=True, blank=True, max_length=150, verbose_name=_('Facebook'))
     twitter = models.URLField(null=True, blank=True, max_length=150, verbose_name=_('Twitter'))

@@ -30,7 +30,7 @@
 		</tr>
 		<tr>
 			<td width="33%" rowspan="4"><img height="250px"
-			                     src="{% static 'images/stu.jpeg' %}"></td>
+			                     src="{% url 'download_user_file' 'personal_picture' student.user.id %}"></td>
 			<td width="33%"><a><i class="fa fa-phone" aria-hidden="true"></i> {{ student.user.mobile }}</a></td>
 			<td width="33%">&nbsp;&nbsp;<b>{% trans 'Sleeping' %}:</b> {{ student.sleeping }}</td>
 

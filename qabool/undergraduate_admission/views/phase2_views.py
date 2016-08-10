@@ -12,6 +12,7 @@ from django.http import Http404
 
 from sendfile import sendfile, os
 
+from find_roommate.views import is_eligible_for_roommate_search
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
@@ -40,7 +41,8 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
     raise_exception = True  # PermissionDenied
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.id == int(self.kwargs['pk'])
+        return self.request.user.is_staff or self.request.user.id == int(self.kwargs['pk']) \
+               or is_eligible_for_roommate_search(self.request.user)
 
     def get(self, request, filetype, pk):
         user = get_object_or_404(User, pk=pk)
