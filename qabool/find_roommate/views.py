@@ -9,16 +9,7 @@ from django.views.generic import ListView
 
 from find_roommate.forms import HousingInfoUpdateForm, HousingSearchForm
 from find_roommate.models import HousingUser
-from undergraduate_admission.models import User
-
-
-def is_eligible_for_housing(user):
-    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing
-
-
-def is_eligible_for_roommate_search(user):
-    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing \
-           and user.housing_user.searchable
+from undergraduate_admission.validators import is_eligible_for_housing, is_eligible_for_roommate_search
 
 
 @login_required()
