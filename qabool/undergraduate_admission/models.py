@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import OperationalError
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
@@ -313,13 +314,16 @@ class User(AbstractUser):
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
-        choices = User.objects.order_by().distinct()
+        try:
+            choices = User.objects.order_by().distinct()
 
-        ch = [(o.high_school_city, o.high_school_city) for o in choices]
-        if add_dashes:
-            ch.insert(0, ('', '---------'))
+            ch = [(o.high_school_city, o.high_school_city) for o in choices]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
 
-        return ch
+            return ch
+        except OperationalError:
+            pass  # happens when db doesn't exist yet
 
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
@@ -499,15 +503,18 @@ class Lookup(models.Model):
 
     @staticmethod
     def get_lookup_choices(lookup_type, add_dashes=True):
-        choices = Lookup.objects.filter(
-            show=True,
-            lookup_type=lookup_type)
+        try:
+            choices = Lookup.objects.filter(
+                show=True,
+                lookup_type=lookup_type)
 
-        ch = [(o.lookup_value_ar, str(o)) for o in choices]
-        if add_dashes:
-            ch.insert(0, ('', '---------'))
+            ch = [(o.lookup_value_ar, str(o)) for o in choices]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
 
-        return ch
+            return ch
+        except OperationalError:
+            pass  # happens when db doesn't exist yet
 
 
 class City(models.Model):
