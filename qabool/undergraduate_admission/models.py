@@ -322,8 +322,8 @@ class User(AbstractUser):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:
-            pass  # happens when db doesn't exist yet
+        except OperationalError: # happens when db doesn't exist yet
+            return [('--', '--')]
 
     def __init__(self, *args, **kwargs):
         super(User,self).__init__(*args, **kwargs)
@@ -513,8 +513,8 @@ class Lookup(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:
-            pass  # happens when db doesn't exist yet
+        except OperationalError: # happens when db doesn't exist yet
+            return [('--', '--')]
 
 
 class City(models.Model):
