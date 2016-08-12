@@ -26,3 +26,12 @@ def validate_image_extension(value):
             params={'ext': ext},
             code='ext_not_allowed',
         )
+
+
+def is_eligible_for_housing(user):
+    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing
+
+
+def is_eligible_for_roommate_search(user):
+    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing \
+           and user.housing_user.searchable
