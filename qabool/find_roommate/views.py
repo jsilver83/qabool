@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 
@@ -48,20 +49,44 @@ def housing_search(request):
     if request.GET:
         form = HousingSearchForm(request.GET)
         if form.is_valid():
-            students = HousingUser.objects.filter(
-                Q(user__high_school_name__icontains=request.GET['high_school_name'])
-                & Q(user__high_school_city__icontains=request.GET['high_school_city'])
-                )
+            students = HousingUser.objects\
+                .filter(user__status_message__status_message_code='ADMITTED')
+
+            try:
+                high_school_city = request.GET['high_school_city']
+                if high_school_city:
+                    students = students.filter(
+                        user__high_school_city__contains=high_school_city)
+
+                high_school_name = request.GET['high_school_name']
+                if high_school_name:
+                    students = students.filter(
+                        user__high_school_name__contains=high_school_name)
+
+                light = request.GET['light']
+                if light:
+                    students = students.filter(light=light)
+
+                room_temperature = request.GET['room_temperature']
+                if room_temperature:
+                    students = students.filter(room_temperature=room_temperature)
+
+                visits = request.GET['visits']
+                if visits:
+                    students = students.filter(visits=visits)
+
+                sleeping = request.GET['sleeping']
+                if sleeping:
+                    students = students.filter(sleeping=sleeping)
+
+            except MultiValueDictKeyError:
+                pass
+
         else:
             students = HousingUser.objects.all()
     else:
         form = HousingSearchForm()
         students = HousingUser.objects.all()
-
-    # if 'search' in request.GET:
-    #     students = HousingUser.objects.all()
-    # else:
-    #     students = HousingUser.objects.all()
 
     paginator = Paginator(students, 10)
 
