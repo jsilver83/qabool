@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 18:54+0300\n"
-"PO-Revision-Date: 2016-08-09 18:54+0300\n"
+"POT-Creation-Date: 2016-08-11 15:10+0300\n"
+"PO-Revision-Date: 2016-08-11 15:12+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -47,49 +47,50 @@ msgstr "ﻻ - (ﻻ أبحث عن زميل للسكن)"
 msgid "You have to check this box"
 msgstr "يجب عليك التأشير في المربع"
 
-#: find_roommate/forms.py:63 undergraduate_admission/models.py:130
+#: find_roommate/forms.py:62 undergraduate_admission/models.py:130
 msgid "High School City"
 msgstr "المدينة الذي تم الحصول على الشهادة الثانوية"
 
-#: find_roommate/forms.py:65 undergraduate_admission/models.py:127
+#: find_roommate/forms.py:64 undergraduate_admission/models.py:127
 msgid "High School Name"
 msgstr "المدرسة الثانوية"
 
-#: find_roommate/models.py:14
-#: find_roommate/templates/find_roommate/housinguser_list.html:45
-msgid "Facebook"
-msgstr "فيسبوك"
-
-#: find_roommate/models.py:15
-#: find_roommate/templates/find_roommate/housinguser_list.html:50
-msgid "Twitter"
-msgstr "تويتر"
-
-#: find_roommate/models.py:16
-#: find_roommate/templates/find_roommate/housinguser_list.html:35
-msgid "Sleeping"
-msgstr "موعد النوم"
-
-#: find_roommate/models.py:17
-#: find_roommate/templates/find_roommate/housinguser_list.html:41
+#: find_roommate/forms.py:66 find_roommate/models.py:18
+#: find_roommate/templates/find_roommate/housinguser_list.html:56
 msgid "Light"
 msgstr "الإضاءة عند النوم"
 
-#: find_roommate/models.py:18
-#: find_roommate/templates/find_roommate/housinguser_list.html:46
+#: find_roommate/forms.py:69 find_roommate/models.py:20
+#: find_roommate/templates/find_roommate/housinguser_list.html:61
 msgid "Room Temperature"
 msgstr "تفضيل جو الغرفة (التكييف)"
 
-#: find_roommate/models.py:19
-#: find_roommate/templates/find_roommate/housinguser_list.html:51
+#: find_roommate/forms.py:72 find_roommate/models.py:21
+#: find_roommate/templates/find_roommate/housinguser_list.html:66
 msgid "Visits"
 msgstr "زيارات الأصدقاء والمعارف"
 
-#: find_roommate/models.py:20
+#: find_roommate/forms.py:75 find_roommate/models.py:17
+#: find_roommate/templates/find_roommate/housinguser_list.html:50
+msgid "Sleeping"
+msgstr "موعد النوم"
+
+#: find_roommate/models.py:15
+#: find_roommate/templates/find_roommate/housinguser_list.html:60
+msgid "Facebook"
+msgstr "فيسبوك"
+
+#: find_roommate/models.py:16
+#: find_roommate/templates/find_roommate/housinguser_list.html:65
+msgid "Twitter"
+msgstr "تويتر"
+
+#: find_roommate/models.py:23
+#: find_roommate/templates/find_roommate/housinguser_list.html:71
 msgid "Interests And Hobbies"
 msgstr "الاهتمامات والهوايات"
 
-#: find_roommate/models.py:21
+#: find_roommate/models.py:24
 msgid "Searchable"
 msgstr "هل تبحث عن زميل سكن؟"
 
@@ -133,7 +134,7 @@ msgstr ""
 "\n"
 "\t\t<p>ترحب بك الإدارة العامة لاسكان الطلاب في هذا الموقع الخاص بمساعدة "
 "الطلاب المستجدين المستحقين للسكن الجامعي للبحث عن زميل السكن المناسب\n"
-"\t\tt</p>\n"
+"\t\t</p>\n"
 "\n"
 "\t\t<p>يتيح لك هذا الموقع اختيار زميل السكن المناسب، من خلال المعلومات التي "
 "ستظهر لك ولزملاء آخرين يبحثون هم كذلك عن زميل للسكن.</p>\n"
@@ -152,12 +153,12 @@ msgstr ""
 "زميل سكن؟ * ) بحيث يتم تلقائيًا إزالة معلوماتك من قائمة الباحثين عن زميل "
 "السكن.</li>\n"
 "\t\t\t<li> إذا لم تجد زميلاً مناسباً عاود الدخول مرة أخرى، حيث أنه سيزداد عدد "
-"الطلاب المسجلين في الموقع مما يتح لك مزيد من الاختيارات.  (تكرر هذه العبارة "
-"في الصفحة الداخلية كذلك)</li>\n"
+"الطلاب المسجلين في الموقع مما يتح لك مزيد من الاختيارات. </li>\n"
 "\t\t</ul>\n"
 "\t"
 
-#: find_roommate/templates/find_roommate/housing_update_form.html:48
+#: find_roommate/templates/find_roommate/housing_update_form.html:54
+#: find_roommate/templates/find_roommate/housinguser_list.html:17
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:30
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
@@ -172,7 +173,7 @@ msgstr ""
 msgid "btn-align"
 msgstr "pull-left"
 
-#: find_roommate/templates/find_roommate/housing_update_form.html:48
+#: find_roommate/templates/find_roommate/housing_update_form.html:54
 #: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
 msgid "Save"
 msgstr "حفظ"
@@ -185,33 +186,53 @@ msgstr ""
 "\n"
 "\t"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:17
+#: find_roommate/templates/find_roommate/housinguser_list.html:19
 msgid "Search"
 msgstr "بحث"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:60
+#: find_roommate/templates/find_roommate/housinguser_list.html:30
+msgid ""
+"Check this page regularly if you did not find a suitable roomate from the "
+"list below"
+msgstr ""
+" إذا لم تجد زميلاً مناسباً عاود الدخول مرة أخرى، حيث أنه سيزداد عدد الطلاب "
+"المسجلين في الموقع مما يتح لك مزيد من الاختيارات"
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:33
+msgid "No of studnet(s):"
+msgstr "عدد الطلاب:"
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:80
 msgid "Previous"
 msgstr "السابق"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:64
+#: find_roommate/templates/find_roommate/housinguser_list.html:84
 msgid "Page"
 msgstr "صفحة"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:64
+#: find_roommate/templates/find_roommate/housinguser_list.html:84
 msgid "of"
 msgstr "من"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:68
+#: find_roommate/templates/find_roommate/housinguser_list.html:88
 msgid "Next"
 msgstr "التالي"
 
-#: find_roommate/views.py:30 undergraduate_admission/views/phase2_views.py:139
-#: undergraduate_admission/views/phase2_views.py:163
-#: undergraduate_admission/views/phase2_views.py:187
-#: undergraduate_admission/views/phase2_views.py:211
-#: undergraduate_admission/views/phase2_views.py:233
-#: undergraduate_admission/views/phase2_views.py:254
-#: undergraduate_admission/views/phase2_views.py:382
+#: find_roommate/templates/find_roommate/housinguser_list.html:95
+msgid ""
+"There are no available students matching your search criteria. Check this "
+"page later..."
+msgstr ""
+"ﻻ يوجد نتائج لبحثك. ننصحك بتغيير خيارات البحث أو عاود الدخول مرة أخرى، حيث "
+"أنه سيزداد عدد الطلاب المسجلين في الموقع مما يتح لك مزيد من الاختيارات. "
+
+#: find_roommate/views.py:41 undergraduate_admission/views/phase2_views.py:141
+#: undergraduate_admission/views/phase2_views.py:165
+#: undergraduate_admission/views/phase2_views.py:189
+#: undergraduate_admission/views/phase2_views.py:213
+#: undergraduate_admission/views/phase2_views.py:235
+#: undergraduate_admission/views/phase2_views.py:256
+#: undergraduate_admission/views/phase2_views.py:384
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
@@ -1578,11 +1599,11 @@ msgid "Error updating contact info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
 #: undergraduate_admission/views/phase1_views.py:26
-#: undergraduate_admission/views/phase2_views.py:110
-#: undergraduate_admission/views/phase2_views.py:269
-#: undergraduate_admission/views/phase2_views.py:290
-#: undergraduate_admission/views/phase2_views.py:311
-#: undergraduate_admission/views/phase2_views.py:344
+#: undergraduate_admission/views/phase2_views.py:112
+#: undergraduate_admission/views/phase2_views.py:271
+#: undergraduate_admission/views/phase2_views.py:292
+#: undergraduate_admission/views/phase2_views.py:313
+#: undergraduate_admission/views/phase2_views.py:346
 msgid "Error."
 msgstr "خطأ"
 
@@ -1598,25 +1619,25 @@ msgstr "لقد تم حفظ البيانات بنجاح"
 msgid "Error updating info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
-#: undergraduate_admission/views/phase2_views.py:135
+#: undergraduate_admission/views/phase2_views.py:137
 msgid "Personal Info was saved successfully..."
 msgstr "لقد تم حفظ البيانات الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:159
+#: undergraduate_admission/views/phase2_views.py:161
 msgid "Guardian Contact Info was saved successfully..."
 msgstr "لقد تم حفظ بيانات ولي اﻷمر بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:183
+#: undergraduate_admission/views/phase2_views.py:185
 msgid "Relative Info was saved successfully..."
 msgstr "لقد تم حفظ معلومات القريب بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:207
-#: undergraduate_admission/views/phase2_views.py:229
-#: undergraduate_admission/views/phase2_views.py:250
+#: undergraduate_admission/views/phase2_views.py:209
+#: undergraduate_admission/views/phase2_views.py:231
+#: undergraduate_admission/views/phase2_views.py:252
 msgid "Documents were uploaded successfully..."
 msgstr "لقد تم حفظ المستندات المرفوعة بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:376
+#: undergraduate_admission/views/phase2_views.py:378
 msgid "You have withdrawn from the university successfully..."
 msgstr "لقد تم انسحابك من الجامعة بنجاح..."
 
