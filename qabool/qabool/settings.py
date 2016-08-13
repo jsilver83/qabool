@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'find_roommate',
     'undergraduate_admission',
+    'find_roommate',
     'reversion',
     'captcha',
     'floppyforms',
