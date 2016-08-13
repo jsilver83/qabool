@@ -13,7 +13,7 @@ from undergraduate_admission.validators import is_eligible_for_housing, is_eligi
 
 
 @login_required()
-@user_passes_test(is_eligible_for_housing)
+# @user_passes_test(is_eligible_for_housing)
 def housing_info_update(request):
     housing_user, d = HousingUser.objects.get_or_create(user=request.user,defaults={'searchable': False,})
     form = HousingInfoUpdateForm(request.POST or None,
@@ -35,7 +35,7 @@ def housing_info_update(request):
 
 
 @login_required()
-@user_passes_test(is_eligible_for_roommate_search)
+# @user_passes_test(is_eligible_for_roommate_search)
 def housing_search(request):
     if request.GET:
         form = HousingSearchForm(request.GET)
