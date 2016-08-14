@@ -30,6 +30,9 @@ urlpatterns = [
         name='password_change_done',
         kwargs={'template_name': 'undergraduate_admission/change_password.html'},
     ),
+
+    url(r'^checkifadmitted', general_views.check_if_student_is_admitted, name='check_if_student_is_admitted'),
+    url(r'^markasattended', general_views.mark_student_as_attended, name='mark_student_as_attended'),
     url(r'^withdrawalletter/$', phase2_views.withdrawal_letter, name='withdrawal_letter'),
     url(r'^withdraw/$', phase2_views.withdraw, name='withdraw'),
     url(r'^medicalletter/$', phase2_views.medical_letter, name='medical_letter'),
