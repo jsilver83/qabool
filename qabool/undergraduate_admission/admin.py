@@ -18,7 +18,8 @@ class UserResource(resources.ModelResource):
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
                   'high_school_province', 'admission_letter_note', 'admission_note', 'government_id_place',
-                  'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date', )
+                  'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
+                  'eligible_for_housing', )
         skip_unchanged = True
         report_skipped = True
 
