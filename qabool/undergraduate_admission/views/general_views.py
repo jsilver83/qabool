@@ -1,13 +1,17 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 
+from qabool.local_settings import WS_SECURITY_TOKEN
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
-from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, User
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
@@ -98,3 +102,50 @@ def edit_contact_info(request):
 
 def csrf_failure(request, reason=""):
     return render(request, 'undergraduate_admission/csrf_failure.html')
+
+
+def check_student_status(kfupm_id, security_token):
+    try:
+        if security_token == WS_SECURITY_TOKEN:
+            student_status = User.objects.get(kfupm_id=kfupm_id).get_student_phase()
+
+            if student_status == 'ADMITTED':
+                return 'ADMITTED'
+            else:
+                return 'NOT'
+        else:
+            return 'WRONG TOKEN'
+
+    except ObjectDoesNotExist:
+        return 'STUDENT DOESNT EXIST'
+    except:
+        return 'GENERAL ERROR'
+
+
+def check_if_student_is_admitted(request):
+    if request.method == 'POST':
+        security_token = request.POST['security_token']
+        kfupm_id = request.POST['kfupm_id']
+
+        return HttpResponse(check_student_status(kfupm_id, security_token))
+    else:
+        return HttpResponse('VERB NOT ALLOWED')
+
+
+def mark_student_as_attended(request):
+    if request.method == 'POST':
+        security_token = request.POST['security_token']
+        kfupm_id = request.POST['kfupm_id']
+
+        result = check_student_status(kfupm_id, security_token)
+
+        if result == 'ADMITTED':
+            user = User.objects.get(kfupm_id=kfupm_id)
+            if user:
+                user.tarifi_week_attendance_date = timezone.now()
+                user.save()
+                return HttpResponse('DONE')
+        else:
+            return HttpResponse(result)
+    else:
+        return HttpResponse('VERB NOT ALLOWED')
