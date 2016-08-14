@@ -263,6 +263,9 @@ class User(AbstractUser):
         validators=[validate_file_extension],
     )
     eligible_for_housing = models.NullBooleanField(verbose_name=_('Eligible For Housing'))
+    tarifi_week_attendance_date = models.DateTimeField(verbose_name=_('Tarifi Week Attendance Date'),
+                                                       null=True,
+                                                       blank=True, )
 
     def get_verification_status(self):
         return self.verification_status
