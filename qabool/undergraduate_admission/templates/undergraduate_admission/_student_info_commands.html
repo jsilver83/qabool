@@ -16,6 +16,10 @@
 			<dd>{{ user.id }}</dd>
 			<dt>{% trans 'Government ID' %}</dt>
 			<dd>{{ user.username }}</dd>
+			{% if can_see_kfupm_id %}
+			<dt>{% trans 'KFUPM ID' %}</dt>
+			<dd>{{ user.kfupm_id }}</dd>
+			{% endif %}
 			<dt>{% trans 'Mobile' %}</dt>
 			<dd>{{ user.mobile }}</dd>
 			<dt>{% trans 'Email' %}</dt>
@@ -31,6 +35,9 @@
 	{% endif %}
 	{% if can_print_docs %}
 	<a href="{% url 'print_documents' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
+	{% endif %}
+	{% if can_see_housing %}
+	<a href="{% url 'housing_info_update' %}" class="list-group-item"><i class="fa fa-home" aria-hidden="true"></i> {% trans 'Student Housing' %}</a>
 	{% endif %}
 	{% if can_print_withdrawal_letter %}
 	<a href="{% url 'withdrawal_letter' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Withdrawal Letter' %}</a>
