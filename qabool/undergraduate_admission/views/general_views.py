@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.csrf import csrf_exempt
 
 from qabool.local_settings import API_SECURITY_TOKEN
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
@@ -122,6 +123,7 @@ def check_student_status(kfupm_id, security_token):
         return 'GENERAL ERROR'
 
 
+@csrf_exempt
 def check_if_student_is_admitted(request):
     if request.method == 'POST':
         security_token = request.POST['security_token']
@@ -132,6 +134,7 @@ def check_if_student_is_admitted(request):
         return HttpResponse('VERB NOT ALLOWED')
 
 
+@csrf_exempt
 def mark_student_as_attended(request):
     if request.method == 'POST':
         security_token = request.POST['security_token']
