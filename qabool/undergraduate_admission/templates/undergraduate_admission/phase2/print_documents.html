@@ -70,6 +70,20 @@
 	</a></h6></li>
 </ul>
 <br>
+{% if eligible_for_housing %}
+<br>
+<h4>{% trans 'Housing Print Documents' %}</h4>
+<br>
+<ul>
+	<li><h6>{% trans 'Housing Letter 1' %}<a href="{% url 'housing_letter1' %}" target="_blank">
+		{% trans 'Click Here' %}</a></h6></li>
+	<li><h6>{% trans 'Housing Letter 2' %}<a href="{% url 'housing_letter2' %}" target="_blank">
+		{% trans 'Click Here' %}
+	</a></h6></li>
+</ul>
+<br><br>
+{% endif %}
+
 <h4>{% trans 'Student Guide' %}
 	<a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Qabool/guide.pdf" target="_blank">
 		{% trans 'Click Here' %}</a></h4>

@@ -2,7 +2,6 @@ from django.conf.global_settings import MEDIA_ROOT
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -12,7 +11,6 @@ from django.http import Http404
 
 from sendfile import sendfile, os
 
-from find_roommate.views import is_eligible_for_roommate_search
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
@@ -20,6 +18,7 @@ from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, Documen
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS
+from undergraduate_admission.validators import is_eligible_for_roommate_search, is_eligible_for_housing
 
 
 def is_phase2_eligible(user):
@@ -357,7 +356,9 @@ def student_agreement_4(request):
 @login_required()
 @user_passes_test(is_admitted)
 def print_documents(request):
-    return render(request, 'undergraduate_admission/phase2/print_documents.html')
+    eligible_for_housing = request.user.eligible_for_housing
+    return render(request, 'undergraduate_admission/phase2/print_documents.html',
+                  {'eligible_for_housing': eligible_for_housing, })
 
 
 @login_required()
@@ -419,3 +420,19 @@ def medical_letter(request):
     user = request.user
 
     return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user,})
+
+
+@login_required()
+@user_passes_test(is_eligible_for_housing)
+def housing_letter1(request):
+    user = request.user
+
+    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})
+
+
+@login_required()
+@user_passes_test(is_eligible_for_housing)
+def housing_letter2(request):
+    user = request.user
+
+    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})
