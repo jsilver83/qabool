@@ -1,8 +1,25 @@
 import floppyforms.__future__ as forms
+from django.db import OperationalError
 from django.utils.translation import ugettext_lazy as _
 
 from find_roommate.models import HousingUser
 from undergraduate_admission.models import Lookup, User
+
+
+# obviously violating the DRY principle to solve a weird error with deploying and migrating the db
+def get_lookup_choices(lookup_type, add_dashes=True):
+    try:
+        choices = Lookup.objects.filter(
+            show=True,
+            lookup_type=lookup_type)
+
+        ch = [(o.lookup_value_ar, str(o)) for o in choices]
+        if add_dashes:
+            ch.insert(0, ('', '---------'))
+
+        return ch
+    except OperationalError: # happens when db doesn't exist yet
+        return [('--', '--')]
 
 
 class HousingInfoUpdateForm(forms.ModelForm):
@@ -23,10 +40,10 @@ class HousingInfoUpdateForm(forms.ModelForm):
 
         widgets = {
             'searchable': forms.Select(choices=SEARCHABLE_CHOICES),
-            # 'sleeping': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
-            # 'light': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')),
-            # 'room_temperature': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_AC')),
-            # 'visits': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_VISITS')),
+            'sleeping': forms.Select(choices= get_lookup_choices('HOUSING_PREF_SLEEPIN')),
+            'light': forms.Select(choices= get_lookup_choices('HOUSING_PREF_LIGHT')),
+            'room_temperature': forms.Select(choices= get_lookup_choices('HOUSING_PREF_AC')),
+            'visits': forms.Select(choices= get_lookup_choices('HOUSING_PREF_VISITS')),
         }
 
     def clean_agree1(self):
@@ -57,24 +74,24 @@ class HousingInfoUpdateForm(forms.ModelForm):
 class HousingSearchForm(forms.Form):
     high_school_city = forms.CharField(
         # queryset = User.objects.order_by().values_list('high_school_city').distinct(),
-        # widget=forms.Select(choices= User.get_distinct_high_school_city()),
+        widget=forms.Select(choices= User.get_distinct_high_school_city()),
         required=False,
         label=_('High School City'),
     )
     high_school_name = forms.CharField(required=False, label=_('High School Name'))
     light = forms.CharField(required=False,
                             label=_('Light'),
-                            # widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')),
+                            widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')),
                             )
     room_temperature = forms.CharField(required=False,
                                        label=_('Room Temperature'),
-                                       # widget=forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_AC')),
+                                       widget=forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_AC')),
                                        )
     visits = forms.CharField(required=False,
                              label=_('Visits'),
-                             # widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_VISITS')),
+                             widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_VISITS')),
                              )
     sleeping = forms.CharField(required=False,
                                label=_('Sleeping'),
-                               # widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
+                               widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
                                )
