@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 
-from qabool.local_settings import WS_SECURITY_TOKEN
+from qabool.local_settings import API_SECURITY_TOKEN
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
 from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, User
 
@@ -106,7 +106,7 @@ def csrf_failure(request, reason=""):
 
 def check_student_status(kfupm_id, security_token):
     try:
-        if security_token == WS_SECURITY_TOKEN:
+        if security_token == API_SECURITY_TOKEN:
             student_status = User.objects.get(kfupm_id=kfupm_id).get_student_phase()
 
             if student_status == 'ADMITTED':
