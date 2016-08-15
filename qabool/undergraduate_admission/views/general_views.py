@@ -123,22 +123,22 @@ def check_student_status(kfupm_id, security_token):
         return 'GENERAL ERROR'
 
 
-@csrf_exempt
+# @csrf_exempt
 def check_if_student_is_admitted(request):
-    if request.method == 'POST':
-        security_token = request.POST['security_token']
-        kfupm_id = request.POST['kfupm_id']
+    if request.method == 'GET':
+        security_token = request.GET['security_token']
+        kfupm_id = request.GET['kfupm_id']
 
         return HttpResponse(check_student_status(kfupm_id, security_token))
     else:
         return HttpResponse('VERB NOT ALLOWED')
 
 
-@csrf_exempt
+# @csrf_exempt
 def mark_student_as_attended(request):
-    if request.method == 'POST':
-        security_token = request.POST['security_token']
-        kfupm_id = request.POST['kfupm_id']
+    if request.method == 'GET':
+        security_token = request.GET['security_token']
+        kfupm_id = request.GET['kfupm_id']
 
         result = check_student_status(kfupm_id, security_token)
 
