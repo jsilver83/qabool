@@ -318,9 +318,10 @@ class User(AbstractUser):
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
         try:
-            choices = User.objects.order_by().distinct()
+            choices = User.objects.filter(eligible_for_housing=True, housing_user__searchable=True).\
+                order_by().values('high_school_city').distinct()
 
-            ch = [(o.high_school_city, o.high_school_city) for o in choices]
+            ch = [(o['high_school_city'], o['high_school_city']) for o in choices]
             if add_dashes:
                 ch.insert(0, ('', '---------'))
 
