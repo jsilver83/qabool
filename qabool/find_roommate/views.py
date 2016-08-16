@@ -37,12 +37,13 @@ def housing_info_update(request):
 @login_required()
 @user_passes_test(is_eligible_for_roommate_search)
 def housing_search(request):
+    students = HousingUser.objects\
+            .filter(user__status_message__status_message_code='ADMITTED',
+                    searchable=True, user__eligible_for_housing=True)
+
     if request.GET:
         form = HousingSearchForm(request.GET)
         if form.is_valid():
-            students = HousingUser.objects\
-                .filter(user__status_message__status_message_code='ADMITTED')
-
             try:
                 high_school_city = request.GET['high_school_city']
                 if high_school_city:
@@ -73,12 +74,10 @@ def housing_search(request):
             except MultiValueDictKeyError:
                 pass
 
-        else:
-            students = HousingUser.objects.all()
     else:
         form = HousingSearchForm()
-        students = HousingUser.objects.all()
 
+    students_count = students.count()
     paginator = Paginator(students, 10)
 
     page = request.GET.get('page')
@@ -92,7 +91,24 @@ def housing_search(request):
         objects = paginator.page(paginator.num_pages)
 
     return render(request, 'find_roommate/housinguser_list.html', {'page_obj': objects,
-                                                                   'form': form,})
+                                                                   'form': form,
+                                                                   'students_count': students_count, })
+
+@login_required()
+@user_passes_test(is_eligible_for_housing)
+def housing_letter1(request):
+    user = request.user
+
+    return render(request, 'find_roommate/letter_housing.html', {'user': user,})
+
+
+@login_required()
+@user_passes_test(is_eligible_for_housing)
+def housing_letter2(request):
+    user = request.user
+
+    return render(request, 'find_roommate/letter_housing_2.html', {'user': user,})
+
 
 
 class PostList(ListView):
