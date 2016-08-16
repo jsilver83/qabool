@@ -1,4 +1,3 @@
-from django.conf.global_settings import MEDIA_ROOT
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
@@ -18,7 +17,7 @@ from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, Documen
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS
-from undergraduate_admission.validators import is_eligible_for_roommate_search, is_eligible_for_housing
+from undergraduate_admission.validators import is_eligible_for_roommate_search
 
 
 def is_phase2_eligible(user):
@@ -420,19 +419,3 @@ def medical_letter(request):
     user = request.user
 
     return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user,})
-
-
-@login_required()
-@user_passes_test(is_eligible_for_housing)
-def housing_letter1(request):
-    user = request.user
-
-    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})
-
-
-@login_required()
-@user_passes_test(is_eligible_for_housing)
-def housing_letter2(request):
-    user = request.user
-
-    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})

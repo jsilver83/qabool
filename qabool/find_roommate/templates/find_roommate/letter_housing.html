@@ -1,0 +1,122 @@
+{% load i18n %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Undergraduate Admission | King Fahd University of Petroleum &amp;Minerals</title>
+	<link rel="icon" href="images/favicon.png">
+	<!-- Bootstrap Core CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<!-- Custom CSS -->
+	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
+	<style media="print">
+		html{
+		font-size:120%;
+		}
+		.noprint{
+		display:none!important;
+		}
+		.ftr-fixed-btm{
+		position:fixed;
+		bottom:0px;
+		}
+	</style>
+</head>
+<body>
+<div class="container-fluid noprint">
+	<div class="row">
+		<div class="col-lg-12"><br>
+			<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
+				<i class="fa fa-print" aria-hidden="true"></i> </a>
+			<a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
+		</div>
+	</div>
+	<hr>
+</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center" dir="rtl">
+	<tr>
+		<td><img class="img-responsive" src="{% static 'images/letter-head.jpg' %}"></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>
+			<center>
+				<h2>عقد ترخيص بالسكن</h2>
+			</center>
+			<br>
+			<!--<div><strong>{% trans 'Dear Student' %}/ </strong>{{ user.get_student_full_name }}</div>
+			<div>
+				<strong>
+					{% if user.kfupm_id %}
+					{% trans 'KFUPM ID' %} / {{ user.kfupm_id }}
+					{% else %}
+					<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
+					{% endif %}
+				</strong>
+			</div>
+			<br>-->
+			<p>بعون الله تعالى, أبرم هذا العقد في جامعة الملك فهد للبترول والمعادن بالظهران – المملكة العربية السعودية في يوم      /       /      14هـ
+            الموافق     /      /      20م بين كل من :
+            </p>
+            <strong>أولاً:  جامعة الملك فهد للبترول والمعادن – عمادة شؤون الطلاب ( صندوق الطلاب )</strong>
+            <strong>( المالك ويشار إليه بالطرف الأول )</strong>
+            <p><strong>ثانياً : الطالب / </strong> {{ user.get_student_full_name }}&nbsp;&nbsp;<strong>رقم البطاقة الجامعية /</strong> {{ user.kfupm_id }}</p>
+            <p>عنوانه بالجامعة : ص .ب :....................................... 
+            هاتف الجوال :.......................................
+            ( الطالب ويشار إليه بالطرف الثاني ) </p>
+            <p>بموجب هذا العقد والتراضي فقد رخص الطرف الأول للطرف الثاني السكن في الغرفة رقم :........................بالوحدة السكنية رقم :....................وفقاً للشروط التالية:-</p>
+            <hr>
+            <ol>
+                <li>مدة العقد فصل دراسي واحد فقط ، بعد ذلك يقوم الطرف الثاني بالتجديد لكل فصل دراسي عن طريق الموقع الإلكتروني المخصص لذلك.</li>
+                <li>لايحق للطالب النقل من الغرفة التي يسكن بها إلى غرفة أخرى إلا من خلال ادارة إسكان الطلاب.</li>
+                <li>يدقع الطالب رسوم السكن وقدره (600) ريال وذلك بخصم 150.00 ريال شهريا من المكافأة.</li>
+                <li>يحق للطرف الثاني أن يستعمل الغرفة للسكن الشخصي المشترك والموافق عليه من الطرف الأول ، ولا يحق تأجيره من الباطن وإيواء أو إسكان شخص آخر من داخل الجامعة أو خارجها وفي حال حدوث ذلك يحق للطرف الأول إلغاء العقد وحرمان الطرف الثاني من السكن لمدة عام كامل وإحالته إلى لجنة شؤون الطلاب .</li>
+                <li>يسكن كل طالبين منتظمين للدارسة في غرف واحدة ولا يسمح السكن فرادى إلا بموافقة عميد شؤون الطلاب.</li>
+                <li>يعطى الطالب الساكن بمفرده مهلة مدة أسبوع لأختيار زميل مناسب له ، وبعد انقضاء هذه المدة يحق لإسكان الطلاب نقله أو نقل طالب آخر معه بدون اشعاره.</li>
+                <li>يقر الطرف الثاني بأنه عاين الغرفة وقبلها في وضعها الحالي ، ويتعهد بالمحافظة على الغرفة والأثاث الموجود بها وتسليمها إلى الطرف الأول عند انتهاء مدة الإيجار بنفس الحالة الأصلية بإستثناء الأستهلاك الطبيعي.</li>
+                <li>لا يحق للطرف الثاني ( الطالب ) إجراء أية تعديلات أو إضافات في الغرفة، وفي حالة إجراء أي تعديلات أو إضافات يعتبر هذا العقد لاغياً ويتحمل الطرف الثاني العقوبات والغرامات التي تقررها الجامعة .</li>
+                <li>على الطرف الثاني ضرورة إخلاء الغرفة في مدة لا تتجاوز (5) خمسة أيام من تاريخ تخرجه أو انسحابه أو تعرضه للفصل أو الإيقاف عن الدراسة أو عدم رغبته في تجديد العقد ، وستقوم إدارة إسكان الطلاب بجرد وإخلاء الغرفة التي لم يتم إخلائها ، ولن يتحمل الطرف الأول أي مسؤولية تنتج عن فقدان أو إتلاف الأغراض الموجودة بالغرفة كما يتحمل الطرف الثاني تكاليف النقل والجرد .</li>
+                <li>تجدد هذه الاتفاقية تلقائيا لفصل دراسي آخر إذا لم يحدث ما يخل بها من عدم السداد أو الانتظام بالجامعة أو ما تراه عمادة شؤون الطلاب وما يسمح به النظام .</li>
+                <li>على الطرف الثاني عدم القيام بأي عمل يضر بالسكن أو يلحق الأذى بالساكنين و الالتزام بالبنود والشروط الواردة في طلب السكن ولائحة إسكان الطلاب والتعليمات التي تصدرها الجامعة وكل مالم يذكر في العقد يرجع فيه لأنظمة الجامعة المعمول بها.</li>
+                <li>الطرف الثاني مسؤول عن المحافظة على وثائقه وممتلكاته الخاصة وعدم التفريط في ذلك بوضعها على الأرض أو نحو ذلك، ولا يتحمل الطرف الأول مسؤولية سرقتها أو تلفها أو ضررها.</li>
+                <li>تم تحرير هذا العقد من نسختين أصل وصورة يكون الأصل لدى الطرف الأول والصورة لدى الطرف الثاني .</li>
+                <li>في حال نشوء خلاف بين الطرفين أو نزاع ( لا قدر الله ) يحل بالطرق الودية ، وإذا تعذر ذلك فيتم إحالته إلى لجنة شؤون الطلاب بالجامعة.</li>
+            </ol>
+            <br />
+            <table style="width:100%">
+                <tr>
+                    <td align=center width=35%>طرف أول (الجامعة)</td>
+                    <td align=center>الختم</td>
+                    <td align=center width=35%>طرف ثاني (الطالب)</td>
+                </tr>
+                <tr>
+                    <td align=right>الاسم: <br /><br /> التوقيع:</td>
+                    <td></td>
+                    <td align=right>الاسم: <br /><br /> التوقيع:</td>
+                </tr>
+            </table>
+
+		</td>
+	</tr>
+    </table><br />
+    <table width=100% dir=rtl style="font-size:small">
+        <tr>
+            <td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br />
+            هاتف 2923-860 (03) - فاكس 1327-860 (03)
+            </td>
+            <td align="center">stufund@kfupm.edu.sa <br />http://www.kfupm.edu.sa/studentaffairs</td>
+            <td align="center">P.O.Box 1404 - Dhahran 31261 Saudi Arabia <br />Phone (03) 860-2923 - Fax (03) 860-1327</td>        
+        </tr>
+    </table>
+</body>
+</html>
