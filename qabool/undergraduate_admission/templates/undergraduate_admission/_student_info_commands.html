@@ -39,6 +39,9 @@
 	{% if can_see_housing %}
 	<a href="{% url 'housing_info_update' %}" class="list-group-item"><i class="fa fa-home" aria-hidden="true"></i> {% trans 'Student Housing' %}</a>
 	{% endif %}
+	{% if can_search_in_housing %}
+	<a href="{% url 'housing_search' %}" class="list-group-item"><i class="fa fa-search" aria-hidden="true"></i> {% trans 'Housing Search' %}</a>
+	{% endif %}
 	{% if can_print_withdrawal_letter %}
 	<a href="{% url 'withdrawal_letter' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Withdrawal Letter' %}</a>
 	{% endif %}
