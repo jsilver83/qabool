@@ -14,11 +14,11 @@ class HousingUser(models.Model):
     )
     facebook = models.URLField(null=True, blank=True, max_length=150, verbose_name=_('Facebook'))
     twitter = models.URLField(null=True, blank=True, max_length=150, verbose_name=_('Twitter'))
-    sleeping = models.CharField(null=True, blank=False, max_length=150, verbose_name=_('Sleeping'))
-    light = models.CharField(null=True, blank=False, max_length=150, verbose_name=_('Light'))
-    room_temperature = models.CharField(null=True, blank=False, max_length=150,
+    sleeping = models.CharField(null=True, blank=True, max_length=150, verbose_name=_('Sleeping'))
+    light = models.CharField(null=True, blank=True, max_length=150, verbose_name=_('Light'))
+    room_temperature = models.CharField(null=True, blank=True, max_length=150,
                                         verbose_name=_('Room Temperature'))
-    visits = models.CharField(null=True, blank=False, max_length=150, verbose_name=_('Visits'))
+    visits = models.CharField(null=True, blank=True, max_length=150, verbose_name=_('Visits'))
     interests_and_hobbies = models.TextField(null=True, blank=True, max_length=1000,
                                              verbose_name=_('Interests And Hobbies'))
     searchable = models.NullBooleanField(verbose_name=_('Searchable'))

@@ -70,6 +70,21 @@ class HousingInfoUpdateForm(forms.ModelForm):
                 message=_('You have to check this box')
             )
 
+    def clean(self):
+        cleaned_data = super(HousingInfoUpdateForm, self).clean()
+        searchable = cleaned_data.get('searchable')
+
+        if searchable:
+            # facebook = cleaned_data.get('facebook')
+            # twitter = cleaned_data.get('twitter')
+            sleeping = cleaned_data.get('sleeping')
+            light = cleaned_data.get('light')
+            room_temperature = cleaned_data.get('room_temperature')
+            visits = cleaned_data.get('visits')
+
+            if not (sleeping and light and room_temperature and visits):
+                raise forms.ValidationError(_('Enter required values'))
+
 
 class HousingSearchForm(forms.Form):
     high_school_city = forms.CharField(
