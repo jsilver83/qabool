@@ -43,7 +43,7 @@
 </div>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center" dir="rtl">
 	<tr>
-		<td><img class="img-responsive" src="{% static 'images/letter-head.jpg' %}"></td>
+		<td><img style="width: auto; margin: 0 auto" class="img-responsive" src="{% static 'images/housing_hdr.jpg' %}"></td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
@@ -54,24 +54,18 @@
 				<h2>نموذج تسكين طالب</h2>
 			</center>
 			<br>
-			<div><strong>{% trans 'Dear Student' %}/ {{ user.get_student_full_name }}</strong></div>
+			<div width=45% style="text-align:right;">التاريخ :</div><br />
+			<div><strong>{% trans 'Dear Student' %}/</strong> {{ user.get_student_full_name }}</div>
 			<div>
-				<strong>
-					{% if user.kfupm_id %}
-					{% trans 'KFUPM ID' %} / {{ user.kfupm_id }}
-					{% else %}
-					<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
-					{% endif %}
-				</strong>
+				{% if user.kfupm_id %}
+				<strong>{% trans 'KFUPM ID' %} /</strong> {{ user.kfupm_id }}
+				{% else %}
+				<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
+				{% endif %}
 			</div>
 			<br>
-            
-			<div width=45% style="text-align:right;">التاريخ :<br /><br />
-            الاسم :            
-            </div>
-            <div width=45% style="text-align:right;">رقم الغرفة – العمارة :<br /><br />
-            الرقم الجامعي :
-            </div>
+
+            <div width=45% style="text-align:right;">رقم الغرفة – العمارة :</div><br />
             
             
             <strong>أقر أنا الطالب الموقع أدناه بأنني استلمت الغرفة المشار إليها أعلاه بكامل أثاثها ومفتاحها وأصبحت في عهدتي ما لم أبلغ خلال (24) ساعة من تاريخ سكني عن خلاف ذلك. وأكون بذلك مسئولاً عن أي تلف أو ضياع ناتج عن الإهمال أو سوء الاستعمال. كما أتعهد بالآتي :</strong>
