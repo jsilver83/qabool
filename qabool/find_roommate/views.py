@@ -40,6 +40,7 @@ def housing_search(request):
     students = HousingUser.objects\
             .filter(user__status_message__status_message_code='ADMITTED',
                     searchable=True, user__eligible_for_housing=True)
+    is_search = False
 
     if request.GET:
         form = HousingSearchForm(request.GET)
@@ -71,6 +72,8 @@ def housing_search(request):
                 if sleeping:
                     students = students.filter(sleeping=sleeping)
 
+                is_search = True
+
             except MultiValueDictKeyError:
                 pass
 
@@ -92,7 +95,8 @@ def housing_search(request):
 
     return render(request, 'find_roommate/housinguser_list.html', {'page_obj': objects,
                                                                    'form': form,
-                                                                   'students_count': students_count, })
+                                                                   'students_count': students_count,
+                                                                   'is_search': is_search, })
 
 @login_required()
 @user_passes_test(is_eligible_for_housing)
