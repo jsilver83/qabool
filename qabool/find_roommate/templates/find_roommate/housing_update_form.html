@@ -44,6 +44,10 @@
 {#		<br>&nbsp;<br>#}
 {#		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>#}
 {#	</form>#}
+
+	{% if form.errors %}
+	<div class="alert alert-danger" role="alert">{{ form.errors }}</div>
+	{% endif %}
 	<form method="post" class="form-horizontal">
 		{% form form using %}
 		{% csrf_token %}
@@ -52,9 +56,9 @@
 		<div class="form_update">
 			{% formrow form.twitter form.facebook form.sleeping form.light form.room_temperature %}
 			{% formrow form.visits form.interests_and_hobbies %}
+			{% formconfig row using "floppyforms/rows/bootstrap3-horizontal-checkboxes.html" %}
+			{% formrow form.agree1 form.agree2 form.agree3 %}
 		</div>
-		{% formconfig row using "floppyforms/rows/bootstrap3-horizontal-checkboxes.html" %}
-		{% formrow form.agree1 form.agree2 form.agree3 %}
 		<br>&nbsp;<br>
 		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
 		{% endform %}
