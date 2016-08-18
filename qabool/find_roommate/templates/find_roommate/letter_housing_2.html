@@ -19,7 +19,7 @@
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
 		html{
-		font-size:120%;
+		font-size:80%;
 		}
 		.noprint{
 		display:none!important;
@@ -41,19 +41,10 @@
 	</div>
 	<hr>
 </div>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center" dir="rtl">
-	<tr>
-		<td><img style="width: auto; margin: 0 auto" class="img-responsive" src="{% static 'images/housing_hdr.jpg' %}"></td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>
+<img style="width: 80%; margin: 0 auto" class="img-responsive" src="{% static 'images/housing_hdr.jpg' %}">
 			<center>
-				<h2>نموذج تسكين طالب</h2>
+				<h4>نموذج تسكين طالب</h4>
 			</center>
-			<br>
 			<div width=45% style="text-align:right;">التاريخ :</div><br />
 			<div><strong>{% trans 'Dear Student' %}/</strong> {{ user.get_student_full_name }}</div>
 			<div>
@@ -63,7 +54,6 @@
 				<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
 				{% endif %}
 			</div>
-			<br>
 
             <div width=45% style="text-align:right;">رقم الغرفة – العمارة :</div><br />
             
@@ -87,11 +77,7 @@
                     <td align=center>توقيع الموظف المختص <br /><br />.........................................</td>
                     <td align=center width=30%>قسم المفاتيح <br /><br />.........................................</td>
                 </tr>
-            </table>
-
-		</td>
-	</tr>
-    </table><br />
+            </table><br /><br><br>
     <table width=100% dir=rtl style="font-size:small">
         <tr>
             <td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br />

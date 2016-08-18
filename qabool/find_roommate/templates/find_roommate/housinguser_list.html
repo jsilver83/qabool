@@ -4,6 +4,15 @@
 {% load staticfiles %}
 
 {% block subcontent %}
+	<p class="lead">
+			<strong>{% if is_search %}
+			{% trans 'No of search results:' %}
+			{% else %}
+			{% trans 'No of single students looking for a roommate:' %}
+			{% endif %}</strong>
+			&nbsp;&nbsp;{{ students_count }}
+		</p>
+		<hr>
 	<div>
 		<h4>{% trans 'Search' %}</h4><br>
 		<div class="alert alert-info" role="alert">
@@ -29,15 +38,6 @@
 			<p>{% trans 'Check this page regularly if you did not find a suitable roomate from the list below' %}</p>
 		</div>
 
-		<p class="lead">
-			{% if is_search %}
-			{% trans 'No of search results:' %}
-			{% else %}
-			{% trans 'No of single students looking for a roommate:' %}
-			{% endif %}
-			&nbsp;&nbsp;{{ students_count }}
-		</p>
-		<hr><br>
 		{% for student in page_obj %}
 			<table cellpadding="10" cellspacing="10">
 				<tr>
@@ -55,26 +55,26 @@
 					</td>
 					<td>&nbsp;&nbsp;</td>
 					<td style="width: 67%; vertical-align: top">
-						<table cellspacing="10" cellpadding="10" style="width: 100%;">
+						<table style="border-spacing: 15px;border-collapse: separate;" style="width: 100%;">
 							<tr>
 								<td width="50%"><a><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;
 									{{ student.user.mobile }}</a></td>
-								<td width="50%"><b>{% trans 'Sleeping' %}:</b> {{ student.sleeping }}</td>
+								<td width="50%"><b>{% trans 'Sleeping' %}:</b>&nbsp;{{ student.sleeping }}</td>
 							</tr>
 							<tr>
 								<td><a href="mailto:{{ student.user.email }}">
-									<i class="fa fa-send" aria-hidden="true"></i>{{ student.user.email }}</a></td>
-								<td><b>{% trans 'Light' %}:</b> {{ student.light }}</td>
+									<i class="fa fa-send" aria-hidden="true"></i>&nbsp;{{ student.user.email }}</a></td>
+								<td><b>{% trans 'Light' %}:</b>&nbsp;{{ student.light }}</td>
 							</tr>
 							<tr>
 								<td><a href="{{ student.facebook }}"><i class="fa fa-facebook" aria-hidden="true"></i>
-									{% trans 'Facebook' %}</a></td>
-								<td><b>{% trans 'Room Temperature' %}:</b> {{ student.room_temperature }}</td>
+									&nbsp;{% trans 'Facebook' %}</a></td>
+								<td><b>{% trans 'Room Temperature' %}:</b>&nbsp;{{ student.room_temperature }}</td>
 							</tr>
 							<tr>
 								<td><a href="{{ student.twitter }}"><i class="fa fa-twitter" aria-hidden="true"></i>
-									{% trans 'Twitter' %}</a></td>
-								<td><b>{% trans 'Visits' %}:</b> {{ student.visits }}</td>
+									&nbsp;{% trans 'Twitter' %}</a></td>
+								<td><b>{% trans 'Visits' %}:</b>&nbsp;{{ student.visits }}</td>
 							</tr>
 						</table>
 					</td>
