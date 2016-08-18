@@ -34,4 +34,4 @@ def is_eligible_for_housing(user):
 
 def is_eligible_for_roommate_search(user):
     return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing \
-           and user.housing_user.searchable
+           and hasattr(user, 'housing_user') and user.housing_user.searchable

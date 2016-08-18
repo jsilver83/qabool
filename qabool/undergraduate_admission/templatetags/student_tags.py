@@ -1,4 +1,5 @@
 from django import template
+from django.core.exceptions import ObjectDoesNotExist
 
 from undergraduate_admission.models import AdmissionSemester
 
@@ -15,7 +16,10 @@ def student_info_commands(context):
     can_confirm = phase == 'PARTIALLY-ADMITTED'
     can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)
     can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing)
-    can_search_in_housing = can_see_housing and user.housing_user and user.housing_user.searchable
+    try:
+        can_search_in_housing = can_see_housing and user.housing_user.searchable
+    except ObjectDoesNotExist:
+        can_search_in_housing = False
     has_pic = phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED'
     can_edit_phase1_info = phase == 'APPLIED' and AdmissionSemester.check_if_phase1_is_active()
     can_edit_contact_info = phase != 'REJECTED'\
