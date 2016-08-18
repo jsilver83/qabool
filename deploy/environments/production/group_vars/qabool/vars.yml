@@ -26,3 +26,5 @@ qabool_email_user: admissions@kfupm.edu.sa
 qabool_email_password: "{{ vault_qabool_email_password }}"
 
 zabbix_server: 10.142.5.236
+
+api_security_token: "{{ vault_api_security_token }}"
