@@ -35,6 +35,10 @@ def is_withdrawn(user):
     return phase == 'WITHDRAWN'
 
 
+def is_eligible_to_withdraw(user):
+    return is_admitted(user) and not user.tarifi_week_attendance_date
+
+
 class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
     raise_exception = True  # PermissionDenied
 
@@ -361,15 +365,13 @@ def print_documents(request):
 
 
 @login_required()
+@user_passes_test(is_eligible_to_withdraw)
 def withdraw(request):
     form = WithdrawalForm(request.POST or None, instance=request.user)
 
     if request.method == "GET":
         if request.user.get_student_phase() == 'WITHDRAWN':
             return redirect("withdrawal_letter")
-
-        if request.user.get_student_phase() != 'ADMITTED':
-            return redirect('student_area')
 
     if request.method == 'POST':
         if form.is_valid():
