@@ -11,7 +11,9 @@ include::includes/proprietary-information.adoc[]
 [cols="1,3,1,3",options="header",small]
 |==================================================
 | Version | Author(s) | Date      | Change
-| 1.0 | Abdullah Joud, Bassam Almaaesh | 2016-4-10 | First version
+| 1.0 | Abdullah Joud, Bassam Almaaesh | 2016-04-10 | First version
+| 2.0 | Abdullah Joud, Bassam Almaaesh | 2017-01-01 | Update
+product functions and business process
 |==================================================
 
 [discrete]
@@ -20,7 +22,7 @@ include::includes/proprietary-information.adoc[]
 [cols="1h,3,1h,1",frame=none,grid=none]
 |==================================================
 | Name        |    | Role    |
-| Designation |   | Version | 1.0
+| Designation |   | Version | 2.0
 | Department  |                  | Date    |
 |==================================================
 
@@ -29,7 +31,7 @@ include::includes/proprietary-information.adoc[]
 [cols="1h,3,1h,1",frame=none,grid=none]
 |==================================================
 | Name        |  | Role    |
-| Designation |           | Version | 1.0
+| Designation |           | Version | 2.0
 | Department  |   | Date |
 |==================================================
 
@@ -93,26 +95,29 @@ functionalities and reports.
 * Registration with initial agreement
 * Calculate GPA
 * Login & dashboard
+* Logout
 * Confirmation (only for accepted students by admission office)
 * Withdrawal and agreement (after confirmation the student
   can withdraw anytime)
-* Complete information (Form 2)
+* Complete information with reading all agreements (Form 2)
 * Upload & Re-upload required documents
 * Print documents like admission letter, medical report and two letters that
 belong to student housing
+* Search for roommate
 * Upload & Re-upload personal picture
+* Reset password
 
 ==== Administrator Functions
 
-* View general statistics and reports
-* Reset students passwords
 * Manipulate denied students list
 * Check and manipulate students' entered info & uploaded documents
 * Manipulate cut-off points to determine admission criteria
 * Manipulate students' status (accepted, rejected, withdrawn, ... etc)
+* Reset password
 
 ==== BI Reports
 
+* View general statistics and reports
 * General statistics
 * Students report (with filters based on high-school GPA, status, nationality, and city)
 * Denied students report
