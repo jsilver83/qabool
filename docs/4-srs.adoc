@@ -100,6 +100,7 @@ functionalities and reports.
 * Upload & Re-upload required documents
 * Print documents like admission letter, medical report and two letters that
 belong to student housing
+* Upload & Re-upload personal picture
 
 ==== Administrator Functions
 
@@ -119,25 +120,31 @@ belong to student housing
 
 ==== Business Process
 
-There are two distinct phases in the admission process at KFUPM. Phase 1 will
-be the registration phase and it will be open to all high-school students as follows:
+There are three phases in the admission process at KFUPM. Phase 1 will
+be the registration phase and it will be open to all high-school students:
 
 [[context]]
 .Phase 1 process
-image::images/bp1.png[]
+image::images/AdmissionBP-1.jpg[]
 
-Phase 2 will be for admission results as follows:
+Phase 2 will be student confirmation and completing information:
 
 [[context]]
 .Phase 2 process
-image::images/bp2.png[]
+image::images/AdmissionBP-2.jpg[]
 
-The process for phase 1 & 2 will be as follows:
+
+Phase 3 printing admission letter, medical report, student housing contracts, other important documents and search for roommate:
 
 [[context]]
-.Process for admitted student 2
-image::images/bp3.png[]
+.Phase 3 process
+image::images/AdmissionBP-3.jpg[]
 
+Phase 4 Orientation week
+
+[[context]]
+.Phase 4 process
+image::images/.jpg[]
 
 == Future Enhancement
 . Interactive cut-off criteria to be developed.
@@ -411,24 +418,24 @@ WARNING: TODO: Translate the following paragraph to English!
 - The university's admission office will receive your scores directly from the
   Ministry of Education and the National Center for Measurement and Evaluation
   (Qiyas).
-  
+
 - The registration period starts on Sunday June 7, 2016 at 2:00 pm, and ends on
   Thursday June 18, 2016 at 9:00 pm.
-  
+
 - Candidates will be announced on Wednesday June 24, 2016 at 12:00 pm.
 
 - Candidates will receive text messages on their mobile phones using the mobile
   phone numbers entered in this application.
-  
+
 - The university's admission website is the main official source for admission
   application results, and for up-to-date application instructions. It is,
   therefore, your responsibility to check it frequently.
-  
+
 - Upon receiving their candidacy notice, candidates who wish to study at the
   university must confirm their application, complete it online, and upload the
   required documents starting from Wednesday June 24, 2016 at 12:00 pm, and
   before 6:00 pm of Saturday June 27, 2016.
-  
+
 ==================================================
 
 
@@ -446,26 +453,26 @@ WARNING: TODO: Translate the following paragraph to English!
 نؤكد على أهمية النقاط التالية:
 
 - التأكد من دقة وصحة جميع البيانات المدخلة مسؤولية الطالب الكاملة.
-  
+
 - تحصل إدارة القبول بالجامعة على نتائج الطالب للمرحلة الثانوية ونتائج اختبار
   القدرات و الاختبار التحصيلي من وزارة التعليم ومن المركز الوطني للقياس والتقويم
   مباشرة.
-  
+
 - تبدأ فترة التسجيل من الساعة 2 ظهر يوم الأحد 20 شعبان 1436هـ الموافق 7 يونيو
   2015م، وتنتهي الساعة 9 مساء يوم الخميس 1 رمضان 1436هـ الموافق 18 يونيو 2015م.
-  
+
 - تعلن نتائج المرشحين للقبول الساعة 12 ظهر يوم الأربعاء 7 رمضان 1436هـ الموافق
   24 يونيو 2015م.
-  
+
 - سيتم إعلام المرشحين للقبول بترشيحم عبر رسائل الجوال باستخدام رقم هاتف الجوال
   المدخل في النموذج الإلكتروني.
 
 - يعتبر الموقع الإلكتروني لإدارة القبول المرجع الرئيس للإعلان عن القبول وعن
   التعليمات المستجدة. لذلك فعلى المتقدم مسؤولية متابعة الموقع الإلكتروني.
-  
+
 - في حال تم قبول ترشيح الطالب للجامعة ولديه الرغبة الكاملة في الدراسة بها، يجب
   عليه أن يؤكد ذلك وأن يستكمل البيانات اللازمة من خلال الموقع الإلكتروني لإدارة
   القبول في الفترة من 12 ظهر يوم الأربعاء 7 رمضان 1436هـ الموافق 24 يونيو 2015م
   إلى الساعة 6 مساء يوم السبت 10 رمضان 1436هـ الموافق 27 يونيو 2015م.
-  
+
 ==================================================
