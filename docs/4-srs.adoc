@@ -14,6 +14,7 @@ include::includes/proprietary-information.adoc[]
 | 1.0 | Abdullah Joud, Bassam Almaaesh | 2016-04-10 | First version
 | 2.0 | Abdullah Joud, Bassam Almaaesh | 2017-01-01 | Update
 product functions and business process
+| 2.1 | Bassam Almaaesh | 2017-02-15 | Update business process for phase 1,2,3 and 4
 |==================================================
 
 [discrete]
@@ -129,27 +130,30 @@ There are three phases in the admission process at KFUPM. Phase 1 will
 be the registration phase and it will be open to all high-school students:
 
 [[context]]
-.Phase 1 process
-image::images/AdmissionBP-1.jpg[]
+.Phase 1
+image::images/1.jpg[]
+
 
 Phase 2 will be student confirmation and completing information:
 
 [[context]]
-.Phase 2 process
-image::images/AdmissionBP-2.jpg[]
+.Phase 2
+image::images/2.jpg[]
+
 
 
 Phase 3 printing admission letter, medical report, student housing contracts, other important documents and search for roommate:
 
 [[context]]
-.Phase 3 process
-image::images/AdmissionBP-3.jpg[]
+.Phase 3
+image::images/3.jpg[]
 
-Phase 4 Orientation week
+
+Phase 4 Orientation week ( Reception in Building 54 and Reception University Preparation Course )
 
 [[context]]
-.Phase 4 process
-image::images/.jpg[]
+.Phase 4
+image::images/4.jpg[]
 
 == Future Enhancement
 . Interactive cut-off criteria to be developed.
