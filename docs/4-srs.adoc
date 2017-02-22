@@ -131,14 +131,14 @@ be the registration phase and it will be open to all high-school students:
 
 [[context]]
 .Phase 1
-image::images/1.jpg[]
+image::images/1.png[]
 
 
 Phase 2 will be student confirmation and completing information:
 
 [[context]]
 .Phase 2
-image::images/2.jpg[]
+image::images/2.png[]
 
 
 
@@ -146,14 +146,14 @@ Phase 3 printing admission letter, medical report, student housing contracts, ot
 
 [[context]]
 .Phase 3
-image::images/3.jpg[]
+image::images/3.png[]
 
 
 Phase 4 Orientation week ( Reception in Building 54 and Reception University Preparation Course )
 
 [[context]]
 .Phase 4
-image::images/4.jpg[]
+image::images/4.png[]
 
 == Future Enhancement
 . Interactive cut-off criteria to be developed.
