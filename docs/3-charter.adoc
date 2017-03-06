@@ -14,7 +14,7 @@ Internal
 [cols="1,3,1,4",options="header",small]
 |==================================================
 | Version | Author(s) | Date      | Change
-| 1.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03 - 04 First version
+| 1.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03 - 04 | First version
 |==================================================
 
 [discrete]
@@ -24,40 +24,16 @@ Internal
 |==================================================
 | Name        | Dr. Ahmad Khayyat                    | Role    | Sponsor
 | Designation | Assistant Director             | Version | 1.0
-| Department  | ICTC                                 | Date    |
+| Department  | ICTC                                 | Date    | 2017-03-01
 |==================================================
+
 
 [cols="1h,3,1h,1",frame=none,grid=none]
 |==================================================
-| Name        |          | Role    | Client
-| Designation |  Director           | Version | 1.0
-| Department  | Admission Department   | Date    |
+| Name        | Dr. Saad Muhammad Saad Al-Shahrani  | Role    | Client
+| Designation | Deanship, Admission and Registration| Version | 1.0
+| Department  | Dean, Admission and Registration |   Date  | 2017-03-01
 |==================================================
-
-|==================================================
-| Name        |          | Role    | Client
-| Designation |  Director           | Version | 1.0
-| Department  | Student Affairs Department   | Date    |
-|==================================================
-
-|==================================================
-| Name        |          | Role    | Client
-| Designation |  Director           | Version | 1.0
-| Department  | Student Housing    | Date    |
-|==================================================
-
-|==================================================
-| Name        |          | Role    | Client
-| Designation |  Director           | Version | 1.0
-| Department  | English Department    | Date    |
-|==================================================
-
-|==================================================
-| Name        |          | Role    | Client
-| Designation |  Director           | Version | 1.0
-| Department  | Registrar Office    | Date    |
-|==================================================
-
 
 <<<
 
@@ -165,7 +141,7 @@ In 3 months and it will start from 01/03/2017 to 30/05/2017.
 
 == Initial Timeline
 
-[width="100%",options="header,footer"]
+[cols="1,3*5"]
 |====================
 | S. No. |Activity  | Start Date  | End Date
 | 1. | Gathering requirements  | 2017-01-01  | 2017-03-01
@@ -188,7 +164,7 @@ In 3 months and it will start from 01/03/2017 to 30/05/2017.
 | 4   | UI/UX Designer | Ghaffar Sethar | ICTC - SDD
 | 5   | Solution Architect | Abdullah Joud  | ICTC - SDD
 | 6   | Lead Developer | Abdullah Joud | ICTC - SDD
-| 7   | Lead Tester | Bassam Almaaesh |Abdullah Joud Bassam Almaaesh | ICTC - SDD
+| 7   | Lead Tester | Abdullah Joud | ICTC - SDD
 | 9   | Trainer | Bassam Almaaesh | ICTC - SDD
 | 10  | Documentation Manager | Bassam Almaaesh | ICTC - SDD
 | 11  | Subject Matter Expert (SME) | Moawiya Taj | Admission Office
