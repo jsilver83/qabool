@@ -4,6 +4,62 @@ VERSION, DATE, VERSION DESCIPTION
 
 include::includes/proprietary-information.adoc[]
 
+[discrete]
+== Document Classification
+Internal
+
+[discrete]
+== Version History
+
+[cols="1,3,1,4",options="header",small]
+|==================================================
+| Version | Author(s) | Date      | Change
+| 1.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03 - 04 First version
+|==================================================
+
+[discrete]
+== Approvals
+
+[cols="1h,3,1h,1",frame=none,grid=none]
+|==================================================
+| Name        | Dr. Ahmad Khayyat                    | Role    | Sponsor
+| Designation | Assistant Director             | Version | 1.0
+| Department  | ICTC                                 | Date    |
+|==================================================
+
+[cols="1h,3,1h,1",frame=none,grid=none]
+|==================================================
+| Name        |          | Role    | Client
+| Designation |  Director           | Version | 1.0
+| Department  | Admission Department   | Date    |
+|==================================================
+
+|==================================================
+| Name        |          | Role    | Client
+| Designation |  Director           | Version | 1.0
+| Department  | Student Affairs Department   | Date    |
+|==================================================
+
+|==================================================
+| Name        |          | Role    | Client
+| Designation |  Director           | Version | 1.0
+| Department  | Student Housing    | Date    |
+|==================================================
+
+|==================================================
+| Name        |          | Role    | Client
+| Designation |  Director           | Version | 1.0
+| Department  | English Department    | Date    |
+|==================================================
+
+|==================================================
+| Name        |          | Role    | Client
+| Designation |  Director           | Version | 1.0
+| Department  | Registrar Office    | Date    |
+|==================================================
+
+<<<
+
 == Project Title
 
 Qabool

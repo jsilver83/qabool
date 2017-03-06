@@ -17,6 +17,7 @@ product functions and business process
 | 2.1 | Bassam Almaaesh | 2017-02-15 | Update business process for phase 1,2,3 and 4
 |==================================================
 
+
 [discrete]
 == Approvals
 
@@ -154,6 +155,12 @@ Phase 4 Orientation week ( Reception in Building 54 and Reception University Pre
 [[context]]
 .Phase 4
 image::images/4.png[]
+
+Student withdrawn
+
+[[context]]
+.Withdrawn
+image::images/5.png[]
 
 == Future Enhancement
 . Interactive cut-off criteria to be developed.
