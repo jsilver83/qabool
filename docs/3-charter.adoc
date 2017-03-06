@@ -58,6 +58,7 @@ Internal
 | Department  | Registrar Office    | Date    |
 |==================================================
 
+
 <<<
 
 == Project Title
@@ -81,29 +82,58 @@ Finally, creating several type of reports for different purposes in business int
 
 == Project Scope
 
-This system will provide many facilities to students and admission office department
-like
+This system will provide many facilities to students, admission office, registrar office
+coommittee, student affairs and English department like
 
-* student registration,
-* calculate GPA,
-* student dashboard, student results, student confirmation,
-* assign KFUPM ID to the students,
-* complete student information,
-* upload required documents,
-* withdrawal form,
-* print documents medical report, admission letters and two letters belong to student housing,
-* searching for roommate,
-* help desk for the application administrator,
+=== For students
+
+* student registration and forgot password.
+* student dashboard.
+* calculate GPA.
+* student results, student confirmation,
+* complete student information for student affairs, admission and security department.
+* upload required documents (personal picture, identification, passpaort, driving license and vehicle registration).
+* assign student KFUPM ID automatically.
+* withdrawal form.
+* select time to visit building 54.
+* select time for English written exam and interview.
+* select time to attend University preparation course.
+* print medical report, admission letters and two letters belong to student housing.
+* searching student roommate.
+* choosing student roommate.
+* change password.
+
+=== For Coommittee
+* review and correct student information.
+
+=== For Admission
+* upload list of denied students.
+* create new semester and enter start and end date for each phase.
+* review and correct student information with extra fields.
+* manage schedule to attend building 54.
+* apply cut-off points and generate results based on student type (S, M and N) and nationality.
 * help the admission office to calculate and take cut-off based on student GPAs
 using business intelligence (BI)
+
+=== For Student Affairs
+* manage schedule for orientation course.
+* atendance for orientation week.
+* atendance for uneversity preparation course.
+
+=== For Registrar
+* upload/enter list of KFUPM Student ID.
+
+=== For English Dept.
+* manage schedule for English written and oral exams.
+
 * Above all, the business intelligence (BI) will provide different type of reports for
-student affairs, registrar office, information technology center and admission office.
+student affairs, registrar office, information and communication technology center and admission office.
 
 == Project Considerations
 
 Risks::
-* The student registration will start on June 2016 and the project should be completed
-before May 2016 in order to test the system.
+* The student registration will start on July 2017 and the project should be completed
+before the end of April 2017 in order to test the system.
 * The integration with Yesser to get student information.
 
 Issues:: --
@@ -131,71 +161,39 @@ Is this project a part of the KFUPM Strategic Plan?
 
 == Estimated Project Duration
 
-In 3 months and it will start from 01/03/2016 to 30/05/2016.
+In 3 months and it will start from 01/03/2017 to 30/05/2017.
 
-. Gathering Requirements (1 week)
+== Initial Timeline
 
-.  Planning (1 week)
-* Determine if you need to develop or buy an administrative system
-* Identify the primary stakeholders in the proposed system development
-* Define the scope of the system, including the constraints of the system,
-and plan to refine this definition as the project progresses
-* Identify the project team
-
-. Analysis (1 weeks)
-
-** Capture and analyze your requirements and identify critical issues, including the following:
-
-*	Business functions to be developed
-*	All data required for these business functions
-*	Business rules determining data behavior, constraints, limits, relationships, and life-cycle
-*	Business function flow
-*	Security requirements
-
-** Decide whether to build or buy a business system
-
-. Design (2 weeks)
-*	Design responsive template , html , JavaScript and CSS
-*	Design all screens related to the students.
-*	Design all screens related to the administrator dashboard.
-*	Design different reports for student affairs, registrar office, information
-technology center and admission office.
-*	Design all screens related to the help desk.
-*	Business flow
-*	Database structures
-*	Quality assurance review to assure all requirements are being met
-*	Business expert review
-
-. Development and programming (4 weeks)
-*	Develop the approved design for all pages related students, application administrator and help desk.
-* Technical architecture
-*	Configuration environment
-*	Security
-
-. User Acceptance Test 1 (1 week)
-. User Acceptance Test 2 (1 week)
-. Deployment and Maintenance (1 week)
-
+[width="100%",options="header,footer"]
+|====================
+| S. No. |Activity  | Start Date  | End Date
+| 1. | Gathering requirements  | 2017-01-01  | 2017-03-01
+| 2. | Designing Wireframes for all phases | 2017-03-01 | 2017-03-10
+| 3. | Design/Develop/Enhance all screens for phase 1 | 2017-03-10 | 2017-03-25
+| 4. | Design/Develop/Enhance all screens for phase 2 | 2017-03-26 | 2017-04-10
+| 5. | Design/Develop/Enhance all screens for phase 3 | 2017-04-11 | 2017-04-20
+| 6. | Design/Develop/Enhance all screens for phase 4 | 2017-04-20 | 2017-05-04
+| 7. | Testing | 2017-05-05 |  2017-05-20
+|====================
 
 == Project Team
 
 [cols="1,3*5"]
 |===============================
 | No. | Role | Name | Department
-| 1   | Project Sponsor | Jaweed Yazdani  | ITC - ADIS
-| 2   | Project Manager / Project Owner | Jaweed Yazdani | ITC - ADIS
+| 1   | Project Sponsor | Dr. Ahmed Khayyat  | ICTC - SDD
+| 2   | Project Manager / Project Owner | Dr. Ahmed Khayyat | ICTC - SDD
 | 3   | Functional Analyst (Business & Systems Analyst) | Abdullah Joud & Bassam Almaaesh | ITC - ADIS
-| 4   | UI/UX Designer | -- | --
-| 5   | Solution Architect | Abdullah Joud  | ITC - ADIS
-| 6   | Lead Developer | Abdullah Joud | ITC - ADIS
-| 7   | Lead Tester | Bassam Almaaesh | ITC - ADIS
-| 8   | Lead Deployer | Bassam Almaaesh | ITC - ADIS
-| 9   | Trainer | Bassam Almaaesh | ITC - ADIS
-| 10  | Documentation Manager | Bassam Almaaesh | ITC - ADIS
+| 4   | UI/UX Designer | Ghaffar Sethar | ICTC - SDD
+| 5   | Solution Architect | Abdullah Joud  | ICTC - SDD
+| 6   | Lead Developer | Abdullah Joud | ICTC - SDD
+| 7   | Lead Tester | Bassam Almaaesh |Abdullah Joud Bassam Almaaesh | ICTC - SDD
+| 9   | Trainer | Bassam Almaaesh | ICTC - SDD
+| 10  | Documentation Manager | Bassam Almaaesh | ICTC - SDD
 | 11  | Subject Matter Expert (SME) | Moawiya Taj | Admission Office
 | 12  | Developer | -- | --
 |===============================
-
 
 == Project Stakeholders
 
@@ -226,11 +224,11 @@ technology center and admission office.
 
 [cols="1,8"]
 |==================================================
-| Name        | Jaweed Yazdani
-| Designation | Director General, Administrative Information System
-| Department  | ITC - Administrative Information System
-| Phone       | 013860-1945
-| Email       | jaweed@kfupm.edu.sa
+| Name        | Dr. Ahmed Khayyat
+| Designation | Director General,  Information System
+| Department  | ICTC - Information & Communications Technology Center
+| Phone       | 013860-7270
+| Email       | akhayyat@kfupm.edu.sa
 |==================================================
 
 
@@ -308,7 +306,7 @@ technology center and admission office.
 
 [cols="1,8"]
 |==================================================
-| Name        |
+| Name        | Ghaffar Sethar
 | Designation | Designer
 | Date        |
 | Type        |
