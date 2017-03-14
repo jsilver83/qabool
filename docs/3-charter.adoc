@@ -14,7 +14,9 @@ Internal
 [cols="1,3,1,4",options="header",small]
 |==================================================
 | Version | Author(s) | Date      | Change
-| 1.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03 - 04 | First version
+| 1.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2016-03 - 04 | First version
+| 2.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03 - 04 | Update project justifications, project scope,
+historical Information, estimated project duration and initial Timeline.
 |==================================================
 
 [discrete]
@@ -44,8 +46,8 @@ Qabool
 == Project Justifications
 
 The project is needed to manage student registration who want to apply and study at KFUPM.
-Currently, there is a system on adm.kfupm.edu.sa developed
-in asp.net and it needs to change the process and some additional functionalities and reports.
+Currently, there is a system on qabool.kfupm.edu.sa developed by Django web framework and
+it needs to change the process and some additional functionalities and reports.
 
 == Project Objectives
 
@@ -65,8 +67,7 @@ coommittee, student affairs and English department like
 
 * student registration and forgot password.
 * student dashboard.
-* calculate GPA.
-* student results, student confirmation,
+* student results and student confirmation,
 * complete student information for student affairs, admission and security department.
 * upload required documents (personal picture, identification, passpaort, driving license and vehicle registration).
 * assign student KFUPM ID automatically.
@@ -88,13 +89,13 @@ coommittee, student affairs and English department like
 * review and correct student information with extra fields.
 * manage schedule to attend building 54.
 * apply cut-off points and generate results based on student type (S, M and N) and nationality.
-* help the admission office to calculate and take cut-off based on student GPAs
+* calculate and take cut-off based on student GPAs
 using business intelligence (BI)
 
 === For Student Affairs
-* manage schedule for orientation course.
-* atendance for orientation week.
-* atendance for uneversity preparation course.
+* manage schedule for university preparation course.
+* atendance for orientation week in building 54.
+* atendance for preparation course.
 
 === For Registrar
 * upload/enter list of KFUPM Student ID.
@@ -123,9 +124,10 @@ Constraints:: --
 
 
 == Historical Information and Related Knowledge Base
+In 2016, we developed Qabool system from scratsh using Django web framework (url: qabool.kfupm.edu.sa.)
 
-There is a system on adm.kfupm.edu.sa developed in asp.net and
-hosted in cloud server.
+Between 2011 and 2015, the system developed using asp.net C# and hosted in cloud server
+(url: adm.kfupm.edu.sa.).
 
 == Relevance to KFUPM Strategic Plan
 
@@ -137,7 +139,7 @@ Is this project a part of the KFUPM Strategic Plan?
 
 == Estimated Project Duration
 
-In 3 months and it will start from 01/03/2017 to 30/05/2017.
+In five months and it will start from 01/03/2017 to 30/05/2017.
 
 == Initial Timeline
 
@@ -160,7 +162,7 @@ In 3 months and it will start from 01/03/2017 to 30/05/2017.
 | No. | Role | Name | Department
 | 1   | Project Sponsor | Dr. Ahmed Khayyat  | ICTC - SDD
 | 2   | Project Manager / Project Owner | Dr. Ahmed Khayyat | ICTC - SDD
-| 3   | Functional Analyst (Business & Systems Analyst) | Abdullah Joud & Bassam Almaaesh | ITC - ADIS
+| 3   | Functional Analyst (Business & Systems Analyst) | Bassam Almaaesh | ICTC - ADIS
 | 4   | UI/UX Designer | Ghaffar Sethar | ICTC - SDD
 | 5   | Solution Architect | Abdullah Joud  | ICTC - SDD
 | 6   | Lead Developer | Abdullah Joud | ICTC - SDD
@@ -177,7 +179,7 @@ In 3 months and it will start from 01/03/2017 to 30/05/2017.
 
 [cols="1,8"]
 |==================================================
-| Name        | Saad Muhammad Saad Al-Shahrani
+| Name        | Dr. Saad Muhammad Saad Al-Shahrani
 | Designation | Deanship, Admission and Registration
 | Department  | Dean, Admission and Registration
 | Phone       | 013860-2040
@@ -200,11 +202,11 @@ In 3 months and it will start from 01/03/2017 to 30/05/2017.
 
 [cols="1,8"]
 |==================================================
-| Name        | Dr. Ahmed Khayyat
-| Designation | Director General,  Information System
+| Name        | Asim Jameel
+| Designation | Manager POM
 | Department  | ICTC - Information & Communications Technology Center
-| Phone       | 013860-7270
-| Email       | akhayyat@kfupm.edu.sa
+| Phone       | 013860-7046
+| Email       | ajameel@kfupm.edu.sa
 |==================================================
 
 
@@ -228,7 +230,7 @@ In 3 months and it will start from 01/03/2017 to 30/05/2017.
 
 [cols="1,8"]
 |==================================================
-| Name        | Saad Muhammad Saad Al-Shahrani
+| Name        | Dr. Saad Muhammad Saad Al-Shahrani
 | Designation | Deanship, Admission and Registration
 | Department  | Dean, Admission and Registration
 | Phone       | 013860-2040
