@@ -1,6 +1,6 @@
 = Project Charter for Qabool
 Bassam Almaaesh <almaaesh@kfupm.edu.sa>; Abdullah Joud <joud@kfupm.edu.sa>;
-VERSION, DATE, VERSION DESCIPTION
+VERSION, DATE, VERSION DESCRIPTION
 
 include::includes/proprietary-information.adoc[]
 
@@ -16,7 +16,7 @@ Internal
 | Version | Author(s) | Date      | Change
 | 1.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2016-03 - 04 | First version
 | 2.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03 - 04 | Update project justifications, project scope,
-historical Information, estimated project duration and initial Timeline.
+historical Information, estimated project duration and initial Time-line.
 |==================================================
 
 [discrete]
@@ -61,7 +61,7 @@ Finally, creating several type of reports for different purposes in business int
 == Project Scope
 
 This system will provide many facilities to students, admission office, registrar office
-coommittee, student affairs and English department like
+committee, student affairs and English department like
 
 === For students
 
@@ -69,7 +69,7 @@ coommittee, student affairs and English department like
 * student dashboard.
 * student results and student confirmation,
 * complete student information for student affairs, admission and security department.
-* upload required documents (personal picture, identification, passpaort, driving license and vehicle registration).
+* upload required documents (personal picture, identification, passport, driving license and vehicle registration).
 * assign student KFUPM ID automatically.
 * withdrawal form.
 * select time to visit building 54.
@@ -80,7 +80,7 @@ coommittee, student affairs and English department like
 * choosing student roommate.
 * change password.
 
-=== For Coommittee
+=== For Committee
 * review and correct student information.
 
 === For Admission
@@ -94,15 +94,14 @@ using business intelligence (BI)
 
 === For Student Affairs
 * manage schedule for university preparation course.
-* atendance for orientation week in building 54.
-* atendance for preparation course.
+* attendance for orientation week in building 54.
+* attendance for preparation course.
 
 === For Registrar
 * upload/enter list of KFUPM Student ID.
 
 === For English Dept.
 * manage schedule for English written and oral exams.
-
 * Above all, the business intelligence (BI) will provide different type of reports for
 student affairs, registrar office, information and communication technology center and admission office.
 
@@ -124,7 +123,7 @@ Constraints:: --
 
 
 == Historical Information and Related Knowledge Base
-In 2016, we developed Qabool system from scratsh using Django web framework (url: qabool.kfupm.edu.sa.)
+In 2016, we developed Qabool system from scratch using Django web framework (url: qabool.kfupm.edu.sa.)
 
 Between 2011 and 2015, the system developed using asp.net C# and hosted in cloud server
 (url: adm.kfupm.edu.sa.).
@@ -147,7 +146,7 @@ In five months and it will start from 01/03/2017 to 30/05/2017.
 |====================
 | S. No. |Activity  | Start Date  | End Date
 | 1. | Gathering requirements  | 2017-01-01  | 2017-03-01
-| 2. | Designing Wireframes for all phases | 2017-03-01 | 2017-03-10
+| 2. | Designing Wire-frames for all phases | 2017-03-01 | 2017-03-10
 | 3. | Design/Develop/Enhance all screens for phase 1 | 2017-03-10 | 2017-03-25
 | 4. | Design/Develop/Enhance all screens for phase 2 | 2017-03-26 | 2017-04-10
 | 5. | Design/Develop/Enhance all screens for phase 3 | 2017-04-11 | 2017-04-20
@@ -203,7 +202,7 @@ In five months and it will start from 01/03/2017 to 30/05/2017.
 [cols="1,8"]
 |==================================================
 | Name        | Asim Jameel
-| Designation | Manager POM
+| Designation | PMO Manager
 | Department  | ICTC - Information & Communications Technology Center
 | Phone       | 013860-7046
 | Email       | ajameel@kfupm.edu.sa
