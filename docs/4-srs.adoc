@@ -1,5 +1,5 @@
 = Software Requirements Specification for Qabool
-Information Technology Center (ITC), KFUPM
+Information and Communication Technology Center (ICTC), KFUPM
 Version 1.0, April 10, 2016: First version
 :docinfo1:
 
@@ -15,6 +15,7 @@ include::includes/proprietary-information.adoc[]
 | 2.0 | Abdullah Joud, Bassam Almaaesh | 2017-01-01 | Update
 product functions and business process
 | 2.1 | Bassam Almaaesh | 2017-02-15 | Update business process for phase 1,2,3 and 4
+| 2.2 | Bassam Almaaesh | 2017-03-15 |
 |==================================================
 
 
@@ -24,7 +25,7 @@ product functions and business process
 [cols="1h,3,1h,1",frame=none,grid=none]
 |==================================================
 | Name        |    | Role    |
-| Designation |   | Version | 2.0
+| Designation |   | Version | 2.2
 | Department  |                  | Date    |
 |==================================================
 
@@ -33,7 +34,7 @@ product functions and business process
 [cols="1h,3,1h,1",frame=none,grid=none]
 |==================================================
 | Name        |  | Role    |
-| Designation |           | Version | 2.0
+| Designation |           | Version | 2.2
 | Department  |   | Date |
 |==================================================
 
@@ -53,8 +54,14 @@ the development team while developing the first version of the system.
 === Product Scope
 
 _Qabool_ shall enable students to apply to enroll at KFUPM.
-This system will cover the whole admission life-cycle from student application
-to admission to orientation and housing.
+This system will cover the whole admission life-cycle including the following screens
+
+* student application
+* admission screens
+* student affairs screens
+* registrar office screen
+* orientation week screens
+* student housing screens
 
 === Definitions, Acronyms, and Abbreviations
 
@@ -94,28 +101,52 @@ functionalities and reports.
 
 ==== Student Functions
 
-* Registration with initial agreement
-* Calculate GPA
-* Login & dashboard
-* Logout
-* Confirmation (only for accepted students by admission office)
+* Registration with initial agreement.
+* Login, logout, change password & dashboard.
+* Confirmation (only for accepted students by admission office).
 * Withdrawal and agreement (after confirmation the student
-  can withdraw anytime)
-* Complete information with reading all agreements (Form 2)
-* Upload & Re-upload required documents
+  can withdraw anytime).
+* Complete information with reading all agreements (Form 2).
+* Upload & Re-upload required documents.
+* Assign student KFUPM ID automatically.
 * Print documents like admission letter, medical report and two letters that
-belong to student housing
-* Search for roommate
-* Upload & Re-upload personal picture
-* Reset password
+belong to student housing.
+* Search for roommate.
+* Choosing student roommate.
+* Upload & Re-upload personal picture.
+* Reset password.
+* Select time to visit building 54.
+* Select time for English written exam and interview.
+* Select time to attend University preparation course.
 
-==== Administrator Functions
 
-* Manipulate denied students list
-* Check and manipulate students' entered info & uploaded documents
-* Manipulate cut-off points to determine admission criteria
-* Manipulate students' status (accepted, rejected, withdrawn, ... etc)
-* Reset password
+==== For Admission Office
+
+* Upload list of denied students.
+* Create new semester and enter start and end date for each phase.
+* Check and manipulate students' entered info & uploaded documents.
+* Manage schedule to attend building 54.
+* Apply cut-off points and generate results based on student type (S, M and N) and nationality
+* Calculate and take cut-off based on student GPAs
+using business intelligence (BI).
+* Change password.
+
+==== For Coommittee
+
+* Review and correct student information.
+
+==== For Student Affairs
+* Manage schedule for university preparation course.
+* Attendance for orientation week in building 54.
+* Attendance for preparation course.
+
+==== For Registrar
+* Upload/enter list of KFUPM Student ID.
+
+==== For English Dept.
+* Manage schedule for English written and oral exams.
+* Above all, the business intelligence (BI) will provide different type of reports for
+student affairs, registrar office, information and communication technology center and admission office.
 
 ==== BI Reports
 
@@ -127,49 +158,37 @@ belong to student housing
 
 ==== Business Process
 
-There are three phases in the admission process at KFUPM. Phase 1 will
-be the registration phase and it will be open to all high-school students:
+There are four phases in _Qabool_ system.
+
 
 [[context]]
-.Phase 1
-image::images/1.png[]
+.Phase one will be the registration phase and it will be open to all high-school students
+image::images/businessProcess/1.png[]
 
-
-Phase 2 will be student confirmation and completing information:
 
 [[context]]
-.Phase 2
-image::images/2.png[]
+.Phase 2 will be student confirmation and completing information
+image::images/businessProcess/2.png[]
 
-
-
-Phase 3 printing admission letter, medical report, student housing contracts, other important documents and search for roommate:
 
 [[context]]
-.Phase 3
-image::images/3.png[]
+.Phase 3 printing admission letter, medical report, student housing contracts, other important documents and search for roommate
+image::images/businessProcess/3.png[]
 
-
-Phase 4 Orientation week ( Reception in Building 54 and Reception University Preparation Course )
 
 [[context]]
-.Phase 4
-image::images/4.png[]
+.Phase 4 Orientation week ( Reception in Building 54 and Reception University Preparation Course )
+image::images/businessProcess/4.png[]
 
-Student withdrawn
 
 [[context]]
-.Withdrawn
-image::images/5.png[]
+.Student withdrawn
+image::images/businessProcess/withdrawn.png[]
 
-== Future Enhancement
-. Interactive cut-off criteria to be developed.
-. Integrate KFUPM ID assigned to the student.
-. The system is modified in future as per the owner requirement.
 
 === User Classes and Characteristics
 
-There are two major types of users that interact with the system.
+There are six major types of users that interact with the system.
 
 Student::
 The student can register, login, check the result in the dashboard,
@@ -179,7 +198,7 @@ Admission Administrator::
 Admission Administrator can manage and filter students list, manipulate students'
 uploaded documents and data entered. Also, he can access to all BI reports and assign user level to the users.
 
-Reviewer::
+Committee::
 Reviewer can review and verify entered students' information and documents and
 correct mistakes if any.
 
