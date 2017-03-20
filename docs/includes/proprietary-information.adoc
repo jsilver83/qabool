@@ -1,9 +1,9 @@
 .Proprietary Information
 
-This document is the property of Information Technology Center (ITC),
+This document is the property of Information and Communication Technology Center (ICTC),
 King Fahd University of Petroleum and Minerals, Kingdom of Saudi
 Arabia, and is assigned the classification rating of Internal.
 
 The contents of this document are proprietary information and may not
-be distributed or disclosed, published or copied without the ITC's
+be distributed or disclosed, published or copied without the ICTC's
 written permission.
