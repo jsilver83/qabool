@@ -98,6 +98,17 @@ Risks::
 before the end of April 2017 in order to test the system.
 * The integration with Yesser to get student information.
 
+Important Dates
+
+[cols="2,3*5"]
+|====================
+| S. No. | Activity | Start Date  | End Date
+| 1. | Phase 1 : Apply to KFUPM  | 2017-07-02 | 2017-07-06
+| 2. | Phase 2 : Confirmation | 2017-07-10 | 2017-07-12
+| 3. | Phase 3 : Print documents and make reservations | 2017-07-16 | 2017-07-27
+| 4. | Phase 4 : Orientation week | 2017-08-14 | 2017-08-17
+|====================
+
 Issues:: --
 
 Assumptions::
@@ -132,11 +143,11 @@ In five months and it will start from 01/03/2017 to 30/05/2017.
 |====================
 | S. No. |Activity  | Start Date  | End Date
 | 1. | Gathering requirements  | 2017-01-01  | 2017-04-30
-| 2. | Designing Wire-frames for all phases | 2017-03-01 | 2017-03-30
-| 3. | Design/Develop/Enhance all screens for phase 1 | 2017-03-20 | 2017-03-30
-| 4. | Design/Develop/Enhance all screens for phase 2 | 2017-04-01 | 2017-04-15
-| 5. | Design/Develop/Enhance all screens for phase 3 | 2017-04-16 | 2017-04-30
-| 6. | Design/Develop/Enhance all screens for phase 4 | 2017-04-16 | 2017-05-16
+| 2. | Designing Wire-frames for all phases | 2017-03-01 | 2017-04-30
+| 3. | Design/Develop/Enhance all screens for phase 1 : registration | 2017-03-20 | 2017-03-30
+| 4. | Design/Develop/Enhance all screens for phase 2 : confirmation| 2017-04-01 | 2017-04-15
+| 5. | Design/Develop/Enhance all screens for phase 3 : print documents and make reservations| 2017-04-16 | 2017-05-15
+| 6. | Design/Develop/Enhance all screens for phase 4 : orientation week| 2017-04-16 | 2017-05-16
 | 7. | Testing | 2017-05-16 |  2017-05-30
 |====================
 
