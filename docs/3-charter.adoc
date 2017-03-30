@@ -27,14 +27,17 @@ historical Information, estimated project duration and initial Time-line.
 | Name        | Dr. Ahmad Khayyat                    | Role    | Sponsor
 | Designation | Assistant Director             | Version | 2.0
 | Department  | ICTC                                 | Date    | 2017-04-30
+| Phone       | 013860-7270
+| Email       | akhayyat@kfupm.edu.sa
 |==================================================
-
 
 [cols="1h,3,1h,1",frame=none,grid=none]
 |==================================================
-| Name        | Dr. Saad Muhammad Saad Al-Shahrani  | Role    | Client
-| Designation | Deanship, Admission and Registration| Version | 2.0
-| Department  | Dean, Admission and Registration |   Date  | 2017-04-30
+| Name        | Mr. Moawiya Taj | Role    | Client
+| Designation | Director General, Admissions| Version | 2.0
+| Department  | Admission Office |   Date  | 2017-04-30
+| Phone       | 013860-4290
+| Email       | moawiya@kfupm.edu.sa
 |==================================================
 
 <<<
@@ -103,7 +106,7 @@ Important Dates
 [cols="2,3*5"]
 |====================
 | S. No. | Activity | Start Date  | End Date
-| 1. | Phase 1 : Apply to KFUPM  | 2017-07-02 | 2017-07-06
+| 1. | Phase 1 : Apply to study at KFUPM  | 2017-07-02 | 2017-07-06
 | 2. | Phase 2 : Confirmation | 2017-07-10 | 2017-07-12
 | 3. | Phase 3 : Print documents and make reservations | 2017-07-16 | 2017-07-27
 | 4. | Phase 4 : Orientation week | 2017-08-14 | 2017-08-17
@@ -135,19 +138,19 @@ Is this project a part of the KFUPM Strategic Plan?
 
 == Estimated Project Duration
 
-In five months and it will start from 01/03/2017 to 30/05/2017.
+In five months and it will be from 01/03/2017 to 30/05/2017.
 
-== Initial Timeline
+== Initial Time-line
 
 [cols="1,3*5"]
 |====================
 | S. No. |Activity  | Start Date  | End Date
 | 1. | Gathering requirements  | 2017-01-01  | 2017-04-30
 | 2. | Designing Wire-frames for all phases | 2017-03-01 | 2017-04-30
-| 3. | Design/Develop/Enhance all screens for phase 1 : registration | 2017-03-20 | 2017-03-30
-| 4. | Design/Develop/Enhance all screens for phase 2 : confirmation| 2017-04-01 | 2017-04-15
+| 3. | Design/Develop/Enhance all screens for phase 1 : registration | 2017-03-20 | 2017-04-15
+| 4. | Design/Develop/Enhance all screens for phase 2 : confirmation| 2017-04-01 | 2017-04-25
 | 5. | Design/Develop/Enhance all screens for phase 3 : print documents and make reservations| 2017-04-16 | 2017-05-15
-| 6. | Design/Develop/Enhance all screens for phase 4 : orientation week| 2017-04-16 | 2017-05-16
+| 6. | Design/Develop/Enhance all screens for phase 4 : orientation week| 2017-04-16 | 2017-05-15
 | 7. | Testing | 2017-05-16 |  2017-05-30
 |====================
 
@@ -166,134 +169,120 @@ In five months and it will start from 01/03/2017 to 30/05/2017.
 | 9   | Trainer | Bassam Almaaesh | ICTC - SDD
 | 10  | Documentation Manager | Bassam Almaaesh | ICTC - SDD
 | 11  | Subject Matter Expert (SME) | Moawiya Taj | Admission Office
-| 12  | Developer | -- | --
+| 12  | Developer | Bassam Almaaesh | ICTC - SDD
 |===============================
 
 == Project Stakeholders
 
+
 === Client
 
-[cols="1,8"]
+[cols="2,9",frame=none,grid=none]
 |==================================================
-| Name        | Dr. Saad Muhammad Saad Al-Shahrani
-| Designation | Deanship, Admission and Registration
-| Department  | Dean, Admission and Registration
-| Phone       | 013860-2040
-| Email       | saadms@kfupm.edu.sa
-|==================================================
-
-
-=== User
-
-[cols="1,8"]
-|==================================================
-| Name        | Moawiya Taj
-| Designation | Director General, Admissions
-| Department  | Admissions Office
+| Name        | Mr. Moawiya Taj | Role    | Client
+| Designation | Director General, Admissions| Version | 2.0
+| Department  | Admission Office |   Date  | 2017-04-30
 | Phone       | 013860-4290
 | Email       | moawiya@kfupm.edu.sa
 |==================================================
 
-=== PMO
+=== Users
 
-[cols="1,8"]
+==== Admission Office
+
+[cols="2,9",frame=none,grid=none]
 |==================================================
-| Name        | Asim Jameel
-| Designation | PMO Manager
-| Department  | ICTC - Information & Communications Technology Center
-| Phone       | 013860-7046
-| Email       | ajameel@kfupm.edu.sa
-|==================================================
-
-
-=== Data Owner
-
-[cols="1,8"]
-|==================================================
-| Name        | Moawiya Taj
+| Name        | Mr. Moawiya Taj
 | Designation | Director General, Admissions
-| Department  | Admissions Office
+| Department  | Admission Office
 | Phone       | 013860-4290
 | Email       | moawiya@kfupm.edu.sa
-| Data        |
-| System      | <the system hosting the data>
 |==================================================
 
+==== Student Affairs
 
-== Approvals
-
-=== Client
-
-[cols="1,8"]
+[cols="2,9",frame=none,grid=none]
 |==================================================
-| Name        | Dr. Saad Muhammad Saad Al-Shahrani
-| Designation | Deanship, Admission and Registration
-| Department  | Dean, Admission and Registration
-| Phone       | 013860-2040
-| Email       | saadms@kfupm.edu.sa
-| Date        |
-| Type        |
-|==================================================
-
-
-=== Data Owner
-
-[cols="1,8"]
-|==================================================
-| Name        | Moawiya Taj
-| Designation | Director General, Admissions
-| Date        |
-| Type        |
-|==================================================
-
-=== User
-
-[cols="1,8"]
-|==================================================
-| Name        | Ahmed Saleh Alojairi
+| Name        | Dr. Ahmed Saleh Alojairi
 | Designation | Dean, Student Affairs
 | Department  | Student Affairs
 | Phone       | 013860-4259
 | Email       | alojairi@kfupm.edu.sa
 |==================================================
 
+==== English Department
+
+[cols="2,9",frame=none,grid=none]
+|==================================================
+| Name        | Dr. Abdulaziz Alassaf
+| Designation | Assistant Dean, Prep Year Affairs
+| Department  | Preparatory Year Program
+| Phone       | 013860-2810
+| Email       |	alassaf@kfupm.edu.sa
+|==================================================
+
+==== Student Affairs / Student Housing
+
+[cols="2,9",frame=none,grid=none]
+|==================================================
+| Name        | Mr. Ali Al-Ghushairy
+| Designation | Student Affairs
+| Department  | Student Affairs
+| Phone       | 013860-2352
+| Email       | ghushiry@kfupm.edu.sa
+|==================================================
+
+=== Data Owner
+
+[cols="2,9",frame=none,grid=none]
+|==================================================
+| Name        | Mr. Moawiya Taj
+| Designation | Director General, Admissions
+| Department  | Admission Office
+| Phone       | 013860-4290
+| Email       | moawiya@kfupm.edu.sa
+|==================================================
 
 === Security
 
-[cols="1,8"]
+[cols="2,9",frame=none,grid=none]
 |==================================================
-| Name        | Aiman Rasheed
-| Designation | Tech. Manager
-| Date        |
-| Type        |
-|==================================================
-
-=== Server Admin
-
-[cols="1,8"]
-|==================================================
-| Name        |
-| Designation |
-| Date        |
-| Type        |
+| Name        | Mr. Aiman Rasheed
+| Designation | ICTC - Information & Communications Technology Center
+| Department  | Digital Risk & Information Security
+| Phone       | 013860-7025
+| Email       | aimanr@kfupm.edu.sa
 |==================================================
 
 === Database
 
-[cols="1,8"]
+[cols="2,9",frame=none,grid=none]
 |==================================================
-| Name        | Syed Tariq Magrabi
-| Designation | Tech. Manager
-| Date        |
-| Type        |
+| Name        | Mr. Syed Tariq Magrabi
+| Designation | ICTC - Information & Communications Technology Center
+| Department  | Tech. Manager
+| Phone       | 013860-3979
+| Email       | stariq@kfupm.edu.sa
 |==================================================
 
-=== UI/UX
+=== UI/UX Designer
 
-[cols="1,8"]
+[cols="2,9",frame=none,grid=none]
 |==================================================
-| Name        | Ghaffar Sethar
-| Designation | Designer
-| Date        |
-| Type        |
+| Name        | Mr. Ghaffar Sethar
+| Designation | ICTC - Information & Communications Technology Center
+| Department  | Tech. Manager
+| Phone       | 013860-7856
+| Email       | gsethar@kfupm.edu.sa
+|==================================================
+
+=== PMO Manager
+
+[cols="2,9",frame=none,grid=none]
+|==================================================
+| Name        | Asim Jameel
+| Designation | PMO Manager
+| Department  | ICTC - Information & Communications Technology Center
+| Phone       | 013860-7046
+| Email       | ajameel@kfupm.edu.sa
 |==================================================
