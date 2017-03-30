@@ -210,6 +210,17 @@ In five months and it will be from 01/03/2017 to 30/05/2017.
 | Email       | alojairi@kfupm.edu.sa
 |==================================================
 
+==== Registrar Office
+
+[cols="2,9",frame=none,grid=none]
+|==================================================
+| Name        | Dr. Ahmed Dharrab
+| Designation | University Registrar
+| Department  | Registrar Office
+| Phone       | 013860-2590
+| Email       | adharrab@kfupm.edu.sa
+|==================================================
+
 ==== English Department
 
 [cols="2,9",frame=none,grid=none]
