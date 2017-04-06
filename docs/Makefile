@@ -1,14 +1,15 @@
 HTML := 1-initial-requirements.html  \
         2-detailed-requirements.html \
         3-charter.html               \
-        4-srs.html                   \
-        5-design.html
-
+				4-capabilities.pdf           \
+        5-srs.html                   \
+        6-design.html                
 PDF :=  1-initial-requirements.pdf  \
         2-detailed-requirements.pdf \
         3-charter.pdf               \
-        4-srs.pdf                   \
-        5-design.pdf
+				4-capabilities.pdf          \
+        5-srs.pdf                   \
+        6-design.pdf
 
 all: html pdf
 
