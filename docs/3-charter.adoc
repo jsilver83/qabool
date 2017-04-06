@@ -99,7 +99,6 @@ to schedule the appointments for English written exam and interview.
 Risks::
 * The student registration will start on July 2017 and the project should be completed
 before the end of April 2017 in order to test the system.
-* The integration with Yesser to get student information.
 
 Important Dates
 
@@ -179,9 +178,9 @@ In five months and it will be from 01/03/2017 to 30/05/2017.
 
 [cols="2,9",frame=none,grid=none]
 |==================================================
-| Name        | Mr. Moawiya Taj | Role    | Client
-| Designation | Director General, Admissions| Version | 2.0
-| Department  | Admission Office |   Date  | 2017-04-30
+| Name        | Mr. Moawiya Taj
+| Designation | Director General, Admissions
+| Department  | Admission Office
 | Phone       | 013860-4290
 | Email       | moawiya@kfupm.edu.sa
 |==================================================
