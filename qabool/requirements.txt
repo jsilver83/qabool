@@ -1,5 +1,5 @@
 Django==1.9.5
-Pillow==3.2.0
+#Pillow==3.2.0
 diff-match-patch==20121119
 django-debug-toolbar==1.4
 django-floppyforms==1.6.2
