@@ -103,11 +103,11 @@ functionalities and reports.
 
 * Registration with initial agreement.
 * Login, logout, change password & dashboard.
-* Confirmation (only for accepted students by admission office).
+* Student confirmation (only for accepted students by admission office).
+And complete information with reading all agreements and upload required documents.
 * Withdrawal and agreement (after confirmation the student
   can withdraw anytime).
-* Complete information with reading all agreements (Form 2).
-* Upload & Re-upload required documents.
+* Re-upload required documents.
 * Assign student KFUPM ID automatically.
 * Print documents like admission letter, medical report and two letters that
 belong to student housing.
@@ -116,19 +116,18 @@ belong to student housing.
 * Upload & Re-upload personal picture.
 * Reset password.
 * Select time to visit building 54.
-* Select time for English written exam and interview.
-* Select time to attend University preparation course.
+// * Select time for English written exam and interview.
+// * Select time to attend University preparation course.
 
 
 ==== For Admission Office
 
 * Upload list of denied students.
 * Create new semester and enter start and end date for each phase.
-* Check and manipulate students' entered info & uploaded documents.
+* Review and correct student information.
 * Manage schedule to attend building 54.
 * Apply cut-off points and generate results based on student type (S, M and N) and nationality
-* Calculate and take cut-off based on student GPAs
-using business intelligence (BI).
+* Calculate and take cut-off based on student GPAs using business intelligence (BI).
 * Change password.
 
 ==== For Coommittee
@@ -136,14 +135,17 @@ using business intelligence (BI).
 * Review and correct student information.
 
 ==== For Student Affairs
+
 * Manage schedule for university preparation course.
 * Attendance for orientation week in building 54.
 * Attendance for preparation course.
 
 ==== For Registrar
+
 * Upload/enter list of KFUPM Student ID.
 
 ==== For English Dept.
+
 * Manage schedule for English written and oral exams.
 * Above all, the business intelligence (BI) will provide different type of reports for
 student affairs, registrar office, information and communication technology center and admission office.
