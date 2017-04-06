@@ -1,7 +1,7 @@
 HTML := 1-initial-requirements.html  \
         2-detailed-requirements.html \
         3-charter.html               \
-				4-capabilities.pdf           \
+				4-capabilities.html           \
         5-srs.html                   \
         6-design.html
 PDF :=  1-initial-requirements.pdf  \
