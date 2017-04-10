@@ -115,15 +115,23 @@ class RegistrationForm(UserCreationForm):
         widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
 
+    gender = forms.CharField(
+        label=_('Gender'),
+        help_text=_('Only male can apply'),
+        initial=_('Male'),
+        disabled=True
+    )
+
     # high_school_system = forms.ModelChoiceField(
     #     queryset=Lookup.objects.filter(show=True, lookup_type='HIGH_SCHOOL_TYPE'),
     #     required=True,
     # )
 
+
+
     class Meta:
         model = User
-
-        fields = ['first_name', 'last_name', 'username', 'username2', 'mobile', 'mobile2',
+        fields = ['first_name', 'last_name','gender', 'username', 'username2', 'mobile', 'mobile2',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
                   'nationality', 'saudi_mother', 'password1', 'password2', 'student_notes']
 
