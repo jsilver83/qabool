@@ -173,6 +173,14 @@ class AgreementItemAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = AgreementItemResource
 
 
+class AgreementItemInline(admin.TabularInline):
+        model = AgreementItem
+
+class AgreementAdmin(admin.ModelAdmin):
+    inlines = [
+        AgreementItemInline,
+    ]
+
 class LookupResource(resources.ModelResource):
     class Meta:
         model = Lookup
@@ -209,8 +217,8 @@ admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear)
-admin.site.register(Agreement)
-admin.site.register(AgreementItem, AgreementItemAdmin)
+# used TabularInline.
+admin.site.register(Agreement, AgreementAdmin)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Student, StudentAdmin)
