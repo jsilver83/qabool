@@ -17,14 +17,12 @@ from undergraduate_admission.utils import SMS, Email
 @csrf_protect
 def initial_agreement(request):
     form = AgreementForm(request.POST or None)
-
     if request.method == 'POST':
         if form.is_valid():
             request.session['agreed'] = True
             return redirect('register')
         else:
             messages.error(request, _('Error.'))
-
     sem = AdmissionSemester.get_phase1_active_semester()
     agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
     agreement_items = agreement.items.filter(show=True)
