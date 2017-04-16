@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<div class="media">
+    <div class="media-left"><i class="fa fa-calendar fa-2x"></i></div>
+    <div class="media-body">
+        <h4 class="media-heading text-uppercase">{% trans 'Important Dates' %}</h4>
+        <ul class="sidebar">
+            {% for date in important_dates %}
+                <li><strong>{{ date.title }} : </strong>{{ date.description }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div><br>

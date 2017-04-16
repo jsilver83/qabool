@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.cache import cache
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm, EditInfoForm, Phase1UserEditForm
-from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement
+from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement, ImportantDateSidebar
 from undergraduate_admission.utils import SMS, Email
 
 
@@ -29,7 +29,6 @@ def initial_agreement(request):
     return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement,
                                                                       'items': agreement_items,
                                                                       'form': form,})
-
 
 class RegisterView(CreateView):
     model = User
