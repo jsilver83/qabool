@@ -76,9 +76,10 @@ class VerifyStudentAdminForm(forms.ModelForm):
         self.fields['verification_notes'].widget = admin.widgets.AdminTextareaWidget()
 
 
+# TODO: Enhance the form and add script to manage student pictures for the committee.
 class VerifyStudentAdmin(VersionAdmin):
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
-                    'status_message_id', 'get_student_type', )
+                    'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message_id', 'get_student_type', )
     date_hierarchy = 'date_joined'
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality', )
     fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
@@ -124,9 +125,14 @@ class HelpDiskForStudentAdmin(VersionAdmin):
         qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
         return qs
 
+class StatusMessagesInline(admin.TabularInline):
+    model = RegistrationStatusMessage
 
 class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('status_ar', 'status_en', 'status_code')
+    inlines = [
+        StatusMessagesInline,
+    ]
 
 
 class NationalityAdmin(ImportExportMixin, admin.ModelAdmin):
@@ -211,13 +217,60 @@ class RegistrationStatusMessageAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = RegistrationStatusMessageResource
 
 
+# Update selected students status to (admitted). You can see the message id No.1 in RegistrationStatusMessage model.
+def Mark_Partial_Admitted(modeladmin, request, queryset):
+    queryset.update(status_message_id='1')
+    Mark_Partial_Admitted.short_description = "Mark as Partial Admitted"
+
+# Update selected students status to (rejected). You can see the message id No.3 in RegistrationStatusMessage model.
+def Mark_Rejected(modeladmin, request, queryset):
+    queryset.update(status_message_id='3')
+    Mark_Rejected.short_description = "Mark as Rejected"
+# TODO: Should we do in the admin dashboard or in the front-end using template?.
+
+class CutOff(User):
+    class Meta:
+        proxy = True
+
+# TODO: display specific fields with criteria and enhance the search field.
+class CutOffAdmin(admin.ModelAdmin):
+    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
+                    'status_message_id', 'get_student_type',)
+    # date_hierarchy = 'date_joined'
+    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
+    fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
+              'is_active', 'date_joined', 'high_school_gpa',
+              'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
+              'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
+              'high_school_province', 'high_school_city', 'birthday', 'birthday_ah',
+              'nationality', 'saudi_mother', 'birth_place', 'government_id_expiry',
+              'personal_picture', 'government_id_file', 'high_school_certificate',
+              'courses_certificate', 'mother_gov_id_file', 'birth_certificate', 'passport_file',
+              'verification_documents_incomplete', 'get_verification_status', 'verification_status',
+              'verification_notes',)
+    readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
+                       'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status',
+                       'nationality', 'saudi_mother',)
+
+    search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
+                     'nationality__nationality_en']
+    actions = [Mark_Partial_Admitted, Mark_Rejected]
+
+
+# Display Qabool in the page title and header
+admin.site.site_header = ('Qabool')
+admin.site.index_title = ('Qabool Administration')
+admin.site.site_title = ('Administration')
+
 admin.site.register(Nationality, NationalityAdmin)
+admin.site.register(ImportantDateSidebar)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
+# Use TabularInline in the RegistrationStatusMessage model.
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear)
-# used TabularInline.
+# Use TabularInline in the Agreement model.
 admin.site.register(Agreement, AgreementAdmin)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, MyUserAdmin)
@@ -227,3 +280,4 @@ admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
 admin.site.register(VerifyStudent, VerifyStudentAdmin)
+admin.site.register(CutOff, CutOffAdmin)
