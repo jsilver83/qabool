@@ -452,7 +452,7 @@ class RegistrationStatusMessage(models.Model):
             return self.status_message_en
 
     def __str__(self):
-        return self.status.registration_status + ".<br>" + self.registration_status_message
+        return  self.registration_status_message
 
     @staticmethod
     def get_status_applied():
@@ -697,3 +697,34 @@ class AgreementItem(models.Model):
 # Auxiliary table in the database for BI reports
 class Aux1To100(models.Model):
     counter = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('Counter'))
+
+# Important dates model for Qabool. It should display as list in the homepage sidebar.
+class ImportantDateSidebar(models.Model):
+    title_ar = models.CharField(max_length=200, verbose_name=_('Arabic Title'))
+    title_en = models.CharField(max_length=200, verbose_name=_('English Title'))
+    description_ar = models.CharField(max_length=300, null=True, verbose_name=_('Arabic Description'))
+    description_en = models.CharField(max_length=300, null=True, verbose_name=_('English Description'))
+    show = models.BooleanField(verbose_name=_('Show'), default=True)
+    display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
+
+    @property
+    def title(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.title_ar
+        else:
+            return self.title_en
+
+    @property
+    def description(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.description_ar
+        else:
+            return self.description_en
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering=['display_order']

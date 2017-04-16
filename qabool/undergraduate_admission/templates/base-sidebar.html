@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load important_dates %}
 
 {% block content %}
 <div class="container">
@@ -11,19 +12,8 @@
 		</div>
 		<div class="col-md-4 col-md-offset-1">
 			<hr  class="visible-xs visible-sm">
+            {% important_dates %}
 			{% blocktrans %}
-			<div class="media">
-				<div class="media-left"><i class="fa fa-calendar fa-2x"></i></div>
-				<div class="media-body">
-					<h4 class="media-heading text-uppercase">Important Dates</h4>
-					<ul class="sidebar">
-						<li><strong>Registration:</strong> Sun 29 May to 07 June 2016</li>
-						<li><strong>Results:</strong> Wed 15 June 2016</li>
-						<li><strong>Admission Confirmation:</strong> Wed 15 to Thu 23 June 2016</li>
-						<li><strong>Orientation Week:</strong> Mon 22 to Thu 25 August 2016</li>
-					</ul>
-				</div>
-			</div>
 			<div class="media">
 				<div class="media-left"><i class="fa fa-question-circle fa-2x"></i></div>
 				<div class="media-body">
