@@ -11,9 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
     upload_location_mother_govid, upload_location_passport, upload_location_certificate, \
-    upload_location_picture, upload_location_courses, upload_location_withdrawal_proof
+    upload_location_picture, upload_location_courses, upload_location_withdrawal_proof , \
+    upload_location_driving_license , upload_location_vehicle_registration
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
-
 
 class User(AbstractUser):
     semester = models.ForeignKey(
@@ -83,10 +83,12 @@ class User(AbstractUser):
     second_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Second Name (Arabic)'))
     third_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Third Name (Arabic)'))
     family_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Family Name (Arabic)'))
+    student_full_name_ar = models.CharField(null=True, blank=True, max_length=400, verbose_name=_('Student Faull Name (Arabic)'))
     first_name_en = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('First Name (English)'))
     second_name_en = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Second Name (English)'))
     third_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (English)'))
     family_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Family Name (English)'))
+    student_full_name_en = models.CharField(null=True, blank=True, max_length=400, verbose_name=_('Student Faull Name (English)'))
     mother_gov_id_file = models.FileField(
         null=True,
         blank=True,
@@ -227,6 +229,24 @@ class User(AbstractUser):
     relative_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative City'))
     relative_job = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Work'))
     relative_employer = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Employer'))
+    vehicle_registration = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Vehicle Registration'))
+    vehicle_registration_file = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Vehicle Registration File'),
+        upload_to=upload_location_vehicle_registration,
+        validators=[validate_file_extension],
+    )
+    driving_license = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Driving License'))
+    driving_license_file = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Driving_License File'),
+        upload_to=upload_location_driving_license,
+        validators=[validate_file_extension],
+    )
     admission_letter_print_date = models.DateTimeField(null=True,
                                                        blank=True,
                                                        verbose_name=_('Admission Letter Print Date'))

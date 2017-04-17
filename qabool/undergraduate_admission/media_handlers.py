@@ -33,6 +33,11 @@ def upload_location_courses(instance, filename):
 def upload_location_picture(instance, filename):
     return upload_location('picture', instance, filename)
 
+def upload_location_driving_license(instance, filename):
+    return upload_location('driving_license', instance, filename)
+
+def upload_location_vehicle_registration(instance, filename):
+    return upload_location('vehicle_registration', instance, filename)
 
 # defines where to save uploaded student documents
 def upload_location(sub_folder, instance, filename):
