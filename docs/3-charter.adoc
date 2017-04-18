@@ -17,6 +17,7 @@ Internal
 | 1.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2016-03 - 04 | First version
 | 2.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03 - 04 | Update project justifications, project scope,
 historical Information, estimated project duration and initial Time-line.
+| 2.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2016-04 - 17 | Update risks and assumptions sections.
 |==================================================
 
 [discrete]
@@ -97,8 +98,8 @@ to schedule the appointments for English written exam and interview.
 == Project Considerations
 
 Risks::
-* The student registration will start on July 2017 and the project should be completed
-before the end of April 2017 in order to test the system.
+* The student registration will start on July 2017 and the project should be completed and tested
+before the end of June 2017.
 
 Important Dates
 
@@ -117,6 +118,14 @@ Assumptions::
 * The registration only for students who study in Saudi Arabia.
 * Student information will captured from Yesser.
 * Denied student cannot register at KFUPM.
+* Prepare in the production system the following
+** Enter the new year for the registration and start/end dates for all phases.
+** Upload student KFUPM IDs.
+** Upload list of denied students.
+** Enter all agreements for phase 1 and 2 bilingual.
+** Update/Enter student's messages status.
+** Update/Enter messages status for committee.
+** (optional) Upload list of distinguished students.
 
 Constraints:: --
 
@@ -168,7 +177,7 @@ In five months and it will be from 01/03/2017 to 30/05/2017.
 | 9   | Trainer | Bassam Almaaesh | ICTC - SDD
 | 10  | Documentation Manager | Bassam Almaaesh | ICTC - SDD
 | 11  | Subject Matter Expert (SME) | Moawiya Taj | Admission Office
-| 12  | Developer | Bassam Almaaesh | ICTC - SDD
+| 12  | Asset Developer | Bassam Almaaesh | ICTC - SDD
 |===============================
 
 == Project Stakeholders
