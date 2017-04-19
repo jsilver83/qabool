@@ -18,7 +18,7 @@ Internal
 |==================================================
 
 == Students
-=== Student Registration and Preview
+=== Student Registration
 
 [horizontal]
 Capability ID::	Q.01
@@ -36,7 +36,6 @@ In addition what we have in the current system in step/phase 1 we should add the
 . Add new two fields called : Qudurat and Tahseel grades.
 . Add note below mobile number (to receive a message you have to activate promotion message from your network provider).
 . In the student dashboard move up student name and change caption name: "اسم الطالب الثنائي".
-. The students should preview their entries before submitting the form.
 
 Dependencies::	None.
 
@@ -107,6 +106,7 @@ and medical report to new step/phase 3 add the following criteria:
 . Only admitted students can access the system in order to make a reservation to visit building 54.
 . Admitted student can not change the reservation once he select and submit the form.
 . Admitted students can print admission letter after he select the reservation.
+. Admitted students can print medical report.
 . The admission letter contains the time-slot to visit building 54.
 . Admitted students can print medical report.
 
@@ -411,7 +411,7 @@ Fit Criteria::
 
 == Student Affairs
 
-=== Reception Building 54
+=== Reception System (in Building 54)
 [horizontal]
 Capability ID:: Q.12
 
