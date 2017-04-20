@@ -14,28 +14,31 @@ include::includes/proprietary-information.adoc[]
 | 1.0 | Abdullah Joud, Bassam Almaaesh | 2016-04-10 | First version
 | 2.0 | Abdullah Joud, Bassam Almaaesh | 2017-01-01 | Update
 product functions and business process
-| 2.1 | Bassam Almaaesh | 2017-02-15 | Update business process for phase 1,2,3 and 4
-| 2.2 | Bassam Almaaesh | 2017-03-15 |
+| 2.0 | Bassam Almaaesh | 2017-02-15 | Update business process for phase 1,2,3 and 4
+| 2.0 | Bassam Almaaesh | 2017-03-15 | Update phase 1 screens
 |==================================================
 
 
 [discrete]
 == Approvals
 
-[cols="1h,3,1h,1",frame=none,grid=none]
-|==================================================
-| Name        |    | Role    |
-| Designation |   | Version | 2.2
-| Department  |                  | Date    |
-|==================================================
-
----
 
 [cols="1h,3,1h,1",frame=none,grid=none]
 |==================================================
-| Name        |  | Role    |
-| Designation |           | Version | 2.2
-| Department  |   | Date |
+| Name        | Dr. Ahmad Khayyat                    | Role    | Sponsor
+| Designation | Assistant Director             | Version | 2.0
+| Department  | ICTC                                 | Date    | 2017-04-30
+| Phone       | 013860-7270
+| Email       | akhayyat@kfupm.edu.sa
+|==================================================
+
+[cols="1h,3,1h,1",frame=none,grid=none]
+|==================================================
+| Name        | Mr. Moawiya Taj | Role    | Client
+| Designation | Director General, Admissions| Version | 2.0
+| Department  | Admission Office |   Date  | 2017-04-30
+| Phone       | 013860-4290
+| Email       | moawiya@kfupm.edu.sa
 |==================================================
 
 <<<
@@ -56,12 +59,15 @@ the development team while developing the first version of the system.
 _Qabool_ shall enable students to apply to enroll at KFUPM.
 This system will cover the whole admission life-cycle including the following screens
 
-* student application
-* admission screens
-* student affairs screens
-* registrar office screen
-* orientation week screens
-* student housing screens
+* student application.
+* admission screens.
+* committee screen.
+* student affairs screens.
+* registrar office screen.
+* English department screens.
+* attendance system for orientation week.
+* attendance system for university preparation course.
+* student housing screens.
 
 === Definitions, Acronyms, and Abbreviations
 
@@ -130,7 +136,7 @@ belong to student housing.
 * Calculate and take cut-off based on student GPAs using business intelligence (BI).
 * Change password.
 
-==== For Coommittee
+==== For Committee
 
 * Review and correct student information.
 
@@ -221,22 +227,47 @@ The system is web-based. All functions shall be available through a web browser.
 
 None.
 
-=== User Documentation
-
-None.
-
 === Assumptions and Dependencies
 
 _Qabool_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
 tests data.
 
-=== Hardware Interfaces
+=== User Interfaces
 
-None
+==== Phase 1: Student Registration
+[[context]]
+.Qabool Homepage
+image::images/phase1/homepage.PNG[]
 
-=== Software Interfaces
 
-NOTE: TBD
+[[context]]
+.Initial Agreements
+image::images/phase1/initalAgreements.PNG[]
+
+
+[[context]]
+.Student Registration
+image::images/phase1/studentRegistration.png[]
+
+[[context]]
+.Registration Successfully Message
+image::images/phase1/success_registered.png[]
+
+[[context]]
+.Denied Student Message
+image::images/phase1/denied_student.png[]
+
+[[context]]
+.Error During Registration
+image::images/phase1/error_during_registration.png[]
+
+[[context]]
+.Student Dashboard
+image::images/phase1/studentDashboard.PNG[]
+
+[[context]]
+.Homepage when the registration is closed
+image::images/phase1/registration_closed.png[]
 
 === Communications Interfaces
 
