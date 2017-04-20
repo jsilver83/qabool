@@ -232,6 +232,8 @@ None.
 _Qabool_ depends on Yesser GSB to fetch students high-school and Quadrat/Tahsili
 tests data.
 
+== External Interface Requirements
+
 === User Interfaces
 
 ==== Phase 1: Student Registration
@@ -268,6 +270,46 @@ image::images/phase1/studentDashboard.PNG[]
 [[context]]
 .Homepage when the registration is closed
 image::images/phase1/registration_closed.png[]
+
+* Email and SMS notifications when students register successfully.
+[cols="1,3",options="header",small]
+|==================================================
+| System Messages  | English | Arabic
+| Email Notification  | Dear <student name>,
+Your request has been successfully submitted and the Admission results
+will be announced on Wednesday June 15, 2016 ...
+
+Registration Details
+Registration ID: %(user_id)s
+Mobile: %(mobile)s<br>'
+Registration Date: %(reg_date)s
+
+You agreed to the following:<br>%(agree_header)s
+%(agree_items)s
+
+You are recommended to frequently visit the admission website to know the
+admission result and any updated instructions.
+
+Admissions Office,
+King Fahd University of Petroleum and Minerals. | [ عزيزي الطالب %(student_name)s, تم استلام طلبك بنجاح
+وسيتم إعلان النتائج يوم اﻷربعاء 10 رمضان 1437 هـ حسب تقويم أم القرى  ...
+
+تفاصيل الطلب
+رقم التسجيل: %(user_id)s
+رقم الجوال: %(mobile)s
+تاريخ التسجيل: %(reg_date)s
+الشروط و اﻷحكام:
+
+فضلا شارك معنا في اﻻستبيان: http://goo.gl/erw8HQ .
+
+ إدارة القبول،
+جامعة الملك فهد للبترول والمعادن.
+| SMS Notification  | Your request has been successfully submitted.
+We appreciate your feedback: http://goo.gl/erw8HQ.
+Admissions Office, KFUPM | تم استلام طلبك بنجاح. فضلا شارك معنا في الاستبيان:
+http://goo.gl/erw8HQ .
+إدارة القبول، جامعة الملك فهد للبترول والمعادن.
+|==================================================
 
 === Communications Interfaces
 
