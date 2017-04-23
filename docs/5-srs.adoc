@@ -240,38 +240,126 @@ tests data.
 [[context]]
 .Qabool Homepage
 image::images/phase1/homepage.PNG[]
-
-
+'''
 [[context]]
 .Initial Agreements
 image::images/phase1/initalAgreements.PNG[]
-
-
+'''
 [[context]]
 .Student Registration
 image::images/phase1/studentRegistration.png[]
-
+'''
 [[context]]
 .Registration Successfully Message
 image::images/phase1/success_registered.png[]
-
+'''
 [[context]]
 .Denied Student Message
 image::images/phase1/denied_student.png[]
-
+'''
 [[context]]
 .Error During Registration
 image::images/phase1/error_during_registration.png[]
-
+'''
 [[context]]
-.Student Dashboard
+.Student Dashboard after Applying
 image::images/phase1/studentDashboard.PNG[]
-
+'''
 [[context]]
 .Homepage when the registration is closed
 image::images/phase1/registration_closed.png[]
+'''
 
-* Email and SMS notifications when students register successfully.
+==== Phase 2: Student Confirmation
+
+[[context]]
+.Rejected Student
+image::images/phase2/studentDashboard-Rejected.PNG[]
+'''
+[[context]]
+.Student Confirmation - Partial Admitted
+image::images/phase2/StuConfirmation-1.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step1 Agreements
+image::images/phase2/StuConfirmation-2.PNG[]
+'''
+[[context]]
+image::images/phase2/StuConfirmation-3.PNG[]
+
+[[context]]
+.Student Confirmation - Step2.1 Student Information
+image::images/phase2/StuConfirmation-31.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step2.2 Student Information
+image::images/phase2/StuConfirmation-4.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step2.3 Student Information
+image::images/phase2/StuConfirmation-5.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step2.4 Upload Docs for Saudi Students
+image::images/phase2/StuConfirmation-6.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step2.4 Upload Docs for Saudi Mother Students
+image::images/phase2/StuConfirmation-61.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step3.1 Student Agreement
+image::images/phase2/StuConfirmation-7.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step3.2 Student Agreement
+image::images/phase2/StuConfirmation-71.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step3.3 Student Agreement
+image::images/phase2/StuConfirmation-72.PNG[]
+'''
+[[context]]
+.Student Confirmation - Step3.4 Student Agreement
+image::images/phase2/StuConfirmation-73.PNG[]
+'''
+
+==== Phase 3: Print Admission Letter and Medical Report
+
+[[context]]
+.Student Confirmation - Print Admission Letter and Medical Report
+image::images/phase2/StuConfirmation-8.PNG[]
+'''
+
+[[context]]
+.Print Admission Letter and Medical Report
+image::images/phase3/admission_letter_schedule.png[]
+'''
+
+[[context]]
+.Print Admission Letter
+image::images/phase3/admLetter.png[]
+'''
+
+[context]]
+.Print Medical Report
+image::images/phase3/medLetter.png[]
+'''
+
+[context]]
+.Search Roommate
+image::images/phase3/StudentHousing-Search.PNG[]
+'''
+
+==== Phase 4: Orientation Week and Attendance systems
+
+
+=== Communications Interfaces
+
+- The system must support email and SMS notifications for different activities.
+These notifications include:
+
+** Notifying students when the registration has been submitted successfully to admission.
 [cols="1,3",options="header",small]
 |==================================================
 | System Messages  | English | Arabic
@@ -311,11 +399,6 @@ http://goo.gl/erw8HQ .
 إدارة القبول، جامعة الملك فهد للبترول والمعادن.
 |==================================================
 
-=== Communications Interfaces
-
-- The system must support email and SMS notifications for different activities.
-These notifications include:
-** Notifying students when the registration has been submitted successfully to admission.
 ** Notifying students when they confirm and accept study at KFUPM.
 ** Notifying both application administrator and
 students when the withdrawal has been submitted to admission.
