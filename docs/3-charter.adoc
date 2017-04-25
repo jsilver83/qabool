@@ -70,8 +70,9 @@ In addition to that we need to add more facilities as below:
 === For students
 * Allow the student to upload driving license and vehicle registration documents for security department.
 * Allow the student to make reservations in order to visit building 54.
-* Allow the student to make reservations to take English written exam and interview.
-* Allow the student to make reservations to attend university preparation course.
+// Not confirm
+// * Allow the student to make reservations to take English written exam and interview.
+// * Allow the student to make reservations to attend university preparation course.
 * Allow the student to choose roommate.
 
 === For Committee
@@ -81,10 +82,10 @@ In addition to that we need to add more facilities as below:
 * The admission office can review and correct student information with extra fields.
 * The admission dates can be managed and schedule the appointments to attend building 54.
 * The admission should be able to apply cut-off points and generate results
-based on student type (S, M and N) and nationality.
+based on student type (S, M and N), graduation year, high school types and nationality.
 
 === For Student Affairs
-* The student affairs will be able to prepare and manage a schedule for preparation of course.
+// * The student affairs will be able to prepare and manage a schedule for preparation of course.
 * The student affairs reception will use the attendance system for orientation week in building 54.
 * The student affairs reception will use the attendance system for university preparation course.
 
@@ -99,7 +100,7 @@ to schedule the appointments for English written exam and interview.
 
 Risks::
 * The student registration will start on July 2017 and the project should be completed and tested
-before the end of June 2017.
+before the end of May 2017.
 
 Important Dates
 
@@ -129,7 +130,7 @@ Assumptions::
 
 Constraints:: --
 
-
+<<<
 == Historical Information and Related Knowledge Base
 In 2016, we developed Qabool system from scratch using Django web framework (url: qabool.kfupm.edu.sa.)
 
