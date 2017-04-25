@@ -288,8 +288,11 @@ image::images/phase2/StuConfirmation-2.PNG[]
 image::images/phase2/StuConfirmation-3.PNG[]
 
 [[context]]
-.Student Confirmation - Step2.1 Student Information
 image::images/phase2/StuConfirmation-31.PNG[]
+
+[[context]]
+.Student Confirmation - Step2.1 Student Information
+image::images/phase2/StuConfirmation-311.PNG[]
 '''
 [[context]]
 .Student Confirmation - Step2.2 Student Information
@@ -341,12 +344,19 @@ image::images/phase3/admission_letter_schedule.png[]
 image::images/phase3/admLetter.png[]
 '''
 
-[context]]
+[[context]]
 .Print Medical Report
 image::images/phase3/medLetter.png[]
 '''
 
-[context]]
+[[context]]
+image::images/phase3/StudentHousing.PNG[]
+
+.Fill the Questionnaires for student housing
+image::images/phase3/StudentHousing-2.PNG[]
+'''
+
+[[context]]
 .Search Roommate
 image::images/phase3/StudentHousing-Search.PNG[]
 '''
@@ -405,128 +415,526 @@ students when the withdrawal has been submitted to admission.
 
 == Functional Requirements
 
-=== Student Registration
+=== Students
+==== Student Registration
 
-ID: FR1
+[horizontal]
+Capability ID::	Q.01
 
-==== Description and Priority
+Description::	This capability allows the student to apply to study at KFUPM.
 
-The student will fill the registration which is the first step in the application
-process.
+Rationale:: Students who are interested to study at KFUPM.
 
-Priority: High
+Source::	Student.
 
-==== Stimulus/Response Sequences
+Fit Criteria::
 
-The student will fill the registration form which contains required fields like
-credentials, email, mobile and the year he graduated from high-school.
-After that. he will be sent an email and SMS as confirmation of receiving his
-registration. He can then periodically login and see his application status in dashboard.
+In addition what we have in the current system in step/phase 1 we should add the following criteria:
 
-==== Functional Requirements
+. Add new fields called:
+.. High School , Qudurat and Tahseel grades.
+.. Student Full Name (Arabic) same as Identification ID/Iqama (show this field in student dashboard).
+.. Student Full Name (English) same as passport or high school certificate (show this field in student dashboard).
+.. Gender, default value is male.
+. Add high school types:
+.. Private - Public studies
+.. Private - International studies.
+. Change status message from : ('تم التقديم') to ('تم تقديم طلبك')
+. Add note above the form (for best browser use Google Chrome or Firefox).
+. Add note below mobile number (to receive a message you have to activate promotion message from your network provider).
+. (Deleted) In the student dashboard move up student name and change caption name: "اسم الطالب الثنائي".
+. (Deleted) Add new caption/label called gender: only for male.
+. Student can edit the following fields till the end of phase 1:
+.. Student Full Name Arabic and English.
+.. Email and student mobile.
+.. High school, Qudurat and Tahseel grades.
+.. Student Note
 
-REQ-1 :: Fill registration form
-REQ-2 :: Receive confirmation of application submission through SMS and email which
-will contain his application ID
-REQ-3 :: Login to student dashboard
+Dependencies::	None.
 
-=== Reset Password
+Conflicts::	None.
 
-ID: FR2
+Priority::	5
 
-==== Description and Priority
+Risk::	1
 
-If the student forgets his password, he can use the reset password form to resolve that.
+Effort::	3
 
-Priority: High
+Approval::	Not yet approved.
 
-==== Stimulus/Response Sequences
 
-If the student forgets his password, he can fill a form which will help him reset it.
-He needs to provide 3 correct answers out of the following:
+==== Student Confirmation
 
-* Application ID
-* Email
-* Mobile
-* Graduation year (from high-school)
+[horizontal]
+Capability ID::	Q.02
 
-==== Functional Requirements
+Description::	Partial admitted students can make confirmation to study at KFUPM and complete their informations
+and also upload required documents including driving license and vehicle registration
+documents for security department.
 
-REQ-1 :: Fill password reset form
+Rationale:: Students who are interested to study at KFUPM can confirm.
 
-=== Admission Confirmation
+Source::	Students.
 
-ID: FR3
+Fit Criteria::
 
-==== Description and Priority
+In addition what we have in the current system step/phase 2, we should add the following criteria:
+. Add new field called (do you have a car) and it is optional.
+. If yes, the student can enter vehicle registration number and driving license.
+. Also, the student can upload these two documents (vehicle registration number and driving license).
+. Partial admitted students can upload personal picture and can edit the image using crop, resize and rotate.
+. Partial admitted students can not edit their information once they submit the form.
+. If partial admitted student doesn't confirm within the period, the system will reject his
+application automatically.
 
-If the the applicants meets the admission criteria, he will be notified
-(outside the system) that he is partially admitted into KFUPM. He then has to
-login and confirm the desire to study at KFUPM. He also has to fill in more
-required info and upload required documents. After that he can view and print
-various important documents like admission letter and medical checkup letter.
+Dependencies::	Q.01 and login screen
 
-Priority: High
+Conflicts::	None.
 
-==== Stimulus/Response Sequences
+Priority::	5
 
-If the student is admitted into KFUPM, he has to login and confirm his desire to
-study at KFUPM after going through the agreement. He will form 2 which contains
-required information by the admission office. He also has to upload required
-documents. He also has to fill form 3 which contains required information by
-student affairs. After that, he can view and print admission letter that contains his
-KFUPM ID and instructions on orientation week. Next, he can view and print the
-medical checkup letter. He can also view and print instructions and guidelines
-to orientation year and student housing in KFUPM.
+Risk::	3
 
-==== Functional Requirements
+Effort::	3
 
-REQ-1 :: Read agreement and confirm desire to study at KFUPM
-REQ-2 :: Fill admission office form (form2)
-REQ-3 :: Upload required documents depending on the student type:
+Approval::	Not yet approved.
 
-* Students in general has to upload these:
-** Personal photo
-** government ID (for Saudis) or Iqama (for non-Saudis)
-** Highscool certificate
-** Muqarrarat certificate (for Muqarrarat students only)
 
-* Non-Saudi students from Saudi mothers
-** Saudi mother's government ID
-** Student birth certificate
+==== Student Reservation and Printing Documents
 
-* Non-Saudi students (in general)
-** Passport
+[horizontal]
+Capability ID::	Q.03
 
-REQ-4 :: Fill student affairs form (form3)
-REQ-5 :: View and print following documents:
-* Admission letter (includes KFUPM ID)
-* Medical checkup letter
-* Orientation year guide
-* Student housing guidelines
+Description::	Admitted students can make reservations in order to visit building 54 and also printing
+admission letter and medical report.
 
-=== Withdraw
+Rationale:: To attend the orientation week and receive student schedule.
 
-ID: FR4
+Source:: Students.
 
-==== Description and Priority
+Fit Criteria::
 
-After the student confirms his desire to study at KFUPM, he can (if he wants)
-withdraw his application at any time later on. Withdrawal is final and irreversible.
+In addition what we have in the current system, we move printing admission letter
+and medical report to new step/phase 3 add the following criteria:
+. This module will be open during step/phase 3.
+. Only admitted students can access the system in order to make a reservation to visit building 54.
+. Admitted student can not change the reservation once he select and submit form.
+. The system will assign KFUPM ID to the student automatically once he make reservation.
+. Admitted students can print admission letter after he select the reservation.
+. Admitted students can print medical report.
+. The admission letter contains the time-slot to visit building 54.
 
-Priority: High
+Dependencies::	login screen and Q.09
 
-==== Stimulus/Response Sequences
+Conflicts::	None.
 
-IF the admitted and confirmed student wishes to withdraw from KFUPM, he has to
-go through the agreement and then fill the withdrawal form. After that, his status
-is changed to withdrawn in the dashboard.
+Priority::	5
 
-==== Functional Requirements
+Risk::	3
 
-REQ-1 :: Read withdrawal agreement
-REQ-2 :: Fill withdrawal form
+Effort::	3
 
+Approval::	Not yet approved.
+
+
+==== Find roommate
+
+[horizontal]
+Capability ID::	Q.04
+
+Description::	Admitted students who are eligible for housing can search and select a roommate.
+
+Rationale:: To search and find roommate.
+
+Source::	Students.
+
+Fit Criteria::
+In addition what we have in the current system step/phase 3, we should add the following criteria:
+. This module will start in step/phase 3 after printing admission letter and it will close before orientation week.
+. Admitted student can answer the questionnaire.
+. Add a new field called "Enter Your Partner KFUPM ID" to send a request to the partner.
+. The roommate should be able to accept or reject the request.
+. If both students agree, their information will not show in the search page.
+
+Dependencies::	login screen , Q.03 and Q.09.
+
+Conflicts::	None.
+
+
+Priority::	4
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+
+==== Student Withdrawn
+
+[horizontal]
+Capability ID::	Q.05
+
+Description::	Admitted students have the opportunity to withdraw from the university.
+
+Rationale:: Admitted students not interested to study at KFUPM.
+
+Source::	Students.
+
+Fit Criteria::
+In addition what we have in the current system step/phase 3, we should add the following criteria:
+. This module will start in step/phase 3 after student confirmation and printing documents.
+. The last day for students to withdraw will be the end of the registration period.
+. Once the student withdrawal is processed, the system will remove his KFUPM
+ID and it will not be used in the system again.
+. The system will send SMS notification to the student and his parent once he confirm and submit the form.
+
+Dependencies::	login screen , Q.03 and Q.09.
+
+Conflicts::	None.
+
+Priority::	4
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+
+=== Registrar
+
+==== Upload KFUPM IDs
+
+[horizontal]
+Capability ID::	Q.06
+
+Description::	The registrar should be able to upload KFUPM IDs in the current semester.
+
+Rationale:: These KFUPM IDs will distribute to Admitted students and it will assign to them
+random and automatically.
+
+Source::	Registrar.
+
+Fit Criteria::
+. The registrar should be able to upload list of KFUPM IDs in the specific semester.
+. All KFUPM IDs should be uniques.
+
+Dependencies::	login screen.
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+
+=== English Department
+
+==== Upload English results
+[horizontal]
+
+Capability ID::	Q.07
+
+Description::	The English department should be able to upload the results of English written exam
+for current semester.
+
+Rationale:: For statistic purpose and the report will create through BI.
+
+Source::	English Department.
+
+Fit Criteria::
+. English department will able to upload list of student results.
+It contains only two fields (student ID and student level) for the current year/semester.
+
+Dependencies::	who-attend-orientation-week and take English exam
+
+Conflicts::	None.
+
+Priority::	1
+
+Risk::	1
+
+Effort::	1
+
+Approval::	Not yet approved.
+
+
+==== Manage Written Exam and Interview Time-slot
+[horizontal]
+
+Capability ID::	Q.08
+
+Description::	The English department can manage written exam and
+interview for current semester in order to use it in step/phase 4.
+
+Rationale:: To use it in the orientation week and print the schedule for the students in the reception.
+
+Source::	English Department.
+
+Fit Criteria::
+. English department should able to add exam dates and sections information in the current semester
+(note: usually they schedule only for two dates).
+// And the fields are date and day.
+
+// . Each date has many sections information ( the fields are : building number, section number,
+//   maximum enrollment, interview start time, interview students per 10 minutes).
+
+Dependencies::	None.
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+==== BI Reports
+
+Fit Criteria::
+
+. Display list of students per section for English exam and Interview.
+
+
+=== Committee
+
+==== Review and Verification Student Information
+[horizontal]
+
+Capability ID::	Q.09
+
+Description::	The committee can view student's information and correct it if need.
+It starts on the second day of step/phase 2.
+
+Rationale:: To verify student's information.
+
+Source::	Committee.
+
+Fit Criteria::
+. This module will open on second day of step/phase 2 once the student submit his application.
+. Committee should be able to correct student full names bilingual (only full names).
+. All fields should be "read only" except
+.. full names
+.. high school name, province, high school city, country,
+.. eligible for housing,
+.. expire Gov ID / Iqama and
+.. birth of date and place
+.. committee note and type of the problems.
+. Committee should be able to review and verify student information.
+. Committee should be able to remove/delete student's documents if any document is missing and it will go back to
+the student in order to correct and re-upload the documents.
+. Committee should be able to remove the student's picture and return back to student in order to re-upload it.
+. The system should be able to assign KFUPM ID automatically (student ID)
+if the application is valid.
+. If the student not respond to correct his application during second step/phase 2,
+his application will be rejected.
+
+// And the fields are date and day.
+// . Each date has many sections information ( the fields are : building number, section number,
+//   maximum enrollment, interview start time, interview students per 10 minutes).
+
+Dependencies::	Q.01 , Q.03 and login screen.
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+
+=== Admission Office
+
+==== Manage Admission Time-slot
+[horizontal]
+Capability ID:: Q.10
+
+Description::	The admission office can manage the time-slot in order to allow admitted students
+to select proper time to attend orientation week and then print the admission letter.
+
+Rationale:: To organize scheduling for the orientation week.
+
+Source::	Admission Office.
+
+Fit Criteria::
+. Admission office should be able to add time-slot in order to organize
+the schedule for the orientation week. (note: usually they schedule
+only for two days and 8 time-slots).
+. These slots only for admitted students.
+
+Dependencies:: Q.09.
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+
+==== Sync Data from Yesser
+[horizontal]
+Capability ID:: Q.11
+
+Description::	The admission office can retrieve data from Yesser in order to calculate students GPAs.
+
+Rationale:: To calculate student GPAs.
+
+Source::	Admission Office.
+
+Fit Criteria::
+. Admission office should be able to retrieve student information from Yesser.
+.. Student Arabic name separated.
+.. Student English name separated.
+.. (another new fields especially for Yesser) High School , Qudurat and Tahseel grades.
+.. High school name, province and city.
+.. Birth of date and place.
+.. Gender
+
+Dependencies:: Q.01.
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+
+==== Apply Cut-Off Points
+[horizontal]
+Capability ID:: Q.12
+
+Description::	The admission office can apply cut-off points based on students GPA
+and their types (S, M and N ) and student nationalities.
+
+Rationale:: To announce student results and nominate partial admitted.
+
+Source::	Admission Office.
+
+Fit Criteria::
+. Admission office should be able to apply cut-off points based on students GPA student type
+(S, M and N), graduation year, high school types and nationality.
+
+Dependencies:: Q.09.
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+==== BI Reports
+We should enhance and update current reports based on the new capabilities.
+
+
+=== Student Housing
+
+==== BI Reports
+
+Fit Criteria::
+
+. Display list of eligible students for housing and their status if they find a roommate or not yet.
+
+=== Student Affairs
+
+==== Reception System (in Building 54)
+[horizontal]
+Capability ID:: Q.13
+
+Description::	This capability will allow the student affairs to print schedule for English exams and
+preparation university course. And then give two copies: one for student and the other will print inside for student affairs.
+
+Rationale::	In order to get student folder and schedule English exams and preparation university course.
+
+Source::	Student Affairs.
+
+Fit Criteria::
+
+. The system will schedule only for admitted students.
+. Student affairs should be able to enter student ID in order to print schedule for English exams and the course time and location.
+. The system should schedule course time without any conflicts with English written exams and interview.
+. If the student does not visit building 54 and print his scheduled exams and course,
+he cannot attend the course of preparation university course.
+
+Dependencies:: Q.03
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+
+==== Attendance System for Preparation Course
+[horizontal]
+Capability ID:: Q.14
+
+Description::	This capability will allow the staff of student affairs to record
+attendance for the students based on their schedule.
+
+Rationale::	In order to attend the course and after that the students can receive books from bookstore.
+
+Source::	Student Affairs.
+
+Fit Criteria::
+
+. Student affairs should be able to make attendance of each student per section.
+. If the student does not visit building 54 and print his scheduled exams and course,
+he cannot attend the course of preparation university course.
+. If the student does not attend preparation course, the system will not allow him to receive books from bookstore.
+
+Dependencies::	Q.12
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
+
+==== BI Reports
+
+Fit Criteria::
+
+. Display list of students per section for preparation course.
+. Display list of students who did not attend the course.
+. Display list of students who attend orientation week and who did not.
+
+=== Security Department
+
+==== BI Reports
+
+Fit Criteria::
+
+. Display list of students who want to get car stickers with vehicle information.
 
 == Other Nonfunctional Requirements
 
