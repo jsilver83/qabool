@@ -228,9 +228,11 @@ def Mark_Rejected(modeladmin, request, queryset):
     Mark_Rejected.short_description = "Mark as Rejected"
 # TODO: Should we do in the admin dashboard or in the front-end using template?.
 
+
 class CutOff(User):
     class Meta:
         proxy = True
+
 
 # TODO: display specific fields with criteria and enhance the search field.
 class CutOffAdmin(admin.ModelAdmin):
