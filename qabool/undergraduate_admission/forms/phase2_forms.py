@@ -4,6 +4,11 @@ from django.utils import timezone
 from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage
 from django.utils.translation import ugettext_lazy as _, get_language
 
+YES_NO_CHOICES = (
+    ('True', _("Yes")),
+    ('False', _("No")),
+)
+
 
 # to save phase 2 submit date on all phase 2 forms
 class Phase2GenericForm(forms.ModelForm):
@@ -36,15 +41,10 @@ class PersonalInfoForm(Phase2GenericForm):
                   'birthday_ah', 'birthday', 'birth_place',
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry', 'social_status',
-                  'is_employed', 'employer_name', # 'employment',
+                  'is_employed', 'employer_name',  # 'employment',
                   'blood_type',
                   'is_disabled', 'disability_needs', 'disability_needs_notes',
-                  'is_diseased', 'chronic_diseases', 'chronic_diseases_notes',]
-
-        YES_NO_CHOICES = (
-            ('True', _("Yes")),
-            ('False', _("No")),
-        )
+                  'is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ]
 
         widgets = {
             'birthday': forms.DateInput(attrs={'class': 'datepicker'}),
@@ -54,7 +54,8 @@ class PersonalInfoForm(Phase2GenericForm):
             'social_status': forms.RadioSelect(choices=Lookup.get_lookup_choices('SOCIAL_STATUS', False)),
             'employment': forms.RadioSelect(choices=Lookup.get_lookup_choices('EMPLOYMENT_STATUS', False)),
             'disability_needs': forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('DISABILITY', False)),
-            'chronic_diseases': forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False)),
+            'chronic_diseases': forms.CheckboxSelectMultiple(
+                choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False)),
             'blood_type': forms.Select(choices=Lookup.get_lookup_choices('BLOOD_TYPE', False)),
             'is_employed': forms.RadioSelect(choices=YES_NO_CHOICES),
             'is_disabled': forms.RadioSelect(choices=YES_NO_CHOICES),
@@ -100,40 +101,40 @@ class PersonalInfoForm(Phase2GenericForm):
             if field == 'birthday_ah':
                 if self.instance.birthday_ah:
                     self.fields[field].widget.attrs.update(
-                        {'class': 'updateOnce',}
+                        {'class': 'updateOnce', }
                     )
                 else:
                     self.fields[field].widget.attrs.update(
-                        {'class': 'hijri updateOnce',}
+                        {'class': 'hijri updateOnce', }
                     )
             elif field == 'birthday':
                 if self.instance.birthday:
                     self.fields[field].widget.attrs.update(
-                        {'class': 'updateOnce',}
+                        {'class': 'updateOnce', }
                     )
                 else:
                     self.fields[field].widget.attrs.update(
-                        {'class': 'datepicker updateOnce',}
+                        {'class': 'datepicker updateOnce', }
                     )
             elif field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
                            'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name',
                            'high_school_province']:
                 self.fields[field].widget.attrs.update(
-                    {'class': 'updateOnce',}
+                    {'class': 'updateOnce', }
                 )
 
 
 class GuardianContactForm(Phase2GenericForm):
-
     class Meta:
         model = User
 
-        fields = ['guardian_name', 'guardian_government_id', 'guardian_relation', 'guardian_phone', # 'guardian_mobile',
+        fields = ['guardian_name', 'guardian_government_id', 'guardian_relation', 'guardian_phone',
+                  # 'guardian_mobile',
                   'guardian_email', 'guardian_po_box', 'guardian_postal_code', 'guardian_city', 'guardian_job',
                   'guardian_employer']
 
         widgets = {
-            'guardian_relation': forms.Select(choices= Lookup.get_lookup_choices('PERSON_RELATION')),
+            'guardian_relation': forms.Select(choices=Lookup.get_lookup_choices('PERSON_RELATION')),
         }
 
     def __init__(self, *args, **kwargs):
@@ -145,16 +146,11 @@ class GuardianContactForm(Phase2GenericForm):
 
 
 class RelativeContactForm(Phase2GenericForm):
-
     class Meta:
         model = User
 
         fields = ['relative_name', 'relative_relation', 'relative_phone', 'relative_po_box',
                   'relative_po_stal_code', 'relative_city', 'relative_job', 'relative_employer']
-
-        # widgets = {
-        #     'relative_relation': forms.Select(choices= Lookup.get_lookup_choices('PERSON_RELATION')),
-        # }
 
     def __init__(self, *args, **kwargs):
         super(RelativeContactForm, self).__init__(*args, **kwargs)
@@ -164,8 +160,28 @@ class RelativeContactForm(Phase2GenericForm):
             self.fields[field].required = True
 
 
-class DocumentsForm(Phase2GenericForm):
+class VehicleInfoForm(Phase2GenericForm):
+    class Meta:
+        model = User
+        fields = ['have_a_vehicle', 'vehicle_plate_no', 'vehicle_registration_file', 'driving_license_file', ]
+        widgets = {
+            'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
+        }
 
+    def clean(self):
+        cleaned_data = super(VehicleInfoForm, self).clean()
+        have_a_vehicle = cleaned_data.get('have_a_vehicle')
+        vehicle_plate_no = cleaned_data.get('vehicle_plate_no')
+        vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
+        driving_license_file = cleaned_data.get('driving_license_file')
+
+        if have_a_vehicle and not (vehicle_plate_no and vehicle_registration_file and driving_license_file):
+            raise forms.ValidationError(_('Vehicle info is required.'))
+
+        return cleaned_data
+
+
+class DocumentsForm(Phase2GenericForm):
     class Meta:
         model = User
 
@@ -195,7 +211,6 @@ class DocumentsForm(Phase2GenericForm):
 
 
 class WithdrawalProofForm(Phase2GenericForm):
-
     class Meta:
         model = User
 
@@ -213,14 +228,13 @@ class WithdrawalProofForm(Phase2GenericForm):
 
 
 class WithdrawalForm(forms.ModelForm):
-
     class Meta:
         model = User
 
         fields = ['withdrawal_university', 'withdrawal_reason', ]
 
         widgets = {
-            'withdrawal_university': forms.Select(choices= Lookup.get_lookup_choices('UNIVERSITY')),
+            'withdrawal_university': forms.Select(choices=Lookup.get_lookup_choices('UNIVERSITY')),
         }
 
     def __init__(self, *args, **kwargs):

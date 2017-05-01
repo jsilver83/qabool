@@ -47,6 +47,7 @@ urlpatterns = [
         name='upload_documents_incomplete'),
     url(r'^uploadwithdrawalproof/$', phase2_views.upload_withdrawal_proof, name='upload_withdrawal_proof'),
     url(r'^uploaddocuments/$', phase2_views.upload_documents, name='upload_documents'),
+    url(r'^vehicleinfo/$', phase2_views.vehicle_info, name='vehicle_info'),
     url(r'^relativecontact/$', phase2_views.relative_contact, name='relative_contact'),
     url(r'^guardiancontact/$', phase2_views.guardian_contact, name='guardian_contact'),
     url(r'^personalinfo/$', phase2_views.personal_info, name='personal_info'),

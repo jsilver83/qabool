@@ -13,7 +13,7 @@ from sendfile import sendfile, os
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
-    RelativeContactForm, WithdrawalForm, WithdrawalProofForm
+    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS
@@ -186,13 +186,35 @@ def relative_contact(request):
             if saved:
                 messages.success(request, _('Relative Info was saved successfully...'))
                 request.session['relative_contact_completed'] = True
-                return redirect('upload_documents')
+                return redirect('vehicle_info')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
     return render(request, 'undergraduate_admission/phase2/form-relative.html', {'form': form,
                                                                                  'step3': 'active'})
 
+@login_required()
+@user_passes_test(is_phase2_eligible)
+def vehicle_info(request):
+    if request.method == 'GET':
+        relative_contact_completed = request.session.get('relative_contact_completed')
+        if not relative_contact_completed:
+            return redirect('relative_contact')
+
+    form = VehicleInfoForm(request.POST or None, request.FILES or None, instance=request.user)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            saved = form.save()
+            if saved:
+                messages.success(request, _('Vehicle info was submitted successfully...'))
+                request.session['vehicle_info_completed'] = True
+                return redirect('upload_documents')
+            else:
+                messages.error(request, _('Error saving info. Try again later!'))
+
+    return render(request, 'undergraduate_admission/phase2/form-uploads.html', {'form': form,
+                                                                                'step4': 'active'})
 
 @login_required()
 @user_passes_test(is_phase2_eligible)
@@ -215,7 +237,7 @@ def upload_documents(request):
                 messages.error(request, _('Error saving info. Try again later!'))
 
     return render(request, 'undergraduate_admission/phase2/form-uploads.html', {'form': form,
-                                                                                'step4': 'active'})
+                                                                                'step5': 'active'})
 
 
 @login_required()
