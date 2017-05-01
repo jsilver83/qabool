@@ -314,7 +314,8 @@ class User(AbstractUser):
     eligible_for_housing = models.NullBooleanField(verbose_name=_('Eligible For Housing'))
     tarifi_week_attendance_date = models.DateTimeField(verbose_name=_('Tarifi Week Attendance Date'),
                                                        null=True,
-                                                       blank=True, )
+                                                    blank=True, )
+
 
     def get_verification_status(self):
         return self.verification_status
@@ -324,8 +325,10 @@ class User(AbstractUser):
     def get_student_full_name(self):
         if self.first_name_ar and self.second_name_ar and self.third_name_ar and self.family_name_ar:
             return '%s %s %s %s' % (self.first_name_ar, self.second_name_ar, self.third_name_ar, self.family_name_ar)
-        elif self.first_name and self.last_name:
-            return '%s %s' % (self.first_name, self.last_name)
+        elif self.student_full_name_ar:
+            return '%s' % (self.student_full_name_ar)
+        elif self.is_staff:
+            return self.username
         else:
             return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
 
