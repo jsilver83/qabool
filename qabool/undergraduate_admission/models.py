@@ -77,19 +77,19 @@ class User(AbstractUser):
                              max_length=50,
                              verbose_name=_('Phone'),
                              help_text=_('With country and area code. e.g. 966138602722'), )
-    high_school_gpa = models.FloatField(null=True,blank=True,verbose_name=_('High School GPA'),
-                                        validators=[MinValueValidator(0), MaxValueValidator(100)],
+    high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA'),
+                                        validators=[MinValueValidator(1), MaxValueValidator(100)],
                                         )
     qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'),
-                                     validators=[MinValueValidator(0), MaxValueValidator(100)],)
+                                     validators=[MinValueValidator(1), MaxValueValidator(100)], )
     tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'),
-                                      validators=[MinValueValidator(0), MaxValueValidator(100)],)
+                                      validators=[MinValueValidator(1), MaxValueValidator(100)], )
     high_school_gpa_yesser = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA - Yesser'),
-                                               validators=[MinValueValidator(0), MaxValueValidator(100)],)
+                                               validators=[MinValueValidator(1), MaxValueValidator(100)], )
     qudrat_score_yesser = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score - Yesser'),
-                                            validators=[MinValueValidator(0), MaxValueValidator(100)],)
+                                            validators=[MinValueValidator(1), MaxValueValidator(100)], )
     tahsili_score_yesser = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score - Yesser'),
-                                             validators=[MinValueValidator(0), MaxValueValidator(100)],)
+                                             validators=[MinValueValidator(1), MaxValueValidator(100)], )
     kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
     first_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('First Name (Arabic)'))
     second_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Second Name (Arabic)'))
