@@ -96,8 +96,8 @@ class User(AbstractUser):
     third_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (Arabic)'))
     family_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Family Name (Arabic)'))
     student_full_name_ar = models.CharField(null=True, blank=True, max_length=400,
-                                            verbose_name=_('Student Full Name (Arabic)'), help_text=_(
-            'Your Arabic full name should be similar to Identification ID/Iqama.'))
+                                            verbose_name=_('Student Full Name (Arabic)'),
+                                            help_text=_('Your Arabic full name should be similar to Identification ID/Iqama.'))
     first_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('First Name (English)'))
     second_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Second Name (English)'))
     third_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (English)'))
@@ -272,7 +272,7 @@ class User(AbstractUser):
         null=True,
         blank=True,
         max_length=100,
-        verbose_name=_('Driving_License File'),
+        verbose_name=_('Driving License File'),
         upload_to=upload_location_driving_license,
         validators=[validate_file_extension],
     )
@@ -365,6 +365,11 @@ class User(AbstractUser):
             return self.high_school_gpa * (semester.high_school_gpa_weight / 100) \
                    + self.qudrat_score * (semester.qudrat_score_weight / 100) \
                    + self.tahsili_score * (semester.tahsili_score_weight / 100)
+
+    # it will be used in setting status to EXPIRED auto
+    @property
+    def is_phase2_confirmation_expired(self):
+        return False if AdmissionSemester.get_phase2_active_semester(self) else True
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
