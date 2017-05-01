@@ -58,6 +58,11 @@ $(function(){
         diseases($(this).val());
     });
 
+    have_a_vehicle($("input[name=have_a_vehicle]:checked").val());
+    $("input[name=have_a_vehicle]").change(function(){
+        have_a_vehicle($(this).val());
+    });
+
 //    $("input").change(function(){
 //        alert("test");
 //        alert($("#disability_needs").val());
@@ -103,6 +108,19 @@ function diseases(value){
         $(".field-chronic_diseases").parents(".form-group").hide();
 //        $("input[name=chronic_diseases]").removeAttr("required", "");
         $(".field-chronic_diseases_notes").parents(".form-group").hide();
+    }
+}
+
+function have_a_vehicle(value){
+    if(value == "True"){
+        $(".field-vehicle_plate_no").parents(".form-group").show();
+        $(".field-vehicle_registration_file").parents(".form-group").show();
+        $(".field-driving_license_file").parents(".form-group").show();
+    }
+    else{
+        $(".field-vehicle_plate_no").parents(".form-group").hide();
+        $(".field-vehicle_registration_file").parents(".form-group").hide();
+        $(".field-driving_license_file").parents(".form-group").hide();
     }
 }
 
