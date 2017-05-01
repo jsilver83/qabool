@@ -257,8 +257,13 @@ class User(AbstractUser):
     relative_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative City'))
     relative_job = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Work'))
     relative_employer = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Employer'))
-    vehicle_registration = models.CharField(null=True, blank=True, max_length=100,
-                                            verbose_name=_('Vehicle Registration'))
+    have_a_vehicle = models.BooleanField(
+        verbose_name=_('Do you have a vehicle you want to register?'),
+        default=False,
+        help_text=_('This will let us help you better to get you a permit to enter campus.'),
+    )
+    vehicle_plate_no = models.CharField(null=True, blank=True, max_length=100,
+                                            verbose_name=_('Vehicle Plate No.'))
     vehicle_registration_file = models.FileField(
         null=True,
         blank=True,
@@ -267,7 +272,6 @@ class User(AbstractUser):
         upload_to=upload_location_vehicle_registration,
         validators=[validate_file_extension],
     )
-    driving_license = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Driving License'))
     driving_license_file = models.FileField(
         null=True,
         blank=True,
