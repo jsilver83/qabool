@@ -2,39 +2,42 @@
 {% load i18n %}
 
 {% block subcontent %}
-{{ agreement.agreement_header|linebreaks }}
-<br>
-<ul>
-	{% for item in items %}
-	<li>{{ item|safe|linebreaks }}</li>
-	{% endfor %}
-</ul>
+    {{ agreement.agreement_header|linebreaks }}
+    <br>
+    <ul>
+        {% for item in items %}
+            <li>{{ item|safe|linebreaks }}</li>
+        {% endfor %}
+    </ul>
+    {% if  agreement.agreement_footer %}
+        {{ agreement.agreement_footer|linebreaks }}
+    {% endif %}
 
-<form method="post">
-	{% csrf_token %}
+    <form method="post">
+        {% csrf_token %}
 
-	<div class="checkbox form-group">
-		<span style="color:red">{{ form.agree1.errors }}</span>
-		<label for="{{ form.agree1.id_for_label }}" class="col-sm-12">
-			{{ form.agree1 }}&nbsp;{{ form.agree1.label }}
-		</label>
-	</div>
+        <div class="checkbox form-group">
+            <span style="color:red">{{ form.agree1.errors }}</span>
+            <label for="{{ form.agree1.id_for_label }}" class="col-sm-12">
+                {{ form.agree1 }}&nbsp;{{ form.agree1.label }}
+            </label>
+        </div>
 
-	<div class="checkbox form-group">
-		<span style="color:red">{{ form.agree1.errors }}</span>
-		<label for="{{ form.agree2.id_for_label }}" class="col-sm-12">
-			{{ form.agree2 }}&nbsp;{{ form.agree2.label }}
-		</label>
-	</div>
-	<br>&nbsp;<br>
-	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'I agree' %}"/>
-</form>
+        <div class="checkbox form-group">
+            <span style="color:red">{{ form.agree1.errors }}</span>
+            <label for="{{ form.agree2.id_for_label }}" class="col-sm-12">
+                {{ form.agree2 }}&nbsp;{{ form.agree2.label }}
+            </label>
+        </div>
+        <br>&nbsp;<br>
+        <input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'I agree' %}"/>
+    </form>
 {% endblock subcontent %}
 
 {% block scripts %}
-<script>
-	$(function(){
-		$("input[type=checkbox]").removeClass("form-control");
-	});
-</script>
+    <script>
+        $(function () {
+            $("input[type=checkbox]").removeClass("form-control");
+        });
+    </script>
 {% endblock scripts %}
