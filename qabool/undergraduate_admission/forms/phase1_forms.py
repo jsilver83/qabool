@@ -38,8 +38,8 @@ class AgreementForm(BaseAgreementForm):
 
 class Phase1UserEditForm(BaseContactForm):
     class Meta(BaseContactForm.Meta):
-        fields = BaseContactForm.Meta.fields + ['first_name', 'last_name', 'high_school_system',
-                                                'nationality', 'saudi_mother', 'student_notes']
+        fields = BaseContactForm.Meta.fields + ['student_full_name_ar', 'student_full_name_en', 'mobile',
+                                                'high_school_gpa', 'qudrat_score', 'tahsili_score', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
             ('', "---"),
@@ -48,21 +48,22 @@ class Phase1UserEditForm(BaseContactForm):
         )
 
         widgets = {
-            'first_name': forms.TextInput(attrs={'required': ''}),
-            'last_name': forms.TextInput(attrs={'required': ''}),
-            'high_school_graduation_year': forms.Select(attrs={'required': ''}),
-            'nationality': forms.Select(attrs={
-                'required': '',
-                'class': 'select2',}),
-            'saudi_mother': forms.Select(choices=SAUDI_MOTHER_CHOICES),
-            'high_school_system': forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
+            'student_full_name_ar': forms.TextInput(attrs={'required': ''}),
+            'student_full_name_en': forms.TextInput(attrs={'required': ''}),
+            'mobile': forms.TextInput(attrs={'required': ''}),
+            'high_school_gpa': forms.TextInput(attrs={'required': ''}),
+            'qudrat_score': forms.TextInput(attrs={'required': ''}),
+            'tahsili_score': forms.TextInput(attrs={'required': ''}),
         }
 
     def __init__(self, *args, **kwargs):
         super(Phase1UserEditForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].required = True
-        self.fields['last_name'].required = True
-        self.fields['high_school_system'].required = True
+        self.fields['student_full_name_ar'].required = True
+        self.fields['student_full_name_en'].required = True
+        self.fields['mobile'].required = True
+        self.fields['high_school_gpa'].required = True
+        self.fields['qudrat_score'].required = True
+        self.fields['tahsili_score'].required = True
 
 
 class RegistrationForm(UserCreationForm):
@@ -115,11 +116,17 @@ class RegistrationForm(UserCreationForm):
         widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
 
+    GENDER_CHOICES = (
+        ('M', _('Male')),
+        ('F', _('Female'))
+    )
+
     gender = forms.CharField(
         label=_('Gender'),
-        help_text=_('Only male can apply'),
-        initial=_('Male'),
-        disabled=True
+        help_text=_('Only male students can apply'),
+        initial=_('M'),
+        disabled=True,
+        widget= forms.Select(choices=GENDER_CHOICES),
     )
 
     # high_school_system = forms.ModelChoiceField(
@@ -128,12 +135,13 @@ class RegistrationForm(UserCreationForm):
     # )
 
 
-
     class Meta:
         model = User
-        fields = ['first_name', 'last_name','gender', 'username', 'username2', 'mobile', 'mobile2',
+        fields = ['student_full_name_ar', 'student_full_name_en','gender', 'username', 'username2', 'mobile', 'mobile2',
+                  'nationality', 'saudi_mother',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
-                  'nationality', 'saudi_mother', 'password1', 'password2', 'student_notes']
+                  'high_school_gpa', 'qudrat_score', 'tahsili_score',
+                  'password1', 'password2', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
             ('', "---"),
@@ -144,8 +152,8 @@ class RegistrationForm(UserCreationForm):
         widgets = {
             # workaround since __init__ setting to required doesnt work
             'email': forms.TextInput(attrs={'required': ''}),
-            'first_name': forms.TextInput(attrs={'required': ''}),
-            'last_name': forms.TextInput(attrs={'required': ''}),
+            'student_full_name_ar': forms.TextInput(attrs={'required': ''}),
+            'student_full_name_en': forms.TextInput(attrs={'required': ''}),
             'high_school_graduation_year': forms.Select(attrs={'required': ''}),
             'nationality': forms.Select(attrs={
                 'required': '',
@@ -166,8 +174,8 @@ class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
-        self.fields['first_name'].required = True
-        self.fields['last_name'].required = True
+        self.fields['student_full_name_ar'].required = True
+        self.fields['student_full_name_en'].required = True
         self.fields['high_school_system'].widget = forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         self.fields['high_school_system'].required = True
         try: # to make this form reusable for edit info
@@ -182,9 +190,6 @@ class RegistrationForm(UserCreationForm):
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
             self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
-    #
-    # def clean_data(self):
-    #     super(RegistrationForm, self).clean_data(self)
 
     def clean_username(self):
         username1 = try_parse_int(self.cleaned_data.get("username"))
@@ -264,7 +269,7 @@ class EditInfoForm(RegistrationForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'mobile', 'mobile2',
+        fields = ['student_full_name_ar', 'student_full_name_en', 'mobile', 'mobile2',
                   'email', 'email2', 'high_school_graduation_year', 'high_school_system',
                   'nationality', 'saudi_mother', 'student_notes']
 
