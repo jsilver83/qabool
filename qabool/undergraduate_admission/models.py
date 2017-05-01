@@ -4,16 +4,17 @@ from django.db import OperationalError
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
     upload_location_mother_govid, upload_location_passport, upload_location_certificate, \
-    upload_location_picture, upload_location_courses, upload_location_withdrawal_proof , \
-    upload_location_driving_license , upload_location_vehicle_registration
+    upload_location_picture, upload_location_courses, upload_location_withdrawal_proof, \
+    upload_location_driving_license, upload_location_vehicle_registration
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
+
 
 class User(AbstractUser):
     semester = models.ForeignKey(
@@ -61,7 +62,8 @@ class User(AbstractUser):
         blank=False,
         max_length=12,
         verbose_name=_('Mobile'),
-        help_text=_('Mobile number should be of this format "9665xxxxxxxx". Use English numerals only.'),
+        help_text=_(
+            'Mobile number should be of this format "9665xxxxxxxx". Use English numerals only. Please make sure to activate promotional messages from your mobile provider.'),
         validators=[
             RegexValidator(
                 '^(9665|٩٦٦٥)\d{8}$',
@@ -75,20 +77,41 @@ class User(AbstractUser):
                              max_length=50,
                              verbose_name=_('Phone'),
                              help_text=_('With country and area code. e.g. 966138602722'), )
-    high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA'))
-    qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'))
-    tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'))
+    high_school_gpa = models.FloatField(null=True,blank=True,verbose_name=_('High School GPA'),
+                                        validators=[MinValueValidator(0), MaxValueValidator(100)],
+                                        )
+    qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'),
+                                     validators=[MinValueValidator(0), MaxValueValidator(100)],)
+    tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'),
+                                      validators=[MinValueValidator(0), MaxValueValidator(100)],)
+    high_school_gpa_yesser = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA - Yesser'),
+                                               validators=[MinValueValidator(0), MaxValueValidator(100)],)
+    qudrat_score_yesser = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score - Yesser'),
+                                            validators=[MinValueValidator(0), MaxValueValidator(100)],)
+    tahsili_score_yesser = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score - Yesser'),
+                                             validators=[MinValueValidator(0), MaxValueValidator(100)],)
     kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
-    first_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('First Name (Arabic)'))
-    second_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Second Name (Arabic)'))
-    third_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Third Name (Arabic)'))
-    family_name_ar = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Family Name (Arabic)'))
-    student_full_name_ar = models.CharField(null=True, blank=True, max_length=400, verbose_name=_('Student Faull Name (Arabic)'))
-    first_name_en = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('First Name (English)'))
-    second_name_en = models.CharField(null=True, blank=True,max_length=50, verbose_name=_('Second Name (English)'))
+    first_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('First Name (Arabic)'))
+    second_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Second Name (Arabic)'))
+    third_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (Arabic)'))
+    family_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Family Name (Arabic)'))
+    student_full_name_ar = models.CharField(null=True, blank=True, max_length=400,
+                                            verbose_name=_('Student Full Name (Arabic)'), help_text=_(
+            'Your Arabic full name should be similar to Identification ID/Iqama.'))
+    first_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('First Name (English)'))
+    second_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Second Name (English)'))
     third_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (English)'))
-    family_name_en = models.CharField(null=True,blank=True,max_length=50, verbose_name=_('Family Name (English)'))
-    student_full_name_en = models.CharField(null=True, blank=True, max_length=400, verbose_name=_('Student Faull Name (English)'))
+    family_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Family Name (English)'))
+    student_full_name_en = models.CharField(null=True, blank=True, max_length=400,
+                                            verbose_name=_('Student Full Name (English)'), help_text=_(
+            'Your English full name should be similar to Passport or high school certificate.'))
+
+    GENDER_CHOICES = (
+        ('M', _('Male')),
+        ('F', _('Female'))
+    )
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=128, default='M')
+
     mother_gov_id_file = models.FileField(
         null=True,
         blank=True,
@@ -114,8 +137,10 @@ class User(AbstractUser):
         validators=[validate_file_extension],
     )
     government_id_issue = models.DateTimeField(null=True, blank=True, verbose_name=_('Government ID Issue Date'))
-    government_id_expiry = models.CharField(null=True, blank=True, max_length=20, verbose_name=_('Government ID Expiry Date'))
-    government_id_place = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Government ID Place of Issue'))
+    government_id_expiry = models.CharField(null=True, blank=True, max_length=20,
+                                            verbose_name=_('Government ID Expiry Date'))
+    government_id_place = models.CharField(null=True, blank=True, max_length=50,
+                                           verbose_name=_('Government ID Place of Issue'))
     passport_number = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Password Number'))
     passport_place = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Passport Place of Issue '))
     passport_expiry = models.DateTimeField(null=True, blank=True, verbose_name=_('Passport Expiry Date'))
@@ -129,7 +154,8 @@ class User(AbstractUser):
     )
     high_school_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Name'))
     high_school_system = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School System'))
-    high_school_province = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Province'))
+    high_school_province = models.CharField(null=True, blank=True, max_length=100,
+                                            verbose_name=_('High School Province'))
     high_school_city = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School City'))
     high_school_certificate = models.FileField(
         null=True,
@@ -157,7 +183,8 @@ class User(AbstractUser):
         validators=[validate_image_extension],
     )
     guardian_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Name'))
-    guardian_government_id = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Government ID'))
+    guardian_government_id = models.CharField(null=True, blank=True, max_length=50,
+                                              verbose_name=_('Guardian Government ID'))
     guardian_relation = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Relation'))
     guardian_phone = models.CharField(null=True,
                                       blank=True,
@@ -179,7 +206,8 @@ class User(AbstractUser):
     )
     guardian_email = models.EmailField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Email'))
     guardian_po_box = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian PO Box'))
-    guardian_postal_code = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Guardian Postal Code'))
+    guardian_postal_code = models.CharField(null=True, blank=True, max_length=50,
+                                            verbose_name=_('Guardian Postal Code'))
     guardian_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian City'))
     guardian_job = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Work'))
     guardian_employer = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Guardian Employer'))
@@ -215,13 +243,13 @@ class User(AbstractUser):
                                               max_length=1000,
                                               verbose_name=_('Chronic Diseases Notes'))
     relative_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Name'))
-    relative_relation = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative Relation'))
+    relative_relation = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Relation'))
     relative_phone = models.CharField(null=True,
                                       blank=True,
                                       max_length=50,
                                       verbose_name=_('Relative Mobile'),
                                       help_text=_('With country and area code. e.g. 966138602722'), )
-    relative_po_box = models.CharField(null=True,blank=True, max_length=50, verbose_name=_('Relative PO Box'))
+    relative_po_box = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative PO Box'))
     relative_po_stal_code = models.CharField(null=True,
                                              blank=True,
                                              max_length=50,
@@ -229,7 +257,8 @@ class User(AbstractUser):
     relative_city = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative City'))
     relative_job = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Work'))
     relative_employer = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Relative Employer'))
-    vehicle_registration = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Vehicle Registration'))
+    vehicle_registration = models.CharField(null=True, blank=True, max_length=100,
+                                            verbose_name=_('Vehicle Registration'))
     vehicle_registration_file = models.FileField(
         null=True,
         blank=True,
@@ -270,7 +299,7 @@ class User(AbstractUser):
     phase2_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 End Date'))
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
     verification_documents_incomplete = models.NullBooleanField(blank=True,
-                                                                verbose_name=_('Uploaded docs are incomplete?'),)
+                                                                verbose_name=_('Uploaded docs are incomplete?'), )
     verification_status = models.CharField(null=True, blank=True, max_length=500,
                                            verbose_name=_('Issues With Uploaded Docs'))
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
@@ -289,15 +318,17 @@ class User(AbstractUser):
 
     def get_verification_status(self):
         return self.verification_status
+
     get_verification_status.short_description = _('Issues With Uploaded Docs')
 
     def get_student_full_name(self):
         if self.first_name_ar and self.second_name_ar and self.third_name_ar and self.family_name_ar:
-            return '%s %s %s %s'%(self.first_name_ar, self.second_name_ar, self.third_name_ar, self.family_name_ar)
+            return '%s %s %s %s' % (self.first_name_ar, self.second_name_ar, self.third_name_ar, self.family_name_ar)
         elif self.first_name and self.last_name:
-            return '%s %s'%(self.first_name, self.last_name)
+            return '%s %s' % (self.first_name, self.last_name)
         else:
             return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
+
     get_student_full_name.short_description = _('Full Name')
 
     def get_student_registration_status(self):
@@ -331,14 +362,14 @@ class User(AbstractUser):
     def get_student_total(self):
         semester = self.semester
         if semester and self.high_school_gpa and self.qudrat_score and self.tahsili_score:
-            return self.high_school_gpa * (semester.high_school_gpa_weight/100)\
-                   + self.qudrat_score * (semester.qudrat_score_weight/100)\
-                   + self.tahsili_score * (semester.tahsili_score_weight/100)
+            return self.high_school_gpa * (semester.high_school_gpa_weight / 100) \
+                   + self.qudrat_score * (semester.qudrat_score_weight / 100) \
+                   + self.tahsili_score * (semester.tahsili_score_weight / 100)
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
         try:
-            choices = User.objects.filter(eligible_for_housing=True, housing_user__searchable=True).\
+            choices = User.objects.filter(eligible_for_housing=True, housing_user__searchable=True). \
                 order_by().values('high_school_city').distinct()
 
             ch = [(o['high_school_city'], o['high_school_city']) for o in choices]
@@ -346,11 +377,11 @@ class User(AbstractUser):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError: # happens when db doesn't exist yet
+        except OperationalError:  # happens when db doesn't exist yet
             return [('--', '--')]
 
     def __init__(self, *args, **kwargs):
-        super(User,self).__init__(*args, **kwargs)
+        super(User, self).__init__(*args, **kwargs)
         self._meta.get_field('username').verbose_name = _('Government ID')
 
     def __str__(self):
@@ -367,11 +398,19 @@ class AdmissionSemester(models.Model):
     phase1_end_date = models.DateTimeField(null=True, verbose_name=_('Phase 1 End Date'))
     phase2_start_date = models.DateTimeField(null=True, verbose_name=_('Phase 2 Start Date'))
     phase2_end_date = models.DateTimeField(null=True, verbose_name=_('Phase 2 End Date'))
+    phase3_start_date = models.DateTimeField(null=True, verbose_name=_('Phase 3 Start Date'))
+    phase3_end_date = models.DateTimeField(null=True, verbose_name=_('Phase 3 End Date'))
+    phase4_start_date = models.DateTimeField(null=True, verbose_name=_('Phase 4 Start Date'))
+    phase4_end_date = models.DateTimeField(null=True, verbose_name=_('Phase 4 End Date'))
     # results_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Results Announcement Date'))
     high_school_gpa_weight = models.FloatField(null=True, blank=False, verbose_name=_('High School GPA Weight'))
     qudrat_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Qudrat Score Weight'))
     tahsili_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Tahsili Score Weight'))
     cutoff_point = models.FloatField(null=True, blank=True, verbose_name=_('Cutoff Point'))
+
+    class Meta:
+        verbose_name = _('Admission Semester')
+        verbose_name_plural = _('Admission Semester')
 
     def __str__(self):
         return self.semester_name
@@ -401,7 +440,7 @@ class AdmissionSemester(models.Model):
         if cache.get('phase1_active') is None:
             sem = AdmissionSemester.get_phase1_active_semester()
             if sem:
-                cache.set('phase1_active', True, 15*60)
+                cache.set('phase1_active', True, 15 * 60)
                 return True
             else:
                 return False
@@ -424,6 +463,9 @@ class KFUPMIDsPool(models.Model):
     )
     kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
 
+    class Meta:
+        verbose_name_plural = _('KFUPM ID Pools')
+
     def __str__(self):
         return str(self.kfupm_id)
 
@@ -437,7 +479,7 @@ class KFUPMIDsPool(models.Model):
 class RegistrationStatus(models.Model):
     status_ar = models.CharField(max_length=50, verbose_name=_('Status (Arabic)'))
     status_en = models.CharField(max_length=50, verbose_name=_('Status (English)'))
-    status_code = models.CharField(max_length=20, null=True, blank=False, unique=True,)
+    status_code = models.CharField(max_length=20, null=True, blank=False, unique=True, )
 
     @property
     def registration_status(self):
@@ -450,11 +492,14 @@ class RegistrationStatus(models.Model):
     def __str__(self):
         return self.registration_status
 
+    class Meta:
+        verbose_name_plural = _('Registration Status')
+
 
 class RegistrationStatusMessage(models.Model):
     status_message_ar = models.CharField(max_length=500, verbose_name=_('Registration Status Message AR'))
     status_message_en = models.CharField(max_length=500, verbose_name=_('Registration Status Message EN'))
-    status_message_code = models.CharField(max_length=20, null=True, blank=False, unique=True,)
+    status_message_code = models.CharField(max_length=20, null=True, blank=False, unique=True, )
     status = models.ForeignKey(
         'RegistrationStatus',
         on_delete=models.SET_NULL,
@@ -472,7 +517,7 @@ class RegistrationStatusMessage(models.Model):
             return self.status_message_en
 
     def __str__(self):
-        return  self.registration_status_message
+        return self.registration_status_message
 
     @staticmethod
     def get_status_applied():
@@ -498,7 +543,7 @@ class RegistrationStatusMessage(models.Model):
     @staticmethod
     def get_status_duplicate():
         try:
-            return RegistrationStatus.objects.get(status_code='SUSPENDED')\
+            return RegistrationStatus.objects.get(status_code='SUSPENDED') \
                 .status_messages.get(status_message_code='DUPLICATE')
         except ObjectDoesNotExist:
             return
@@ -510,6 +555,9 @@ class Lookup(models.Model):
     lookup_value_en = models.CharField(max_length=100, null=True, blank=False)
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
+
+    class Meta:
+        verbose_name_plural = _('Look ups')
 
     @property
     def lookup_value(self):
@@ -523,7 +571,7 @@ class Lookup(models.Model):
         return self.lookup_value
 
     class Meta:
-        ordering=['lookup_type',  '-display_order']
+        ordering = ['lookup_type', '-display_order']
 
     @staticmethod
     def get_lookup_choices(lookup_type, add_dashes=True):
@@ -537,7 +585,7 @@ class Lookup(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError: # happens when db doesn't exist yet
+        except OperationalError:  # happens when db doesn't exist yet
             return [('--', '--')]
 
 
@@ -559,8 +607,8 @@ class City(models.Model):
         return self.city
 
     class Meta:
-        ordering=['-display_order']
-        verbose_name_plural='cities'
+        ordering = ['-display_order']
+        verbose_name_plural = _('Cities')
 
 
 class DeniedStudent(models.Model):
@@ -579,13 +627,16 @@ class DeniedStudent(models.Model):
     last_trial_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Last Trial Date'))
     trials_count = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Count Trial'))
 
+    class Meta:
+        verbose_name_plural = _('Denied Students')
+
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
 
     @staticmethod
     def check_if_student_is_denied(govid):
         activeSem = AdmissionSemester.get_phase1_active_semester()
-        denied = activeSem.denied_students.filter(government_id = govid).first()
+        denied = activeSem.denied_students.filter(government_id=govid).first()
 
         if denied:
             denied.last_trial_date = timezone.now()
@@ -603,6 +654,9 @@ class DistinguishedStudent(models.Model):
     city = models.CharField(max_length=400, verbose_name=_('City'))
     attended = models.BooleanField(verbose_name=_('Attended'), default=True)
 
+    class Meta:
+        verbose_name_plural = _('Distinguished Students')
+
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
 
@@ -615,7 +669,8 @@ class GraduationYear(models.Model):
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
 
     class Meta:
-        ordering=['-display_order']
+        ordering = ['-display_order']
+        verbose_name_plural = _('Graduation Years')
 
     @property
     def graduation_year(self):
@@ -647,8 +702,8 @@ class Nationality(models.Model):
         return self.nationality
 
     class Meta:
-        ordering=['display_order', 'nationality_en']
-        verbose_name_plural = 'nationalities'
+        ordering = ['display_order', 'nationality_en']
+        verbose_name_plural = _('Nationalities')
 
 
 class Agreement(models.Model):
@@ -658,13 +713,20 @@ class Agreement(models.Model):
         blank=False,
         null=True,
         related_name='agreement',
-        verbose_name= 'Semester',
+        verbose_name='Semester',
     )
     agreement_type = models.CharField(max_length=100, null=True, blank=False, verbose_name=_('Agreement Type'))
-    agreement_header_ar = models.TextField(max_length=2000, null=True, blank=True, verbose_name=_('Agreement Header (Arabic)'))
-    agreement_header_en = models.TextField(max_length=2000, null=True, blank=True, verbose_name=_('Agreement Header (English)'))
-    agreement_footer_ar = models.TextField(max_length=2000, null=True, blank=True, verbose_name=_('Agreement Footer (Arabic)'))
-    agreement_footer_en = models.TextField(max_length=2000, null=True, blank=True, verbose_name=_('Agreement Footer (English)'))
+    agreement_header_ar = models.TextField(max_length=2000, null=True, blank=True,
+                                           verbose_name=_('Agreement Header (Arabic)'))
+    agreement_header_en = models.TextField(max_length=2000, null=True, blank=True,
+                                           verbose_name=_('Agreement Header (English)'))
+    agreement_footer_ar = models.TextField(max_length=2000, null=True, blank=True,
+                                           verbose_name=_('Agreement Footer (Arabic)'))
+    agreement_footer_en = models.TextField(max_length=2000, null=True, blank=True,
+                                           verbose_name=_('Agreement Footer (English)'))
+
+    class Meta:
+        verbose_name_plural = _('Agreements')
 
     @property
     def agreement_header(self):
@@ -692,9 +754,9 @@ class AgreementItem(models.Model):
         on_delete=models.CASCADE,
         blank=False,
         null=True,
-        related_name = 'items',
+        related_name='items',
     )
-    agreement_text_ar = models.TextField(max_length=2000, verbose_name=_('Agreement Text (Arabic)') )
+    agreement_text_ar = models.TextField(max_length=2000, verbose_name=_('Agreement Text (Arabic)'))
     agreement_text_en = models.TextField(max_length=2000, verbose_name=_('Agreement Text (English)'))
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
@@ -711,12 +773,13 @@ class AgreementItem(models.Model):
         return self.agreement_item
 
     class Meta:
-        ordering=['agreement', '-display_order']
+        ordering = ['agreement', '-display_order']
 
 
 # Auxiliary table in the database for BI reports
 class Aux1To100(models.Model):
     counter = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('Counter'))
+
 
 # Important dates model for Qabool. It should display as list in the homepage sidebar.
 class ImportantDateSidebar(models.Model):
@@ -747,4 +810,5 @@ class ImportantDateSidebar(models.Model):
         return self.title
 
     class Meta:
-        ordering=['display_order']
+        ordering = ['display_order']
+        verbose_name_plural = _('Important Date Sidebar')
