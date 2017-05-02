@@ -97,7 +97,8 @@ class User(AbstractUser):
     family_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Family Name (Arabic)'))
     student_full_name_ar = models.CharField(null=True, blank=True, max_length=400,
                                             verbose_name=_('Student Full Name (Arabic)'),
-                                            help_text=_('Your Arabic full name should be similar to Identification ID/Iqama.'))
+                                            help_text=_(
+                                                'Your Arabic full name should be similar to Identification ID/Iqama.'))
     first_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('First Name (English)'))
     second_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Second Name (English)'))
     third_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (English)'))
@@ -263,7 +264,7 @@ class User(AbstractUser):
         help_text=_('This will let us help you better to get you a permit to enter campus.'),
     )
     vehicle_plate_no = models.CharField(null=True, blank=True, max_length=100,
-                                            verbose_name=_('Vehicle Plate No.'))
+                                        verbose_name=_('Vehicle Plate No.'))
     vehicle_registration_file = models.FileField(
         null=True,
         blank=True,
@@ -283,10 +284,6 @@ class User(AbstractUser):
     admission_letter_print_date = models.DateTimeField(null=True,
                                                        blank=True,
                                                        verbose_name=_('Admission Letter Print Date'))
-    admission_letter_note = models.CharField(null=True,
-                                             blank=True,
-                                             max_length=500,
-                                             verbose_name=_('Admission Letter Note'))
     medical_report_print_date = models.DateTimeField(null=True,
                                                      blank=True,
                                                      verbose_name=_('Medical Report Print Date'))
@@ -316,10 +313,22 @@ class User(AbstractUser):
         validators=[validate_file_extension],
     )
     eligible_for_housing = models.NullBooleanField(verbose_name=_('Eligible For Housing'))
-    tarifi_week_attendance_date = models.DateTimeField(verbose_name=_('Tarifi Week Attendance Date'),
-                                                       null=True,
+    tarifi_week_attendance_date = models.ForeignKey('TarifiReceptionDate',
+                                                    verbose_name=_('Tarifi Week Attendance Date'),
+                                                    on_delete=models.CASCADE,
+                                                    null=True,
                                                     blank=True, )
-
+    english_placement_test_score = models.PositiveSmallIntegerField(null=True,
+                                                                    blank=True,
+                                                                    verbose_name='English Placement Test Score',
+                                                                    validators=[MinValueValidator(1),
+                                                                                MaxValueValidator(100)], )
+    english_speaking_test_score = models.PositiveSmallIntegerField(null=True,
+                                                                   blank=True,
+                                                                   verbose_name='English Speaking Test Score',
+                                                                   validators=[MinValueValidator(1),
+                                                                               MaxValueValidator(100)], )
+    english_level = models.CharField(max_length=20, null=True, blank=True, verbose_name='English Level')
 
     def get_verification_status(self):
         return self.verification_status
@@ -824,3 +833,28 @@ class ImportantDateSidebar(models.Model):
     class Meta:
         ordering = ['display_order']
         verbose_name_plural = _('Important Date Sidebar')
+
+
+class TarifiReceptionDate(models.Model):
+    semester = models.ForeignKey(
+        'AdmissionSemester',
+        on_delete=models.SET_NULL,
+        blank=False,
+        null=True,
+        related_name='tarifi_reception_dates',
+        verbose_name='Semester',
+    )
+    reception_date = models.CharField(max_length=600, null=True, blank=False, verbose_name=_('Reception Date'))
+    slots = models.PositiveSmallIntegerField(null=True, blank=False, default=300, verbose_name=_('Slots'))
+    slot_start_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Start Date'))
+    slot_end_date = models.DateTimeField(null=True, blank=False, verbose_name=_('End Date'))
+
+    class Meta:
+        verbose_name_plural = _('Tarifi Reception Dates')
+
+    @property
+    def remaining_slots(self):
+        return self.slots - User.objects.filter(tarifi_week_attendance_date=self.pk).count()
+
+    def __str__(self):
+        return self.reception_date
