@@ -5,6 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from import_export import resources
 from import_export.admin import ImportExportMixin
 from reversion.admin import VersionAdmin
+from django.utils.translation import ugettext_lazy as _
 
 from .models import *
 
@@ -12,14 +13,15 @@ from .models import *
 class UserResource(resources.ModelResource):
     class Meta:
         model = User
-        import_id_fields = ('username',)
+        import_id_fields = ('username', 'kfupm_id')
         fields = ('semester', 'username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
                   'high_school_province', 'admission_letter_note', 'admission_note', 'government_id_place',
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
-                  'eligible_for_housing', )
+                  'eligible_for_housing', 'english_placement_test_score', 'english_speaking_test_score',
+                  'english_level', )
         skip_unchanged = True
         report_skipped = True
 
@@ -259,11 +261,16 @@ class CutOffAdmin(admin.ModelAdmin):
     actions = [Mark_Partial_Admitted, Mark_Rejected]
 
 
-# Display Qabool in the page title and header
-admin.site.site_header = ('Qabool')
-admin.site.index_title = ('Qabool Administration')
-admin.site.site_title = ('Administration')
+class TarifiReceptionDateAdmin(admin.ModelAdmin):
+    list_display = ('semester', 'reception_date', 'slots', 'remaining_slots', 'slot_start_date', 'slot_end_date', )
+    list_filter = ('semester', )
 
+# Display Qabool in the page title and header
+admin.site.site_header = _('Qabool')
+admin.site.index_title = _('Qabool Administration')
+admin.site.site_title = _('Administration')
+
+admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(ImportantDateSidebar)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)

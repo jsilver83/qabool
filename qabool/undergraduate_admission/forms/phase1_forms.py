@@ -124,7 +124,7 @@ class RegistrationForm(UserCreationForm):
     gender = forms.CharField(
         label=_('Gender'),
         help_text=_('Only male students can apply'),
-        initial=_('M'),
+        initial='M',
         disabled=True,
         widget= forms.Select(choices=GENDER_CHOICES),
     )

@@ -97,7 +97,8 @@ class User(AbstractUser):
     family_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Family Name (Arabic)'))
     student_full_name_ar = models.CharField(null=True, blank=True, max_length=400,
                                             verbose_name=_('Student Full Name (Arabic)'),
-                                            help_text=_('Your Arabic full name should be similar to Identification ID/Iqama.'))
+                                            help_text=_(
+                                                'Your Arabic full name should be similar to Identification ID/Iqama.'))
     first_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('First Name (English)'))
     second_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Second Name (English)'))
     third_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (English)'))
@@ -263,7 +264,7 @@ class User(AbstractUser):
         help_text=_('This will let us help you better to get you a permit to enter campus.'),
     )
     vehicle_plate_no = models.CharField(null=True, blank=True, max_length=100,
-                                            verbose_name=_('Vehicle Plate No.'))
+                                        verbose_name=_('Vehicle Plate No.'))
     vehicle_registration_file = models.FileField(
         null=True,
         blank=True,
@@ -283,10 +284,6 @@ class User(AbstractUser):
     admission_letter_print_date = models.DateTimeField(null=True,
                                                        blank=True,
                                                        verbose_name=_('Admission Letter Print Date'))
-    admission_letter_note = models.CharField(null=True,
-                                             blank=True,
-                                             max_length=500,
-                                             verbose_name=_('Admission Letter Note'))
     medical_report_print_date = models.DateTimeField(null=True,
                                                      blank=True,
                                                      verbose_name=_('Medical Report Print Date'))
@@ -316,10 +313,22 @@ class User(AbstractUser):
         validators=[validate_file_extension],
     )
     eligible_for_housing = models.NullBooleanField(verbose_name=_('Eligible For Housing'))
-    tarifi_week_attendance_date = models.DateTimeField(verbose_name=_('Tarifi Week Attendance Date'),
-                                                       null=True,
+    tarifi_week_attendance_date = models.ForeignKey('TarifiReceptionDate',
+                                                    verbose_name=_('Tarifi Week Attendance Date'),
+                                                    on_delete=models.CASCADE,
+                                                    null=True,
                                                     blank=True, )
-
+    english_placement_test_score = models.PositiveSmallIntegerField(null=True,
+                                                                    blank=True,
+                                                                    verbose_name='English Placement Test Score',
+                                                                    validators=[MinValueValidator(1),
+                                                                                MaxValueValidator(100)], )
+    english_speaking_test_score = models.PositiveSmallIntegerField(null=True,
+                                                                   blank=True,
+                                                                   verbose_name='English Speaking Test Score',
+                                                                   validators=[MinValueValidator(1),
+                                                                               MaxValueValidator(100)], )
+    english_level = models.CharField(max_length=20, null=True, blank=True, verbose_name='English Level')
 
     def get_verification_status(self):
         return self.verification_status
@@ -422,7 +431,7 @@ class AdmissionSemester(models.Model):
 
     class Meta:
         verbose_name = _('Admission Semester')
-        verbose_name_plural = _('Admission: Admission Semesters')
+        verbose_name_plural = _('Admission Semester')
 
     def __str__(self):
         return self.semester_name
@@ -481,9 +490,6 @@ class KFUPMIDsPool(models.Model):
     def __str__(self):
         return str(self.kfupm_id)
 
-    class Meta:
-        verbose_name_plural = _('Registrar: KFUPMIDs Pool')
-
     @staticmethod
     def get_next_available_id():
         kid = KFUPMIDsPool.objects.exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
@@ -508,7 +514,7 @@ class RegistrationStatus(models.Model):
         return self.registration_status
 
     class Meta:
-        verbose_name_plural = _('Admission: Registration Status')
+        verbose_name_plural = _('Registration Status')
 
 
 class RegistrationStatusMessage(models.Model):
@@ -563,9 +569,6 @@ class RegistrationStatusMessage(models.Model):
         except ObjectDoesNotExist:
             return
 
-    class Meta:
-        verbose_name_plural = _('Admission: Registration Status Message')
-
 
 class Lookup(models.Model):
     lookup_type = models.CharField(max_length=20, null=True, blank=False, db_index=True)
@@ -573,6 +576,9 @@ class Lookup(models.Model):
     lookup_value_en = models.CharField(max_length=100, null=True, blank=False)
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
+
+    class Meta:
+        verbose_name_plural = _('Look ups')
 
     @property
     def lookup_value(self):
@@ -603,10 +609,6 @@ class Lookup(models.Model):
         except OperationalError:  # happens when db doesn't exist yet
             return [('--', '--')]
 
-    class Meta:
-        ordering = ['-lookup_type']
-        verbose_name_plural = _('Admission: Cities')
-
 
 class City(models.Model):
     city_name_ar = models.CharField(max_length=100, verbose_name=_('City Name Arabic'))
@@ -627,7 +629,7 @@ class City(models.Model):
 
     class Meta:
         ordering = ['-display_order']
-        verbose_name_plural = _('Admission: Cities')
+        verbose_name_plural = _('Cities')
 
 
 class DeniedStudent(models.Model):
@@ -647,7 +649,7 @@ class DeniedStudent(models.Model):
     trials_count = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Count Trial'))
 
     class Meta:
-        verbose_name_plural = _('Admission: Denied Students')
+        verbose_name_plural = _('Denied Students')
 
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
@@ -674,7 +676,7 @@ class DistinguishedStudent(models.Model):
     attended = models.BooleanField(verbose_name=_('Attended'), default=True)
 
     class Meta:
-        verbose_name_plural = _('Admission: Distinguished Students')
+        verbose_name_plural = _('Distinguished Students')
 
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
@@ -689,7 +691,7 @@ class GraduationYear(models.Model):
 
     class Meta:
         ordering = ['-display_order']
-        verbose_name_plural = _('Admission: Graduation Years')
+        verbose_name_plural = _('Graduation Years')
 
     @property
     def graduation_year(self):
@@ -722,7 +724,7 @@ class Nationality(models.Model):
 
     class Meta:
         ordering = ['display_order', 'nationality_en']
-        verbose_name_plural = _('Admission: Nationalities')
+        verbose_name_plural = _('Nationalities')
 
 
 class Agreement(models.Model):
@@ -745,7 +747,7 @@ class Agreement(models.Model):
                                            verbose_name=_('Agreement Footer (English)'))
 
     class Meta:
-        verbose_name_plural = _('Admission and Student Affairs: Agreements')
+        verbose_name_plural = _('Agreements')
 
     @property
     def agreement_header(self):
@@ -793,7 +795,6 @@ class AgreementItem(models.Model):
 
     class Meta:
         ordering = ['agreement', '-display_order']
-        verbose_name_plural = _('Admission and Student Affairs: Agreement Items')
 
 
 # Auxiliary table in the database for BI reports
@@ -831,4 +832,29 @@ class ImportantDateSidebar(models.Model):
 
     class Meta:
         ordering = ['display_order']
-        verbose_name_plural = _('Admission: Important Date Sidebar')
+        verbose_name_plural = _('Important Date Sidebar')
+
+
+class TarifiReceptionDate(models.Model):
+    semester = models.ForeignKey(
+        'AdmissionSemester',
+        on_delete=models.SET_NULL,
+        blank=False,
+        null=True,
+        related_name='tarifi_reception_dates',
+        verbose_name='Semester',
+    )
+    reception_date = models.CharField(max_length=600, null=True, blank=False, verbose_name=_('Reception Date'))
+    slots = models.PositiveSmallIntegerField(null=True, blank=False, default=300, verbose_name=_('Slots'))
+    slot_start_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Start Date'))
+    slot_end_date = models.DateTimeField(null=True, blank=False, verbose_name=_('End Date'))
+
+    class Meta:
+        verbose_name_plural = _('Tarifi Reception Dates')
+
+    @property
+    def remaining_slots(self):
+        return self.slots - User.objects.filter(tarifi_week_attendance_date=self.pk).count()
+
+    def __str__(self):
+        return self.reception_date
