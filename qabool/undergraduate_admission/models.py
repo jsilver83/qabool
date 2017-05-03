@@ -422,7 +422,7 @@ class AdmissionSemester(models.Model):
 
     class Meta:
         verbose_name = _('Admission Semester')
-        verbose_name_plural = _('Admission Semester')
+        verbose_name_plural = _('Admission: Admission Semesters')
 
     def __str__(self):
         return self.semester_name
@@ -481,6 +481,9 @@ class KFUPMIDsPool(models.Model):
     def __str__(self):
         return str(self.kfupm_id)
 
+    class Meta:
+        verbose_name_plural = _('Registrar: KFUPMIDs Pool')
+
     @staticmethod
     def get_next_available_id():
         kid = KFUPMIDsPool.objects.exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
@@ -505,7 +508,7 @@ class RegistrationStatus(models.Model):
         return self.registration_status
 
     class Meta:
-        verbose_name_plural = _('Registration Status')
+        verbose_name_plural = _('Admission: Registration Status')
 
 
 class RegistrationStatusMessage(models.Model):
@@ -560,6 +563,9 @@ class RegistrationStatusMessage(models.Model):
         except ObjectDoesNotExist:
             return
 
+    class Meta:
+        verbose_name_plural = _('Admission: Registration Status Message')
+
 
 class Lookup(models.Model):
     lookup_type = models.CharField(max_length=20, null=True, blank=False, db_index=True)
@@ -567,9 +573,6 @@ class Lookup(models.Model):
     lookup_value_en = models.CharField(max_length=100, null=True, blank=False)
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
-
-    class Meta:
-        verbose_name_plural = _('Look ups')
 
     @property
     def lookup_value(self):
@@ -600,6 +603,10 @@ class Lookup(models.Model):
         except OperationalError:  # happens when db doesn't exist yet
             return [('--', '--')]
 
+    class Meta:
+        ordering = ['-lookup_type']
+        verbose_name_plural = _('Admission: Cities')
+
 
 class City(models.Model):
     city_name_ar = models.CharField(max_length=100, verbose_name=_('City Name Arabic'))
@@ -620,7 +627,7 @@ class City(models.Model):
 
     class Meta:
         ordering = ['-display_order']
-        verbose_name_plural = _('Cities')
+        verbose_name_plural = _('Admission: Cities')
 
 
 class DeniedStudent(models.Model):
@@ -640,7 +647,7 @@ class DeniedStudent(models.Model):
     trials_count = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Count Trial'))
 
     class Meta:
-        verbose_name_plural = _('Denied Students')
+        verbose_name_plural = _('Admission: Denied Students')
 
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
@@ -667,7 +674,7 @@ class DistinguishedStudent(models.Model):
     attended = models.BooleanField(verbose_name=_('Attended'), default=True)
 
     class Meta:
-        verbose_name_plural = _('Distinguished Students')
+        verbose_name_plural = _('Admission: Distinguished Students')
 
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
@@ -682,7 +689,7 @@ class GraduationYear(models.Model):
 
     class Meta:
         ordering = ['-display_order']
-        verbose_name_plural = _('Graduation Years')
+        verbose_name_plural = _('Admission: Graduation Years')
 
     @property
     def graduation_year(self):
@@ -715,7 +722,7 @@ class Nationality(models.Model):
 
     class Meta:
         ordering = ['display_order', 'nationality_en']
-        verbose_name_plural = _('Nationalities')
+        verbose_name_plural = _('Admission: Nationalities')
 
 
 class Agreement(models.Model):
@@ -738,7 +745,7 @@ class Agreement(models.Model):
                                            verbose_name=_('Agreement Footer (English)'))
 
     class Meta:
-        verbose_name_plural = _('Agreements')
+        verbose_name_plural = _('Admission and Student Affairs: Agreements')
 
     @property
     def agreement_header(self):
@@ -786,6 +793,7 @@ class AgreementItem(models.Model):
 
     class Meta:
         ordering = ['agreement', '-display_order']
+        verbose_name_plural = _('Admission and Student Affairs: Agreement Items')
 
 
 # Auxiliary table in the database for BI reports
@@ -823,4 +831,4 @@ class ImportantDateSidebar(models.Model):
 
     class Meta:
         ordering = ['display_order']
-        verbose_name_plural = _('Important Date Sidebar')
+        verbose_name_plural = _('Admission: Important Date Sidebar')
