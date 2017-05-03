@@ -431,7 +431,7 @@ class AdmissionSemester(models.Model):
 
     class Meta:
         verbose_name = _('Admission Semester')
-        verbose_name_plural = _('Admission Semester')
+        verbose_name_plural = _('Admission: Admission Semesters')
 
     def __str__(self):
         return self.semester_name
@@ -485,7 +485,7 @@ class KFUPMIDsPool(models.Model):
     kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
 
     class Meta:
-        verbose_name_plural = _('KFUPM ID Pools')
+        verbose_name_plural = _('Registrar: KFUPM ID Pools')
 
     def __str__(self):
         return str(self.kfupm_id)
@@ -514,7 +514,7 @@ class RegistrationStatus(models.Model):
         return self.registration_status
 
     class Meta:
-        verbose_name_plural = _('Registration Status')
+        verbose_name_plural = _('Admission: Registration Status')
 
 
 class RegistrationStatusMessage(models.Model):
@@ -528,6 +528,9 @@ class RegistrationStatusMessage(models.Model):
         null=True,
         related_name='status_messages'
     )
+
+    class Meta:
+        verbose_name_plural = _('Admission: Registration Status Messages')
 
     @property
     def registration_status_message(self):
@@ -578,7 +581,8 @@ class Lookup(models.Model):
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
 
     class Meta:
-        verbose_name_plural = _('Look ups')
+        verbose_name_plural = _('Admission: Look ups')
+        ordering = ['lookup_type', '-display_order']
 
     @property
     def lookup_value(self):
@@ -590,9 +594,6 @@ class Lookup(models.Model):
 
     def __str__(self):
         return self.lookup_value
-
-    class Meta:
-        ordering = ['lookup_type', '-display_order']
 
     @staticmethod
     def get_lookup_choices(lookup_type, add_dashes=True):
@@ -629,7 +630,7 @@ class City(models.Model):
 
     class Meta:
         ordering = ['-display_order']
-        verbose_name_plural = _('Cities')
+        verbose_name_plural = _('Admission: Cities')
 
 
 class DeniedStudent(models.Model):
@@ -649,7 +650,7 @@ class DeniedStudent(models.Model):
     trials_count = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Count Trial'))
 
     class Meta:
-        verbose_name_plural = _('Denied Students')
+        verbose_name_plural = _('Admission: Denied Students')
 
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
@@ -676,7 +677,7 @@ class DistinguishedStudent(models.Model):
     attended = models.BooleanField(verbose_name=_('Attended'), default=True)
 
     class Meta:
-        verbose_name_plural = _('Distinguished Students')
+        verbose_name_plural = _('Admission: Distinguished Students')
 
     def __str__(self):
         return self.student_name + ' (' + self.government_id + ')'
@@ -691,7 +692,7 @@ class GraduationYear(models.Model):
 
     class Meta:
         ordering = ['-display_order']
-        verbose_name_plural = _('Graduation Years')
+        verbose_name_plural = _('Admission: Graduation Years')
 
     @property
     def graduation_year(self):
@@ -724,7 +725,7 @@ class Nationality(models.Model):
 
     class Meta:
         ordering = ['display_order', 'nationality_en']
-        verbose_name_plural = _('Nationalities')
+        verbose_name_plural = _('Admission: Nationalities')
 
 
 class Agreement(models.Model):
@@ -747,7 +748,7 @@ class Agreement(models.Model):
                                            verbose_name=_('Agreement Footer (English)'))
 
     class Meta:
-        verbose_name_plural = _('Agreements')
+        verbose_name_plural = _('Admission and Student Affairs: Agreements')
 
     @property
     def agreement_header(self):
@@ -794,6 +795,7 @@ class AgreementItem(models.Model):
         return self.agreement_item
 
     class Meta:
+        verbose_name_plural = _('Admission and Student Affairs: Agreement Items')
         ordering = ['agreement', '-display_order']
 
 
@@ -832,7 +834,7 @@ class ImportantDateSidebar(models.Model):
 
     class Meta:
         ordering = ['display_order']
-        verbose_name_plural = _('Important Date Sidebar')
+        verbose_name_plural = _('Admission: Important Date Sidebar')
 
 
 class TarifiReceptionDate(models.Model):
@@ -850,7 +852,7 @@ class TarifiReceptionDate(models.Model):
     slot_end_date = models.DateTimeField(null=True, blank=False, verbose_name=_('End Date'))
 
     class Meta:
-        verbose_name_plural = _('Tarifi Reception Dates')
+        verbose_name_plural = _('Admission: Tarifi Reception Dates')
 
     @property
     def remaining_slots(self):
