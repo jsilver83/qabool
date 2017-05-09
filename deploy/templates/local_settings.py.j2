@@ -32,4 +32,18 @@ ADMINS = [
 EMAIL_HOST_USER = '{{ email_user }}'
 EMAIL_HOST_PASSWORD = '{{ email_password.json.data.value }}'
 SERVER_EMAIL = '{{ email_user }}'
-DEFAULT_FROM_EMAIL = 'Visit TTIE <{{ email_user }}>'
+DEFAULT_FROM_EMAIL = 'KFUPM Admission <{{ email_user }}>'
+
+UNIFONIC_APP_SID = "{{ sms_gateway_app_sid.json.data.value }}"
+
+DISABLE_SMS = {{ disable_sms }}
+DISABLE_EMAIL = {{ disable_email }}
+DISABLE_CAPTCHA = {{ disable_captcha }}
+
+MEDIA_ROOT = '{{ upload_dir }}'
+
+SENDFILE_BACKEND = 'sendfile.backends.nginx'
+SENDFILE_ROOT = '{{ upload_dir }}'
+SENDFILE_URL = '/protected-files'
+
+API_SECURITY_TOKEN = '{{ api_security_token }}'
