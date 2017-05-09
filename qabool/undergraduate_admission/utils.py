@@ -8,8 +8,6 @@ from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django_tables2 import SingleTableView
-from django_tables2.config import RequestConfig
 
 from qabool import settings
 from undergraduate_admission.models import Agreement, AdmissionSemester

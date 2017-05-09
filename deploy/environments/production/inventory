@@ -1,2 +1,5 @@
-[qabool]
+[application-servers]
 qabool-1.kfupm.edu.sa
+
+[database-servers]
+postgres-1.kfupm.edu.sa
