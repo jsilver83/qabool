@@ -391,6 +391,7 @@ class User(AbstractUser):
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
+        return [('--', '--')]
         try:
             choices = User.objects.filter(eligible_for_housing=True, housing_user__searchable=True). \
                 order_by().values('high_school_city').distinct()
@@ -599,6 +600,7 @@ class Lookup(models.Model):
 
     @staticmethod
     def get_lookup_choices(lookup_type, add_dashes=True):
+        return [('--', '--')]
         try:
             choices = Lookup.objects.filter(
                 show=True,
