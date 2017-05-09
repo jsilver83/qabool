@@ -362,7 +362,8 @@ class User(AbstractUser):
         except:
             return 'REJECTED'
 
-    def get_student_type(self):
+    @property
+    def student_type(self):
         student_type = 'S'
 
         if self.nationality:
@@ -375,7 +376,8 @@ class User(AbstractUser):
 
         return student_type
 
-    def get_student_total(self):
+    @property
+    def admission_total(self):
         semester = self.semester
         if semester and self.high_school_gpa and self.qudrat_score and self.tahsili_score:
             return self.high_school_gpa * (semester.high_school_gpa_weight / 100) \
@@ -693,6 +695,19 @@ class GraduationYear(models.Model):
         ordering = ['-display_order']
         verbose_name_plural = _('Graduation Years')
 
+    @staticmethod
+    def get_graduation_year_choices(add_dashes=True):
+        try:
+            choices = GraduationYear.objects.filter(show=True)
+
+            ch = [(o.id, str(o)) for o in choices]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
+
+            return ch
+        except OperationalError:  # happens when db doesn't exist yet
+            return [('--', '--')]
+
     @property
     def graduation_year(self):
         lang = translation.get_language()
@@ -710,6 +725,19 @@ class Nationality(models.Model):
     nationality_en = models.CharField(max_length=50, verbose_name=_('Nationality (English)'))
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
+
+    @staticmethod
+    def get_nationality_choices(add_dashes=True):
+        try:
+            choices = Nationality.objects.filter(show=True)
+
+            ch = [(o.id, str(o)) for o in choices]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
+
+            return ch
+        except OperationalError:  # happens when db doesn't exist yet
+            return [('--', '--')]
 
     @property
     def nationality(self):
