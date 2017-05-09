@@ -13,12 +13,26 @@ database_port: 5432
 django_debug: no
 apache_debug: yes
 
-email_user: qabool@kfupm.edu.sa
+email_user: admissions@kfupm.edu.sa
 
 # pick a unique port that is not used by any other application on the target
 # application server
-uwsgi_http_port: 8002
+uwsgi_http_port: 5656
 
 cas_login_url: "{{ test_cas_login_url }}"
 cas_validate_url: "{{ test_cas_validate_url }}"
 cas_logout_url: "{{ test_cas_logout_url }}"
+
+qabool_recaptcha_public_key: 6LfFoR4TAAAAAG5sUY388qie8DvVgUvFS211Spt-
+qabool_recaptcha_private_key: "{{ qabool_recaptcha_private_key.json.data.value }}"
+
+zabbix_server: 10.180.17.200
+
+api_security_token: "{{ vault_api_security_token }}"
+
+disable_sms: no
+disable_email: no
+disable_captcha: no
+
+upload_dir: uploaded_docs
+api_security_token: aA6sFghhJ46tYu09iL0o
