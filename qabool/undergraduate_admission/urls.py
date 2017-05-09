@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth.views import login, logout, password_change, password_change_done
 
+from undergraduate_admission.views import phase3_views
 from .views import general_views, phase1_views, phase2_views
 from .models import User
 
@@ -30,7 +31,7 @@ urlpatterns = [
         name='password_change_done',
         kwargs={'template_name': 'undergraduate_admission/change_password.html'},
     ),
-
+    url(r'^cutoffpoint', phase1_views.cut_off_point, name='check_if_student_is_admitted'),
     url(r'^checkifadmitted', general_views.check_if_student_is_admitted, name='check_if_student_is_admitted'),
     url(r'^markasattended', general_views.mark_student_as_attended, name='mark_student_as_attended'),
     url(r'^withdrawalletter/$', phase2_views.withdrawal_letter, name='withdrawal_letter'),
