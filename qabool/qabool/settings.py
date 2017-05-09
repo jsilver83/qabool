@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'floppyforms',
 
     'import_export',
+    'django_filters',
 
     'django.contrib.admin',
     'django.contrib.auth',

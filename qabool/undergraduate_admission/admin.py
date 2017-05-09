@@ -27,7 +27,7 @@ class UserResource(resources.ModelResource):
 
 
 class MyUserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
-    list_display = ('id', 'username', 'kfupm_id', 'get_student_full_name', 'email', 'get_student_total',
+    list_display = ('id', 'username', 'kfupm_id', 'get_student_full_name', 'email', 'admission_total',
                     'status_message_id', )
     date_hierarchy = 'date_joined'
     fieldsets = UserAdmin.fieldsets + (
@@ -47,8 +47,8 @@ class Student(User):
 
 
 class StudentAdmin(VersionAdmin):
-    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile', 'status_message_id',
-                    'get_student_type')
+    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
+                    'student_type', 'admission_total', 'status_message_id',)
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('username', 'id', 'is_active', 'date_joined')
@@ -81,7 +81,7 @@ class VerifyStudentAdminForm(forms.ModelForm):
 # TODO: Enhance the form and add script to manage student pictures for the committee.
 class VerifyStudentAdmin(VersionAdmin):
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
-                    'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message_id', 'get_student_type', )
+                    'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message_id', 'student_type', )
     date_hierarchy = 'date_joined'
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality', )
     fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
@@ -112,7 +112,7 @@ class HelpDiskForStudent(User):
 
 
 class HelpDiskForStudentAdmin(VersionAdmin):
-    list_display = ('username', 'get_student_full_name', 'email', 'mobile', 'get_student_type', 'kfupm_id', 'status_message_id')
+    list_display = ('username', 'get_student_full_name', 'email', 'mobile', 'student_type', 'kfupm_id', 'status_message_id')
     date_hierarchy = 'date_joined'
     fields = readonly_fields = ('username', 'get_student_full_name', 'mobile', 'email',
                                 'nationality', 'saudi_mother', 'status_message',
@@ -239,7 +239,7 @@ class CutOff(User):
 # TODO: display specific fields with criteria and enhance the search field.
 class CutOffAdmin(admin.ModelAdmin):
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
-                    'status_message_id', 'get_student_type',)
+                    'status_message_id', 'student_type',)
     # date_hierarchy = 'date_joined'
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
     fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',

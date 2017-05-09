@@ -8,9 +8,11 @@ from django.views.generic import CreateView
 from django.utils.translation import ugettext_lazy as _
 from django.core.cache import cache
 
-from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm, EditInfoForm, Phase1UserEditForm
+from undergraduate_admission.filters import UserListFilter
+from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm, EditInfoForm, Phase1UserEditForm, \
+    CutOffForm
 from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement, ImportantDateSidebar
-from undergraduate_admission.utils import SMS, Email
+from undergraduate_admission.utils import SMS, Email, try_parse_float
 
 
 @cache_page(60 * 15)
@@ -103,3 +105,21 @@ def edit_info(request):
                 messages.error(request, _('Error updating info. Try again later!'))
 
     return render(request, 'undergraduate_admission/edit_info.html', context={'form': form})
+
+
+def cut_off_point(request):
+    form = CutOffForm(request.GET or None)
+    selected_student_types = request.GET.getlist('student_type', ['S', 'M', 'N'])
+    print(selected_student_types)
+    cut_off_total = try_parse_float(request.GET.get('admission_total', 0.0))
+    print(cut_off_total)
+
+    filtered = UserListFilter(request.GET, queryset=User.objects.all())
+    filtered_with_properties = [student for student in filtered.qs
+                                if student.student_type in selected_student_types]
+    filtered_with_properties = [student for student in filtered_with_properties
+                                if student.admission_total > cut_off_total]
+
+    return render(request,
+                  template_name='undergraduate_admission/phase3/cutoff.html',
+                  context={'form': form, 'students': filtered_with_properties})

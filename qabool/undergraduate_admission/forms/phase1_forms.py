@@ -8,7 +8,7 @@ from django.core.validators import RegexValidator
 
 from qabool import settings
 from undergraduate_admission.forms.general_forms import BaseContactForm
-from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup
+from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup, Nationality, GraduationYear
 from undergraduate_admission.utils import try_parse_int
 
 
@@ -92,7 +92,8 @@ class RegistrationForm(UserCreationForm):
         label=_('Government ID'),
         max_length=11,
         min_length=9,
-        help_text=_('National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx.  Use English numerals only.'),
+        help_text=_(
+            'National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx.  Use English numerals only.'),
         validators=[
             RegexValidator(
                 '^\d{9,11}$',
@@ -126,7 +127,7 @@ class RegistrationForm(UserCreationForm):
         help_text=_('Only male students can apply'),
         initial='M',
         disabled=True,
-        widget= forms.Select(choices=GENDER_CHOICES),
+        widget=forms.Select(choices=GENDER_CHOICES),
     )
 
     # high_school_system = forms.ModelChoiceField(
@@ -137,7 +138,8 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['student_full_name_ar', 'student_full_name_en','gender', 'username', 'username2', 'mobile', 'mobile2',
+        fields = ['student_full_name_ar', 'student_full_name_en', 'gender', 'username', 'username2', 'mobile',
+                  'mobile2',
                   'nationality', 'saudi_mother',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
                   'high_school_gpa', 'qudrat_score', 'tahsili_score',
@@ -157,7 +159,7 @@ class RegistrationForm(UserCreationForm):
             'high_school_graduation_year': forms.Select(attrs={'required': ''}),
             'nationality': forms.Select(attrs={
                 'required': '',
-                'class': 'select2',}),
+                'class': 'select2', }),
             'mobile': forms.TextInput(attrs={'required': '',
                                              'placeholder': '9665xxxxxxxx',
                                              }),
@@ -176,9 +178,9 @@ class RegistrationForm(UserCreationForm):
         self.fields['email'].required = True
         self.fields['student_full_name_ar'].required = True
         self.fields['student_full_name_en'].required = True
-        self.fields['high_school_system'].widget = forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
+        self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         self.fields['high_school_system'].required = True
-        try: # to make this form reusable for edit info
+        try:  # to make this form reusable for edit info
             self.fields['guardian_mobile'].required = True
             self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
             self.fields['password2'].help_text = _('Enter the same password as before, for verification')
@@ -266,15 +268,14 @@ class RegistrationForm(UserCreationForm):
 
 
 class EditInfoForm(RegistrationForm):
-
     class Meta:
         model = User
         fields = ['student_full_name_ar', 'student_full_name_en', 'mobile', 'mobile2',
                   'email', 'email2', 'high_school_graduation_year', 'high_school_system',
                   'nationality', 'saudi_mother', 'student_notes']
 
-    # def __init__(self, *args, **kwargs):
-    #     super(EditInfoForm, self).__init__(*args, **kwargs)
+        # def __init__(self, *args, **kwargs):
+        #     super(EditInfoForm, self).__init__(*args, **kwargs)
         # self.fields['email'].required = True
         # self.fields['first_name'].required = True
         # self.fields['last_name'].required = True
@@ -286,4 +287,36 @@ class EditInfoForm(RegistrationForm):
         #     self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
 
+class CutOffForm(forms.ModelForm):
+    GENDER_CHOICES = (
+        ('', _('Both')),
+        ('M', _('Male')),
+        ('F', _('Female'))
+    )
+    STUDENT_TYPES = (
+        ('S', _('Saudi')),
+        ('M', _('Saudi Mother')),
+        ('N', _('Non-Saudi')),
+    )
+    student_type = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=STUDENT_TYPES),
+                                   required=False)
+    # gender = forms.CharField(widget=forms.RadioSelect(choices=GENDER_CHOICES))
+    # nationality = forms.IntegerField(widget=forms.Select(choices=Nationality.get_nationality_choices(), attrs={'class': 'select2'}))
+    admission_total = forms.FloatField(min_value=1, max_value=100, required=False)
+
+    class Meta:
+        model = User
+        fields = ['semester', 'gender', 'nationality', 'admission_total', 'student_type',
+                  'high_school_graduation_year']
+
+    def __init__(self, *args, **kwargs):
+        super(CutOffForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].widget = forms.RadioSelect(choices=self.GENDER_CHOICES)
+        self.fields['gender'].required = False
+        self.fields['nationality'].required = False
+        self.fields['nationality'].widget.is_required = False
+        self.fields['high_school_graduation_year'].widget = \
+            widget=forms.CheckboxSelectMultiple(choices=
+                                                GraduationYear.get_graduation_year_choices(add_dashes=False))
+        self.fields['high_school_graduation_year'].required=False
 
