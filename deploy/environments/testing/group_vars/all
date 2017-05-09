@@ -4,7 +4,7 @@ apache_server_names:
   - qabool.test.kfupm.edu.sa
 
 database_engine: django.db.backends.postgresql
-database_name: qabool
+database_name: qabool2
 database_user: qabool
 # database_password: set from Vault in playbook
 database_host: postgres.test.kfupm.edu.sa
@@ -27,8 +27,6 @@ qabool_recaptcha_public_key: 6LfFoR4TAAAAAG5sUY388qie8DvVgUvFS211Spt-
 qabool_recaptcha_private_key: "{{ qabool_recaptcha_private_key.json.data.value }}"
 
 zabbix_server: 10.180.17.200
-
-api_security_token: "{{ vault_api_security_token }}"
 
 disable_sms: no
 disable_email: no
