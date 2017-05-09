@@ -1,0 +1,17 @@
+{% extends "base-sidebar.html" %}
+{#{% load bootstrap3 %}#}
+{% load querystring from django_tables2 %}
+{% load title from django_tables2 %}
+{% load trans blocktrans from i18n %}
+
+{% block subcontent %}
+
+<form>
+	{{  form }}
+<button>SEARCH</button>
+</form>
+
+	{% for student in students %}
+		{{ student }} &nbsp; {{ student.student_total }}<br>
+	{% endfor %}
+{% endblock subcontent %}
