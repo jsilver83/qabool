@@ -142,7 +142,7 @@ class User(AbstractUser):
                                             verbose_name=_('Government ID Expiry Date'))
     government_id_place = models.CharField(null=True, blank=True, max_length=50,
                                            verbose_name=_('Government ID Place of Issue'))
-    passport_number = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Password Number'))
+    passport_number = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Passport Number'))
     passport_place = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Passport Place of Issue '))
     passport_expiry = models.DateTimeField(null=True, blank=True, verbose_name=_('Passport Expiry Date'))
     passport_file = models.FileField(
@@ -391,7 +391,6 @@ class User(AbstractUser):
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
-        return [('--', '--')]
         try:
             choices = User.objects.filter(eligible_for_housing=True, housing_user__searchable=True). \
                 order_by().values('high_school_city').distinct()
@@ -600,7 +599,6 @@ class Lookup(models.Model):
 
     @staticmethod
     def get_lookup_choices(lookup_type, add_dashes=True):
-        return [('--', '--')]
         try:
             choices = Lookup.objects.filter(
                 show=True,
