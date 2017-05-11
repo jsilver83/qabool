@@ -8,7 +8,6 @@ from undergraduate_admission.models import Lookup, User
 
 # obviously violating the DRY principle to solve a weird error with deploying and migrating the db
 def get_lookup_choices(lookup_type, add_dashes=True):
-    return [('--', '--')]
     try:
         choices = Lookup.objects.filter(
             show=True,
