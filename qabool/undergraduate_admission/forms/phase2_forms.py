@@ -224,7 +224,7 @@ class WithdrawalProofForm(Phase2GenericForm):
             self.fields[field].required = True
             self.fields[field].help_text = \
                 _('Please upload clear scanned images with good quality. Allowed formats: '
-                  'pdf, jpg, jpeg, png, bmp, gif. Max Size: 2 MB')
+                  'jpg, jpeg, png, bmp, gif. Max Size: 2 MB')
 
 
 class WithdrawalForm(forms.ModelForm):
