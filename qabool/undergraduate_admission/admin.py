@@ -170,7 +170,7 @@ class AgreementItemResource(resources.ModelResource):
     class Meta:
         model = AgreementItem
         import_id_fields = ('id',)
-        fields = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+        fields = ('id', 'agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
         skip_unchanged = True
         report_skipped = True
 
