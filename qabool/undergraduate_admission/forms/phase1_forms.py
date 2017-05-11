@@ -86,7 +86,7 @@ class RegistrationForm(UserCreationForm):
         label=_('Email Address Confirmation'),
         required=True,
         help_text=_('Enter the same email address as before, for verification'),
-        widget=forms.EmailInput()
+        widget=forms.EmailInput(attrs={'class': 'nocopy'})
     )
     username = forms.CharField(
         label=_('Government ID'),
@@ -107,7 +107,7 @@ class RegistrationForm(UserCreationForm):
         min_length=9,
         required=True,
         help_text=_('Enter the same government ID as before, for verification'),
-        # widget=forms.TextInput(attrs={'class': 'nocopy'})
+        widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
     mobile2 = forms.CharField(
         label=_('Mobile Confirmation'),
@@ -142,7 +142,7 @@ class RegistrationForm(UserCreationForm):
                   'mobile2',
                   'nationality', 'saudi_mother',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
-                  'high_school_gpa', 'qudrat_score', 'tahsili_score',
+                  'high_school_gpa',
                   'password1', 'password2', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
@@ -271,8 +271,7 @@ class EditInfoForm(RegistrationForm):
     class Meta:
         model = User
         fields = ['student_full_name_ar', 'student_full_name_en', 'mobile', 'mobile2',
-                  'email', 'email2', 'high_school_graduation_year', 'high_school_system',
-                  'nationality', 'saudi_mother', 'student_notes']
+                  'email', 'email2', 'high_school_gpa', 'student_notes']
 
         # def __init__(self, *args, **kwargs):
         #     super(EditInfoForm, self).__init__(*args, **kwargs)
