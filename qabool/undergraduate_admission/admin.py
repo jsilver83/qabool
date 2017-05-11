@@ -181,13 +181,13 @@ class AgreementItemAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = AgreementItemResource
 
 
-class AgreementItemInline(admin.TabularInline):
-        model = AgreementItem
-
-class AgreementAdmin(admin.ModelAdmin):
-    inlines = [
-        AgreementItemInline,
-    ]
+# class AgreementItemInline(admin.TabularInline):
+#         model = AgreementItem
+#
+# class AgreementAdmin(admin.ModelAdmin):
+#     inlines = [
+#         AgreementItemInline,
+#     ]
 
 class LookupResource(resources.ModelResource):
     class Meta:
@@ -231,34 +231,34 @@ def Mark_Rejected(modeladmin, request, queryset):
 # TODO: Should we do in the admin dashboard or in the front-end using template?.
 
 
-class CutOff(User):
-    class Meta:
-        proxy = True
+# class CutOff(User):
+#     class Meta:
+#         proxy = True
 
 
 # TODO: display specific fields with criteria and enhance the search field.
-class CutOffAdmin(admin.ModelAdmin):
-    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
-                    'status_message_id', 'student_type',)
-    # date_hierarchy = 'date_joined'
-    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
-    fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
-              'is_active', 'date_joined', 'high_school_gpa',
-              'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
-              'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
-              'high_school_province', 'high_school_city', 'birthday', 'birthday_ah',
-              'nationality', 'saudi_mother', 'birth_place', 'government_id_expiry',
-              'personal_picture', 'government_id_file', 'high_school_certificate',
-              'courses_certificate', 'mother_gov_id_file', 'birth_certificate', 'passport_file',
-              'verification_documents_incomplete', 'get_verification_status', 'verification_status',
-              'verification_notes',)
-    readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
-                       'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status',
-                       'nationality', 'saudi_mother',)
-
-    search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
-                     'nationality__nationality_en']
-    actions = [Mark_Partial_Admitted, Mark_Rejected]
+# class CutOffAdmin(admin.ModelAdmin):
+#     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
+#                     'status_message_id', 'student_type',)
+#     # date_hierarchy = 'date_joined'
+#     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
+#     fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
+#               'is_active', 'date_joined', 'high_school_gpa',
+#               'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
+#               'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
+#               'high_school_province', 'high_school_city', 'birthday', 'birthday_ah',
+#               'nationality', 'saudi_mother', 'birth_place', 'government_id_expiry',
+#               'personal_picture', 'government_id_file', 'high_school_certificate',
+#               'courses_certificate', 'mother_gov_id_file', 'birth_certificate', 'passport_file',
+#               'verification_documents_incomplete', 'get_verification_status', 'verification_status',
+#               'verification_notes',)
+#     readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
+#                        'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status',
+#                        'nationality', 'saudi_mother',)
+#
+#     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
+#                      'nationality__nationality_en']
+#     actions = [Mark_Partial_Admitted, Mark_Rejected]
 
 
 class TarifiReceptionDateAdmin(admin.ModelAdmin):
@@ -280,7 +280,9 @@ admin.site.register(City)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear)
 # Use TabularInline in the Agreement model.
-admin.site.register(Agreement, AgreementAdmin)
+# admin.site.register(Agreement, AgreementAdmin)
+admin.site.register(Agreement)
+admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Student, StudentAdmin)
@@ -289,4 +291,4 @@ admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
 admin.site.register(VerifyStudent, VerifyStudentAdmin)
-admin.site.register(CutOff, CutOffAdmin)
+# admin.site.register(CutOff, CutOffAdmin)
