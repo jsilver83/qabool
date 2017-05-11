@@ -39,7 +39,7 @@ class AgreementForm(BaseAgreementForm):
 class Phase1UserEditForm(BaseContactForm):
     class Meta(BaseContactForm.Meta):
         fields = BaseContactForm.Meta.fields + ['student_full_name_ar', 'student_full_name_en', 'mobile',
-                                                'high_school_gpa', 'qudrat_score', 'tahsili_score', 'student_notes']
+                                                'high_school_gpa', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
             ('', "---"),
@@ -52,8 +52,6 @@ class Phase1UserEditForm(BaseContactForm):
             'student_full_name_en': forms.TextInput(attrs={'required': ''}),
             'mobile': forms.TextInput(attrs={'required': ''}),
             'high_school_gpa': forms.TextInput(attrs={'required': ''}),
-            'qudrat_score': forms.TextInput(attrs={'required': ''}),
-            'tahsili_score': forms.TextInput(attrs={'required': ''}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -62,8 +60,6 @@ class Phase1UserEditForm(BaseContactForm):
         self.fields['student_full_name_en'].required = True
         self.fields['mobile'].required = True
         self.fields['high_school_gpa'].required = True
-        self.fields['qudrat_score'].required = True
-        self.fields['tahsili_score'].required = True
 
 
 class RegistrationForm(UserCreationForm):
@@ -271,7 +267,7 @@ class EditInfoForm(RegistrationForm):
     class Meta:
         model = User
         fields = ['student_full_name_ar', 'student_full_name_en', 'mobile', 'mobile2',
-                  'email', 'email2', 'high_school_gpa', 'student_notes']
+                  'email', 'email2', 'student_notes']
 
         # def __init__(self, *args, **kwargs):
         #     super(EditInfoForm, self).__init__(*args, **kwargs)

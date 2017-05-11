@@ -33,7 +33,7 @@ class BaseContactForm(forms.ModelForm):
         label=_('Email Address Confirmation'),
         required=True,
         help_text=_('Enter the same email address as before, for verification'),
-        widget=forms.EmailInput()
+        widget=forms.EmailInput(attrs={'class': 'nocopy'})
     )
     mobile2 = forms.CharField(
         label=_('Mobile Confirmation'),
