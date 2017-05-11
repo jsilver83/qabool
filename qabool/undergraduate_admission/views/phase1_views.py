@@ -68,8 +68,8 @@ class RegisterView(CreateView):
                                         mobile=form.cleaned_data['mobile'],
                                         guardian_mobile=form.cleaned_data['guardian_mobile'],
                                         high_school_gpa=form.cleaned_data['high_school_gpa'],
-                                        qudrat_score=form.cleaned_data['qudrat_score'],
-                                        tahsili_score=form.cleaned_data['tahsili_score'],
+                                        # qudrat_score=form.cleaned_data['qudrat_score'],
+                                        # tahsili_score=form.cleaned_data['tahsili_score'],
                                         student_notes=form.cleaned_data['student_notes'],
                                         high_school_system=form.cleaned_data['high_school_system'],
                                         )

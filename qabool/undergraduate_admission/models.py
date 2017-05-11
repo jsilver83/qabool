@@ -440,9 +440,12 @@ class AdmissionSemester(models.Model):
 
     @staticmethod
     def get_phase1_active_semester():
-        now = timezone.now()
-        sem = AdmissionSemester.objects.filter(phase1_start_date__lte=now, phase1_end_date__gte=now).first()
-        return sem
+        try:
+            now = timezone.now()
+            sem = AdmissionSemester.objects.filter(phase1_start_date__lte=now, phase1_end_date__gte=now).first()
+            return sem
+        except ObjectDoesNotExist:
+            return None
 
     @staticmethod
     def get_phase2_active_semester(user):
