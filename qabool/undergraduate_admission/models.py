@@ -298,6 +298,8 @@ class User(AbstractUser):
                                          verbose_name=_('Withdrawal Reason'))
     phase2_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Start Date'))
     phase2_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 End Date'))
+    phase3_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 Start Date'))
+    phase3_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 End Date'))
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
     verification_documents_incomplete = models.NullBooleanField(blank=True,
                                                                 verbose_name=_('Uploaded docs are incomplete?'), )
@@ -461,6 +463,19 @@ class AdmissionSemester(models.Model):
         return sem
 
     @staticmethod
+    def get_phase3_active_semester(user):
+        now = timezone.now()
+        sem = AdmissionSemester.objects.filter(phase3_start_date__lte=now, phase3_end_date__gte=now).first()
+
+        # if phase 3 expired globally but the student is given an exception
+        if not sem:
+            if user and user.phase3_start_date and user.phase3_end_date and \
+                                    user.phase3_start_date <= now <= user.phase3_end_date:
+                sem = user.semester
+
+        return sem
+
+    @staticmethod
     def check_if_phase1_is_active():
         # cache if semester phase1 is active for 15 mins
         if cache.get('phase1_active') is None:
@@ -499,7 +514,10 @@ class KFUPMIDsPool(models.Model):
     def get_next_available_id():
         kid = KFUPMIDsPool.objects.exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
                                            .values_list('kfupm_id', flat=True)).order_by('?').first()
-        return kid.kfupm_id
+        if kid:
+            return kid.kfupm_id
+        else:
+            return 0
 
 
 class RegistrationStatus(models.Model):
