@@ -577,6 +577,14 @@ class RegistrationStatusMessage(models.Model):
         except ObjectDoesNotExist:
             return
 
+    @staticmethod
+    def get_status_confirmed():
+        try:
+            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
+                .status_messages.get(status_message_code='CONFIRMED')
+        except ObjectDoesNotExist:
+            return
+
 
 class Lookup(models.Model):
     lookup_type = models.CharField(max_length=20, null=True, blank=False, db_index=True)

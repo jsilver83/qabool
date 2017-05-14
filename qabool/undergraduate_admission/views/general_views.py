@@ -1,3 +1,4 @@
+import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,7 @@ from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
+from qabool import settings
 from qabool.local_settings import API_SECURITY_TOKEN
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
 from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, User
@@ -66,14 +68,15 @@ def forgot_password(request):
 @login_required
 def student_area(request):
     phase = request.user.get_student_phase()
+    status_message = request.user.status_message
 
     show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
 
-    can_confirm = phase == 'PARTIALLY-ADMITTED'
+    can_confirm = phase == 'PARTIALLY-ADMITTED' and status_message != RegistrationStatusMessage.get_status_confirmed()
 
     can_re_upload_docs = phase == 'ADMITTED' and request.user.verification_documents_incomplete
 
-    can_upload_withdrawal_proof = request.user.status_message == RegistrationStatusMessage.get_status_duplicate()
+    can_upload_withdrawal_proof = status_message == RegistrationStatusMessage.get_status_duplicate()
 
     return render(request,
                   'undergraduate_admission/student_area.html', context={'user': request.user,
