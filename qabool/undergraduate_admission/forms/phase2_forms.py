@@ -83,7 +83,7 @@ class PersonalInfoForm(Phase2GenericForm):
     def __init__(self, *args, **kwargs):
         super(PersonalInfoForm, self).__init__(*args, **kwargs)
 
-        if self.instance.get_student_type() == 'S':
+        if self.instance.student_type == 'S':
             del self.fields['passport_number']
             del self.fields['passport_place']
             del self.fields['passport_expiry']
@@ -191,11 +191,11 @@ class DocumentsForm(Phase2GenericForm):
     def __init__(self, *args, **kwargs):
         super(DocumentsForm, self).__init__(*args, **kwargs)
 
-        if self.instance.get_student_type() == 'N':
+        if self.instance.student_type == 'N':
             del self.fields['mother_gov_id_file']
             del self.fields['birth_certificate']
 
-        elif self.instance.get_student_type() == 'S':
+        elif self.instance.student_type == 'S':
             del self.fields['mother_gov_id_file']
             del self.fields['birth_certificate']
             del self.fields['passport_file']
