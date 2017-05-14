@@ -36,7 +36,8 @@ def is_withdrawn(user):
 
 
 def is_eligible_to_withdraw(user):
-    return is_admitted(user) and not user.tarifi_week_attendance_date
+    return user.status_message == RegistrationStatusMessage.get_status_admitted() \
+           or user.status_message == RegistrationStatusMessage.get_status_confirmed()
 
 
 class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
@@ -288,108 +289,6 @@ def upload_withdrawal_proof(request):
     return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
 
 
-@login_required()
-@user_passes_test(is_phase2_eligible)
-def student_agreement_1(request):
-    form = AgreementForm(request.POST or None)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed1'] = True
-            return redirect('student_agreement_2')
-        else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase2_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_1', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step1': 'active'})
-
-
-@login_required()
-@user_passes_test(is_phase2_eligible)
-def student_agreement_2(request):
-    form = AgreementForm(request.POST or None)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed2'] = True
-            return redirect('student_agreement_3')
-        else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase2_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_2', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step2': 'active'})
-
-
-@login_required()
-@user_passes_test(is_phase2_eligible)
-def student_agreement_3(request):
-    form = AgreementForm(request.POST or None)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed3'] = True
-            return redirect('student_agreement_4')
-        else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase2_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_3', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step3': 'active'})
-
-
-@login_required()
-@user_passes_test(is_phase2_eligible)
-def student_agreement_4(request):
-    form = AgreementForm(request.POST or None)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed5'] = True
-
-            reg_msg = RegistrationStatusMessage.get_status_admitted()
-            kfupm_id = KFUPMIDsPool.get_next_available_id()
-
-            user = request.user
-            if not user.kfupm_id:
-                user.kfupm_id = kfupm_id
-            user.status_message = reg_msg
-            user.save()
-
-            SMS.send_sms_admitted(user.mobile)
-
-            return redirect('print_documents')
-        else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase2_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_4', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step4': 'active'})
-
-
-@login_required()
-@user_passes_test(is_admitted)
-def print_documents(request):
-    eligible_for_housing = request.user.eligible_for_housing
-    return render(request, 'undergraduate_admission/phase2/print_documents.html',
-                  {'eligible_for_housing': eligible_for_housing, })
 
 
 @login_required()
@@ -425,27 +324,3 @@ def withdrawal_letter(request):
     user = request.user
 
     return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user,})
-
-
-@login_required()
-@user_passes_test(is_admitted)
-def admission_letter(request):
-    if request.method == "GET" and not request.user.admission_letter_print_date:
-        request.user.admission_letter_print_date = timezone.now()
-        request.user.save()
-
-    user = request.user
-
-    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})
-
-
-@login_required()
-@user_passes_test(is_admitted)
-def medical_letter(request):
-    if request.method == "GET" and not request.user.medical_report_print_date:
-        request.user.medical_report_print_date = timezone.now()
-        request.user.save()
-
-    user = request.user
-
-    return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user,})
