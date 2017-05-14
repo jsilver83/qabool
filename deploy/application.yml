@@ -11,9 +11,10 @@
     django_project_admin_username: joud
     django_project_admin_email: joud@kfupm.edu.sa
     django_project_package_name: qabool
-    #apache_authn: cas
-    #apache_authn_urls:
-    #  - /admin/
+    apache_authn: cas
+    apache_authn_urls:
+      - /admin/
+      - /manage/
     admins:
       - name: Abdullah Joud
         email: joud@kfupm.edu.sa
@@ -82,11 +83,16 @@
     - name: Generate local settings
       set_fact:
         django_project_local_settings: "{{ lookup('template', 'local_settings.py.j2') }}"
+        
 
   roles:
     - django-project
 
   # tasks to be performed after role tasks, if any
-  # post_tasks:
-  #   - name: some task
-  #     ...
+  post_tasks:
+    - name: mount nfs media files repository from filer
+      mount:
+        name: "{{ django_project_media_dir }}"
+        src: "{{ qabool_media_files_remote_path }}"
+        fstype: nfs
+        state: mounted
