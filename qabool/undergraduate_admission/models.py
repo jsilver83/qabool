@@ -915,5 +915,18 @@ class TarifiReceptionDate(models.Model):
     def remaining_slots(self):
         return self.slots - User.objects.filter(tarifi_week_attendance_date=self.pk).count()
 
+    @staticmethod
+    def get_all_available_slots(add_dashes=True):
+        try:
+            choices = TarifiReceptionDate.objects.filter(semester=AdmissionSemester.get_phase3_active_semester())
+
+            ch = [(o.id, str(o)) for o in choices if o.remaining_slots]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
+
+            return ch
+        except OperationalError:  # happens when db doesn't exist yet
+            return [('--', '--')]
+
     def __str__(self):
         return self.reception_date
