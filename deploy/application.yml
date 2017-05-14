@@ -13,8 +13,10 @@
     django_project_package_name: qabool
     apache_authn: cas
     apache_authn_urls:
-      - /admin/
-      - /manage/
+      - /ar/admin/
+      - /en/admin/
+      - /ar/manage/
+      - /en/manage/      
     admins:
       - name: Abdullah Joud
         email: joud@kfupm.edu.sa
