@@ -301,6 +301,8 @@ class User(AbstractUser):
     phase3_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 Start Date'))
     phase3_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 End Date'))
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
+    phase3_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 Submit Date'))
+
     verification_documents_incomplete = models.NullBooleanField(blank=True,
                                                                 verbose_name=_('Uploaded docs are incomplete?'), )
     verification_status = models.CharField(null=True, blank=True, max_length=500,
@@ -916,9 +918,9 @@ class TarifiReceptionDate(models.Model):
         return self.slots - User.objects.filter(tarifi_week_attendance_date=self.pk).count()
 
     @staticmethod
-    def get_all_available_slots(add_dashes=True):
+    def get_all_available_slots(user, add_dashes=True):
         try:
-            choices = TarifiReceptionDate.objects.filter(semester=AdmissionSemester.get_phase3_active_semester())
+            choices = TarifiReceptionDate.objects.filter(semester=AdmissionSemester.get_phase3_active_semester(user))
 
             ch = [(o.id, str(o)) for o in choices if o.remaining_slots]
             if add_dashes:

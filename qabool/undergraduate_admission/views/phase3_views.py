@@ -101,14 +101,14 @@ def student_agreement_4(request):
 @login_required()
 @user_passes_test(is_phase3_eligible)
 def choose_tarifi_time_slot(request):
-    form = TarifiTimeSlotForm(request.POST or None)
+    form = TarifiTimeSlotForm(request.POST or None, user=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
             kfupm_id = KFUPMIDsPool.get_next_available_id()
 
             saved = form.save(commit=False)
-
+            saved.phase3_submit_date = timezone.now()
             if not saved.kfupm_id:
                 saved.kfupm_id = kfupm_id
             saved.save()
