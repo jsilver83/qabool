@@ -7,7 +7,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('undergraduate_admission/_student_info_commands.html', takes_context=True)
-def student_info_commands(context):
+def admin_commands(context):
     user = context['request'].user
     phase = user.get_student_phase()
     can_withdraw = phase == 'ADMITTED' and not user.tarifi_week_attendance_date
@@ -51,4 +51,3 @@ def student_info_commands(context):
         'can_see_housing': can_see_housing,
         'can_search_in_housing': can_search_in_housing,
     }
-
