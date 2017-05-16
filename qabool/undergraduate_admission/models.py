@@ -512,6 +512,14 @@ class KFUPMIDsPool(models.Model):
     def __str__(self):
         return str(self.kfupm_id)
 
+    @property
+    def assigned_student(self):
+        try:
+            student = User.objects.get(kfupm_id=self.kfupm_id)
+            return '%s - (%s)'%(str(student), student.username)
+        except ObjectDoesNotExist:
+            return None
+
     @staticmethod
     def get_next_available_id():
         kid = KFUPMIDsPool.objects.exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
