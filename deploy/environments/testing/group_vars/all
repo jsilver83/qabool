@@ -28,8 +28,8 @@ qabool_recaptcha_private_key: "{{ qabool_recaptcha_private_key.json.data.value }
 
 zabbix_server: 10.180.17.200
 
-disable_sms: no
-disable_email: no
+disable_sms: yes
+disable_email: yes
 disable_captcha: no
 
 upload_dir: uploaded_docs
