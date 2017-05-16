@@ -11,6 +11,7 @@
     django_project_admin_username: joud
     django_project_admin_email: joud@kfupm.edu.sa
     django_project_package_name: qabool
+    django_project_media_dir: /opt/qabool/uploaded_docs
     apache_authn: cas
     apache_authn_urls:
       - /ar/admin/
