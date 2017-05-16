@@ -101,36 +101,33 @@ def student_agreement_4(request):
 @login_required()
 @user_passes_test(is_phase3_eligible)
 def choose_tarifi_time_slot(request):
-    form = TarifiTimeSlotForm(request.POST or None, user=request.user)
+    form = TarifiTimeSlotForm(request.POST or None, instance=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
             kfupm_id = KFUPMIDsPool.get_next_available_id()
 
-            saved = form.save(commit=False)
-            saved.phase3_submit_date = timezone.now()
-            if not saved.kfupm_id:
-                saved.kfupm_id = kfupm_id
-            saved.save()
+            if kfupm_id:
+                saved = form.save(commit=False)
+                saved.phase3_submit_date = timezone.now()
+                if not saved.kfupm_id:
+                    saved.kfupm_id = kfupm_id
+                saved.save()
 
-            if saved:
-                messages.success(request, _('Tarifi time slot was chosen successfully...'))
-                SMS.send_sms_admitted(request.user.mobile)
-                return redirect('print_documents')
+                if saved:
+                    messages.success(request, _('Tarifi time slot was chosen successfully...'))
+                    SMS.send_sms_admitted(request.user.mobile)
+                    return redirect('print_documents')
+                else:
+                    messages.error(request, _('Error saving info. Try again later!'))
             else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-            return redirect('print_documents')
+                messages.error(request, _('No IDs to assign. Contact the site admins...'))
+                return redirect('choose_tarifi_time_slot')
         else:
+            print(form.errors)
             messages.error(request, _('Error.'))
 
-    sem = AdmissionSemester.get_phase3_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_4', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase3/tarifi_time_slot.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step4': 'active'})
+    return render(request, 'undergraduate_admission/phase3/tarifi_time_slot.html', {'form': form, })
 
 
 @login_required()

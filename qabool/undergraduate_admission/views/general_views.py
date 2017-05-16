@@ -68,11 +68,14 @@ def forgot_password(request):
 @login_required
 def student_area(request):
     phase = request.user.get_student_phase()
+
     status_message = request.user.status_message
 
     show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
 
     can_confirm = phase == 'PARTIALLY-ADMITTED' and status_message != RegistrationStatusMessage.get_status_confirmed()
+
+    can_finish_phase3 = phase == 'ADMITTED' and not request.user.tarifi_week_attendance_date
 
     can_re_upload_docs = phase == 'ADMITTED' and request.user.verification_documents_incomplete
 
@@ -85,6 +88,7 @@ def student_area(request):
                                                                         'can_re_upload_docs': can_re_upload_docs,
                                                                         'can_upload_withdrawal_proof':
                                                                             can_upload_withdrawal_proof,
+                                                                        'can_finish_phase3': can_finish_phase3,
                                                                         })
 
 
