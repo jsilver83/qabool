@@ -280,38 +280,3 @@ class EditInfoForm(RegistrationForm):
         # if not settings.DISABLE_CAPTCHA:
         #     # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
         #     self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
-
-
-class CutOffForm(forms.ModelForm):
-    GENDER_CHOICES = (
-        ('', _('Both')),
-        ('M', _('Male')),
-        ('F', _('Female'))
-    )
-    STUDENT_TYPES = (
-        ('S', _('Saudi')),
-        ('M', _('Saudi Mother')),
-        ('N', _('Non-Saudi')),
-    )
-    student_type = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=STUDENT_TYPES),
-                                   required=False)
-    # gender = forms.CharField(widget=forms.RadioSelect(choices=GENDER_CHOICES))
-    # nationality = forms.IntegerField(widget=forms.Select(choices=Nationality.get_nationality_choices(), attrs={'class': 'select2'}))
-    admission_total = forms.FloatField(min_value=1, max_value=100, required=False)
-
-    class Meta:
-        model = User
-        fields = ['semester', 'gender', 'nationality', 'admission_total', 'student_type',
-                  'high_school_graduation_year']
-
-    def __init__(self, *args, **kwargs):
-        super(CutOffForm, self).__init__(*args, **kwargs)
-        self.fields['gender'].widget = forms.RadioSelect(choices=self.GENDER_CHOICES)
-        self.fields['gender'].required = False
-        self.fields['nationality'].required = False
-        self.fields['nationality'].widget.is_required = False
-        self.fields['high_school_graduation_year'].widget = \
-            widget=forms.CheckboxSelectMultiple(choices=
-                                                GraduationYear.get_graduation_year_choices(add_dashes=False))
-        self.fields['high_school_graduation_year'].required=False
-

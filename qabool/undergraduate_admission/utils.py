@@ -2,7 +2,8 @@ import os
 
 import random
 import requests
-from django.core.exceptions import ValidationError
+from django import forms
+from django.utils.safestring import mark_safe
 
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404

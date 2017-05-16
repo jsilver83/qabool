@@ -1,0 +1,25 @@
+{% extends 'undergraduate_admission/admin/base_admin_area.html' %}
+{% load i18n %}
+
+{% block subcontent %}
+
+	<form>
+		{% for f in form %}
+			{% if f.name in list1 %}
+				<div class="fieldWrapper">
+					{{ f.label_tag }} {{ f.value }}
+				</div>
+			{% else %}
+				<div class="fieldWrapper">
+					{{ f.errors }}
+					{{ field.label_tag }} {{ f }}
+					{% if f.help_text %}
+						<p class="help">{{ f.help_text|safe }}</p>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% endfor %}
+{#		{{ form }}#}
+		<button>Verify</button>
+	</form>
+{% endblock subcontent %}
