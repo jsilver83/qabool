@@ -42,7 +42,7 @@ DISABLE_CAPTCHA = {{ disable_captcha }}
 
 MEDIA_ROOT = '{{ django_project_media_dir }}'
 
-SENDFILE_BACKEND = 'sendfile.backends.nginx'
+SENDFILE_BACKEND = 'sendfile.backends.xsendfile'
 SENDFILE_ROOT = '{{ django_project_media_dir }}'
 SENDFILE_URL = '/protected-files'
 
