@@ -111,7 +111,7 @@ class User(AbstractUser):
         ('M', _('Male')),
         ('F', _('Female'))
     )
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=128, default='M')
+    gender = models.CharField(null=True, blank=False, choices=GENDER_CHOICES, max_length=128, default='M')
 
     mother_gov_id_file = models.FileField(
         null=True,
