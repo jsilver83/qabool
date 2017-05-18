@@ -39,7 +39,7 @@ class AgreementForm(BaseAgreementForm):
 class Phase1UserEditForm(BaseContactForm):
     class Meta(BaseContactForm.Meta):
         fields = BaseContactForm.Meta.fields + ['student_full_name_ar', 'student_full_name_en', 'mobile',
-                                                'high_school_gpa', 'student_notes']
+                                                'high_school_system', 'high_school_gpa', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
             ('', "---"),
@@ -52,6 +52,7 @@ class Phase1UserEditForm(BaseContactForm):
             'student_full_name_en': forms.TextInput(attrs={'required': ''}),
             'mobile': forms.TextInput(attrs={'required': ''}),
             'high_school_gpa': forms.TextInput(attrs={'required': ''}),
+            'high_school_system': forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
         }
 
     def __init__(self, *args, **kwargs):
@@ -60,6 +61,7 @@ class Phase1UserEditForm(BaseContactForm):
         self.fields['student_full_name_en'].required = True
         self.fields['mobile'].required = True
         self.fields['high_school_gpa'].required = True
+        self.fields['high_school_system'].required = True
 
 
 class RegistrationForm(UserCreationForm):
@@ -126,17 +128,17 @@ class RegistrationForm(UserCreationForm):
         widget=forms.Select(choices=GENDER_CHOICES),
     )
 
-    # high_school_system = forms.ModelChoiceField(
-    #     queryset=Lookup.objects.filter(show=True, lookup_type='HIGH_SCHOOL_TYPE'),
-    #     required=True,
-    # )
+    high_school_system = forms.ModelChoiceField(
+        queryset=Lookup.objects.filter(show=True, lookup_type='HIGH_SCHOOL_TYPE'),
+        required=True,
+    )
 
 
     class Meta:
         model = User
         fields = ['student_full_name_ar', 'student_full_name_en', 'gender', 'username', 'username2', 'mobile',
                   'mobile2',
-                  'nationality', 'saudi_mother',
+                  'nationality', 'saudi_mother','saudi_mother_gov_id',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
                   'high_school_gpa',
                   'password1', 'password2', 'student_notes']
@@ -163,6 +165,8 @@ class RegistrationForm(UserCreationForm):
                                                       'placeholder': '9665xxxxxxxx',
                                                       }),
             'saudi_mother': forms.Select(choices=SAUDI_MOTHER_CHOICES),
+            'saudi_mother_gov_id': forms.TextInput(attrs={'required': '',
+                                                      }),
         }
         # help_texts = {
         #     'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),
@@ -176,6 +180,7 @@ class RegistrationForm(UserCreationForm):
         self.fields['student_full_name_en'].required = True
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         self.fields['high_school_system'].required = True
+        self.fields['saudi_mother_gov_id'].required = True
         try:  # to make this form reusable for edit info
             self.fields['guardian_mobile'].required = True
             self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
@@ -276,7 +281,7 @@ class EditInfoForm(RegistrationForm):
         # self.fields['last_name'].required = True
         # self.fields['high_school_system'].widget = forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         # self.fields['high_school_system'].required = True
-        #
+
         # if not settings.DISABLE_CAPTCHA:
         #     # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
         #     self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))

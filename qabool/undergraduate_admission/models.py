@@ -43,6 +43,8 @@ class User(AbstractUser):
         verbose_name=_('Nationality'),
     )
     saudi_mother = models.NullBooleanField(verbose_name=_('Saudi Mother'))
+    saudi_mother_gov_id = models.CharField(verbose_name=_('Saudi Mother Government ID'), max_length=50, null=True,
+                                           blank=True, )
     birthday = models.DateField(null=True, blank=True, verbose_name=_('Birthday'))
     birthday_ah = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Birthday Hijri'))
     birth_place = models.CharField(null=True,
@@ -111,7 +113,7 @@ class User(AbstractUser):
         ('M', _('Male')),
         ('F', _('Female'))
     )
-    gender = models.CharField(null=True, blank=False, choices=GENDER_CHOICES, max_length=128, default='M')
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=128, default='M')
 
     mother_gov_id_file = models.FileField(
         null=True,
@@ -516,7 +518,7 @@ class KFUPMIDsPool(models.Model):
     def assigned_student(self):
         try:
             student = User.objects.get(kfupm_id=self.kfupm_id)
-            return '%s - (%s)'%(str(student), student.username)
+            return '%s - (%s)' % (str(student), student.username)
         except ObjectDoesNotExist:
             return None
 
