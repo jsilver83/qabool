@@ -98,31 +98,6 @@ class PersonalInfoForm(Phase2GenericForm):
                     {'required': ''}
                 )
 
-            if field == 'birthday_ah':
-                if self.instance.birthday_ah:
-                    self.fields[field].widget.attrs.update(
-                        {'class': 'updateOnce', }
-                    )
-                else:
-                    self.fields[field].widget.attrs.update(
-                        {'class': 'hijri updateOnce', }
-                    )
-            elif field == 'birthday':
-                if self.instance.birthday:
-                    self.fields[field].widget.attrs.update(
-                        {'class': 'updateOnce', }
-                    )
-                else:
-                    self.fields[field].widget.attrs.update(
-                        {'class': 'datepicker updateOnce', }
-                    )
-            elif field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
-                           'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name',
-                           'high_school_province']:
-                self.fields[field].widget.attrs.update(
-                    {'class': 'updateOnce', }
-                )
-
 
 class GuardianContactForm(Phase2GenericForm):
     class Meta:
@@ -254,4 +229,3 @@ class WithdrawalForm(forms.ModelForm):
             return instance
         else:
             return instance
-
