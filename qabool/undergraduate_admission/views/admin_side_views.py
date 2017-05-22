@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from undergraduate_admission.filters import UserListFilter
 from undergraduate_admission.forms.admin_side_forms import CutOffForm, VerifyCommitteeForm
 from undergraduate_admission.models import User
@@ -25,11 +28,12 @@ def cut_off_point(request):
                   context={'form': form, 'students': filtered_with_properties})
 
 
-@login_required
-def verify_committee(request):
-    form = VerifyCommitteeForm(request.GET or None)
-    list1 = ['username', 'nationality']
+class VerifyCommittee(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'undergraduate_admission/admin/verify_committee.html'
+    form_class = VerifyCommitteeForm
+    model = User
+    success_message = 'List successfully saved!!!!'
 
-    return render(request,
-                  template_name='undergraduate_admission/admin/verify_committee.html',
-                  context={'form': form, 'list1': list1})
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('verify_committee', kwargs={'pk': self.kwargs['pk']})
+    # def form_valid(self, form):
