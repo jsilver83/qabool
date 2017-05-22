@@ -9,9 +9,3 @@ class TarifiTimeSlotForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['tarifi_week_attendance_date', ]
-
-    def __init__(self, *args, **kwargs):
-        super(TarifiTimeSlotForm, self).__init__(*args, **kwargs)
-        self.fields['tarifi_week_attendance_date'].widget = \
-            forms.Select(choices=TarifiReceptionDate.get_all_available_slots(self.instance, add_dashes=True))
-        self.fields['tarifi_week_attendance_date'].required = True

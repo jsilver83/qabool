@@ -64,6 +64,7 @@ class RegisterView(CreateView):
                                         semester=semester,
                                         nationality=form.cleaned_data['nationality'],
                                         saudi_mother=form.cleaned_data['saudi_mother'],
+                                        saudi_mother_gov_id = form.cleaned_data['saudi_mother_gov_id'],
                                         mobile=form.cleaned_data['mobile'],
                                         guardian_mobile=form.cleaned_data['guardian_mobile'],
                                         high_school_gpa=form.cleaned_data['high_school_gpa'],
