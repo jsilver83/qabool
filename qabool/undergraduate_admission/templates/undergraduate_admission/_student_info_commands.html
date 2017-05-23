@@ -51,6 +51,9 @@
 	{% if can_edit_contact_info %}
 	<a href="{% url 'edit_contact_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
 	{% endif %}
+    {% if can_choose_roommate %}
+	<a href="{% url 'choose_roommate' %}" class="list-group-item"><i class="fa fa-home" aria-hidden="true"></i> {% trans 'Choose Roommate' %}</a>
+	{% endif %}
 	{% if can_withdraw %}
 	<!--<br>-->
 	<!--<span class="text-warning">{% trans "If you don't want to proceed with the application you can still withdraw your application by clicking below on the red button." %}</span><br><br>-->
