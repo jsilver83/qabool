@@ -11,6 +11,7 @@ def student_info_commands(context):
     user = context['request'].user
     phase = user.get_student_phase()
     can_withdraw = phase == 'ADMITTED'
+    can_choose_roommate = (phase == 'ADMITTED' and user.eligible_for_housing)
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
     can_print_docs = (phase == 'ADMITTED' and user.tarifi_week_attendance_date)
     can_confirm = phase == 'PARTIALLY-ADMITTED'
@@ -39,6 +40,7 @@ def student_info_commands(context):
 
     return {
         'user': user,
+        'can_choose_roommate': can_choose_roommate,
         'can_withdraw': can_withdraw,
         'can_print_docs': can_print_docs,
         'can_confirm': can_confirm,
