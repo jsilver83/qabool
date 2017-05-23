@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from qabool import settings
 from undergraduate_admission.models import Agreement, AdmissionSemester
+from django.utils.safestring import mark_safe
 
 
 class Email(object):
@@ -123,9 +124,20 @@ def try_parse_int(str_to_int):
     except:
         return -1
 
+
 # safe parsing of floats
 def try_parse_float(str_to_float):
     try:
         return float(str_to_float)
     except:
         return 0.0
+
+
+class PlainTextWidget(forms.Widget):
+    def render(self, name, value, attrs=None):
+        if value is not None:
+            field = "<input type='hidden' name='%s' value='%s' readonly> <span>%s</span>" \
+                    % (name, mark_safe(value), mark_safe(value))
+        else:
+            field = "<input type='hidden' name='%s' value='' readonly> <span>-</span>" % (name)
+        return field

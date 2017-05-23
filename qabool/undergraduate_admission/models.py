@@ -390,6 +390,8 @@ class User(AbstractUser):
             return self.high_school_gpa * (semester.high_school_gpa_weight / 100) \
                    + self.qudrat_score * (semester.qudrat_score_weight / 100) \
                    + self.tahsili_score * (semester.tahsili_score_weight / 100)
+        else:
+            return 0.0
 
     # it will be used in setting status to EXPIRED auto
     @property
@@ -578,6 +580,19 @@ class RegistrationStatusMessage(models.Model):
 
     def __str__(self):
         return self.registration_status_message
+
+    @staticmethod
+    def get_registration_status_choices(add_dashes=True):
+        try:
+            choices = RegistrationStatusMessage.objects.all()
+
+            ch = [(o, str(o.status) + ' - ' + str(o)) for o in choices]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
+
+            return ch
+        except OperationalError:  # happens when db doesn't exist yet
+            return [('--', '--')]
 
     @staticmethod
     def get_status_applied():

@@ -2,24 +2,41 @@
 {% load i18n %}
 
 {% block subcontent %}
-
-	<form>
-		{% for f in form %}
-			{% if f.name in list1 %}
-				<div class="fieldWrapper">
-					{{ f.label_tag }} {{ f.value }}
+	<form method="post">
+	{% csrf_token %}
+		{% for field in form %}
+{#			{% if field.name in readonly_fields %}#}
+{#				<div class="fieldWrapper col-lg-4">#}
+{#					<div#}
+{#							{% if not line.fields|length_is:'1' %} class="field-box{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="checkbox-row"{% endif %}>#}
+{#						{% if not line.fields|length_is:'1' and not is_readonly %}{{ field.errors }}{% endif %}#}
+{#						{% if field.is_checkbox %}#}
+{#							{{ field.field }}{{ field.label_tag }}#}
+{#						{% else %}#}
+{#							{{ field.label_tag }}#}
+{#							{% if is_readonly %}#}
+{#								<p>{{ field.contents }}</p>#}
+{#							{% else %}#}
+{#								{{ field.field }}#}
+{#							{% endif %}#}
+{#						{% endif %}#}
+{#						{% if field.field.help_text %}#}
+{#							<p class="help">{{ field.field.help_text|safe }}</p>#}
+{#						{% endif %}#}
+{#					</div>#}
+{#				</div>#}
+{#			{% else %}#}
+				<div class="fieldWrapper col-lg-4">
+					{{ field.errors }}
+					{{ field.label_tag }} {{ field }}
+{#					{% if field.help_text %}#}
+{#						<p class="help">{{ field.help_text|safe }}</p>#}
+{#					{% endif %}#}
+				<p>&nbsp;</p><p>&nbsp;</p>
 				</div>
-			{% else %}
-				<div class="fieldWrapper">
-					{{ f.errors }}
-					{{ field.label_tag }} {{ f }}
-					{% if f.help_text %}
-						<p class="help">{{ f.help_text|safe }}</p>
-					{% endif %}
-				</div>
-			{% endif %}
+{#			{% endif %}#}
 		{% endfor %}
-{#		{{ form }}#}
+{#				{{ form }}#}
 		<button>Verify</button>
 	</form>
 {% endblock subcontent %}
