@@ -28,7 +28,7 @@ class CutOffForm(forms.ModelForm):
                   'high_school_graduation_year']
 
     def __init__(self, *args, **kwargs):
-        super(CutOffForm, self).__init__()
+        super(CutOffForm, self).__init__(*args, **kwargs)
         self.fields['gender'].widget = forms.RadioSelect(choices=self.GENDER_CHOICES)
         self.fields['gender'].required = False
         self.fields['nationality'].required = False
@@ -88,4 +88,10 @@ class VerifyCommitteeForm(forms.ModelForm):
                 self.fields[field].disabled = True
             self.fields['verification_status'].widget = \
             forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
-            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required':''}) # admin.widgets.AdminTextareaWidget()
+            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required':''})
+            # admin.widgets.AdminTextareaWidget()
+
+
+class ApplyStatusForm(forms.Form):
+    status_message = forms.IntegerField(widget=forms.Select(
+        choices=RegistrationStatusMessage.get_registration_status_choices()))

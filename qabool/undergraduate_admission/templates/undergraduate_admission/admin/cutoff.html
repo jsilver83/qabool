@@ -1,15 +1,59 @@
 {% extends "base-sidebar.html" %}
 {#{% load bootstrap3 %}#}
-{% load trans blocktrans from i18n %}
+{% load i18n %}
+{% load floppyforms %}
 
 {% block subcontent %}
 
-<form>
-	{{  form }}
-<button>SEARCH</button>
-</form>
+	{% if messages %}
+		<div class="messages">
+			{% for message in messages %}
+				<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
 
-	{% for student in students %}
-		{{ student }} &nbsp; {{ student.student_total }}<br>
-	{% endfor %}
+	<div class="row">
+		<form method="get">
+			{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+			<button class="btn btn-primary {% trans 'btn-align' %}">
+				<i class="fa fa-search"></i> {% trans 'Search' %}</button>
+		</form>
+	</div>
+	{% if students %}
+		<div class="row">
+			<br><br>
+			<table class="table table-striped">
+				<tr>
+					<th>{% trans 'Student Full Name' %}</th>
+					<th>{% trans 'Nationality' %}</th>
+					<th>{% trans 'Status' %}</th>
+					<th>{% trans 'Student Type' %}</th>
+					<th>{% trans 'Admission Total' %}</th>
+					<th>{% trans 'Gender' %}</th>
+				</tr>
+				{% for student in students %}
+					<tr>
+						<td>{{ student }}</td>
+						<td>{{ student.nationality }}</td>
+						<td>{{ student.status_message.status }}</td>
+						<td>{{ student.student_type }}</td>
+						<td>{{ student.admission_total }}</td>
+						<td>{{ student.gender }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	{% endif %}
+	<br><hr><br>
+	<p>{% trans 'Choose a status from below list to apply to ' %}</p>
+	<div class="row">
+		<form method="post">
+			{% csrf_token %}
+			{% form form2 using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+			<br><br>
+			<button class="btn btn-primary {% trans 'btn-align' %}">
+				<i class="fa fa-search"></i> {% trans 'Apply Status' %}</button>
+		</form>
+	</div>
 {% endblock subcontent %}
