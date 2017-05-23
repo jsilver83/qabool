@@ -1,7 +1,7 @@
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
 
-from undergraduate_admission.models import AdmissionSemester
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
 
 register = template.Library()
 
@@ -14,7 +14,8 @@ def student_info_commands(context):
     can_choose_roommate = (phase == 'ADMITTED' and user.eligible_for_housing)
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
     can_print_docs = (phase == 'ADMITTED' and user.tarifi_week_attendance_date)
-    can_confirm = phase == 'PARTIALLY-ADMITTED'
+    can_confirm = phase == 'PARTIALLY-ADMITTED' \
+                  and user.status_message != RegistrationStatusMessage.get_status_confirmed()
     can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)
     can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing)
     try:

@@ -28,15 +28,15 @@ class CutOffForm(forms.ModelForm):
                   'high_school_graduation_year']
 
     def __init__(self, *args, **kwargs):
-        super(CutOffForm, self).__init__()
+        super(CutOffForm, self).__init__(*args, **kwargs)
         self.fields['gender'].widget = forms.RadioSelect(choices=self.GENDER_CHOICES)
         self.fields['gender'].required = False
         self.fields['nationality'].required = False
         self.fields['nationality'].widget.is_required = False
         self.fields['high_school_graduation_year'].widget = \
-            widget=forms.CheckboxSelectMultiple(choices=
-                                                GraduationYear.get_graduation_year_choices(add_dashes=False))
-        self.fields['high_school_graduation_year'].required=False
+            widget = forms.CheckboxSelectMultiple(choices=
+                                                  GraduationYear.get_graduation_year_choices(add_dashes=False))
+        self.fields['high_school_graduation_year'].required = False
 
 
 class VerifyCommitteeForm(forms.ModelForm):
@@ -75,4 +75,23 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'verification_notes', ]
 
     def __init__(self, *args, **kwargs):
-        super(VerifyCommitteeForm, self).__init__()
+        super(VerifyCommitteeForm, self).__init__(*args, **kwargs)
+
+        readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
+
+                           'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
+                           'high_school_graduation_year', 'high_school_system',
+
+                           'verification_notes', ]
+        for field in self.fields:
+            if field in readonly_fields:
+                self.fields[field].disabled = True
+            self.fields['verification_status'].widget = \
+            forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
+            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required':''})
+            # admin.widgets.AdminTextareaWidget()
+
+
+class ApplyStatusForm(forms.Form):
+    status_message = forms.IntegerField(widget=forms.Select(
+        choices=RegistrationStatusMessage.get_registration_status_choices()))
