@@ -103,6 +103,9 @@ def student_agreement_4(request):
 def choose_tarifi_time_slot(request):
     form = TarifiTimeSlotForm(request.POST or None, instance=request.user)
 
+    if request.user.tarifi_week_attendance_date:
+        return redirect('student_area')
+
     if request.method == 'POST':
         if form.is_valid():
             kfupm_id = KFUPMIDsPool.get_next_available_id()
