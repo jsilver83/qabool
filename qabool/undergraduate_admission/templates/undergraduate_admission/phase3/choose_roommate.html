@@ -1,0 +1,34 @@
+{% extends 'base_student_area.html' %}
+{% load floppyforms %}
+{% load i18n %}
+
+{% block subcontent %}
+
+	{% if messages %}
+		<div class="messages">
+			{% for message in messages %}
+				<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	<br><br>
+	<h4>{% trans 'Roommate' %}</h4>
+	<br>
+	<div class="alert alert-warning" role="alert">
+		{% blocktrans %}
+			<strong>Important Note:</strong>
+			<p>Please enter your roommate government ID.</p>
+		{% endblocktrans %}
+		<br>
+	</div>
+	<form method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
+		{% csrf_token %}
+		{% block form %}
+			{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+		{% endblock form %}
+		<br>&nbsp;<br>
+		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
+	</form>
+
+{% endblock subcontent %}
