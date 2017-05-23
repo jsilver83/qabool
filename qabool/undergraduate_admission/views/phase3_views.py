@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm
-from undergraduate_admission.forms.phase3_forms import TarifiTimeSlotForm
+from undergraduate_admission.forms.phase3_forms import TarifiTimeSlotForm, ChooseRoommateForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.utils import SMS
 
@@ -163,3 +163,30 @@ def medical_letter(request):
     user = request.user
 
     return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user,})
+
+
+@login_required()
+@user_passes_test(is_phase3_eligible)
+def choose_roommate(request):
+    form = ChooseRoommateForm(request.POST or None, instance=request.user)
+
+    if request.user.eligible_for_housing ==False:
+        messages.success(request, _('You are not eligible for housing...'))
+        return redirect('student_area')
+
+
+    if request.method == 'POST':
+        if form.is_valid():
+            if request.user.roommate_id:
+                saved = form.save(commit=True)
+                messages.success(request, _('Roommate was chosen successfully...'))
+                return redirect('student_area')
+
+            else:
+                messages.error(request, _('Contact the site admins...'))
+                return redirect('student_area')
+        else:
+            print(form.errors)
+            messages.error(request, _('Error.'))
+
+    return render(request, 'undergraduate_admission/phase3/choose_roommate.html',{'form': form})

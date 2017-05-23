@@ -34,6 +34,7 @@ urlpatterns = [
     ),
 
     url(r'^choosetarifitimeslot/$', phase3_views.choose_tarifi_time_slot, name='choose_tarifi_time_slot'),
+    url(r'^chooseroommate/$', phase3_views.choose_roommate, name='choose_roommate'),
     url(r'^admin/verifycommittee/$', admin_side_views.verify_committee, name='verify_committee'),
     url(r'^admin/cutoffpoint/$', admin_side_views.cut_off_point, name='check_if_student_is_admitted'),
     url(r'^checkifadmitted/$', general_views.check_if_student_is_admitted, name='check_if_student_is_admitted'),

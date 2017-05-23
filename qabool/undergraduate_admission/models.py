@@ -319,6 +319,7 @@ class User(AbstractUser):
         validators=[validate_file_extension],
     )
     eligible_for_housing = models.NullBooleanField(verbose_name=_('Eligible For Housing'))
+    roommate_id = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('Roommate ID'))
     tarifi_week_attendance_date = models.ForeignKey('TarifiReceptionDate',
                                                     verbose_name=_('Tarifi Week Attendance Date'),
                                                     on_delete=models.CASCADE,
