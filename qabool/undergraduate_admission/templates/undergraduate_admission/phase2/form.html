@@ -28,7 +28,7 @@
 {% block form-notes %}
 {% endblock form-notes %}
 
-<form method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
+<form method="post" class="form-horizontal" enctype="multipart/form-data">
 	{% csrf_token %}
 	{% block form %}
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
