@@ -34,4 +34,4 @@ disable_captcha: no
 
 #upload_dir: uploaded_docs
 api_security_token: aA6sFghhJ46tYu09iL0o
-qabool_media_files_remote_path: //to_be_defined_later
+qabool_media_files_remote_path: 196.15.32.133:/vol/volf2/qabool_test
