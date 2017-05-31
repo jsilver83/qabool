@@ -17,10 +17,10 @@
       - /en/admin/
       - /ar/manage/
       - /en/manage/
-#    apache_extra_modules: 
-#      - mod_xsendfile
-#    apache_extra_config: |
-#      XSendFile True
+    apache_extra_modules: 
+      - xsendfile
+    apache_extra_config: |
+      XSendFile True
 
     admins:
       - name: Abdullah Joud
