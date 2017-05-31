@@ -16,7 +16,11 @@
       - /ar/admin/
       - /en/admin/
       - /ar/manage/
-      - /en/manage/      
+      - /en/manage/
+    apache_extra_modules: [mod_xsendfile]
+    apache_extra_config: |
+      XSendFile True
+
     admins:
       - name: Abdullah Joud
         email: joud@kfupm.edu.sa
@@ -34,7 +38,6 @@
 
   # tasks to be performed before role tasks, if any
   pre_tasks:
-
     - name: Vault authentication
       uri:
         url: https://vault-1.test.kfupm.edu.sa:8200/v1/auth/ldap/login/{{ ad_username }}
