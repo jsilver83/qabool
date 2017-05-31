@@ -20,7 +20,7 @@
     apache_extra_modules: 
       - xsendfile
     apache_extra_config: |
-      XSendFile True
+      XSendFile On
 
     admins:
       - name: Abdullah Joud
