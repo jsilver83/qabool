@@ -17,10 +17,10 @@
       - /en/admin/
       - /ar/manage/
       - /en/manage/
-    apache_extra_modules: 
-      - mod_xsendfile
-    apache_extra_config: |
-      XSendFile True
+#    apache_extra_modules: 
+#      - mod_xsendfile
+#    apache_extra_config: |
+#      XSendFile True
 
     admins:
       - name: Abdullah Joud
@@ -89,6 +89,9 @@
     - name: Generate local settings
       set_fact:
         django_project_local_settings: "{{ lookup('template', 'local_settings.py.j2') }}"
+        
+#    - name: Install mod_xsendfile for apache
+#      apt: pkg=libapache2-mod-xsendfile state=installed
         
 
   roles:
