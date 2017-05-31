@@ -7,7 +7,7 @@ apache_server_names:
 apache_public_url: https://qabool.kfupm.edu.sa
 
 database_engine: django.db.backends.postgresql
-database_name: qabool2
+database_name: qabool2017
 database_user: qabool
 # database_password: set from Vault in playbook
 database_host: postgres-1.kfupm.edu.sa
