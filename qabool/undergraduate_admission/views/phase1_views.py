@@ -53,28 +53,74 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         # reg_msg = RegistrationStatusMessage.objects.get(pk=1) # for status 1 'application submitted'
         reg_msg = RegistrationStatusMessage.get_status_applied()
+        non_saudi_reg_msg = RegistrationStatusMessage.get_status_non_saudi()
+        old_high_school_reg_msg = RegistrationStatusMessage.get_status_old_high_school()
         semester = AdmissionSemester.get_phase1_active_semester()
-        user = User.objects.create_user(form.cleaned_data['username'],
-                                        form.cleaned_data['email'],
-                                        form.cleaned_data['password1'],
-                                        student_full_name_ar=form.cleaned_data['student_full_name_ar'],
-                                        student_full_name_en=form.cleaned_data['student_full_name_en'],
-                                        high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
-                                        status_message=reg_msg,
-                                        semester=semester,
-                                        nationality=form.cleaned_data['nationality'],
-                                        saudi_mother=form.cleaned_data['saudi_mother'],
-                                        saudi_mother_gov_id = form.cleaned_data['saudi_mother_gov_id'],
-                                        mobile=form.cleaned_data['mobile'],
-                                        guardian_mobile=form.cleaned_data['guardian_mobile'],
-                                        high_school_gpa=form.cleaned_data['high_school_gpa'],
-                                        # qudrat_score=form.cleaned_data['qudrat_score'],
-                                        # tahsili_score=form.cleaned_data['tahsili_score'],
-                                        student_notes=form.cleaned_data['student_notes'],
-                                        high_school_system=form.cleaned_data['high_school_system'],
-                                        )
 
-        SMS.send_sms_registration_success(user.mobile)
+        if 'Other' in form.cleaned_data['high_school_graduation_year'].graduation_year_en:
+            user = User.objects.create_user(form.cleaned_data['username'],
+                                            form.cleaned_data['email'],
+                                            form.cleaned_data['password1'],
+                                            student_full_name_ar=form.cleaned_data['student_full_name_ar'],
+                                            student_full_name_en=form.cleaned_data['student_full_name_en'],
+                                            high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
+                                            status_message=old_high_school_reg_msg,
+                                            semester=semester,
+                                            nationality=form.cleaned_data['nationality'],
+                                            saudi_mother=form.cleaned_data['saudi_mother'],
+                                            saudi_mother_gov_id = form.cleaned_data['saudi_mother_gov_id'],
+                                            mobile=form.cleaned_data['mobile'],
+                                            guardian_mobile=form.cleaned_data['guardian_mobile'],
+                                            high_school_gpa_student_entry=
+                                            form.cleaned_data['high_school_gpa_student_entry'],
+                                            student_notes=form.cleaned_data['student_notes'],
+                                            high_school_system=form.cleaned_data['high_school_system'],
+                                            )
+            SMS.send_sms_registration_success_old_high_school(user.mobile)
+            SMS.send_sms_registration_success_old_high_school(user.guardian_mobile)
+        elif form.cleaned_data["nationality"].nationality_en != 'Saudi Arabia' and not form.cleaned_data["saudi_mother"]:
+            user = User.objects.create_user(form.cleaned_data['username'],
+                                            form.cleaned_data['email'],
+                                            form.cleaned_data['password1'],
+                                            student_full_name_ar=form.cleaned_data['student_full_name_ar'],
+                                            student_full_name_en=form.cleaned_data['student_full_name_en'],
+                                            high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
+                                            status_message=non_saudi_reg_msg,
+                                            semester=semester,
+                                            nationality=form.cleaned_data['nationality'],
+                                            saudi_mother=form.cleaned_data['saudi_mother'],
+                                            saudi_mother_gov_id = form.cleaned_data['saudi_mother_gov_id'],
+                                            mobile=form.cleaned_data['mobile'],
+                                            guardian_mobile=form.cleaned_data['guardian_mobile'],
+                                            high_school_gpa_student_entry=
+                                            form.cleaned_data['high_school_gpa_student_entry'],
+                                            student_notes=form.cleaned_data['student_notes'],
+                                            high_school_system=form.cleaned_data['high_school_system'],
+                                            )
+            SMS.send_sms_registration_success(user.mobile)
+            SMS.send_sms_registration_success(user.guardian_mobile)
+        else:
+            user = User.objects.create_user(form.cleaned_data['username'],
+                                            form.cleaned_data['email'],
+                                            form.cleaned_data['password1'],
+                                            student_full_name_ar=form.cleaned_data['student_full_name_ar'],
+                                            student_full_name_en=form.cleaned_data['student_full_name_en'],
+                                            high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
+                                            status_message=reg_msg,
+                                            semester=semester,
+                                            nationality=form.cleaned_data['nationality'],
+                                            saudi_mother=form.cleaned_data['saudi_mother'],
+                                            saudi_mother_gov_id = form.cleaned_data['saudi_mother_gov_id'],
+                                            mobile=form.cleaned_data['mobile'],
+                                            guardian_mobile=form.cleaned_data['guardian_mobile'],
+                                            high_school_gpa_student_entry=
+                                            form.cleaned_data['high_school_gpa_student_entry'],
+                                            student_notes=form.cleaned_data['student_notes'],
+                                            high_school_system=form.cleaned_data['high_school_system'],
+                                            )
+            SMS.send_sms_registration_success(user.mobile)
+            SMS.send_sms_registration_success(user.guardian_mobile)
+
         Email.send_email_registration_success(user)
 
         self.request.session['user'] = user.id

@@ -43,8 +43,13 @@ class User(AbstractUser):
         verbose_name=_('Nationality'),
     )
     saudi_mother = models.NullBooleanField(verbose_name=_('Saudi Mother'))
-    saudi_mother_gov_id = models.CharField(verbose_name=_('Saudi Mother Government ID'), max_length=50, null=True,
-                                           blank=True, )
+    saudi_mother_gov_id = models.CharField(verbose_name=_('Saudi Mother Government ID'), max_length=15, null=True,
+                                           blank=True,
+                                           validators=[
+                                               RegexValidator(
+                                                   '^\d{9,11}$',
+                                                   message=_("You have entered an invalid Government ID")
+                                               ), ])
     birthday = models.DateField(null=True, blank=True, verbose_name=_('Birthday'))
     birthday_ah = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Birthday Hijri'))
     birth_place = models.CharField(null=True,
@@ -86,12 +91,15 @@ class User(AbstractUser):
                                      validators=[MinValueValidator(1), MaxValueValidator(100)], )
     tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'),
                                       validators=[MinValueValidator(1), MaxValueValidator(100)], )
-    high_school_gpa_yesser = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA - Yesser'),
-                                               validators=[MinValueValidator(1), MaxValueValidator(100)], )
-    qudrat_score_yesser = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score - Yesser'),
-                                            validators=[MinValueValidator(1), MaxValueValidator(100)], )
-    tahsili_score_yesser = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score - Yesser'),
-                                             validators=[MinValueValidator(1), MaxValueValidator(100)], )
+    high_school_gpa_student_entry = models.FloatField(null=True, blank=True,
+                                                      verbose_name=_('High School GPA'),
+                                                      validators=[MinValueValidator(1), MaxValueValidator(100)], )
+    qudrat_score_student_entry = models.FloatField(null=True, blank=True,
+                                                   verbose_name=_('Qudrat Score - Entered by Student'),
+                                                   validators=[MinValueValidator(1), MaxValueValidator(100)], )
+    tahsili_score_student_entry = models.FloatField(null=True, blank=True,
+                                                    verbose_name=_('Tahsili Score - Entered by Student'),
+                                                    validators=[MinValueValidator(1), MaxValueValidator(100)], )
     kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
     first_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('First Name (Arabic)'))
     second_name_ar = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Second Name (Arabic)'))
@@ -597,7 +605,32 @@ class RegistrationStatusMessage(models.Model):
     @staticmethod
     def get_status_applied():
         try:
-            return RegistrationStatus.objects.get(status_code='APPLIED').status_messages.first()
+            return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
+                get(status_message_code='APPLIED')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_non_saudi():
+        try:
+            return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
+                get(status_message_code='NON-SAUDI')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_old_high_school():
+        try:
+            return RegistrationStatus.objects.get(status_code='REJECTED').status_messages. \
+                get(status_message_code='OLD-HS')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_girls():
+        try:
+            return RegistrationStatus.objects.get(status_code='REJECTED').status_messages. \
+                get(status_message_code='GIRLS')
         except ObjectDoesNotExist:
             return
 

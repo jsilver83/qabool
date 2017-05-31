@@ -38,8 +38,9 @@ class AgreementForm(BaseAgreementForm):
 
 class Phase1UserEditForm(BaseContactForm):
     class Meta(BaseContactForm.Meta):
-        fields = BaseContactForm.Meta.fields + ['student_full_name_ar', 'student_full_name_en', 'mobile',
-                                                'high_school_system', 'high_school_gpa', 'student_notes']
+        fields = ['student_full_name_ar', 'student_full_name_en', 'mobile','mobile2',
+                  'email', 'email2', 'high_school_system',
+                  'high_school_gpa_student_entry','student_notes']
 
         SAUDI_MOTHER_CHOICES = (
             ('', "---"),
@@ -51,7 +52,7 @@ class Phase1UserEditForm(BaseContactForm):
             'student_full_name_ar': forms.TextInput(attrs={'required': ''}),
             'student_full_name_en': forms.TextInput(attrs={'required': ''}),
             'mobile': forms.TextInput(attrs={'required': ''}),
-            'high_school_gpa': forms.TextInput(attrs={'required': ''}),
+            'high_school_gpa_student_entry': forms.TextInput(attrs={'required': ''}),
             'high_school_system': forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
         }
 
@@ -60,7 +61,7 @@ class Phase1UserEditForm(BaseContactForm):
         self.fields['student_full_name_ar'].required = True
         self.fields['student_full_name_en'].required = True
         self.fields['mobile'].required = True
-        self.fields['high_school_gpa'].required = True
+        self.fields['high_school_gpa_student_entry'].required = True
         self.fields['high_school_system'].required = True
 
 
@@ -76,7 +77,9 @@ class RegistrationForm(UserCreationForm):
             'mobile_not_unique': _("The Mobile entered is associated with another applicant. "
                                    "Please use a different Mobile"),
             'govid_invalid': _("You have entered an invalid Government ID"),
-            'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile")
+            'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile"),
+            'no_saudi_mother_gov_id': _("You have entered the mother to be Saudi but you did NOT enter her Saudi"
+                                        " Government ID")
         }
     )
 
@@ -128,19 +131,13 @@ class RegistrationForm(UserCreationForm):
         widget=forms.Select(choices=GENDER_CHOICES),
     )
 
-    high_school_system = forms.ModelChoiceField(
-        queryset=Lookup.objects.filter(show=True, lookup_type='HIGH_SCHOOL_TYPE'),
-        required=True,
-    )
-
-
     class Meta:
         model = User
         fields = ['student_full_name_ar', 'student_full_name_en', 'gender', 'username', 'username2', 'mobile',
                   'mobile2',
-                  'nationality', 'saudi_mother','saudi_mother_gov_id',
+                  'nationality', 'saudi_mother', 'saudi_mother_gov_id',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
-                  'high_school_gpa',
+                  'high_school_gpa_student_entry',
                   'password1', 'password2', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
@@ -165,8 +162,7 @@ class RegistrationForm(UserCreationForm):
                                                       'placeholder': '9665xxxxxxxx',
                                                       }),
             'saudi_mother': forms.Select(choices=SAUDI_MOTHER_CHOICES),
-            'saudi_mother_gov_id': forms.TextInput(attrs={'required': '',
-                                                      }),
+            'saudi_mother_gov_id': forms.TextInput,
         }
         # help_texts = {
         #     'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),
@@ -180,7 +176,11 @@ class RegistrationForm(UserCreationForm):
         self.fields['student_full_name_en'].required = True
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         self.fields['high_school_system'].required = True
-        self.fields['saudi_mother_gov_id'].required = True
+        self.fields['saudi_mother_gov_id'].validators = [
+            RegexValidator(
+                '^\d{9,11}$',
+                message=UserCreationForm.error_messages['govid_invalid']
+            )]
         try:  # to make this form reusable for edit info
             self.fields['guardian_mobile'].required = True
             self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
@@ -266,6 +266,17 @@ class RegistrationForm(UserCreationForm):
                 code='guardian_mobile_match',
             )
         return mobile2
+
+    def clean_saudi_mother_gov_id(self):
+        saudi_mother = self.cleaned_data.get("saudi_mother")
+        if saudi_mother:
+            saudi_mother_gov_id = self.cleaned_data.get("saudi_mother_gov_id")
+            if not saudi_mother_gov_id:
+                raise forms.ValidationError(
+                    self.error_messages['no_saudi_mother_gov_id'],
+                    code='no_saudi_mother_gov_id',
+                )
+        return saudi_mother_gov_id
 
 
 class EditInfoForm(RegistrationForm):

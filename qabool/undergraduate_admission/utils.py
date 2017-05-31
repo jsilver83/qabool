@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from qabool import settings
-from undergraduate_admission.models import Agreement, AdmissionSemester
+from undergraduate_admission.models import Agreement, AdmissionSemester, RegistrationStatusMessage
 from django.utils.safestring import mark_safe
 
 
@@ -19,18 +19,27 @@ class Email(object):
     email_messages = {
         'registration_success':
             _('Dear %(student_name)s,<br>Your request has been successfully submitted and the Admission results '
-              'will be announced on Wednesday June 15, 2016 ... <br>'
+              'will be announced on Thursday July 6, 2017 ... <br>'
               '<h4>Registration Details</h4><hr>'
               'Registration ID: %(user_id)s<br>'
               'Mobile: %(mobile)s<br>'
               'Registration Date: %(reg_date)s<br><hr><br>'
               'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
               '<hr><br>'
-              # 'You are recommended to frequently visit the admission website to know the '
-              # 'admission result and any updated instructions.'
               'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . '
               '<br><br> Admissions Office, <br>King Fahd '
               'University of Petroleum and Minerals'),
+        'registration_success_old_high_school': _('Dear %(student_name)s,<br>We regret to inform you that your '
+                                                  'application has been rejected because your old high school '
+                                                  'certificate. '
+                                                  '<h4>Registration Details</h4><hr>'
+                                                  'Registration ID: %(user_id)s<br>'
+                                                  'Mobile: %(mobile)s<br>'
+                                                  'Registration Date: %(reg_date)s<br><hr><br>'
+                                                  'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
+                                                  '<hr><br>'
+                                                  '<br><br> Admissions Office, <br>King Fahd '
+                                                  'University of Petroleum and Minerals'),
         # TODO: implement
         'admitted_msg':
             _('Dear Student, You have been admitted successfully and you have to attend the orientation'
@@ -60,7 +69,10 @@ class Email(object):
              'agree_items': a_items,
              })
 
-        plain_message = SMS.sms_messages['registration_success']
+        if(user.status_message == RegistrationStatusMessage.get_status_old_high_school()):
+            plain_message = SMS.sms_messages['registration_success_old_high_school']
+        else:
+            plain_message = SMS.sms_messages['registration_success']
 
         if settings.DISABLE_EMAIL:
             return None
@@ -75,10 +87,15 @@ class SMS(object):
         'registration_success': _('Your request has been successfully submitted. '
                                   'We appreciate your feedback:\nhttp://goo.gl/erw8HQ .\n'
                                   'Admissions Office, KFUPM'),
+        'registration_success_old_high_school': _('We regret to inform you that your application has been rejected '
+                                                  'because your old high school certificate. '
+                                                  'We appreciate your feedback:\nhttp://goo.gl/erw8HQ .\n'
+                                                  'Admissions Office, KFUPM'),
         'confirmation_message': _('TBA'),
         'admitted_msg':
             _('Dear Student, You have been admitted successfully and you have to attend the orientation'
               'week as specified in the admission letter'),
+
         'withdrawn_msg':
             _('Dear Student, Your application has been withdrawn as per your request. We wish you luck '
               'in your future...'),
@@ -98,7 +115,11 @@ class SMS(object):
 
     @staticmethod
     def send_sms_registration_success(mobile):
-        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['registration_success']))  # unjustifiable workaround
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['registration_success']))
+
+    @staticmethod
+    def send_sms_registration_success_old_high_school(mobile):
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['registration_success_old_high_school']))
 
     @staticmethod
     def send_sms_admitted(mobile):
@@ -106,10 +127,10 @@ class SMS(object):
 
     @staticmethod
     def send_sms_withdrawn(mobile):
-        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['withdrawn_msg']))
+        SMS.send_sms(mobile,
+                     '%s' % (SMS.sms_messages['withdrawn_msg']))  # a custom function to generate 6-digit captcha codes
 
 
-# a custom function to generate 6-digit captcha codes
 def random_digit_challenge():
     ret = u''
     for i in range(6):
