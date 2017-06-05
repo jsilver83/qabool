@@ -198,6 +198,7 @@ EMAIL_HOST = 'mail.kfupm.edu.sa'
 EMAIL_PORT = '587'
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 1
 
 ADMINS = [('joud', 'joud@kfupm.edu.sa'), ('Dr. Ahmad Khayyat', 'akhayyat@kfupm.edu.sa'), ('almaaesh', 'almaaesh@kfupm.edu.sa')]
 SERVER_EMAIL = 'admissions@kfupm.edu.sa'
