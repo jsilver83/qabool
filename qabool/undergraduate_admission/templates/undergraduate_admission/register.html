@@ -13,11 +13,7 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 <hr>
 <form class="form-horizontal" action="{% url 'register' %}" method="post">
 	{% csrf_token %}
-	{% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
+	
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
 	<div class="checkbox form-group">
 		<div class="col-sm-5">&nbsp;</div>
