@@ -274,6 +274,20 @@ class LookupResource(resources.ModelResource):
         report_skipped = True
 
 
+class ImportantDateSidebarResource(resources.ModelResource):
+    class Meta:
+        model = ImportantDateSidebar
+        import_id_fields = ('id',)
+        fields = ('title_ar', 'title_en', 'description_ar', 'description_en', 'show', 'display_order', 'id')
+        skip_unchanged = True
+        report_skipped = True
+
+
+class ImportantDateSidebarAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('title_ar', 'description_ar', 'show', 'display_order')
+    resource_class = ImportantDateSidebarResource
+
+
 class LookupAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
     list_filter = ('lookup_type',)
@@ -293,6 +307,16 @@ class RegistrationStatusMessageResource(resources.ModelResource):
 class RegistrationStatusMessageAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('status_message_ar', 'status_message_en', 'status_message_code', 'status_id', 'id')
     resource_class = RegistrationStatusMessageResource
+
+
+class AdmissionSemesterAdmin(admin.ModelAdmin):
+    list_display = ('semester_name', 'phase1_start_date', 'phase1_end_date', 'phase2_start_date', 'phase2_end_date',
+                    'phase3_start_date', 'phase3_end_date', 'high_school_gpa_weight', 'qudrat_score_weight',
+                    'tahsili_score_weight', )
+
+
+class GraduationYearAdmin(admin.ModelAdmin):
+    list_display = ('graduation_year_ar', 'graduation_year_en', 'description', 'show', 'display_order', )
 
 
 # Update selected students status to (admitted). You can see the message id No.1 in RegistrationStatusMessage model.
@@ -352,18 +376,18 @@ admin.site.site_title = _('Administration')
 
 admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
 admin.site.register(Nationality, NationalityAdmin)
-admin.site.register(ImportantDateSidebar)
+admin.site.register(ImportantDateSidebar, ImportantDateSidebarAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 # Use TabularInline in the RegistrationStatusMessage model.
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
-admin.site.register(GraduationYear)
+admin.site.register(GraduationYear, GraduationYearAdmin)
 # Use TabularInline in the Agreement model.
 admin.site.register(Agreement, AgreementAdmin)
 # admin.site.register(Agreement)
 admin.site.register(AgreementItem, AgreementItemAdmin)
-admin.site.register(AdmissionSemester)
+admin.site.register(AdmissionSemester, AdmissionSemesterAdmin)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
