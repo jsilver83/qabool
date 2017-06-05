@@ -77,9 +77,12 @@ class Email(object):
         if settings.DISABLE_EMAIL:
             return None
 
-        send_mail(_('KFUPM Admission'), plain_message,
+        try:
+            send_mail(_('KFUPM Admission'), plain_message,
                   'admissions@kfupm.edu.sa', [user.email], fail_silently=True,
                   html_message=html_message)
+        except: # usually TimeoutError but made it general so it will never raise an exception
+            pass
 
 
 class SMS(object):
@@ -104,12 +107,15 @@ class SMS(object):
         if settings.DISABLE_SMS:
             return None
 
-        r = requests.post('http://api.unifonic.com/rest/Messages/Send',
-                          data={'AppSid': settings.UNIFONIC_APP_SID,
-                                'Recipient': mobile,
-                                'Body': body,
-                                'SenderID': 'KFUPM-ADM'})
-        return r
+        try:
+            r = requests.post('http://api.unifonic.com/rest/Messages/Send',
+                              data={'AppSid': settings.UNIFONIC_APP_SID,
+                                    'Recipient': mobile,
+                                    'Body': body,
+                                    'SenderID': 'KFUPM-ADM'})
+            return r
+        except: # usually TimeoutError but made it general so it will never raise an exception
+            pass
 
     @staticmethod
     def send_sms_registration_success(mobile):
