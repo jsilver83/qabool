@@ -38,9 +38,9 @@ class AgreementForm(BaseAgreementForm):
 
 class Phase1UserEditForm(BaseContactForm):
     class Meta(BaseContactForm.Meta):
-        fields = ['student_full_name_ar', 'student_full_name_en', 'mobile','mobile2',
+        fields = ['student_full_name_ar', 'student_full_name_en', 'mobile', 'mobile2',
                   'email', 'email2', 'high_school_system',
-                  'high_school_gpa_student_entry','student_notes']
+                  'high_school_gpa_student_entry', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
             ('', "---"),
@@ -194,8 +194,9 @@ class RegistrationForm(UserCreationForm):
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
             self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
-    def clean_username(self):
-        username1 = try_parse_int(self.cleaned_data.get("username"))
+    def clean(self):
+        cleaned_data = super(RegistrationForm, self).clean()
+        username1 = try_parse_int(cleaned_data.get("username"))
         denial = DeniedStudent.check_if_student_is_denied(username1)
 
         if denial:
@@ -203,7 +204,6 @@ class RegistrationForm(UserCreationForm):
                 self.error_messages['govid_denied'] + denial,
                 code='govid_denied',
             )
-        return username1
 
     def clean_username2(self):
         username1 = try_parse_int(self.cleaned_data.get("username"))
@@ -269,8 +269,8 @@ class RegistrationForm(UserCreationForm):
 
     def clean_saudi_mother_gov_id(self):
         saudi_mother = self.cleaned_data.get("saudi_mother")
+        saudi_mother_gov_id = self.cleaned_data.get("saudi_mother_gov_id")
         if saudi_mother:
-            saudi_mother_gov_id = self.cleaned_data.get("saudi_mother_gov_id")
             if not saudi_mother_gov_id:
                 raise forms.ValidationError(
                     self.error_messages['no_saudi_mother_gov_id'],
