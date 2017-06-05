@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 13:35+0300\n"
-"PO-Revision-Date: 2017-05-31 12:17+0300\n"
+"PO-Revision-Date: 2017-06-05 11:12+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -616,16 +616,12 @@ msgid "Tahsili Score"
 msgstr "درجة التحصيلي"
 
 #: undergraduate_admission/models.py:98
-#, fuzzy
-#| msgid "Qudrat Score - Yesser"
 msgid "Qudrat Score - Entered by Student"
-msgstr "درجة القدرات ( من يسر )"
+msgstr "درجة القدرات (إدخال الطالب )"
 
 #: undergraduate_admission/models.py:101
-#, fuzzy
-#| msgid "Tahsili Score - Yesser"
 msgid "Tahsili Score - Entered by Student"
-msgstr "درجة التحصيلي ( من يسر )"
+msgstr "درجة التحصيلي ( إدخال الطالب )"
 
 #: undergraduate_admission/models.py:104
 msgid "First Name (Arabic)"
@@ -1886,17 +1882,7 @@ msgstr ""
 "<br><br> إدارة القبول، <br>جامعة الملك فهد للبترول والمعادن.</div>"
 
 #: undergraduate_admission/utils.py:32
-#, fuzzy, python-format
-#| msgid ""
-#| "Dear %(student_name)s,<br>Your request has been successfully submitted "
-#| "and the Admission results will be announced on Thursday July 6, 2017 ... "
-#| "<br><h4>Registration Details</h4><hr>Registration ID: "
-#| "%(user_id)s<br>Mobile: %(mobile)s<br>Registration Date: "
-#| "%(reg_date)s<br><hr><br>You agreed to the following:<br>"
-#| "%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br>We appreciate "
-#| "your feedback: <a href=\"http://goo.gl/erw8HQ\">http://goo.gl/erw8HQ</"
-#| "a> . <br><br> Admissions Office, <br>King Fahd University of Petroleum "
-#| "and Minerals"
+#, python-format
 msgid ""
 "Dear %(student_name)s,<br>We regret to inform you that your application has "
 "been rejected because your old high school certificate. <h4>Registration "
@@ -1906,13 +1892,13 @@ msgid ""
 "ul><hr><br><br><br> Admissions Office, <br>King Fahd University of Petroleum "
 "and Minerals"
 msgstr ""
-"<div style=\"direction:rtl\">عزيزي الطالب %(student_name)s,<br>تم استلام "
-"طلبك بنجاح وسيتم إعلان النتائج يوم الخميس ( 1 ظهراً ) 12 شوال 1438ه حسب تقويم "
-"أم القرى  ... <br><h4>تفاصيل الطلب</h4><hr>رقم التسجيل: %(user_id)s<br>رقم "
-"الجوال: %(mobile)s<br>تاريخ التسجيل: %(reg_date)s<br><hr><br>الشروط و اﻷحكام:"
-"<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br>فضلا شارك معنا "
-"في اﻻستبيان: <a href=\"http://goo.gl/erw8HQ\">http://goo.gl/erw8HQ</a> . "
-"<br><br> إدارة القبول، <br>جامعة الملك فهد للبترول والمعادن.</div>"
+"<div style=\"direction:rtl\">عزيزي الطالب %(student_name)s,<br>نشعرك بأنه قد "
+"تم رفض طلبك ﻷن شهادة الثانوية أقدم من عامين... <br><h4>تفاصيل الطلب</"
+"h4><hr>رقم التسجيل: %(user_id)s<br>رقم الجوال: %(mobile)s<br>تاريخ التسجيل: "
+"%(reg_date)s<br><hr><br>الشروط و اﻷحكام:<br>%(agree_header)s<br><br><ul>"
+"%(agree_items)s</ul><hr><br>فضلا شارك معنا في اﻻستبيان: <a href=\"http://goo."
+"gl/erw8HQ\">http://goo.gl/erw8HQ</a> . <br><br> إدارة القبول، <br>جامعة "
+"الملك فهد للبترول والمعادن.</div>"
 
 #: undergraduate_admission/utils.py:45 undergraduate_admission/utils.py:96
 msgid ""
