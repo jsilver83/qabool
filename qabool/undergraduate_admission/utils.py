@@ -84,21 +84,19 @@ class Email(object):
 
 class SMS(object):
     sms_messages = {
-        'registration_success': _('Your request has been successfully submitted. '
-                                  'We appreciate your feedback:\nhttp://goo.gl/erw8HQ .\n'
-                                  'Admissions Office, KFUPM'),
-        'registration_success_old_high_school': _('We regret to inform you that your application has been rejected '
-                                                  'because your old high school certificate. '
-                                                  'We appreciate your feedback:\nhttp://goo.gl/erw8HQ .\n'
-                                                  'Admissions Office, KFUPM'),
-        'confirmation_message': _('TBA'),
+        'registration_success': _('Your request was submitted. Share feedback http://goo.gl/erw8HQ, KFUPM'),
+        'registration_success_old_high_school': _('Application was rejected '
+                                                  'because of old HS certificate. '
+                                                  'Share feedback: http://goo.gl/erw8HQ.'
+                                                  'KFUPM'),
+        'partial_admission_message': _('Congrats, you have been admitted into KFUPM. Check our website'),
+        'general_results_message': _('Your admission result is out. Check our website. KFUPM'),
+        'confirmed_message': _('Documents were submitted and being checked. Check website later. KFUPM'),
+        'docs_issue_message': _('You have issues in documents. Check website to fix them. KFUPM'),
         'admitted_msg':
-            _('Dear Student, You have been admitted successfully and you have to attend the orientation'
-              'week as specified in the admission letter'),
-
+            _('Your admission is confirmed. Check website to print admission letter. KFUPM'),
         'withdrawn_msg':
-            _('Dear Student, Your application has been withdrawn as per your request. We wish you luck '
-              'in your future...'),
+            _('Your admission was withdrawn as per your request. Good luck. KFUPM'),
     }
 
     @staticmethod
@@ -128,9 +126,10 @@ class SMS(object):
     @staticmethod
     def send_sms_withdrawn(mobile):
         SMS.send_sms(mobile,
-                     '%s' % (SMS.sms_messages['withdrawn_msg']))  # a custom function to generate 6-digit captcha codes
+                     '%s' % (SMS.sms_messages['withdrawn_msg']))
 
 
+# a custom function to generate 6-digit captcha codes
 def random_digit_challenge():
     ret = u''
     for i in range(6):
