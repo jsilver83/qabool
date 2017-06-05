@@ -6,22 +6,6 @@ from find_roommate.models import HousingUser
 from undergraduate_admission.models import Lookup, User
 
 
-# obviously violating the DRY principle to solve a weird error with deploying and migrating the db
-def get_lookup_choices(lookup_type, add_dashes=True):
-    try:
-        choices = Lookup.objects.filter(
-            show=True,
-            lookup_type=lookup_type)
-
-        ch = [(o.lookup_value_ar, str(o)) for o in choices]
-        if add_dashes:
-            ch.insert(0, ('', '---------'))
-
-        return ch
-    except OperationalError: # happens when db doesn't exist yet
-        return [('--', '--')]
-
-
 class HousingInfoUpdateForm(forms.ModelForm):
     agree1 = forms.BooleanField(label=_('housing terms and conditions 1'))
     agree2 = forms.BooleanField(label=_('housing terms and conditions 2'))
@@ -40,10 +24,10 @@ class HousingInfoUpdateForm(forms.ModelForm):
 
         widgets = {
             'searchable': forms.Select(choices=SEARCHABLE_CHOICES),
-            'sleeping': forms.Select(choices= get_lookup_choices('HOUSING_PREF_SLEEPIN')),
-            'light': forms.Select(choices= get_lookup_choices('HOUSING_PREF_LIGHT')),
-            'room_temperature': forms.Select(choices= get_lookup_choices('HOUSING_PREF_AC')),
-            'visits': forms.Select(choices= get_lookup_choices('HOUSING_PREF_VISITS')),
+            'sleeping': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
+            'light': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')),
+            'room_temperature': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_AC')),
+            'visits': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_VISITS')),
         }
 
     def clean_agree1(self):

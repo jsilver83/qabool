@@ -417,7 +417,7 @@ class User(AbstractUser):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:  # happens when db doesn't exist yet
+        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     def __init__(self, *args, **kwargs):
@@ -599,7 +599,7 @@ class RegistrationStatusMessage(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:  # happens when db doesn't exist yet
+        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @staticmethod
@@ -699,7 +699,7 @@ class Lookup(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:  # happens when db doesn't exist yet
+        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
 
@@ -796,7 +796,7 @@ class GraduationYear(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:  # happens when db doesn't exist yet
+        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @property
@@ -827,7 +827,7 @@ class Nationality(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:  # happens when db doesn't exist yet
+        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @property
@@ -986,7 +986,7 @@ class TarifiReceptionDate(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except OperationalError:  # happens when db doesn't exist yet
+        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     def __str__(self):

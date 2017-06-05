@@ -90,8 +90,8 @@
       set_fact:
         django_project_local_settings: "{{ lookup('template', 'local_settings.py.j2') }}"
         
-#    - name: Install mod_xsendfile for apache
-#      apt: pkg=libapache2-mod-xsendfile state=installed
+    - name: Install mod_xsendfile for apache
+      apt: pkg=libapache2-mod-xsendfile state=installed
         
 
   roles:
