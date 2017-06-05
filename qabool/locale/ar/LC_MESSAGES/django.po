@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-05 13:25+0300\n"
-"PO-Revision-Date: 2017-06-05 13:29+0300\n"
+"POT-Creation-Date: 2017-06-05 19:03+0300\n"
+"PO-Revision-Date: 2017-06-05 19:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -297,15 +297,15 @@ msgstr "عربي"
 msgid "English"
 msgstr "انجليزي"
 
-#: undergraduate_admission/admin.py:349
+#: undergraduate_admission/admin.py:373
 msgid "Qabool"
 msgstr "نظام القبول"
 
-#: undergraduate_admission/admin.py:350
+#: undergraduate_admission/admin.py:374
 msgid "Qabool Administration"
 msgstr "إدارة القبول"
 
-#: undergraduate_admission/admin.py:351
+#: undergraduate_admission/admin.py:375
 msgid "Administration"
 msgstr "إدارة"
 
@@ -1901,7 +1901,7 @@ msgstr ""
 "gl/erw8HQ\">http://goo.gl/erw8HQ</a> . <br><br> إدارة القبول، <br>جامعة "
 "الملك فهد للبترول والمعادن.</div>"
 
-#: undergraduate_admission/utils.py:45 undergraduate_admission/utils.py:96
+#: undergraduate_admission/utils.py:45
 msgid ""
 "Dear Student, You have been admitted successfully and you have to attend the "
 "orientationweek as specified in the admission letter"
@@ -1912,7 +1912,7 @@ msgstr ""
 "الطبي وصورة الهوية الوطنية وصورة شهادة الثانوية وصورتين شخصية حديثة ملونة "
 "وبالزي السعودي."
 
-#: undergraduate_admission/utils.py:49 undergraduate_admission/utils.py:100
+#: undergraduate_admission/utils.py:49
 msgid ""
 "Dear Student, Your application has been withdrawn as per your request. We "
 "wish you luck in your future..."
@@ -1925,30 +1925,54 @@ msgid "KFUPM Admission"
 msgstr "إدارة القبول بجامعة الملك فهد للبترول والمعادن"
 
 #: undergraduate_admission/utils.py:87
-msgid ""
-"Your request has been successfully submitted. We appreciate your feedback:\n"
-"http://goo.gl/erw8HQ .\n"
-"Admissions Office, KFUPM"
+msgid "Your request was submitted. Share feedback http://goo.gl/erw8HQ, KFUPM"
 msgstr ""
-"تم استلام طلبك بنجاح. فضلا شارك معنا في الاستبيان:\n"
-"http://goo.gl/erw8HQ .\n"
-"إدارة القبول، جامعة الملك فهد للبترول والمعادن."
+"تم استلام طلبك. رأيك يهمنا http://goo.gl/erw8HQ \n"
+"جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:90
+#: undergraduate_admission/utils.py:88
 msgid ""
-"We regret to inform you that your application has been rejected because your "
-"old high school certificate. We appreciate your feedback:\n"
-"http://goo.gl/erw8HQ .\n"
-"Admissions Office, KFUPM"
+"Application was rejected because of old HS certificate. Share feedback: "
+"http://goo.gl/erw8HQ.KFUPM"
 msgstr ""
-"نشعرك بأنه قد تم رفض طلبك ﻷن شهادة الثانوية أقدم من عامين. فضلا شارك معنا في "
-"الاستبيان:\n"
-"http://goo.gl/erw8HQ .\n"
-"إدارة القبول، جامعة الملك فهد للبترول والمعادن."
+"تم رفض طلبك ﻷن شهادة الثانوية أقدم من عامين. رأيك يهمنا http://goo.gl/"
+"erw8HQ \n"
+"جامعة الملك فهد"
+
+#: undergraduate_admission/utils.py:92
+msgid "Congrats, you have been admitted into KFUPM. Check our website"
+msgstr "نهنئك بقبولك في جامعة الملك فهد للبترول والمعادن، راجع الموقع"
+
+#: undergraduate_admission/utils.py:93
+msgid "Your admission result is out. Check our website. KFUPM"
+msgstr ""
+"ظهرت نتيجة قبولك، راجع الموقع\n"
+"جامعة الملك فهد"
 
 #: undergraduate_admission/utils.py:94
-msgid "TBA"
+msgid "Documents were submitted and being checked. Check website later. KFUPM"
 msgstr ""
+"تم استلام مستنداتك وجاري التحقق منها، راجع الموقع\n"
+"جامعة الملك فهد"
+
+#: undergraduate_admission/utils.py:95
+msgid "You have issues in documents. Check website to fix them. KFUPM"
+msgstr ""
+"لديك مشكلة بمستنداتك، راجع الموقع لإعادة رفعها\n"
+"جامعة الملك فهد"
+
+#: undergraduate_admission/utils.py:97
+msgid ""
+"Your admission is confirmed. Check website to print admission letter. KFUPM"
+msgstr ""
+"تم تأكيد قبولك، راجع الموقع لطباعة خطاب القبول\n"
+"جامعة الملك فهد"
+
+#: undergraduate_admission/utils.py:99
+msgid "Your admission was withdrawn as per your request. Good luck. KFUPM"
+msgstr ""
+"لقد تم إلغاء قبولك في جامعة الملك فهد بناء على طلبك.\n"
+"بالتوفيق"
 
 #: undergraduate_admission/validators.py:13
 #: undergraduate_admission/validators.py:25
