@@ -142,7 +142,7 @@ class ForgotPasswordForm(forms.ModelForm):
     )
 
     password1 = forms.CharField(
-        label=_('Password'),
+        label=_('New Password'),
         max_length=50,
         required=True,
         help_text= _('Minimum length is 8. Use both numbers and characters.'),
@@ -150,7 +150,7 @@ class ForgotPasswordForm(forms.ModelForm):
     )
 
     password2 = forms.CharField(
-        label=_('Password confirmation'),
+        label=_('New Password confirmation'),
         max_length=50,
         required=True,
         help_text= _('Enter the same password as before, for verification'),
