@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-05 19:03+0300\n"
-"PO-Revision-Date: 2017-06-05 19:09+0300\n"
+"POT-Creation-Date: 2017-06-08 15:38+0300\n"
+"PO-Revision-Date: 2017-06-08 15:39+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -175,6 +175,7 @@ msgstr "نموذج تسكين طالب"
 #: find_roommate/templates/find_roommate/housinguser_list.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:19
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:59
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:51
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:33
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
@@ -224,6 +225,8 @@ msgstr ""
 "المسجلين في الموقع مما يتح لك مزيد من الاختيارات"
 
 #: find_roommate/templates/find_roommate/housinguser_list.html:99
+#: undergraduate_admission/templates/snippets/pagination.html:9
+#: undergraduate_admission/templates/snippets/pagination.html:15
 msgid "Previous"
 msgstr "السابق"
 
@@ -236,6 +239,8 @@ msgid "of"
 msgstr "من"
 
 #: find_roommate/templates/find_roommate/housinguser_list.html:111
+#: undergraduate_admission/templates/snippets/pagination.html:29
+#: undergraduate_admission/templates/snippets/pagination.html:35
 msgid "Next"
 msgstr "التالي"
 
@@ -310,16 +315,19 @@ msgid "Administration"
 msgstr "إدارة"
 
 #: undergraduate_admission/forms/admin_side_forms.py:10
-msgid "Both"
-msgstr "كلاهما"
+#: undergraduate_admission/forms/admin_side_forms.py:100
+msgid "Unknown"
+msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:11
+#: undergraduate_admission/forms/admin_side_forms.py:101
 #: undergraduate_admission/forms/phase1_forms.py:122
 #: undergraduate_admission/models.py:121
 msgid "Male"
 msgstr "ذكر"
 
 #: undergraduate_admission/forms/admin_side_forms.py:12
+#: undergraduate_admission/forms/admin_side_forms.py:102
 #: undergraduate_admission/forms/phase1_forms.py:123
 #: undergraduate_admission/models.py:122
 msgid "Female"
@@ -394,6 +402,7 @@ msgstr ""
 #: undergraduate_admission/models.py:425 undergraduate_admission/models.py:729
 #: undergraduate_admission/models.py:766
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:17
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:22
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:25
 msgid "Government ID"
 msgstr "الهوية الوطنية أو هوية مقيم"
@@ -498,6 +507,7 @@ msgstr "أعد إدخال الهوية الوطنية أو هوية مقيم  و
 
 #: undergraduate_admission/forms/phase1_forms.py:127
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:35
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:28
 msgid "Gender"
 msgstr "الجنس"
 
@@ -551,6 +561,7 @@ msgstr "ملاحظة القبول"
 
 #: undergraduate_admission/models.py:43
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:31
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:26
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:33
 msgid "Nationality"
 msgstr "الجنسية"
@@ -582,6 +593,7 @@ msgstr "سنة التخرج"
 
 #: undergraduate_admission/models.py:71
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:23
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:25
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:26
 msgid "Mobile"
 msgstr "رقم الجوال"
@@ -640,6 +652,7 @@ msgid "Family Name (Arabic)"
 msgstr "اسم العائلة ( بالعربي )"
 
 #: undergraduate_admission/models.py:109
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:23
 msgid "Student Full Name (Arabic)"
 msgstr "اسم الطالب الكامل ( بالعربي )"
 
@@ -1436,6 +1449,7 @@ msgid "Student Full Name"
 msgstr "اسم الطالب"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:32
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:27
 msgid "Status"
 msgstr "الحالة"
 
@@ -1454,6 +1468,10 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:60
 msgid "Apply Status"
 msgstr "حالة الطلب"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:52
+msgid "Update Gender"
+msgstr "تحديث الجنس"
 
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:33
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:31
@@ -1920,17 +1938,17 @@ msgstr ""
 "عزيز الطالب، لقد تم الغاء قبولك في جامعة الملك فهد للبترول والمعادن بناء على "
 "طلبك، نتمنى لك التوفيق والنجاح في مكان آخر."
 
-#: undergraduate_admission/utils.py:80
+#: undergraduate_admission/utils.py:81
 msgid "KFUPM Admission"
 msgstr "إدارة القبول بجامعة الملك فهد للبترول والمعادن"
 
-#: undergraduate_admission/utils.py:87
+#: undergraduate_admission/utils.py:90
 msgid "Your request was submitted. Share feedback http://goo.gl/erw8HQ, KFUPM"
 msgstr ""
 "تم استلام طلبك. رأيك يهمنا http://goo.gl/erw8HQ \n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:88
+#: undergraduate_admission/utils.py:91
 msgid ""
 "Application was rejected because of old HS certificate. Share feedback: "
 "http://goo.gl/erw8HQ.KFUPM"
@@ -1939,36 +1957,36 @@ msgstr ""
 "erw8HQ \n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:92
+#: undergraduate_admission/utils.py:95
 msgid "Congrats, you have been admitted into KFUPM. Check our website"
 msgstr "نهنئك بقبولك في جامعة الملك فهد للبترول والمعادن، راجع الموقع"
 
-#: undergraduate_admission/utils.py:93
+#: undergraduate_admission/utils.py:96
 msgid "Your admission result is out. Check our website. KFUPM"
 msgstr ""
 "ظهرت نتيجة قبولك، راجع الموقع\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:94
+#: undergraduate_admission/utils.py:97
 msgid "Documents were submitted and being checked. Check website later. KFUPM"
 msgstr ""
 "تم استلام مستنداتك وجاري التحقق منها، راجع الموقع\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:95
+#: undergraduate_admission/utils.py:98
 msgid "You have issues in documents. Check website to fix them. KFUPM"
 msgstr ""
 "لديك مشكلة بمستنداتك، راجع الموقع لإعادة رفعها\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:97
+#: undergraduate_admission/utils.py:100
 msgid ""
 "Your admission is confirmed. Check website to print admission letter. KFUPM"
 msgstr ""
 "تم تأكيد قبولك، راجع الموقع لطباعة خطاب القبول\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:99
+#: undergraduate_admission/utils.py:102
 msgid "Your admission was withdrawn as per your request. Good luck. KFUPM"
 msgstr ""
 "لقد تم إلغاء قبولك في جامعة الملك فهد بناء على طلبك.\n"
@@ -1980,9 +1998,13 @@ msgstr ""
 msgid "File extension (%(ext)s) not allowed!"
 msgstr "صيغة الملف (%(ext)s) غير مسموح بها!"
 
-#: undergraduate_admission/views/admin_side_views.py:78
+#: undergraduate_admission/views/admin_side_views.py:85
 msgid "New status has been applied to students chosen..."
 msgstr ""
+
+#: undergraduate_admission/views/admin_side_views.py:105
+msgid "Gender updated successfully"
+msgstr "لقد تم تحديث بيانات الجنس بنجاح"
 
 #: undergraduate_admission/views/general_views.py:60
 msgid "Password was reset successfully..."
@@ -2076,6 +2098,9 @@ msgstr "تم اختيار زميل السكن بنجاح."
 #: undergraduate_admission/views/phase3_views.py:186
 msgid "Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
+
+#~ msgid "Both"
+#~ msgstr "كلاهما"
 
 #~ msgid ""
 #~ "\n"
