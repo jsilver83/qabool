@@ -113,7 +113,7 @@ class StudentGenderView(AdminBaseView, TemplateView):
                                         is_staff=False,
                                         is_superuser=False).order_by('date_joined')
 
-        paginator = Paginator(students, 1)
+        paginator = Paginator(students, 25)
         page = self.request.GET.get('page')
         try:
             page_obj = paginator.page(page)
