@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
@@ -144,7 +145,7 @@ class StudentGenderView(AdminBaseView, TemplateView):
 
         return render(request, 'undergraduate_admission/admin/student_gender.html', context)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         formset = self.formset(request.POST)
 
         if formset.is_valid():
@@ -152,4 +153,4 @@ class StudentGenderView(AdminBaseView, TemplateView):
                 form.save()
             messages.success(request, _('Gender updated successfully'))
 
-        return redirect(reverse_lazy('student_gender'))
+        return HttpResponseRedirect("")
