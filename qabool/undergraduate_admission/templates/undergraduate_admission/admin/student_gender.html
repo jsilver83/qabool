@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block content %}
+<div class="container">
+	{% if messages %}
+		<div class="messages">
+			{% for message in messages %}
+				<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{% if formset.forms %}
+		<form method="post">
+			<div class="row">
+				<br><br>
+				<table class="table table-striped" style="width:100%">
+					<tr>
+						<th style="width: 10%">{% trans 'Government ID' %}</th>
+						<th style="width: 25%">{% trans 'Student Full Name (Arabic)' %}</th>
+						<th style="width: 25%">{% trans 'Student Full Name (English)' %}</th>
+						<th style="width: 30%">{% trans 'Status' %}</th>
+						<th style="width: 10%">{% trans 'Gender' %}</th>
+					</tr>
+					{% csrf_token %}
+					{{ formset.management_form }}
+					{% for form in formset %}
+						<tr>
+							<td>{{ form.instance.username }}</td>
+							<td>{{ form.instance.student_full_name_ar }}</td>
+							<td>{{ form.instance.student_full_name_en }}</td>
+							<td>{{ form.instance.status_message }}</td>
+							<td>{{ form.gender }}</td>
+						{{ form.id }}
+						</tr>
+					{% endfor %}
+
+				</table>
+			</div>
+			<br>
+			<hr>
+			<br>
+			<button class="btn btn-primary {% trans 'btn-align' %}">
+				<i class="fa fa-search"></i> {% trans 'Apply Status' %}</button>
+		</form>
+		{% include 'snippets/pagination.html' %}
+	{% endif %}
+</div>
+{% endblock content %}
