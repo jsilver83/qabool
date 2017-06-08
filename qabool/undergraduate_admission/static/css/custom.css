@@ -308,4 +308,8 @@ background: rgba(153, 153, 153, 0.15) none repeat scroll 0% 0%;
 .form-bordered .form-group{
 border-bottom: 1px solid #C6C6C6;
 }
+
+th {
+    text-align: center!important;
+}
 /* end of add by joud */

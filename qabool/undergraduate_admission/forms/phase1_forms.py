@@ -205,6 +205,10 @@ class RegistrationForm(UserCreationForm):
                 code='govid_denied',
             )
 
+    def clean_username(self):
+        username = try_parse_int(self.cleaned_data.get("username"))
+        return username
+
     def clean_username2(self):
         username1 = try_parse_int(self.cleaned_data.get("username"))
         username2 = try_parse_int(self.cleaned_data.get("username2"))

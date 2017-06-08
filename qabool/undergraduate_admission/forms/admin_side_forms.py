@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _, get_language
 
 class CutOffForm(forms.ModelForm):
     GENDER_CHOICES = (
-        ('', _('Both')),
+        ('', _('Unknown')),
         ('M', _('Male')),
         ('F', _('Female'))
     )
@@ -18,8 +18,6 @@ class CutOffForm(forms.ModelForm):
     )
     student_type = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=STUDENT_TYPES),
                                    required=False)
-    # gender = forms.CharField(widget=forms.RadioSelect(choices=GENDER_CHOICES))
-    # nationality = forms.IntegerField(widget=forms.Select(choices=Nationality.get_nationality_choices(), attrs={'class': 'select2'}))
     admission_total = forms.FloatField(min_value=1, max_value=100, required=False)
 
     class Meta:
@@ -95,3 +93,31 @@ class VerifyCommitteeForm(forms.ModelForm):
 class ApplyStatusForm(forms.Form):
     status_message = forms.IntegerField(widget=forms.Select(
         choices=RegistrationStatusMessage.get_registration_status_choices()))
+
+
+class StudentGenderForm(forms.ModelForm):
+    GENDER_CHOICES = (
+        ('', _('Unknown')),
+        ('M', _('Male')),
+        ('F', _('Female'))
+    )
+
+    class Meta:
+        model = User
+        fields = ['gender']
+
+    def __init__(self, *args, **kwargs):
+        super(StudentGenderForm, self).__init__(*args, **kwargs)
+        self.fields['gender'].widget = forms.Select(choices=self.GENDER_CHOICES)
+        self.fields['gender'].required = True
+
+    def save(self, commit=True):
+        instance = super(StudentGenderForm, self).save(commit=False)
+        if instance.gender == 'F':
+            reg_msg = RegistrationStatusMessage.get_status_girls()
+            instance.status_message = reg_msg
+        if commit:
+            instance.save()
+            return instance
+        else:
+            return instance

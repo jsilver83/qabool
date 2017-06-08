@@ -1,9 +1,8 @@
 from django.conf.urls import url, include
 from django.contrib.auth.views import login, logout, password_change, password_change_done
 
-from undergraduate_admission.views import admin_side_views
 from undergraduate_admission.views import phase3_views
-from .views import general_views, phase1_views, phase2_views
+from .views import general_views, phase1_views, phase2_views, admin_side_views
 from .models import User
 
 urlpatterns = [

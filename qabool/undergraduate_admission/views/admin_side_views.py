@@ -1,13 +1,20 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from extra_views import FormSetView
+from extra_views import ModelFormSetView
+from floppyforms.__future__ import modelformset_factory
+
 from undergraduate_admission.filters import UserListFilter
-from undergraduate_admission.forms.admin_side_forms import CutOffForm, VerifyCommitteeForm, ApplyStatusForm
-from undergraduate_admission.models import User
+from undergraduate_admission.forms.admin_side_forms import CutOffForm, VerifyCommitteeForm, ApplyStatusForm, \
+    StudentGenderForm
+from undergraduate_admission.models import User, AdmissionSemester
 from undergraduate_admission.utils import try_parse_float
 from django.utils.translation import ugettext_lazy as _
 
@@ -87,4 +94,62 @@ class VerifyCommittee(AdminBaseView, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('verify_committee', kwargs={'pk': self.kwargs['pk']})
-        # def form_valid(self, form):
+
+
+class StudentGenderViewNOTWORKING(AdminBaseView, SuccessMessageMixin, ModelFormSetView):
+    template_name = 'undergraduate_admission/admin/student_gender.html'
+    model = User
+    form_class = StudentGenderForm
+    extra = 0
+    paginate_by = 1 # doesnt work
+    success_message = _('Gender updated successfully')
+
+    def get_queryset(self):
+        sem = AdmissionSemester.get_phase1_active_semester()
+        students =  User.objects.filter(semester=sem,
+                                        is_staff=False,
+                                        is_superuser=False).order_by('date_joined')
+        return students
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentGenderView, self).get_context_data(**kwargs)
+        context['test'] = 'test'
+        print(context)
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('student_gender') #, kwargs={'pk': self.kwargs['pk']})
+
+
+class StudentGenderView(AdminBaseView, TemplateView):
+    formset = modelformset_factory(User, form=StudentGenderForm, extra=0)
+
+    def get(self, request, *args, **kwargs):
+        sem = AdmissionSemester.get_phase1_active_semester()
+        students =  User.objects.filter(semester=sem,
+                                        is_staff=False,
+                                        is_superuser=False).order_by('date_joined')
+
+        paginator = Paginator(students, 25)
+        page = request.GET.get('page')
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+        page_query = students.filter(id__in=[object.id for object in page_obj])
+        formset = self.formset(queryset=page_query)
+        context = {'page_obj': page_obj, 'paginator': paginator, 'formset': formset, 'is_paginated': True}
+
+        return render(request, 'undergraduate_admission/admin/student_gender.html', context)
+
+    def post(self, request):
+        formset = self.formset(request.POST)
+
+        if formset.is_valid():
+            for form in formset:
+                form.save()
+            messages.success(request, _('Gender updated successfully'))
+
+        return redirect(reverse_lazy('student_gender'))
