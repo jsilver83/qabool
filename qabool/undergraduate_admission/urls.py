@@ -35,8 +35,9 @@ urlpatterns = [
 
     url(r'^choosetarifitimeslot/$', phase3_views.choose_tarifi_time_slot, name='choose_tarifi_time_slot'),
     url(r'^chooseroommate/$', phase3_views.choose_roommate, name='choose_roommate'),
-    url(r'^manage/verifycommittee/$', admin_side_views.VerifyCommittee.as_view(), name='verify_committee'),
-    url(r'^manage/cutoffpoint/$', admin_side_views.CutOffPointView.as_view(), name='check_if_student_is_admitted'),
+    url(r'^admin/studentgender/$', admin_side_views.StudentGenderView.as_view(), name='student_gender'),
+    url(r'^admin/verifycommittee/$', admin_side_views.VerifyCommittee.as_view(), name='verify_committee'),
+    url(r'^admin/cutoffpoint/$', admin_side_views.CutOffPointView.as_view(), name='check_if_student_is_admitted'),
     url(r'^checkifadmitted/$', general_views.check_if_student_is_admitted, name='check_if_student_is_admitted'),
     url(r'^markasattended/$', general_views.mark_student_as_attended, name='mark_student_as_attended'),
     url(r'^withdrawalletter/$', phase2_views.withdrawal_letter, name='withdrawal_letter'),
