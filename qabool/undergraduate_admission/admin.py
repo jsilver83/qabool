@@ -50,7 +50,7 @@ class Student(User):
 
 
 class StudentAdmin(VersionAdmin):
-    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
+    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
                     'student_type', 'admission_total', 'status_message_id',)
 
     # high_school_gpa_student_entry.short_description = "high_school_gpa_student_entry"
@@ -122,13 +122,13 @@ class StudentAdmin(VersionAdmin):
     )
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
-    readonly_fields = ('username', 'id', 'is_active', 'date_joined')
+    readonly_fields = ('id', 'date_joined')
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
-                     'nationality__nationality_en']
+                     'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
 
     def get_queryset(self, request):
-        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
+        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')
         return qs
 
 
@@ -222,7 +222,8 @@ class DistinguishedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 class DeniedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('government_id', 'student_name', 'message', 'semester')
+    list_display = ('semester', 'government_id', 'student_name', 'message',
+                    'last_trial_date', 'trials_count')
     search_fields = ['government_id', ]
 
 
