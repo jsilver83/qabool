@@ -275,7 +275,9 @@ class RegistrationForm(UserCreationForm):
         saudi_mother = self.cleaned_data.get("saudi_mother")
         saudi_mother_gov_id = self.cleaned_data.get("saudi_mother_gov_id")
         if saudi_mother:
-            if not saudi_mother_gov_id:
+            if saudi_mother_gov_id:
+                saudi_mother_gov_id = try_parse_int(saudi_mother_gov_id)
+            else:
                 raise forms.ValidationError(
                     self.error_messages['no_saudi_mother_gov_id'],
                     code='no_saudi_mother_gov_id',
