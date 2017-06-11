@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-08 15:38+0300\n"
-"PO-Revision-Date: 2017-06-08 15:39+0300\n"
+"POT-Creation-Date: 2017-06-11 11:26+0300\n"
+"PO-Revision-Date: 2017-06-11 11:27+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -180,7 +180,7 @@ msgstr "نموذج تسكين طالب"
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:62
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:69
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:31
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:37
 #: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
@@ -302,15 +302,15 @@ msgstr "عربي"
 msgid "English"
 msgstr "انجليزي"
 
-#: undergraduate_admission/admin.py:373
+#: undergraduate_admission/admin.py:374
 msgid "Qabool"
 msgstr "نظام القبول"
 
-#: undergraduate_admission/admin.py:374
+#: undergraduate_admission/admin.py:375
 msgid "Qabool Administration"
 msgstr "إدارة القبول"
 
-#: undergraduate_admission/admin.py:375
+#: undergraduate_admission/admin.py:376
 msgid "Administration"
 msgstr "إدارة"
 
@@ -422,8 +422,8 @@ msgid "Registration Number"
 msgstr "رقم التسجيل"
 
 #: undergraduate_admission/forms/general_forms.py:145
-msgid "Password"
-msgstr "كلمة السر"
+msgid "New Password"
+msgstr "كلمة السر الجديدة"
 
 #: undergraduate_admission/forms/general_forms.py:148
 #: undergraduate_admission/forms/phase1_forms.py:186
@@ -431,8 +431,8 @@ msgid "Minimum length is 8. Use both numbers and characters."
 msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
 
 #: undergraduate_admission/forms/general_forms.py:153
-msgid "Password confirmation"
-msgstr "تأكيد كلمة السر"
+msgid "New Password confirmation"
+msgstr "تأكيد كلمة السر الجديدة"
 
 #: undergraduate_admission/forms/general_forms.py:156
 #: undergraduate_admission/forms/phase1_forms.py:187
@@ -1337,6 +1337,10 @@ msgstr ""
 "\t\t\t</div>\n"
 "\t\t\t"
 
+#: undergraduate_admission/templates/base.html:5
+msgid "en"
+msgstr "ar"
+
 #: undergraduate_admission/templates/base.html:12
 msgid ""
 "Undergraduate Admission | King Fahd University of Petroleum &amp; Minerals"
@@ -1526,7 +1530,7 @@ msgstr "تغيير كلمة السر"
 msgid "Fill the form below to reset your password"
 msgstr "عليك تعبئة النموذج لاستعادة كلمة السر"
 
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:30
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:31
 msgid ""
 "You need to provide 2 correct values out of (email - mobile - registration "
 "number)"
@@ -1534,7 +1538,7 @@ msgstr ""
 "عليك أن تدخل قيمتين صحيحة من الحقول التالية ( عنوان البريد الالكتروني - رقم "
 "الجوال - رقم التسجيل) وذلك لاستعادة كلمة السر"
 
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:62
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:69
 msgid "Reset Password"
 msgstr "تغيير كلمة السر"
 
@@ -1998,11 +2002,12 @@ msgstr ""
 msgid "File extension (%(ext)s) not allowed!"
 msgstr "صيغة الملف (%(ext)s) غير مسموح بها!"
 
-#: undergraduate_admission/views/admin_side_views.py:85
+#: undergraduate_admission/views/admin_side_views.py:66
 msgid "New status has been applied to students chosen..."
 msgstr ""
 
-#: undergraduate_admission/views/admin_side_views.py:105
+#: undergraduate_admission/views/admin_side_views.py:86
+#: undergraduate_admission/views/admin_side_views.py:142
 msgid "Gender updated successfully"
 msgstr "لقد تم تحديث بيانات الجنس بنجاح"
 
