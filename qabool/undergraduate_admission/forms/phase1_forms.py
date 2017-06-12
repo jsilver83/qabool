@@ -182,6 +182,8 @@ class RegistrationForm(UserCreationForm):
                 message=UserCreationForm.error_messages['govid_invalid']
             )]
         try:  # to make this form reusable for edit info
+
+            self.fields['high_school_gpa_student_entry'].required = True
             self.fields['guardian_mobile'].required = True
             self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
             self.fields['password2'].help_text = _('Enter the same password as before, for verification')
