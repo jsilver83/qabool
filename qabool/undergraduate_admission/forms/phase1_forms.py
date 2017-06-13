@@ -91,7 +91,7 @@ class RegistrationForm(UserCreationForm):
     )
     username = forms.CharField(
         label=_('Government ID'),
-        max_length=11,
+        max_length=12,
         min_length=9,
         help_text=_(
             'National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx.'),
