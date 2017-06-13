@@ -21,7 +21,8 @@ class UserResource(resources.ModelResource):
                   'high_school_province', 'admission_note', 'government_id_place',
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
                   'eligible_for_housing', 'english_placement_test_score', 'english_speaking_test_score',
-                  'english_level',)
+                  'english_level', 'high_school_gpa_student_entry', 'student_full_name_ar',
+                  'student_full_name_en', 'gender')
         skip_unchanged = True
         report_skipped = True
 
@@ -59,9 +60,10 @@ class StudentAdmin(VersionAdmin):
         (None, {
             'fields': ('username', 'status_message',
                        ('student_full_name_ar', 'student_full_name_en','gender'),
-                       ('nationality', 'saudi_mother','saudi_mother_gov_id'),
+                       ('student_type', 'nationality', 'saudi_mother','saudi_mother_gov_id'),
                        'email', 'mobile','guardian_mobile',
-                       ('high_school_gpa', 'qudrat_score', 'tahsili_score'), 'high_school_gpa_student_entry',
+                       ('high_school_gpa', 'qudrat_score', 'tahsili_score'),
+                       'admission_total', 'high_school_gpa_student_entry',
                        ('high_school_graduation_year', 'high_school_system'),'student_notes'
                        )
         }),
@@ -122,7 +124,7 @@ class StudentAdmin(VersionAdmin):
     )
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
-    readonly_fields = ('id', 'date_joined')
+    readonly_fields = ('id', 'date_joined', 'student_type', 'admission_total')
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
