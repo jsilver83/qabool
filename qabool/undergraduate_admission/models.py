@@ -79,17 +79,17 @@ class User(AbstractUser):
         ],
         db_index=True,
     )
+    high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA (Ministry)'),
+                                        validators=[MinValueValidator(1), MaxValueValidator(100)],
+                                        )
     phone = models.CharField(null=True,
                              blank=True,
                              max_length=50,
                              verbose_name=_('Phone'),
                              help_text=_('With country and area code. e.g. 966138602722'), )
-    high_school_gpa = models.FloatField(null=True, blank=True, verbose_name=_('High School GPA'),
-                                        validators=[MinValueValidator(1), MaxValueValidator(100)],
-                                        )
-    qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score'),
+    qudrat_score = models.FloatField(null=True, blank=True, verbose_name=_('Qudrat Score (Qiyas)'),
                                      validators=[MinValueValidator(1), MaxValueValidator(100)], )
-    tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score'),
+    tahsili_score = models.FloatField(null=True, blank=True, verbose_name=_('Tahsili Score (Qiyas)'),
                                       validators=[MinValueValidator(1), MaxValueValidator(100)], )
     high_school_gpa_student_entry = models.FloatField(null=True, blank=True,
                                                       verbose_name=_('High School GPA'),
