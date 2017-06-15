@@ -1,3 +1,4 @@
+import time
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,13 +16,20 @@ from floppyforms.__future__ import modelformset_factory
 
 from zeep import Client
 import json
+import os
+import csv
 
-from qabool.local_settings import YESSER_QIYAS_WSDL
+from django.conf import settings
 from undergraduate_admission.filters import UserListFilter
 from undergraduate_admission.forms.admin_side_forms import CutOffForm, VerifyCommitteeForm, ApplyStatusForm, \
     StudentGenderForm
 from undergraduate_admission.models import User, AdmissionSemester
 from undergraduate_admission.utils import try_parse_float
+
+
+YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
+YESSER_QIYAS_WSDL = settings.YESSER_QIYAS_WSDL
+BASE_DIR = settings.BASE_DIR
 
 
 class AdminBaseView(LoginRequiredMixin, UserPassesTestMixin):
@@ -152,6 +160,46 @@ class StudentGenderView(AdminBaseView, TemplateView):
                                       context_instance=RequestContext(request))
 
 
+class YesserDataUpdateBackup(AdminBaseView, TemplateView):
+    template_name = 'undergraduate_admission/admin/yesser_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(YesserDataUpdateBackup, self).get_context_data(**kwargs)
+        sem = AdmissionSemester.get_phase1_active_semester()
+        students = User.objects.filter(semester=sem,
+                                       is_staff=False,
+                                       is_superuser=False)
+        context['students'] = students
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        read_file = os.path.join(BASE_DIR, 'uploaded_docs') + '/names_o.csv'
+        write_file = os.path.join(BASE_DIR, 'uploaded_docs') + '/names.csv'
+        counter = 1
+        total = 27984
+
+        with open(write_file, 'w') as csvfile2:
+            fieldnames = ['username', 'high_school_gpa', 'quodrat', 'tahsili']
+            writer = csv.DictWriter(csvfile2, fieldnames=fieldnames)
+            writer.writeheader()
+
+            with open(read_file) as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    # time.sleep(0.09)
+                    data = get_qiyas_from_yesser(row['username'])
+                    print('%s: %s'%(counter/total * 100, data))
+                    counter = counter + 1
+                    writer.writerow({'username': row['username'],
+                                     'high_school_gpa': row['high_school_gpa'],
+                                     'quodrat': data['qudrat'],
+                                     'tahsili': data['tahsili'],
+                                     })
+
+        return super(YesserDataUpdateBackup, self).get(request)
+
+
 class YesserDataUpdate(AdminBaseView, TemplateView):
     template_name = 'undergraduate_admission/admin/yesser_update.html'
 
@@ -169,6 +217,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
 class QiyasDataUpdate(AdminBaseView, TemplateView):
     def get(self, request, *args, **kwargs):
         client = Client(YESSER_QIYAS_WSDL)
+        client2 = Client(YESSER_MOE_WSDL)
         gov_id = request.GET.get('govid', 0)
 
         sem = AdmissionSemester.get_phase1_active_semester()
@@ -180,8 +229,10 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
 
             resultQudrat = client.service.GetExamResult(gov_id, '01', '01')
             resultTahsili = client.service.GetExamResult(gov_id, '02', '01')
+            resultHS = client2.service.GetHighSchoolCertificate(gov_id)
             print(resultQudrat)
             print(resultTahsili)
+            print*resultHS
 
             data = {}
             data['qudrat_before'] = student.qudrat_score
@@ -190,14 +241,55 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
             try:
                 data['qudrat_after'] = resultQudrat.GetExamResultResponseDetailObject.ExamResult.ExamResult
             except AttributeError:  # no qudrat result from Qiyas
-                data['qudrat_after'] = -1
+                data['qudrat_after'] = None
 
             try:
                 data['tahsili_after'] = resultTahsili.GetExamResultResponseDetailObject.ExamResult.ExamResult
             except AttributeError:  # no tahsili result from Qiyas
-                data['tahsili_after'] = -1
+                data['tahsili_after'] = None
 
         except ObjectDoesNotExist:
             data = {}
 
         return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def get_qiyas_from_yesser(gov_id):
+    client = Client(YESSER_QIYAS_WSDL)
+    data = {}
+    try:
+        resultQudrat = client.service.GetExamResult(gov_id, '01', '01')
+        resultTahsili = client.service.GetExamResult(gov_id, '02', '01')
+        print(resultQudrat)
+        print(resultTahsili)
+
+        try:
+            data['qudrat'] = resultQudrat.GetExamResultResponseDetailObject.ExamResult.ExamResult
+        except:  # no qudrat result from Qiyas
+            data['qudrat'] = 0
+
+        try:
+            data['tahsili'] = resultTahsili.GetExamResultResponseDetailObject.ExamResult.ExamResult
+        except:  # no tahsili result from Qiyas
+            data['tahsili'] = 0
+    except:
+        data['qudrat'] = 0
+        data['tahsili'] = 0
+    return data
+
+# def get_high_school_from_yesser(gov_id):
+#     client = Client(YESSER_MOE_WSDL)
+#     data = {}
+#     try:
+#         result = client.service.GetExamResult(gov_id, '01', '01')
+#         print(result)
+#
+#         try:
+#             data['qudrat'] = resultQudrat.GetExamResultResponseDetailObject.ExamResult.ExamResult
+#         except:  # no qudrat result from Qiyas
+#             data['qudrat'] = 0
+#
+#     except:
+#         data['qudrat'] = 0
+#         data['tahsili'] = 0
+#     return data
