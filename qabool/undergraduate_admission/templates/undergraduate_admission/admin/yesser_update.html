@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block content %}
+	<div class="container">
+		{% if messages %}
+			<div class="messages">
+				{% for message in messages %}
+					<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if students %}
+			<div class="row">
+				<br><br>
+				<table class="table table-striped" style="width:100%">
+					<tr>
+						<th style="width: 5%">#</th>
+						<th style="width: 10%">{% trans 'Government ID' %}</th>
+						<th style="width: 25%">{% trans 'Student Full Name (Arabic)' %}</th>
+						<th style="width: 15%">{% trans 'Quodrat Before' %}</th>
+						<th style="width: 15%">{% trans 'Quodrat After' %}</th>
+						<th style="width: 15%">{% trans 'Tahsili Before' %}</th>
+						<th style="width: 15%">{% trans 'Tahsili After' %}</th>
+					</tr>
+					{% for student in students %}
+						<tr>
+							<td>{{ student.id }}</td>
+							<td>{{ student.username }}</td>
+							<td>{{ student.student_full_name_ar }}</td>
+							<td>{{ student.qudrat_score }}</td>
+							<td class="q_a"></td>
+							<td>{{ student.tahsili_score }}</td>
+							<td class="t_a"></td>
+						</tr>
+					{% endfor %}
+
+				</table>
+			</div>
+			<br>
+			<hr>
+			<br>
+		{% endif %}
+	</div>
+{% endblock content %}
