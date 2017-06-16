@@ -90,31 +90,6 @@ class VerifyCommittee(AdminBaseView, SuccessMessageMixin, UpdateView):
         return reverse_lazy('verify_committee', kwargs={'pk': self.kwargs['pk']})
 
 
-class StudentGenderViewNOTWORKING(AdminBaseView, SuccessMessageMixin, ModelFormSetView):
-    template_name = 'undergraduate_admission/admin/student_gender.html'
-    model = User
-    form_class = StudentGenderForm
-    extra = 0
-    paginate_by = 1  # doesnt work
-    success_message = _('Gender updated successfully')
-
-    def get_queryset(self):
-        sem = AdmissionSemester.get_phase1_active_semester()
-        students = User.objects.filter(semester=sem,
-                                       is_staff=False,
-                                       is_superuser=False).order_by('date_joined')
-        return students
-
-    def get_context_data(self, **kwargs):
-        context = super(StudentGenderView, self).get_context_data(**kwargs)
-        context['test'] = 'test'
-        print(context)
-        return context
-
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('student_gender')  # , kwargs={'pk': self.kwargs['pk']})
-
-
 class StudentGenderView(AdminBaseView, TemplateView):
     formset = modelformset_factory(User, form=StudentGenderForm, extra=0)
     template_name = 'undergraduate_admission/admin/student_gender.html'
@@ -208,108 +183,132 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
         students = User.objects.filter(semester=sem,
                                        is_staff=False,
                                        is_superuser=False)
-        context['students'] = students
+        context['students_count'] = students.count()
 
         return context
 
 
 class QiyasDataUpdate(AdminBaseView, TemplateView):
     def get(self, request, *args, **kwargs):
-        special_cases_log = ''
-        final_data, data = {}, {}
-        gov_id = request.GET.get('gov_id', 0)
-        print(gov_id)
+        serialized_obj = {
+            'gov_id': 'Not found',
+            'student_full_name_ar': 'Not found',
+            'status_before': 'Not found',
+            'status': 'Not found',
+            'hs_before': 0.0,
+            'hs': 0.0,
+            'qudrat_before': 0,
+            'qudrat': 0,
+            'tahsili_before': 0,
+            'tahsili': 0,
+            'log': ''
+        }
+        page = request.GET.get('page', 1)
         sem = AdmissionSemester.get_phase1_active_semester()
-        print(sem)
-        try:
-            student = User.objects.get(semester=sem,
+        students = User.objects.filter(semester=sem,
                                        is_staff=False,
-                                       is_superuser=False,
-                                       username=gov_id)
+                                       is_superuser=False)
+        paginator = Paginator(students, 1)
+        try:
+            student = paginator.page(page).object_list[0]
 
-            data = merge_dicts(get_qudrat_from_yesser(gov_id),
-                               get_tahsili_from_yesser(gov_id),
-                               get_high_school_from_yesser(gov_id))
-            print(data)
+            serialized_obj = get_student_record_serialized(student)
+        except PageNotAnInteger:
+            pass
+        except EmptyPage:
+            pass
+        return HttpResponse(json.dumps(serialized_obj), content_type='application/json; charset=utf-8')
 
-            if not data['q_error']:
-                student.first_name_ar = data['FirstName']
-                student.second_name_ar = data['SecondName']
-                student.third_name_ar = data['ThirdName']
-                student.family_name_ar = data['LastName']
-                student.qudrat_score = data['qudrat']
 
-            if not data['t_error']:
-                student.tahsili_score = data['tahsili']
+def get_student_record_serialized(student):
+    special_cases_log = ''
 
-            if not data['hs_error']:
-                student.high_school_gpa = data['high_school_gpa']
-                if data['CertificationHijriYear']:
-                    year = GraduationYear.get_graduation_year(data['CertificationHijriYear'])
-                    """
-                    this is the case of student who entered his hs year wrong
-                    """
-                    if year and student.high_school_graduation_year != year:
-                        student.high_school_graduation_year = year
-                        special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % (student.username)
-                        """
-                        this is the case of a student who was marked as old hs but actually has recent hs in MOE
-                        """
-                        if data['CertificationHijriYear'] in ['2015-2016', '2016-2017'] \
-                                and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
-                            student.status_message = RegistrationStatusMessage.get_status_applied()
-                            special_cases_log += \
-                                '{%s} was marked as old hs but actually has recent hs in MOE<br>' % (student.username)
-                    """
-                    this is the case of a student who has old hs status but he has recent hs in his application
-                    """
-                    if year and student.high_school_graduation_year == year and \
-                                    student.status_message == RegistrationStatusMessage.get_status_old_high_school():
-                        student.status_message = RegistrationStatusMessage.get_status_applied()
-                        special_cases_log += \
-                            "{%s} has old hs status but he has recent hs in his application<br>" % (student.username)
-                    """
-                    this is the case of a student who has old hs
-                    """
-                    if not year:
-                        try:
-                            student.high_school_graduation_year = \
-                                GraduationYear.objects.get(description__contains='Other')
-                        except ObjectDoesNotExist:
-                            other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
-                                                        description='Other', show=True, display_order=100000)
-                            other_year.save()
-                            student.high_school_graduation_year = other_year
-                        """
-                        this is the case of a student who has old hs in MOE but has a status of applied
-                        """
-                        if student.status_message == RegistrationStatusMessage.get_status_applied():
-                            student.status_message = RegistrationStatusMessage.get_status_old_high_school()
-                            special_cases_log += \
-                                '{%s} has old hs in MOE but has a status of applied<br>' % (student.username)
-                if data['Gender'] and student.gender != data['Gender']:
-                    student.gender = data['Gender']
-                    special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username, data['Gender'])
-                student.high_school_name = data['SchoolNameAr']
-                student.high_school_province = data['AdministrativeAreaNameAr']
+    data = merge_dicts(get_qudrat_from_yesser(student.username),
+                       get_tahsili_from_yesser(student.username),
+                       get_high_school_from_yesser(student.username))
+    # print(data)
+    data['status_before'] = student.status_message.status.status_en
 
-            student.save()
+    data['qudrat_before'] = student.qudrat_score
+    if not data['q_error']:
+        student.first_name_ar = data['FirstName']
+        student.second_name_ar = data['SecondName']
+        student.third_name_ar = data['ThirdName']
+        student.family_name_ar = data['LastName']
+        student.qudrat_score = data['qudrat']
 
-            final_data = {'status': student.status_message.status.status_ar,
-                          'hs': data['high_school_gpa'],
-                          'qudrat': data['qudrat'],
-                          'tahsili': data['tahsili'],
-                          'log': special_cases_log}
+    data['tahsili_before'] = student.tahsili_score
+    if not data['t_error']:
+        student.tahsili_score = data['tahsili']
 
-        except ObjectDoesNotExist:
-            final_data = {'status': 'Not found',
-                          'hs': 0.0,
-                          'qudrat': 0.0,
-                          'tahsili': 0.0,
-                          'log': ''}
+    data['high_school_gpa_before'] = student.high_school_gpa
+    if not data['hs_error']:
+        student.high_school_gpa = data['high_school_gpa']
+        if data['CertificationHijriYear']:
+            year = GraduationYear.get_graduation_year(data['CertificationHijriYear'])
+            """
+            this is the case of student who entered his hs year wrong
+            """
+            if year and student.high_school_graduation_year != year:
+                student.high_school_graduation_year = year
+                special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % (student.username)
+                """
+                this is the case of a student who was marked as old hs but actually has recent hs in MOE
+                """
+                if data['CertificationHijriYear'] in ['2015-2016', '2016-2017'] \
+                        and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
+                    student.status_message = RegistrationStatusMessage.get_status_applied()
+                    special_cases_log += \
+                        '{%s} was marked as old hs but actually has recent hs in MOE<br>' % (student.username)
+            """
+            this is the case of a student who has old hs status but he has recent hs in his application
+            """
+            if year and student.high_school_graduation_year == year and \
+                            student.status_message == RegistrationStatusMessage.get_status_old_high_school():
+                student.status_message = RegistrationStatusMessage.get_status_applied()
+                special_cases_log += \
+                    "{%s} has old hs status but he has recent hs in his application<br>" % (student.username)
+            """
+            this is the case of a student who has old hs
+            """
+            if not year:
+                try:
+                    student.high_school_graduation_year = \
+                        GraduationYear.objects.get(description__contains='Other')
+                except ObjectDoesNotExist:
+                    other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
+                                                description='Other', show=True, display_order=100000)
+                    other_year.save()
+                    student.high_school_graduation_year = other_year
+                """
+                this is the case of a student who has old hs in MOE but has a status of applied
+                """
+                if student.status_message == RegistrationStatusMessage.get_status_applied():
+                    student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                    special_cases_log += \
+                        '{%s} has old hs in MOE but has a status of applied<br>' % (student.username)
+        if data['Gender'] and student.gender != data['Gender']:
+            student.gender = data['Gender']
+            special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username, data['Gender'])
+        student.high_school_name = data['SchoolNameAr']
+        student.high_school_province = data['AdministrativeAreaNameAr']
 
-        return HttpResponse(json.dumps(final_data), content_type='application/json; charset=utf-8')
-        # return HttpResponse(json_string, content_type='application/json; charset=utf-8')
+    student.save()
+
+    final_data = {
+        'gov_id': student.username,
+        'student_full_name_ar': student.student_full_name_ar,
+        'status_before': data['status_before'],
+        'status': student.status_message.status.status_ar,
+        'hs_before': data['high_school_gpa_before'],
+        'hs': student.high_school_gpa,
+        'qudrat_before': data['qudrat_before'],
+        'qudrat': student.qudrat_score,
+        'tahsili_before': data['tahsili_before'],
+        'tahsili': student.tahsili_score,
+        'log': special_cases_log}
+
+    return final_data
 
 
 def get_qudrat_from_yesser(gov_id):

@@ -12,20 +12,25 @@
 			</div>
 		{% endif %}
 
-		{% if students %}
+		{% if students_count %}
 			<div class="row">
+				<h2>{% trans 'Progress' %}:</h2>
+				<hr>
 				<div class="progress">
 					<div class="progress-bar" role="progressbar" aria-valuenow="70"
 					     aria-valuemin="0" aria-valuemax="100" style="width:1%">
 						<span class="sr-only">0% Complete</span>
 					</div>
 				</div>
+				<br>
+				{% trans 'Student No' %} <span class="stu_page">1</span> {% trans 'of' %}
+				<span class="stu_count">{{ students_count }}</span>
 			</div>
 			<div class="row">
-				<h2>Logs:</h2><br>
-				<pre class="logs">
-
-				</pre>
+				<h2>{% trans 'Logs' %}:</h2>
+				<hr>
+				<ul class="logs">
+				</ul>
 			</div>
 			<div class="row">
 				<br><br>
@@ -43,21 +48,6 @@
 						<th style="width: 15%">{% trans 'Tahsili Before' %}</th>
 						<th style="width: 15%">{% trans 'Tahsili After' %}</th>
 					</tr>
-					{% for student in students %}
-						<tr style="display: none">
-							<td>{{ student.id }}</td>
-							<td class="gov_id">{{ student.username }}</td>
-							<td>{{ student.student_full_name_ar }}</td>
-							<td>{{ student.status_message.status }}</td>
-							<td class="st_a"></td>
-							<td>{{ student.high_school_gpa }}</td>
-							<td class="hs_a"></td>
-							<td>{{ student.qudrat_score }}</td>
-							<td class="qu_a"></td>
-							<td>{{ student.tahsili_score }}</td>
-							<td class="ta_a"></td>
-						</tr>
-					{% endfor %}
 				</table>
 			</div>
 			<br>
@@ -69,32 +59,52 @@
 {% block scripts %}
 	<script type="application/javascript">
 		$(function () {
-			var counter = 1;
-			var total = $(".students tr .gov_id").length
-			$(".students tr").each(function () {
-				var row  = $(this);
-				var gov_id = row.find(".gov_id").text();
-				$.ajax({
-					type: "GET",
-					contentType: "application/json; charset=utf-8",
-					url: "/admin/qiyasupdate/",
-					data: {"gov_id": gov_id},
-					dataType: "json",
-					success: function (data) {
-						row.find(".st_a").text(data.status);
-						row.find(".hs_a").text(data.hs);
-						row.find(".qu_a").text(data.qudrat);
-						row.find(".ta_a").text(data.tahsili);
-						$(".logs").text($(".logs").text() + data.log);
-						var progress = counter / total * 100;
-						$(".progress-bar").attr("style", "width:" + progress + "%");
-						counter++;
-					},
-					complete: function () {
-						row.show();
-					}
-				});
-			});
+			var page = 1;
+			var total_pages = parseInt($(".stu_count").html());
+			tries = 1;
+			max_tries = 3;
+
+			while (page <= total_pages) {
+
+				tries = 1;
+				while (tries <= 1) {
+					$.ajax({
+						type: "GET",
+						contentType: "application/json; charset=utf-8",
+						url: "/admin/qiyasupdate/",
+						data: {"page": page},
+						async: false,
+						dataType: "json",
+						success: function (data) {
+							tr_html = '<tr>' +
+									  '<td>' + page + '</td>' +
+									  '<td>' + data.gov_id + '</td>' +
+									  '<td>' + data.student_full_name_ar + '</td>' +
+									  '<td>' + data.status_before + '</td>' +
+									  '<td>' + data.status + '</td>' +
+									  '<td>' + data.hs_before + '</td>' +
+									  '<td>' + data.hs + '</td>' +
+									  '<td>' + data.qudrat_before + '</td>' +
+									  '<td>' + data.qudrat + '</td>' +
+									  '<td>' + data.tahsili_before + '</td>' +
+									  '<td>' + data.tahsili + '</td>' +
+									  '</tr>';
+							$(".students").append(tr_html)
+							if(data.log.length > 0) {
+								$(".logs").prepend('<li>' + data.log + '</li>');
+							}
+							var progress = page / total_pages * 100;
+							$(".progress-bar").attr("style", "width:" + progress + "%");
+							$(".stu_page").html(page);
+							page++;
+							tries = max_tries;
+						},
+						complete: function (jqXHR, textStatus) {
+							tries++;
+						}
+					});
+				}
+			}
 		})
 		;
 	</script>
