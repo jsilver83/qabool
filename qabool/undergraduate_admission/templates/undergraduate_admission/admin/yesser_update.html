@@ -14,6 +14,9 @@
 
 		{% if students_count %}
 			<div class="row">
+				<a class="btn btn-primary go_button"> >> {% trans 'Sync Now' %} << </a>
+			</div>
+			<div class="row">
 				<h2>{% trans 'Progress' %}:</h2>
 				<hr>
 				<div class="progress">
@@ -23,14 +26,14 @@
 					</div>
 				</div>
 				<br>
-				{% trans 'Student No' %} <span class="stu_page">1</span> {% trans 'of' %}
+				{% trans 'Progress' %}: <span class="stu_page">1</span> {% trans 'of' %}
 				<span class="stu_count">{{ students_count }}</span>
 			</div>
-			<div class="row">
+			<div class="row" style="direction: ltr; text-align: left">
 				<h2>{% trans 'Logs' %}:</h2>
 				<hr>
-				<ul class="logs">
-				</ul>
+				<ol class="logs">
+				</ol>
 			</div>
 			<div class="row">
 				<br><br>
@@ -39,14 +42,14 @@
 						<th style="width: 5%">#</th>
 						<th style="width: 10%">{% trans 'Government ID' %}</th>
 						<th style="width: 25%">{% trans 'Student Full Name (Arabic)' %}</th>
-						<th style="width: 15%">{% trans 'Message Status' %} Before</th>
-						<th style="width: 15%">{% trans 'Message Status' %} After</th>
-						<th style="width: 15%">{% trans 'High School Before' %}</th>
-						<th style="width: 15%">{% trans 'High School After' %}</th>
-						<th style="width: 15%">{% trans 'Quodrat Before' %}</th>
-						<th style="width: 15%">{% trans 'Quodrat After' %}</th>
-						<th style="width: 15%">{% trans 'Tahsili Before' %}</th>
-						<th style="width: 15%">{% trans 'Tahsili After' %}</th>
+						<th style="width: 15%">{% trans 'Message Status' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'Message Status' %} {% trans 'After' %}</th>
+						<th style="width: 15%">{% trans 'High School' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'High School' %} {% trans 'After' %}</th>
+						<th style="width: 15%">{% trans 'Quodrat' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'Quodrat' %} {% trans 'After' %}</th>
+						<th style="width: 15%">{% trans 'Tahsili' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'Tahsili' %} {% trans 'After' %}</th>
 					</tr>
 				</table>
 			</div>
@@ -59,15 +62,19 @@
 {% block scripts %}
 	<script type="application/javascript">
 		$(function () {
+			$(".go_button").click(function () {
+				go_button_function(3);
+			});
+		});
+		function go_button_function(max_tries) {
 			var page = 1;
 			var total_pages = parseInt($(".stu_count").html());
 			tries = 1;
-			max_tries = 3;
 
 			while (page <= total_pages) {
-
 				tries = 1;
-				while (tries <= 1) {
+				while (tries <= max_tries) {
+					alert(tries);
 					$.ajax({
 						type: "GET",
 						contentType: "application/json; charset=utf-8",
@@ -77,20 +84,20 @@
 						dataType: "json",
 						success: function (data) {
 							tr_html = '<tr>' +
-									  '<td>' + page + '</td>' +
-									  '<td>' + data.gov_id + '</td>' +
-									  '<td>' + data.student_full_name_ar + '</td>' +
-									  '<td>' + data.status_before + '</td>' +
-									  '<td>' + data.status + '</td>' +
-									  '<td>' + data.hs_before + '</td>' +
-									  '<td>' + data.hs + '</td>' +
-									  '<td>' + data.qudrat_before + '</td>' +
-									  '<td>' + data.qudrat + '</td>' +
-									  '<td>' + data.tahsili_before + '</td>' +
-									  '<td>' + data.tahsili + '</td>' +
-									  '</tr>';
+									'<td>' + page + '</td>' +
+									'<td>' + data.gov_id + '</td>' +
+									'<td>' + data.student_full_name_ar + '</td>' +
+									'<td>' + data.status_before + '</td>' +
+									'<td>' + data.status + '</td>' +
+									'<td>' + data.hs_before + '</td>' +
+									'<td>' + data.hs + '</td>' +
+									'<td>' + data.qudrat_before + '</td>' +
+									'<td>' + data.qudrat + '</td>' +
+									'<td>' + data.tahsili_before + '</td>' +
+									'<td>' + data.tahsili + '</td>' +
+									'</tr>';
 							$(".students").append(tr_html)
-							if(data.log.length > 0) {
+							if (data.log.length > 0) {
 								$(".logs").prepend('<li>' + data.log + '</li>');
 							}
 							var progress = page / total_pages * 100;
@@ -105,7 +112,6 @@
 					});
 				}
 			}
-		})
-		;
+		}
 	</script>
 {% endblock scripts %}

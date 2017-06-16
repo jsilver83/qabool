@@ -1,4 +1,5 @@
 import time
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -299,7 +300,7 @@ def get_student_record_serialized(student):
         'gov_id': student.username,
         'student_full_name_ar': student.student_full_name_ar,
         'status_before': data['status_before'],
-        'status': student.status_message.status.status_ar,
+        'status': student.status_message.status.status_en,
         'hs_before': data['high_school_gpa_before'],
         'hs': student.high_school_gpa,
         'qudrat_before': data['qudrat_before'],
@@ -312,20 +313,27 @@ def get_student_record_serialized(student):
 
 
 def get_qudrat_from_yesser(gov_id):
-    client = Client(YESSER_QIYAS_WSDL)
     data = {}
-    resultQudrat = client.service.GetExamResult(gov_id, '01', '01')
-    # print(resultQudrat)
+    try:
+        client = Client(YESSER_QIYAS_WSDL)
+        resultQudrat = client.service.GetExamResult(gov_id, '01', '01')
 
-    if not resultQudrat.ServiceError:
-        data['q_error'] = 0
-        data['qudrat'] = resultQudrat.GetExamResultResponseDetailObject.ExamResult.ExamResult
-        data['FirstName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.FirstName
-        data['SecondName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.SecondName
-        data['ThirdName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.ThirdName
-        data['LastName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.LastName
-    else:  # no qudrat result from Qiyas
-        data['q_error'] = resultQudrat.ServiceError.Code
+        if not resultQudrat.ServiceError:
+            data['q_error'] = 0
+            data['qudrat'] = resultQudrat.GetExamResultResponseDetailObject.ExamResult.ExamResult
+            data['FirstName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.FirstName
+            data['SecondName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.SecondName
+            data['ThirdName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.ThirdName
+            data['LastName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.LastName
+        else:  # no qudrat result from Qiyas
+            data['q_error'] = resultQudrat.ServiceError.Code
+            data['qudrat'] = 0
+            data['FirstName'] = ''
+            data['SecondName'] = ''
+            data['ThirdName'] = ''
+        data['LastName'] = ''
+    except:
+        data['q_error'] = 'general error' # Client request message schema validation failure'
         data['qudrat'] = 0
         data['FirstName'] = ''
         data['SecondName'] = ''
@@ -335,39 +343,50 @@ def get_qudrat_from_yesser(gov_id):
 
 
 def get_tahsili_from_yesser(gov_id):
-    client = Client(YESSER_QIYAS_WSDL)
     data = {}
-    resultTahsili = client.service.GetExamResult(gov_id, '02', '01')
-    # print(resultTahsili)
+    try:
+        client = Client(YESSER_QIYAS_WSDL)
+        resultTahsili = client.service.GetExamResult(gov_id, '02', '01')
+        # print(resultTahsili)
 
-    if not resultTahsili.ServiceError:
-        data['t_error'] = 0
-        data['tahsili'] = resultTahsili.GetExamResultResponseDetailObject.ExamResult.ExamResult
-    else:  # no tahsili result from Qiyas
-        data['t_error'] = resultTahsili.ServiceError.Code
+        if not resultTahsili.ServiceError:
+            data['t_error'] = 0
+            data['tahsili'] = resultTahsili.GetExamResultResponseDetailObject.ExamResult.ExamResult
+        else:  # no tahsili result from Qiyas
+            data['t_error'] = resultTahsili.ServiceError.Code
+            data['tahsili'] = 0
+    except:
+        data['t_error'] = 'general error'
         data['tahsili'] = 0
     return data
 
 
 def get_high_school_from_yesser(gov_id):
-    client = Client(YESSER_MOE_WSDL)
     data = {}
-    result = client.service.GetHighSchoolCertificate(gov_id)
-    # print(result)
+    try:
+        client = Client(YESSER_MOE_WSDL)
+        result = client.service.GetHighSchoolCertificate(gov_id)
 
-    if not result.ServiceError:
-        data['hs_error'] = 0
-        data['high_school_gpa'] = result.getHighSchoolCertificateResponseDetailObject. \
-            CertificationDetails.GPA
-        data['CertificationHijriYear'] = result.getHighSchoolCertificateResponseDetailObject. \
-            CertificationDetails.CertificationHijriYear
-        data['Gender'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.Gender
-        data['SchoolNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
-            SchoolInfo.SchoolNameAr
-        data['AdministrativeAreaNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
-            SchoolInfo.AdministrativeAreaNameAr
-    else:
-        data['hs_error'] = result.ServiceError.Code
+        if not result.ServiceError:
+            data['hs_error'] = 0
+            data['high_school_gpa'] = result.getHighSchoolCertificateResponseDetailObject. \
+                CertificationDetails.GPA
+            data['CertificationHijriYear'] = result.getHighSchoolCertificateResponseDetailObject. \
+                CertificationDetails.CertificationHijriYear
+            data['Gender'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.Gender
+            data['SchoolNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.SchoolNameAr
+            data['AdministrativeAreaNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.AdministrativeAreaNameAr
+        else:
+            data['hs_error'] = result.ServiceError.Code
+            data['high_school_gpa'] = 0
+            data['CertificationHijriYear'] = ''
+            data['Gender'] = ''
+            data['SchoolNameAr'] = ''
+            data['AdministrativeAreaNameAr'] = ''
+    except:
+        data['hs_error'] = 'general error'
         data['high_school_gpa'] = 0
         data['CertificationHijriYear'] = ''
         data['Gender'] = ''
