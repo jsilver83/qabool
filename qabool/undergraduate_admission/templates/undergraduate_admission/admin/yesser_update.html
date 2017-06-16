@@ -44,7 +44,7 @@
 						<th style="width: 15%">{% trans 'Tahsili After' %}</th>
 					</tr>
 					{% for student in students %}
-						<tr>
+						<tr style="display: none">
 							<td>{{ student.id }}</td>
 							<td class="gov_id">{{ student.username }}</td>
 							<td>{{ student.student_full_name_ar }}</td>
@@ -72,11 +72,8 @@
 			var counter = 1;
 			var total = $(".students tr .gov_id").length
 			$(".students tr").each(function () {
-				var gov_id = $(this).find(".gov_id").text();
-				var st_a = $(this).find(".st_a");
-				var hs_a = $(this).find(".hs_a");
-				var qu_a = $(this).find(".qu_a");
-				var ta_a = $(this).find(".ta_a");
+				var row  = $(this);
+				var gov_id = row.find(".gov_id").text();
 				$.ajax({
 					type: "GET",
 					contentType: "application/json; charset=utf-8",
@@ -84,14 +81,17 @@
 					data: {"gov_id": gov_id},
 					dataType: "json",
 					success: function (data) {
-						st_a.text(data.status);
-						hs_a.text(data.hs);
-						qu_a.text(data.qudrat);
-						ta_a.text(data.tahsili);
+						row.find(".st_a").text(data.status);
+						row.find(".hs_a").text(data.hs);
+						row.find(".qu_a").text(data.qudrat);
+						row.find(".ta_a").text(data.tahsili);
 						$(".logs").text($(".logs").text() + data.log);
 						var progress = counter / total * 100;
 						$(".progress-bar").attr("style", "width:" + progress + "%");
 						counter++;
+					},
+					complete: function () {
+						row.show();
 					}
 				});
 			});
