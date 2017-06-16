@@ -230,6 +230,7 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
             data = merge_dicts(get_qudrat_from_yesser(gov_id),
                                get_tahsili_from_yesser(gov_id),
                                get_high_school_from_yesser(gov_id))
+            print(data)
 
             if not data['q_error']:
                 student.first_name_ar = data['FirstName']
@@ -271,7 +272,14 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
                     this is the case of a student who has old hs
                     """
                     if not year:
-                        student.high_school_graduation_year = GraduationYear.objects.get(description__contains='Other')
+                        try:
+                            student.high_school_graduation_year = \
+                                GraduationYear.objects.get(description__contains='Other')
+                        except ObjectDoesNotExist:
+                            other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
+                                                        description='Other', show=True, display_order=100000)
+                            other_year.save()
+                            student.high_school_graduation_year = other_year
                         """
                         this is the case of a student who has old hs in MOE but has a status of applied
                         """
@@ -287,7 +295,7 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
 
             student.save()
 
-            final_data = {'status': student.status_message.status,
+            final_data = {'status': student.status_message.status.status_ar,
                           'hs': data['high_school_gpa'],
                           'qudrat': data['qudrat'],
                           'tahsili': data['tahsili'],
@@ -308,7 +316,7 @@ def get_qudrat_from_yesser(gov_id):
     client = Client(YESSER_QIYAS_WSDL)
     data = {}
     resultQudrat = client.service.GetExamResult(gov_id, '01', '01')
-    print(resultQudrat)
+    # print(resultQudrat)
 
     if not resultQudrat.ServiceError:
         data['q_error'] = 0
@@ -318,7 +326,7 @@ def get_qudrat_from_yesser(gov_id):
         data['ThirdName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.ThirdName
         data['LastName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.LastName
     else:  # no qudrat result from Qiyas
-        data['t_error'] = resultQudrat.ServiceError.Code
+        data['q_error'] = resultQudrat.ServiceError.Code
         data['qudrat'] = 0
         data['FirstName'] = ''
         data['SecondName'] = ''
@@ -331,7 +339,7 @@ def get_tahsili_from_yesser(gov_id):
     client = Client(YESSER_QIYAS_WSDL)
     data = {}
     resultTahsili = client.service.GetExamResult(gov_id, '02', '01')
-    print(resultTahsili)
+    # print(resultTahsili)
 
     if not resultTahsili.ServiceError:
         data['t_error'] = 0
@@ -346,7 +354,7 @@ def get_high_school_from_yesser(gov_id):
     client = Client(YESSER_MOE_WSDL)
     data = {}
     result = client.service.GetHighSchoolCertificate(gov_id)
-    print(result)
+    # print(result)
 
     if not result.ServiceError:
         data['hs_error'] = 0
