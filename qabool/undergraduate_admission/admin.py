@@ -58,7 +58,7 @@ class StudentAdmin(VersionAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('username', 'status_message',
+            'fields': (('username', 'semester', 'status_message'),
                        ('student_full_name_ar', 'student_full_name_en','gender'),
                        ('student_type', 'nationality', 'saudi_mother','saudi_mother_gov_id'),
                        'email', 'mobile','guardian_mobile',
