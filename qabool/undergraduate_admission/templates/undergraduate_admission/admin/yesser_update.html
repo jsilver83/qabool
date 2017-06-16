@@ -58,7 +58,6 @@
 							<td class="ta_a"></td>
 						</tr>
 					{% endfor %}
-
 				</table>
 			</div>
 			<br>
@@ -74,18 +73,22 @@
 			var total = $(".students tr .gov_id").length
 			$(".students tr").each(function () {
 				var gov_id = $(this).find(".gov_id").text();
+				var st_a = $(this).find(".st_a");
+				var hs_a = $(this).find(".hs_a");
+				var qu_a = $(this).find(".qu_a");
+				var ta_a = $(this).find(".ta_a");
 				$.ajax({
 					type: "GET",
 					contentType: "application/json; charset=utf-8",
-					url: "/admin/qiyasupdate",
-					data: {"gov_id": gov_id}
+					url: "/admin/qiyasupdate/",
+					data: {"gov_id": gov_id},
 					dataType: "json",
 					success: function (data) {
-						$(this).find(".st_a").text(data.status);
-						$(this).find(".hs_a").text(data.hs);
-						$(this).find(".qu_a").text(data.qudrat);
-						$(this).find(".ta_a").text(data.tahsili);
-						$(".logs").text($(".logging").text() + data.log);
+						st_a.text(data.status);
+						hs_a.text(data.hs);
+						qu_a.text(data.qudrat);
+						ta_a.text(data.tahsili);
+						$(".logs").text($(".logs").text() + data.log);
 						var progress = counter / total * 100;
 						$(".progress-bar").attr("style", "width:" + progress + "%");
 						counter++;
