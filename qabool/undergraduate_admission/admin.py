@@ -13,7 +13,8 @@ from .models import *
 class UserResource(resources.ModelResource):
     class Meta:
         model = User
-        import_id_fields = ('username')
+        exclude = ('id', )
+        import_id_fields = ('username', )
         fields = ('semester', 'username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
