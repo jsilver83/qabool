@@ -331,9 +331,9 @@ def get_qudrat_from_yesser(gov_id):
             data['FirstName'] = ''
             data['SecondName'] = ''
             data['ThirdName'] = ''
-        data['LastName'] = ''
+            data['LastName'] = ''
     except:
-        data['q_error'] = 'general error' # Client request message schema validation failure'
+        data['q_error'] = 'general error'  # Client request message schema validation failure'
         data['qudrat'] = 0
         data['FirstName'] = ''
         data['SecondName'] = ''
