@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n staticfiles %}
 {% load floppyforms %}
 
 {% block content %}
@@ -60,27 +60,40 @@
 	</div>
 {% endblock content %}
 {% block scripts %}
+	<script type="application/javascript" src="{% static 'js/jquery.blockUI.js' %}"></script>
 	<script type="application/javascript">
 		$(function () {
 			$(".go_button").click(function () {
 				go_button_function(3);
 			});
+
+			$.blockUI.defaults.css.border = '5px solid red';
+			$.blockUI.defaults.css.message = '<h2>Fetching Data From Yesser!</h2>';
+			//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 		});
+
 		function go_button_function(max_tries) {
 			var page = 1;
 			var total_pages = parseInt($(".stu_count").html());
-			tries = 1;
+			var tries = 0;
+			var counter = 0;
 
 			while (page <= total_pages) {
-				tries = 1;
+				tries = 0;
 				while (tries <= max_tries) {
 					$.ajax({
 						type: "GET",
 						contentType: "application/json; charset=utf-8",
-						url: "/admin/qiyasupdate/",
+						url: "{% url 'qiyas_update' %}",
 						data: {"page": page},
 						async: false,
+						//timeout: 1000,
 						dataType: "json",
+						beforeSend: function () {
+							tries++;
+							$.blockUI();
+							counter++;
+						},
 						success: function (data) {
 							tr_html = '<tr>' +
 									'<td>' + page + '</td>' +
@@ -95,7 +108,7 @@
 									'<td>' + data.tahsili_before + '</td>' +
 									'<td>' + data.tahsili + '</td>' +
 									'</tr>';
-							$(".students").append(tr_html)
+							$(".students").append(tr_html);
 							if (data.log.length > 0) {
 								$(".logs").prepend('<li>' + data.log + '</li>');
 							}
@@ -103,10 +116,13 @@
 							$(".progress-bar").attr("style", "width:" + progress + "%");
 							$(".stu_page").html(page);
 							page++;
-							tries = max_tries;
+							tries = max_tries+1;
 						},
-						complete: function (jqXHR, textStatus) {
-							tries++;
+						error: function ( jqXHR, textStatus, errorThrown) {
+							//alert(errorThrown);
+						},
+						complete: function(){
+							$.unblockUI();
 						}
 					});
 				}

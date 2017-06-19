@@ -16,6 +16,7 @@ from extra_views import ModelFormSetView
 from floppyforms.__future__ import modelformset_factory
 
 from zeep import Client
+from zeep.transports import Transport
 import json
 import os
 import csv
@@ -31,8 +32,13 @@ YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
 YESSER_QIYAS_WSDL = settings.YESSER_QIYAS_WSDL
 BASE_DIR = settings.BASE_DIR
 
+# setting soap client requests timeout
+transport = Transport(timeout=3)
+
 
 class AdminBaseView(LoginRequiredMixin, UserPassesTestMixin):
+    login_url = reverse_lazy('admin:index')
+
     def test_func(self):
         return self.request.user.is_superuser
 
@@ -188,6 +194,19 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
 
         return context
 
+    def get(self, request, *args, **kwargs):
+        manual_update = request.GET.get('manual_update', 0)
+
+        if manual_update:
+            sem = AdmissionSemester.get_phase1_active_semester()
+            students = User.objects.filter(semester=sem,
+                                           is_staff=False,
+                                           is_superuser=False)
+            for student in students:
+                get_student_record_serialized(student)
+
+        return super(YesserDataUpdate, self).get(request, *args, **kwargs)
+
 
 class QiyasDataUpdate(AdminBaseView, TemplateView):
     def get(self, request, *args, **kwargs):
@@ -204,6 +223,7 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
             'tahsili': 0,
             'log': ''
         }
+        # time.sleep(3)
         page = request.GET.get('page', 1)
         sem = AdmissionSemester.get_phase1_active_semester()
         students = User.objects.filter(semester=sem,
@@ -222,92 +242,114 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
 
 
 def get_student_record_serialized(student):
-    special_cases_log = ''
+    final_data = {
+        'changed': False,
+        'gov_id': '',
+        'student_full_name_ar': '',
+        'status_before': '',
+        'status': '',
+        'hs_before': 0.0,
+        'hs': 0.0,
+        'qudrat_before': 0,
+        'qudrat': 0,
+        'tahsili_before': 0,
+        'tahsili': 0,
+        'log': '',
+        'error': True,
+    }
 
-    data = merge_dicts(get_qudrat_from_yesser(student.username),
-                       get_tahsili_from_yesser(student.username),
-                       get_high_school_from_yesser(student.username))
-    # print(data)
-    data['status_before'] = student.status_message.status.status_en
+    try:
+        special_cases_log = ''
+        changed = False
 
-    data['qudrat_before'] = student.qudrat_score
-    if not data['q_error']:
-        student.first_name_ar = data['FirstName']
-        student.second_name_ar = data['SecondName']
-        student.third_name_ar = data['ThirdName']
-        student.family_name_ar = data['LastName']
-        student.qudrat_score = data['qudrat']
+        qudrat_data = get_qudrat_from_yesser(student.username)
+        tahsili_data = get_tahsili_from_yesser(student.username)
+        hs_data = get_high_school_from_yesser(student.username)
 
-    data['tahsili_before'] = student.tahsili_score
-    if not data['t_error']:
-        student.tahsili_score = data['tahsili']
+        # print(data)
+        final_data['status_before'] = student.status_message.status.status_en
 
-    data['high_school_gpa_before'] = student.high_school_gpa
-    if not data['hs_error']:
-        student.high_school_gpa = data['high_school_gpa']
-        if data['CertificationHijriYear']:
-            year = GraduationYear.get_graduation_year(data['CertificationHijriYear'])
-            """
-            this is the case of student who entered his hs year wrong
-            """
-            if year and student.high_school_graduation_year != year:
-                student.high_school_graduation_year = year
-                special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % (student.username)
+        final_data['qudrat_before'] = student.qudrat_score
+        if not qudrat_data['q_error']:
+            changed = True
+            student.first_name_ar = qudrat_data['FirstName']
+            student.second_name_ar = qudrat_data['SecondName']
+            student.third_name_ar = qudrat_data['ThirdName']
+            student.family_name_ar = qudrat_data['LastName']
+            student.qudrat_score = qudrat_data['qudrat']
+
+        final_data['tahsili_before'] = student.tahsili_score
+        if not tahsili_data['t_error']:
+            changed = True
+            student.tahsili_score = tahsili_data['tahsili']
+
+        final_data['high_school_gpa_before'] = student.high_school_gpa
+        if not hs_data['hs_error']:
+            changed = True
+            student.high_school_gpa = hs_data['high_school_gpa']
+            if hs_data['CertificationHijriYear']:
+                year = GraduationYear.get_graduation_year(hs_data['CertificationHijriYear'])
                 """
-                this is the case of a student who was marked as old hs but actually has recent hs in MOE
+                this is the case of student who entered his hs year wrong
                 """
-                if data['CertificationHijriYear'] in ['2015-2016', '2016-2017'] \
-                        and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
+                if year and student.high_school_graduation_year != year:
+                    student.high_school_graduation_year = year
+                    special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % (student.username)
+                    """
+                    this is the case of a student who was marked as old hs but actually has recent hs in MOE
+                    """
+                    if hs_data['CertificationHijriYear'] in ['2015-2016', '2016-2017'] \
+                            and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
+                        student.status_message = RegistrationStatusMessage.get_status_applied()
+                        special_cases_log += \
+                            '{%s} was marked as old hs but actually has recent hs in MOE<br>' % (student.username)
+                """
+                this is the case of a student who has old hs status but he has recent hs in his application
+                """
+                if year and student.high_school_graduation_year == year and \
+                                student.status_message == RegistrationStatusMessage.get_status_old_high_school():
                     student.status_message = RegistrationStatusMessage.get_status_applied()
                     special_cases_log += \
-                        '{%s} was marked as old hs but actually has recent hs in MOE<br>' % (student.username)
-            """
-            this is the case of a student who has old hs status but he has recent hs in his application
-            """
-            if year and student.high_school_graduation_year == year and \
-                            student.status_message == RegistrationStatusMessage.get_status_old_high_school():
-                student.status_message = RegistrationStatusMessage.get_status_applied()
-                special_cases_log += \
-                    "{%s} has old hs status but he has recent hs in his application<br>" % (student.username)
-            """
-            this is the case of a student who has old hs
-            """
-            if not year:
-                try:
-                    student.high_school_graduation_year = \
-                        GraduationYear.objects.get(description__contains='Other')
-                except ObjectDoesNotExist:
-                    other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
-                                                description='Other', show=True, display_order=100000)
-                    other_year.save()
-                    student.high_school_graduation_year = other_year
+                        "{%s} has old hs status but he has recent hs in his application<br>" % (student.username)
                 """
-                this is the case of a student who has old hs in MOE but has a status of applied
+                this is the case of a student who has old hs
                 """
-                if student.status_message == RegistrationStatusMessage.get_status_applied():
-                    student.status_message = RegistrationStatusMessage.get_status_old_high_school()
-                    special_cases_log += \
-                        '{%s} has old hs in MOE but has a status of applied<br>' % (student.username)
-        if data['Gender'] and student.gender != data['Gender']:
-            student.gender = data['Gender']
-            special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username, data['Gender'])
-        student.high_school_name = data['SchoolNameAr']
-        student.high_school_province = data['AdministrativeAreaNameAr']
+                if not year:
+                    try:
+                        student.high_school_graduation_year = \
+                            GraduationYear.objects.get(description__contains='Other')
+                    except ObjectDoesNotExist:
+                        other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
+                                                    description='Other', show=True, display_order=100000)
+                        other_year.save()
+                        student.high_school_graduation_year = other_year
+                    """
+                    this is the case of a student who has old hs in MOE but has a status of applied
+                    """
+                    if student.status_message == RegistrationStatusMessage.get_status_applied():
+                        student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                        special_cases_log += \
+                            '{%s} has old hs in MOE but has a status of applied<br>' % (student.username)
+            if hs_data['Gender'] and student.gender != hs_data['Gender']:
+                student.gender = hs_data['Gender']
+                special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username, hs_data['Gender'])
+            student.high_school_name = hs_data['SchoolNameAr']
+            student.high_school_province = hs_data['AdministrativeAreaNameAr']
 
-    student.save()
+        if changed:
+            student.save()
 
-    final_data = {
-        'gov_id': student.username,
-        'student_full_name_ar': student.student_full_name_ar,
-        'status_before': data['status_before'],
-        'status': student.status_message.status.status_en,
-        'hs_before': data['high_school_gpa_before'],
-        'hs': student.high_school_gpa,
-        'qudrat_before': data['qudrat_before'],
-        'qudrat': student.qudrat_score,
-        'tahsili_before': data['tahsili_before'],
-        'tahsili': student.tahsili_score,
-        'log': special_cases_log}
+        final_data['changed'] = changed
+        final_data['gov_id'] = student.username
+        final_data['student_full_name_ar'] = student.student_full_name_ar
+        final_data['status'] = student.status_message.status.status_en
+        final_data['hs'] = student.high_school_gpa
+        final_data['qudrat'] = student.qudrat_score
+        final_data['tahsili'] = student.tahsili_score
+        final_data['log'] = special_cases_log
+        final_data['error'] = False
+    except:
+        pass
 
     return final_data
 
@@ -315,7 +357,7 @@ def get_student_record_serialized(student):
 def get_qudrat_from_yesser(gov_id):
     data = {}
     try:
-        client = Client(YESSER_QIYAS_WSDL)
+        client = Client(YESSER_QIYAS_WSDL, transport=transport)
         resultQudrat = client.service.GetExamResult(gov_id, '01', '01')
 
         if not resultQudrat.ServiceError:
@@ -345,7 +387,7 @@ def get_qudrat_from_yesser(gov_id):
 def get_tahsili_from_yesser(gov_id):
     data = {}
     try:
-        client = Client(YESSER_QIYAS_WSDL)
+        client = Client(YESSER_QIYAS_WSDL, transport=transport)
         resultTahsili = client.service.GetExamResult(gov_id, '02', '01')
         # print(resultTahsili)
 
@@ -364,7 +406,7 @@ def get_tahsili_from_yesser(gov_id):
 def get_high_school_from_yesser(gov_id):
     data = {}
     try:
-        client = Client(YESSER_MOE_WSDL)
+        client = Client(YESSER_MOE_WSDL, transport=transport)
         result = client.service.GetHighSchoolCertificate(gov_id)
 
         if not result.ServiceError:
