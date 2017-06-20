@@ -17,7 +17,7 @@
       - /en/admin/
       - /ar/manage/
       - /en/manage/
-    apache_extra_modules: 
+    apache_extra_modules:
       - xsendfile
     apache_extra_config: |
       XSendFile On
@@ -76,7 +76,7 @@
       connection: local
       become: no
       register: email_password
-      
+
     - name: Retrieve sms gateway app sid from Vault
       uri:
         url: https://vault-1.test.kfupm.edu.sa:8200/v1/secret/{{ env }}/apps/qabool/sms_gateway_app_sid
@@ -89,18 +89,19 @@
     - name: Generate local settings
       set_fact:
         django_project_local_settings: "{{ lookup('template', 'local_settings.py.j2') }}"
-        
+
     - name: Install mod_xsendfile for apache
       apt: pkg=libapache2-mod-xsendfile state=installed
 
-    - name: Install required software packages for zeep
+    - name: Install required software packages for zeep - python3-lxml build-deps
+      apt: pkg=python3-lxml state=build-dep
+
+    - name: Install required software packages for zeep - additional optional build dependencies
       apt: pkg="{{ item }}" state=installed
       with_items:
-        - build-dep
-        - python3-lxml
-        - python-defusedxml
         - libxml2-dev
         - libxslt-dev
+        - python-defusedxml
 
   roles:
     - django-project
