@@ -13,8 +13,9 @@ from .models import *
 class UserResource(resources.ModelResource):
     class Meta:
         model = User
-        import_id_fields = ('username', 'kfupm_id', 'id')
-        fields = ('semester', 'id', 'username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
+        exclude = ('id', )
+        import_id_fields = ('username', )
+        fields = ('semester', 'username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
@@ -58,7 +59,7 @@ class StudentAdmin(VersionAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('username', 'status_message',
+            'fields': (('username', 'semester', 'status_message'),
                        ('student_full_name_ar', 'student_full_name_en','gender'),
                        ('student_type', 'nationality', 'saudi_mother','saudi_mother_gov_id'),
                        'email', 'mobile','guardian_mobile',

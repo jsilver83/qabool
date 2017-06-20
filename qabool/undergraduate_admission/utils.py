@@ -159,6 +159,17 @@ def try_parse_float(str_to_float):
         return 0.0
 
 
+def merge_dicts(*dict_args):
+    """
+    Given any number of dicts, shallow copy and merge into a new dict,
+    precedence goes to key value pairs in latter dicts.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
+
 class PlainTextWidget(forms.Widget):
     def render(self, name, value, attrs=None):
         if value is not None:

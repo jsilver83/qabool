@@ -799,6 +799,13 @@ class GraduationYear(models.Model):
         except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
+    @staticmethod
+    def get_graduation_year(academic_hijri_year):
+        try:
+            return GraduationYear.objects.get(description=academic_hijri_year)
+        except ObjectDoesNotExist:
+            return None
+
     @property
     def graduation_year(self):
         lang = translation.get_language()
