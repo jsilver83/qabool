@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load i18n staticfiles %}
+{% load floppyforms %}
+
+{% block content %}
+	<div class="container">
+		{% if messages %}
+			<div class="messages">
+				{% for message in messages %}
+					<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if students_count %}
+			<div class="row">
+				<a class="btn btn-primary go_button"> >> {% trans 'Sync Now' %} << </a>
+			</div>
+			<div class="row">
+				<h2>{% trans 'Progress' %}:</h2>
+				<hr>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="70"
+					     aria-valuemin="0" aria-valuemax="100" style="width:1%">
+						<span class="sr-only">0% Complete</span>
+					</div>
+				</div>
+				<br>
+				{% trans 'Progress' %}: <span class="stu_page">1</span> {% trans 'of' %}
+				<span class="stu_count">{{ students_count }}</span>
+			</div>
+			<div class="row" style="direction: ltr; text-align: left">
+				<h2>{% trans 'Logs' %}:</h2>
+				<hr>
+				<ol class="logs">
+				</ol>
+			</div>
+			<div class="row">
+				<br><br>
+				<table class="table table-striped students" style="width:100%">
+					<tr>
+						<th style="width: 5%">#</th>
+						<th style="width: 10%">{% trans 'Government ID' %}</th>
+						<th style="width: 25%">{% trans 'Student Full Name (Arabic)' %}</th>
+						<th style="width: 15%">{% trans 'Message Status' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'Message Status' %} {% trans 'After' %}</th>
+						<th style="width: 15%">{% trans 'High School' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'High School' %} {% trans 'After' %}</th>
+						<th style="width: 15%">{% trans 'Quodrat' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'Quodrat' %} {% trans 'After' %}</th>
+						<th style="width: 15%">{% trans 'Tahsili' %} {% trans 'Before' %}</th>
+						<th style="width: 15%">{% trans 'Tahsili' %} {% trans 'After' %}</th>
+					</tr>
+				</table>
+			</div>
+			<br>
+			<hr>
+			<br>
+		{% endif %}
+	</div>
+{% endblock content %}
+{% block scripts %}
+	<script type="application/javascript" src="{% static 'js/jquery.blockUI.js' %}"></script>
+	<script type="application/javascript">
+		$(function () {
+			$(".go_button").click(function () {
+				go_button_function(3);
+			});
+
+			$.blockUI.defaults.css.border = '5px solid red';
+			$.blockUI.defaults.css.message = '<h2>Fetching Data From Yesser!</h2>';
+			//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+		});
+
+		function go_button_function(max_tries) {
+			var page = 1;
+			var total_pages = parseInt($(".stu_count").html());
+			var tries = 0;
+			var counter = 0;
+
+			while (page <= total_pages) {
+				tries = 0;
+				while (tries <= max_tries) {
+					$.ajax({
+						type: "GET",
+						contentType: "application/json; charset=utf-8",
+						url: "{% url 'qiyas_update' %}",
+						data: {"page": page},
+						async: false,
+						//timeout: 1000,
+						dataType: "json",
+						beforeSend: function () {
+							tries++;
+							$.blockUI();
+							counter++;
+						},
+						success: function (data) {
+							tr_html = '<tr>' +
+									'<td>' + page + '</td>' +
+									'<td>' + data.gov_id + '</td>' +
+									'<td>' + data.student_full_name_ar + '</td>' +
+									'<td>' + data.status_before + '</td>' +
+									'<td>' + data.status + '</td>' +
+									'<td>' + data.hs_before + '</td>' +
+									'<td>' + data.hs + '</td>' +
+									'<td>' + data.qudrat_before + '</td>' +
+									'<td>' + data.qudrat + '</td>' +
+									'<td>' + data.tahsili_before + '</td>' +
+									'<td>' + data.tahsili + '</td>' +
+									'</tr>';
+							$(".students").append(tr_html);
+							if (data.log.length > 0) {
+								$(".logs").prepend('<li>' + data.log + '</li>');
+							}
+							var progress = page / total_pages * 100;
+							$(".progress-bar").attr("style", "width:" + progress + "%");
+							$(".stu_page").html(page);
+							page++;
+							tries = max_tries+1;
+						},
+						error: function ( jqXHR, textStatus, errorThrown) {
+							//alert(errorThrown);
+						},
+						complete: function(){
+							$.unblockUI();
+						}
+					});
+				}
+			}
+		}
+	</script>
+{% endblock scripts %}
