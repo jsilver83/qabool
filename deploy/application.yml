@@ -92,7 +92,15 @@
         
     - name: Install mod_xsendfile for apache
       apt: pkg=libapache2-mod-xsendfile state=installed
-        
+
+    - name: Install required software packages for zeep
+      apt: pkg="{{ item }}" state=installed
+      with_items:
+        - build-dep
+        - python3-lxml
+        - python-defusedxml
+        - libxml2-dev
+        - libxslt-dev
 
   roles:
     - django-project
