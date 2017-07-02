@@ -211,17 +211,19 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
 class QiyasDataUpdate(AdminBaseView, TemplateView):
     def get(self, request, *args, **kwargs):
         serialized_obj = {
+            'changed': False,
             'gov_id': 'Not found',
             'student_full_name_ar': 'Not found',
             'status_before': 'Not found',
             'status': 'Not found',
-            'hs_before': 0.0,
-            'hs': 0.0,
+            'high_school_gpa_before': 0.0,
+            'high_school_gpa': 0.0,
             'qudrat_before': 0,
             'qudrat': 0,
             'tahsili_before': 0,
             'tahsili': 0,
-            'log': ''
+            'log': '',
+            'error': True
         }
         # time.sleep(3)
         page = request.GET.get('page', 1)
@@ -248,8 +250,8 @@ def get_student_record_serialized(student):
         'student_full_name_ar': '',
         'status_before': '',
         'status': '',
-        'hs_before': 0.0,
-        'hs': 0.0,
+        'high_school_gpa_before': 0.0,
+        'high_school_gpa': 0.0,
         'qudrat_before': 0,
         'qudrat': 0,
         'tahsili_before': 0,
@@ -343,7 +345,7 @@ def get_student_record_serialized(student):
         final_data['gov_id'] = student.username
         final_data['student_full_name_ar'] = student.student_full_name_ar
         final_data['status'] = student.status_message.status.status_en
-        final_data['hs'] = student.high_school_gpa
+        final_data['high_school_gpa'] = student.high_school_gpa
         final_data['qudrat'] = student.qudrat_score
         final_data['tahsili'] = student.tahsili_score
         final_data['log'] = special_cases_log
