@@ -1,4 +1,7 @@
+import base64
+
 import floppyforms.__future__ as forms
+import re
 from django.utils import timezone
 
 from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage
@@ -160,7 +163,7 @@ class DocumentsForm(Phase2GenericForm):
     class Meta:
         model = User
 
-        fields = ['personal_picture', 'high_school_certificate', 'courses_certificate', 'government_id_file',
+        fields = ['high_school_certificate', 'courses_certificate', 'government_id_file',
                   'mother_gov_id_file', 'passport_file', 'birth_certificate', ]
 
     def __init__(self, *args, **kwargs):
@@ -229,3 +232,27 @@ class WithdrawalForm(forms.ModelForm):
             return instance
         else:
             return instance
+
+
+class PersonalPhotoForm(forms.ModelForm):
+    data_uri = forms.CharField(widget=forms.HiddenInput)
+
+    class Meta:
+        model = User
+        fields = ('personal_picture', 'data_uri', )
+        widgets = {
+            'file': forms.FileInput(attrs={
+                'accept': 'image/*'
+            })
+        }
+
+    def save(self):
+        photo = super(PersonalPhotoForm, self).save()
+
+        data_uri = self.cleaned_data.get('data_uri')
+        img_str = re.search(r'base64,(.*)', data_uri).group(1)
+        output = open(photo.personal_picture.path, 'wb')
+        output.write(base64.b64decode(img_str))
+        output.close()
+
+        return photo
