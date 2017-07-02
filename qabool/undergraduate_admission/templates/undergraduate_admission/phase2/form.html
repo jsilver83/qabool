@@ -15,11 +15,12 @@
 <div class="row">
 	<div class="col-lg-12">
 		<ul class="nav nav-tabs nav-justified">
-			<li class="{{ step1 }}" role="presentation"><a href="{% url 'personal_info' %}">1- {% trans 'Personal Info' %}</a></li>
-			<li class="{{ step2 }}" role="presentation"><a href="{% url 'guardian_contact' %}">2- {% trans 'Guardian Contact' %}</a></li>
-			<li class="{{ step3 }}" role="presentation"><a href="{% url 'relative_contact' %}">3- {% trans 'Relative Contact' %}</a></li>
-			<li class="{{ step4 }}" role="presentation"><a href="{% url 'vehicle_info' %}">4- {% trans 'Vehicle Info' %}</a></li>
-			<li class="{{ step5 }}" role="presentation"><a href="{% url 'upload_documents' %}">5- {% trans 'Documents' %}</a></li>
+			<li class="{{ step1 }}" role="presentation"><a href="{% url 'personal_info' %}">{% trans 'Personal Info' %}</a></li>
+			<li class="{{ step2 }}" role="presentation"><a href="{% url 'guardian_contact' %}">{% trans 'Guardian Contact' %}</a></li>
+			<li class="{{ step3 }}" role="presentation"><a href="{% url 'relative_contact' %}">{% trans 'Relative Contact' %}</a></li>
+			<li class="{{ step4 }}" role="presentation"><a href="{% url 'vehicle_info' %}">{% trans 'Vehicle Info' %}</a></li>
+			<li class="{{ step5 }}" role="presentation"><a href="{% url 'personal_picture' %}">{% trans 'Picture' %}</a></li>
+			<li class="{{ step6 }}" role="presentation"><a href="{% url 'upload_documents' %}">{% trans 'Documents' %}</a></li>
 		</ul>
 		<br><br>
 	</div>

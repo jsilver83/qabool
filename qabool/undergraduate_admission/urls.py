@@ -1,8 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth.views import login, logout, password_change, password_change_done
 
-from undergraduate_admission.views import phase3_views
-from .views import general_views, phase1_views, phase2_views, admin_side_views
+from .views import general_views, phase1_views, phase2_views, phase3_views, admin_side_views
 from .models import User
 
 urlpatterns = [
@@ -55,6 +54,7 @@ urlpatterns = [
     url(r'^uploaddocumentsincomplete/$', phase2_views.upload_documents_for_incomplete,
         name='upload_documents_incomplete'),
     url(r'^uploadwithdrawalproof/$', phase2_views.upload_withdrawal_proof, name='upload_withdrawal_proof'),
+    url(r'^personalpicture/$', phase2_views.PersonalPictureView.as_view(), name='personal_picture'),
     url(r'^uploaddocuments/$', phase2_views.upload_documents, name='upload_documents'),
     url(r'^vehicleinfo/$', phase2_views.vehicle_info, name='vehicle_info'),
     url(r'^relativecontact/$', phase2_views.relative_contact, name='relative_contact'),
