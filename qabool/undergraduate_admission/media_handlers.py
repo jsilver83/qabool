@@ -1,4 +1,5 @@
 import os
+from django.conf import settings
 from django.utils import timezone
 
 
@@ -41,9 +42,13 @@ def upload_location_vehicle_registration(instance, filename):
 
 # defines where to save uploaded student documents
 def upload_location(sub_folder, instance, filename):
-    upload_date = timezone.now().strftime('%d-%m-%Y')
-    ext = os.path.splitext(filename)[1]
-    if instance.kfupm_id:
-        return '%s/%s/%s%s'%(sub_folder, upload_date, instance.kfupm_id, ext)
+    semester_name = instance.semester.semester_name
+    if sub_folder == 'picture':
+        ext = '.jpg'  # personal picture will always come in jpg format from cropper.js
     else:
-        return '%s/%s/%s%s'%(sub_folder, upload_date, instance.username, ext)
+        ext = os.path.splitext(filename)[1]
+    file_name = '%s/%s/%s%s'%(sub_folder, semester_name, instance.username, ext)
+    full_path = os.path.join(settings.MEDIA_ROOT, file_name)
+    if os.path.exists(full_path):
+        os.remove(full_path)
+    return file_name
