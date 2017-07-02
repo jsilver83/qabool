@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import UpdateView
 from django.views.generic.base import View
 from django.http import Http404
 
@@ -13,7 +15,7 @@ from sendfile import sendfile, os
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
-    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm
+    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS
@@ -53,7 +55,7 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
             user_file = getattr(user, filetype)
         except AttributeError:  # invalid filetype
             raise Http404
-        if not user_file:       # file not uploaded
+        if not user_file:  # file not uploaded
             raise Http404
         return sendfile(request, user_file.path)
 
@@ -102,6 +104,11 @@ def media_view(request, filename):
             raise PermissionDenied
 
 
+class Phase2BaseView(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return is_phase2_eligible(self.request.user)
+
+
 @login_required()
 @user_passes_test(is_phase2_eligible)
 def confirm(request):
@@ -119,7 +126,7 @@ def confirm(request):
     agreement_items = agreement.items.filter(show=True)
     return render(request, 'undergraduate_admission/phase2/confirm.html', {'agreement': agreement,
                                                                            'items': agreement_items,
-                                                                           'form': form,})
+                                                                           'form': form, })
 
 
 @login_required()
@@ -194,6 +201,7 @@ def relative_contact(request):
     return render(request, 'undergraduate_admission/phase2/form-relative.html', {'form': form,
                                                                                  'step3': 'active'})
 
+
 @login_required()
 @user_passes_test(is_phase2_eligible)
 def vehicle_info(request):
@@ -210,20 +218,50 @@ def vehicle_info(request):
             if saved:
                 messages.success(request, _('Vehicle info was submitted successfully...'))
                 request.session['vehicle_info_completed'] = True
-                return redirect('upload_documents')
+                return redirect('personal_picture')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
     return render(request, 'undergraduate_admission/phase2/form-uploads.html', {'form': form,
                                                                                 'step4': 'active'})
 
+
+class PersonalPictureView(Phase2BaseView, UpdateView):
+    template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
+    form_class = PersonalPhotoForm
+    success_url = reverse_lazy('personal_picture')
+
+    def test_func(self):
+        original_test_result = super(PersonalPictureView, self).test_func()
+        relative_contact_completed = self.request.session.get('relative_contact_completed')
+        return original_test_result and relative_contact_completed
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonalPictureView, self).get_context_data(**kwargs)
+        context['step5'] = 'active'
+        return context
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        super(PersonalPictureView, self).form_valid(form)
+        saved = form.save()
+        if saved:
+            messages.success(self.request, _('Personal picture was uploaded successfully...'))
+            self.request.session['personal_picture_completed'] = True
+            return redirect(self.success_url)
+        else:
+            messages.error(self.request, _('Error saving info. Try again later!'))
+
+
 @login_required()
 @user_passes_test(is_phase2_eligible)
 def upload_documents(request):
     if request.method == 'GET':
-        relative_contact_completed = request.session.get('relative_contact_completed')
-        if not relative_contact_completed:
-            return redirect('relative_contact')
+        personal_picture_completed = request.GET.get('f', '')
+        if not personal_picture_completed:
+            return redirect('personal_picture')
 
     form = DocumentsForm(request.POST or None, request.FILES or None, instance=request.user)
 
@@ -243,7 +281,7 @@ def upload_documents(request):
                 messages.error(request, _('Error saving info. Try again later!'))
 
     return render(request, 'undergraduate_admission/phase2/form-uploads.html', {'form': form,
-                                                                                'step5': 'active'})
+                                                                                'step6': 'active'})
 
 
 @login_required()
@@ -289,8 +327,6 @@ def upload_withdrawal_proof(request):
     return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
 
 
-
-
 @login_required()
 @user_passes_test(is_eligible_to_withdraw)
 def withdraw(request):
@@ -312,7 +348,7 @@ def withdraw(request):
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
-    return render(request, 'undergraduate_admission/phase2/withdraw.html', {'form': form,})
+    return render(request, 'undergraduate_admission/phase2/withdraw.html', {'form': form, })
 
 
 @login_required()
@@ -323,4 +359,4 @@ def withdrawal_letter(request):
 
     user = request.user
 
-    return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user,})
+    return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user, })
