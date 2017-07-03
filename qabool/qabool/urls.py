@@ -25,14 +25,11 @@ from undergraduate_admission.views import phase2_views
 
 urlpatterns = i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),
-)
-
-urlpatterns += i18n_patterns(
     url(r'', include(undergraduate_admission.urls)),
     url(r'', include(find_roommate.urls)),
 )
 
-urlpatterns += patterns('',
+urlpatterns += [
     url(r'^captcha/', include(captcha.urls)),
 
     url(r'^files/(?P<filetype>[\w\-]+)/(?P<pk>\d+)/$',
@@ -42,4 +39,4 @@ urlpatterns += patterns('',
     url(r'^uploaded_docs/(?P<filename>.*)/$',
         phase2_views.media_view,
         name='user_file'),
-)
+]
