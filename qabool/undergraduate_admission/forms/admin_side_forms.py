@@ -58,7 +58,8 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                   'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
 
-                  'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
+                  'email', 'mobile', 'high_school_gpa',
+                  # 'qudrat_score', 'tahsili_score',
                   'high_school_graduation_year', 'high_school_system',
 
                   'government_id_issue', 'government_id_expiry', 'government_id_place',
@@ -90,15 +91,19 @@ class VerifyCommitteeForm(forms.ModelForm):
         readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
 
                            'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
-                           'high_school_graduation_year', 'high_school_system',
+                           # 'high_school_graduation_year', 'high_school_system',
 
-                           'verification_notes', ]
+                           'have_a_vehicle',
+                           'vehicle_plate_no',
+
+                           'verification_notes',
+                           ]
         for field in self.fields:
             if field in readonly_fields:
                 self.fields[field].disabled = True
             self.fields['verification_status'].widget = \
-            forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
-            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required':''})
+                forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
+            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
             # admin.widgets.AdminTextareaWidget()
 
 

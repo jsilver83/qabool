@@ -126,7 +126,7 @@ class VerifyCommittee(AdminBaseView, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/admin/verify_committee.html'
     form_class = VerifyCommitteeForm
     model = User
-    success_message = 'List successfully saved!!!!'
+    success_message = 'Verification submitted successfully!!!!'
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('verify_committee', kwargs={'pk': self.kwargs['pk']})
