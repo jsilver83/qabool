@@ -1,17 +1,9 @@
-{% extends "base-sidebar.html" %}
+{% extends 'undergraduate_admission/admin/base_admin_area.html' %}
 {#{% load bootstrap3 %}#}
 {% load i18n %}
 {% load floppyforms %}
 
 {% block subcontent %}
-
-	{% if messages %}
-		<div class="messages">
-			{% for message in messages %}
-				<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
-			{% endfor %}
-		</div>
-	{% endif %}
 
 	<div class="row">
 		<form method="get">
@@ -45,7 +37,7 @@
 							<td>{{ student.username }}</td>
 							<td>{{ student.nationality }}</td>
 							<td>{{ student.status_message.status }}</td>
-							<td>{{ student.student_type }}</td>
+							<td>{{ student.student_nationality_type }}</td>
 							<td>{{ student.admission_percent }}</td>
 							<td>{{ student.high_school_graduation_year }}</td>
 							<td>{{ student.gender }}</td>
