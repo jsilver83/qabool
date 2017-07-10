@@ -53,7 +53,7 @@ class Student(User):
 
 class StudentAdmin(VersionAdmin):
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
-                    'student_type', 'admission_total', 'status_message_id',)
+                    'student_type', 'admission_total', 'status_message',)
 
     # high_school_gpa_student_entry.short_description = "high_school_gpa_student_entry"
 
@@ -128,7 +128,7 @@ class StudentAdmin(VersionAdmin):
     readonly_fields = ('id', 'date_joined', 'student_type', 'admission_total')
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
-    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
+    list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
 
     def get_queryset(self, request):
         qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')

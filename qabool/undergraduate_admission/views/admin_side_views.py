@@ -6,6 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q, F, Case, When, Value, CharField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
@@ -45,53 +46,109 @@ class AdminBaseView(LoginRequiredMixin, UserPassesTestMixin):
 
 class CutOffPointView(AdminBaseView, View):
     def get_students_matching(self, request):
-        selected_student_types = request.GET.getlist('student_type', ['S', 'M', 'N'])
-        # print(selected_student_types)
+        selected_student_types = request.GET.getlist('student_type', [])
+        selected_high_school_graduation_year = request.GET.getlist('selected_high_school_graduation_year', [])
+        # selected_high_school_graduation_year = list(map(int, selected_high_school_graduation_year))
         cut_off_total = try_parse_float(request.GET.get('admission_total', 0.0))
-        # print(cut_off_total)
+        cut_off_total_operand = request.GET.get('admission_total_operand', 'GTE')
+        filtered = UserListFilter(request.GET, queryset=User.objects.filter(is_staff=False))
 
-        filtered = UserListFilter(request.GET, queryset=User.objects.all())
-        filtered_with_properties = [student for student in filtered.qs
-                                    if student.student_type in selected_student_types]
-        filtered_with_properties2 = [student for student in filtered_with_properties
-                                     if student.admission_total >= cut_off_total]
+        filtered_with_properties = filtered.qs.select_related('semester', 'nationality')\
+            .annotate(
+            admission_percent=F('semester__high_school_gpa_weight') * F('high_school_gpa') / 100
+                              + F('semester__qudrat_score_weight') * F('qudrat_score') / 100
+                              + F('semester__tahsili_score_weight') * F('tahsili_score') / 100,
+            student_nationality_type=Case(When(nationality__nationality_en__icontains='Saudi', then=Value('S')),
+                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                               & Q(nationality__isnull=False)
+                                               & Q(saudi_mother=True),
+                                               then=Value('M')),
+                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                               & Q(nationality__isnull=False)
+                                               & (Q(saudi_mother=False) | Q(saudi_mother__isnull=True)),
+                                               then=Value('N')),
+                                          default=Value('N/A'),
+                                          output_field=CharField())) \
+            .order_by('-admission_percent')
 
-        return filtered_with_properties2
+        if cut_off_total:
+            if cut_off_total_operand == 'LT':
+                filtered_with_properties = filtered_with_properties.filter(admission_percent__lt=cut_off_total)
+            else:
+                filtered_with_properties = filtered_with_properties.filter(admission_percent__gte=cut_off_total)
+
+        if selected_high_school_graduation_year:
+            filtered_with_properties = filtered_with_properties.filter(
+                high_school_graduation_year__in=selected_high_school_graduation_year)
+
+        if selected_student_types:
+            filtered_with_properties = filtered_with_properties.filter(
+                student_nationality_type__in=selected_student_types)
+            # filtered_with_properties = [student for student in filtered.qs
+            #                             if student.student_type in selected_student_types]
+
+        return filtered_with_properties
 
     def get(self, request, *args, **kwargs):
         form = CutOffForm(request.GET or None)
-
         filtered = self.get_students_matching(request)
-
         form2 = ApplyStatusForm()
+        show_detailed_results = request.GET.get('show_detailed_results', '')
+
+        paginator = Paginator(filtered, 10)
+        page = request.GET.get('page')
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
 
         return render(request,
                       template_name='undergraduate_admission/admin/cutoff.html',
                       context={'form': form,
-                               'students': filtered,
-                               'form2': form2})
+                               'students': page_obj,
+                               'students_count': len(filtered),
+                               'form2': form2,
+                               'show_detailed_results': show_detailed_results})
 
     def post(self, request, *args, **kwargs):
-        form = CutOffForm(request.GET or None)
-
-        filtered = self.get_students_matching(request)
-
+        # Django Bug: cant update a queryset with annotation; workaround from this:
+        # https://stackoverflow.com/questions/13559944/how-to-update-a-queryset-that-has-been-annotated
+        filtered = User.objects.filter(pk__in=self.get_students_matching(request))
         form2 = ApplyStatusForm(request.POST or None)
 
         if form2.is_valid():
-            print('valid')
-            status = form2.cleaned_data.get('status')
-            print(status)
+            try:
+                status = RegistrationStatusMessage.objects.get(pk=form2.cleaned_data.get('status_message'))
+                records_updated = filtered.update(status_message = status)
 
-        messages.success(request, _('New status has been applied to students chosen...'))
-        return redirect(reverse_lazy('cut_off_point'))
+                # students_count = len(filtered)
+                students_count = filtered.count()
+                # records_updated = 0
+                # for student in filtered:
+                #     student.status_message = status
+                #     student.save()
+                #     records_updated += 1
+
+                # if records_updated == students_count:
+                messages.success(request, _('New status has been applied to %(count)d students chosen...')
+                                 % ({'count': records_updated}))
+            except ObjectDoesNotExist:
+                messages.error(request, _('Error in updating status...'))
+                # else:
+                #     messages.warning(request, _('New status has been applied to %(count)d out of %(count2)d students ...')
+                #                      % ({'count': records_updated,
+                #                          'count2': students_count}))
+
+        return redirect('cut_off_point')
 
 
 class VerifyCommittee(AdminBaseView, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/admin/verify_committee.html'
     form_class = VerifyCommitteeForm
     model = User
-    success_message = 'List successfully saved!!!!'
+    success_message = 'Verification submitted successfully!!!!'
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('verify_committee', kwargs={'pk': self.kwargs['pk']})
@@ -211,17 +268,19 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
 class QiyasDataUpdate(AdminBaseView, TemplateView):
     def get(self, request, *args, **kwargs):
         serialized_obj = {
+            'changed': False,
             'gov_id': 'Not found',
             'student_full_name_ar': 'Not found',
             'status_before': 'Not found',
             'status': 'Not found',
-            'hs_before': 0.0,
-            'hs': 0.0,
+            'high_school_gpa_before': 0.0,
+            'high_school_gpa': 0.0,
             'qudrat_before': 0,
             'qudrat': 0,
             'tahsili_before': 0,
             'tahsili': 0,
-            'log': ''
+            'log': '',
+            'error': True
         }
         # time.sleep(3)
         page = request.GET.get('page', 1)
@@ -248,8 +307,8 @@ def get_student_record_serialized(student):
         'student_full_name_ar': '',
         'status_before': '',
         'status': '',
-        'hs_before': 0.0,
-        'hs': 0.0,
+        'high_school_gpa_before': 0.0,
+        'high_school_gpa': 0.0,
         'qudrat_before': 0,
         'qudrat': 0,
         'tahsili_before': 0,
@@ -343,7 +402,7 @@ def get_student_record_serialized(student):
         final_data['gov_id'] = student.username
         final_data['student_full_name_ar'] = student.student_full_name_ar
         final_data['status'] = student.status_message.status.status_en
-        final_data['hs'] = student.high_school_gpa
+        final_data['high_school_gpa'] = student.high_school_gpa
         final_data['qudrat'] = student.qudrat_score
         final_data['tahsili'] = student.tahsili_score
         final_data['log'] = special_cases_log

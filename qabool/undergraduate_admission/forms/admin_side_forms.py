@@ -16,14 +16,26 @@ class CutOffForm(forms.ModelForm):
         ('M', _('Saudi Mother')),
         ('N', _('Non-Saudi')),
     )
+    OPERAND_TYPES = (
+        ('GTE', _('Greater Than Or Equal')),
+        ('LT', _('Less Than')),
+    )
     student_type = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=STUDENT_TYPES),
-                                   required=False)
-    admission_total = forms.FloatField(min_value=1, max_value=100, required=False)
+                                   required=False, label=_('Student Type'))
+    selected_high_school_graduation_year = \
+        forms.CharField(widget=forms.CheckboxSelectMultiple(choices=
+        GraduationYear.get_graduation_year_choices(
+            add_dashes=False)),
+            required=False, label=_('Graduation Year'))
+    admission_total = forms.FloatField(min_value=1, max_value=100, required=False, label=_('Admission Total'))
+    admission_total_operand = forms.CharField(widget=forms.RadioSelect(choices=OPERAND_TYPES),
+                                              required=False, label=_('Admission Total Operand'))
+    show_detailed_results = forms.BooleanField(required=False, label=_('Show Detailed Results'))
 
     class Meta:
         model = User
-        fields = ['semester', 'gender', 'nationality', 'admission_total', 'student_type',
-                  'high_school_graduation_year']
+        fields = ['semester', 'gender', 'student_type', 'nationality', 'status_message', 'admission_total',
+                  'admission_total_operand', 'selected_high_school_graduation_year']
 
     def __init__(self, *args, **kwargs):
         super(CutOffForm, self).__init__(*args, **kwargs)
@@ -31,22 +43,23 @@ class CutOffForm(forms.ModelForm):
         self.fields['gender'].required = False
         self.fields['nationality'].required = False
         self.fields['nationality'].widget.is_required = False
-        self.fields['high_school_graduation_year'].widget = \
-            widget = forms.CheckboxSelectMultiple(choices=
-                                                  GraduationYear.get_graduation_year_choices(add_dashes=False))
-        self.fields['high_school_graduation_year'].required = False
+        # self.fields['high_school_graduation_year'].widget = \
+        #     forms.CheckboxSelectMultiple(choices=
+        # GraduationYear.get_graduation_year_choices(add_dashes=False))
+        # self.fields['high_school_graduation_year'].required = False
 
 
 class VerifyCommitteeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'nationality', 'saudi_mother', 'student_full_name_ar', 'student_full_name_en',
-                  'status_message',
+                  # 'status_message',
 
                   'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                   'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
 
-                  'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
+                  'email', 'mobile', 'high_school_gpa',
+                  # 'qudrat_score', 'tahsili_score',
                   'high_school_graduation_year', 'high_school_system',
 
                   'government_id_issue', 'government_id_expiry', 'government_id_place',
@@ -78,21 +91,25 @@ class VerifyCommitteeForm(forms.ModelForm):
         readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
 
                            'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
-                           'high_school_graduation_year', 'high_school_system',
+                           # 'high_school_graduation_year', 'high_school_system',
 
-                           'verification_notes', ]
+                           'have_a_vehicle',
+                           'vehicle_plate_no',
+
+                           'verification_notes',
+                           ]
         for field in self.fields:
             if field in readonly_fields:
                 self.fields[field].disabled = True
             self.fields['verification_status'].widget = \
-            forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
-            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required':''})
+                forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
+            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
             # admin.widgets.AdminTextareaWidget()
 
 
 class ApplyStatusForm(forms.Form):
     status_message = forms.IntegerField(widget=forms.Select(
-        choices=RegistrationStatusMessage.get_registration_status_choices()))
+        choices=RegistrationStatusMessage.get_registration_status_choices()), required=True, label=_('Message Status'))
 
 
 class StudentGenderForm(forms.ModelForm):
