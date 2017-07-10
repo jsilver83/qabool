@@ -24,7 +24,7 @@
 
 	{% if form.instance.personal_picture %}
 		<div class="row" style="margin-top: 20px">
-			<div class="col-sm-4 col-md-3">
+			<div class="col-sm-4 col-md-3 smart-card-div">
 				<img src="{% url 'download_user_file' 'personal_picture' user.id %}" class="thumbnail">
 			</div>
 		</div>

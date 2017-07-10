@@ -316,4 +316,23 @@ th {
 .student-nav-tabs > li > a {
     padding: 10px 5px!important;
 }
+
+.modal-dialog {
+    width: 80%!important;
+    min-height: 600px!important;
+}
+
+.smart-card-div{
+    background-image: url(../images/smart_card.jpg);
+    width: 695px;
+    height: 426px;
+}
+.smart-card-div img {
+    position: relative;
+    left: -5px;
+    top: 100px;
+    float: left;
+    max-width: 199px;
+    max-height: 265px;
+}
 /* end of add by joud */
