@@ -21,16 +21,16 @@ class CutOffForm(forms.ModelForm):
         ('LT', _('Less Than')),
     )
     student_type = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=STUDENT_TYPES),
-                                   required=False)
+                                   required=False, label=_('Student Type'))
     selected_high_school_graduation_year = \
         forms.CharField(widget=forms.CheckboxSelectMultiple(choices=
         GraduationYear.get_graduation_year_choices(
             add_dashes=False)),
-            required=False)
-    admission_total = forms.FloatField(min_value=1, max_value=100, required=True)
+            required=False, label=_('Graduation Year'))
+    admission_total = forms.FloatField(min_value=1, max_value=100, required=False, label=_('Admission Total'))
     admission_total_operand = forms.CharField(widget=forms.RadioSelect(choices=OPERAND_TYPES),
-                                              required=False)
-    show_detailed_results = forms.BooleanField(required=False)
+                                              required=False, label=_('Admission Total Operand'))
+    show_detailed_results = forms.BooleanField(required=False, label=_('Show Detailed Results'))
 
     class Meta:
         model = User
@@ -109,7 +109,7 @@ class VerifyCommitteeForm(forms.ModelForm):
 
 class ApplyStatusForm(forms.Form):
     status_message = forms.IntegerField(widget=forms.Select(
-        choices=RegistrationStatusMessage.get_registration_status_choices()), required=True)
+        choices=RegistrationStatusMessage.get_registration_status_choices()), required=True, label=_('Message Status'))
 
 
 class StudentGenderForm(forms.ModelForm):

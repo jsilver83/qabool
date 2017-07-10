@@ -6,7 +6,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse_lazy
-from django.db.models import F
+from django.db.models import Q, F, Case, When, Value, CharField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
@@ -53,24 +53,39 @@ class CutOffPointView(AdminBaseView, View):
         cut_off_total_operand = request.GET.get('admission_total_operand', 'GTE')
         filtered = UserListFilter(request.GET, queryset=User.objects.filter(is_staff=False))
 
-        filtered_with_properties = filtered.qs.select_related('semester')\
+        filtered_with_properties = filtered.qs.select_related('semester', 'nationality')\
             .annotate(
-            admission_percent=F('semester__high_school_gpa_weight')*F('high_school_gpa')/100
-                              +F('semester__qudrat_score_weight')*F('qudrat_score')/100
-                              +F('semester__tahsili_score_weight')*F('tahsili_score')/100)\
+            admission_percent=F('semester__high_school_gpa_weight') * F('high_school_gpa') / 100
+                              + F('semester__qudrat_score_weight') * F('qudrat_score') / 100
+                              + F('semester__tahsili_score_weight') * F('tahsili_score') / 100,
+            student_nationality_type=Case(When(nationality__nationality_en__icontains='Saudi', then=Value('S')),
+                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                               & Q(nationality__isnull=False)
+                                               & Q(saudi_mother=True),
+                                               then=Value('M')),
+                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                               & Q(nationality__isnull=False)
+                                               & (Q(saudi_mother=False) | Q(saudi_mother__isnull=True)),
+                                               then=Value('N')),
+                                          default=Value('N/A'),
+                                          output_field=CharField())) \
             .order_by('-admission_percent')
 
-        if cut_off_total_operand == 'LT':
-            filtered_with_properties = filtered_with_properties.filter(admission_percent__lt=cut_off_total)
-        else:
-            filtered_with_properties = filtered_with_properties.filter(admission_percent__gte=cut_off_total)
+        if cut_off_total:
+            if cut_off_total_operand == 'LT':
+                filtered_with_properties = filtered_with_properties.filter(admission_percent__lt=cut_off_total)
+            else:
+                filtered_with_properties = filtered_with_properties.filter(admission_percent__gte=cut_off_total)
 
         if selected_high_school_graduation_year:
-            filtered_with_properties = filtered_with_properties.filter(high_school_graduation_year__in=selected_high_school_graduation_year)
+            filtered_with_properties = filtered_with_properties.filter(
+                high_school_graduation_year__in=selected_high_school_graduation_year)
 
         if selected_student_types:
-            filtered_with_properties = [student for student in filtered.qs
-                                        if student.student_type in selected_student_types]
+            filtered_with_properties = filtered_with_properties.filter(
+                student_nationality_type__in=selected_student_types)
+            # filtered_with_properties = [student for student in filtered.qs
+            #                             if student.student_type in selected_student_types]
 
         return filtered_with_properties
 
@@ -98,26 +113,33 @@ class CutOffPointView(AdminBaseView, View):
                                'show_detailed_results': show_detailed_results})
 
     def post(self, request, *args, **kwargs):
-        filtered = self.get_students_matching(request)
+        # Django Bug: cant update a queryset with annotation; workaround from this:
+        # https://stackoverflow.com/questions/13559944/how-to-update-a-queryset-that-has-been-annotated
+        filtered = User.objects.filter(pk__in=self.get_students_matching(request))
         form2 = ApplyStatusForm(request.POST or None)
 
         if form2.is_valid():
-            status = form2.cleaned_data.get('status')
-            # records_updated = filtered.update(status_message = status)
-            students_count = len(filtered)
-            records_updated = 0
-            for student in filtered:
-                student.status_message = status
-                student.save()
-                records_updated += 1
+            try:
+                status = RegistrationStatusMessage.objects.get(pk=form2.cleaned_data.get('status_message'))
+                records_updated = filtered.update(status_message = status)
 
-            if records_updated == students_count:
+                # students_count = len(filtered)
+                students_count = filtered.count()
+                # records_updated = 0
+                # for student in filtered:
+                #     student.status_message = status
+                #     student.save()
+                #     records_updated += 1
+
+                # if records_updated == students_count:
                 messages.success(request, _('New status has been applied to %(count)d students chosen...')
                                  % ({'count': records_updated}))
-            else:
-                messages.warning(request, _('New status has been applied to %(count)d out of %(count2)d students ...')
-                                 % ({'count': records_updated,
-                                     'count2': students_count}))
+            except ObjectDoesNotExist:
+                messages.error(request, _('Error in updating status...'))
+                # else:
+                #     messages.warning(request, _('New status has been applied to %(count)d out of %(count2)d students ...')
+                #                      % ({'count': records_updated,
+                #                          'count2': students_count}))
 
         return redirect('cut_off_point')
 
