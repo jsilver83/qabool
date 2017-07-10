@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 12:48+0300\n"
-"PO-Revision-Date: 2017-07-10 12:57+0300\n"
+"POT-Creation-Date: 2017-07-10 15:18+0300\n"
+"PO-Revision-Date: 2017-07-10 15:21+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -365,7 +365,6 @@ msgstr "نوع الطالب"
 #: undergraduate_admission/forms/admin_side_forms.py:29
 #: undergraduate_admission/models.py:65
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:31
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:21
 msgid "Graduation Year"
 msgstr "سنة التخرج"
 
@@ -769,7 +768,6 @@ msgid "Upload Passport"
 msgstr "صورة الجواز"
 
 #: undergraduate_admission/models.py:167
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:47
 msgid "High School System"
 msgstr "نظام الثانوية"
 
@@ -810,7 +808,6 @@ msgid "Guardian Phone"
 msgstr "هاتف المنزل"
 
 #: undergraduate_admission/models.py:209
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:27
 msgid "Guardian Mobile"
 msgstr "رقم جوال ولي اﻷمر"
 
@@ -1677,50 +1674,49 @@ msgid "Forgot Password?"
 msgstr "نسيت كلمة السر"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:8
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-uploads.html:7
 msgid ""
 "\n"
 "\t\t\t<strong>Important Note:</strong>\n"
 "\t\t\t<ul>\n"
 "\t\t\t\t<li>Please upload clear scanned images with good quality.</li>\n"
 "\t\t\t\t<li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>\n"
-"\t\t\t\t<li>Max Size: 2 MB</li>\n"
-"\t\t\t\t<li>Mobile images/personal picture will be rejected.</li>\n"
+"\t\t\t\t<li>Mobile-taken pictures will not be accepted.</li>\n"
 "\t\t\t</ul>\n"
 "\t\t"
 msgstr ""
 "\n"
 "\t\t\t<strong>ملاحظة هامة:</strong>\n"
 "\t\t\t<ul>\n"
-"\t\t\t\t<li>الرجاء رفع الصور من الماسح الضوئي بشكل واضح ومقروء</li>\n"
+"\t\t\t\t<li>رفع الصور عبر الماسح الضوئي بشكل واضح وبدقة عالية</li>\n"
 "\t\t\t\t<li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
-"\t\t\t\t<li>أقصى حجم للملف المرفوع: 2 ميغابايت</li>\n"
-"\t\t\t\t<li>الصور الملتقطة عن طريق الجوال مرفوضة.</li>\n"
+"\t\t\t\t<li>الصور الملتقطة عن طريق الجوال غير مقبولة.</li>\n"
 "\t\t\t</ul>\n"
 "\t\t"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:33
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:32
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:38
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:104
 msgid "Save and Next"
 msgstr "حفظ وانتقال للخطوة التالية"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:45
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:44
 msgid "Crop the photo"
 msgstr "اقتصاص الصورة"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:59
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:58
 msgid "Rot-right"
 msgstr "تدوير يمين"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:60
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:59
 msgid "Rot-left"
 msgstr "تدوير يسار"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:61
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:60
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:62
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:61
 msgid "Crop and upload"
 msgstr "رفع الصورة المعدلة"
 
@@ -1748,28 +1744,6 @@ msgstr ""
 "\n"
 "\t<strong>ملاحظة:</strong>\n"
 "\t<p>نحتاج لمعلومات أحد اﻷقارب للتواصل في الحالات الطارئة</p>\n"
-"\t"
-
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-uploads.html:7
-msgid ""
-"\n"
-"\t<strong>Important Note:</strong>\n"
-"\t<ul>\n"
-"        <li>Please upload clear scanned images with good quality.</li>\n"
-"        <li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>\n"
-"        <li>Max Size: 2 MB</li>\n"
-"        <li>Mobile images/personal picture will be rejected.</li>\n"
-"    </ul>\n"
-"\t"
-msgstr ""
-"\n"
-"\t<strong>ملاحظة هامة:</strong>\n"
-"\t<ul>\n"
-"        <li>الرجاء رفع الصور من الماسح الضوئي بشكل واضح ومقروء.</li>\n"
-"        <li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
-"        <li>أقصى حجم للملفات: 2 MB</li>\n"
-"        <li>الصور الملتقطة عن طريق الجوال مرفوضة.</li>\n"
-"    </ul>\n"
 "\t"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:18
@@ -2250,6 +2224,27 @@ msgstr "تم اختيار زميل السكن بنجاح."
 #: undergraduate_admission/views/phase3_views.py:186
 msgid "Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
+
+#~ msgid ""
+#~ "\n"
+#~ "\t<strong>Important Note:</strong>\n"
+#~ "\t<ul>\n"
+#~ "        <li>Please upload clear scanned images with good quality.</li>\n"
+#~ "        <li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>\n"
+#~ "        <li>Max Size: 2 MB</li>\n"
+#~ "        <li>Mobile images/personal picture will be rejected.</li>\n"
+#~ "    </ul>\n"
+#~ "\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t<strong>ملاحظة هامة:</strong>\n"
+#~ "\t<ul>\n"
+#~ "        <li>الرجاء رفع الصور من الماسح الضوئي بشكل واضح ومقروء.</li>\n"
+#~ "        <li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
+#~ "        <li>أقصى حجم للملفات: 2 MB</li>\n"
+#~ "        <li>الصور الملتقطة عن طريق الجوال مرفوضة.</li>\n"
+#~ "    </ul>\n"
+#~ "\t"
 
 #~ msgid ""
 #~ "New status has been applied to %(count)d out of %(count2)d students ..."

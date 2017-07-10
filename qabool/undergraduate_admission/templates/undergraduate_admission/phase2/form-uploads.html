@@ -3,21 +3,20 @@
 {% load floppyforms %}
 
 {% block form-notes %}
-<div class="alert alert-warning" role="alert">
-	{% blocktrans %}
-	<strong>Important Note:</strong>
-	<ul>
-        <li>Please upload clear scanned images with good quality.</li>
-        <li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>
-        <li>Max Size: 2 MB</li>
-        <li>Mobile images/personal picture will be rejected.</li>
-    </ul>
-	{% endblocktrans %}
-</div>
+	<div class="alert alert-warning" role="alert">
+		{% blocktrans %}
+			<strong>Important Note:</strong>
+			<ul>
+				<li>Please upload clear scanned images with good quality.</li>
+				<li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>
+				<li>Mobile-taken pictures will not be accepted.</li>
+			</ul>
+		{% endblocktrans %}
+	</div>
 {% endblock form-notes %}
 
 {% block form %}
-<div class="form-uploads">
-{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-</div>
+	<div class="form-uploads">
+		{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	</div>
 {% endblock form %}

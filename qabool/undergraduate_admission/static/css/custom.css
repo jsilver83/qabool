@@ -319,7 +319,7 @@ th {
 
 .modal-dialog {
     width: 80%!important;
-    min-height: 600px!important;
+    min-height: 65%!important;
 }
 
 .smart-card-div{
@@ -332,7 +332,7 @@ th {
     left: -5px;
     top: 100px;
     float: left;
-    max-width: 199px;
+    width: 199px;
     max-height: 265px;
 }
 /* end of add by joud */
