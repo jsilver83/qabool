@@ -17,18 +17,18 @@
 	<h3>{% trans 'Application Details' %}</h3>
 	<hr>
 	<form class="form-horizontal">
-		<div class="form-group">
-			<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>
-			<div class="col-sm-5">
-				<p class="form-control-static">{{ user.high_school_graduation_year }}</p>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">{% trans 'Guardian Mobile' %}</label>
-			<div class="col-sm-5">
-				<p class="form-control-static">{{ user.guardian_mobile }}</p>
-			</div>
-		</div>
+{#		<div class="form-group">#}
+{#			<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>#}
+{#			<div class="col-sm-5">#}
+{#				<p class="form-control-static">{{ user.high_school_graduation_year }}</p>#}
+{#			</div>#}
+{#		</div>#}
+{#		<div class="form-group">#}
+{#			<label class="col-sm-3 control-label">{% trans 'Guardian Mobile' %}</label>#}
+{#			<div class="col-sm-5">#}
+{#				<p class="form-control-static">{{ user.guardian_mobile }}</p>#}
+{#			</div>#}
+{#		</div>#}
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>
 			<div class="col-sm-5">
@@ -43,12 +43,12 @@
 				</div>
 			</div>
 		{% endif %}
-		<div class="form-group">
-			<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>
-			<div class="col-sm-5">
-				<p class="form-control-static">{{ user.high_school_system }}</p>
-			</div>
-		</div>
+{#		<div class="form-group">#}
+{#			<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>#}
+{#			<div class="col-sm-5">#}
+{#				<p class="form-control-static">{{ user.high_school_system }}</p>#}
+{#			</div>#}
+{#		</div>#}
 
 		{% if show_result and user.get_student_total %}
 			<div class="form-group">
