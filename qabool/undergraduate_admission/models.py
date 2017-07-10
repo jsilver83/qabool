@@ -121,7 +121,7 @@ class User(AbstractUser):
         ('M', _('Male')),
         ('F', _('Female'))
     )
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=128, default='M')
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=128, default='M', verbose_name=_('Gender'))
 
     mother_gov_id_file = models.FileField(
         null=True,
@@ -313,8 +313,12 @@ class User(AbstractUser):
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
     phase3_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 Submit Date'))
 
+    verification_committee_member = models.CharField(null=True, blank=True, max_length=50,
+                                                     verbose_name=_('Assigned Committee Member'))
     verification_documents_incomplete = models.NullBooleanField(blank=True,
                                                                 verbose_name=_('Uploaded docs are incomplete?'), )
+    verification_picture_acceptable = models.NullBooleanField(blank=True,
+                                                                verbose_name=_('Uploaded picture is acceptable?'), )
     verification_status = models.CharField(null=True, blank=True, max_length=500,
                                            verbose_name=_('Issues With Uploaded Docs'))
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
