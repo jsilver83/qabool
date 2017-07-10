@@ -312,4 +312,8 @@ border-bottom: 1px solid #C6C6C6;
 th {
     text-align: center!important;
 }
+
+.student-nav-tabs > li > a {
+    padding: 10px 5px!important;
+}
 /* end of add by joud */
