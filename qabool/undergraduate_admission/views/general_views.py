@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -21,7 +21,7 @@ def index(request, template_name='undergraduate_admission/login.html'):
     form = MyAuthenticationForm(request.POST or None)
 
     redirect_to = request.POST.get('next',
-                                   request.GET.get('next', ''))
+                                   request.GET.get('next', reverse_lazy('student_area')))
 
     if request.method == 'GET' and request.user.is_authenticated():return redirect(reverse('student_area'))
 
@@ -35,7 +35,6 @@ def index(request, template_name='undergraduate_admission/login.html'):
                     login(request, user)
                     # if not is_safe_url(url=redirect_to, host=request.get_host()):
                     #     redirect_to = reverse('student_area')
-
                     return redirect(redirect_to)
 
     phase1_active = False
