@@ -33,9 +33,8 @@ def index(request, template_name='undergraduate_admission/login.html'):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-
-                    if not is_safe_url(url=redirect_to, host=request.get_host()):
-                        redirect_to = reverse('student_area')
+                    # if not is_safe_url(url=redirect_to, host=request.get_host()):
+                    #     redirect_to = reverse('student_area')
 
                     return redirect(redirect_to)
 
