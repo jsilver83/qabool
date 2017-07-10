@@ -138,7 +138,7 @@ class ForgotPasswordForm(forms.ModelForm):
 
     id2 = forms.IntegerField(
         label=_('Registration Number'),
-        required=True,
+        required=False,
     )
 
     password1 = forms.CharField(
@@ -167,6 +167,11 @@ class ForgotPasswordForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ForgotPasswordForm, self).__init__(*args, **kwargs)
+
+        self.fields['email'].required = False
+        self.fields['email'].widget.is_required = False
+        self.fields['mobile'].required = False
+        self.fields['mobile'].widget.is_required = False
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})

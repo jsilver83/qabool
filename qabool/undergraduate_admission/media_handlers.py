@@ -49,8 +49,6 @@ def upload_location(sub_folder, instance, filename):
         ext = os.path.splitext(filename)[1]
     file_name = '%s/%s/%s%s'%(sub_folder, semester_name, instance.username, ext)
     full_path = os.path.join(settings.MEDIA_ROOT, file_name)
-    print(full_path)
     if os.path.exists(full_path):
         os.remove(full_path)
-        print('removed')
     return file_name
