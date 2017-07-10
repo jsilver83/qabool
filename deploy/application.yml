@@ -17,6 +17,7 @@
       - /en/admin/
       - /ar/manage/
       - /en/manage/
+      - /admin_files/
     apache_extra_modules:
       - xsendfile
     apache_extra_config: |

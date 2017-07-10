@@ -60,50 +60,6 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
         return sendfile(request, user_file.path)
 
 
-@login_required()
-def media_view(request, filename):
-    user = request.user
-    absolute_file_name = os.path.join(SENDFILE_ROOT, filename)
-
-    if user.is_staff:
-        return sendfile(request, absolute_file_name)
-    else:
-        if filename.startswith('govid/'):
-            if user.government_id_file == filename:
-                return sendfile(request, user.government_id_file.path)
-
-        elif filename.startswith('picture/'):
-            if user.personal_picture == filename:
-                return sendfile(request, user.personal_picture.path)
-
-        elif filename.startswith('certificate/courses'):
-            if user.courses_certificate == filename:
-                return sendfile(request, user.courses_certificate.path)
-
-        elif filename.startswith('certificate/'):
-            if user.high_school_certificate == filename:
-                return sendfile(request, user.high_school_certificate.path)
-
-        elif filename.startswith('birth/'):
-            if user.birth_certificate == filename:
-                return sendfile(request, user.birth_certificate.path)
-
-        elif filename.startswith('mother_govid/'):
-            if user.mother_gov_id_file == filename:
-                return sendfile(request, user.mother_gov_id_file.path)
-
-        elif filename.startswith('passport/'):
-            if user.passport_file == filename:
-                return sendfile(request, user.passport_file.path)
-
-        elif filename.startswith('withdrawal_proof/'):
-            if user.withdrawal_proof_letter == filename:
-                return sendfile(request, user.withdrawal_proof_letter.path)
-
-        else:
-            raise PermissionDenied
-
-
 class Phase2BaseView(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return is_phase2_eligible(self.request.user)
