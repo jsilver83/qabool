@@ -21,6 +21,7 @@
       - xsendfile
     apache_extra_config: |
       XSendFile On
+      XSendFilePath {{ django_project_media_dir }}
 
     admins:
       - name: Abdullah Joud
