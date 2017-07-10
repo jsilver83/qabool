@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 07:56+0300\n"
-"PO-Revision-Date: 2017-07-10 08:06+0300\n"
+"POT-Creation-Date: 2017-07-10 09:08+0300\n"
+"PO-Revision-Date: 2017-07-10 09:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -283,15 +283,15 @@ msgstr "عزيزي الطالب"
 msgid "KFUPM ID"
 msgstr "الرقم الجامعي"
 
-#: find_roommate/views.py:32 undergraduate_admission/views/phase2_views.py:151
-#: undergraduate_admission/views/phase2_views.py:175
-#: undergraduate_admission/views/phase2_views.py:199
-#: undergraduate_admission/views/phase2_views.py:223
-#: undergraduate_admission/views/phase2_views.py:255
+#: find_roommate/views.py:32 undergraduate_admission/views/phase2_views.py:107
+#: undergraduate_admission/views/phase2_views.py:131
+#: undergraduate_admission/views/phase2_views.py:155
+#: undergraduate_admission/views/phase2_views.py:179
+#: undergraduate_admission/views/phase2_views.py:211
+#: undergraduate_admission/views/phase2_views.py:237
+#: undergraduate_admission/views/phase2_views.py:260
 #: undergraduate_admission/views/phase2_views.py:281
-#: undergraduate_admission/views/phase2_views.py:304
-#: undergraduate_admission/views/phase2_views.py:325
-#: undergraduate_admission/views/phase2_views.py:349
+#: undergraduate_admission/views/phase2_views.py:305
 #: undergraduate_admission/views/phase3_views.py:125
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
@@ -319,7 +319,7 @@ msgstr "إدارة"
 #: undergraduate_admission/forms/admin_side_forms.py:10
 #: undergraduate_admission/forms/admin_side_forms.py:117
 msgid "Unknown"
-msgstr ""
+msgstr "غير معروف"
 
 #: undergraduate_admission/forms/admin_side_forms.py:11
 #: undergraduate_admission/forms/admin_side_forms.py:118
@@ -1395,6 +1395,14 @@ msgstr ""
 "\t\t\t\t<br><br>\n"
 "\t\t\t\t"
 
+#: undergraduate_admission/templates/floppyforms/clearable_input.html:1
+msgid "File already uploaded"
+msgstr "تم رفع الملف"
+
+#: undergraduate_admission/templates/floppyforms/clearable_input.html:6
+msgid "Re-upload file"
+msgstr "تعديل الملف"
+
 #: undergraduate_admission/templates/undergraduate_admission/_important_dates.html:6
 msgid "Important Dates"
 msgstr "تواريخ هامة <small/> (حسب تقويم أم القرى)<small>"
@@ -2105,24 +2113,24 @@ msgstr "الحالة الجديدة تم تطبيقها على %(count)d من %(
 msgid "Gender updated successfully"
 msgstr "لقد تم تحديث بيانات الجنس بنجاح"
 
-#: undergraduate_admission/views/general_views.py:59
+#: undergraduate_admission/views/general_views.py:58
 msgid "Password was reset successfully..."
 msgstr "لقد تم تغيير كلمة السر بنجاح"
 
-#: undergraduate_admission/views/general_views.py:62
+#: undergraduate_admission/views/general_views.py:61
 msgid "Error resetting password. Make sure you enter the correct info."
 msgstr "خطأ بتغيير كلمة السر، فضلاً تأكد من صحة البيانات المدخلة."
 
-#: undergraduate_admission/views/general_views.py:102
+#: undergraduate_admission/views/general_views.py:101
 msgid "Contact Info was updated successfully..."
 msgstr "لقد تم حفظ بيانات التواصل بنجاح"
 
-#: undergraduate_admission/views/general_views.py:105
+#: undergraduate_admission/views/general_views.py:104
 msgid "Error updating contact info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
 #: undergraduate_admission/views/phase1_views.py:26
-#: undergraduate_admission/views/phase2_views.py:122
+#: undergraduate_admission/views/phase2_views.py:78
 #: undergraduate_admission/views/phase3_views.py:27
 #: undergraduate_admission/views/phase3_views.py:48
 #: undergraduate_admission/views/phase3_views.py:69
@@ -2144,39 +2152,39 @@ msgstr "لقد تم حفظ البيانات بنجاح"
 msgid "Error updating info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
-#: undergraduate_admission/views/phase2_views.py:147
+#: undergraduate_admission/views/phase2_views.py:103
 msgid "Personal Info was saved successfully..."
 msgstr "لقد تم حفظ البيانات الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:171
+#: undergraduate_admission/views/phase2_views.py:127
 msgid "Guardian Contact Info was saved successfully..."
 msgstr "لقد تم حفظ بيانات ولي اﻷمر بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:195
+#: undergraduate_admission/views/phase2_views.py:151
 msgid "Relative Info was saved successfully..."
 msgstr "لقد تم حفظ معلومات القريب بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:219
+#: undergraduate_admission/views/phase2_views.py:175
 msgid "Vehicle info was submitted successfully..."
 msgstr "لقد تم حفظ معلومات السيارة"
 
-#: undergraduate_admission/views/phase2_views.py:251
+#: undergraduate_admission/views/phase2_views.py:207
 msgid "Personal picture was uploaded successfully..."
 msgstr "لقد تم حفظ الصورة الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:277
-#: undergraduate_admission/views/phase2_views.py:300
+#: undergraduate_admission/views/phase2_views.py:233
+#: undergraduate_admission/views/phase2_views.py:256
 msgid ""
 "Documents were uploaded successfully. We will verify your information and "
 "get back to you soon..."
 msgstr ""
 "لقد تم حفظ المستندات بنجاح. وسوف يتم التأكد من جميع المعلومات والمستندات."
 
-#: undergraduate_admission/views/phase2_views.py:321
+#: undergraduate_admission/views/phase2_views.py:277
 msgid "Documents were uploaded successfully..."
 msgstr "لقد تم حفظ المستندات المرفوعة بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:343
+#: undergraduate_admission/views/phase2_views.py:299
 msgid "You have withdrawn from the university successfully..."
 msgstr "لقد انسحبت من الجامعة بنجاح..."
 
