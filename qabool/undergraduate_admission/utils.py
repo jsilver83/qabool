@@ -126,6 +126,10 @@ class SMS(object):
         SMS.send_sms(mobile, '%s' % (SMS.sms_messages['registration_success_old_high_school']))
 
     @staticmethod
+    def send_sms_confirmed(mobile):
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['confirmed_message']))
+
+    @staticmethod
     def send_sms_admitted(mobile):
         SMS.send_sms(mobile, '%s' % (SMS.sms_messages['admitted_msg']))
 

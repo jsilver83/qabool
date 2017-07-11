@@ -233,6 +233,7 @@ def upload_documents(request):
             saved_user.save()
 
             if saved_user:
+                SMS.send_sms_confirmed(request.user.mobile)
                 messages.success(request, _('Documents were uploaded successfully. We will verify your information '
                                             'and get back to you soon...'))
                 return redirect('student_area')
