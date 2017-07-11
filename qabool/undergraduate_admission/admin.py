@@ -138,6 +138,22 @@ class StudentAdmin(VersionAdmin):
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
     actions = ['yesser_update']
 
+    # Update selected students and sync them with Yesser
+    def yesser_update(self, request, queryset):
+        log = ''
+        changed_students = 0
+        for student in queryset:
+            result = get_student_record_serialized(student, False)
+            if result['changed']:
+                changed_students += 1
+            if result['log']:
+                log += '<br>' + result['log']
+
+        self.message_user(request, "%d student(s) were successfully sync''d with yesser. Here is the sync log: %s "
+                                % (changed_students, log))
+
+    yesser_update.short_description = _("Sync with Yesser")
+
     def get_queryset(self, request):
         qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')
         return qs
@@ -329,24 +345,6 @@ class AdmissionSemesterAdmin(admin.ModelAdmin):
 
 class GraduationYearAdmin(admin.ModelAdmin):
     list_display = ('graduation_year_ar', 'graduation_year_en', 'description', 'show', 'display_order',)
-
-
-# Update selected students and sync them with Yesser
-def yesser_update(modeladmin, request, queryset):
-    log = ''
-    changed_students = 0
-    for student in queryset:
-        result = get_student_record_serialized(student, False)
-        if result['changed']:
-            changed_students += 1
-        if result['log']:
-            log += '<br>' + result['log']
-
-    modeladmin.message_user(request, "%d student(s) were successfully sync''d with yesser.<br>Here is the sync log:<br>%s "
-                            % (changed_students, log))
-
-
-yesser_update.short_description = "Sync with Yesser"
 
 
 class TarifiReceptionDateAdmin(admin.ModelAdmin):
