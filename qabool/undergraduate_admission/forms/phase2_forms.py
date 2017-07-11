@@ -59,7 +59,7 @@ class PersonalInfoForm(Phase2GenericForm):
             'disability_needs': forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('DISABILITY', False)),
             'chronic_diseases': forms.CheckboxSelectMultiple(
                 choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False)),
-            'blood_type': forms.Select(choices=Lookup.get_lookup_choices('BLOOD_TYPE', False)),
+            'blood_type': forms.Select(choices=Lookup.get_lookup_choices('BLOOD_TYPE', add_dashes=True)),
             'is_employed': forms.RadioSelect(choices=YES_NO_CHOICES),
             'is_disabled': forms.RadioSelect(choices=YES_NO_CHOICES),
             'is_diseased': forms.RadioSelect(choices=YES_NO_CHOICES),
