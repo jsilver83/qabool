@@ -136,7 +136,7 @@ class StudentAdmin(VersionAdmin):
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
-    actions = [yesser_updater]
+    actions = ['yesser_update']
 
     def get_queryset(self, request):
         qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')
@@ -332,7 +332,7 @@ class GraduationYearAdmin(admin.ModelAdmin):
 
 
 # Update selected students and sync them with Yesser
-def yesser_updater(modeladmin, request, queryset):
+def yesser_update(modeladmin, request, queryset):
     log = ''
     changed_students = 0
     for student in queryset:
@@ -346,7 +346,7 @@ def yesser_updater(modeladmin, request, queryset):
                             % (changed_students, log))
 
 
-yesser_updater.short_description = "Sync with Yesser"
+yesser_update.short_description = "Sync with Yesser"
 
 
 class TarifiReceptionDateAdmin(admin.ModelAdmin):
