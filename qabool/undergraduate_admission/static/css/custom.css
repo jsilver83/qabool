@@ -319,7 +319,8 @@ th {
 
 .modal-dialog {
     width: 80%!important;
-    min-height: 65%!important;
+    height: 70%!important;
+    min-height: 800px!important;
 }
 
 .smart-card-div{
