@@ -4,11 +4,13 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import UpdateView
 from django.views.generic.base import View
 from django.http import Http404
+from django.views.decorators.cache import never_cache
 
 from sendfile import sendfile, os
 
@@ -42,6 +44,7 @@ def is_eligible_to_withdraw(user):
            or user.status_message == RegistrationStatusMessage.get_status_confirmed()
 
 
+@method_decorator(never_cache, name='dispatch')
 class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
     raise_exception = True  # PermissionDenied
 
