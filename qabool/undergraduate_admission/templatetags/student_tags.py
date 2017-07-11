@@ -10,7 +10,7 @@ register = template.Library()
 def student_info_commands(context):
     user = context['request'].user
     phase = user.get_student_phase()
-    can_withdraw = phase == 'ADMITTED'
+    can_withdraw = (phase == 'ADMITTED' or phase == 'CONFIRMED')
     can_choose_roommate = (phase == 'ADMITTED' and user.eligible_for_housing)
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
     can_print_docs = (phase == 'ADMITTED' and user.tarifi_week_attendance_date)

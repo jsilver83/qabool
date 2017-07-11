@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 15:18+0300\n"
-"PO-Revision-Date: 2017-07-11 10:27+0300\n"
+"POT-Creation-Date: 2017-07-11 10:56+0300\n"
+"PO-Revision-Date: 2017-07-11 10:57+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -180,7 +180,7 @@ msgstr "نموذج تسكين طالب"
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:38
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:31
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:38
 #: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
@@ -283,15 +283,15 @@ msgstr "عزيزي الطالب"
 msgid "KFUPM ID"
 msgstr "الرقم الجامعي"
 
-#: find_roommate/views.py:32 undergraduate_admission/views/phase2_views.py:107
-#: undergraduate_admission/views/phase2_views.py:131
-#: undergraduate_admission/views/phase2_views.py:155
-#: undergraduate_admission/views/phase2_views.py:179
-#: undergraduate_admission/views/phase2_views.py:211
-#: undergraduate_admission/views/phase2_views.py:237
-#: undergraduate_admission/views/phase2_views.py:260
-#: undergraduate_admission/views/phase2_views.py:281
-#: undergraduate_admission/views/phase2_views.py:305
+#: find_roommate/views.py:32 undergraduate_admission/views/phase2_views.py:110
+#: undergraduate_admission/views/phase2_views.py:134
+#: undergraduate_admission/views/phase2_views.py:158
+#: undergraduate_admission/views/phase2_views.py:182
+#: undergraduate_admission/views/phase2_views.py:214
+#: undergraduate_admission/views/phase2_views.py:240
+#: undergraduate_admission/views/phase2_views.py:263
+#: undergraduate_admission/views/phase2_views.py:284
+#: undergraduate_admission/views/phase2_views.py:308
 #: undergraduate_admission/views/phase3_views.py:125
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
@@ -788,6 +788,7 @@ msgid "Student Notes"
 msgstr "ملاحظات الطالب"
 
 #: undergraduate_admission/models.py:192
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:22
 msgid "Personal Picture"
 msgstr "رفع الصورة الشخصية"
 
@@ -1626,7 +1627,7 @@ msgstr ""
 "عليك أن تدخل قيمتين صحيحة من الحقول التالية ( عنوان البريد الالكتروني - رقم "
 "الجوال - رقم التسجيل) وذلك لاستعادة كلمة السر"
 
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:38
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:39
 msgid "Reset Password"
 msgstr "تغيير كلمة السر"
 
@@ -1674,11 +1675,14 @@ msgid "Forgot Password?"
 msgstr "نسيت كلمة السر"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:8
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-uploads.html:7
 msgid ""
 "\n"
 "\t\t\t<strong>Important Note:</strong>\n"
 "\t\t\t<ul>\n"
+"\t\t\t\t<li>Please upload a recent picture (with the Saudi thobe -- white "
+"background -- no glasses).\n"
+"\t\t\t\t\tCheck the <a href=\"http://www.kfupm.edu.sa/departments/admissions/"
+"SitePages/ar/Qabool/egPersonal.jpg\">example</a>...</li>\n"
 "\t\t\t\t<li>Please upload clear scanned images with good quality.</li>\n"
 "\t\t\t\t<li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>\n"
 "\t\t\t\t<li>Mobile-taken pictures will not be accepted.</li>\n"
@@ -1688,35 +1692,37 @@ msgstr ""
 "\n"
 "\t\t\t<strong>ملاحظة هامة:</strong>\n"
 "\t\t\t<ul>\n"
+"\t\t\t\t<li>صورة حديثة ملونة للطالب ( بالزي السعودي -- خلفية الصورة بيضاء -- "
+"بدون نظارة ) انظر المثال</li>\n"
 "\t\t\t\t<li>رفع الصور عبر الماسح الضوئي بشكل واضح وبدقة عالية</li>\n"
 "\t\t\t\t<li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
 "\t\t\t\t<li>الصور الملتقطة عن طريق الجوال غير مقبولة.</li>\n"
 "\t\t\t</ul>\n"
 "\t\t"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:32
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:34
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:38
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:104
 msgid "Save and Next"
 msgstr "حفظ وانتقال للخطوة التالية"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:44
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:46
 msgid "Crop the photo"
 msgstr "اقتصاص الصورة"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:58
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:60
 msgid "Rot-right"
 msgstr "تدوير يمين"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:59
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:61
 msgid "Rot-left"
 msgstr "تدوير يسار"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:60
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:62
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:61
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:63
 msgid "Crop and upload"
 msgstr "رفع الصورة المعدلة"
 
@@ -1746,6 +1752,26 @@ msgstr ""
 "\t<p>نحتاج لمعلومات أحد اﻷقارب للتواصل في الحالات الطارئة</p>\n"
 "\t"
 
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-uploads.html:7
+msgid ""
+"\n"
+"\t\t\t<strong>Important Note:</strong>\n"
+"\t\t\t<ul>\n"
+"\t\t\t\t<li>Please upload clear scanned images with good quality.</li>\n"
+"\t\t\t\t<li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>\n"
+"\t\t\t\t<li>Mobile-taken pictures will not be accepted.</li>\n"
+"\t\t\t</ul>\n"
+"\t\t"
+msgstr ""
+"\n"
+"\t\t\t<strong>ملاحظة هامة:</strong>\n"
+"\t\t\t<ul>\n"
+"\t\t\t\t<li>رفع الصور عبر الماسح الضوئي بشكل واضح وبدقة عالية</li>\n"
+"\t\t\t\t<li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
+"\t\t\t\t<li>الصور الملتقطة عن طريق الجوال غير مقبولة.</li>\n"
+"\t\t\t</ul>\n"
+"\t\t"
+
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:18
 msgid "Personal Info"
 msgstr "المعلومات الشخصية"
@@ -1761,10 +1787,6 @@ msgstr "معلومات أحد اﻷقرباء"
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:21
 msgid "Vehicle Info"
 msgstr "معلومات السيارة"
-
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:22
-msgid "Picture"
-msgstr "الصورة الشخصية"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:23
 msgid "Documents"
@@ -2145,7 +2167,7 @@ msgid "Error updating contact info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
 #: undergraduate_admission/views/phase1_views.py:26
-#: undergraduate_admission/views/phase2_views.py:78
+#: undergraduate_admission/views/phase2_views.py:81
 #: undergraduate_admission/views/phase3_views.py:27
 #: undergraduate_admission/views/phase3_views.py:48
 #: undergraduate_admission/views/phase3_views.py:69
@@ -2167,39 +2189,39 @@ msgstr "لقد تم حفظ البيانات بنجاح"
 msgid "Error updating info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
-#: undergraduate_admission/views/phase2_views.py:103
+#: undergraduate_admission/views/phase2_views.py:106
 msgid "Personal Info was saved successfully..."
 msgstr "لقد تم حفظ البيانات الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:127
+#: undergraduate_admission/views/phase2_views.py:130
 msgid "Guardian Contact Info was saved successfully..."
 msgstr "لقد تم حفظ بيانات ولي اﻷمر بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:151
+#: undergraduate_admission/views/phase2_views.py:154
 msgid "Relative Info was saved successfully..."
 msgstr "لقد تم حفظ معلومات القريب بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:175
+#: undergraduate_admission/views/phase2_views.py:178
 msgid "Vehicle info was submitted successfully..."
 msgstr "لقد تم حفظ معلومات السيارة"
 
-#: undergraduate_admission/views/phase2_views.py:207
+#: undergraduate_admission/views/phase2_views.py:210
 msgid "Personal picture was uploaded successfully..."
 msgstr "لقد تم حفظ الصورة الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:233
-#: undergraduate_admission/views/phase2_views.py:256
+#: undergraduate_admission/views/phase2_views.py:236
+#: undergraduate_admission/views/phase2_views.py:259
 msgid ""
 "Documents were uploaded successfully. We will verify your information and "
 "get back to you soon..."
 msgstr ""
 "لقد تم حفظ المستندات بنجاح. وسوف يتم التأكد من جميع المعلومات والمستندات."
 
-#: undergraduate_admission/views/phase2_views.py:277
+#: undergraduate_admission/views/phase2_views.py:280
 msgid "Documents were uploaded successfully..."
 msgstr "لقد تم حفظ المستندات المرفوعة بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:299
+#: undergraduate_admission/views/phase2_views.py:302
 msgid "You have withdrawn from the university successfully..."
 msgstr "لقد انسحبت من الجامعة بنجاح..."
 
@@ -2224,6 +2246,9 @@ msgstr "تم اختيار زميل السكن بنجاح."
 #: undergraduate_admission/views/phase3_views.py:186
 msgid "Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
+
+#~ msgid "Picture"
+#~ msgstr "الصورة الشخصية"
 
 #~ msgid ""
 #~ "\n"

@@ -20,10 +20,12 @@
 			<dt>{% trans 'KFUPM ID' %}</dt>
 			<dd>{{ user.kfupm_id }}</dd>
 			{% endif %}
-			<dt>{% trans 'Mobile' %}</dt>
-			<dd>{{ user.mobile }}</dd>
-			<dt>{% trans 'Email' %}</dt>
-			<dd>{{ user.email }}</dd>
+{#			<dt>{% trans 'Mobile' %}</dt>#}
+{#			<dd>{{ user.mobile }}</dd>#}
+{#			<dt>{% trans 'Email' %}</dt>#}
+{#			<dd>{{ user.email }}</dd>#}
+			<dt>{% trans 'Nationality' %}</dt>
+			<dd>{{ user.nationality }}</dd>
 			<dt>{% trans 'Registration Status' %}</dt>
 			<dd><h2 class="label label-{{ status_css_class }}">{{ user.get_student_registration_status }}</h2></dd>
 		</dl>

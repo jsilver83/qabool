@@ -29,20 +29,20 @@
 {#				<p class="form-control-static">{{ user.guardian_mobile }}</p>#}
 {#			</div>#}
 {#		</div>#}
-		<div class="form-group">
-			<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>
-			<div class="col-sm-5">
-				<p class="form-control-static">{{ user.nationality }}</p>
-			</div>
-		</div>
-		{% if user.saudi_mother %}
-			<div class="form-group">
-				<label class="col-sm-3 control-label">{% trans 'Saudi Mother' %}</label>
-				<div class="col-sm-5">
-					<p class="form-control-static">{% trans 'Yes' %}</p>
-				</div>
-			</div>
-		{% endif %}
+{#		<div class="form-group">#}
+{#			<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>#}
+{#			<div class="col-sm-5">#}
+{#				<p class="form-control-static">{{ user.nationality }}</p>#}
+{#			</div>#}
+{#		</div>#}
+{#		{% if user.saudi_mother %}#}
+{#			<div class="form-group">#}
+{#				<label class="col-sm-3 control-label">{% trans 'Saudi Mother' %}</label>#}
+{#				<div class="col-sm-5">#}
+{#					<p class="form-control-static">{% trans 'Yes' %}</p>#}
+{#				</div>#}
+{#			</div>#}
+{#		{% endif %}#}
 {#		<div class="form-group">#}
 {#			<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>#}
 {#			<div class="col-sm-5">#}
@@ -86,8 +86,8 @@
 			<label class="col-sm-3 control-label">{% trans 'Message Status' %}</label>
 			<div class="col-sm-5">
 				<div class="alert alert-info" role="alert">
+					<h4>{{ user.status_message.status }}</h4>
 					<strong>{{ user.get_actual_student_status|safe }}</strong><br>
-
 				</div>
 				{% if can_confirm %}
 					<a href="{% url 'confirm' %}" class="btn btn-success btn-lg btn-block">
