@@ -300,7 +300,7 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
         return HttpResponse(json.dumps(serialized_obj), content_type='application/json; charset=utf-8')
 
 
-def get_student_record_serialized(student):
+def get_student_record_serialized(student, change_status=False):
     final_data = {
         'changed': False,
         'gov_id': '',
@@ -359,7 +359,8 @@ def get_student_record_serialized(student):
                     """
                     if hs_data['CertificationHijriYear'] in ['2015-2016', '2016-2017'] \
                             and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
-                        student.status_message = RegistrationStatusMessage.get_status_applied()
+                        if change_status:
+                            student.status_message = RegistrationStatusMessage.get_status_applied()
                         special_cases_log += \
                             '{%s} was marked as old hs but actually has recent hs in MOE<br>' % (student.username)
                 """
@@ -367,7 +368,8 @@ def get_student_record_serialized(student):
                 """
                 if year and student.high_school_graduation_year == year and \
                                 student.status_message == RegistrationStatusMessage.get_status_old_high_school():
-                    student.status_message = RegistrationStatusMessage.get_status_applied()
+                    if change_status:
+                        student.status_message = RegistrationStatusMessage.get_status_applied()
                     special_cases_log += \
                         "{%s} has old hs status but he has recent hs in his application<br>" % (student.username)
                 """
@@ -386,7 +388,8 @@ def get_student_record_serialized(student):
                     this is the case of a student who has old hs in MOE but has a status of applied
                     """
                     if student.status_message == RegistrationStatusMessage.get_status_applied():
-                        student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                        if change_status:
+                            student.status_message = RegistrationStatusMessage.get_status_old_high_school()
                         special_cases_log += \
                             '{%s} has old hs in MOE but has a status of applied<br>' % (student.username)
             if hs_data['Gender'] and student.gender != hs_data['Gender']:

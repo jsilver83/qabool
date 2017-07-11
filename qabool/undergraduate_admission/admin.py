@@ -7,14 +7,15 @@ from import_export.admin import ImportExportMixin
 from reversion.admin import VersionAdmin
 from django.utils.translation import ugettext_lazy as _
 
+from undergraduate_admission.views.admin_side_views import get_student_record_serialized
 from .models import *
 
 
 class UserResource(resources.ModelResource):
     class Meta:
         model = User
-        exclude = ('id', )
-        import_id_fields = ('username', )
+        exclude = ('id',)
+        import_id_fields = ('username',)
         fields = ('semester', 'username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
@@ -60,26 +61,28 @@ class StudentAdmin(VersionAdmin):
     fieldsets = (
         (None, {
             'fields': (('username', 'semester', 'status_message'),
-                       ('student_full_name_ar', 'student_full_name_en','gender'),
-                       ('student_type', 'nationality', 'saudi_mother','saudi_mother_gov_id'),
-                       'email', 'mobile','guardian_mobile',
+                       ('student_full_name_ar', 'student_full_name_en', 'gender'),
+                       ('student_type', 'nationality', 'saudi_mother', 'saudi_mother_gov_id'),
+                       'email', 'mobile', 'guardian_mobile',
                        ('high_school_gpa', 'qudrat_score', 'tahsili_score'),
                        'admission_total', 'high_school_gpa_student_entry',
-                       ('high_school_graduation_year', 'high_school_system'),'student_notes'
+                       ('high_school_graduation_year', 'high_school_system'), 'student_notes'
                        )
         }),
         ('Phase 2 Fields - Personal Information', {
             'classes': ('collapse',),
             'fields': (('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
                        ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
-                       'government_id_issue','government_id_expiry', 'government_id_place',
+                       'government_id_issue', 'government_id_expiry', 'government_id_place',
                        'passport_number', 'passport_place', 'passport_expiry',
                        'birthday', 'birthday_ah', 'birth_place', 'high_school_name', 'high_school_province',
-                       'high_school_city', 'eligible_for_housing', 'blood_type', 'student_address', 'social_status', 'kids_no',
-                       'is_employed', 'employer_name','is_disabled', 'disability_needs', 'disability_needs_notes', 'is_diseased',
+                       'high_school_city', 'eligible_for_housing', 'blood_type', 'student_address', 'social_status',
+                       'kids_no',
+                       'is_employed', 'employer_name', 'is_disabled', 'disability_needs', 'disability_needs_notes',
+                       'is_diseased',
                        'chronic_diseases', 'chronic_diseases_notes',
-                       'have_a_vehicle','vehicle_plate_no','driving_license_file',
-                       'phase2_start_date','phase2_end_date','phase2_submit_date'
+                       'have_a_vehicle', 'vehicle_plate_no', 'driving_license_file',
+                       'phase2_start_date', 'phase2_end_date', 'phase2_submit_date'
                        ),
         }),
         ('Phase 2 Fields - Uploaded Documents', {
@@ -95,15 +98,17 @@ class StudentAdmin(VersionAdmin):
         }),
         ('Phase 2 Fields - Guardian Information', {
             'classes': ('collapse',),
-            'fields': ( 'guardian_name','guardian_government_id','guardian_relation','guardian_mobile', 'guardian_email',
-                       'guardian_po_box', 'guardian_postal_code','guardian_city', 'guardian_job', 'guardian_employer',
-                       ),
+            'fields': (
+                'guardian_name', 'guardian_government_id', 'guardian_relation', 'guardian_mobile', 'guardian_email',
+                'guardian_po_box', 'guardian_postal_code', 'guardian_city', 'guardian_job', 'guardian_employer',
+            ),
         }),
         ('Phase 2 Fields - Relative Information', {
             'classes': ('collapse',),
-            'fields': (  'relative_name', 'relative_relation', 'relative_phone', 'relative_po_box', 'relative_po_stal_code',
-                       'relative_city', 'relative_job', 'relative_employer',
-                       ),
+            'fields': (
+                'relative_name', 'relative_relation', 'relative_phone', 'relative_po_box', 'relative_po_stal_code',
+                'relative_city', 'relative_job', 'relative_employer',
+            ),
         }),
         ('Committee Fields', {
             'classes': ('collapse',),
@@ -113,13 +118,15 @@ class StudentAdmin(VersionAdmin):
         }),
         ('Phase 3 Fields', {
             'classes': ('collapse',),
-            'fields': ('admission_letter_print_date','medical_report_print_date','roommate_id','tarifi_week_attendance_date',
-                       'english_placement_test_score','english_speaking_test_score', 'english_level',
-                       'phase3_start_date','phase3_end_date','phase3_submit_date'),
+            'fields': (
+                'admission_letter_print_date', 'medical_report_print_date', 'roommate_id',
+                'tarifi_week_attendance_date',
+                'english_placement_test_score', 'english_speaking_test_score', 'english_level',
+                'phase3_start_date', 'phase3_end_date', 'phase3_submit_date'),
         }),
         ('Withdrawal Fields', {
             'classes': ('collapse',),
-            'fields': ('withdrawal_date','withdrawal_university','withdrawal_reason'),
+            'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason'),
 
         }),
     )
@@ -129,6 +136,7 @@ class StudentAdmin(VersionAdmin):
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
+    actions = [yesser_updater]
 
     def get_queryset(self, request):
         qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')
@@ -316,56 +324,29 @@ class RegistrationStatusMessageAdmin(ImportExportMixin, admin.ModelAdmin):
 class AdmissionSemesterAdmin(admin.ModelAdmin):
     list_display = ('semester_name', 'phase1_start_date', 'phase1_end_date', 'phase2_start_date', 'phase2_end_date',
                     'phase3_start_date', 'phase3_end_date', 'high_school_gpa_weight', 'qudrat_score_weight',
-                    'tahsili_score_weight', )
+                    'tahsili_score_weight',)
 
 
 class GraduationYearAdmin(admin.ModelAdmin):
-    list_display = ('graduation_year_ar', 'graduation_year_en', 'description', 'show', 'display_order', )
+    list_display = ('graduation_year_ar', 'graduation_year_en', 'description', 'show', 'display_order',)
 
 
-# Update selected students status to (admitted). You can see the message id No.1 in RegistrationStatusMessage model.
-def Mark_Partial_Admitted(modeladmin, request, queryset):
-    queryset.update(status_message_id='1')
-    Mark_Partial_Admitted.short_description = "Mark as Partial Admitted"
+# Update selected students and sync them with Yesser
+def yesser_updater(modeladmin, request, queryset):
+    log = ''
+    changed_students = 0
+    for student in queryset:
+        result = get_student_record_serialized(student, False)
+        if result['changed']:
+            changed_students += 1
+        if result['log']:
+            log += '<br>' + result['log']
+
+    modeladmin.message_user(request, "%d student(s) were successfully sync''d with yesser.<br>Here is the sync log:<br>%s "
+                            % (changed_students, log))
 
 
-# Update selected students status to (rejected). You can see the message id No.3 in RegistrationStatusMessage model.
-def Mark_Rejected(modeladmin, request, queryset):
-    queryset.update(status_message_id='3')
-    Mark_Rejected.short_description = "Mark as Rejected"
-
-
-# TODO: Should we do in the admin dashboard or in the front-end using template?.
-
-
-# class CutOff(User):
-#     class Meta:
-#         proxy = True
-
-
-# TODO: display specific fields with criteria and enhance the search field.
-# class CutOffAdmin(admin.ModelAdmin):
-#     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
-#                     'status_message_id', 'student_type',)
-#     # date_hierarchy = 'date_joined'
-#     list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
-#     fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
-#               'is_active', 'date_joined', 'high_school_gpa',
-#               'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
-#               'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
-#               'high_school_province', 'high_school_city', 'birthday', 'birthday_ah',
-#               'nationality', 'saudi_mother', 'birth_place', 'government_id_expiry',
-#               'personal_picture', 'government_id_file', 'high_school_certificate',
-#               'courses_certificate', 'mother_gov_id_file', 'birth_certificate', 'passport_file',
-#               'verification_documents_incomplete', 'get_verification_status', 'verification_status',
-#               'verification_notes',)
-#     readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
-#                        'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status',
-#                        'nationality', 'saudi_mother',)
-#
-#     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
-#                      'nationality__nationality_en']
-#     actions = [Mark_Partial_Admitted, Mark_Rejected]
+yesser_updater.short_description = "Sync with Yesser"
 
 
 class TarifiReceptionDateAdmin(admin.ModelAdmin):
