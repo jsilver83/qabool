@@ -90,6 +90,10 @@
 			var cropBoxData;
 			var canvasData;
 			$("#modalCrop").on("shown.bs.modal", function () {
+				$(".modal .modal-body").css('overflow-y', 'auto');
+                $(".modal .modal-body").css('max-height', $(window).height() * 0.8);
+				$('.modal .modal-body').css('height', $(window).height() * 0.8);
+
 				$image.cropper({
 					viewMode: 1,
 					aspectRatio: 4 / 5,
@@ -98,16 +102,7 @@
 					ready: function () {
 						$image.cropper("setCanvasData", canvasData);
 						$image.cropper("setCropBoxData", cropBoxData);
-					}//,
-					{#          crop: function(e) {#}
-					{#            // Output the result data for cropping image.#}
-					{#            console.log("==============");#}
-					{#            console.log(e.x);            #}
-					{#            console.log(e.y);#}
-					{#            console.log(e.width);#}
-					{#            console.log(e.height);#}
-					{#            console.log(e.rotate);#}
-					{#          }#}
+					}
 				});
 			}).on("hidden.bs.modal", function () {
 				cropBoxData = $image.cropper("getCropBoxData");
@@ -141,15 +136,8 @@
 
 		function cropData() {
 			var $image = $("#image");
-			var cropData = $image.cropper("getData");
-			var cropDataURI = $image.cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5);//("getDataURL", "image/jpeg");
-			{#        $("#id_x").val(cropData["x"]);#}
-			{#        $("#id_y").val(cropData["y"]);#}
-			{#        $("#id_height").val(cropData["height"]);#}
-			{#        $("#id_width").val(cropData["width"]);#}
-			{#        $("#id_rotate").val(cropData["rotate"]);#}
-			{#        $("#id_scalex").val(cropData["scaleX"]);#}
-			{#        $("#id_scaley").val(cropData["scaleY"]);#}
+{#			var cropData = $image.cropper("getData");#}
+			var cropDataURI = $image.cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.9);//("getDataURL", "image/jpeg");
 			$("#id_data_uri").val(cropDataURI);
 		}
 	</script>

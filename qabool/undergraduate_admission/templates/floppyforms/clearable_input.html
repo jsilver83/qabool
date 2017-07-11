@@ -1,4 +1,4 @@
-{% load i18n %}{% if value.url %}{% trans 'File already uploaded' %}<!--{{ initial_text }}: <a target="_blank" href="{{ value.url }}">{{ value }}</a>-->
+{% load i18n %}{% if value.url %}  <span class="label label-info"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;&nbsp;{% trans 'File already uploaded' %}</span><!--{{ initial_text }}: <a target="_blank" href="{{ value.url }}">{{ value }}</a>-->
 {% if not required %}
 <input type="checkbox" name="{{ checkbox_name }}" id="{{ checkbox_id }}">
 <label for="{{ checkbox_id }}">{{ clear_checkbox_label }}</label>
