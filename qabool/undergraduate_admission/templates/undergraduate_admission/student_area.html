@@ -17,38 +17,38 @@
 	<h3>{% trans 'Application Details' %}</h3>
 	<hr>
 	<form class="form-horizontal">
-{#		<div class="form-group">#}
-{#			<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>#}
-{#			<div class="col-sm-5">#}
-{#				<p class="form-control-static">{{ user.high_school_graduation_year }}</p>#}
-{#			</div>#}
-{#		</div>#}
-{#		<div class="form-group">#}
-{#			<label class="col-sm-3 control-label">{% trans 'Guardian Mobile' %}</label>#}
-{#			<div class="col-sm-5">#}
-{#				<p class="form-control-static">{{ user.guardian_mobile }}</p>#}
-{#			</div>#}
-{#		</div>#}
-{#		<div class="form-group">#}
-{#			<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>#}
-{#			<div class="col-sm-5">#}
-{#				<p class="form-control-static">{{ user.nationality }}</p>#}
-{#			</div>#}
-{#		</div>#}
-{#		{% if user.saudi_mother %}#}
-{#			<div class="form-group">#}
-{#				<label class="col-sm-3 control-label">{% trans 'Saudi Mother' %}</label>#}
-{#				<div class="col-sm-5">#}
-{#					<p class="form-control-static">{% trans 'Yes' %}</p>#}
-{#				</div>#}
-{#			</div>#}
-{#		{% endif %}#}
-{#		<div class="form-group">#}
-{#			<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>#}
-{#			<div class="col-sm-5">#}
-{#				<p class="form-control-static">{{ user.high_school_system }}</p>#}
-{#			</div>#}
-{#		</div>#}
+		{#		<div class="form-group">#}
+		{#			<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>#}
+		{#			<div class="col-sm-5">#}
+		{#				<p class="form-control-static">{{ user.high_school_graduation_year }}</p>#}
+		{#			</div>#}
+		{#		</div>#}
+		{#		<div class="form-group">#}
+		{#			<label class="col-sm-3 control-label">{% trans 'Guardian Mobile' %}</label>#}
+		{#			<div class="col-sm-5">#}
+		{#				<p class="form-control-static">{{ user.guardian_mobile }}</p>#}
+		{#			</div>#}
+		{#		</div>#}
+		{#		<div class="form-group">#}
+		{#			<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>#}
+		{#			<div class="col-sm-5">#}
+		{#				<p class="form-control-static">{{ user.nationality }}</p>#}
+		{#			</div>#}
+		{#		</div>#}
+		{#		{% if user.saudi_mother %}#}
+		{#			<div class="form-group">#}
+		{#				<label class="col-sm-3 control-label">{% trans 'Saudi Mother' %}</label>#}
+		{#				<div class="col-sm-5">#}
+		{#					<p class="form-control-static">{% trans 'Yes' %}</p>#}
+		{#				</div>#}
+		{#			</div>#}
+		{#		{% endif %}#}
+		{#		<div class="form-group">#}
+		{#			<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>#}
+		{#			<div class="col-sm-5">#}
+		{#				<p class="form-control-static">{{ user.high_school_system }}</p>#}
+		{#			</div>#}
+		{#		</div>#}
 
 		{% if show_result and user.get_student_total %}
 			<div class="form-group">
@@ -112,14 +112,12 @@
 					</div>
 				{% endif %}
 
-			    {% if can_finish_phase3 %}
+				{% if can_finish_phase3 %}
 					<a href="{% url 'student_agreement_1' %}" class="btn btn-success btn-lg btn-block">
 						<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Print Admission Letter' %}</a>
 				{% endif %}
 
 			</div>
 		</div>
-
-
 	</form>
 {% endblock subcontent %}
