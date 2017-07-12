@@ -72,6 +72,7 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'high_school_certificate',
                   'personal_picture',
                   'mother_gov_id_file',
+                  'saudi_mother_gov_id',
                   'birth_certificate',
                   'government_id_file',
                   'passport_file',
@@ -82,6 +83,8 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'vehicle_registration_file',
                   'driving_license_file',
 
+                  'verification_documents_incomplete',
+                  'verification_picture_acceptable',
                   'verification_status',
                   'verification_notes', ]
 
