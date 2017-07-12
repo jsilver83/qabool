@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-11 10:56+0300\n"
-"PO-Revision-Date: 2017-07-11 11:38+0300\n"
+"POT-Creation-Date: 2017-07-12 09:54+0300\n"
+"PO-Revision-Date: 2017-07-12 09:55+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -288,10 +288,10 @@ msgstr "الرقم الجامعي"
 #: undergraduate_admission/views/phase2_views.py:158
 #: undergraduate_admission/views/phase2_views.py:182
 #: undergraduate_admission/views/phase2_views.py:214
-#: undergraduate_admission/views/phase2_views.py:240
-#: undergraduate_admission/views/phase2_views.py:263
-#: undergraduate_admission/views/phase2_views.py:284
-#: undergraduate_admission/views/phase2_views.py:308
+#: undergraduate_admission/views/phase2_views.py:241
+#: undergraduate_admission/views/phase2_views.py:264
+#: undergraduate_admission/views/phase2_views.py:285
+#: undergraduate_admission/views/phase2_views.py:309
 #: undergraduate_admission/views/phase3_views.py:125
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
@@ -304,15 +304,19 @@ msgstr "عربي"
 msgid "English"
 msgstr "انجليزي"
 
-#: undergraduate_admission/admin.py:377
+#: undergraduate_admission/admin.py:157
+msgid "Sync with Yesser"
+msgstr "التحديث من يسر"
+
+#: undergraduate_admission/admin.py:358
 msgid "Qabool"
 msgstr "نظام القبول"
 
-#: undergraduate_admission/admin.py:378
+#: undergraduate_admission/admin.py:359
 msgid "Qabool Administration"
 msgstr "إدارة القبول"
 
-#: undergraduate_admission/admin.py:379
+#: undergraduate_admission/admin.py:360
 msgid "Administration"
 msgstr "إدارة"
 
@@ -341,7 +345,6 @@ msgstr "سعودي"
 
 #: undergraduate_admission/forms/admin_side_forms.py:16
 #: undergraduate_admission/models.py:45
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:40
 msgid "Saudi Mother"
 msgstr "الأم سعودية"
 
@@ -359,6 +362,7 @@ msgstr "أقل من"
 
 #: undergraduate_admission/forms/admin_side_forms.py:24
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:29
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:16
 msgid "Student Type"
 msgstr "نوع الطالب"
 
@@ -446,6 +450,7 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:17
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:22
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:13
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:43
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:25
 msgid "Government ID"
@@ -499,7 +504,6 @@ msgstr "أوافق على جميع الشروط و الأحكام اعلاه."
 #: undergraduate_admission/forms/phase1_forms.py:145
 #: undergraduate_admission/forms/phase2_forms.py:11
 #: undergraduate_admission/forms/phase2_forms.py:34
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:42
 msgid "Yes"
 msgstr "نعم"
 
@@ -600,9 +604,10 @@ msgid "Admission Note"
 msgstr "ملاحظة القبول"
 
 #: undergraduate_admission/models.py:43
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:27
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:27
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:26
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:33
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:14
 msgid "Nationality"
 msgstr "الجنسية"
 
@@ -627,7 +632,6 @@ msgid "Country and city. e.g. Saudi Arabia Jeddah"
 msgstr "الدولة والمدينة، مثال: المملكة العربية السعودية - جدة"
 
 #: undergraduate_admission/models.py:71
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:23
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:25
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:26
 msgid "Mobile"
@@ -1398,7 +1402,8 @@ msgid "Welcome"
 msgstr "مرحبا"
 
 #: undergraduate_admission/templates/base.html:46
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:66
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:68
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:20
 msgid "Logout"
 msgstr "خروج"
 
@@ -1439,76 +1444,90 @@ msgstr "تواريخ هامة <small/> (حسب تقويم أم القرى)<small
 msgid "Registration ID"
 msgstr "رقم  التسجيل"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:25
-msgid "Email"
-msgstr "البريد اﻹلكتروني"
-
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:27
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:29
 msgid "Registration Status"
 msgstr "حالة الطلب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:34
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:36
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:94
 msgid "Complete Application"
 msgstr "تأكيد الرغبة واستكمال البيانات"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:37
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/print_documents.html:87
 msgid "Print Documents"
 msgstr "طباعة الخطابات"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:40
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:42
 msgid "Student Housing"
 msgstr "سكن الطلاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:43
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:45
 msgid "Housing Search"
 msgstr "البحث عن زميل سكن"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:46
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:48
 msgid "Print Withdrawal Letter"
 msgstr "طباعة خطاب اﻻنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:49
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:51
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:9
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
 msgid "Edit Info"
 msgstr "تعديل البيانات"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:52
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:54
 msgid "Edit Contact Information"
 msgstr "تعديل بيانات التواصل"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:55
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:57
 msgid "Choose Roommate"
 msgstr "اختيار زميل السكن"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:59
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:61
 msgid ""
 "If you don't want to proceed with the application you can still withdraw "
 "your application by clicking below on the red button."
 msgstr "في حال رغبتكم في الإنسحاب ، الرجاء الضغط على زر اﻹنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:60
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:62
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:64
 msgid "Withdraw Application"
 msgstr "اﻻنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:64
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:66
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 msgid "Change Password"
 msgstr "تغيير كلمة السر"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:7
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:9
+msgid "Superuser"
+msgstr "مستخدم خارق"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:15
+msgid "Verify Students"
+msgstr "التحقق من بيانات الطلاب"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:17
+msgid "Cut-off Point"
+msgstr "نغيير حالة الطلاب"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:19
 msgid "Number of students matching search criteria"
 msgstr "نتائج البحث"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:25
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:12
 msgid "Student Full Name"
 msgstr "اسم الطالب"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:28
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:27
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:15
 msgid "Status"
 msgstr "الحالة"
 
@@ -1523,6 +1542,18 @@ msgstr "تغيير حالة قبول الطلاب"
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:52
 msgid "Update Gender"
 msgstr "تحديث الجنس"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:17
+msgid "Documents Incomplete"
+msgstr "المستندات ناقصة"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:18
+msgid "Picture Acceptable"
+msgstr "الصورة غير مقبولة"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:19
+msgid "Verification Status"
+msgstr "حالة التأكد من الطلب"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:17
 msgid "Sync Now"
@@ -2137,16 +2168,16 @@ msgstr ""
 msgid "File extension (%(ext)s) not allowed!"
 msgstr "صيغة الملف (%(ext)s) غير مسموح بها!"
 
-#: undergraduate_admission/views/admin_side_views.py:135
+#: undergraduate_admission/views/admin_side_views.py:127
 #, python-format
-msgid "New status has been applied to %(count)d students chosen..."
-msgstr "الحالة الجديدة تم تطبيقها على %(count)d طالب..."
+msgid "New status has been applied to %(count)d of %(all)d students chosen..."
+msgstr "الحالة الجديدة تم تطبيقها على %(count)d من %(all)d طالب..."
 
-#: undergraduate_admission/views/admin_side_views.py:138
+#: undergraduate_admission/views/admin_side_views.py:131
 msgid "Error in updating status..."
 msgstr "خطأ بتعديل حالة الطلاب"
 
-#: undergraduate_admission/views/admin_side_views.py:194
+#: undergraduate_admission/views/admin_side_views.py:198
 msgid "Gender updated successfully"
 msgstr "لقد تم تحديث بيانات الجنس بنجاح"
 
@@ -2209,19 +2240,19 @@ msgstr "لقد تم حفظ معلومات السيارة"
 msgid "Personal picture was uploaded successfully..."
 msgstr "لقد تم حفظ الصورة الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:236
-#: undergraduate_admission/views/phase2_views.py:259
+#: undergraduate_admission/views/phase2_views.py:237
+#: undergraduate_admission/views/phase2_views.py:260
 msgid ""
 "Documents were uploaded successfully. We will verify your information and "
 "get back to you soon..."
 msgstr ""
 "لقد تم حفظ المستندات بنجاح. وسوف يتم التأكد من جميع المعلومات والمستندات."
 
-#: undergraduate_admission/views/phase2_views.py:280
+#: undergraduate_admission/views/phase2_views.py:281
 msgid "Documents were uploaded successfully..."
 msgstr "لقد تم حفظ المستندات المرفوعة بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:302
+#: undergraduate_admission/views/phase2_views.py:303
 msgid "You have withdrawn from the university successfully..."
 msgstr "لقد انسحبت من الجامعة بنجاح..."
 
@@ -2246,6 +2277,9 @@ msgstr "تم اختيار زميل السكن بنجاح."
 #: undergraduate_admission/views/phase3_views.py:186
 msgid "Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
+
+#~ msgid "Email"
+#~ msgstr "البريد اﻹلكتروني"
 
 #~ msgid "Picture"
 #~ msgstr "الصورة الشخصية"
@@ -2334,9 +2368,6 @@ msgstr "عليك التواصل حالا مع إدارة القبول."
 
 #~ msgid "No of studnet(s):"
 #~ msgstr "عدد الطلاب:"
-
-#~ msgid "Verification Status"
-#~ msgstr "حالة التأكد من الطلب"
 
 #~ msgid "date"
 #~ msgstr "التاريخ"
