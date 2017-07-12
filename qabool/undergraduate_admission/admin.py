@@ -112,9 +112,11 @@ class StudentAdmin(VersionAdmin):
         }),
         ('Committee Fields', {
             'classes': ('collapse',),
-            'fields': ('verification_status',
-                       'verification_notes',
-                       'verification_documents_incomplete'),
+            'fields': ('verification_committee_member',
+                       'verification_documents_incomplete',
+                       'verification_picture_acceptable',
+                       'verification_status',
+                       'verification_notes'),
         }),
         ('Phase 3 Fields', {
             'classes': ('collapse',),
@@ -149,7 +151,7 @@ class StudentAdmin(VersionAdmin):
             if result['log']:
                 log += '<br>' + result['log']
 
-        self.message_user(request, "%d student(s) were successfully sync''d with yesser. Here is the sync log: %s "
+        self.message_user(request, "%d student(s) were successfully sync'd with yesser. Here is the sync log: %s "
                                 % (changed_students, log))
 
     yesser_update.short_description = _("Sync with Yesser")

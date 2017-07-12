@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
 from extra_views import ModelFormSetView
@@ -122,36 +123,39 @@ class CutOffPointView(AdminBaseView, View):
             try:
                 status = RegistrationStatusMessage.objects.get(pk=form2.cleaned_data.get('status_message'))
                 records_updated = filtered.update(status_message = status)
-
-                # students_count = len(filtered)
                 students_count = filtered.count()
-                # records_updated = 0
-                # for student in filtered:
-                #     student.status_message = status
-                #     student.save()
-                #     records_updated += 1
-
-                # if records_updated == students_count:
-                messages.success(request, _('New status has been applied to %(count)d students chosen...')
-                                 % ({'count': records_updated}))
+                messages.success(request, _('New status has been applied to %(count)d of %(all)d students chosen...')
+                                 % ({'count': records_updated,
+                                     'all': students_count}))
             except ObjectDoesNotExist:
                 messages.error(request, _('Error in updating status...'))
-                # else:
-                #     messages.warning(request, _('New status has been applied to %(count)d out of %(count2)d students ...')
-                #                      % ({'count': records_updated,
-                #                          'count2': students_count}))
 
         return redirect('cut_off_point')
 
 
-class VerifyCommittee(AdminBaseView, SuccessMessageMixin, UpdateView):
+class VerifyList(AdminBaseView, ListView):
+    template_name = 'undergraduate_admission/admin/verify_list.html'
+    model = User
+    context_object_name = 'students'
+    paginate_by = 1
+
+    def get_queryset(self):
+        logged_in_username = self.request.user.username
+        status = RegistrationStatusMessage.get_status_confirmed()
+        students_to_verified = User.objects.filter(is_staff=False,
+                                                   status_message=status,
+                                                   verification_committee_member= logged_in_username)
+        return students_to_verified
+
+
+class VerifyStudent(AdminBaseView, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/admin/verify_committee.html'
     form_class = VerifyCommitteeForm
     model = User
     success_message = 'Verification submitted successfully!!!!'
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('verify_committee', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('verify_student', kwargs={'pk': self.kwargs['pk']})
 
 
 class StudentGenderView(AdminBaseView, TemplateView):
@@ -196,46 +200,6 @@ class StudentGenderView(AdminBaseView, TemplateView):
             return render_to_response(self.template_name,
                                       self.get_context_data(**kwargs),
                                       context_instance=RequestContext(request))
-
-
-# class YesserDataUpdateBackup(AdminBaseView, TemplateView):
-#     template_name = 'undergraduate_admission/admin/yesser_update.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(YesserDataUpdateBackup, self).get_context_data(**kwargs)
-#         sem = AdmissionSemester.get_phase1_active_semester()
-#         students = User.objects.filter(semester=sem,
-#                                        is_staff=False,
-#                                        is_superuser=False)
-#         context['students'] = students
-#
-#         return context
-#
-#     def get(self, request, *args, **kwargs):
-#         read_file = os.path.join(BASE_DIR, 'uploaded_docs') + '/names_o.csv'
-#         write_file = os.path.join(BASE_DIR, 'uploaded_docs') + '/names.csv'
-#         counter = 1
-#         total = 27984
-#
-#         with open(write_file, 'w') as csvfile2:
-#             fieldnames = ['username', 'high_school_gpa', 'qudrat', 'tahsili']
-#             writer = csv.DictWriter(csvfile2, fieldnames=fieldnames)
-#             writer.writeheader()
-#
-#             with open(read_file) as csvfile:
-#                 reader = csv.DictReader(csvfile)
-#                 for row in reader:
-#                     # time.sleep(0.09)
-#                     data = get_qiyas_from_yesser(row['username'])
-#                     print('%s: %s'%(counter/total * 100, data))
-#                     counter = counter + 1
-#                     writer.writerow({'username': row['username'],
-#                                      'high_school_gpa': row['high_school_gpa'],
-#                                      'qudrat': data['qudrat'],
-#                                      'tahsili': data['tahsili'],
-#                                      })
-#
-#         return super(YesserDataUpdateBackup, self).get(request)
 
 
 class YesserDataUpdate(AdminBaseView, TemplateView):
