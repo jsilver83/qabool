@@ -62,12 +62,12 @@ class VerifyCommitteeForm(forms.ModelForm):
                   # 'qudrat_score', 'tahsili_score',
                   'high_school_graduation_year', 'high_school_system',
 
-                  'government_id_issue', 'government_id_expiry', 'government_id_place',
+                  'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry',
                   'birthday', 'birthday_ah', 'birth_place',
 
                   'high_school_name', 'high_school_province', 'high_school_city',
-                  'eligible_for_housing',
+                  # 'eligible_for_housing',
 
                   'high_school_certificate',
                   'personal_picture',
@@ -78,36 +78,35 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'passport_file',
                   'courses_certificate',
 
-                  'have_a_vehicle',
-                  'vehicle_plate_no',
-                  'vehicle_registration_file',
-                  'driving_license_file',
-
                   'verification_documents_incomplete',
                   'verification_picture_acceptable',
-                  'verification_status',
-                  'verification_notes', ]
+                  'verification_status', ]
+
+        widgets = {
+            'birthday': forms.DateInput(attrs={'class': 'datepicker'}),
+            'birthday_ah': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
+            'government_id_expiry': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
+            'passport_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
+            'high_school_system': forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
+            # 'verification_status': forms.CheckboxSelectMultiple(
+            #     choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
+        }
 
     def __init__(self, *args, **kwargs):
         super(VerifyCommitteeForm, self).__init__(*args, **kwargs)
 
         readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
-
-                           'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
-                           # 'high_school_graduation_year', 'high_school_system',
-
-                           'have_a_vehicle',
-                           'vehicle_plate_no',
-
-                           'verification_notes',
-                           ]
+                           'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score', ]
         for field in self.fields:
             if field in readonly_fields:
                 self.fields[field].disabled = True
-            self.fields['verification_status'].widget = \
-                forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
-            self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
-            # admin.widgets.AdminTextareaWidget()
+        self.fields['username'].label = _('Government ID')
+        self.fields['username'].help_text = ''
+        self.fields['mobile'].help_text = ''
+        self.fields['verification_status'].widget = \
+            forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
+        self.fields['verification_status'].initial = self.instance.verification_status
+        # self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
 
 
 class ApplyStatusForm(forms.Form):
