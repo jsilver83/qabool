@@ -144,7 +144,8 @@ class VerifyList(AdminBaseView, ListView):
         status = [RegistrationStatusMessage.get_status_confirmed()]
         students_to_verified = User.objects.filter(is_staff=False,
                                                    status_message__in=status,
-                                                   verification_committee_member= logged_in_username)
+                                                   verification_committee_member= logged_in_username)\
+            .order_by('-phase2_submit_date')
         return students_to_verified
 
 
@@ -152,7 +153,7 @@ class VerifyStudent(AdminBaseView, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/admin/verify_committee.html'
     form_class = VerifyCommitteeForm
     model = User
-    success_message = 'Verification submitted successfully!!!!'
+    success_message = _('Verification submitted successfully!!!!')
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('verify_student', kwargs={'pk': self.kwargs['pk']})

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load admin_tags %}
+{% load staticfiles %}
 
 {% block content %}
 
@@ -33,3 +34,25 @@
 		</div>
 	</div>
 {% endblock content %}
+
+{% block styles %}
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'js/calendars/jquery.calendars.picker.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.11.4.custom/jquery-ui.theme.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'js/calendars/smoothness.calendars.picker.css' %}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet"/>
+{% endblock styles %}
+
+{% block scripts %}
+	<script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"
+	        integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
+	        crossorigin="anonymous"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.plus.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.plugin.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.picker.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.ummalqura.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.ummalqura-ar.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/custom-form-phase2.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+{% endblock scripts %}
