@@ -137,13 +137,13 @@ class VerifyList(AdminBaseView, ListView):
     template_name = 'undergraduate_admission/admin/verify_list.html'
     model = User
     context_object_name = 'students'
-    paginate_by = 1
+    paginate_by = 25
 
     def get_queryset(self):
         logged_in_username = self.request.user.username
-        status = RegistrationStatusMessage.get_status_confirmed()
+        status = [RegistrationStatusMessage.get_status_confirmed()]
         students_to_verified = User.objects.filter(is_staff=False,
-                                                   status_message=status,
+                                                   status_message__in=status,
                                                    verification_committee_member= logged_in_username)
         return students_to_verified
 
@@ -252,7 +252,7 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
         students = User.objects.filter(semester=sem,
                                        is_staff=False,
                                        is_superuser=False)
-        paginator = Paginator(students, 1)
+        paginator = Paginator(students, 25)
         try:
             student = paginator.page(page).object_list[0]
 
