@@ -223,8 +223,7 @@ class PersonalPictureUnacceptableView(Phase2BaseView, UpdateView):
 
     def test_func(self):
         original_test_result = super(PersonalPictureUnacceptableView, self).test_func()
-        can_re_upload_picture = not self.request.user.verification_picture_acceptable \
-                                or self.request.user.verification_picture_acceptable is None
+        can_re_upload_picture = self.request.user.verification_picture_acceptable
         return original_test_result and can_re_upload_picture
 
     def get_context_data(self, **kwargs):
