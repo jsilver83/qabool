@@ -58,21 +58,19 @@ class VerifyCommitteeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'nationality', 'saudi_mother', 'student_full_name_ar', 'student_full_name_en',
-                  # 'status_message',
 
                   'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                   'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
 
                   'email', 'mobile', 'high_school_gpa',
                   # 'qudrat_score', 'tahsili_score',
-                  'high_school_graduation_year', 'high_school_system',
+                  'high_school_graduation_year', 'high_school_system', 'high_school_major',
 
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry',
                   'birthday', 'birthday_ah', 'birth_place',
 
                   'high_school_name', 'high_school_province', 'high_school_city',
-                  # 'eligible_for_housing',
 
                   'high_school_certificate',
                   'personal_picture',
@@ -112,6 +110,7 @@ class VerifyCommitteeForm(forms.ModelForm):
         self.fields['username'].help_text = ''
         self.fields['mobile'].help_text = ''
         self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
+        self.fields['verification_notes'].required = False
         self.fields['verification_documents_incomplete'].required = True
         self.fields['verification_picture_acceptable'].required = True
 
