@@ -11,7 +11,7 @@
 				<tr>
 					<th>{% trans 'Government ID' %}</th>
 					<th>{% trans 'Student Full Name' %}</th>
-					<th>{% trans 'Status' %}</th>
+{#					<th>{% trans 'Status' %}</th>#}
 					<th>{% trans 'Student Type' %}</th>
 					<th>{% trans 'Documents Incomplete' %}</th>
 					<th>{% trans 'Picture Acceptable' %}</th>
@@ -26,7 +26,7 @@
 					{% endif %}
 				<td><a href="{% url 'verify_student' student.pk %}">{{ student.username }}</a></td>
 				<td><a href="{% url 'verify_student' student.pk %}">{{ student }}</a></td>
-				<td>{{ student.status_message.status_message_code }}</td>
+{#				<td>{{ student.status_message.status_message_code }}</td>#}
 				<td>{{ student.student_type }}</td>
 				<td>{{ student.verification_documents_incomplete }}</td>
 				<td>{{ student.verification_picture_acceptable }}</td>

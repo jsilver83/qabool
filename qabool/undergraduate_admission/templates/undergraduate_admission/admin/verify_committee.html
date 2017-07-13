@@ -33,19 +33,6 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-sm-12"><h4>{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;
-					{{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</h4></div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">{% formrow form.first_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-				<div class="col-sm-6">{% formrow form.second_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">{% formrow form.third_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-				<div class="col-sm-6">{% formrow form.family_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-			</div>
-			<hr>
-			<div class="row">
 				<div class="col-sm-6">
 					{% formrow form.username using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
 					{% formrow form.government_id_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
@@ -56,6 +43,19 @@
 				<div class="col-sm-6">
 					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}"/>
 				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-sm-12"><h4>{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;
+					{{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</h4></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">{% formrow form.first_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
+				<div class="col-sm-6">{% formrow form.second_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">{% formrow form.third_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
+				<div class="col-sm-6">{% formrow form.family_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
 			</div>
 			<hr>
 			<div class="row">
@@ -104,13 +104,16 @@
 			{% endif %}
 			<hr>
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-4">
 					{% formrow form.personal_picture using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br><br>
 					{{ form.data_uri }}
 					{% formrow form.verification_picture_acceptable using "floppyforms/rows/bootstrap3-horizontal.html" %}
 				</div>
-				<div class="col-sm-6">
-					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}"/><br>
+				<div class="col-sm-8">
+					<div class="col-sm-4 col-md-3 smart-card-div" style="width: 100%">
+						<img class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}" >
+					</div>
+					<br>
 				</div>
 			</div>
 			<hr>
@@ -170,12 +173,14 @@
 	<link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
 	<script src="{% static 'js/cropper.min.js' %}"></script>
 	<script src="{% static 'js/custom-crop.js' %}"></script>
+	<script src="{% static 'css/magnific-popup.css' %}"></script>
+	<script src="{% static 'js/magnific-popup.js' %}"></script>
 	<script type="application/javascript">
 		$(function () {
-			/* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
 			$(".js-crop-and-upload").click(function () {
 				cropData();
 			});
+			$('.img-popup').magnificPopup({type:'image'});
 		});
 	</script>
 {% endblock %}
