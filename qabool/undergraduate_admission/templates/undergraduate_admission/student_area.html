@@ -94,12 +94,28 @@
 						<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 				{% endif %}
 
-				{% if can_re_upload_docs %}
+				{% if can_re_upload_docs or can_re_upload_picture %}
+					<br>
 					<div class="alert alert-danger" role="alert">
-						<strong>{% trans 'Please re-upload files for the following reasons' %}:</strong><br>
-						{{ user.verification_status }}<br><br>
-						<a href="{% url 'upload_documents_incomplete' %}" class="btn btn-warning btn-lg btn-block">
-							<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Missing Documents' %}</a>
+						{% if user.verification_status %}
+							<strong>{% trans 'You have the following issues with your data' %}:</strong><br>
+							{{ user.verification_status }}<br>
+						{% endif %}
+						{% if can_re_upload_docs %}
+							<br>
+							<strong>{% trans 'Please re-upload your docs' %}:</strong><br>
+							<a href="{% url 'upload_documents_incomplete' %}" class="btn btn-warning btn-lg btn-block">
+								<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Missing Documents' %}
+							</a>
+						{% endif %}
+
+						{% if can_re_upload_picture %}
+							<br>
+							<strong>{% trans 'Please re-upload your picture' %}:</strong><br>
+							<a href="{% url 'personal_picture_re_upload' %}" class="btn btn-warning btn-lg btn-block">
+								<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Picture' %}
+							</a>
+						{% endif %}
 					</div>
 				{% endif %}
 

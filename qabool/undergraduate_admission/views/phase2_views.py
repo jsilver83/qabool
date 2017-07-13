@@ -198,6 +198,8 @@ class PersonalPictureView(Phase2BaseView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(PersonalPictureView, self).get_context_data(**kwargs)
         context['step5'] = 'active'
+        context['base_extend'] = 'undergraduate_admission/phase2/form.html'
+        context['re_upload'] = False
         return context
 
     def get_object(self):
@@ -205,6 +207,37 @@ class PersonalPictureView(Phase2BaseView, UpdateView):
 
     def form_valid(self, form):
         super(PersonalPictureView, self).form_valid(form)
+        saved = form.save()
+        if saved:
+            messages.success(self.request, _('Personal picture was uploaded successfully...'))
+            self.request.session['personal_picture_completed'] = True
+            return redirect(self.success_url)
+        else:
+            messages.error(self.request, _('Error saving info. Try again later!'))
+
+
+class PersonalPictureUnacceptableView(Phase2BaseView, UpdateView):
+    template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
+    form_class = PersonalPhotoForm
+    success_url = reverse_lazy('personal_picture_re_upload')
+
+    def test_func(self):
+        original_test_result = super(PersonalPictureUnacceptableView, self).test_func()
+        can_re_upload_picture = not self.request.user.verification_picture_acceptable \
+                                or self.request.user.verification_picture_acceptable is None
+        return original_test_result and can_re_upload_picture
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonalPictureUnacceptableView, self).get_context_data(**kwargs)
+        context['base_extend'] = 'base_student_area.html'
+        context['re_upload'] = True
+        return context
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        super(PersonalPictureUnacceptableView, self).form_valid(form)
         saved = form.save()
         if saved:
             messages.success(self.request, _('Personal picture was uploaded successfully...'))
@@ -264,6 +297,9 @@ def upload_documents_for_incomplete(request):
                 messages.error(request, _('Error saving info. Try again later!'))
 
     return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
+
+
+
 
 
 @login_required()
