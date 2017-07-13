@@ -23,7 +23,7 @@ def index(request, template_name='undergraduate_admission/login.html'):
     redirect_to = request.POST.get('next',
                                    request.GET.get('next', reverse_lazy('student_area')))
 
-    if request.method == 'GET' and request.user.is_authenticated():return redirect(reverse('student_area'))
+    if request.method == 'GET' and request.user.is_authenticated(): return redirect(reverse('student_area'))
 
     if request.method == 'POST':
         if form.is_valid():
@@ -75,7 +75,9 @@ def student_area(request):
 
     can_finish_phase3 = phase == 'ADMITTED' and not request.user.tarifi_week_attendance_date
 
-    can_re_upload_docs = phase == 'ADMITTED' and request.user.verification_documents_incomplete
+    can_re_upload_docs = phase == 'PARTIALLY-ADMITTED' and request.user.verification_documents_incomplete
+
+    can_re_upload_picture = phase == 'PARTIALLY-ADMITTED' and request.user.verification_picture_acceptable == False
 
     can_upload_withdrawal_proof = status_message == RegistrationStatusMessage.get_status_duplicate()
 
@@ -84,6 +86,7 @@ def student_area(request):
                                                                         'show_result': show_result,
                                                                         'can_confirm': can_confirm,
                                                                         'can_re_upload_docs': can_re_upload_docs,
+                                                                        'can_re_upload_picture': can_re_upload_picture,
                                                                         'can_upload_withdrawal_proof':
                                                                             can_upload_withdrawal_proof,
                                                                         'can_finish_phase3': can_finish_phase3,
