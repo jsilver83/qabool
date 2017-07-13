@@ -150,8 +150,8 @@
 					<h4 class="modal-title">{% trans 'Crop the photo' %}</h4>
 				</div>
 				<div class="modal-body">
-					<img src="" id="image" style="max-width: 100%;">
-					<img id="image" class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
+{#					<img src="" id="image" style="max-width: 100%;">#}
+					<img style="max-width: 100%;" id="image" class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
 				</div>
 				<div class="modal-footer">
 					<div class="btn-group pull-left" role="group">
