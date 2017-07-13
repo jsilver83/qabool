@@ -19,7 +19,8 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-sm-12">{% formrow form.student_full_name_ar using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
+				<div class="col-sm-12"><h4>{{ form.instance.first_name_ar }}&nbsp;{{ form.instance.second_name_ar }}&nbsp;
+					{{ form.instance.third_name_ar }}&nbsp;{{ form.instance.family_name_ar }}</h4></div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">{% formrow form.first_name_ar using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
@@ -31,7 +32,8 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-sm-12">{% formrow form.student_full_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
+				<div class="col-sm-12"><h4>{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;
+					{{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</h4></div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">{% formrow form.first_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
@@ -44,13 +46,11 @@
 			<hr>
 			<div class="row">
 				<div class="col-sm-6">
-					{% formrow form.username using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
+					{% formrow form.username using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
 					{% formrow form.government_id_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-					{% formrow form.government_id_issue using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					{% formrow form.government_id_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-					{% formrow form.birthday_ah using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-					{% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					{% formrow form.birth_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
+					{% formrow form.birthday_ah using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 				</div>
 				<div class="col-sm-6">
 					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}"/>
@@ -65,7 +65,6 @@
 					{% formrow form.high_school_name using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					{% formrow form.high_school_province using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					{% formrow form.high_school_city using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-					{% formrow form.eligible_for_housing using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 				</div>
 				<div class="col-sm-6">
 					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}"/><br>
@@ -74,18 +73,20 @@
 					{% endif %}
 				</div>
 			</div>
-			<hr>
-			<div class="row">
-				<div class="col-sm-6">
-					{% formrow form.passport_number using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-					{% formrow form.passport_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-					{% formrow form.passport_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-					{% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
+			{% if form.instance.student_type == 'M' or form.instance.student_type == 'N' %}
+				<hr>
+				<div class="row">
+					<div class="col-sm-6">
+						{% formrow form.passport_number using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
+						{% formrow form.passport_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
+						{% formrow form.passport_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
+						{% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
+					</div>
+					<div class="col-sm-6">
+						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}"/>
+					</div>
 				</div>
-				<div class="col-sm-6">
-					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}"/>
-				</div>
-			</div>
+			{% endif %}
 			{% if form.instance.student_type == 'M' %}
 				<hr>
 				<div class="row">
