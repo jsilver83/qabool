@@ -41,9 +41,8 @@
 					{% formrow form.birthday_ah using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 				</div>
 				<div class="col-sm-6">
-					<img class="img-popup" style="width: 100%"
-					     src="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}"
-					      data-featherlight="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}" />
+					<a href="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%"
+					     src="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}" /></a>
 				</div>
 			</div>
 			<hr>
@@ -72,9 +71,10 @@
 					{% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
 				</div>
 				<div class="col-sm-6">
-					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}"/><br>
+					<a href="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}" target="_blank">
+					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}"/></a><br>
 					{% if form.instance.courses_certificate %}
-						<br><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'courses_certificate' form.instance.pk %}"/>
+						<br><a href="" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'courses_certificate' form.instance.pk %}"/></a>
 					{% endif %}
 				</div>
 			</div>
@@ -88,7 +88,7 @@
 						{% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					</div>
 					<div class="col-sm-6">
-						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}"/>
+						<a href="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}"/></a>
 					</div>
 				</div>
 			{% endif %}
@@ -96,11 +96,11 @@
 				<hr>
 				<div class="row">
 					<div class="col-sm-6">
-						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'mother_gov_id_file' form.instance.pk %}"/><br>
+						<a href="{% url 'download_user_file_admin' 'mother_gov_id_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'mother_gov_id_file' form.instance.pk %}"/></a><br>
 						{% formrow form.saudi_mother_gov_id using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					</div>
 					<div class="col-sm-6">
-						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'birth_certificate' form.instance.pk %}"/>
+						<a href="{% url 'download_user_file_admin' 'birth_certificate' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'birth_certificate' form.instance.pk %}"/></a>
 					</div>
 				</div>
 			{% endif %}
@@ -175,8 +175,8 @@
 	<link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
 	<script src="{% static 'js/cropper.min.js' %}"></script>
 	<script src="{% static 'js/custom-crop.js' %}"></script>
-	<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.css" type="text/css" rel="stylesheet" />
-	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+{#	<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.css" type="text/css" rel="stylesheet" />#}
+{#	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>#}
 {#	<script src="{% static 'css/magnific-popup.css' %}"></script>#}
 {#	<script src="{% static 'js/magnific-popup.js' %}"></script>#}
 	<script type="application/javascript">
