@@ -7,6 +7,8 @@ from django.utils import timezone
 from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, GraduationYear
 from django.utils.translation import ugettext_lazy as _, get_language
 
+from undergraduate_admission.utils import SMS
+
 
 class CutOffForm(forms.ModelForm):
     GENDER_CHOICES = (
@@ -140,6 +142,12 @@ class VerifyCommitteeForm(forms.ModelForm):
 
         if commit:
             student.save()
+            if(verification_documents_incomplete or verification_picture_acceptable == False):
+                SMS.send_sms_docs_issue_message(student.mobile)
+                SMS.send_sms_docs_issue_message(student.guardian_mobile)
+            elif verification_documents_incomplete == False and verification_picture_acceptable == True:
+                SMS.send_sms_admitted(student.mobile)
+                SMS.send_sms_admitted(student.guardian_mobile)
             return student
         else:
             return student
