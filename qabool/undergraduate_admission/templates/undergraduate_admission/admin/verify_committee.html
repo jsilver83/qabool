@@ -1,7 +1,7 @@
 {% extends 'undergraduate_admission/admin/base_admin_area.html' %}
 {% load i18n %}
 {% load floppyforms %}
-{% load staticfiles  %}
+{% load staticfiles %}
 
 {% block subcontent %}
 	{{ form.errors }}
@@ -42,7 +42,7 @@
 				</div>
 				<div class="col-sm-6">
 					<a href="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%"
-					     src="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}" /></a>
+					                                                                                                          src="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}"/></a>
 				</div>
 			</div>
 			<hr>
@@ -72,9 +72,10 @@
 				</div>
 				<div class="col-sm-6">
 					<a href="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}" target="_blank">
-					<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}"/></a><br>
+						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}"/></a><br>
 					{% if form.instance.courses_certificate %}
-						<br><a href="" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'courses_certificate' form.instance.pk %}"/></a>
+						<br>
+						<a href="" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'courses_certificate' form.instance.pk %}"/></a>
 					{% endif %}
 				</div>
 			</div>
@@ -113,7 +114,7 @@
 				</div>
 				<div class="col-sm-8">
 					<div class="col-sm-4 col-md-3 smart-card-div" style="width: 100%">
-						<img class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}" >
+						<img class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
 					</div>
 					<br>
 				</div>
@@ -150,6 +151,7 @@
 				</div>
 				<div class="modal-body">
 					<img src="" id="image" style="max-width: 100%;">
+					<img id="image" class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
 				</div>
 				<div class="modal-footer">
 					<div class="btn-group pull-left" role="group">
@@ -175,16 +177,74 @@
 	<link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
 	<script src="{% static 'js/cropper.min.js' %}"></script>
 	<script src="{% static 'js/custom-crop.js' %}"></script>
-{#	<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.css" type="text/css" rel="stylesheet" />#}
-{#	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>#}
-{#	<script src="{% static 'css/magnific-popup.css' %}"></script>#}
-{#	<script src="{% static 'js/magnific-popup.js' %}"></script>#}
+	{#	<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.css" type="text/css" rel="stylesheet" />#}
+	{#	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>#}
+	{#	<script src="{% static 'css/magnific-popup.css' %}"></script>#}
+	{#	<script src="{% static 'js/magnific-popup.js' %}"></script>#}
 	<script type="application/javascript">
 		$(function () {
+			/* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+			$("#id_personal_picture").click(function () {
+{#				if (this.files && this.files[0]) {#}
+{#					var reader = new FileReader();#}
+{#					reader.onload = function (e) {#}
+{#						$("#image").attr("src", e.target.result);#}
+						$("#modalCrop").modal("show");
+{#					}#}
+{#					reader.readAsDataURL(this.files[0]);#}
+{#				}#}
+			});
+
+			/* SCRIPTS TO HANDLE THE CROPPER BOX */
+			var $image = $("#image");
+			var cropBoxData;
+			var canvasData;
+			$("#modalCrop").on("shown.bs.modal", function () {
+				$(".modal .modal-body").css('overflow-y', 'auto');
+				$(".modal .modal-body").css('max-height', $(window).height() * 0.8);
+				$('.modal .modal-body').css('height', $(window).height() * 0.8);
+
+				$image.cropper({
+					viewMode: 1,
+					aspectRatio: 4 / 5,
+					minCropBoxWidth: 200,
+					minCropBoxHeight: 200,
+					ready: function () {
+						$image.cropper("setCanvasData", canvasData);
+						$image.cropper("setCropBoxData", cropBoxData);
+					}
+				});
+			}).on("hidden.bs.modal", function () {
+				cropBoxData = $image.cropper("getCropBoxData");
+				canvasData = $image.cropper("getCanvasData");
+				$image.cropper("destroy");
+			});
+
+			$(".js-zoom-in").click(function () {
+				$image.cropper("zoom", 0.1);
+			});
+
+			$(".js-zoom-out").click(function () {
+				$image.cropper("zoom", -0.1);
+			});
+
+			$(".js-rotate-right").click(function () {
+				$image.cropper("rotate", 3);
+			});
+
+			$(".js-rotate-left").click(function () {
+				$image.cropper("rotate", -3);
+			});
 			$(".js-crop-and-upload").click(function () {
 				cropData();
 			});
-{#			$('.img-popup').magnificPopup({type:'image'});#}
+			{#			$('.img-popup').magnificPopup({type:'image'});#}
 		});
+
+		function cropData() {
+			var $image = $("#image");
+			var cropDataURI = $image.cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.9);//("getDataURL", "image/jpeg");
+			$("#id_data_uri").val(cropDataURI);
+		}
 	</script>
 {% endblock %}
