@@ -45,6 +45,13 @@ class AdminBaseView(LoginRequiredMixin, UserPassesTestMixin):
         return self.request.user.is_superuser
 
 
+class StaffBaseView(LoginRequiredMixin, UserPassesTestMixin):
+    login_url = reverse_lazy('admin:index')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
 class CutOffPointView(AdminBaseView, View):
     def get_students_matching(self, request):
         selected_student_types = request.GET.getlist('student_type', [])
@@ -133,7 +140,7 @@ class CutOffPointView(AdminBaseView, View):
         return redirect('cut_off_point')
 
 
-class VerifyList(AdminBaseView, ListView):
+class VerifyList(StaffBaseView, ListView):
     template_name = 'undergraduate_admission/admin/verify_list.html'
     model = User
     context_object_name = 'students'
@@ -149,7 +156,7 @@ class VerifyList(AdminBaseView, ListView):
         return students_to_verified
 
 
-class VerifyStudent(AdminBaseView, SuccessMessageMixin, UpdateView):
+class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/admin/verify_committee.html'
     form_class = VerifyCommitteeForm
     model = User
