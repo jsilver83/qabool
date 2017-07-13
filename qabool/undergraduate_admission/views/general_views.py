@@ -77,7 +77,7 @@ def student_area(request):
 
     can_re_upload_docs = phase == 'PARTIALLY-ADMITTED' and request.user.verification_documents_incomplete
 
-    can_re_upload_picture = phase == 'PARTIALLY-ADMITTED' and request.user.verification_picture_acceptable == False
+    can_re_upload_picture = phase == 'PARTIALLY-ADMITTED' and request.user.verification_picture_acceptable
 
     can_upload_withdrawal_proof = status_message == RegistrationStatusMessage.get_status_duplicate()
 
