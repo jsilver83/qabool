@@ -9,25 +9,24 @@
 			<br><br>
 			<table class="table table-striped">
 				<tr>
-					<th>{% trans 'Student Full Name' %}</th>
 					<th>{% trans 'Government ID' %}</th>
-					<th>{% trans 'Nationality' %}</th>
+					<th>{% trans 'Student Full Name' %}</th>
 					<th>{% trans 'Status' %}</th>
 					<th>{% trans 'Student Type' %}</th>
 					<th>{% trans 'Documents Incomplete' %}</th>
 					<th>{% trans 'Picture Acceptable' %}</th>
 					<th>{% trans 'Verification Status' %}</th>
+					<th>{% trans 'Last Update Date' %}</th>
 				</tr>
 				{% for student in students %}
 					<tr>
-						<td><a href="{% url 'verify_student' student.pk %}">{{ student }}</a></td>
 						<td><a href="{% url 'verify_student' student.pk %}">{{ student.username }}</a></td>
-						<td>{{ student.nationality }}</td>
-						<td>{{ student.status_message.status }}</td>
-						<td>{{ student.student_nationality_type }}</td>
+						<td><a href="{% url 'verify_student' student.pk %}">{{ student }}</a></td>
+						<td>{{ student.status_message.status_message_code }}</td>
+						<td>{{ student.student_type }}</td>
 						<td>{{ student.verification_documents_incomplete }}</td>
 						<td>{{ student.verification_picture_acceptable }}</td>
-						<td>{{ student.verification_status }}</td>
+						<td>{{ student.phase2_submit_date }}</td>
 					</tr>
 				{% endfor %}
 			</table>

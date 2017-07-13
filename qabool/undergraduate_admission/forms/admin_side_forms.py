@@ -1,4 +1,7 @@
+import base64
+
 import floppyforms.__future__ as forms
+import re
 from django.utils import timezone
 
 from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, GraduationYear
@@ -50,6 +53,8 @@ class CutOffForm(forms.ModelForm):
 
 
 class VerifyCommitteeForm(forms.ModelForm):
+    data_uri = forms.CharField(widget=forms.HiddenInput, required=False)
+
     class Meta:
         model = User
         fields = ['username', 'nationality', 'saudi_mother', 'student_full_name_ar', 'student_full_name_en',
@@ -80,7 +85,10 @@ class VerifyCommitteeForm(forms.ModelForm):
 
                   'verification_documents_incomplete',
                   'verification_picture_acceptable',
-                  'verification_status', ]
+                  'verification_status',
+                  'verification_notes',
+                  'data_uri',
+                  ]
 
         widgets = {
             'birthday': forms.DateInput(attrs={'class': 'datepicker'}),
@@ -88,8 +96,8 @@ class VerifyCommitteeForm(forms.ModelForm):
             'government_id_expiry': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'passport_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
             'high_school_system': forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
-            # 'verification_status': forms.CheckboxSelectMultiple(
-            #     choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
+            'verification_status': forms.CheckboxSelectMultiple(
+                choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
         }
 
     def __init__(self, *args, **kwargs):
@@ -103,10 +111,39 @@ class VerifyCommitteeForm(forms.ModelForm):
         self.fields['username'].label = _('Government ID')
         self.fields['username'].help_text = ''
         self.fields['mobile'].help_text = ''
-        self.fields['verification_status'].widget = \
-            forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
-        self.fields['verification_status'].initial = self.instance.verification_status
-        # self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
+        self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
+        self.fields['verification_documents_incomplete'].required = True
+        self.fields['verification_picture_acceptable'].required = True
+
+    def save(self, commit=True):
+        student = super(VerifyCommitteeForm, self).save(commit=False)
+
+        verification_documents_incomplete = self.cleaned_data.get('verification_documents_incomplete')
+        verification_picture_acceptable = self.cleaned_data.get('verification_picture_acceptable')
+        if(verification_documents_incomplete or verification_picture_acceptable == False):
+            status = RegistrationStatusMessage.get_status_confirmed()
+            student.status_message = status
+            student.phase2_start_date = timezone.now()
+            student.phase2_end_date = timezone.datetime(day=19, month=7, year=2017, hour=13, minute=30)
+        elif verification_documents_incomplete == False and verification_picture_acceptable == True:
+            status = RegistrationStatusMessage.get_status_admitted()
+            student.status_message = status
+
+        try:
+            data_uri = self.cleaned_data.get('data_uri')
+            if data_uri:
+                img_str = re.search(r'base64,(.*)', data_uri).group(1)
+                output = open(student.personal_picture.path, 'wb')
+                output.write(base64.b64decode(img_str))
+                output.close()
+        except ValueError:
+            pass
+
+        if commit:
+            student.save()
+            return student
+        else:
+            return student
 
 
 class ApplyStatusForm(forms.Form):
