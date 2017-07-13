@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-12 09:54+0300\n"
-"PO-Revision-Date: 2017-07-12 09:55+0300\n"
+"PO-Revision-Date: 2017-07-12 16:43+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -652,7 +652,7 @@ msgstr "لقد ادخلت رقم جوال بشكل غير صحيح"
 
 #: undergraduate_admission/models.py:82
 msgid "High School GPA (Ministry)"
-msgstr "وزن درجة الشهادة الثانوية (الوزارة)"
+msgstr "نسبة شهادة الثانوية (الوزارة)"
 
 #: undergraduate_admission/models.py:88
 msgid "Phone"
@@ -1063,7 +1063,7 @@ msgstr "نهاية المرحلة الرابعة"
 
 #: undergraduate_admission/models.py:450
 msgid "High School GPA Weight"
-msgstr "وزن درجة الشهادة الثانوية"
+msgstr "نسبة شهادة الثانوية"
 
 #: undergraduate_admission/models.py:451
 msgid "Qudrat Score Weight"
