@@ -259,7 +259,7 @@ select.form-control{
 .controls ul {
     list-style:none;
     /*border-bottom: 1px solid #C6C6C6 !important;*/
-    width: 200px!important;
+    /*width: 200px!important;*/
 }
 
 #id_chronic_diseases{
