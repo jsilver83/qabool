@@ -165,6 +165,7 @@ class User(AbstractUser):
     )
     high_school_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Name'))
     high_school_system = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School System'))
+    high_school_major= models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Major'))
     high_school_province = models.CharField(null=True, blank=True, max_length=100,
                                             verbose_name=_('High School Province'))
     high_school_city = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School City'))

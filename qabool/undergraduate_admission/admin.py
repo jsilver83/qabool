@@ -24,7 +24,7 @@ class UserResource(resources.ModelResource):
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
                   'eligible_for_housing', 'english_placement_test_score', 'english_speaking_test_score',
                   'english_level', 'high_school_gpa_student_entry', 'student_full_name_ar',
-                  'student_full_name_en', 'gender', 'verification_committee_member')
+                  'student_full_name_en', 'gender', 'verification_committee_member', 'high_school_major')
         skip_unchanged = True
         report_skipped = True
 
