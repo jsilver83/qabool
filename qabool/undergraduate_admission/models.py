@@ -318,8 +318,9 @@ class User(AbstractUser):
                                                      verbose_name=_('Assigned Committee Member'))
     verification_documents_incomplete = models.NullBooleanField(blank=True,
                                                                 verbose_name=_('Uploaded docs are incomplete?'), )
+    #TODO: change field name to verification_picture_unacceptable
     verification_picture_acceptable = models.NullBooleanField(blank=True,
-                                                                verbose_name=_('Uploaded picture is acceptable?'), )
+                                                                verbose_name=_('Uploaded picture is rejected?'), )
     verification_status = models.CharField(null=True, blank=True, max_length=500,
                                            verbose_name=_('Issues With Uploaded Docs'))
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))

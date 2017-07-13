@@ -134,6 +134,10 @@ class SMS(object):
         SMS.send_sms(mobile, '%s' % (SMS.sms_messages['admitted_msg']))
 
     @staticmethod
+    def send_sms_docs_issue_message(mobile):
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['docs_issue_message']))
+
+    @staticmethod
     def send_sms_withdrawn(mobile):
         SMS.send_sms(mobile,
                      '%s' % (SMS.sms_messages['withdrawn_msg']))
