@@ -114,7 +114,7 @@
 				</div>
 				<div class="col-sm-8">
 					<div class="col-sm-4 col-md-3 smart-card-div" style="width: 100%">
-						<img class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
+						<img class="img-popup thumbnail personal-img" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
 					</div>
 					<br>
 				</div>
@@ -184,7 +184,7 @@
 	<script type="application/javascript">
 		$(function () {
 			/* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
-			$("#id_personal_picture").click(function () {
+			$(".personal-img").click(function () {
 {#				if (this.files && this.files[0]) {#}
 {#					var reader = new FileReader();#}
 {#					reader.onload = function (e) {#}
