@@ -28,8 +28,12 @@
 				<td><a href="{% url 'verify_student' student.pk %}">{{ student }}</a></td>
 {#				<td>{{ student.status_message.status_message_code }}</td>#}
 				<td>{{ student.student_type }}</td>
-				<td>{{ student.verification_documents_incomplete }}</td>
-				<td>{{ student.verification_picture_acceptable }}</td>
+				<td{% if student.verification_documents_incomplete %} class="danger"{% endif %}>
+					{{ student.verification_documents_incomplete }}
+				</td>
+				<td{% if student.verification_picture_acceptable %} class="danger"{% endif %}>
+					{{ student.verification_picture_acceptable }}
+				</td>
 				{% if student.verification_status %}
 					<td class="danger">{{ student.verification_status }}</td>
 				{% else %}
