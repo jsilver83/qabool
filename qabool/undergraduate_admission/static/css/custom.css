@@ -325,6 +325,7 @@ th {
 
 .smart-card-div{
     background-image: url(../images/smart_card.jpg);
+    background-repeat: no-repeat;
     width: 695px;
     height: 426px;
 }
