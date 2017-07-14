@@ -73,7 +73,7 @@ def student_area(request):
 
     can_confirm = phase == 'PARTIALLY-ADMITTED' and status_message != RegistrationStatusMessage.get_status_confirmed()
 
-    can_finish_phase3 = phase == 'ADMITTED' and not request.user.tarifi_week_attendance_date
+    can_finish_phase3 = phase == 'ADMITTED' and  not request.user.tarifi_week_attendance_date
 
     can_re_upload_docs = phase == 'PARTIALLY-ADMITTED' and request.user.verification_documents_incomplete
 

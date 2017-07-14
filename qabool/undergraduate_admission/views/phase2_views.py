@@ -258,7 +258,10 @@ def upload_documents(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            reg_msg = RegistrationStatusMessage.get_status_confirmed()
+            if request.student_type == 'N':
+                reg_msg = RegistrationStatusMessage.get_status_confirmed_non_saudi()
+            else:
+                reg_msg = RegistrationStatusMessage.get_status_confirmed()
 
             saved_user = form.save(commit=False)
             saved_user.status_message = reg_msg

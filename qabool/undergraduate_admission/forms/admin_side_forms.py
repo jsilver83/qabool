@@ -121,12 +121,13 @@ class VerifyCommitteeForm(forms.ModelForm):
 
         verification_documents_incomplete = self.cleaned_data.get('verification_documents_incomplete')
         verification_picture_acceptable = self.cleaned_data.get('verification_picture_acceptable')
-        if(verification_documents_incomplete or verification_picture_acceptable):
+        if (verification_documents_incomplete or verification_picture_acceptable):
             status = RegistrationStatusMessage.get_status_confirmed()
             student.status_message = status
             student.phase2_start_date = timezone.now()
             student.phase2_end_date = timezone.datetime(day=19, month=7, year=2017, hour=13, minute=30)
-        elif verification_documents_incomplete == False and verification_picture_acceptable == False:
+        elif verification_documents_incomplete == False and verification_picture_acceptable == False \
+                and student.student_type in ('S', 'M'):
             status = RegistrationStatusMessage.get_status_admitted()
             student.status_message = status
 
@@ -142,10 +143,11 @@ class VerifyCommitteeForm(forms.ModelForm):
 
         if commit:
             student.save()
-            if(verification_documents_incomplete or verification_picture_acceptable):
+            if (verification_documents_incomplete or verification_picture_acceptable):
                 SMS.send_sms_docs_issue_message(student.mobile)
                 SMS.send_sms_docs_issue_message(student.guardian_mobile)
-            elif verification_documents_incomplete == False and verification_picture_acceptable == False:
+            elif verification_documents_incomplete == False and verification_picture_acceptable == False \
+                    and student.student_type in ('S', 'M'):
                 SMS.send_sms_admitted(student.mobile)
                 SMS.send_sms_admitted(student.guardian_mobile)
             return student
