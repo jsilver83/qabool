@@ -117,12 +117,14 @@
 			<hr>
 			<div class="row">
 				<div class="col-sm-6">
-					{% formrow form.verification_picture_acceptable using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-					{% formrow form.verification_documents_incomplete using "floppyforms/rows/bootstrap3-horizontal.html" %}
+					{% formrow form.verification_picture_acceptable using "floppyforms/rows/bootstrap3-horizontal.html" %}
 				</div>
 				<div class="col-sm-6">
-					{% formrow form.verification_status using "floppyforms/rows/bootstrap3-horizontal.html" %}
+					{% formrow form.verification_documents_incomplete using "floppyforms/rows/bootstrap3-horizontal.html" %}
 				</div>
+			</div>
+			<div class="row">
+				{% formrow form.verification_status using "floppyforms/rows/bootstrap3-horizontal.html" %}
 			</div>
 			<hr>
 			<div class="row">
