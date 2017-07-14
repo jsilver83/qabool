@@ -88,7 +88,6 @@
 						{% formrow form.passport_number using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 						{% formrow form.passport_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 						{% formrow form.passport_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-						{% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					</div>
 					<div class="col-sm-6">
 						<a href="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}"/></a>
@@ -123,6 +122,7 @@
 					{% formrow form.verification_documents_incomplete using "floppyforms/rows/bootstrap3-horizontal.html" %}
 				</div>
 			</div>
+			<hr>
 			<div class="row">
 				{% formrow form.verification_status using "floppyforms/rows/bootstrap3-horizontal.html" %}
 			</div>

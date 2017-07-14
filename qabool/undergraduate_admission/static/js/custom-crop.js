@@ -20,7 +20,7 @@ $(function () {
     $("#modalCrop").on("shown.bs.modal", function () {
         $(".modal .modal-body").css('overflow-y', 'auto');
         $(".modal .modal-body").css('max-height', $(window).height() * 0.8);
-        $('.modal .modal-body').css('height', $(window).height() * 0.8);
+        $('.modal .modal-body').css('height', $(window).height() * 0.75);
 
         $image.cropper({
             viewMode: 1,
