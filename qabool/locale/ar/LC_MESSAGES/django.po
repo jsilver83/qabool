@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-13 15:46+0300\n"
-"PO-Revision-Date: 2017-07-13 15:46+0300\n"
+"POT-Creation-Date: 2017-07-14 06:25+0300\n"
+"PO-Revision-Date: 2017-07-14 06:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -176,7 +176,7 @@ msgstr "نموذج تسكين طالب"
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:51
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:135
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:136
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:33
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
@@ -1013,11 +1013,11 @@ msgstr "الشخص المسؤول عن التحقق"
 
 #: undergraduate_admission/models.py:320
 msgid "Uploaded docs are incomplete?"
-msgstr "المستندات المرفوعة ناقصة"
+msgstr "هل توجد ملاحظات على المستندات؟"
 
 #: undergraduate_admission/models.py:323
 msgid "Uploaded picture is rejected?"
-msgstr "الصورة الشخصية مرفوضة"
+msgstr "هل توجد ملاحظات على الصورة؟"
 
 #: undergraduate_admission/models.py:325 undergraduate_admission/models.py:357
 msgid "Issues With Uploaded Docs"
@@ -1548,39 +1548,39 @@ msgstr "تغيير حالة قبول الطلاب"
 msgid "Update Gender"
 msgstr "تحديث الجنس"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:135
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:136
 msgid "are u sure?"
 msgstr "هل أنت متأكد؟"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:136
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:137
 msgid "Verify Student"
 msgstr "تم التحقق من البيانات"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:149
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:150
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:50
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:118
 msgid "Crop the photo"
 msgstr "اقتصاص الصورة"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:163
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:164
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:64
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:132
 msgid "Rot-right"
 msgstr "تدوير يمين"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:164
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:165
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:65
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:133
 msgid "Rot-left"
 msgstr "تدوير يسار"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:165
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:166
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:134
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:166
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:167
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:67
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:135
 msgid "Crop and upload"
@@ -1588,11 +1588,11 @@ msgstr "رفع الصورة المعدلة"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:16
 msgid "Documents Incomplete"
-msgstr "المستندات ناقصة"
+msgstr "مشاكل بالمستندات"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:17
 msgid "Picture Acceptable"
-msgstr "الصورة غير مقبولة"
+msgstr "مشاكل بالصورة"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:18
 msgid "Verification Status"
@@ -1601,6 +1601,10 @@ msgstr "حالة التأكد من الطلب"
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:19
 msgid "Last Update Date"
 msgstr "تاريخ آخر تحديث"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:32
+msgid "Yes,No,Unknow"
+msgstr "نعم,لا,غير معروف"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:17
 msgid "Sync Now"
