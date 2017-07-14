@@ -71,7 +71,9 @@ def student_area(request):
 
     show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
 
-    can_confirm = phase == 'PARTIALLY-ADMITTED' and status_message != RegistrationStatusMessage.get_status_confirmed()
+    can_confirm = phase == 'PARTIALLY-ADMITTED' \
+                  and status_message != RegistrationStatusMessage.get_status_confirmed() \
+                  and status_message != RegistrationStatusMessage.get_status_confirmed_non_saudi()
 
     can_finish_phase3 = phase == 'ADMITTED' and  not request.user.tarifi_week_attendance_date
 
