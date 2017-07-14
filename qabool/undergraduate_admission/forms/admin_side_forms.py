@@ -122,7 +122,10 @@ class VerifyCommitteeForm(forms.ModelForm):
         verification_documents_incomplete = self.cleaned_data.get('verification_documents_incomplete')
         verification_picture_acceptable = self.cleaned_data.get('verification_picture_acceptable')
         if (verification_documents_incomplete or verification_picture_acceptable):
-            status = RegistrationStatusMessage.get_status_confirmed()
+            if student.student_type in ('S', 'M'):
+                status = RegistrationStatusMessage.get_status_confirmed()
+            else:
+                status = RegistrationStatusMessage.get_status_confirmed_non_saudi()
             student.status_message = status
             student.phase2_start_date = timezone.now()
             student.phase2_end_date = timezone.datetime(day=19, month=7, year=2017, hour=13, minute=30)
