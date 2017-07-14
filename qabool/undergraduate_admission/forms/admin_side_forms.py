@@ -111,7 +111,7 @@ class VerifyCommitteeForm(forms.ModelForm):
         self.fields['username'].label = _('Government ID')
         self.fields['username'].help_text = ''
         self.fields['mobile'].help_text = ''
-        self.fields['verification_notes'].widget = forms.Textarea(attrs={'required': ''})
+        self.fields['verification_notes'].widget = forms.Textarea()
         self.fields['verification_notes'].required = False
         self.fields['verification_documents_incomplete'].required = True
         self.fields['verification_picture_acceptable'].required = True
