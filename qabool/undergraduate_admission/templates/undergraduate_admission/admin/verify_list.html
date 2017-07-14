@@ -13,8 +13,8 @@
 					<th>{% trans 'Student Full Name' %}</th>
 {#					<th>{% trans 'Status' %}</th>#}
 					<th>{% trans 'Student Type' %}</th>
-					<th>{% trans 'Documents Incomplete' %}</th>
 					<th>{% trans 'Picture Acceptable' %}</th>
+					<th>{% trans 'Documents Incomplete' %}</th>
 					<th>{% trans 'Verification Status' %}</th>
 					<th>{% trans 'Last Update Date' %}</th>
 				</tr>
@@ -24,15 +24,15 @@
 							{% else %}
 						<tr>
 					{% endif %}
-				<td><a href="{% url 'verify_student' student.pk %}">{{ student.username }}</a></td>
-				<td><a href="{% url 'verify_student' student.pk %}">{{ student }}</a></td>
+				<td><a target="_blank" href="{% url 'verify_student' student.pk %}">{{ student.username }}</a></td>
+				<td><a target="_blank" href="{% url 'verify_student' student.pk %}">{{ student }}</a></td>
 {#				<td>{{ student.status_message.status_message_code }}</td>#}
 				<td>{{ student.student_type }}</td>
-				<td{% if student.verification_documents_incomplete %} class="danger"{% endif %}>
-					{{ student.verification_documents_incomplete }}
-				</td>
 				<td{% if student.verification_picture_acceptable %} class="danger"{% endif %}>
-					{{ student.verification_picture_acceptable }}
+					{{ student.verification_picture_acceptable|yesno:_("Yes,No,Unknow") }}
+				</td>
+				<td{% if student.verification_documents_incomplete %} class="danger"{% endif %}>
+					{{ student.verification_documents_incomplete|yesno:_("Yes,No,Unknow") }}
 				</td>
 				{% if student.verification_status %}
 					<td class="danger">{{ student.verification_status }}</td>
