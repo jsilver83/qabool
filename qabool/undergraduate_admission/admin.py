@@ -100,7 +100,7 @@ class StudentAdmin(VersionAdmin):
         ('Phase 2 Fields - Guardian Information', {
             'classes': ('collapse',),
             'fields': (
-                'guardian_name', 'guardian_government_id', 'guardian_relation', 'guardian_mobile', 'guardian_email',
+                'guardian_name', 'guardian_government_id', 'guardian_relation', 'guardian_email',
                 'guardian_po_box', 'guardian_postal_code', 'guardian_city', 'guardian_job', 'guardian_employer',
             ),
         }),
