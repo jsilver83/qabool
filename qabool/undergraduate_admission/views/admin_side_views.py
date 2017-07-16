@@ -52,6 +52,7 @@ class StaffBaseView(LoginRequiredMixin, UserPassesTestMixin):
         return self.request.user.is_staff
 
 
+# TODO: include a mechanism for the null admission total (missing data)
 class CutOffPointView(AdminBaseView, View):
     def get_students_matching(self, request):
         selected_student_types = request.GET.getlist('student_type', [])

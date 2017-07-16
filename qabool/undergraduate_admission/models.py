@@ -438,6 +438,7 @@ class User(AbstractUser):
         verbose_name_plural = "users"
 
 
+#TODO: add a flag for active semester that will be used in mau places
 class AdmissionSemester(models.Model):
     semester_name = models.CharField(max_length=200, verbose_name=_('Semester Name'))
     phase1_start_date = models.DateTimeField(null=True, verbose_name=_('Phase 1 Start Date'))
