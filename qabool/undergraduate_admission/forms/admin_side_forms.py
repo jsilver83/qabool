@@ -59,12 +59,12 @@ class VerifyCommitteeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'nationality', 'saudi_mother', 'student_full_name_ar', 'student_full_name_en',
+        fields = ['username', 'nationality', 'saudi_mother',
 
                   'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                   'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
 
-                  'email', 'mobile', 'high_school_gpa',
+                  'mobile', 'high_school_gpa',
                   # 'qudrat_score', 'tahsili_score',
                   'high_school_graduation_year', 'high_school_system', 'high_school_major',
 
@@ -95,9 +95,6 @@ class VerifyCommitteeForm(forms.ModelForm):
             'birthday_ah': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'government_id_expiry': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'passport_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
-            'high_school_system': forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
-            'verification_status': forms.CheckboxSelectMultiple(
-                choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
         }
 
     def __init__(self, *args, **kwargs):
@@ -115,6 +112,9 @@ class VerifyCommitteeForm(forms.ModelForm):
         self.fields['verification_notes'].required = False
         self.fields['verification_documents_incomplete'].required = True
         self.fields['verification_picture_acceptable'].required = True
+        self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
+        self.fields['verification_status'].widget = forms.CheckboxSelectMultiple(
+                choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
 
     def save(self, commit=True):
         student = super(VerifyCommitteeForm, self).save(commit=False)

@@ -9,6 +9,7 @@
 			<br><br>
 			<table class="table table-striped">
 				<tr>
+					<th></th>
 					<th>{% trans 'Government ID' %}</th>
 					<th>{% trans 'Student Full Name' %}</th>
 {#					<th>{% trans 'Status' %}</th>#}
@@ -24,6 +25,7 @@
 							{% else %}
 						<tr>
 					{% endif %}
+				<td><img style="width: 150px;" src="{% url 'download_user_file_admin' 'personal_picture' student.pk %}"></td>
 				<td><a target="_blank" href="{% url 'verify_student' student.pk %}">{{ student.username }}</a></td>
 				<td><a target="_blank" href="{% url 'verify_student' student.pk %}">{{ student }}</a></td>
 {#				<td>{{ student.status_message.status_message_code }}</td>#}
