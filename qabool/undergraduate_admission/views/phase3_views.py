@@ -1,8 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import FormView
+from django.views.generic import TemplateView
+from django.views.generic import UpdateView
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from undergraduate_admission.forms.phase3_forms import TarifiTimeSlotForm, ChooseRoommateForm
@@ -10,183 +15,124 @@ from undergraduate_admission.models import AdmissionSemester, Agreement, Registr
 from undergraduate_admission.utils import SMS
 
 
-def is_phase3_eligible(user):
-    return user.status_message == RegistrationStatusMessage.get_status_admitted()
+class Phase3BaseView(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted() \
+           and AdmissionSemester.get_phase3_active_semester(self.request.user)
 
 
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def student_agreement_1(request):
-    form = AgreementForm(request.POST or None)
+class BaseStudentAgreement(Phase3BaseView, FormView):
+    template_name = 'undergraduate_admission/phase2/student_agreement.html'
+    form_class = AgreementForm
+    agreement_type = 'n/a'
+    check_step = ''
+    step_number = 'n/a'
+    next_url = 'n/a'
 
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed1'] = True
-            return redirect('student_agreement_2')
+    def test_func(self):
+        test_result = super(BaseStudentAgreement, self).test_func()
+        if self.check_step:
+            return self.request.session.get(self.check_step) and test_result
         else:
-            messages.error(request, _('Error.'))
+            return test_result
 
-    sem = AdmissionSemester.get_phase3_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_1', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step1': 'active'})
+    def get_context_data(self, **kwargs):
+        context = super(BaseStudentAgreement, self).get_context_data(**kwargs)
+        sem = AdmissionSemester.get_phase3_active_semester(self.request.user)
+        context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
+        context['items'] = context['agreement'].items.filter(show=True)
+        context[self.step_number] = 'active'
+        return context
+
+    def form_valid(self, form):
+        self.request.session[self.step_number] = True
+        return redirect(self.next_url)
+
+    def form_invalid(self, form):
+        messages.error(self.request, _('Error.'))
+        return super(BaseStudentAgreement, self).form_invalid(form)
 
 
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def student_agreement_2(request):
-    form = AgreementForm(request.POST or None)
+class StudentAgreement1(BaseStudentAgreement):
+    agreement_type = 'STUDENT_AGREEMENT_1'
+    step_number = 'step1'
+    next_url = 'student_agreement_2'
 
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed2'] = True
-            return redirect('student_agreement_3')
+
+class StudentAgreement2(BaseStudentAgreement):
+    agreement_type = 'STUDENT_AGREEMENT_2'
+    check_step = 'step1'
+    step_number = 'step2'
+    next_url = 'student_agreement_3'
+
+
+class StudentAgreement3(BaseStudentAgreement):
+    agreement_type = 'STUDENT_AGREEMENT_3'
+    check_step = 'step2'
+    step_number = 'step3'
+    next_url = 'student_agreement_4'
+
+
+class StudentAgreement4(BaseStudentAgreement):
+    agreement_type = 'STUDENT_AGREEMENT_4'
+    check_step = 'step3'
+    step_number = 'step4'
+    next_url = 'choose_tarifi_time_slot'
+
+
+class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
+    form_class = TarifiTimeSlotForm
+    template_name = 'undergraduate_admission/phase3/tarifi_time_slot.html'
+    success_url = 'print_documents'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        kfupm_id = KFUPMIDsPool.get_next_available_id()
+
+        if kfupm_id:
+            saved = form.save(commit=False)
+            saved.phase3_submit_date = timezone.now()
+            if not saved.kfupm_id:
+                saved.kfupm_id = kfupm_id
+            saved.save()
+
+            if saved:
+                messages.success(self.request, _('Tarifi time slot was chosen successfully...'))
+                return redirect(self.success_url)
         else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase3_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_2', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step2': 'active'})
+            messages.error(self.request, _('No IDs to assign. Contact the site admins...'))
+            return redirect('student_area')
 
 
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def student_agreement_3(request):
-    form = AgreementForm(request.POST or None)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed3'] = True
-            return redirect('student_agreement_4')
-        else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase3_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_3', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step3': 'active'})
+class PrintDocuments(Phase3BaseView, TemplateView):
+    template_name = 'undergraduate_admission/phase3/print_documents.html'
 
 
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def student_agreement_4(request):
-    form = AgreementForm(request.POST or None)
+class BasePrintDocuments(Phase3BaseView, TemplateView):
+    template_name = 'undergraduate_admission/phase3/print_documents_no_steps.html'
 
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['agreed4'] = True
-            return redirect('choose_tarifi_time_slot')
-        else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase3_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='STUDENT_AGREEMENT_4', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
-    return render(request, 'undergraduate_admission/phase2/student_agreement.html', {'agreement': agreement,
-                                                                                     'items': agreement_items,
-                                                                                     'form': form,
-                                                                                     'step4': 'active'})
+    def test_func(self):
+        return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted() \
+           and self.request.user.tarifi_week_attendance_date
 
 
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def choose_tarifi_time_slot(request):
-    form = TarifiTimeSlotForm(request.POST or None, instance=request.user)
+class AdmissionLetter(BasePrintDocuments):
+    template_name = 'undergraduate_admission/phase3/letter_admission.html'
 
-    if request.user.tarifi_week_attendance_date:
-        return redirect('student_area')
-
-    if request.method == 'POST':
-        if form.is_valid():
-            kfupm_id = KFUPMIDsPool.get_next_available_id()
-
-            if kfupm_id:
-                saved = form.save(commit=False)
-                saved.phase3_submit_date = timezone.now()
-                if not saved.kfupm_id:
-                    saved.kfupm_id = kfupm_id
-                saved.save()
-
-                if saved:
-                    messages.success(request, _('Tarifi time slot was chosen successfully...'))
-                    SMS.send_sms_admitted(request.user.mobile)
-                    return redirect('print_documents')
-                else:
-                    messages.error(request, _('Error saving info. Try again later!'))
-            else:
-                messages.error(request, _('No IDs to assign. Contact the site admins...'))
-                return redirect('choose_tarifi_time_slot')
-        else:
-            print(form.errors)
-            messages.error(request, _('Error.'))
-
-    return render(request, 'undergraduate_admission/phase3/tarifi_time_slot.html', {'form': form, })
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.admission_letter_print_date:
+            request.user.admission_letter_print_date = timezone.now()
+            request.user.save()
+        return super(AdmissionLetter, self).dispatch(request, *args, **kwargs)
 
 
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def print_documents(request):
-    eligible_for_housing = request.user.eligible_for_housing
-    return render(request, 'undergraduate_admission/phase2/print_documents.html',
-                  {'eligible_for_housing': eligible_for_housing, })
+class MedicalLetter(BasePrintDocuments):
+    template_name = 'undergraduate_admission/phase3/letter_medical.html'
 
-
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def admission_letter(request):
-    if request.method == "GET" and not request.user.admission_letter_print_date:
-        request.user.admission_letter_print_date = timezone.now()
-        request.user.save()
-
-    user = request.user
-
-    return render(request, 'undergraduate_admission/phase2/letter_admission.html', {'user': user,})
-
-
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def medical_letter(request):
-    if request.method == "GET" and not request.user.medical_report_print_date:
-        request.user.medical_report_print_date = timezone.now()
-        request.user.save()
-
-    user = request.user
-
-    return render(request, 'undergraduate_admission/phase2/letter_medical.html', {'user': user,})
-
-
-@login_required()
-@user_passes_test(is_phase3_eligible)
-def choose_roommate(request):
-    form = ChooseRoommateForm(request.POST or None, instance=request.user)
-
-    if request.user.eligible_for_housing ==False:
-        messages.success(request, _('You are not eligible for housing...'))
-        return redirect('student_area')
-
-
-    if request.method == 'POST':
-        if form.is_valid():
-            if request.user.roommate_id:
-                saved = form.save(commit=True)
-                messages.success(request, _('Roommate was chosen successfully...'))
-                return redirect('student_area')
-
-            else:
-                messages.error(request, _('Contact the site admins...'))
-                return redirect('student_area')
-        else:
-            print(form.errors)
-            messages.error(request, _('Error.'))
-
-    return render(request, 'undergraduate_admission/phase3/choose_roommate.html',{'form': form})
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.medical_report_print_date:
+            request.user.medical_report_print_date = timezone.now()
+            request.user.save()
+        return super(MedicalLetter, self).dispatch(request, *args, **kwargs)
