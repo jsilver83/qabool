@@ -60,7 +60,7 @@ class StudentAgreement1(BaseStudentAgreement):
 
 
 class StudentAgreement2(BaseStudentAgreement):
-    agreement_type = 'STUDENT_AGREEMENT_2'
+    agreement_type = 'STUDENT_AGREEMENT_4'
     check_step = 'step1'
     step_number = 'step2'
     next_url = 'student_agreement_3'
@@ -74,7 +74,7 @@ class StudentAgreement3(BaseStudentAgreement):
 
 
 class StudentAgreement4(BaseStudentAgreement):
-    agreement_type = 'STUDENT_AGREEMENT_4'
+    agreement_type = 'STUDENT_AGREEMENT_2'
     check_step = 'step3'
     step_number = 'step4'
     next_url = 'choose_tarifi_time_slot'
