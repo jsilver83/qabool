@@ -12,13 +12,13 @@ def student_info_commands(context):
     phase = user.get_student_phase()
     can_withdraw = (phase == 'ADMITTED'
                     or user.status_message == RegistrationStatusMessage.get_status_confirmed())
-    can_choose_roommate = (phase == 'ADMITTED' and user.eligible_for_housing)
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
     can_print_docs = (phase == 'ADMITTED' and user.tarifi_week_attendance_date)
     can_confirm = phase == 'PARTIALLY-ADMITTED' \
                   and user.status_message != RegistrationStatusMessage.get_status_confirmed()
     can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)
-    can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing)
+    can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing
+                       and AdmissionSemester.get_phase4_active_semester(user))
     try:
         can_search_in_housing = can_see_housing and user.housing_user.searchable
     except ObjectDoesNotExist:
@@ -42,7 +42,6 @@ def student_info_commands(context):
 
     return {
         'user': user,
-        'can_choose_roommate': can_choose_roommate,
         'can_withdraw': can_withdraw,
         'can_print_docs': can_print_docs,
         'can_confirm': can_confirm,
