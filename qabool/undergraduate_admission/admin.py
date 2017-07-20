@@ -77,7 +77,7 @@ class StudentAdmin(VersionAdmin):
                        'government_id_issue', 'government_id_expiry', 'government_id_place',
                        'passport_number', 'passport_place', 'passport_expiry',
                        'birthday', 'birthday_ah', 'birth_place', 'high_school_name', 'high_school_province',
-                       'high_school_city', 'eligible_for_housing', 'blood_type', 'student_address', 'social_status',
+                       'high_school_city', 'blood_type', 'student_address', 'social_status',
                        'kids_no',
                        'is_employed', 'employer_name', 'is_disabled', 'disability_needs', 'disability_needs_notes',
                        'is_diseased',
@@ -122,14 +122,23 @@ class StudentAdmin(VersionAdmin):
         ('Phase 3 Fields', {
             'classes': ('collapse',),
             'fields': (
+                'kfupm_id',
                 'admission_letter_print_date', 'medical_report_print_date', 'roommate_id',
-                'tarifi_week_attendance_date',
                 'english_placement_test_score', 'english_speaking_test_score', 'english_level',
                 'phase3_start_date', 'phase3_end_date', 'phase3_submit_date'),
         }),
         ('Withdrawal Fields', {
             'classes': ('collapse',),
             'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason'),
+
+        }),
+        ('Tarifi Fields', {
+            'classes': ('collapse',),
+            'fields': ('eligible_for_housing',
+                       'tarifi_week_attendance_date', 'preparation_course_attendance_date',
+                       'english_placement_test_date', 'english_speaking_test_date',
+                       'english_placement_test_score', 'english_speaking_test_score',
+                       'english_level'),
 
         }),
     )
@@ -357,12 +366,30 @@ class TarifiReceptionDateAdmin(admin.ModelAdmin):
     list_filter = ('semester',)
 
 
+class TarifiActivitySlotResource(resources.ModelResource):
+    class Meta:
+        model = TarifiActivitySlot
+        import_id_fields = ('id',)
+        fields = ('semester', 'type', 'location_ar', 'location_en', 'slots', 'remaining_slots', 'slot_start_date',
+                  'slot_end_date', 'show', 'display_order')
+        skip_unchanged = True
+        report_skipped = True
+
+
+class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('semester', 'type', 'location_ar', 'location_en', 'slots', 'remaining_slots', 'slot_start_date',
+                    'slot_end_date', 'show', 'display_order')
+    list_filter = ('semester', 'type', 'location_ar', 'location_en')
+    resource_class = TarifiActivitySlotResource
+
+
 # Display Qabool in the page title and header
 admin.site.site_header = _('Qabool')
 admin.site.index_title = _('Qabool Administration')
 admin.site.site_title = _('Administration')
 
 admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
+admin.site.register(TarifiActivitySlot, TarifiActivitySlotAdmin)
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(ImportantDateSidebar, ImportantDateSidebarAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
