@@ -124,7 +124,6 @@ class StudentAdmin(VersionAdmin):
             'fields': (
                 'kfupm_id',
                 'admission_letter_print_date', 'medical_report_print_date', 'roommate_id',
-                'tarifi_week_attendance_date',
                 'english_placement_test_score', 'english_speaking_test_score', 'english_level',
                 'phase3_start_date', 'phase3_end_date', 'phase3_submit_date'),
         }),
