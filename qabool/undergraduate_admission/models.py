@@ -1024,6 +1024,7 @@ class TarifiReceptionDate(models.Model):
 
     class Meta:
         verbose_name_plural = _('Tarifi: Tarifi Reception Dates')
+        ordering = ['slot_start_date']
 
     @property
     def remaining_slots(self):
