@@ -16,6 +16,7 @@ from undergraduate_admission.media_handlers import upload_location_govid, upload
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
 
 
+# TODO: split user fields into two groups: essential and non essential fields
 class User(AbstractUser):
     semester = models.ForeignKey(
         'AdmissionSemester',
@@ -165,7 +166,7 @@ class User(AbstractUser):
     )
     high_school_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Name'))
     high_school_system = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School System'))
-    high_school_major= models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Major'))
+    high_school_major = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Major'))
     high_school_province = models.CharField(null=True, blank=True, max_length=100,
                                             verbose_name=_('High School Province'))
     high_school_city = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School City'))
@@ -318,9 +319,9 @@ class User(AbstractUser):
                                                      verbose_name=_('Assigned Committee Member'))
     verification_documents_incomplete = models.NullBooleanField(blank=True,
                                                                 verbose_name=_('Uploaded docs are incomplete?'), )
-    #TODO: change field name to verification_picture_unacceptable
+    # TODO: change field name to verification_picture_unacceptable
     verification_picture_acceptable = models.NullBooleanField(blank=True,
-                                                                verbose_name=_('Uploaded picture is rejected?'), )
+                                                              verbose_name=_('Uploaded picture is rejected?'), )
     verification_status = models.CharField(null=True, blank=True, max_length=500,
                                            verbose_name=_('Issues With Uploaded Docs'))
     verification_notes = models.CharField(null=True, blank=True, max_length=500, verbose_name=_('Verification Note'))
@@ -336,12 +337,33 @@ class User(AbstractUser):
     roommate_id = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('Roommate ID'))
     tarifi_week_attendance_date = models.ForeignKey('TarifiReceptionDate',
                                                     verbose_name=_('Tarifi Week Attendance Date'),
-                                                    on_delete=models.CASCADE,
+                                                    on_delete=models.SET_NULL,
                                                     null=True,
                                                     blank=True, )
+    preparation_course_attendance_date = models.ForeignKey('TarifiActivitySlot',
+                                                           verbose_name=_('Preparation Course Attendance Date'),
+                                                           on_delete=models.SET_NULL,
+                                                           null=True,
+                                                           blank=True,
+                                                           related_name='students_in_course_slot',
+                                                           limit_choices_to={'type': 'PREPARATION_COURSE'})
+    english_placement_test_date = models.ForeignKey('TarifiActivitySlot',
+                                                    verbose_name=_('English Placement Test Date'),
+                                                    on_delete=models.SET_NULL,
+                                                    null=True,
+                                                    blank=True,
+                                                    related_name='students_in_placement_slot',
+                                                    limit_choices_to={'type': 'ENGLISH_PLACEMENT_TEST'})
+    english_speaking_test_date = models.ForeignKey('TarifiActivitySlot',
+                                                   verbose_name=_('English Speaking Test Date'),
+                                                   on_delete=models.SET_NULL,
+                                                   null=True,
+                                                   blank=True,
+                                                   related_name='students_in_speaking_slot',
+                                                   limit_choices_to={'type': 'ENGLISH_SPEAKING_TEST'})
     english_placement_test_score = models.PositiveSmallIntegerField(null=True,
                                                                     blank=True,
-                                                                    verbose_name='English Placement Test Score',
+                                                                    verbose_name=_('English Placement Test Score'),
                                                                     validators=[MinValueValidator(1),
                                                                                 MaxValueValidator(100)], )
     english_speaking_test_score = models.PositiveSmallIntegerField(null=True,
@@ -423,7 +445,7 @@ class User(AbstractUser):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     def __init__(self, *args, **kwargs):
@@ -438,7 +460,7 @@ class User(AbstractUser):
         verbose_name_plural = "users"
 
 
-#TODO: add a flag for active semester that will be used in mau places
+# TODO: add a flag for active semester that will be used in mau places
 class AdmissionSemester(models.Model):
     semester_name = models.CharField(max_length=200, verbose_name=_('Semester Name'))
     phase1_start_date = models.DateTimeField(null=True, verbose_name=_('Phase 1 Start Date'))
@@ -494,6 +516,13 @@ class AdmissionSemester(models.Model):
             if user and user.phase3_start_date and user.phase3_end_date and \
                                     user.phase3_start_date <= now <= user.phase3_end_date:
                 sem = user.semester
+
+        return sem
+
+    @staticmethod
+    def get_phase4_active_semester(user):
+        now = timezone.now()
+        sem = AdmissionSemester.objects.filter(phase4_start_date__lte=now, phase4_end_date__gte=now).first()
 
         return sem
 
@@ -606,7 +635,7 @@ class RegistrationStatusMessage(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @staticmethod
@@ -714,7 +743,7 @@ class Lookup(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
 
@@ -811,7 +840,7 @@ class GraduationYear(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @staticmethod
@@ -849,7 +878,7 @@ class Nationality(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @property
@@ -990,13 +1019,16 @@ class TarifiReceptionDate(models.Model):
     slots = models.PositiveSmallIntegerField(null=True, blank=False, default=300, verbose_name=_('Slots'))
     slot_start_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Start Date'))
     slot_end_date = models.DateTimeField(null=True, blank=False, verbose_name=_('End Date'))
+    show = models.BooleanField(verbose_name=_('Show'), default=True)
+    display_order = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Display Order'))
 
     class Meta:
-        verbose_name_plural = _('Admission: Tarifi Reception Dates')
+        verbose_name_plural = _('Tarifi: Tarifi Reception Dates')
 
     @property
     def remaining_slots(self):
-        return self.slots - User.objects.filter(tarifi_week_attendance_date=self.pk).count()
+        return self.slots - User.objects.filter(tarifi_week_attendance_date=self.pk,
+                                                status_message=RegistrationStatusMessage.get_status_admitted()).count()
 
     @staticmethod
     def get_all_available_slots(user, add_dashes=True):
@@ -1008,8 +1040,83 @@ class TarifiReceptionDate(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except: # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
     def __str__(self):
         return self.reception_date
+
+
+class TarifiActivitySlot(models.Model):
+    semester = models.ForeignKey(
+        'AdmissionSemester',
+        on_delete=models.SET_NULL,
+        blank=False,
+        null=True,
+        related_name='tarifi_activities_dates',
+        verbose_name='Semester',
+    )
+    slot_start_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Start Date'))
+    slot_end_date = models.DateTimeField(null=True, blank=False, verbose_name=_('End Date'))
+    location_ar = models.CharField(max_length=600, null=True, blank=False, verbose_name=_('Location (Arabic)'))
+    location_en = models.CharField(max_length=600, null=True, blank=False, verbose_name=_('Location (English)'))
+    slots = models.PositiveSmallIntegerField(null=True, blank=False, default=300, verbose_name=_('Slots'))
+    type = models.CharField(max_length=30, null=True, blank=False, verbose_name=_('Slot Type'),
+                            choices=[
+                                ('PREPARATION_COURSE', _('Preparation Course Attendance Date')),
+                                ('ENGLISH_PLACEMENT_TEST', _('English Placement Test Date')),
+                                ('ENGLISH_SPEAKING_TEST', _('English Speaking Test Date'))]
+                            )
+    description = models.CharField(max_length=600, null=True, blank=True, verbose_name=_('Description'))
+    show = models.BooleanField(verbose_name=_('Show'), default=True)
+    display_order = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Display Order'))
+
+    class Meta:
+        verbose_name_plural = _('Tarifi: Preparation Activity Slots')
+
+    def __str__(self):
+        if translation.get_language() == "ar":
+            location = self.location_ar
+        else:
+            location = self.location_en
+
+        if self.type == 'PREPARATION_COURSE':
+            type = _('Preparation Course Attendance')
+        elif self.type == 'ENGLISH_PLACEMENT_TEST':
+            type = _('English Placement Test')
+        elif self.type == 'ENGLISH_SPEAKING_TEST':
+            type = _('English Speaking Test')
+        else:
+            type = 'N/A'
+
+        return _('%(type)s (%(location)s) - %(start_date)s to %(end_date)s') % {
+            'type': type,
+            'location': location,
+            'start_date': self.slot_start_date,
+            'end_date': self.slot_end_date,
+        }
+
+    @property
+    def remaining_slots(self):
+        if self.type == 'PREPARATION_COURSE':
+            return self.slots - User.objects.filter(preparation_course_attendance_date=self.pk,
+                                                    status_message=RegistrationStatusMessage.get_status_admitted()).count()
+        elif self.type == 'ENGLISH_PLACEMENT_TEST':
+            return self.slots - User.objects.filter(english_placement_test_date=self.pk,
+                                                    status_message=RegistrationStatusMessage.get_status_admitted()).count()
+        elif self.type == 'ENGLISH_SPEAKING_TEST':
+            return self.slots - User.objects.filter(english_speaking_test_date=self.pk,
+                                                    status_message=RegistrationStatusMessage.get_status_admitted()).count()
+
+    # TODO: Implement next available slot logic
+    @staticmethod
+    def get_next_preparation_course_available_slot(student):
+        pass
+
+    @staticmethod
+    def get_next_placement_test_available_slot(student):
+        pass
+
+    @staticmethod
+    def get_next_speaking_test_available_slot(student):
+        pass
