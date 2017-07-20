@@ -1,0 +1,31 @@
+{% extends 'base_student_area.html' %}
+{% load i18n %}
+
+{% block subcontent %}
+
+	{% if messages %}
+		<div class="messages">
+			{% for message in messages %}
+				<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	<br>&nbsp;<br>
+	<h4>{% trans 'Print Documents' %}</h4>
+	<br>
+	<ul>
+		<li><h6>{% trans 'Admission Letter' %}<a href="{% url 'admission_letter' %}" target="_blank">
+			{% trans 'Click Here' %}</a></h6></li>
+		<li><h6>{% trans 'Medical Checkup Letter' %}<a href="{% url 'medical_letter' %}" target="_blank">
+			{% trans 'Click Here' %}
+		</a></h6></li>
+	</ul>
+	<br>
+
+	<h4>{% trans 'Student Guide' %}
+		<a href="http://www.kfupm.edu.sa/sites/newstu/Image%20Library/student_booklet.pdf" target="_blank">
+			{% trans 'Click Here' %}</a></h4>
+
+
+{% endblock subcontent %}
