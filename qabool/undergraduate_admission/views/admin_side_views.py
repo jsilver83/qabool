@@ -149,7 +149,8 @@ class VerifyList(StaffBaseView, ListView):
 
     def get_queryset(self):
         logged_in_username = self.request.user.username
-        status = [RegistrationStatusMessage.get_status_confirmed()]
+        status = [RegistrationStatusMessage.get_status_confirmed(),
+                  RegistrationStatusMessage.get_status_confirmed_non_saudi()]
         students_to_verified = User.objects.filter(is_staff=False,
                                                    status_message__in=status,
                                                    verification_committee_member= logged_in_username)\
