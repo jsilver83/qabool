@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-14 06:25+0300\n"
-"PO-Revision-Date: 2017-07-14 06:28+0300\n"
+"PO-Revision-Date: 2017-07-20 12:03+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -1041,7 +1041,7 @@ msgstr "رقم هوية زميل السكن"
 
 #: undergraduate_admission/models.py:338
 msgid "Tarifi Week Attendance Date"
-msgstr "تاريخ حضور اﻻسبوع التعريفي"
+msgstr "تاريخ حضور البرنامج التعريفي"
 
 #: undergraduate_admission/models.py:369
 msgid "Full Name"
@@ -1936,15 +1936,15 @@ msgstr "التعهدات"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:56
 msgid "Agreement 2"
-msgstr "اجتياز السنة التحضيرية"
+msgstr "الترقية في اللغة الانجليزية"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:57
 msgid "Agreement 3"
-msgstr "اختيار التخصص"
+msgstr "اجتياز السنة التحضيرية"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:58
 msgid "Agreement 4"
-msgstr "الترقية في اللغة الانجليزية"
+msgstr "اختيار التخصص"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:59
 msgid "Agreement 5"

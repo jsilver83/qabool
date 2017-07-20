@@ -17,8 +17,8 @@
 	<!-- Custom CSS -->
 	<link href="css/rtl.css" rel="stylesheet">
 	<style media="print">
-		html{
-		font-size:110%;
+		body{
+		font-size:95%;
 		font-family:tahoma;
 		}
 		.noprint{
@@ -43,7 +43,7 @@
 </div>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
-		<td colspan="3" align="center" valign="top"><img src="{% static 'images/letter-head.jpg' %}"></td>
+		<td colspan="3" align="center" valign="top"><img style="width: 90%" src="{% static 'images/letter-head.jpg' %}"></td>
 	</tr>
 	<tr>
 		<td colspan="3" align="center" valign="top"><h3>كشف طبي</h3></td>
@@ -59,13 +59,11 @@
 			نأمل إجراء الفحوص الطبية اللازمة للطالب الموضح اسمه أعلاه
 		</td>
 		<td></td>
-		<td align="left" valign="top"></td>
+		<td align="left" valign="top"><img class="pull-left" width="150" src="{% static 'images/withdrawletter-signature.jpg' %}"/></td>
 	</tr>
 	<tr>
-		<td colspan="3" align="center" valign="top"><img class="pull-left" width="200" src="{% static 'images/withdrawletter-signature.jpg' %}"/></td>
-	</tr>
-	<tr>
-		<td colspan="3" align="center" valign="top"><img class="img-responsive" src="{% static 'images/form.png' %}" width="100%"/>
+		<td colspan="3" align="center" valign="top"><img class="img-responsive" src="{% static 'images/form.png' %}"
+		                                                 width="100%"/>
 		</td>
 	</tr>
 	<tr>
@@ -75,7 +73,7 @@
 	</tr>
 	<tr>
 		<td align="right" valign="top">المكرم مدير عام القبول بجامعة الملك فهد للبترول والمعادن      الموقر<br>
-			السلام عليكم ورحمة الله وبركاته – بعد
+			السلام عليكم ورحمة الله وبركاته – وبعد
 		</td>
 		<td>&nbsp;</td>
 		<td align="left" valign="middle"></td>
@@ -100,15 +98,16 @@
 		</td>
 		<td align="right" valign="top">&nbsp;</td>
 		<td align="right" valign="top">
-			<strong>مدير المستشفى / المتستوصف</strong><br>
+			<strong>مدير المستشفى / المستوصف</strong><br>
 			الاسم: ....................................................................<br>
 			التوقيع: ....................................................................<br>
 			التاريخ: ....................................................................
 		</td>
 	</tr>
-
 	<tr>
-		<td colspan="3" align="center" valign="top"><img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
+	<td><br><br></td></tr>
+	<tr>
+		<td colspan="3" align="center" valign="top"><img style="width: 90%" class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
 	</tr>
 </table>
 

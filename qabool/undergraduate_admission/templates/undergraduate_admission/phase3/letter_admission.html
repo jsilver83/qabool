@@ -18,15 +18,17 @@
 	<!-- Custom CSS -->
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
-		html{
-		font-size:120%;
+		html {
+			font-size: 120%;
 		}
-		.noprint{
-		display:none!important;
+
+		.noprint {
+			display: none !important;
 		}
-		.ftr-fixed-btm{
-		position:fixed;
-		bottom:0px;
+
+		.ftr-fixed-btm {
+			position: fixed;
+			bottom: 0px;
 		}
 	</style>
 </head>
@@ -43,7 +45,7 @@
 </div>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center">
 	<tr>
-		<td><img class="img-responsive" src="{% static 'images/letter-head.jpg' %}"></td>
+		<td><img class="img-responsive" style="width: 90%" src="{% static 'images/letter-head.jpg' %}"></td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
@@ -52,18 +54,18 @@
 		<td>
 			<center>
 				<h2>خطــاب القبــول<br>
-					<small> للعام الدراسي 1437 / 1438هـ</small>
+					<small> للعام الدراسي 1438 / 1439هـ</small>
 				</h2>
 			</center>
-			<div class="date">التاريخ: 10 رمضان 1437هـ</div>
+			<div class="date">التاريخ: 26 شوال 1438هـ</div>
 			<br>
 			<div><strong>{% trans 'Dear Student' %}/ {{ user.get_student_full_name }}</strong></div>
 			<div>
 				<strong>
 					{% if user.kfupm_id %}
-					{% trans 'KFUPM ID' %} / {{ user.kfupm_id }}
+						{% trans 'KFUPM ID' %} / {{ user.kfupm_id }}
 					{% else %}
-					<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
+						<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
 					{% endif %}
 				</strong>
 			</div>
@@ -71,22 +73,22 @@
 			<p>
 				السلام عليكم ورحمة الله وبركاته
 				<br><br>
-				يطيب لعمادة القبول والتسجيل أن تهنئك بالقبول في الجامعة للعام الدراسي 1437/ 1438هـ
+				يطيب لعمادة القبول والتسجيل أن تهنئك بالقبول في الجامعة للعام الدراسي 1438/ 1439هـ
 				متمنين لك حياة دراسية موفقة. ونود إفادتك بأن القبول في الجامعة هو لبرنامج السنة التحضيرية
 				وفي حالة إنهائك لجميع متطلبات هذا البرنامج يحق لك مواصلة الدراسة في المرحلة الجامعية
-				(عليك الاطلاع على شروط اجتياز السنة التحضيرية)، ولإنهاء الإجراءات الخاصة بالطلاب المستجدين
-				يجب عليك الحضور إلى الجامعة في الموعد التالي:
-				<br>
+				، ولإنهاء الإجراءات الخاصة بالطلاب المستجدين
+				يجب عليك الحضور إلى الجامعة في الموعد المحدد أدناه (مصطحباً المستندات التالية): خطاب القبول والكشف الطبي وصورة الهوية الوطنية وصورة شهادة الثانوية وصورتين شخصية حديثة ملونة وبالزي السعودي.
+				<br><br>
 				{% if user.tarifi_week_attendance_date %}
-				<strong>{{ user.tarifi_week_attendance_date }}</strong>
+					<strong>{{ user.tarifi_week_attendance_date }}</strong>
 				{% else %}
-				<strong style="color:red">ERROR: contact admins about this ASAP</strong>
+					<strong style="color:red">ERROR: contact admins about this ASAP</strong>
 				{% endif %}
-				<br>
-				علماً بأن حضور جميع فعاليات البرنامج التعريفي – بما في اختبار تحديد المستوى
-				في اللغة الإنجليزية - إلزامي، وسوف يستمر البرنامج التعريفي حتى يوم الخميس 22
-				ذوالقعدة 1437هـ الموافق 25 اغسطس 2016م، وستبدأ الدراسة يوم الأحد 17 ذوالحجة 1437هـ
-				الموافق 18 سبتمبر 2016م.
+				<br><br>
+				مقر البرنامج التعريفي: مبنى السنة التحضيرية (مبنى 57) بجوار مجمع الجامعة في سكن الطلاب.
+				<br><br>
+				علماً بأن حضور جميع فعاليات البرنامج التعريفي – بما في ذلك اختبار تحديد المستوى
+				في اللغة الإنجليزية - إلزامي، وسوف يستمر البرنامج التعريفي حتى يوم الخميس 23 ذوالحجة 1438هـ الموافق 14 سبتمبر 2017م، وستبدأ الدراسة يوم الأحد 26 ذوالحجة 1438هـ الموافق 17 سبتمبر 2017م.
 			</p>
 		</td>
 	</tr>
@@ -94,11 +96,8 @@
 		<td><img class="pull-left" width="200" src="{% static 'images/admissionletter-signature.jpg' %}"/></td>
 	</tr>
 	<tr>
-		<td align="center">عند حضورك للجامعة يجب عليك إحضار هذا الخطاب حيث إنه الاثبات الرسمي لقبولك</td>
-	</tr>
-	<tr>
 		<td align="center" class="ftr-fixed-btm">
-			<img class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
+			<img style="width: 90%" class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
 	</tr>
 </table>
 
