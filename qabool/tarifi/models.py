@@ -77,27 +77,27 @@ class TarifiActivitySlot(models.Model):
     class Meta:
         verbose_name_plural = _('Tarifi: Preparation Activity Slots')
 
-    # def __str__(self):
-    #     if translation.get_language() == "ar":
-    #         location = self.location_ar
-    #     else:
-    #         location = self.location_en
-    #
-    #     if self.type == 'PREPARATION_COURSE':
-    #         slot_type = _('Preparation Course Attendance')
-    #     elif self.type == 'ENGLISH_PLACEMENT_TEST':
-    #         slot_type = _('English Placement Test')
-    #     elif self.type == 'ENGLISH_SPEAKING_TEST':
-    #         slot_type = _('English Speaking Test')
-    #     else:
-    #         slot_type = 'N/A'
-    #
-    #     return _('%(slot_type)s (%(location)s) - %(start_date)s to %(end_date)s') % {
-    #         'slot_type': slot_type,
-    #         'location': location,
-    #         'start_date': self.slot_start_date,
-    #         'end_date': self.slot_end_date,
-    #     }
+    def __str__(self):
+        if translation.get_language() == "ar":
+            location = self.location_ar
+        else:
+            location = self.location_en
+
+        if self.type == 'PREPARATION_COURSE':
+            slot_type = _('Preparation Course Attendance')
+        elif self.type == 'ENGLISH_PLACEMENT_TEST':
+            slot_type = _('English Placement Test')
+        elif self.type == 'ENGLISH_SPEAKING_TEST':
+            slot_type = _('English Speaking Test')
+        else:
+            slot_type = 'N/A'
+
+        return _('%(slot_type)s (%(location)s) - %(start_date)s to %(end_date)s') % {
+            'slot_type': slot_type,
+            'location': location,
+            'start_date': self.slot_start_date,
+            'end_date': self.slot_end_date,
+        }
 
     @property
     def remaining_slots(self):
