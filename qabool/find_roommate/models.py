@@ -7,7 +7,7 @@ from undergraduate_admission.models import User
 
 class HousingUser(models.Model):
     user = models.OneToOneField(
-        User,
+        'undergraduate_admission.User',
         on_delete=models.CASCADE,
         primary_key=True,
         related_name='housing_user',
