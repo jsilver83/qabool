@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'undergraduate_admission',
     'find_roommate',
+    'tarifi',
     'reversion',
     'captcha',
     'floppyforms',

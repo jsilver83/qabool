@@ -41,7 +41,7 @@
 				{% else %}
 					<td>{{ student.verification_status }}</td>
 				{% endif %}
-				<td>{{ student.phase2_submit_date }}</td>
+				<td>{{ student.phase2_submit_date|timesince }}</td>
 				</tr>
 				{% endfor %}
 			</table>

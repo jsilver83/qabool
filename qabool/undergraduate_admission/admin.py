@@ -22,8 +22,7 @@ class UserResource(resources.ModelResource):
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
                   'high_school_province', 'admission_note', 'government_id_place',
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
-                  'eligible_for_housing', 'english_placement_test_score', 'english_speaking_test_score',
-                  'english_level', 'high_school_gpa_student_entry', 'student_full_name_ar',
+                  'eligible_for_housing', 'high_school_gpa_student_entry', 'student_full_name_ar',
                   'student_full_name_en', 'gender', 'verification_committee_member', 'high_school_major',
                   'email', 'mobile', 'nationality', 'guardian_mobile', 'student_notes')
         skip_unchanged = True
@@ -67,8 +66,8 @@ class StudentAdmin(VersionAdmin):
                        'email', 'mobile', 'guardian_mobile',
                        ('high_school_gpa', 'qudrat_score', 'tahsili_score'),
                        'admission_total', 'high_school_gpa_student_entry',
-                       ('high_school_graduation_year', 'high_school_system'), 'student_notes'
-                       )
+                       ('high_school_graduation_year', 'high_school_system'), 'student_notes',
+                       'admission_note', 'admission_note2', 'admission_note3', )
         }),
         ('Phase 2 Fields - Personal Information', {
             'classes': ('collapse',),
@@ -124,7 +123,6 @@ class StudentAdmin(VersionAdmin):
             'fields': (
                 'kfupm_id',
                 'admission_letter_print_date', 'medical_report_print_date', 'roommate_id',
-                'english_placement_test_score', 'english_speaking_test_score', 'english_level',
                 'phase3_start_date', 'phase3_end_date', 'phase3_submit_date'),
         }),
         ('Withdrawal Fields', {
@@ -135,10 +133,7 @@ class StudentAdmin(VersionAdmin):
         ('Tarifi Fields', {
             'classes': ('collapse',),
             'fields': ('eligible_for_housing',
-                       'tarifi_week_attendance_date', 'preparation_course_attendance_date',
-                       'english_placement_test_date', 'english_speaking_test_date',
-                       'english_placement_test_score', 'english_speaking_test_score',
-                       'english_level'),
+                       'tarifi_week_attendance_date', ),
 
         }),
     )
@@ -151,6 +146,12 @@ class StudentAdmin(VersionAdmin):
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
     actions = ['yesser_update']
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(StudentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name in['admission_note', 'admission_note2', 'admission_note3']:
+            formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
+        return formfield
 
     # Update selected students and sync them with Yesser
     def yesser_update(self, request, queryset):
@@ -169,8 +170,7 @@ class StudentAdmin(VersionAdmin):
     yesser_update.short_description = _("Sync with Yesser")
 
     def get_queryset(self, request):
-        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')
-        return qs
+        return self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')
 
 
 class VerifyStudent(User):
@@ -366,30 +366,12 @@ class TarifiReceptionDateAdmin(admin.ModelAdmin):
     list_filter = ('semester',)
 
 
-class TarifiActivitySlotResource(resources.ModelResource):
-    class Meta:
-        model = TarifiActivitySlot
-        import_id_fields = ('id',)
-        fields = ('semester', 'type', 'location_ar', 'location_en', 'slots', 'remaining_slots', 'slot_start_date',
-                  'slot_end_date', 'show', 'display_order')
-        skip_unchanged = True
-        report_skipped = True
-
-
-class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('semester', 'type', 'location_ar', 'location_en', 'slots', 'remaining_slots', 'slot_start_date',
-                    'slot_end_date', 'show', 'display_order')
-    list_filter = ('semester', 'type', 'location_ar', 'location_en')
-    resource_class = TarifiActivitySlotResource
-
-
 # Display Qabool in the page title and header
 admin.site.site_header = _('Qabool')
 admin.site.index_title = _('Qabool Administration')
 admin.site.site_title = _('Administration')
 
 admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
-admin.site.register(TarifiActivitySlot, TarifiActivitySlotAdmin)
 admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(ImportantDateSidebar, ImportantDateSidebarAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
