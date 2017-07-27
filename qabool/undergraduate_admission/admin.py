@@ -20,7 +20,7 @@ class UserResource(resources.ModelResource):
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
-                  'high_school_province', 'admission_note', 'government_id_place',
+                  'high_school_province', 'admission_note', 'admission_note2', 'admission_note3', 'government_id_place',
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
                   'eligible_for_housing', 'high_school_gpa_student_entry', 'student_full_name_ar',
                   'student_full_name_en', 'gender', 'verification_committee_member', 'high_school_major',
