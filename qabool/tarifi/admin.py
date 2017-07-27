@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportMixin
 
-from .models import TarifiActivitySlot
+from .models import TarifiActivitySlot, TarifiUser
 
 
 class TarifiActivitySlotResource(resources.ModelResource):
@@ -22,4 +22,12 @@ class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = TarifiActivitySlotResource
 
 
+class TarifiUserAdmin(admin.ModelAdmin):
+    list_display = ('user', 'preparation_course_attendance_date', 'english_placement_test_date',
+                    'english_speaking_test_date', 'english_placement_test_score', 'english_speaking_test_score',
+                    'english_level', )
+    list_filter = ('user__semester', 'user__status_message',)
+
+
+admin.site.register(TarifiUser, TarifiUserAdmin)
 admin.site.register(TarifiActivitySlot, TarifiActivitySlotAdmin)
