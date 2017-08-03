@@ -11,9 +11,10 @@ from django.views.generic import CreateView
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
+from django.views.generic import View
 
 from find_roommate.forms import HousingInfoUpdateForm, HousingSearchForm, RoommateRequestForm
-from find_roommate.models import HousingUser, RoommateRequest
+from find_roommate.models import HousingUser, RoommateRequest, Room
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from undergraduate_admission.models import RegistrationStatusMessage, AdmissionSemester, Agreement, User
 from undergraduate_admission.validators import is_eligible_for_housing, is_eligible_for_roommate_search
@@ -84,12 +85,12 @@ class NewRoommateRequest(HousingBaseView, FormView):
                                                           status=RoommateRequest.RequestStatuses.PENDING)
         return not pending_requests and test_result
 
-    def get_context_data(self, **kwargs):
-        context = super(NewRoommateRequest, self).get_context_data(**kwargs)
-        sem = AdmissionSemester.get_phase4_active_semester(self.request.user)
-        context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
-        context['items'] = context['agreement'].items.filter(show=True)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(NewRoommateRequest, self).get_context_data(**kwargs)
+    #     sem = AdmissionSemester.get_phase4_active_semester(self.request.user)
+    #     context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
+    #     context['items'] = context['agreement'].items.filter(show=True)
+    #     return context
 
     def form_valid(self, form):
         gov_id_or_kfupm_id = form.cleaned_data.get('gov_id_or_kfupm_id')
@@ -120,6 +121,22 @@ class NewRoommateRequest(HousingBaseView, FormView):
     def form_invalid(self, form):
         messages.error(self.request, _('Error.'))
         return super(NewRoommateRequest, self).form_invalid(form)
+
+
+class AcceptRequest(HousingBaseView, View):
+    def get(self, *args, **kwargs):
+        request = RoommateRequest.objects.get(pk=kwargs.get('pk'),
+                                              requested_user=self.request.user,
+                                              status=RoommateRequest.RequestStatuses.PENDING)
+        room = Room.get_next_available_room()
+        request.update(assigned_room = room, status=RoommateRequest.RequestStatuses.ACCEPTED)
+        return redirect('housing_landing_page')
+
+
+class RejectRequest(HousingBaseView, View):
+    def get(self, *args, **kwargs):
+        print(self.kwargs['pk'])
+        return redirect('housing_landing_page')
 
 
 @login_required()
