@@ -13,6 +13,16 @@
 			{% endfor %}
 		</table>
 	{% endif %}
+	<br><br>
+	{% if received_requests %}
+		<h4>{% trans 'Received Requests' %}</h4>
+		<hr><br>
+		<table>
+			{% for request in sent_requests %}
+				{% include 'find_roommate/__request.html' %}
+			{% endfor %}
+		</table>
+	{% endif %}
 	</div>
 	{% if can_make_a_new_request %}
 		<a href="{% url 'roommate_request' %}">{% trans 'Send Roommate Request' %}</a>
