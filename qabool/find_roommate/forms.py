@@ -1,9 +1,12 @@
 import floppyforms.__future__ as forms
+import re
+from django.core.validators import RegexValidator
 from django.db import OperationalError
 from django.utils.translation import ugettext_lazy as _
+from pip import status_codes
 
-from find_roommate.models import HousingUser
-from undergraduate_admission.models import Lookup, User
+from find_roommate.models import HousingUser, RoommateRequest
+from undergraduate_admission.models import Lookup, User, RegistrationStatusMessage, AdmissionSemester
 
 
 class HousingInfoUpdateForm(forms.ModelForm):
@@ -24,10 +27,10 @@ class HousingInfoUpdateForm(forms.ModelForm):
 
         widgets = {
             'searchable': forms.Select(choices=SEARCHABLE_CHOICES),
-            'sleeping': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
-            'light': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')),
-            'room_temperature': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_AC')),
-            'visits': forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_VISITS')),
+            'sleeping': forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
+            'light': forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_LIGHT')),
+            'room_temperature': forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_AC')),
+            'visits': forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_VISITS')),
         }
 
     def clean_agree1(self):
@@ -73,7 +76,7 @@ class HousingInfoUpdateForm(forms.ModelForm):
 class HousingSearchForm(forms.Form):
     high_school_city = forms.CharField(
         # queryset = User.objects.order_by().values_list('high_school_city').distinct(),
-        widget=forms.Select(choices= User.get_distinct_high_school_city()),
+        widget=forms.Select(choices=User.get_distinct_high_school_city()),
         required=False,
         label=_('High School City'),
     )
@@ -84,7 +87,7 @@ class HousingSearchForm(forms.Form):
                             )
     room_temperature = forms.CharField(required=False,
                                        label=_('Room Temperature'),
-                                       widget=forms.Select(choices= Lookup.get_lookup_choices('HOUSING_PREF_AC')),
+                                       widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_AC')),
                                        )
     visits = forms.CharField(required=False,
                              label=_('Visits'),
@@ -94,3 +97,11 @@ class HousingSearchForm(forms.Form):
                                label=_('Sleeping'),
                                widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
                                )
+
+
+class RoommateRequestForm(forms.Form):
+    gov_id_or_kfupm_id = forms.CharField(max_length=12, label=_('KFUPM/Government ID'), validators=[
+        RegexValidator(
+            '^\d{9,11}$',
+            message=_('Invalid KFUPM ID or government ID')
+        )])

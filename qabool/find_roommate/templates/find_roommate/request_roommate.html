@@ -1,0 +1,20 @@
+{% extends 'find_roommate/base_housing.html' %}
+{% load i18n %}
+{% load floppyforms %}
+{% load staticfiles %}
+
+{% block subcontent %}
+
+	{% if form.errors %}
+	<div class="alert alert-danger" role="alert">{{ form.errors }}</div>
+	{% endif %}
+	<form method="post" class="form-horizontal">
+		{% csrf_token %}
+		{{ form }}
+		<br>&nbsp;<br>
+		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
+	</form>
+
+	<br><br><br>
+	<hr>
+{% endblock subcontent %}
