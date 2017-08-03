@@ -337,4 +337,11 @@ th {
     width: 199px;
     max-height: 265px;
 }
+.hreqs table{
+    width: 100%;
+}
+
+.hreqs table td{
+    padding: 5px;
+}
 /* end of add by joud */
