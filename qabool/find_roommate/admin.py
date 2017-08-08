@@ -16,7 +16,7 @@ class RoomResource(resources.ModelResource):
     class Meta:
         model = Room
         import_id_fields = ('id',)
-        fields = ('building', 'room', 'available')
+        fields = ('id', 'building', 'room', 'available')
         skip_unchanged = True
         report_skipped = True
 
