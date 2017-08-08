@@ -344,4 +344,16 @@ th {
 .hreqs table td{
     padding: 5px;
 }
+.hreqs .btn-success {
+    color: #4cae4c;
+    background-color: inherit!important;
+    border-color: #4cae4c;
+    font-weight: bold;
+}
+.hreqs .btn-danger {
+    color: #d9534f;
+    background-color: inherit!important;
+    border-color: #d9534f;
+    font-weight: bold;
+}
 /* end of add by joud */

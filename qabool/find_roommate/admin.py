@@ -1,4 +1,6 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ImportExportMixin
 
 from find_roommate.models import HousingUser, Room, RoommateRequest
 
@@ -10,10 +12,19 @@ class UserHousingAdmin(admin.ModelAdmin):
     list_filter = ('searchable', 'user__eligible_for_housing',)
 
 
-class RoomAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'building', 'room', 'available')
+class RoomResource(resources.ModelResource):
+    class Meta:
+        model = Room
+        import_id_fields = ('id',)
+        fields = ('building', 'room', 'available')
+        skip_unchanged = True
+        report_skipped = True
 
+
+class RoomAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('__str__', 'building', 'room', 'available', 'residents')
     list_filter = ('available', )
+    resource_class = RoomResource
 
 
 class RoommateRequestAdmin(admin.ModelAdmin):
