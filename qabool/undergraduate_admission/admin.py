@@ -140,8 +140,7 @@ class StudentAdmin(VersionAdmin):
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('id', 'date_joined', 'student_type', 'admission_total', 'phase2_submit_date',
-                       'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
-                       'withdrawal_date')
+                       'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date', )
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)

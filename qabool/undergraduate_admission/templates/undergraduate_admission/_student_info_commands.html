@@ -39,7 +39,7 @@
 	<a href="{% url 'print_documents_after_phase3' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 	{% endif %}
 	{% if can_see_housing %}
-	<a href="{% url 'housing_info_update' %}" class="list-group-item"><i class="fa fa-home" aria-hidden="true"></i> {% trans 'Student Housing' %}</a>
+	<a href="{% url 'housing_landing_page' %}" class="list-group-item"><i class="fa fa-home" aria-hidden="true"></i> {% trans 'Student Housing' %}</a>
 	{% endif %}
 {#	{% if can_search_in_housing %}#}
 {#	<a href="{% url 'housing_search' %}" class="list-group-item"><i class="fa fa-search" aria-hidden="true"></i> {% trans 'Housing Search' %}</a>#}

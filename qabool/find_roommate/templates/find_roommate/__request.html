@@ -1,0 +1,58 @@
+{% load i18n %}
+{#['R', 'W1', 'W2', 'E']#}
+<tr class="{% if request.status == 'A' %}success{% elif request.status == 'P' %}warning{% else %}danger{% endif %}">
+	<td>
+		<table>
+			<tr>
+				<td><strong>{% trans 'Roommate' %}</strong></td>
+				<td>
+					{% if request.requesting_user != user %}
+						{{ request.requesting_user }}
+					{% else %}
+						{{ request.requested_user }}
+					{% endif %}
+				</td>
+				<td><strong>{% trans 'Status' %}</strong></td>
+				<td>{{ request.get_status_display }}</td>
+			</tr>
+			<tr>
+				<td><strong>{% trans 'Request Date' %}</strong></td>
+				<td>{{ request.request_date }}</td>
+				<td><strong>{% trans 'Updated On' %}</strong></td>
+				<td>{{ request.updated_on|timesince }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"></td>
+				{% if request.status == 'A' %}
+					<td><strong>{% trans 'Assigned Room' %}</strong></td>
+					<td>{{ request.assigned_room }}</td>
+				{% elif request.status == 'P' and request.requesting_user != user %}
+					<td><a onclick="return confirm('{% trans "Are you sure?" %}');"
+					       class="btn btn-success btn-lg btn-block"
+					       href="{% url 'accept_request' request.pk %}">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						{% trans 'Accept' %}</a></td>
+					<td><a onclick="return confirm('{% trans "Are you sure?" %}');"
+					       class="btn btn-danger btn-lg btn-block"
+					       href="{% url 'reject_request' request.pk %}">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						{% trans 'Reject' %}</a></td>
+				{% else %}
+					<td></td>
+					<td></td>
+				{% endif %}
+			</tr>
+			{% if request.status == 'A' %}
+				<tr>
+					<td colspan="2"></td>
+					<td colspan="2">
+						<a target="_blank" class="btn btn-primary btn-lg" href="{% url 'housing_letter1' %}">
+							<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;{% trans 'Housing Letter 1' %}</a>&nbsp;&nbsp;
+						<a target="_blank" class="btn btn-primary btn-lg" href="{% url 'housing_letter2' %}">
+							<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;{% trans 'Housing Letter 2' %}</a>
+					</td>
+				</tr>
+			{% endif %}
+		</table>
+	</td>
+</tr>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -25,3 +26,87 @@ class HousingUser(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class RoommateRequest(models.Model):
+    class RequestStatuses:
+        PENDING = 'P'
+        ACCEPTED = 'A'
+        REJECTED = 'R'
+        REQUESTING_STUDENT_WITHDRAWN = 'W1'
+        REQUESTED_STUDENT_WITHDRAWN = 'W2'
+        EXPIRED = 'E'
+
+        @classmethod
+        def choices(cls):
+            return (
+                (cls.PENDING, _('Pending')),
+                (cls.ACCEPTED, _('Accepted')),
+                (cls.REJECTED, _('Rejected')),
+                (cls.REQUESTING_STUDENT_WITHDRAWN, _('Requesting Student Withdrawn')),
+                (cls.REQUESTED_STUDENT_WITHDRAWN, _('Requested Student Withdrawn')),
+                (cls.EXPIRED, _('Expired')),
+            )
+
+    requesting_user = models.ForeignKey(
+        'undergraduate_admission.User',
+        on_delete=models.CASCADE,
+        related_name='roommate_request_sent',
+        null=True,
+        blank=False,
+    )
+    requested_user = models.ForeignKey(
+        'undergraduate_admission.User',
+        on_delete=models.SET_NULL,
+        related_name='roommate_request_received',
+        null=True,
+        blank=False,
+    )
+    status = models.CharField(
+        null=True,
+        blank=True,
+        max_length=10,
+        choices=RequestStatuses.choices(),
+        verbose_name=_('Status'),
+        default=RequestStatuses.PENDING,
+    )
+    assigned_room = models.ForeignKey(
+        'Room',
+        on_delete=models.SET_NULL,
+        related_name='residing',
+        null=True,
+        blank=True,
+        verbose_name=_('Assigned Room'),
+    )
+    request_date = models.DateTimeField(null=True, blank=False, auto_now_add=True, verbose_name=_('Request Date'), )
+    updated_on = models.DateTimeField(null=True, blank=False, auto_now=True, verbose_name=_('Updated On'), )
+
+    def __str__(self):
+        return '%s & %s' % (self.requesting_user, self.requested_user)
+
+
+class Room(models.Model):
+    building = models.CharField(null=True, blank=False, max_length=20, verbose_name=_('Building'), )
+    room = models.CharField(null=True, blank=False, max_length=20, verbose_name=_('Room'), )
+    available = models.BooleanField(default=True, verbose_name=_('Available'), )
+
+    class Meta:
+        unique_together = ['building', 'room']
+
+    def __str__(self):
+        return '%s - %s' % (self.building, self.room)
+
+    def residents(self):
+        return RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED,
+                                              assigned_room=self).first()
+
+    @staticmethod
+    def get_next_available_room():
+        return Room.objects.filter(available=True). \
+            exclude(pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
+                    .values_list('assigned_room', flat=True)).order_by('?').first()
+
+    @staticmethod
+    def get_assigned_room(user):
+        return RoommateRequest.objects.filter(Q(requesting_user=user) | Q(requested_user=user),
+                                              status=RoommateRequest.RequestStatuses.ACCEPTED).first().assigned_room
