@@ -1,12 +1,9 @@
 import floppyforms.__future__ as forms
-import re
 from django.core.validators import RegexValidator
-from django.db import OperationalError
 from django.utils.translation import ugettext_lazy as _
-from pip import status_codes
 
-from find_roommate.models import HousingUser, RoommateRequest
-from undergraduate_admission.models import Lookup, User, RegistrationStatusMessage, AdmissionSemester
+from .models import HousingUser
+from undergraduate_admission.models import Lookup, User
 
 
 class HousingInfoUpdateForm(forms.ModelForm):
