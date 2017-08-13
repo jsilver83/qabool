@@ -6,6 +6,7 @@ from .models import User
 urlpatterns = [
     url(r'^acceptrequest/(?P<pk>\d+)/$', AcceptRequest.as_view(), name='accept_request'),
     url(r'^rejectrequest/(?P<pk>\d+)/$', RejectRequest.as_view(), name='reject_request'),
+    url(r'^expirerequest/(?P<pk>\d+)/$', ExpireRequest.as_view(), name='expire_request'),
     url(r'^housinglanding/$', HousingLandingPage.as_view(), name='housing_landing_page'),
     url(r'^roommaterequest/$', NewRoommateRequest.as_view(), name='roommate_request'),
     url(r'^housingagreement/$', HousingAgreement.as_view(), name='housing_agreement'),
