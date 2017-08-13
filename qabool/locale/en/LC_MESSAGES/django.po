@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 15:33+0300\n"
+"POT-Creation-Date: 2017-08-13 13:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,146 +21,146 @@ msgstr ""
 msgid "Find Roommate App"
 msgstr ""
 
-#: find_roommate/forms.py:13
+#: find_roommate/forms.py:10
 msgid "housing terms and conditions 1"
 msgstr ""
 
-#: find_roommate/forms.py:14
+#: find_roommate/forms.py:11
 msgid "housing terms and conditions 2"
 msgstr ""
 
-#: find_roommate/forms.py:15
+#: find_roommate/forms.py:12
 msgid "housing terms and conditions 3"
 msgstr ""
 
-#: find_roommate/forms.py:24
+#: find_roommate/forms.py:21
 msgid "Looking for roommate"
 msgstr ""
 
-#: find_roommate/forms.py:25
+#: find_roommate/forms.py:22
 msgid "Not looking for roommate"
 msgstr ""
 
-#: find_roommate/forms.py:41 find_roommate/forms.py:49
-#: find_roommate/forms.py:57 undergraduate_admission/forms/phase1_forms.py:23
+#: find_roommate/forms.py:38 find_roommate/forms.py:46
+#: find_roommate/forms.py:54 undergraduate_admission/forms/phase1_forms.py:23
 #: undergraduate_admission/forms/phase1_forms.py:35
 msgid "You have to check this box"
 msgstr ""
 
-#: find_roommate/forms.py:73
+#: find_roommate/forms.py:70
 msgid "Enter required values"
 msgstr ""
 
-#: find_roommate/forms.py:81 undergraduate_admission/models.py:174
+#: find_roommate/forms.py:78 undergraduate_admission/models.py:174
 msgid "High School City"
 msgstr ""
 
-#: find_roommate/forms.py:83 undergraduate_admission/models.py:169
+#: find_roommate/forms.py:80 undergraduate_admission/models.py:169
 msgid "High School Name"
 msgstr ""
 
-#: find_roommate/forms.py:85 find_roommate/models.py:18
+#: find_roommate/forms.py:82 find_roommate/models.py:19
 #: find_roommate/templates/find_roommate/housinguser_list.html:67
 msgid "Light"
 msgstr ""
 
-#: find_roommate/forms.py:89 find_roommate/models.py:20
+#: find_roommate/forms.py:86 find_roommate/models.py:21
 #: find_roommate/templates/find_roommate/housinguser_list.html:72
 msgid "Room Temperature"
 msgstr ""
 
-#: find_roommate/forms.py:93 find_roommate/models.py:21
+#: find_roommate/forms.py:90 find_roommate/models.py:22
 #: find_roommate/templates/find_roommate/housinguser_list.html:77
 msgid "Visits"
 msgstr ""
 
-#: find_roommate/forms.py:97 find_roommate/models.py:17
+#: find_roommate/forms.py:94 find_roommate/models.py:18
 #: find_roommate/templates/find_roommate/housinguser_list.html:62
 msgid "Sleeping"
 msgstr ""
 
-#: find_roommate/forms.py:103
+#: find_roommate/forms.py:100
 msgid "KFUPM/Government ID"
 msgstr ""
 
-#: find_roommate/forms.py:106
+#: find_roommate/forms.py:103
 msgid "Invalid KFUPM ID or government ID"
 msgstr ""
 
-#: find_roommate/models.py:15
+#: find_roommate/models.py:16
 #: find_roommate/templates/find_roommate/housinguser_list.html:71
 msgid "Facebook"
 msgstr ""
 
-#: find_roommate/models.py:16
+#: find_roommate/models.py:17
 #: find_roommate/templates/find_roommate/housinguser_list.html:76
 msgid "Twitter"
 msgstr ""
 
-#: find_roommate/models.py:23
+#: find_roommate/models.py:24
 #: find_roommate/templates/find_roommate/housinguser_list.html:86
 msgid "Interests And Hobbies"
 msgstr ""
 
-#: find_roommate/models.py:24
+#: find_roommate/models.py:25
 msgid "Searchable"
 msgstr ""
 
-#: find_roommate/models.py:42
+#: find_roommate/models.py:43
 msgid "Pending"
 msgstr ""
 
-#: find_roommate/models.py:43
+#: find_roommate/models.py:44
 msgid "Accepted"
 msgstr ""
 
-#: find_roommate/models.py:44
+#: find_roommate/models.py:45
 msgid "Rejected"
 msgstr ""
 
-#: find_roommate/models.py:45
+#: find_roommate/models.py:46
 msgid "Requesting Student Withdrawn"
 msgstr ""
 
-#: find_roommate/models.py:46
+#: find_roommate/models.py:47
 msgid "Requested Student Withdrawn"
 msgstr ""
 
-#: find_roommate/models.py:47
+#: find_roommate/models.py:48
 msgid "Expired"
 msgstr ""
 
-#: find_roommate/models.py:69
+#: find_roommate/models.py:70
 #: find_roommate/templates/find_roommate/__request.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:28
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:27
 msgid "Status"
 msgstr ""
 
-#: find_roommate/models.py:78
+#: find_roommate/models.py:79
 #: find_roommate/templates/find_roommate/__request.html:27
 msgid "Assigned Room"
 msgstr ""
 
-#: find_roommate/models.py:80
+#: find_roommate/models.py:81
 #: find_roommate/templates/find_roommate/__request.html:19
 msgid "Request Date"
 msgstr ""
 
-#: find_roommate/models.py:81
+#: find_roommate/models.py:82
 #: find_roommate/templates/find_roommate/__request.html:21
 msgid "Updated On"
 msgstr ""
 
-#: find_roommate/models.py:88
+#: find_roommate/models.py:89
 msgid "Building"
 msgstr ""
 
-#: find_roommate/models.py:89
+#: find_roommate/models.py:90
 msgid "Room"
 msgstr ""
 
-#: find_roommate/models.py:90
+#: find_roommate/models.py:91
 msgid "Available"
 msgstr ""
 
@@ -171,6 +171,7 @@ msgstr ""
 
 #: find_roommate/templates/find_roommate/__request.html:30
 #: find_roommate/templates/find_roommate/__request.html:35
+#: find_roommate/templates/find_roommate/__request.html:42
 msgid "Are you sure?"
 msgstr ""
 
@@ -182,11 +183,15 @@ msgstr ""
 msgid "Reject"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/__request.html:50
+#: find_roommate/templates/find_roommate/__request.html:46
+msgid "Expire"
+msgstr ""
+
+#: find_roommate/templates/find_roommate/__request.html:58
 msgid "Housing Letter 1"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/__request.html:52
+#: find_roommate/templates/find_roommate/__request.html:60
 msgid "Housing Letter 2"
 msgstr ""
 
@@ -398,6 +403,7 @@ msgid ""
 msgstr ""
 
 #: find_roommate/views.py:151 find_roommate/views.py:166
+#: find_roommate/views.py:181
 msgid "Invalid request"
 msgstr ""
 
@@ -405,7 +411,11 @@ msgstr ""
 msgid "Request was rejected successfully..."
 msgstr ""
 
-#: find_roommate/views.py:186
+#: find_roommate/views.py:179
+msgid "Request was expired as per your request..."
+msgstr ""
+
+#: find_roommate/views.py:201
 #: undergraduate_admission/views/phase2_views.py:110
 #: undergraduate_admission/views/phase2_views.py:134
 #: undergraduate_admission/views/phase2_views.py:158

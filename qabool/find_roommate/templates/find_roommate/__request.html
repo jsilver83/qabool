@@ -37,6 +37,13 @@
 					       href="{% url 'reject_request' request.pk %}">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						{% trans 'Reject' %}</a></td>
+				{% elif request.status == 'P' and request.requesting_user == user %}
+					<td></td>
+					<td><a onclick="return confirm('{% trans "Are you sure?" %}');"
+					       class="btn btn-danger btn-lg btn-block"
+					       href="{% url 'expire_request' request.pk %}">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						{% trans 'Expire' %}</a></td>
 				{% else %}
 					<td></td>
 					<td></td>

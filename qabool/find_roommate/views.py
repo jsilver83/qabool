@@ -102,7 +102,7 @@ class NewRoommateRequest(HousingBaseView, FormView):
                                        status_message=RegistrationStatusMessage.get_status_admitted(),
                                        eligible_for_housing=True,
                                        semester=semester).exclude(pk=self.request.user.pk).first()
-        print(roommate)
+
         if roommate:
             can_receive_a_new_request = \
                 RoommateRequest.objects.filter(Q(requesting_user=roommate) |
@@ -110,7 +110,7 @@ class NewRoommateRequest(HousingBaseView, FormView):
                                                status__in=[
                                                    RoommateRequest.RequestStatuses.PENDING,
                                                    RoommateRequest.RequestStatuses.ACCEPTED]).count() == 0
-            print(can_receive_a_new_request)
+
             if can_receive_a_new_request:
                 roommate_request = RoommateRequest()
                 roommate_request.requesting_user = self.request.user
@@ -157,11 +157,26 @@ class RejectRequest(HousingBaseView, View):
         roommate_request = RoommateRequest.objects.get(pk=kwargs.get('pk'),
                                                        requested_user=self.request.user,
                                                        status=RoommateRequest.RequestStatuses.PENDING)
-        print(roommate_request)
+
         if roommate_request:
             roommate_request.status = RoommateRequest.RequestStatuses.REJECTED
             roommate_request.save()
             messages.warning(self.request, _('Request was rejected successfully...'))
+        else:
+            messages.error(self.request, _('Invalid request'))
+        return redirect('housing_landing_page')
+
+
+class ExpireRequest(HousingBaseView, View):
+    def get(self, *args, **kwargs):
+        roommate_request = RoommateRequest.objects.get(pk=kwargs.get('pk'),
+                                                       requesting_user=self.request.user,
+                                                       status=RoommateRequest.RequestStatuses.PENDING)
+
+        if roommate_request:
+            roommate_request.status = RoommateRequest.RequestStatuses.EXPIRED
+            roommate_request.save()
+            messages.warning(self.request, _('Request was expired as per your request...'))
         else:
             messages.error(self.request, _('Invalid request'))
         return redirect('housing_landing_page')
@@ -193,7 +208,9 @@ def housing_info_update(request):
 def housing_search(request):
     students = HousingUser.objects \
         .filter(user__status_message__status_message_code='ADMITTED',
-                searchable=True, user__eligible_for_housing=True)
+                searchable=True,
+                user__eligible_for_housing=True)
+        # .exclude(user__pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED))
     is_search = False
 
     if request.GET:
