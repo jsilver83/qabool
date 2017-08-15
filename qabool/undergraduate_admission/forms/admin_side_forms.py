@@ -4,7 +4,7 @@ import floppyforms.__future__ as forms
 import re
 from django.utils import timezone
 
-from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, GraduationYear
+from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, GraduationYear, AdmissionSemester
 from django.utils.translation import ugettext_lazy as _, get_language
 
 from undergraduate_admission.utils import SMS
@@ -189,3 +189,19 @@ class StudentGenderForm(forms.ModelForm):
             return instance
         else:
             return instance
+
+
+class SendMassSMSForm(forms.Form):
+    semester = forms.IntegerField(required=True, label=_('Admission Semester'))
+    status_message = forms.IntegerField(required=True, label=_('Message Status'))
+    eligible_for_housing = forms.NullBooleanField(label=_('Eligible For Housing'))
+    sms_message = forms.CharField(widget=forms.Textarea,
+                                  max_length=70,
+                                  required=True, label=_('SMS Message To Be Sent'))
+
+    def __init__(self, *args, **kwargs):
+        super(SendMassSMSForm, self).__init__(*args, **kwargs)
+        self.fields['semester'].widget = forms.Select(choices=AdmissionSemester.get_semesters_choices())
+        self.fields['status_message'].widget = \
+            forms.Select(choices=RegistrationStatusMessage.get_registration_status_choices())
+
