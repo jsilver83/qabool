@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
@@ -25,8 +26,7 @@ import csv
 
 from django.conf import settings
 from undergraduate_admission.filters import UserListFilter
-from undergraduate_admission.forms.admin_side_forms import CutOffForm, VerifyCommitteeForm, ApplyStatusForm, \
-    StudentGenderForm
+from undergraduate_admission.forms.admin_side_forms import *
 from undergraduate_admission.models import User, AdmissionSemester, GraduationYear, RegistrationStatusMessage
 from undergraduate_admission.utils import try_parse_float, merge_dicts
 
@@ -272,6 +272,15 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
         except EmptyPage:
             pass
         return HttpResponse(json.dumps(serialized_obj), content_type='application/json; charset=utf-8')
+
+
+class SendMassSMSView(AdminBaseView, FormView):
+    template_name = 'undergraduate_admission/admin/send_sms_notification.html'
+    form_class = SendMassSMSForm
+
+    def form_valid(self, form):
+        students_criteria = form.cleaned_data
+        print(students_criteria)
 
 
 def get_student_record_serialized(student, change_status=False):

@@ -512,6 +512,19 @@ class AdmissionSemester(models.Model):
             else:
                 return False
 
+    @staticmethod
+    def get_semesters_choices(add_dashes=True):
+        try:
+            choices = AdmissionSemester.objects.all()
+
+            ch = [(o.pk, str(o)) for o in choices]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
+
+            return ch
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+            return [('--', '--')]
+
 
 class KFUPMIDsPool(models.Model):
     semester = models.ForeignKey(
