@@ -41,9 +41,9 @@
 					<td></td>
 					<td><a onclick="return confirm('{% trans "Are you sure?" %}');"
 					       class="btn btn-danger btn-lg btn-block"
-					       href="{% url 'expire_request' request.pk %}">
+					       href="{% url 'cancel_request' request.pk %}">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						{% trans 'Expire' %}</a></td>
+						{% trans 'Cancel' %}</a></td>
 				{% else %}
 					<td></td>
 					<td></td>
@@ -51,7 +51,7 @@
 			</tr>
 			{% if request.status == 'A' %}
 				<tr>
-					<td colspan="2"></td>
+					<td colspan="2">{% trans 'Kindly print two copies of each of the following documents: ' %}</td>
 					<td colspan="2">
 						<a target="_blank" class="btn btn-primary btn-lg" href="{% url 'housing_letter1' %}">
 							<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;{% trans 'Housing Letter 1' %}</a>&nbsp;&nbsp;

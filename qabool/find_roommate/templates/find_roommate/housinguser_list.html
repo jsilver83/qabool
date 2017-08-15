@@ -5,14 +5,14 @@
 
 {% block subcontent %}
 	<p class="lead">
-			<strong>{% if is_search %}
+		<strong>{% if is_search %}
 			{% trans 'No of search results:' %}
-			{% else %}
+		{% else %}
 			{% trans 'No of single students looking for a roommate:' %}
-			{% endif %}</strong>
-			&nbsp;&nbsp;{{ students_count }}
-		</p>
-		<hr>
+		{% endif %}</strong>
+		&nbsp;&nbsp;{{ students_count }}
+	</p>
+	<hr>
 	<div>
 		<h4>{% trans 'Search' %}</h4><br>
 		<div class="alert alert-info" role="alert">
@@ -80,39 +80,54 @@
 					</td>
 				</tr>
 				{% if student.interests_and_hobbies %}
-				<tr>
-					<td colspan="2">
+					<tr>
+						<td colspan="3">
+							<br>
+							<b>{% trans 'Interests And Hobbies' %}:</b> {{ student.interests_and_hobbies }}
+						</td>
+					</tr>
+				{% endif %}
+				{% if student != user %}
+					<tr>
+						<td colspan="3">
 						<br>
-						<b>{% trans 'Interests And Hobbies' %}:</b> {{ student.interests_and_hobbies }}
-					</td>
-				</tr>
+							<span class="glyphicon glyphicon-pushpin"></span>&nbsp;
+							{% trans 'If you would like to be roommates with this student, contact him and get his KFUPM ID and ' %}:
+							&nbsp;
+							<a class="btn btn-primary" href="{% url 'roommate_request' %}">
+								<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+								&nbsp;
+								{% trans 'Request Here' %}
+							</a>
+						</td>
+					</tr>
 				{% endif %}
 			</table>
 			<hr>
 		{% endfor %}
 		{% if page_obj.has_other_pages %}
-		<nav aria-label="Page navigation">
-			<ul class="pagination">
-				{% if page_obj.has_previous %}
-				<li>
-						<a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>&nbsp;{% trans 'Previous' %}</a>
-				</li>
-				{% endif %}
-				<li>
-					<a><span class="current">
+			<nav aria-label="Page navigation">
+				<ul class="pagination">
+					{% if page_obj.has_previous %}
+						<li>
+							<a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>&nbsp;{% trans 'Previous' %}</a>
+						</li>
+					{% endif %}
+					<li>
+						<a><span class="current">
 			            {% trans 'Page' %} {{ page_obj.number }} {% trans 'of' %}
 						{{ page_obj.paginator.num_pages }}
 			        </span></a>
-				</li>
-				{% if page_obj.has_next %}
-				<li>
-				    <a aria-label="Next" href="?page={{ page_obj.next_page_number }}">
-					    <span aria-hidden="true">&raquo;</span>&nbsp;{% trans 'Next' %}</a>
-				</li>
-				{% endif %}
-			</ul>
-		</nav>
+					</li>
+					{% if page_obj.has_next %}
+						<li>
+							<a aria-label="Next" href="?page={{ page_obj.next_page_number }}">
+								<span aria-hidden="true">&raquo;</span>&nbsp;{% trans 'Next' %}</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>
 		{% endif %}
 		<br>
 	{% else %}

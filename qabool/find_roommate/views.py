@@ -11,12 +11,14 @@ from django.views.generic import CreateView
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
+from django.views.generic import UpdateView
 from django.views.generic import View
 
 from find_roommate.forms import HousingInfoUpdateForm, HousingSearchForm, RoommateRequestForm
 from find_roommate.models import HousingUser, RoommateRequest, Room
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from undergraduate_admission.models import RegistrationStatusMessage, AdmissionSemester, Agreement, User
+from undergraduate_admission.utils import SMS
 from undergraduate_admission.validators import is_eligible_for_housing, is_eligible_for_roommate_search
 
 
@@ -117,19 +119,32 @@ class NewRoommateRequest(HousingBaseView, FormView):
                 roommate_request.requested_user = roommate
                 roommate_request.save()
 
+                SMS.send_sms_housing_roommate_request_sent(roommate_request.requested_user.mobile)
                 messages.success(self.request, _('Request was sent to the student you have chosen...'))
                 return redirect(self.success_url)
             else:
-                messages.error(self.request, 'The entered KFUPM/Government ID belong to a student who is '
-                                             'already a roommate with another student.')
+                messages.error(self.request, _('The entered KFUPM ID belong to a student who is '
+                                               'already a roommate with another student.'))
         else:
-            messages.error(self.request, 'The entered KFUPM/Government ID doesnt belong to an existing '
-                                         'student who is both admitted and eligible for housing')
+            messages.error(self.request, _('The entered KFUPM ID doesnt belong to an existing '
+                                           'student who is both admitted and eligible for housing'))
         return redirect(reverse_lazy('roommate_request'))
 
     def form_invalid(self, form):
         messages.error(self.request, _('Error.'))
         return super(NewRoommateRequest, self).form_invalid(form)
+
+
+def check_remaining_rooms_threshold():
+    remaining_rooms = Room.objects.filter(available=True). \
+        exclude(pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
+                .values_list('assigned_room', flat=True)).count()
+
+    if remaining_rooms <= 50:
+        SMS.send_sms_housing_rooms_threshold_50()
+
+    elif remaining_rooms <= 100:
+        SMS.send_sms_housing_rooms_threshold_100()
 
 
 class AcceptRequest(HousingBaseView, View):
@@ -143,10 +158,13 @@ class AcceptRequest(HousingBaseView, View):
                 roommate_request.assigned_room = room
                 roommate_request.status = RoommateRequest.RequestStatuses.ACCEPTED
                 roommate_request.save()
+
+                SMS.send_sms_housing_roommate_request_accepted(roommate_request.requesting_user.mobile)
+                check_remaining_rooms_threshold()
                 messages.success(self.request, _('Request was accepted and room was assigned to you successfully...'))
             else:
-                messages.warning(self.request, _('No rooms are available in the system at the moment. '
-                                                 'Kindly try again later!'))
+                messages.warning(self.request, _('There was an issue in assigning a room to you. '
+                                                 'Kindly try again in 24 hours!'))
         else:
             messages.error(self.request, _('Invalid request'))
         return redirect('housing_landing_page')
@@ -161,46 +179,71 @@ class RejectRequest(HousingBaseView, View):
         if roommate_request:
             roommate_request.status = RoommateRequest.RequestStatuses.REJECTED
             roommate_request.save()
+
+            SMS.send_sms_housing_roommate_request_rejected(roommate_request.requesting_user.mobile)
             messages.warning(self.request, _('Request was rejected successfully...'))
         else:
             messages.error(self.request, _('Invalid request'))
         return redirect('housing_landing_page')
 
 
-class ExpireRequest(HousingBaseView, View):
+class CancelRequest(HousingBaseView, View):
     def get(self, *args, **kwargs):
         roommate_request = RoommateRequest.objects.get(pk=kwargs.get('pk'),
                                                        requesting_user=self.request.user,
                                                        status=RoommateRequest.RequestStatuses.PENDING)
 
         if roommate_request:
-            roommate_request.status = RoommateRequest.RequestStatuses.EXPIRED
+            roommate_request.status = RoommateRequest.RequestStatuses.CANCELLED
             roommate_request.save()
-            messages.warning(self.request, _('Request was expired as per your request...'))
+            messages.warning(self.request, _('Request was cancelled as per your request...'))
         else:
             messages.error(self.request, _('Invalid request'))
         return redirect('housing_landing_page')
 
 
-@login_required()
-@user_passes_test(is_eligible_for_housing)
-def housing_info_update(request):
-    housing_user, d = HousingUser.objects.get_or_create(user=request.user, defaults={'searchable': False, })
-    form = HousingInfoUpdateForm(request.POST or None, instance=housing_user)
+class HousingInfoUpdate(HousingBaseView, UpdateView):
+    template_name = 'find_roommate/housing_update_form.html'
+    form_class = HousingInfoUpdateForm
+    agreement_type = 'HOUSING_ROOMMATE_SEARCH_INSTRUCTIONS'
+    success_url = reverse_lazy('housing_search')
+    housing_user = None
 
-    if request.method == 'POST':
+    def test_func(self):
+        self.login_url = reverse_lazy('housing_landing_page')
+        test_result = super(HousingInfoUpdate, self).test_func()
+        can_search = \
+            RoommateRequest.objects.filter(Q(requesting_user=self.request.user) |
+                                           Q(requested_user=self.request.user),
+                                           status__in=[
+                                               RoommateRequest.RequestStatuses.PENDING,
+                                               RoommateRequest.RequestStatuses.ACCEPTED]).count() == 0
+        return can_search and test_result
 
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                if saved.searchable:
-                    return redirect('housing_search')
-                else:
-                    return redirect('student_area')
+    def dispatch(self, request, *args, **kwargs):
+        self.housing_user, d = HousingUser.objects.get_or_create(user=request.user, defaults={'searchable': False, })
+        return super(HousingInfoUpdate, self).dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return self.housing_user
+
+    def get_context_data(self, **kwargs):
+        context = super(HousingInfoUpdate, self).get_context_data(**kwargs)
+        sem = AdmissionSemester.get_phase4_active_semester(self.request.user)
+        context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
+        context['items'] = context['agreement'].items.filter(show=True)
+        return context
+
+    def form_valid(self, form):
+        saved = form.save()
+        if saved:
+            if saved.searchable:
+                return redirect('housing_search')
             else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-    return render(request, 'find_roommate/housing_update_form.html', {'form': form, })
+                return redirect('student_area')
+        else:
+            messages.error(self.request, _('Error saving info. Try again later!'))
+        return redirect(reverse_lazy('student_area'))
 
 
 @login_required()
@@ -210,7 +253,7 @@ def housing_search(request):
         .filter(user__status_message__status_message_code='ADMITTED',
                 searchable=True,
                 user__eligible_for_housing=True)
-        # .exclude(user__pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED))
+    # .exclude(user__pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED))
     is_search = False
 
     if request.GET:
@@ -287,7 +330,7 @@ def housing_letter2(request):
     assigned_room = Room.get_assigned_room(user)
 
     return render(request, 'find_roommate/letter_housing_2.html', {'user': user,
-                                                                 'assigned_room': assigned_room, })
+                                                                   'assigned_room': assigned_room, })
 
 
 class PostList(ListView):

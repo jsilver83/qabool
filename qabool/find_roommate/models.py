@@ -36,6 +36,7 @@ class RoommateRequest(models.Model):
         REQUESTING_STUDENT_WITHDRAWN = 'W1'
         REQUESTED_STUDENT_WITHDRAWN = 'W2'
         EXPIRED = 'E'
+        CANCELLED = 'C'
 
         @classmethod
         def choices(cls):
@@ -46,6 +47,7 @@ class RoommateRequest(models.Model):
                 (cls.REQUESTING_STUDENT_WITHDRAWN, _('Requesting Student Withdrawn')),
                 (cls.REQUESTED_STUDENT_WITHDRAWN, _('Requested Student Withdrawn')),
                 (cls.EXPIRED, _('Expired')),
+                (cls.CANCELLED, _('Cancelled By Requester')),
             )
 
     requesting_user = models.ForeignKey(

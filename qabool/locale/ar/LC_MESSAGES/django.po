@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-13 13:46+0300\n"
-"PO-Revision-Date: 2017-08-13 13:47+0300\n"
+"POT-Creation-Date: 2017-08-15 09:44+0300\n"
+"PO-Revision-Date: 2017-08-15 09:47+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -84,12 +84,17 @@ msgid "Sleeping"
 msgstr "موعد النوم"
 
 #: find_roommate/forms.py:100
-msgid "KFUPM/Government ID"
-msgstr "الهوية الوطنية أو الرقم الجامعي"
+#: find_roommate/templates/find_roommate/letter_housing.html:52
+#: find_roommate/templates/find_roommate/letter_housing_2.html:52
+#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:526
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
+#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:66
+msgid "KFUPM ID"
+msgstr "الرقم الجامعي"
 
 #: find_roommate/forms.py:103
-msgid "Invalid KFUPM ID or government ID"
-msgstr "الهوية الوطنية أو الرقم الجامعي غير صالح"
+msgid "Invalid KFUPM ID"
+msgstr "رقم جامعي غير صالح"
 
 #: find_roommate/models.py:16
 #: find_roommate/templates/find_roommate/housinguser_list.html:71
@@ -110,61 +115,65 @@ msgstr "الاهتمامات والهوايات"
 msgid "Searchable"
 msgstr "هل تبحث عن زميل سكن؟"
 
-#: find_roommate/models.py:43
+#: find_roommate/models.py:44
 msgid "Pending"
 msgstr "بإنتظار الموافقة"
 
-#: find_roommate/models.py:44
+#: find_roommate/models.py:45
 msgid "Accepted"
 msgstr "الطلب مقبول"
 
-#: find_roommate/models.py:45
+#: find_roommate/models.py:46
 msgid "Rejected"
 msgstr "الطلب غير مقبول"
 
-#: find_roommate/models.py:46
+#: find_roommate/models.py:47
 msgid "Requesting Student Withdrawn"
 msgstr "انسحب صاحب الطلب "
 
-#: find_roommate/models.py:47
+#: find_roommate/models.py:48
 msgid "Requested Student Withdrawn"
 msgstr "انسحب الطرف اﻵخر"
 
-#: find_roommate/models.py:48
+#: find_roommate/models.py:49
 msgid "Expired"
 msgstr "انتهت مهلة الطلب"
 
-#: find_roommate/models.py:70
+#: find_roommate/models.py:50
+msgid "Cancelled By Requester"
+msgstr "تم إلغاء الطلب من قبل المرسل"
+
+#: find_roommate/models.py:72
 #: find_roommate/templates/find_roommate/__request.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:28
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:27
 msgid "Status"
 msgstr "حالة الطلب"
 
-#: find_roommate/models.py:79
+#: find_roommate/models.py:81
 #: find_roommate/templates/find_roommate/__request.html:27
 msgid "Assigned Room"
 msgstr "الغرفة المحددة"
 
-#: find_roommate/models.py:81
+#: find_roommate/models.py:83
 #: find_roommate/templates/find_roommate/__request.html:19
 msgid "Request Date"
 msgstr "تاريخ الطلب"
 
-#: find_roommate/models.py:82
+#: find_roommate/models.py:84
 #: find_roommate/templates/find_roommate/__request.html:21
 msgid "Updated On"
 msgstr "تاريخ آخر تحديث"
 
-#: find_roommate/models.py:89
+#: find_roommate/models.py:91
 msgid "Building"
 msgstr "المبنى"
 
-#: find_roommate/models.py:90
+#: find_roommate/models.py:92
 msgid "Room"
 msgstr "الغرفة"
 
-#: find_roommate/models.py:91
+#: find_roommate/models.py:93
 msgid "Available"
 msgstr "متوفرة"
 
@@ -188,23 +197,31 @@ msgid "Reject"
 msgstr "غير موافق"
 
 #: find_roommate/templates/find_roommate/__request.html:46
-msgid "Expire"
-msgstr "انتهت مهلة الطلب"
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:168
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:134
+msgid "Cancel"
+msgstr "إلغاء"
 
-#: find_roommate/templates/find_roommate/__request.html:58
+#: find_roommate/templates/find_roommate/__request.html:54
+msgid "Kindly print two copies of each of the following documents: "
+msgstr "الرجاء طباعة نسختين من المستندات التالية:"
+
+#: find_roommate/templates/find_roommate/__request.html:57
 msgid "Housing Letter 1"
 msgstr "عقد ترخيص السكن"
 
-#: find_roommate/templates/find_roommate/__request.html:60
+#: find_roommate/templates/find_roommate/__request.html:59
 msgid "Housing Letter 2"
 msgstr "نموذج تسكين طالب"
 
 #: find_roommate/templates/find_roommate/housing_agreement.html:42
-#: find_roommate/templates/find_roommate/housing_update_form.html:63
+#: find_roommate/templates/find_roommate/housing_update_form.html:34
 #: find_roommate/templates/find_roommate/housinguser_list.html:26
 #: find_roommate/templates/find_roommate/request_roommate.html:23
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
+#: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:51
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:137
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:33
@@ -230,70 +247,7 @@ msgstr "pull-left"
 msgid "I agree"
 msgstr "موافق"
 
-#: find_roommate/templates/find_roommate/housing_update_form.html:7
-msgid ""
-"\n"
-"\t\t<p>Dear new student.</p>\n"
-"\t\t<p>Peace, mercy and blessings of God..</p>\n"
-"\n"
-"\t\t<p>We welcome you to this special site with the help of freshmen "
-"students eligible for university accommodation\n"
-"\t\t\tto search for a colleague adequate housing.</p>\n"
-"\n"
-"\t\t<p>This site allows you to choose a fellow adequate housing, through the "
-"information that will appear to you\n"
-"\t\t\tand other colleagues are also looking for a fellow for housing.</p>\n"
-"\n"
-"\t\t<p>Site work method:</p>\n"
-"\n"
-"\t\t<ul>\n"
-"\t\t\t<li>The site gives you access to personal information, and additional "
-"all new students who are looking\n"
-"\t\t\t\tfor a colleague for housing.\n"
-"\t\t\t</li>\n"
-"\t\t\t<li>For more information you can communicate with those who are "
-"interested in housing with the private\n"
-"\t\t\t\tmeans of communication.\n"
-"\t\t\t</li>\n"
-"\t\t\t<li>When agreeing with a colleague adequate housing, log back on this "
-"site, and choose not to\n"
-"\t\t\t\tquestion (Are you looking for a fellow housing? *) So that your "
-"information is automatically\n"
-"\t\t\t\tremoved from the list of fellow seekers housing.\n"
-"\t\t\t</li>\n"
-"\t\t</ul>\n"
-"\t"
-msgstr ""
-"\n"
-"\t\t<p>عزيزي الطالب المستجد.</p>\n"
-"\t\t<p>السلام عليكم ورحمة الله وبركاته..</p>\n"
-"\n"
-"\t\t<p>ترحب بك الإدارة العامة لاسكان الطلاب في هذا الموقع الخاص بمساعدة "
-"الطلاب المستجدين المستحقين للسكن الجامعي للبحث عن زميل السكن المناسب\n"
-"\t\t</p>\n"
-"\n"
-"\t\t<p>يتيح لك هذا الموقع اختيار زميل السكن المناسب، من خلال المعلومات التي "
-"ستظهر لك ولزملاء آخرين يبحثون هم كذلك عن زميل للسكن.</p>\n"
-"\n"
-"\t\t<p>طريقة عمل الموقع:</p>\n"
-"\n"
-"\t\t<ul>\n"
-"\t\t\t<li>يتيح لك الموقع الاطلاع على معلومات شخصية وأخرى إضافية عن الطلاب "
-"المستجدين الذين يبحثون عن زميل للسكن.</li>\n"
-"\t\t\t<li>يمكنك البحث في الموقع من خلال عنصر بحث واحد أو أكثر (المدينة، "
-"المدرسة، موعد النوم ...).</li>\n"
-"\t\t\t<li>لمزيد من المعلومات يمكنك التواصل مع من ترغب في السكن معه على وسائل "
-"التواصل الخاصة</li>\n"
-"\t\t\t<li>تفادياً للإزعاج وكثرة الاتصالات عند الاتفاق مع زميل السكن المناسب، "
-"فعليك معاودة تسجيل الدخول في هذا الموقع، و اختيار (لا) في سؤال ( هل تبحث عن "
-"زميل سكن؟ * ) بحيث يتم تلقائيًا إزالة معلوماتك من قائمة الباحثين عن زميل "
-"السكن.</li>\n"
-"\t\t\t<li> إذا لم تجد زميلاً مناسباً عاود الدخول مرة أخرى، حيث أنه سيزداد عدد "
-"الطلاب المسجلين في الموقع مما يتح لك مزيد من الاختيارات. </li>\n"
-"\t\t</ul>\n"
-"\t"
-
-#: find_roommate/templates/find_roommate/housing_update_form.html:63
+#: find_roommate/templates/find_roommate/housing_update_form.html:34
 #: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
 msgid "Save"
@@ -325,28 +279,38 @@ msgstr ""
 " إذا لم تجد زميلاً مناسباً عاود الدخول مرة أخرى، حيث أنه سيزداد عدد الطلاب "
 "المسجلين في الموقع مما يتح لك مزيد من الاختيارات"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:99
+#: find_roommate/templates/find_roommate/housinguser_list.html:95
+msgid ""
+"If you would like to be roommates with this student, contact him and get his "
+"KFUPM ID and "
+msgstr "إذا كنت تريد أن ترسل طلب زميل سكن لهذا الطالب "
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:100
+msgid "Request Here"
+msgstr "اطلب هنا"
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:114
 #: undergraduate_admission/templates/snippets/pagination.html:9
 #: undergraduate_admission/templates/snippets/pagination.html:15
 msgid "Previous"
 msgstr "السابق"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:104
+#: find_roommate/templates/find_roommate/housinguser_list.html:119
 msgid "Page"
 msgstr "صفحة"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:104
+#: find_roommate/templates/find_roommate/housinguser_list.html:119
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:29
 msgid "of"
 msgstr "من"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:111
+#: find_roommate/templates/find_roommate/housinguser_list.html:126
 #: undergraduate_admission/templates/snippets/pagination.html:29
 #: undergraduate_admission/templates/snippets/pagination.html:35
 msgid "Next"
 msgstr "التالي"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:120
+#: find_roommate/templates/find_roommate/housinguser_list.html:135
 msgid ""
 "There are no available students matching your search criteria. Check this "
 "page later..."
@@ -354,13 +318,22 @@ msgstr ""
 "ﻻ يوجد نتائج لبحثك. ننصحك بتغيير خيارات البحث أو عاود الدخول مرة أخرى، حيث "
 "أنه سيزداد عدد الطلاب المسجلين في الموقع مما يتح لك مزيد من الاختيارات. "
 
-#: find_roommate/templates/find_roommate/landing_page.html:9
+#: find_roommate/templates/find_roommate/landing_page.html:8
+msgid "welcome to KFUPM Student Housing page"
+msgstr ""
+"عزيزي الطالب المستجد، يسر الإدارة العامة لإسكان الطلاب بجامعة الملك فهد "
+"للبترول والمعادن أن تهنئك بقبولك في الجامعة كما يسرنا استقبالك في هذا "
+"البرنامج الذي يتيح لك إنهاء إجراءات السكن والحصول على غرفة بعد اتفاقك على "
+"السكن مع أحد زملائك المقبولين في الجامعة، كما يتيح لك إمكانية البحث عن زميل "
+"للسكن. "
+
+#: find_roommate/templates/find_roommate/landing_page.html:11
 msgid ""
 "Do you have a friend who is admitted and eligible for housing that you want "
 "to be roommmates with?"
 msgstr "هل لديك زميل من الطلاب المقبولين ترغب بالسكن معه؟"
 
-#: find_roommate/templates/find_roommate/landing_page.html:17
+#: find_roommate/templates/find_roommate/landing_page.html:19
 #: undergraduate_admission/forms/phase1_forms.py:47
 #: undergraduate_admission/forms/phase1_forms.py:145
 #: undergraduate_admission/forms/phase2_forms.py:11
@@ -368,7 +341,7 @@ msgstr "هل لديك زميل من الطلاب المقبولين ترغب ب�
 msgid "Yes"
 msgstr "نعم"
 
-#: find_roommate/templates/find_roommate/landing_page.html:29
+#: find_roommate/templates/find_roommate/landing_page.html:31
 #: undergraduate_admission/forms/phase1_forms.py:48
 #: undergraduate_admission/forms/phase1_forms.py:146
 #: undergraduate_admission/forms/phase2_forms.py:12
@@ -376,11 +349,11 @@ msgstr "نعم"
 msgid "No"
 msgstr "لا"
 
-#: find_roommate/templates/find_roommate/landing_page.html:38
+#: find_roommate/templates/find_roommate/landing_page.html:40
 msgid "Sent Requests"
 msgstr "الطلبات المرسلة"
 
-#: find_roommate/templates/find_roommate/landing_page.html:48
+#: find_roommate/templates/find_roommate/landing_page.html:50
 msgid "Received Requests"
 msgstr "الطلبات المستقبلة"
 
@@ -406,55 +379,58 @@ msgstr "العودة"
 msgid "Dear Student"
 msgstr "عزيزي الطالب"
 
-#: find_roommate/templates/find_roommate/letter_housing.html:52
-#: find_roommate/templates/find_roommate/letter_housing_2.html:52
-#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:526
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
-#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:66
-msgid "KFUPM ID"
-msgstr "الرقم الجامعي"
-
 #: find_roommate/templates/find_roommate/request_roommate.html:23
 msgid "Send Request"
 msgstr "إرسال الطلب"
 
-#: find_roommate/views.py:69 find_roommate/views.py:131
+#: find_roommate/views.py:71 find_roommate/views.py:134
 #: undergraduate_admission/views/phase1_views.py:26
 #: undergraduate_admission/views/phase2_views.py:81
 #: undergraduate_admission/views/phase3_views.py:52
 msgid "Error."
 msgstr "خطأ"
 
-#: find_roommate/views.py:120
+#: find_roommate/views.py:123
 msgid "Request was sent to the student you have chosen..."
 msgstr "تم إرسال الطلب بنجاح "
 
-#: find_roommate/views.py:146
+#: find_roommate/views.py:126
+msgid ""
+"The entered KFUPM ID belong to a student who is already a roommate with "
+"another student."
+msgstr "هذا الطالب لديه زميل سكن، الرجاء إدخال رقم جامعي آخر. "
+
+#: find_roommate/views.py:129
+msgid ""
+"The entered KFUPM ID doesnt belong to an existing student who is both "
+"admitted and eligible for housing"
+msgstr ""
+"الرقم الجامعي المدخل ﻻ ينتمي إلى أي من الطلاب المقبولين المسموح لهم بالسكن."
+
+#: find_roommate/views.py:164
 msgid "Request was accepted and room was assigned to you successfully..."
 msgstr ""
 "تمت الموافقة على الطلب بنجاح وتم تحديد الغرفة بشكل آلي من طرف النظام..."
 
-#: find_roommate/views.py:148
+#: find_roommate/views.py:166
 msgid ""
-"No rooms are available in the system at the moment. Kindly try again later!"
-msgstr ""
-"ﻻ يوجد غرفة متاجة بالنظام، الرجاء التواصل مع إدارة إسكان الطلاب بهذا "
-"الخصوص..."
+"There was an issue in assigning a room to you. Kindly try again in 24 hours!"
+msgstr "تعذر تنفيذ طلبك بالوقت الحالي، عاود المحاولة بعد 24 ساعة..."
 
-#: find_roommate/views.py:151 find_roommate/views.py:166
-#: find_roommate/views.py:181
+#: find_roommate/views.py:169 find_roommate/views.py:186
+#: find_roommate/views.py:201
 msgid "Invalid request"
 msgstr "طلب غير صالح"
 
-#: find_roommate/views.py:164
+#: find_roommate/views.py:184
 msgid "Request was rejected successfully..."
 msgstr "لقد تم رفض الطلب بنجاح"
 
-#: find_roommate/views.py:179
-msgid "Request was expired as per your request..."
-msgstr "تم انهاء مهلة الطلب بناء على رغبتك"
+#: find_roommate/views.py:199
+msgid "Request was cancelled as per your request..."
+msgstr "تم إلغاء الطلب بناء على رغبتك"
 
-#: find_roommate/views.py:201
+#: find_roommate/views.py:245
 #: undergraduate_admission/views/phase2_views.py:110
 #: undergraduate_admission/views/phase2_views.py:134
 #: undergraduate_admission/views/phase2_views.py:158
@@ -652,12 +628,18 @@ msgid "Government ID"
 msgstr "الهوية الوطنية أو هوية مقيم"
 
 #: undergraduate_admission/forms/admin_side_forms.py:163
+#: undergraduate_admission/forms/admin_side_forms.py:196
+#: undergraduate_admission/forms/admin_side_forms.py:198
 #: undergraduate_admission/models.py:35
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:45
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:46
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:86
 msgid "Message Status"
 msgstr "تفصيل حالة الطلب"
+
+#: undergraduate_admission/forms/admin_side_forms.py:202
+msgid "SMS Message To Be Sent"
+msgstr "نص الرسالة"
 
 #: undergraduate_admission/forms/general_forms.py:24
 #: undergraduate_admission/forms/phase1_forms.py:71
@@ -1747,6 +1729,10 @@ msgstr "اختر الحالة الجديدة لتطبيقها على قائمة 
 msgid "Apply Status"
 msgstr "تغيير حالة قبول الطلاب"
 
+#: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:16
+msgid "Send SMS"
+msgstr "إرسال الرسالة"
+
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:52
 msgid "Update Gender"
 msgstr "تحديث الجنس"
@@ -1776,12 +1762,6 @@ msgstr "تدوير يمين"
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:133
 msgid "Rot-left"
 msgstr "تدوير يسار"
-
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:168
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:134
-msgid "Cancel"
-msgstr "إلغاء"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:169
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:67
@@ -2296,7 +2276,7 @@ msgstr "رفع إخلاء الطرف"
 msgid "Print Admission Letter"
 msgstr "طبـــــاعة<br>خطاب القبول"
 
-#: undergraduate_admission/utils.py:21
+#: undergraduate_admission/utils.py:24
 #, python-format
 msgid ""
 "Dear %(student_name)s,<br>Your request has been successfully submitted and "
@@ -2316,7 +2296,7 @@ msgstr ""
 "في اﻻستبيان: <a href=\"http://goo.gl/erw8HQ\">http://goo.gl/erw8HQ</a> . "
 "<br><br> إدارة القبول، <br>جامعة الملك فهد للبترول والمعادن.</div>"
 
-#: undergraduate_admission/utils.py:32
+#: undergraduate_admission/utils.py:35
 #, python-format
 msgid ""
 "Dear %(student_name)s,<br>We regret to inform you that your application has "
@@ -2335,7 +2315,7 @@ msgstr ""
 "gl/erw8HQ\">http://goo.gl/erw8HQ</a> . <br><br> إدارة القبول، <br>جامعة "
 "الملك فهد للبترول والمعادن.</div>"
 
-#: undergraduate_admission/utils.py:45
+#: undergraduate_admission/utils.py:48
 msgid ""
 "Dear Student, You have been admitted successfully and you have to attend the "
 "orientationweek as specified in the admission letter"
@@ -2346,7 +2326,7 @@ msgstr ""
 "الطبي وصورة الهوية الوطنية وصورة شهادة الثانوية وصورتين شخصية حديثة ملونة "
 "وبالزي السعودي."
 
-#: undergraduate_admission/utils.py:49
+#: undergraduate_admission/utils.py:52
 msgid ""
 "Dear Student, Your application has been withdrawn as per your request. We "
 "wish you luck in your future..."
@@ -2354,17 +2334,17 @@ msgstr ""
 "عزيز الطالب، لقد تم الغاء قبولك في جامعة الملك فهد للبترول والمعادن بناء على "
 "طلبك، نتمنى لك التوفيق والنجاح في مكان آخر."
 
-#: undergraduate_admission/utils.py:81
+#: undergraduate_admission/utils.py:84
 msgid "KFUPM Admission"
 msgstr "إدارة القبول بجامعة الملك فهد للبترول والمعادن"
 
-#: undergraduate_admission/utils.py:90
+#: undergraduate_admission/utils.py:93
 msgid "Your request was submitted. Share feedback http://goo.gl/erw8HQ, KFUPM"
 msgstr ""
 "تم استلام طلبك. رأيك يهمنا http://goo.gl/erw8HQ \n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:91
+#: undergraduate_admission/utils.py:94
 msgid ""
 "Application was rejected because of old HS certificate. Share feedback: "
 "http://goo.gl/erw8HQ.KFUPM"
@@ -2373,40 +2353,69 @@ msgstr ""
 "erw8HQ \n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:95
+#: undergraduate_admission/utils.py:98
 msgid "Congrats, you have been admitted into KFUPM. Check our website"
 msgstr "نهنئك بقبولك في جامعة الملك فهد للبترول والمعادن، راجع الموقع"
 
-#: undergraduate_admission/utils.py:96
+#: undergraduate_admission/utils.py:99
 msgid "Your admission result is out. Check our website. KFUPM"
 msgstr ""
 "ظهرت نتيجة قبولك، راجع الموقع\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:97
+#: undergraduate_admission/utils.py:100
 msgid "Documents were submitted and being checked. Check website later. KFUPM"
 msgstr ""
 "تم استلام مستنداتك وجاري التحقق منها، راجع الموقع\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:98
+#: undergraduate_admission/utils.py:101
 msgid "You have issues in documents. Check website to fix them. KFUPM"
 msgstr ""
 "لديك مشكلة بمستنداتك، راجع الموقع لإعادة رفعها\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:100
+#: undergraduate_admission/utils.py:103
 msgid ""
 "Your admission is confirmed. Check website to print admission letter. KFUPM"
 msgstr ""
 "تم تأكيد قبولك، راجع الموقع لطباعة خطاب القبول\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:102
+#: undergraduate_admission/utils.py:105
 msgid "Your admission was withdrawn as per your request. Good luck. KFUPM"
 msgstr ""
 "لقد تم إلغاء قبولك في جامعة الملك فهد بناء على طلبك.\n"
 "بالتوفيق"
+
+#: undergraduate_admission/utils.py:107
+msgid "You received a roommate request. Login to our site to accept"
+msgstr ""
+" لديك طلب للسكن من أحد زملائك، بادر بالدخول على الموقع للرد وإنهاء الاجراءات"
+
+#: undergraduate_admission/utils.py:109
+msgid "Your roommate request was accepted. Login to our site to print docs"
+msgstr ""
+" تم قبول طلبك من زميل السكن، بادر بالدخول إلى الموقع لإنهاء إجراءات السكن"
+
+#: undergraduate_admission/utils.py:111
+msgid ""
+"Your roommate request was rejected. Login to our site to send another one"
+msgstr ""
+" تم إلغاء طلبك في السكن بسبب اعتذار زميلك، وينبغي عليك البحث عن زميل آخر"
+
+#: undergraduate_admission/utils.py:113
+msgid "Your roommate has withdrawn. Login to our site to find another one"
+msgstr ""
+" تم إلغاء طلبك في السكن بسبب انسحاب زميلك، وينبغي عليك البحث عن زميل آخر"
+
+#: undergraduate_admission/utils.py:115
+msgid "Remaining rooms is 100"
+msgstr " رصيد الغرف المتبقي 100"
+
+#: undergraduate_admission/utils.py:117
+msgid "Remaining rooms is 50"
+msgstr " رصيد الغرف المتبقي 50"
 
 #: undergraduate_admission/validators.py:13
 #: undergraduate_admission/validators.py:25
@@ -2505,6 +2514,85 @@ msgstr ""
 #: undergraduate_admission/views/phase3_views.py:105
 msgid "No IDs to assign. Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
+
+#~ msgid ""
+#~ "\n"
+#~ "\t\t<p>Dear new student.</p>\n"
+#~ "\t\t<p>Peace, mercy and blessings of God..</p>\n"
+#~ "\n"
+#~ "\t\t<p>We welcome you to this special site with the help of freshmen "
+#~ "students eligible for university accommodation\n"
+#~ "\t\t\tto search for a colleague adequate housing.</p>\n"
+#~ "\n"
+#~ "\t\t<p>This site allows you to choose a fellow adequate housing, through "
+#~ "the information that will appear to you\n"
+#~ "\t\t\tand other colleagues are also looking for a fellow for housing.</"
+#~ "p>\n"
+#~ "\n"
+#~ "\t\t<p>Site work method:</p>\n"
+#~ "\n"
+#~ "\t\t<ul>\n"
+#~ "\t\t\t<li>The site gives you access to personal information, and "
+#~ "additional all new students who are looking\n"
+#~ "\t\t\t\tfor a colleague for housing.\n"
+#~ "\t\t\t</li>\n"
+#~ "\t\t\t<li>For more information you can communicate with those who are "
+#~ "interested in housing with the private\n"
+#~ "\t\t\t\tmeans of communication.\n"
+#~ "\t\t\t</li>\n"
+#~ "\t\t\t<li>When agreeing with a colleague adequate housing, log back on "
+#~ "this site, and choose not to\n"
+#~ "\t\t\t\tquestion (Are you looking for a fellow housing? *) So that your "
+#~ "information is automatically\n"
+#~ "\t\t\t\tremoved from the list of fellow seekers housing.\n"
+#~ "\t\t\t</li>\n"
+#~ "\t\t</ul>\n"
+#~ "\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t<p>عزيزي الطالب المستجد.</p>\n"
+#~ "\t\t<p>السلام عليكم ورحمة الله وبركاته..</p>\n"
+#~ "\n"
+#~ "\t\t<p>ترحب بك الإدارة العامة لاسكان الطلاب في هذا الموقع الخاص بمساعدة "
+#~ "الطلاب المستجدين المستحقين للسكن الجامعي للبحث عن زميل السكن المناسب\n"
+#~ "\t\t</p>\n"
+#~ "\n"
+#~ "\t\t<p>يتيح لك هذا الموقع اختيار زميل السكن المناسب، من خلال المعلومات "
+#~ "التي ستظهر لك ولزملاء آخرين يبحثون هم كذلك عن زميل للسكن.</p>\n"
+#~ "\n"
+#~ "\t\t<p>طريقة عمل الموقع:</p>\n"
+#~ "\n"
+#~ "\t\t<ul>\n"
+#~ "\t\t\t<li>يتيح لك الموقع الاطلاع على معلومات شخصية وأخرى إضافية عن الطلاب "
+#~ "المستجدين الذين يبحثون عن زميل للسكن.</li>\n"
+#~ "\t\t\t<li>يمكنك البحث في الموقع من خلال عنصر بحث واحد أو أكثر (المدينة، "
+#~ "المدرسة، موعد النوم ...).</li>\n"
+#~ "\t\t\t<li>لمزيد من المعلومات يمكنك التواصل مع من ترغب في السكن معه على "
+#~ "وسائل التواصل الخاصة</li>\n"
+#~ "\t\t\t<li>تفادياً للإزعاج وكثرة الاتصالات عند الاتفاق مع زميل السكن "
+#~ "المناسب، فعليك معاودة تسجيل الدخول في هذا الموقع، و اختيار (لا) في سؤال "
+#~ "( هل تبحث عن زميل سكن؟ * ) بحيث يتم تلقائيًا إزالة معلوماتك من قائمة "
+#~ "الباحثين عن زميل السكن.</li>\n"
+#~ "\t\t\t<li> إذا لم تجد زميلاً مناسباً عاود الدخول مرة أخرى، حيث أنه سيزداد "
+#~ "عدد الطلاب المسجلين في الموقع مما يتح لك مزيد من الاختيارات. </li>\n"
+#~ "\t\t</ul>\n"
+#~ "\t"
+
+#~ msgid "KFUPM/Government ID"
+#~ msgstr "الهوية الوطنية أو الرقم الجامعي"
+
+#~ msgid "Invalid KFUPM ID or government ID"
+#~ msgstr "الهوية الوطنية أو الرقم الجامعي غير صالح"
+
+#~ msgid "Expire"
+#~ msgstr "انتهت مهلة الطلب"
+
+#~ msgid ""
+#~ "No rooms are available in the system at the moment. Kindly try again "
+#~ "later!"
+#~ msgstr ""
+#~ "ﻻ يوجد غرفة متاجة بالنظام، الرجاء التواصل مع إدارة إسكان الطلاب بهذا "
+#~ "الخصوص..."
 
 #~ msgid "Housing Search"
 #~ msgstr "البحث عن زميل سكن"

@@ -97,8 +97,8 @@ class HousingSearchForm(forms.Form):
 
 
 class RoommateRequestForm(forms.Form):
-    gov_id_or_kfupm_id = forms.CharField(max_length=12, label=_('KFUPM/Government ID'), validators=[
+    gov_id_or_kfupm_id = forms.CharField(max_length=12, label=_('KFUPM ID'), validators=[
         RegexValidator(
             '^\d{9,11}$',
-            message=_('Invalid KFUPM ID or government ID')
+            message=_('Invalid KFUPM ID')
         )])

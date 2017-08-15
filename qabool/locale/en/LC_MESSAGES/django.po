@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-13 13:46+0300\n"
+"POT-Creation-Date: 2017-08-15 09:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,11 +80,16 @@ msgid "Sleeping"
 msgstr ""
 
 #: find_roommate/forms.py:100
-msgid "KFUPM/Government ID"
+#: find_roommate/templates/find_roommate/letter_housing.html:52
+#: find_roommate/templates/find_roommate/letter_housing_2.html:52
+#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:526
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
+#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:66
+msgid "KFUPM ID"
 msgstr ""
 
 #: find_roommate/forms.py:103
-msgid "Invalid KFUPM ID or government ID"
+msgid "Invalid KFUPM ID"
 msgstr ""
 
 #: find_roommate/models.py:16
@@ -106,61 +111,65 @@ msgstr ""
 msgid "Searchable"
 msgstr ""
 
-#: find_roommate/models.py:43
+#: find_roommate/models.py:44
 msgid "Pending"
 msgstr ""
 
-#: find_roommate/models.py:44
+#: find_roommate/models.py:45
 msgid "Accepted"
 msgstr ""
 
-#: find_roommate/models.py:45
+#: find_roommate/models.py:46
 msgid "Rejected"
 msgstr ""
 
-#: find_roommate/models.py:46
+#: find_roommate/models.py:47
 msgid "Requesting Student Withdrawn"
 msgstr ""
 
-#: find_roommate/models.py:47
+#: find_roommate/models.py:48
 msgid "Requested Student Withdrawn"
 msgstr ""
 
-#: find_roommate/models.py:48
+#: find_roommate/models.py:49
 msgid "Expired"
 msgstr ""
 
-#: find_roommate/models.py:70
+#: find_roommate/models.py:50
+msgid "Cancelled By Requester"
+msgstr ""
+
+#: find_roommate/models.py:72
 #: find_roommate/templates/find_roommate/__request.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:28
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:27
 msgid "Status"
 msgstr ""
 
-#: find_roommate/models.py:79
+#: find_roommate/models.py:81
 #: find_roommate/templates/find_roommate/__request.html:27
 msgid "Assigned Room"
 msgstr ""
 
-#: find_roommate/models.py:81
+#: find_roommate/models.py:83
 #: find_roommate/templates/find_roommate/__request.html:19
 msgid "Request Date"
 msgstr ""
 
-#: find_roommate/models.py:82
+#: find_roommate/models.py:84
 #: find_roommate/templates/find_roommate/__request.html:21
 msgid "Updated On"
 msgstr ""
 
-#: find_roommate/models.py:89
+#: find_roommate/models.py:91
 msgid "Building"
 msgstr ""
 
-#: find_roommate/models.py:90
+#: find_roommate/models.py:92
 msgid "Room"
 msgstr ""
 
-#: find_roommate/models.py:91
+#: find_roommate/models.py:93
 msgid "Available"
 msgstr ""
 
@@ -184,23 +193,31 @@ msgid "Reject"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/__request.html:46
-msgid "Expire"
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:168
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:134
+msgid "Cancel"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/__request.html:58
+#: find_roommate/templates/find_roommate/__request.html:54
+msgid "Kindly print two copies of each of the following documents: "
+msgstr ""
+
+#: find_roommate/templates/find_roommate/__request.html:57
 msgid "Housing Letter 1"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/__request.html:60
+#: find_roommate/templates/find_roommate/__request.html:59
 msgid "Housing Letter 2"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/housing_agreement.html:42
-#: find_roommate/templates/find_roommate/housing_update_form.html:63
+#: find_roommate/templates/find_roommate/housing_update_form.html:34
 #: find_roommate/templates/find_roommate/housinguser_list.html:26
 #: find_roommate/templates/find_roommate/request_roommate.html:23
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
+#: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:51
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:137
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:33
@@ -226,42 +243,7 @@ msgstr ""
 msgid "I agree"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housing_update_form.html:7
-msgid ""
-"\n"
-"\t\t<p>Dear new student.</p>\n"
-"\t\t<p>Peace, mercy and blessings of God..</p>\n"
-"\n"
-"\t\t<p>We welcome you to this special site with the help of freshmen "
-"students eligible for university accommodation\n"
-"\t\t\tto search for a colleague adequate housing.</p>\n"
-"\n"
-"\t\t<p>This site allows you to choose a fellow adequate housing, through the "
-"information that will appear to you\n"
-"\t\t\tand other colleagues are also looking for a fellow for housing.</p>\n"
-"\n"
-"\t\t<p>Site work method:</p>\n"
-"\n"
-"\t\t<ul>\n"
-"\t\t\t<li>The site gives you access to personal information, and additional "
-"all new students who are looking\n"
-"\t\t\t\tfor a colleague for housing.\n"
-"\t\t\t</li>\n"
-"\t\t\t<li>For more information you can communicate with those who are "
-"interested in housing with the private\n"
-"\t\t\t\tmeans of communication.\n"
-"\t\t\t</li>\n"
-"\t\t\t<li>When agreeing with a colleague adequate housing, log back on this "
-"site, and choose not to\n"
-"\t\t\t\tquestion (Are you looking for a fellow housing? *) So that your "
-"information is automatically\n"
-"\t\t\t\tremoved from the list of fellow seekers housing.\n"
-"\t\t\t</li>\n"
-"\t\t</ul>\n"
-"\t"
-msgstr ""
-
-#: find_roommate/templates/find_roommate/housing_update_form.html:63
+#: find_roommate/templates/find_roommate/housing_update_form.html:34
 #: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
 msgid "Save"
@@ -291,40 +273,54 @@ msgid ""
 "list below"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:99
+#: find_roommate/templates/find_roommate/housinguser_list.html:95
+msgid ""
+"If you would like to be roommates with this student, contact him and get his "
+"KFUPM ID and "
+msgstr ""
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:100
+msgid "Request Here"
+msgstr ""
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:114
 #: undergraduate_admission/templates/snippets/pagination.html:9
 #: undergraduate_admission/templates/snippets/pagination.html:15
 msgid "Previous"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:104
+#: find_roommate/templates/find_roommate/housinguser_list.html:119
 msgid "Page"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:104
+#: find_roommate/templates/find_roommate/housinguser_list.html:119
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:29
 msgid "of"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:111
+#: find_roommate/templates/find_roommate/housinguser_list.html:126
 #: undergraduate_admission/templates/snippets/pagination.html:29
 #: undergraduate_admission/templates/snippets/pagination.html:35
 msgid "Next"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:120
+#: find_roommate/templates/find_roommate/housinguser_list.html:135
 msgid ""
 "There are no available students matching your search criteria. Check this "
 "page later..."
 msgstr ""
 
-#: find_roommate/templates/find_roommate/landing_page.html:9
+#: find_roommate/templates/find_roommate/landing_page.html:8
+msgid "welcome to KFUPM Student Housing page"
+msgstr ""
+
+#: find_roommate/templates/find_roommate/landing_page.html:11
 msgid ""
 "Do you have a friend who is admitted and eligible for housing that you want "
 "to be roommmates with?"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/landing_page.html:17
+#: find_roommate/templates/find_roommate/landing_page.html:19
 #: undergraduate_admission/forms/phase1_forms.py:47
 #: undergraduate_admission/forms/phase1_forms.py:145
 #: undergraduate_admission/forms/phase2_forms.py:11
@@ -332,7 +328,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/landing_page.html:29
+#: find_roommate/templates/find_roommate/landing_page.html:31
 #: undergraduate_admission/forms/phase1_forms.py:48
 #: undergraduate_admission/forms/phase1_forms.py:146
 #: undergraduate_admission/forms/phase2_forms.py:12
@@ -340,11 +336,11 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/landing_page.html:38
+#: find_roommate/templates/find_roommate/landing_page.html:40
 msgid "Sent Requests"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/landing_page.html:48
+#: find_roommate/templates/find_roommate/landing_page.html:50
 msgid "Received Requests"
 msgstr ""
 
@@ -370,52 +366,56 @@ msgstr ""
 msgid "Dear Student"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/letter_housing.html:52
-#: find_roommate/templates/find_roommate/letter_housing_2.html:52
-#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:526
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
-#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:66
-msgid "KFUPM ID"
-msgstr ""
-
 #: find_roommate/templates/find_roommate/request_roommate.html:23
 msgid "Send Request"
 msgstr ""
 
-#: find_roommate/views.py:69 find_roommate/views.py:131
+#: find_roommate/views.py:71 find_roommate/views.py:134
 #: undergraduate_admission/views/phase1_views.py:26
 #: undergraduate_admission/views/phase2_views.py:81
 #: undergraduate_admission/views/phase3_views.py:52
 msgid "Error."
 msgstr ""
 
-#: find_roommate/views.py:120
+#: find_roommate/views.py:123
 msgid "Request was sent to the student you have chosen..."
 msgstr ""
 
-#: find_roommate/views.py:146
-msgid "Request was accepted and room was assigned to you successfully..."
-msgstr ""
-
-#: find_roommate/views.py:148
+#: find_roommate/views.py:126
 msgid ""
-"No rooms are available in the system at the moment. Kindly try again later!"
+"The entered KFUPM ID belong to a student who is already a roommate with "
+"another student."
 msgstr ""
 
-#: find_roommate/views.py:151 find_roommate/views.py:166
-#: find_roommate/views.py:181
-msgid "Invalid request"
+#: find_roommate/views.py:129
+msgid ""
+"The entered KFUPM ID doesnt belong to an existing student who is both "
+"admitted and eligible for housing"
 msgstr ""
 
 #: find_roommate/views.py:164
+msgid "Request was accepted and room was assigned to you successfully..."
+msgstr ""
+
+#: find_roommate/views.py:166
+msgid ""
+"There was an issue in assigning a room to you. Kindly try again in 24 hours!"
+msgstr ""
+
+#: find_roommate/views.py:169 find_roommate/views.py:186
+#: find_roommate/views.py:201
+msgid "Invalid request"
+msgstr ""
+
+#: find_roommate/views.py:184
 msgid "Request was rejected successfully..."
 msgstr ""
 
-#: find_roommate/views.py:179
-msgid "Request was expired as per your request..."
+#: find_roommate/views.py:199
+msgid "Request was cancelled as per your request..."
 msgstr ""
 
-#: find_roommate/views.py:201
+#: find_roommate/views.py:245
 #: undergraduate_admission/views/phase2_views.py:110
 #: undergraduate_admission/views/phase2_views.py:134
 #: undergraduate_admission/views/phase2_views.py:158
@@ -613,11 +613,17 @@ msgid "Government ID"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:163
+#: undergraduate_admission/forms/admin_side_forms.py:196
+#: undergraduate_admission/forms/admin_side_forms.py:198
 #: undergraduate_admission/models.py:35
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:45
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:46
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:86
 msgid "Message Status"
+msgstr ""
+
+#: undergraduate_admission/forms/admin_side_forms.py:202
+msgid "SMS Message To Be Sent"
 msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:24
@@ -1634,6 +1640,10 @@ msgstr ""
 msgid "Apply Status"
 msgstr ""
 
+#: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:16
+msgid "Send SMS"
+msgstr ""
+
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:52
 msgid "Update Gender"
 msgstr ""
@@ -1662,12 +1672,6 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:65
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:133
 msgid "Rot-left"
-msgstr ""
-
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:168
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:134
-msgid "Cancel"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:169
@@ -2115,7 +2119,7 @@ msgstr ""
 msgid "Print Admission Letter"
 msgstr ""
 
-#: undergraduate_admission/utils.py:21
+#: undergraduate_admission/utils.py:24
 #, python-format
 msgid ""
 "Dear %(student_name)s,<br>Your request has been successfully submitted and "
@@ -2128,7 +2132,7 @@ msgid ""
 "Petroleum and Minerals"
 msgstr ""
 
-#: undergraduate_admission/utils.py:32
+#: undergraduate_admission/utils.py:35
 #, python-format
 msgid ""
 "Dear %(student_name)s,<br>We regret to inform you that your application has "
@@ -2140,55 +2144,80 @@ msgid ""
 "and Minerals"
 msgstr ""
 
-#: undergraduate_admission/utils.py:45
+#: undergraduate_admission/utils.py:48
 msgid ""
 "Dear Student, You have been admitted successfully and you have to attend the "
 "orientationweek as specified in the admission letter"
 msgstr ""
 
-#: undergraduate_admission/utils.py:49
+#: undergraduate_admission/utils.py:52
 msgid ""
 "Dear Student, Your application has been withdrawn as per your request. We "
 "wish you luck in your future..."
 msgstr ""
 
-#: undergraduate_admission/utils.py:81
+#: undergraduate_admission/utils.py:84
 msgid "KFUPM Admission"
 msgstr ""
 
-#: undergraduate_admission/utils.py:90
+#: undergraduate_admission/utils.py:93
 msgid "Your request was submitted. Share feedback http://goo.gl/erw8HQ, KFUPM"
 msgstr ""
 
-#: undergraduate_admission/utils.py:91
+#: undergraduate_admission/utils.py:94
 msgid ""
 "Application was rejected because of old HS certificate. Share feedback: "
 "http://goo.gl/erw8HQ.KFUPM"
 msgstr ""
 
-#: undergraduate_admission/utils.py:95
+#: undergraduate_admission/utils.py:98
 msgid "Congrats, you have been admitted into KFUPM. Check our website"
 msgstr ""
 
-#: undergraduate_admission/utils.py:96
+#: undergraduate_admission/utils.py:99
 msgid "Your admission result is out. Check our website. KFUPM"
 msgstr ""
 
-#: undergraduate_admission/utils.py:97
+#: undergraduate_admission/utils.py:100
 msgid "Documents were submitted and being checked. Check website later. KFUPM"
 msgstr ""
 
-#: undergraduate_admission/utils.py:98
+#: undergraduate_admission/utils.py:101
 msgid "You have issues in documents. Check website to fix them. KFUPM"
 msgstr ""
 
-#: undergraduate_admission/utils.py:100
+#: undergraduate_admission/utils.py:103
 msgid ""
 "Your admission is confirmed. Check website to print admission letter. KFUPM"
 msgstr ""
 
-#: undergraduate_admission/utils.py:102
+#: undergraduate_admission/utils.py:105
 msgid "Your admission was withdrawn as per your request. Good luck. KFUPM"
+msgstr ""
+
+#: undergraduate_admission/utils.py:107
+msgid "You received a roommate request. Login to our site to accept"
+msgstr ""
+
+#: undergraduate_admission/utils.py:109
+msgid "Your roommate request was accepted. Login to our site to print docs"
+msgstr ""
+
+#: undergraduate_admission/utils.py:111
+msgid ""
+"Your roommate request was rejected. Login to our site to send another one"
+msgstr ""
+
+#: undergraduate_admission/utils.py:113
+msgid "Your roommate has withdrawn. Login to our site to find another one"
+msgstr ""
+
+#: undergraduate_admission/utils.py:115
+msgid "Remaining rooms is 100"
+msgstr ""
+
+#: undergraduate_admission/utils.py:117
+msgid "Remaining rooms is 50"
 msgstr ""
 
 #: undergraduate_admission/validators.py:13
