@@ -10,7 +10,10 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from qabool import settings
+from django.conf import settings
+from zeep import Client
+from zeep import Transport
+
 from undergraduate_admission.models import Agreement, AdmissionSemester, RegistrationStatusMessage
 from django.utils.safestring import mark_safe
 
@@ -100,10 +103,23 @@ class SMS(object):
             _('Your admission is confirmed. Check website to print admission letter. KFUPM'),
         'withdrawn_msg':
             _('Your admission was withdrawn as per your request. Good luck. KFUPM'),
+        'housing_roommate_request_sent':
+            _('You received a roommate request. Login to our site to accept'),
+        'housing_roommate_request_accepted':
+            _('Your roommate request was accepted. Login to our site to print docs'),
+        'housing_roommate_request_rejected':
+            _('Your roommate request was rejected. Login to our site to send another one'),
+        'housing_roommate_request_withdrawn':
+            _('Your roommate has withdrawn. Login to our site to find another one'),
+        'housing_rooms_threshold_100':
+            _('Remaining rooms is 100'),
+        'housing_rooms_threshold_50':
+            _('Remaining rooms is 50'),
     }
 
+    # using UNIFONIC gateway to send SMS
     @staticmethod
-    def send_sms(mobile, body):
+    def send_sms_deprecated(mobile, body):
         if settings.DISABLE_SMS:
             return None
 
@@ -114,7 +130,26 @@ class SMS(object):
                                     'Body': body,
                                     'SenderID': 'KFUPM-ADM'})
             return r
-        except: # usually TimeoutError but made it general so it will never raise an exception
+        except:  # usually TimeoutError but made it general so it will never raise an exception
+            pass
+
+    # using Yesser Tarasol service to send SMS
+    @staticmethod
+    def send_sms(mobile, body):
+        if settings.DISABLE_SMS:
+            return None
+
+        try:
+            print(mobile)
+            client = Client(settings.YESSER_SMS_WSDL, transport=Transport(timeout=5))
+            sms_type = client.get_type('ns2:SMSNotificationStructure')
+            new_sms = sms_type(Requestor='KFUPMQabool',
+                               Message=body,
+                               LineNumber=mobile,
+                               NotificationId='225656')
+            result = client.service.SendNotification(new_sms)
+            return result
+        except:
             pass
 
     @staticmethod
@@ -139,8 +174,33 @@ class SMS(object):
 
     @staticmethod
     def send_sms_withdrawn(mobile):
-        SMS.send_sms(mobile,
-                     '%s' % (SMS.sms_messages['withdrawn_msg']))
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['withdrawn_msg']))
+
+    @staticmethod
+    def send_sms_housing_roommate_request_sent(mobile):
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['housing_roommate_request_sent']))
+
+    @staticmethod
+    def send_sms_housing_roommate_request_accepted(mobile):
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['housing_roommate_request_accepted']))
+
+    @staticmethod
+    def send_sms_housing_roommate_request_rejected(mobile):
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['housing_roommate_request_rejected']))
+
+    @staticmethod
+    def send_sms_housing_roommate_request_withdrawn(mobile):
+        SMS.send_sms(mobile, '%s' % (SMS.sms_messages['housing_roommate_request_withdrawn']))
+
+    @staticmethod
+    def send_sms_housing_rooms_threshold_100():
+        SMS.send_sms('966505932317', '%s' % (SMS.sms_messages['housing_rooms_threshold_100']))
+        SMS.send_sms('966569402303', '%s' % (SMS.sms_messages['housing_rooms_threshold_100']))
+
+    @staticmethod
+    def send_sms_housing_rooms_threshold_50():
+        SMS.send_sms('966505932317', '%s' % (SMS.sms_messages['housing_rooms_threshold_50']))
+        SMS.send_sms('966569402303', '%s' % (SMS.sms_messages['housing_rooms_threshold_50']))
 
 
 # a custom function to generate 6-digit captcha codes
