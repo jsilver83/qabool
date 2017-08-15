@@ -252,8 +252,13 @@ def housing_search(request):
     students = HousingUser.objects \
         .filter(user__status_message__status_message_code='ADMITTED',
                 searchable=True,
-                user__eligible_for_housing=True)
-    # .exclude(user__pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED))
+                user__eligible_for_housing=True)\
+        .exclude(user__pk__in=RoommateRequest.objects.
+                 filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
+                 .values_list('requesting_user__pk', flat=True))\
+        .exclude(user__pk__in=RoommateRequest.objects.
+                 filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
+                 .values_list('requested_user__pk', flat=True))
     is_search = False
 
     if request.GET:
