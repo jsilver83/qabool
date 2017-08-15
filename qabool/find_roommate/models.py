@@ -83,6 +83,12 @@ class RoommateRequest(models.Model):
     request_date = models.DateTimeField(null=True, blank=False, auto_now_add=True, verbose_name=_('Request Date'), )
     updated_on = models.DateTimeField(null=True, blank=False, auto_now=True, verbose_name=_('Updated On'), )
 
+    def requesting_user__kfupm_id(self):
+        return self.requesting_user.kfupm_id
+
+    def requested_user__kfupm_id(self):
+        return self.requested_user.kfupm_id
+
     def __str__(self):
         return '%s & %s' % (self.requesting_user, self.requested_user)
 

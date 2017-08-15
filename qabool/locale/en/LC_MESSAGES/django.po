@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-15 09:44+0300\n"
+"POT-Creation-Date: 2017-08-15 13:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,65 +21,75 @@ msgstr ""
 msgid "Find Roommate App"
 msgstr ""
 
-#: find_roommate/forms.py:10
+#: find_roommate/forms.py:11
 msgid "housing terms and conditions 1"
 msgstr ""
 
-#: find_roommate/forms.py:11
+#: find_roommate/forms.py:12
 msgid "housing terms and conditions 2"
 msgstr ""
 
-#: find_roommate/forms.py:12
+#: find_roommate/forms.py:13
 msgid "housing terms and conditions 3"
 msgstr ""
 
-#: find_roommate/forms.py:21
-msgid "Looking for roommate"
-msgstr ""
-
 #: find_roommate/forms.py:22
-msgid "Not looking for roommate"
+#: find_roommate/templates/find_roommate/landing_page.html:19
+#: undergraduate_admission/forms/phase1_forms.py:47
+#: undergraduate_admission/forms/phase1_forms.py:145
+#: undergraduate_admission/forms/phase2_forms.py:11
+#: undergraduate_admission/forms/phase2_forms.py:34
+msgid "Yes"
 msgstr ""
 
-#: find_roommate/forms.py:38 find_roommate/forms.py:46
-#: find_roommate/forms.py:54 undergraduate_admission/forms/phase1_forms.py:23
+#: find_roommate/forms.py:23
+#: find_roommate/templates/find_roommate/landing_page.html:31
+#: undergraduate_admission/forms/phase1_forms.py:48
+#: undergraduate_admission/forms/phase1_forms.py:146
+#: undergraduate_admission/forms/phase2_forms.py:12
+#: undergraduate_admission/forms/phase2_forms.py:35
+msgid "No"
+msgstr ""
+
+#: find_roommate/forms.py:39 find_roommate/forms.py:47
+#: find_roommate/forms.py:55 undergraduate_admission/forms/phase1_forms.py:23
 #: undergraduate_admission/forms/phase1_forms.py:35
 msgid "You have to check this box"
 msgstr ""
 
-#: find_roommate/forms.py:70
+#: find_roommate/forms.py:71
 msgid "Enter required values"
 msgstr ""
 
-#: find_roommate/forms.py:78 undergraduate_admission/models.py:174
+#: find_roommate/forms.py:79 undergraduate_admission/models.py:174
 msgid "High School City"
 msgstr ""
 
-#: find_roommate/forms.py:80 undergraduate_admission/models.py:169
+#: find_roommate/forms.py:81 undergraduate_admission/models.py:169
 msgid "High School Name"
 msgstr ""
 
-#: find_roommate/forms.py:82 find_roommate/models.py:19
+#: find_roommate/forms.py:83 find_roommate/models.py:19
 #: find_roommate/templates/find_roommate/housinguser_list.html:67
 msgid "Light"
 msgstr ""
 
-#: find_roommate/forms.py:86 find_roommate/models.py:21
+#: find_roommate/forms.py:87 find_roommate/models.py:21
 #: find_roommate/templates/find_roommate/housinguser_list.html:72
 msgid "Room Temperature"
 msgstr ""
 
-#: find_roommate/forms.py:90 find_roommate/models.py:22
+#: find_roommate/forms.py:91 find_roommate/models.py:22
 #: find_roommate/templates/find_roommate/housinguser_list.html:77
 msgid "Visits"
 msgstr ""
 
-#: find_roommate/forms.py:94 find_roommate/models.py:18
+#: find_roommate/forms.py:95 find_roommate/models.py:18
 #: find_roommate/templates/find_roommate/housinguser_list.html:62
 msgid "Sleeping"
 msgstr ""
 
-#: find_roommate/forms.py:100
+#: find_roommate/forms.py:101
 #: find_roommate/templates/find_roommate/letter_housing.html:52
 #: find_roommate/templates/find_roommate/letter_housing_2.html:52
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:526
@@ -88,7 +98,7 @@ msgstr ""
 msgid "KFUPM ID"
 msgstr ""
 
-#: find_roommate/forms.py:103
+#: find_roommate/forms.py:104
 msgid "Invalid KFUPM ID"
 msgstr ""
 
@@ -214,7 +224,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/housing_agreement.html:42
 #: find_roommate/templates/find_roommate/housing_update_form.html:34
 #: find_roommate/templates/find_roommate/housinguser_list.html:26
-#: find_roommate/templates/find_roommate/request_roommate.html:23
+#: find_roommate/templates/find_roommate/request_roommate.html:37
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
 #: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:15
@@ -274,37 +284,45 @@ msgid ""
 msgstr ""
 
 #: find_roommate/templates/find_roommate/housinguser_list.html:95
+msgid "Update your own Info "
+msgstr ""
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:100
+msgid "Here"
+msgstr ""
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:109
 msgid ""
 "If you would like to be roommates with this student, contact him and get his "
 "KFUPM ID and "
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:100
+#: find_roommate/templates/find_roommate/housinguser_list.html:114
 msgid "Request Here"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:114
+#: find_roommate/templates/find_roommate/housinguser_list.html:128
 #: undergraduate_admission/templates/snippets/pagination.html:9
 #: undergraduate_admission/templates/snippets/pagination.html:15
 msgid "Previous"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:119
+#: find_roommate/templates/find_roommate/housinguser_list.html:133
 msgid "Page"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:119
+#: find_roommate/templates/find_roommate/housinguser_list.html:133
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:29
 msgid "of"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:126
+#: find_roommate/templates/find_roommate/housinguser_list.html:140
 #: undergraduate_admission/templates/snippets/pagination.html:29
 #: undergraduate_admission/templates/snippets/pagination.html:35
 msgid "Next"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:135
+#: find_roommate/templates/find_roommate/housinguser_list.html:149
 msgid ""
 "There are no available students matching your search criteria. Check this "
 "page later..."
@@ -318,22 +336,6 @@ msgstr ""
 msgid ""
 "Do you have a friend who is admitted and eligible for housing that you want "
 "to be roommmates with?"
-msgstr ""
-
-#: find_roommate/templates/find_roommate/landing_page.html:19
-#: undergraduate_admission/forms/phase1_forms.py:47
-#: undergraduate_admission/forms/phase1_forms.py:145
-#: undergraduate_admission/forms/phase2_forms.py:11
-#: undergraduate_admission/forms/phase2_forms.py:34
-msgid "Yes"
-msgstr ""
-
-#: find_roommate/templates/find_roommate/landing_page.html:31
-#: undergraduate_admission/forms/phase1_forms.py:48
-#: undergraduate_admission/forms/phase1_forms.py:146
-#: undergraduate_admission/forms/phase2_forms.py:12
-#: undergraduate_admission/forms/phase2_forms.py:35
-msgid "No"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/landing_page.html:40
@@ -366,7 +368,7 @@ msgstr ""
 msgid "Dear Student"
 msgstr ""
 
-#: find_roommate/templates/find_roommate/request_roommate.html:23
+#: find_roommate/templates/find_roommate/request_roommate.html:37
 msgid "Send Request"
 msgstr ""
 

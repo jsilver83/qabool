@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-15 09:44+0300\n"
-"PO-Revision-Date: 2017-08-15 11:25+0300\n"
+"POT-Creation-Date: 2017-08-15 13:14+0300\n"
+"PO-Revision-Date: 2017-08-15 13:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -23,67 +23,77 @@ msgstr ""
 msgid "Find Roommate App"
 msgstr "تطبيق زميل السكن"
 
-#: find_roommate/forms.py:10
+#: find_roommate/forms.py:11
 msgid "housing terms and conditions 1"
 msgstr " أوافق على الإطلاع على معلوماتي الشخصية لمن يدخلون هذا الموقع."
 
-#: find_roommate/forms.py:11
+#: find_roommate/forms.py:12
 msgid "housing terms and conditions 2"
 msgstr " أقر بصحة معلوماتي الشخصية التي أضفتها في هذا الموقع."
 
-#: find_roommate/forms.py:12
+#: find_roommate/forms.py:13
 msgid "housing terms and conditions 3"
 msgstr ""
 " أتعهد بالتعامل مع المعلومات المتاحة في هذا الموقع بمسؤولية تراعي خصوصية "
 "أصحابها وتحقق الأهداف المرجوة."
 
-#: find_roommate/forms.py:21
-msgid "Looking for roommate"
-msgstr "نعم - (أبحث عن زميل للسكن)"
-
 #: find_roommate/forms.py:22
-msgid "Not looking for roommate"
-msgstr "ﻻ - (ﻻ أبحث عن زميل للسكن)"
+#: find_roommate/templates/find_roommate/landing_page.html:19
+#: undergraduate_admission/forms/phase1_forms.py:47
+#: undergraduate_admission/forms/phase1_forms.py:145
+#: undergraduate_admission/forms/phase2_forms.py:11
+#: undergraduate_admission/forms/phase2_forms.py:34
+msgid "Yes"
+msgstr "نعم"
 
-#: find_roommate/forms.py:38 find_roommate/forms.py:46
-#: find_roommate/forms.py:54 undergraduate_admission/forms/phase1_forms.py:23
+#: find_roommate/forms.py:23
+#: find_roommate/templates/find_roommate/landing_page.html:31
+#: undergraduate_admission/forms/phase1_forms.py:48
+#: undergraduate_admission/forms/phase1_forms.py:146
+#: undergraduate_admission/forms/phase2_forms.py:12
+#: undergraduate_admission/forms/phase2_forms.py:35
+msgid "No"
+msgstr "لا"
+
+#: find_roommate/forms.py:39 find_roommate/forms.py:47
+#: find_roommate/forms.py:55 undergraduate_admission/forms/phase1_forms.py:23
 #: undergraduate_admission/forms/phase1_forms.py:35
 msgid "You have to check this box"
 msgstr "يجب عليك التأشير في المربع"
 
-#: find_roommate/forms.py:70
+#: find_roommate/forms.py:71
 msgid "Enter required values"
 msgstr "أدخل القيم المطلوبة (*)"
 
-#: find_roommate/forms.py:78 undergraduate_admission/models.py:174
+#: find_roommate/forms.py:79 undergraduate_admission/models.py:174
 msgid "High School City"
 msgstr "مصدر الشهادة (المدينة/القرية)"
 
-#: find_roommate/forms.py:80 undergraduate_admission/models.py:169
+#: find_roommate/forms.py:81 undergraduate_admission/models.py:169
 msgid "High School Name"
 msgstr "المدرسة الثانوية"
 
-#: find_roommate/forms.py:82 find_roommate/models.py:19
+#: find_roommate/forms.py:83 find_roommate/models.py:19
 #: find_roommate/templates/find_roommate/housinguser_list.html:67
 msgid "Light"
 msgstr "الإضاءة عند النوم"
 
-#: find_roommate/forms.py:86 find_roommate/models.py:21
+#: find_roommate/forms.py:87 find_roommate/models.py:21
 #: find_roommate/templates/find_roommate/housinguser_list.html:72
 msgid "Room Temperature"
 msgstr "تفضيل جو الغرفة (التكييف)"
 
-#: find_roommate/forms.py:90 find_roommate/models.py:22
+#: find_roommate/forms.py:91 find_roommate/models.py:22
 #: find_roommate/templates/find_roommate/housinguser_list.html:77
 msgid "Visits"
 msgstr "زيارات الأصدقاء والمعارف"
 
-#: find_roommate/forms.py:94 find_roommate/models.py:18
+#: find_roommate/forms.py:95 find_roommate/models.py:18
 #: find_roommate/templates/find_roommate/housinguser_list.html:62
 msgid "Sleeping"
 msgstr "موعد النوم"
 
-#: find_roommate/forms.py:100
+#: find_roommate/forms.py:101
 #: find_roommate/templates/find_roommate/letter_housing.html:52
 #: find_roommate/templates/find_roommate/letter_housing_2.html:52
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:526
@@ -92,7 +102,7 @@ msgstr "موعد النوم"
 msgid "KFUPM ID"
 msgstr "الرقم الجامعي"
 
-#: find_roommate/forms.py:103
+#: find_roommate/forms.py:104
 msgid "Invalid KFUPM ID"
 msgstr "رقم جامعي غير صالح"
 
@@ -113,7 +123,7 @@ msgstr "الاهتمامات والهوايات"
 
 #: find_roommate/models.py:25
 msgid "Searchable"
-msgstr "هل تبحث عن زميل سكن؟"
+msgstr "هل ترغب في اﻻستمرار بالبحث عن زميل سكن؟"
 
 #: find_roommate/models.py:44
 msgid "Pending"
@@ -218,7 +228,7 @@ msgstr "نموذج تسكين طالب"
 #: find_roommate/templates/find_roommate/housing_agreement.html:42
 #: find_roommate/templates/find_roommate/housing_update_form.html:34
 #: find_roommate/templates/find_roommate/housinguser_list.html:26
-#: find_roommate/templates/find_roommate/request_roommate.html:23
+#: find_roommate/templates/find_roommate/request_roommate.html:37
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
 #: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:15
@@ -280,6 +290,14 @@ msgstr ""
 "المسجلين في الموقع مما يتح لك مزيد من الاختيارات"
 
 #: find_roommate/templates/find_roommate/housinguser_list.html:95
+msgid "Update your own Info "
+msgstr "حدث بياناتك الشخصية"
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:100
+msgid "Here"
+msgstr "هــنــا"
+
+#: find_roommate/templates/find_roommate/housinguser_list.html:109
 msgid ""
 "If you would like to be roommates with this student, contact him and get his "
 "KFUPM ID and "
@@ -287,32 +305,32 @@ msgstr ""
 "بعد اﻻتفاق مع هذا الزميل، تأكد من حصولك على رقمه الجامعي لتستكمل اﻻجراءات "
 "عبر الرابط التالي: "
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:100
+#: find_roommate/templates/find_roommate/housinguser_list.html:114
 msgid "Request Here"
 msgstr "اطلب هنا"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:114
+#: find_roommate/templates/find_roommate/housinguser_list.html:128
 #: undergraduate_admission/templates/snippets/pagination.html:9
 #: undergraduate_admission/templates/snippets/pagination.html:15
 msgid "Previous"
 msgstr "السابق"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:119
+#: find_roommate/templates/find_roommate/housinguser_list.html:133
 msgid "Page"
 msgstr "صفحة"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:119
+#: find_roommate/templates/find_roommate/housinguser_list.html:133
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:29
 msgid "of"
 msgstr "من"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:126
+#: find_roommate/templates/find_roommate/housinguser_list.html:140
 #: undergraduate_admission/templates/snippets/pagination.html:29
 #: undergraduate_admission/templates/snippets/pagination.html:35
 msgid "Next"
 msgstr "التالي"
 
-#: find_roommate/templates/find_roommate/housinguser_list.html:135
+#: find_roommate/templates/find_roommate/housinguser_list.html:149
 msgid ""
 "There are no available students matching your search criteria. Check this "
 "page later..."
@@ -334,22 +352,6 @@ msgid ""
 "Do you have a friend who is admitted and eligible for housing that you want "
 "to be roommmates with?"
 msgstr "هل لديك زميل من الطلاب المقبولين ترغب بالسكن معه؟"
-
-#: find_roommate/templates/find_roommate/landing_page.html:19
-#: undergraduate_admission/forms/phase1_forms.py:47
-#: undergraduate_admission/forms/phase1_forms.py:145
-#: undergraduate_admission/forms/phase2_forms.py:11
-#: undergraduate_admission/forms/phase2_forms.py:34
-msgid "Yes"
-msgstr "نعم"
-
-#: find_roommate/templates/find_roommate/landing_page.html:31
-#: undergraduate_admission/forms/phase1_forms.py:48
-#: undergraduate_admission/forms/phase1_forms.py:146
-#: undergraduate_admission/forms/phase2_forms.py:12
-#: undergraduate_admission/forms/phase2_forms.py:35
-msgid "No"
-msgstr "لا"
 
 #: find_roommate/templates/find_roommate/landing_page.html:40
 msgid "Sent Requests"
@@ -381,7 +383,7 @@ msgstr "العودة"
 msgid "Dear Student"
 msgstr "عزيزي الطالب"
 
-#: find_roommate/templates/find_roommate/request_roommate.html:23
+#: find_roommate/templates/find_roommate/request_roommate.html:37
 msgid "Send Request"
 msgstr "إرسال الطلب"
 
@@ -2516,6 +2518,12 @@ msgstr ""
 #: undergraduate_admission/views/phase3_views.py:105
 msgid "No IDs to assign. Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
+
+#~ msgid "Looking for roommate"
+#~ msgstr "نعم - (أبحث عن زميل للسكن)"
+
+#~ msgid "Not looking for roommate"
+#~ msgstr "ﻻ - (ﻻ أبحث عن زميل للسكن)"
 
 #~ msgid ""
 #~ "\n"
