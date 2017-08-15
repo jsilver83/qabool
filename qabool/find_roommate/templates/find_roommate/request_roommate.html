@@ -18,7 +18,21 @@
 	{% endif %}
 	<form method="post" class="form-horizontal">
 		{% csrf_token %}
-		{{ form }}
+		<div class="checkbox form-group">
+            <span style="color:red">{{ form.agree1.errors }}</span>
+            <label for="{{ form.agree1.id_for_label }}" class="col-sm-12">
+                {{ form.agree1 }}&nbsp;{{ form.agree1.label }}
+            </label>
+        </div>
+
+        <div class="checkbox form-group">
+            <span style="color:red">{{ form.agree1.errors }}</span>
+            <label for="{{ form.agree2.id_for_label }}" class="col-sm-12">
+                {{ form.agree2 }}&nbsp;{{ form.agree2.label }}
+            </label>
+        </div>
+		<br>&nbsp;<br>
+		{% formrow form.gov_id_or_kfupm_id using "floppyforms/rows/bootstrap3-horizontal.html" %}
 		<br>&nbsp;<br>
 		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Send Request' %}"/>
 	</form>

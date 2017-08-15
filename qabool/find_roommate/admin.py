@@ -28,9 +28,12 @@ class RoomAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 class RoommateRequestAdmin(admin.ModelAdmin):
-    list_display = ('requesting_user', 'requested_user', 'status', 'assigned_room', 'request_date', 'updated_on')
+    list_display = ('requesting_user', 'requesting_user__kfupm_id', 'requested_user', 'requested_user__kfupm_id',
+                    'status', 'assigned_room', 'request_date', 'updated_on')
 
     list_filter = ('status', )
+
+    search_fields = ['requesting_user__kfupm_id', 'requested_user__kfupm_id']
 
 
 admin.site.register(HousingUser, UserHousingAdmin)

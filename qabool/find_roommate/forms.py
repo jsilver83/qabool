@@ -2,6 +2,7 @@ import floppyforms.__future__ as forms
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
+from undergraduate_admission.forms.phase1_forms import AgreementForm
 from .models import HousingUser
 from undergraduate_admission.models import Lookup, User
 
@@ -18,8 +19,8 @@ class HousingInfoUpdateForm(forms.ModelForm):
 
         SEARCHABLE_CHOICES = (
             ('', "---"),
-            (True, _("Looking for roommate")),
-            (False, _("Not looking for roommate")),
+            (True, _("Yes")),
+            (False, _("No")),
         )
 
         widgets = {
@@ -96,9 +97,12 @@ class HousingSearchForm(forms.Form):
                                )
 
 
-class RoommateRequestForm(forms.Form):
+class RoommateRequestForm(AgreementForm):
     gov_id_or_kfupm_id = forms.CharField(max_length=12, label=_('KFUPM ID'), validators=[
         RegexValidator(
             '^\d{9,11}$',
             message=_('Invalid KFUPM ID')
         )])
+
+    class Meta:
+        fields = ['agree1', 'agree2', 'gov_id_or_kfupm_id']

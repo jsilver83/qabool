@@ -140,7 +140,6 @@ class SMS(object):
             return None
 
         try:
-            print(mobile)
             client = Client(settings.YESSER_SMS_WSDL, transport=Transport(timeout=5))
             sms_type = client.get_type('ns2:SMSNotificationStructure')
             new_sms = sms_type(Requestor='KFUPMQabool',
@@ -149,7 +148,7 @@ class SMS(object):
                                NotificationId='225656')
             result = client.service.SendNotification(new_sms)
             return result
-        except:
+        except:  # ERROR: Client request message schema validation failure
             pass
 
     @staticmethod
