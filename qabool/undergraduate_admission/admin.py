@@ -11,7 +11,7 @@ from undergraduate_admission.views.admin_side_views import get_student_record_se
 from .models import *
 
 
-class UserResource(resources.ModelResource):
+class StudentResource(resources.ModelResource):
     class Meta:
         model = User
         exclude = ('id',)
@@ -29,19 +29,10 @@ class UserResource(resources.ModelResource):
         report_skipped = True
 
 
-class MyUserAdmin(ImportExportMixin, VersionAdmin, UserAdmin):
+class MyUserAdmin(VersionAdmin, UserAdmin):
     list_display = ('id', 'username', 'kfupm_id', 'get_student_full_name', 'email', 'admission_total',
                     'status_message_id',)
     date_hierarchy = 'date_joined'
-    fieldsets = UserAdmin.fieldsets + (
-        ('Qabool Fields', {
-            'fields': ('semester', 'kfupm_id', 'mobile', 'nationality', 'saudi_mother', 'status_message',
-                       'admission_note',
-                       'guardian_mobile', 'high_school_graduation_year', 'high_school_system', 'high_school_gpa',
-                       'qudrat_score', 'tahsili_score',),
-        }),
-    )
-    resource_class = UserResource
 
 
 class Student(User):
@@ -52,7 +43,7 @@ class Student(User):
         # }
 
 
-class StudentAdmin(VersionAdmin):
+class StudentAdmin(ImportExportMixin, VersionAdmin):
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
                     'student_type', 'admission_total', 'status_message',)
 
@@ -145,6 +136,7 @@ class StudentAdmin(VersionAdmin):
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
     actions = ['yesser_update']
+    resource_class = StudentResource
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(StudentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
