@@ -45,7 +45,7 @@
 			<center>
 				<h4>نموذج تسكين طالب</h4>
 			</center>
-			<div width=45% style="text-align:right;">التاريخ :</div><br />
+			<div width=45% style="text-align:right;"> التاريخ : <strong>{{ date }}</strong></div><br />
 			<div><strong>{% trans 'Dear Student' %}/</strong> {{ user.get_student_full_name }}</div>
 			<div>
 				{% if user.kfupm_id %}

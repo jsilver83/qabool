@@ -252,10 +252,10 @@ def housing_search(request):
     students = HousingUser.objects \
         .filter(user__status_message__status_message_code='ADMITTED',
                 searchable=True,
-                user__eligible_for_housing=True)\
+                user__eligible_for_housing=True) \
         .exclude(user__pk__in=RoommateRequest.objects.
                  filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
-                 .values_list('requesting_user__pk', flat=True))\
+                 .values_list('requesting_user__pk', flat=True)) \
         .exclude(user__pk__in=RoommateRequest.objects.
                  filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
                  .values_list('requested_user__pk', flat=True))
@@ -318,34 +318,27 @@ def housing_search(request):
                                                                    'is_search': is_search, })
 
 
-class HousingLetter1(HousingBaseView, TemplateView):
+class BaseHousingLetter(HousingBaseView, TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super(BaseHousingLetter, self).get_context_data(**kwargs)
+        context['assigned_room'] = Room.get_assigned_room(self.request.user)
+        context['date'] = RoommateRequest.objects.filter(Q(requesting_user=self.request.user) |
+                                                         Q(requested_user=self.request.user),
+                                                         status=RoommateRequest.RequestStatuses.ACCEPTED).first().updated_on
+
+        return context
+
+
+class HousingLetter1(BaseHousingLetter):
     template_name = 'find_roommate/letter_housing.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(HousingLetter1, self).get_context_data(**kwargs)
-        context['assigned_room'] = Room.get_assigned_room(self.request.user)
 
-        return context
-
-
-class HousingLetter2(HousingBaseView, TemplateView):
+class HousingLetter2(BaseHousingLetter):
     template_name = 'find_roommate/letter_housing_2.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(HousingLetter2, self).get_context_data(**kwargs)
-        context['assigned_room'] = Room.get_assigned_room(self.request.user)
 
-        return context
-
-
-class HousingLetter3(HousingBaseView, TemplateView):
+class HousingLetter3(BaseHousingLetter):
     template_name = 'find_roommate/letter_housing_3.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(HousingLetter3, self).get_context_data(**kwargs)
-        context['assigned_room'] = Room.get_assigned_room(self.request.user)
-
-        return context
 
 
 class PostList(ListView):
