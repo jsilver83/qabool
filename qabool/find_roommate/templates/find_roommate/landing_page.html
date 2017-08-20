@@ -16,7 +16,7 @@
 				<a href="{% url 'roommate_request' %}">
 					<div class="jumbotron">
 						<h4 style="text-align: center">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;{% trans 'Yes' %}
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;{% trans 'Yes' %}
 						</h4>
 					</div>
 				</a>
@@ -28,33 +28,34 @@
 				<a href="{% url 'housing_info_update' %}">
 					<div class="jumbotron">
 						<h4 style="text-align: center">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;{% trans 'No' %}
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;{% trans 'No' %}
 						</h4>
 					</div>
 				</a>
 			</div>
 		</div>
 	{% endif %}
-		<div class="hreqs">
-			{% if sent_requests %}
-				<h4>{% trans 'Sent Requests' %}</h4>
-				<hr><br>
-				<table class="table">
-					{% for request in sent_requests %}
-						{% include 'find_roommate/__request.html' %}
-					{% endfor %}
-				</table>
-			{% endif %}
-			<br><br>
-			{% if received_requests %}
-				<h4>{% trans 'Received Requests' %}</h4>
-				<hr><br>
-				<table class="table">
-					{% for request in received_requests %}
-						{% include 'find_roommate/__request.html' %}
-					{% endfor %}
-				</table>
-			{% endif %}
-		</div>
-
+	<div class="hreqs">
+		{% if sent_requests %}
+			<h4>{% trans 'Sent Requests' %}</h4>
+			<hr><br>
+			<table class="table">
+				{% for request in sent_requests %}
+					{% include 'find_roommate/__request.html' %}
+				{% endfor %}
+			</table>
+		{% endif %}
+		<br><br>
+		{% if received_requests %}
+			<h4>{% trans 'Received Requests' %}</h4>
+			<hr><br>
+			<table class="table">
+				{% for request in received_requests %}
+					{% include 'find_roommate/__request.html' %}
+				{% endfor %}
+			</table>
+		{% endif %}
+	</div>
+	<hr>
+	<span>{% trans 'housing note message' %}</span>
 {% endblock subcontent %}
