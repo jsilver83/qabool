@@ -6,5 +6,5 @@ class FindRoommateConfig(AppConfig):
     name = 'find_roommate'
     verbose_name = _('Find Roommate App')
 
-    def ready(self):
-        import find_roommate.signals
+    # def ready(self):
+    #     import find_roommate.signals

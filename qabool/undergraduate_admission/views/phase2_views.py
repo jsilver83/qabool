@@ -14,6 +14,7 @@ from django.views.decorators.cache import never_cache
 
 from sendfile import sendfile, os
 
+from find_roommate.models import RoommateRequest
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
@@ -301,9 +302,6 @@ def upload_documents_for_incomplete(request):
     return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
 
 
-
-
-
 @login_required()
 def upload_withdrawal_proof(request):
     # it is ok to come here unconditionally if student has duplicate admission in other universities
@@ -341,6 +339,27 @@ def withdraw(request):
                 messages.success(request, _('You have withdrawn from the university successfully...'))
 
                 SMS.send_sms_withdrawn(request.user.mobile)
+
+                # added for housing module
+                if request.user.status_message.status.status_code == 'WITHDRAWN':
+                    roommate_requests = RoommateRequest.objects.filter(requesting_user=request.user,
+                                                                       status__in=[
+                                                                           RoommateRequest.RequestStatuses.PENDING,
+                                                                           RoommateRequest.RequestStatuses.ACCEPTED])
+
+                    if roommate_requests.count():
+                        roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
+                        for roommate_request in roommate_requests:
+                            SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
+
+                    roommate_requests = RoommateRequest.objects.filter(requested_user=request.user,
+                                                                       status__in=[
+                                                                           RoommateRequest.RequestStatuses.PENDING,
+                                                                           RoommateRequest.RequestStatuses.ACCEPTED])
+                    if roommate_requests.count():
+                        roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
+                        for roommate_request in roommate_requests:
+                            SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
 
                 return redirect('withdrawal_letter')
             else:

@@ -18,15 +18,17 @@
 	<!-- Custom CSS -->
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
-		*{
-		font-size:90%!important;
+		* {
+			font-size: 90% !important;
 		}
-		.noprint{
-		display:none!important;
+
+		.noprint {
+			display: none !important;
 		}
-		.ftr-fixed-btm{
-		position:fixed;
-		bottom:0px;
+
+		.ftr-fixed-btm {
+			position: fixed;
+			bottom: 0px;
 		}
 	</style>
 </head>
@@ -42,52 +44,58 @@
 	<hr>
 </div>
 <img style="width: 80%; margin: 0 auto" class="img-responsive" src="{% static 'images/housing_hdr.jpg' %}">
-			<center>
-				<h4>نموذج تسكين طالب</h4>
-			</center>
-			<div width=45% style="text-align:right;"> التاريخ : <strong>{{ date }}</strong></div><br />
-			<div><strong>{% trans 'Dear Student' %}/</strong> {{ user.get_student_full_name }}</div>
-			<div>
-				{% if user.kfupm_id %}
-				<strong>{% trans 'KFUPM ID' %} /</strong> {{ user.kfupm_id }}
-				{% else %}
-				<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
-				{% endif %}
-			</div>
+<center>
+	<h2>نموذج تسكين طالب</h2>
+</center>
+<div width=45% style="text-align:right;"> التاريخ : <strong>{{ date }}</strong></div>
+<br/>
+<div><strong>{% trans 'Dear Student' %}/</strong> {{ user.get_student_full_name }}</div>
+<div>
+	{% if user.kfupm_id %}
+		<strong>{% trans 'KFUPM ID' %} /</strong> {{ user.kfupm_id }}
+	{% else %}
+		<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
+	{% endif %}
+</div>
 
-            <div width=45% style="text-align:right;"><strong>رقم الغرفة – العمارة /</strong> {{ assigned_room }}</div><br />
+<div width=45% style="text-align:right;"><strong>رقم الغرفة – العمارة /</strong> {{ assigned_room }}</div>
+<br/>
 
 
-            <strong>أقر أنا الطالب الموقع أدناه بأنني استلمت الغرفة المشار إليها أعلاه بكامل أثاثها ومفتاحها وأصبحت في عهدتي ما لم أبلغ خلال (24) ساعة من تاريخ سكني عن خلاف ذلك. وأكون بذلك مسئولاً عن أي تلف أو ضياع ناتج عن الإهمال أو سوء الاستعمال. كما أتعهد بالآتي :</strong>
-            <hr>
-            <ol>
-                <li>عدم فك أو إخراج أي قطعة أثاث من الغرفة .</li>
-                <li>عدم الانتقال من الغرفة أو إخلائها بدون موافقة الإدارة العامة لإسكان الطلاب.</li>
-                <li>أنني قد استلمت نسخة من المفتاح ولا يحق لي نسخه خارج الجامعة، وفي حالة ضياعه للمرة الأولى أتحمل غرامة مالية وقدرها (100) ريال وفي المرة الثانية (150) ريال وفي المرة الثالثة (200) ريال.</li>
-                <li>في حال رغبتي البقاء في السكن فإني التزم بتجديد السكن حسب المواعيد المعلنة من قبل الإدارة العامة لإسكان الطلاب.</li>
-                <li>إبلاغ إدارة إسكان الطلاب عند تغيُّب زميلي عن الغرفة مدة ثلاثة أيام دراسية أو سكن شخص آخر من الغرفة بصورة غير نظامية.</li>
-                <li>الالتزام بشروط ولوائح إسكان الطلاب وفي حال مخالفتي لأي منها، سيترتب على ذلك الحرمان من السكن أو الفصل من الجامعة.</li>
-								<li>سكني في هذه الغرفة ميزة خاصة بي، و لا يحق لي السماح لشخص آخر بالاستفادة من الغرفة أو
-                مشاركتي فيها سواءً من منسوبي الجامعة أو من خارجها، وعند مخالفة هذا الأمر فإنه يترتب على ذلك فصلي من الجامعة.</li>
-                <!-- <li>سكني في هذه الغرفة ميزة خاصة بي، و لا يحق لي السماح لشخص آخر بالاستفادة من الغرفة أو
-                مشاركتي فيها سواءً من منسوبي الجامعة أو من خارجها، وعند مخالفة هذا الأمر فإنه يترتب على ذلك فصلي من الجامعة. ( نأمل إعادة كتابة ما تحته خط في المربع ادناه ).</li> -->
-            </ol>
-            <br />
-            <table style="width:100%">
-                <tr>
-                    <td align=center width=30%>توقيع الطالب <br /><br />.........................................</td>
-                    <td align=center>توقيع الموظف المختص <br /><br />.........................................</td>
-                    <td align=center width=30%>قسم المفاتيح <br /><br />.........................................</td>
-                </tr>
-            </table><br /><br><br>
-    <table width=100% dir=rtl style="font-size:small">
-        <tr>
-            <td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br />
-            هاتف 2923-860 (03) - فاكس 1327-860 (03)
-            </td>
-            <td align="center">stufund@kfupm.edu.sa <br />http://www.kfupm.edu.sa/studentaffairs</td>
-            <td align="center">P.O.Box 1404 - Dhahran 31261 Saudi Arabia <br />Phone (03) 860-2923 - Fax (03) 860-1327</td>
-        </tr>
-    </table>
+<strong>أقر أنا الطالب الموقع أدناه بأنني استلمت الغرفة المشار إليها أعلاه بكامل أثاثها ومفتاحها وأصبحت في عهدتي ما لم أبلغ خلال (24) ساعة من تاريخ سكني عن خلاف ذلك. وأكون بذلك مسئولاً عن أي تلف أو ضياع ناتج عن الإهمال أو سوء الاستعمال. كما أتعهد بالآتي :</strong>
+<hr>
+<ol>
+	<li>عدم فك أو إخراج أي قطعة أثاث من الغرفة .</li>
+	<li>عدم الانتقال من الغرفة أو إخلائها بدون موافقة الإدارة العامة لإسكان الطلاب.</li>
+	<li>أنني قد استلمت نسخة من المفتاح ولا يحق لي نسخه خارج الجامعة، وفي حالة ضياعه للمرة الأولى أتحمل غرامة مالية وقدرها (100) ريال وفي المرة الثانية (150) ريال وفي المرة الثالثة (200) ريال.</li>
+	<li>في حال رغبتي البقاء في السكن فإني التزم بتجديد السكن حسب المواعيد المعلنة من قبل الإدارة العامة لإسكان الطلاب.</li>
+	<li>إبلاغ إدارة إسكان الطلاب عند تغيُّب زميلي عن الغرفة مدة ثلاثة أيام دراسية أو سكن شخص آخر من الغرفة بصورة غير نظامية.</li>
+	<li>الالتزام بشروط ولوائح إسكان الطلاب وفي حال مخالفتي لأي منها، سيترتب على ذلك الحرمان من السكن أو الفصل من الجامعة.</li>
+	<li><span style="text-decoration: underline">سكني في هذه الغرفة ميزة خاصة بي، و لا يحق لي السماح لشخص آخر بالاستفادة من الغرفة أو
+		مشاركتي فيها سواءً من منسوبي الجامعة أو من خارجها، وعند مخالفة هذا الأمر فإنه يترتب على ذلك فصلي من الجامعة.</span><br>
+		نأمل إعادة كتابة ما تحته خط بالمربع أدناه:<br>
+		<div style="border: 1px double black; width: 90%; margin: 5px auto; height: 100px;"></div>
+	</li>
+	<!-- <li>سكني في هذه الغرفة ميزة خاصة بي، و لا يحق لي السماح لشخص آخر بالاستفادة من الغرفة أو
+    مشاركتي فيها سواءً من منسوبي الجامعة أو من خارجها، وعند مخالفة هذا الأمر فإنه يترتب على ذلك فصلي من الجامعة. ( نأمل إعادة كتابة ما تحته خط في المربع ادناه ).</li> -->
+</ol>
+<br/>
+<table style="width:100%">
+	<tr>
+		<td align=center width=30%>توقيع الطالب <br/><br/>.........................................</td>
+		<td align=center>توقيع الموظف المختص <br/><br/>.........................................</td>
+		<td align=center width=30%>قسم المفاتيح <br/><br/>.........................................</td>
+	</tr>
+</table>
+<br/><br><br>
+<table width=100% dir=rtl style="font-size:small">
+	<tr>
+		<td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br/>
+			هاتف 2923-860 (03) - فاكس 1327-860 (03)
+		</td>
+		<td align="center">stufund@kfupm.edu.sa <br/>http://www.kfupm.edu.sa/studentaffairs</td>
+		<td align="center">P.O.Box 1404 - Dhahran 31261 Saudi Arabia <br/>Phone (03) 860-2923 - Fax (03) 860-1327</td>
+	</tr>
+</table>
 </body>
 </html>
