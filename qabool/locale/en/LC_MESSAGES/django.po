@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 15:23+0300\n"
+"POT-Creation-Date: 2017-08-20 16:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,7 +91,7 @@ msgstr ""
 
 #: find_roommate/forms.py:101
 #: find_roommate/templates/find_roommate/letter_housing.html:52
-#: find_roommate/templates/find_roommate/letter_housing_2.html:52
+#: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:539
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
@@ -356,7 +356,7 @@ msgid "housing note message"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/letter_housing.html:37
-#: find_roommate/templates/find_roommate/letter_housing_2.html:37
+#: find_roommate/templates/find_roommate/letter_housing_2.html:39
 #: find_roommate/templates/find_roommate/letter_housing_3.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:35
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:39
@@ -365,7 +365,7 @@ msgid "Print"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/letter_housing.html:39
-#: find_roommate/templates/find_roommate/letter_housing_2.html:39
+#: find_roommate/templates/find_roommate/letter_housing_2.html:41
 #: find_roommate/templates/find_roommate/letter_housing_3.html:41
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:37
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:41
@@ -374,7 +374,7 @@ msgid "Go Back"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/letter_housing.html:48
-#: find_roommate/templates/find_roommate/letter_housing_2.html:49
+#: find_roommate/templates/find_roommate/letter_housing_2.html:52
 #: find_roommate/templates/find_roommate/letter_housing_3.html:52
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:62
 msgid "Dear Student"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: find_roommate/views.py:71 find_roommate/views.py:143
 #: undergraduate_admission/views/phase1_views.py:26
-#: undergraduate_admission/views/phase2_views.py:81
+#: undergraduate_admission/views/phase2_views.py:82
 #: undergraduate_admission/views/phase3_views.py:52
 msgid "Error."
 msgstr ""
@@ -433,16 +433,16 @@ msgid "Request was cancelled as per your request..."
 msgstr ""
 
 #: find_roommate/views.py:254
-#: undergraduate_admission/views/phase2_views.py:110
-#: undergraduate_admission/views/phase2_views.py:134
-#: undergraduate_admission/views/phase2_views.py:158
-#: undergraduate_admission/views/phase2_views.py:182
-#: undergraduate_admission/views/phase2_views.py:216
-#: undergraduate_admission/views/phase2_views.py:246
-#: undergraduate_admission/views/phase2_views.py:276
-#: undergraduate_admission/views/phase2_views.py:299
-#: undergraduate_admission/views/phase2_views.py:323
-#: undergraduate_admission/views/phase2_views.py:347
+#: undergraduate_admission/views/phase2_views.py:111
+#: undergraduate_admission/views/phase2_views.py:135
+#: undergraduate_admission/views/phase2_views.py:159
+#: undergraduate_admission/views/phase2_views.py:183
+#: undergraduate_admission/views/phase2_views.py:217
+#: undergraduate_admission/views/phase2_views.py:247
+#: undergraduate_admission/views/phase2_views.py:277
+#: undergraduate_admission/views/phase2_views.py:300
+#: undergraduate_admission/views/phase2_views.py:321
+#: undergraduate_admission/views/phase2_views.py:365
 msgid "Error saving info. Try again later!"
 msgstr ""
 
@@ -2229,7 +2229,8 @@ msgid ""
 msgstr ""
 
 #: undergraduate_admission/utils.py:113
-msgid "Your roommate has withdrawn. Login to our site to find another one"
+msgid ""
+"Your roommate has withdrawn. Login to our site to search for another roommate"
 msgstr ""
 
 #: undergraduate_admission/utils.py:115
@@ -2291,39 +2292,39 @@ msgstr ""
 msgid "Error updating info. Try again later!"
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:106
+#: undergraduate_admission/views/phase2_views.py:107
 msgid "Personal Info was saved successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:130
+#: undergraduate_admission/views/phase2_views.py:131
 msgid "Guardian Contact Info was saved successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:154
+#: undergraduate_admission/views/phase2_views.py:155
 msgid "Relative Info was saved successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:178
+#: undergraduate_admission/views/phase2_views.py:179
 msgid "Vehicle info was submitted successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:212
-#: undergraduate_admission/views/phase2_views.py:242
+#: undergraduate_admission/views/phase2_views.py:213
+#: undergraduate_admission/views/phase2_views.py:243
 msgid "Personal picture was uploaded successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:272
-#: undergraduate_admission/views/phase2_views.py:295
+#: undergraduate_admission/views/phase2_views.py:273
+#: undergraduate_admission/views/phase2_views.py:296
 msgid ""
 "Documents were uploaded successfully. We will verify your information and "
 "get back to you soon..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:319
+#: undergraduate_admission/views/phase2_views.py:317
 msgid "Documents were uploaded successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:341
+#: undergraduate_admission/views/phase2_views.py:339
 msgid "You have withdrawn from the university successfully..."
 msgstr ""
 
