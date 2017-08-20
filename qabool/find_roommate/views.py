@@ -123,8 +123,17 @@ class NewRoommateRequest(HousingBaseView, FormView):
                 messages.success(self.request, _('Request was sent to the student you have chosen...'))
                 return redirect(self.success_url)
             else:
-                messages.error(self.request, _('The entered KFUPM ID belong to a student who is '
-                                               'already a roommate with another student.'))
+                student_has_pending_requests = \
+                    RoommateRequest.objects.filter(Q(requesting_user=roommate) |
+                                                   Q(requested_user=roommate),
+                                                   status=RoommateRequest.RequestStatuses.PENDING).count() > 0
+
+                if student_has_pending_requests:
+                    messages.error(self.request, _('The entered KFUPM ID belong to a student who has '
+                                                   'a pending roommate request.'))
+                else:
+                    messages.error(self.request, _('The entered KFUPM ID belong to a student who already has '
+                                                   'a roommate.'))
         else:
             messages.error(self.request, _('The entered KFUPM ID doesnt belong to an existing '
                                            'student who is both admitted and eligible for housing'))
@@ -140,10 +149,10 @@ def check_remaining_rooms_threshold():
         exclude(pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
                 .values_list('assigned_room', flat=True)).count()
 
-    if remaining_rooms <= 50:
+    if remaining_rooms == 50:
         SMS.send_sms_housing_rooms_threshold_50()
 
-    elif remaining_rooms <= 100:
+    elif remaining_rooms == 100:
         SMS.send_sms_housing_rooms_threshold_100()
 
 

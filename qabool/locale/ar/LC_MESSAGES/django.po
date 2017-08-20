@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 11:56+0300\n"
-"PO-Revision-Date: 2017-08-20 12:22+0300\n"
+"POT-Creation-Date: 2017-08-20 15:23+0300\n"
+"PO-Revision-Date: 2017-08-20 15:24+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -38,7 +38,7 @@ msgstr ""
 "أصحابها وتحقق الأهداف المرجوة."
 
 #: find_roommate/forms.py:22
-#: find_roommate/templates/find_roommate/landing_page.html:21
+#: find_roommate/templates/find_roommate/landing_page.html:19
 #: undergraduate_admission/forms/phase1_forms.py:47
 #: undergraduate_admission/forms/phase1_forms.py:145
 #: undergraduate_admission/forms/phase2_forms.py:11
@@ -47,7 +47,7 @@ msgid "Yes"
 msgstr "نعم"
 
 #: find_roommate/forms.py:23
-#: find_roommate/templates/find_roommate/landing_page.html:33
+#: find_roommate/templates/find_roommate/landing_page.html:31
 #: undergraduate_admission/forms/phase1_forms.py:48
 #: undergraduate_admission/forms/phase1_forms.py:146
 #: undergraduate_admission/forms/phase2_forms.py:12
@@ -352,25 +352,25 @@ msgstr ""
 "السكن مع أحد زملائك المقبولين في الجامعة، كما يتيح لك إمكانية البحث عن زميل "
 "للسكن."
 
-#: find_roommate/templates/find_roommate/landing_page.html:10
-msgid "housing note message"
-msgstr ""
-"للاستفسار فيما يتعلق بهذا البرنامج؛ نأمل إرسال بريد إلكتروني بعنوان (استفسار "
-"طالب مستجد) إلى البريد الإلكتروني: stuhouse@kfupm.edu.sa"
-
-#: find_roommate/templates/find_roommate/landing_page.html:13
+#: find_roommate/templates/find_roommate/landing_page.html:11
 msgid ""
 "Do you have a friend who is admitted and eligible for housing that you want "
 "to be roommmates with?"
 msgstr "هل لديك زميل من الطلاب المقبولين ترغب بالسكن معه؟"
 
-#: find_roommate/templates/find_roommate/landing_page.html:42
+#: find_roommate/templates/find_roommate/landing_page.html:40
 msgid "Sent Requests"
 msgstr "الطلبات المرسلة"
 
-#: find_roommate/templates/find_roommate/landing_page.html:52
+#: find_roommate/templates/find_roommate/landing_page.html:50
 msgid "Received Requests"
 msgstr "الطلبات المستقبلة"
+
+#: find_roommate/templates/find_roommate/landing_page.html:60
+msgid "housing note message"
+msgstr ""
+"للاستفسار فيما يتعلق بهذا البرنامج؛ نأمل إرسال بريد إلكتروني بعنوان (استفسار "
+"طالب مستجد) إلى البريد الإلكتروني: stuhouse@kfupm.edu.sa"
 
 #: find_roommate/templates/find_roommate/letter_housing.html:37
 #: find_roommate/templates/find_roommate/letter_housing_2.html:37
@@ -401,7 +401,7 @@ msgstr "عزيزي الطالب"
 msgid "Send Request"
 msgstr "إرسال الطلب"
 
-#: find_roommate/views.py:71 find_roommate/views.py:134
+#: find_roommate/views.py:71 find_roommate/views.py:143
 #: undergraduate_admission/views/phase1_views.py:26
 #: undergraduate_admission/views/phase2_views.py:81
 #: undergraduate_admission/views/phase3_views.py:52
@@ -412,43 +412,46 @@ msgstr "خطأ"
 msgid "Request was sent to the student you have chosen..."
 msgstr "تم إرسال الطلب بنجاح "
 
-#: find_roommate/views.py:126
+#: find_roommate/views.py:132
 msgid ""
-"The entered KFUPM ID belong to a student who is already a roommate with "
-"another student."
+"The entered KFUPM ID belong to a student who has a pending roommate request."
 msgstr "هذا الطالب لديه طلب قيد الانتظار، الرجاء إدخال رقم جامعي آخر. "
 
-#: find_roommate/views.py:129
+#: find_roommate/views.py:135
+msgid "The entered KFUPM ID belong to a student who already has a roommate."
+msgstr "هذا الطالب لديه .زميل سكن، الرجاء إدخال رقم جامعي آخر. "
+
+#: find_roommate/views.py:138
 msgid ""
 "The entered KFUPM ID doesnt belong to an existing student who is both "
 "admitted and eligible for housing"
 msgstr ""
 "الرقم الجامعي المدخل ﻻ ينتمي إلى أي من الطلاب المقبولين المسموح لهم بالسكن."
 
-#: find_roommate/views.py:164
+#: find_roommate/views.py:173
 msgid "Request was accepted and room was assigned to you successfully..."
 msgstr ""
 "تمت الموافقة على الطلب بنجاح وتم تحديد الغرفة بشكل آلي من طرف النظام..."
 
-#: find_roommate/views.py:166
+#: find_roommate/views.py:175
 msgid ""
 "There was an issue in assigning a room to you. Kindly try again in 24 hours!"
 msgstr "تعذر تنفيذ طلبك بالوقت الحالي، عاود المحاولة بعد 24 ساعة..."
 
-#: find_roommate/views.py:169 find_roommate/views.py:186
-#: find_roommate/views.py:201
+#: find_roommate/views.py:178 find_roommate/views.py:195
+#: find_roommate/views.py:210
 msgid "Invalid request"
 msgstr "طلب غير صالح"
 
-#: find_roommate/views.py:184
+#: find_roommate/views.py:193
 msgid "Request was rejected successfully..."
 msgstr "لقد تم رفض الطلب بنجاح"
 
-#: find_roommate/views.py:199
+#: find_roommate/views.py:208
 msgid "Request was cancelled as per your request..."
 msgstr "تم إلغاء الطلب بناء على رغبتك"
 
-#: find_roommate/views.py:245
+#: find_roommate/views.py:254
 #: undergraduate_admission/views/phase2_views.py:110
 #: undergraduate_admission/views/phase2_views.py:134
 #: undergraduate_admission/views/phase2_views.py:158
