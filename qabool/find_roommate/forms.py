@@ -96,6 +96,10 @@ class HousingSearchForm(forms.Form):
                                widget=forms.Select(choices=Lookup.get_lookup_choices('HOUSING_PREF_SLEEPIN')),
                                )
 
+    def __init__(self, *args, **kwargs):
+        super(HousingSearchForm, self).__init__(*args, **kwargs)
+        self.fields['high_school_city'].widget = forms.Select(choices=User.get_distinct_high_school_city())
+
 
 class RoommateRequestForm(AgreementForm):
     gov_id_or_kfupm_id = forms.CharField(max_length=12, label=_('KFUPM ID'), validators=[
