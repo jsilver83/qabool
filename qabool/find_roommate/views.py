@@ -325,6 +325,8 @@ class HousingLetter1(HousingBaseView, TemplateView):
         context = super(HousingLetter1, self).get_context_data(**kwargs)
         context['assigned_room'] = Room.get_assigned_room(self.request.user)
 
+        return context
+
 
 class HousingLetter2(HousingBaseView, TemplateView):
     template_name = 'find_roommate/letter_housing_2.html'
@@ -332,6 +334,8 @@ class HousingLetter2(HousingBaseView, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HousingLetter2, self).get_context_data(**kwargs)
         context['assigned_room'] = Room.get_assigned_room(self.request.user)
+
+        return context
 
 
 class HousingLetter3(HousingBaseView, TemplateView):
@@ -341,25 +345,7 @@ class HousingLetter3(HousingBaseView, TemplateView):
         context = super(HousingLetter3, self).get_context_data(**kwargs)
         context['assigned_room'] = Room.get_assigned_room(self.request.user)
 
-
-# @login_required()
-# @user_passes_test(is_eligible_for_housing)
-# def housing_letter1(request):
-#     user = request.user
-#     assigned_room = Room.get_assigned_room(user)
-#
-#     return render(request, 'find_roommate/letter_housing.html', {'user': user,
-#                                                                  'assigned_room': assigned_room, })
-
-
-# @login_required()
-# @user_passes_test(is_eligible_for_housing)
-# def housing_letter2(request):
-#     user = request.user
-#     assigned_room = Room.get_assigned_room(user)
-#
-#     return render(request, 'find_roommate/letter_housing_2.html', {'user': user,
-#                                                                    'assigned_room': assigned_room, })
+        return context
 
 
 class PostList(ListView):
