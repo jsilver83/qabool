@@ -1,6 +1,7 @@
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
 
+from find_roommate.models import RoommateRequest
 from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
 
 register = template.Library()
@@ -19,13 +20,16 @@ def student_info_commands(context):
     can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)
     can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing
                        and AdmissionSemester.get_phase4_active_semester(user))
+    pending_housing_roommate_requests = \
+        RoommateRequest.objects.filter(requested_user=user,
+                                       status=RoommateRequest.RequestStatuses.PENDING).count()
     try:
         can_search_in_housing = can_see_housing and user.housing_user.searchable
     except ObjectDoesNotExist:
         can_search_in_housing = False
     has_pic = phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED'
     can_edit_phase1_info = phase == 'APPLIED' and AdmissionSemester.check_if_phase1_is_active()
-    can_edit_contact_info = phase != 'REJECTED'\
+    can_edit_contact_info = phase != 'REJECTED' \
                             and phase != 'WITHDRAWN' \
                             and phase != 'ADMITTED' \
                             and not can_edit_phase1_info
@@ -53,5 +57,5 @@ def student_info_commands(context):
         'can_see_kfupm_id': can_see_kfupm_id,
         'can_see_housing': can_see_housing,
         'can_search_in_housing': can_search_in_housing,
+        'pending_housing_roommate_requests': pending_housing_roommate_requests,
     }
-
