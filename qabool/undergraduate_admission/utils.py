@@ -110,7 +110,7 @@ class SMS(object):
         'housing_roommate_request_rejected':
             _('Your roommate request was rejected. Login to our site to send another one'),
         'housing_roommate_request_withdrawn':
-            _('Your roommate has withdrawn. Login to our site to find another one'),
+            _('Your roommate has withdrawn. Login to our site to search for another roommate'),
         'housing_rooms_threshold_100':
             _('Remaining rooms is 100'),
         'housing_rooms_threshold_50':

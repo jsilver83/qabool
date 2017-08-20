@@ -340,26 +340,25 @@ def withdraw(request):
 
                 SMS.send_sms_withdrawn(request.user.mobile)
 
-                # added for housing module
-                if request.user.status_message.status.status_code == 'WITHDRAWN':
-                    roommate_requests = RoommateRequest.objects.filter(requesting_user=request.user,
-                                                                       status__in=[
-                                                                           RoommateRequest.RequestStatuses.PENDING,
-                                                                           RoommateRequest.RequestStatuses.ACCEPTED])
+                # # added for housing module
+                roommate_requests = RoommateRequest.objects.filter(requesting_user=request.user,
+                                                                   status__in=[
+                                                                       RoommateRequest.RequestStatuses.PENDING,
+                                                                       RoommateRequest.RequestStatuses.ACCEPTED])
 
-                    if roommate_requests.count():
-                        roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
-                        for roommate_request in roommate_requests:
-                            SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
+                if roommate_requests.count():
+                    roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
+                    for roommate_request in roommate_requests:
+                        SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
 
-                    roommate_requests = RoommateRequest.objects.filter(requested_user=request.user,
-                                                                       status__in=[
-                                                                           RoommateRequest.RequestStatuses.PENDING,
-                                                                           RoommateRequest.RequestStatuses.ACCEPTED])
-                    if roommate_requests.count():
-                        roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
-                        for roommate_request in roommate_requests:
-                            SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
+                roommate_requests = RoommateRequest.objects.filter(requested_user=request.user,
+                                                                   status__in=[
+                                                                       RoommateRequest.RequestStatuses.PENDING,
+                                                                       RoommateRequest.RequestStatuses.ACCEPTED])
+                if roommate_requests.count():
+                    roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
+                    for roommate_request in roommate_requests:
+                        SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
 
                 return redirect('withdrawal_letter')
             else:
