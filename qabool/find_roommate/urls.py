@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^housingagreement/$', HousingAgreement.as_view(), name='housing_agreement'),
     url(r'^findroommate/$', HousingInfoUpdate.as_view(), name='housing_info_update'),
     url(r'^housingsearch/$', housing_search, name='housing_search'),
-    url(r'^housingletter2/$', housing_letter2, name='housing_letter2'),
-    url(r'^housingletter1/$', housing_letter1, name='housing_letter1'),
+    url(r'^housingletter3/$', HousingLetter3.as_view(), name='housing_letter3'),
+    url(r'^housingletter2/$', HousingLetter2.as_view(), name='housing_letter2'),
+    url(r'^housingletter1/$', HousingLetter1.as_view(), name='housing_letter1'),
 ]
