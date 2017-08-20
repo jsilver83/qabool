@@ -57,8 +57,8 @@
 							<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;{% trans 'Housing Letter 1' %}</a>&nbsp;&nbsp;
 						<a target="_blank" class="btn btn-primary btn-lg" href="{% url 'housing_letter2' %}">
 							<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;{% trans 'Housing Letter 2' %}</a>
-						<a target="_blank" class="btn btn-primary btn-lg"
-						   href="{% static 'pdf/housing_agreement.pdf' %}">
+						<a target="_blank" class="btn btn-primary btn-lg" href="{% url 'housing_letter3' %}">
+{#						   href="{% static 'pdf/housing_agreement.pdf' %}">#}
 							<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;{% trans 'Housing Letter 3' %}</a>
 					</td>
 				</tr>
