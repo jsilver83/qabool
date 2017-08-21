@@ -115,6 +115,8 @@ class SMS(object):
             _('Remaining rooms is 100'),
         'housing_rooms_threshold_50':
             _('Remaining rooms is 50'),
+        'housing_rooms_threshold_10':
+            _('Remaining rooms is 10'),
     }
 
     # using UNIFONIC gateway to send SMS
@@ -200,6 +202,11 @@ class SMS(object):
     def send_sms_housing_rooms_threshold_50():
         SMS.send_sms('966505932317', '%s' % (SMS.sms_messages['housing_rooms_threshold_50']))
         SMS.send_sms('966569402303', '%s' % (SMS.sms_messages['housing_rooms_threshold_50']))
+
+    @staticmethod
+    def send_sms_housing_rooms_threshold_10():
+        SMS.send_sms('966505932317', '%s' % (SMS.sms_messages['housing_rooms_threshold_10']))
+        SMS.send_sms('966569402303', '%s' % (SMS.sms_messages['housing_rooms_threshold_10']))
 
 
 # a custom function to generate 6-digit captcha codes

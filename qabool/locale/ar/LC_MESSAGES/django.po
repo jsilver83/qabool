@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 16:52+0300\n"
-"PO-Revision-Date: 2017-08-20 16:55+0300\n"
+"POT-Creation-Date: 2017-08-21 10:33+0300\n"
+"PO-Revision-Date: 2017-08-21 10:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -93,7 +93,7 @@ msgstr "زيارات الأصدقاء والمعارف"
 msgid "Sleeping"
 msgstr "موعد النوم"
 
-#: find_roommate/forms.py:101
+#: find_roommate/forms.py:105
 #: find_roommate/templates/find_roommate/letter_housing.html:52
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
@@ -103,7 +103,7 @@ msgstr "موعد النوم"
 msgid "KFUPM ID"
 msgstr "الرقم الجامعي"
 
-#: find_roommate/forms.py:104
+#: find_roommate/forms.py:108
 msgid "Invalid KFUPM ID"
 msgstr "رقم جامعي غير صالح"
 
@@ -428,30 +428,30 @@ msgid ""
 msgstr ""
 "الرقم الجامعي المدخل ﻻ ينتمي إلى أي من الطلاب المقبولين المسموح لهم بالسكن."
 
-#: find_roommate/views.py:173
+#: find_roommate/views.py:176
 msgid "Request was accepted and room was assigned to you successfully..."
 msgstr ""
 "تمت الموافقة على الطلب بنجاح وتم تحديد الغرفة بشكل آلي من طرف النظام..."
 
-#: find_roommate/views.py:175
+#: find_roommate/views.py:178
 msgid ""
 "There was an issue in assigning a room to you. Kindly try again in 24 hours!"
 msgstr "تعذر تنفيذ طلبك بالوقت الحالي، عاود المحاولة بعد 24 ساعة..."
 
-#: find_roommate/views.py:178 find_roommate/views.py:195
-#: find_roommate/views.py:210
+#: find_roommate/views.py:181 find_roommate/views.py:198
+#: find_roommate/views.py:213
 msgid "Invalid request"
 msgstr "طلب غير صالح"
 
-#: find_roommate/views.py:193
+#: find_roommate/views.py:196
 msgid "Request was rejected successfully..."
 msgstr "لقد تم رفض الطلب بنجاح"
 
-#: find_roommate/views.py:208
+#: find_roommate/views.py:211
 msgid "Request was cancelled as per your request..."
 msgstr "تم إلغاء الطلب بناء على رغبتك"
 
-#: find_roommate/views.py:254
+#: find_roommate/views.py:257
 #: undergraduate_admission/views/phase2_views.py:111
 #: undergraduate_admission/views/phase2_views.py:135
 #: undergraduate_admission/views/phase2_views.py:159
@@ -461,7 +461,7 @@ msgstr "تم إلغاء الطلب بناء على رغبتك"
 #: undergraduate_admission/views/phase2_views.py:277
 #: undergraduate_admission/views/phase2_views.py:300
 #: undergraduate_admission/views/phase2_views.py:321
-#: undergraduate_admission/views/phase2_views.py:365
+#: undergraduate_admission/views/phase2_views.py:364
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
@@ -1629,7 +1629,7 @@ msgid "Welcome"
 msgstr "مرحبا"
 
 #: undergraduate_admission/templates/base.html:46
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:65
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:71
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:20
 msgid "Logout"
 msgstr "خروج"
@@ -1686,36 +1686,36 @@ msgstr "تأكيد الرغبة واستكمال البيانات"
 msgid "Print Documents"
 msgstr "طباعة الخطابات"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:42
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:44
 msgid "Student Housing"
 msgstr "سكن الطلاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:48
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:54
 msgid "Print Withdrawal Letter"
 msgstr "طباعة خطاب اﻻنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:51
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:57
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:9
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
 msgid "Edit Info"
 msgstr "تعديل البيانات"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:54
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:60
 msgid "Edit Contact Information"
 msgstr "تعديل بيانات التواصل"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:58
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:64
 msgid ""
 "If you don't want to proceed with the application you can still withdraw "
 "your application by clicking below on the red button."
 msgstr "في حال رغبتكم في الإنسحاب ، الرجاء الضغط على زر اﻹنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:59
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:61
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:65
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:67
 msgid "Withdraw Application"
 msgstr "اﻻنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:63
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:69
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 msgid "Change Password"
 msgstr "تغيير كلمة السر"
@@ -2412,33 +2412,33 @@ msgstr "لقد تم إلغاء قبولك في جامعة الملك فهد بن
 
 #: undergraduate_admission/utils.py:107
 msgid "You received a roommate request. Login to our site to accept"
-msgstr ""
-" لديك طلب للسكن من أحد زملائك، بادر بالدخول على الموقع للرد وإنهاء الاجراءات"
+msgstr "لديك طلب سكن من أحد زملائك، ادخل على الموقع للرد وإنهاء إجراءاتك"
 
 #: undergraduate_admission/utils.py:109
 msgid "Your roommate request was accepted. Login to our site to print docs"
-msgstr ""
-" تم قبول طلبك من زميل السكن، بادر بالدخول إلى الموقع لإنهاء إجراءات السكن"
+msgstr "تم قبول طلبك من زميل السكن، ادخل إلى الموقع لإنهاء إجراءات السكن"
 
 #: undergraduate_admission/utils.py:111
 msgid ""
 "Your roommate request was rejected. Login to our site to send another one"
-msgstr ""
-" تم إلغاء طلبك في السكن بسبب اعتذار زميلك، وينبغي عليك البحث عن زميل آخر"
+msgstr "تم إلغاء طلبك في السكن بسبب اعتذار زميلك، ابحث عن زميل آخر"
 
 #: undergraduate_admission/utils.py:113
 msgid ""
 "Your roommate has withdrawn. Login to our site to search for another roommate"
-msgstr ""
-" تم إلغاء طلبك في السكن بسبب انسحاب زميلك، وينبغي عليك البحث عن زميل آخر"
+msgstr "تم إلغاء طلبك في السكن بسبب انسحاب زميلك، ابحث عن زميل آخر"
 
 #: undergraduate_admission/utils.py:115
 msgid "Remaining rooms is 100"
-msgstr " رصيد الغرف المتبقي 100"
+msgstr "رصيد الغرف المتبقي 100"
 
 #: undergraduate_admission/utils.py:117
 msgid "Remaining rooms is 50"
 msgstr " رصيد الغرف المتبقي 50"
+
+#: undergraduate_admission/utils.py:119
+msgid "Remaining rooms is 10"
+msgstr "رصيد الغرف المتبقي 10"
 
 #: undergraduate_admission/validators.py:13
 #: undergraduate_admission/validators.py:25
