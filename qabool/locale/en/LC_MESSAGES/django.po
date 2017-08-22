@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 16:52+0300\n"
+"POT-Creation-Date: 2017-08-21 10:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Sleeping"
 msgstr ""
 
-#: find_roommate/forms.py:101
+#: find_roommate/forms.py:105
 #: find_roommate/templates/find_roommate/letter_housing.html:52
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
@@ -99,7 +99,7 @@ msgstr ""
 msgid "KFUPM ID"
 msgstr ""
 
-#: find_roommate/forms.py:104
+#: find_roommate/forms.py:108
 msgid "Invalid KFUPM ID"
 msgstr ""
 
@@ -410,29 +410,29 @@ msgid ""
 "admitted and eligible for housing"
 msgstr ""
 
-#: find_roommate/views.py:173
+#: find_roommate/views.py:176
 msgid "Request was accepted and room was assigned to you successfully..."
 msgstr ""
 
-#: find_roommate/views.py:175
+#: find_roommate/views.py:178
 msgid ""
 "There was an issue in assigning a room to you. Kindly try again in 24 hours!"
 msgstr ""
 
-#: find_roommate/views.py:178 find_roommate/views.py:195
-#: find_roommate/views.py:210
+#: find_roommate/views.py:181 find_roommate/views.py:198
+#: find_roommate/views.py:213
 msgid "Invalid request"
 msgstr ""
 
-#: find_roommate/views.py:193
+#: find_roommate/views.py:196
 msgid "Request was rejected successfully..."
 msgstr ""
 
-#: find_roommate/views.py:208
+#: find_roommate/views.py:211
 msgid "Request was cancelled as per your request..."
 msgstr ""
 
-#: find_roommate/views.py:254
+#: find_roommate/views.py:257
 #: undergraduate_admission/views/phase2_views.py:111
 #: undergraduate_admission/views/phase2_views.py:135
 #: undergraduate_admission/views/phase2_views.py:159
@@ -442,7 +442,7 @@ msgstr ""
 #: undergraduate_admission/views/phase2_views.py:277
 #: undergraduate_admission/views/phase2_views.py:300
 #: undergraduate_admission/views/phase2_views.py:321
-#: undergraduate_admission/views/phase2_views.py:365
+#: undergraduate_admission/views/phase2_views.py:364
 msgid "Error saving info. Try again later!"
 msgstr ""
 
@@ -1544,7 +1544,7 @@ msgid "Welcome"
 msgstr ""
 
 #: undergraduate_admission/templates/base.html:46
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:65
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:71
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:20
 msgid "Logout"
 msgstr ""
@@ -1593,36 +1593,36 @@ msgstr ""
 msgid "Print Documents"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:42
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:44
 msgid "Student Housing"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:48
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:54
 msgid "Print Withdrawal Letter"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:51
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:57
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:9
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
 msgid "Edit Info"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:54
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:60
 msgid "Edit Contact Information"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:58
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:64
 msgid ""
 "If you don't want to proceed with the application you can still withdraw "
 "your application by clicking below on the red button."
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:59
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:61
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:65
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:67
 msgid "Withdraw Application"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:63
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:69
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 msgid "Change Password"
 msgstr ""
@@ -2239,6 +2239,10 @@ msgstr ""
 
 #: undergraduate_admission/utils.py:117
 msgid "Remaining rooms is 50"
+msgstr ""
+
+#: undergraduate_admission/utils.py:119
+msgid "Remaining rooms is 10"
 msgstr ""
 
 #: undergraduate_admission/validators.py:13

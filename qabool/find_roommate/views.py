@@ -149,7 +149,10 @@ def check_remaining_rooms_threshold():
         exclude(pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
                 .values_list('assigned_room', flat=True)).count()
 
-    if remaining_rooms == 50:
+    if remaining_rooms == 10:
+        SMS.send_sms_housing_rooms_threshold_10()
+
+    elif remaining_rooms == 50:
         SMS.send_sms_housing_rooms_threshold_50()
 
     elif remaining_rooms == 100:
