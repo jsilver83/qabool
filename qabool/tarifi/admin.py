@@ -10,14 +10,14 @@ class TarifiActivitySlotResource(resources.ModelResource):
         model = TarifiActivitySlot
         import_id_fields = ('id',)
         fields = ('semester', 'type', 'location_ar', 'location_en', 'slots', 'remaining_slots', 'slot_start_date',
-                  'slot_end_date', 'show', 'display_order')
+                  'slot_end_date', 'show', 'display_order','id')
         skip_unchanged = True
         report_skipped = True
 
 
 class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'type', 'location_ar', 'location_en', 'slots', 'remaining_slots', 'slot_start_date',
-                    'slot_end_date', 'show', 'display_order')
+                    'slot_end_date', 'show', 'display_order','id')
     list_filter = ('semester', 'type', 'location_ar', 'location_en')
     resource_class = TarifiActivitySlotResource
 
