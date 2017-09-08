@@ -1,0 +1,85 @@
+{% extends 'undergraduate_admission/admin/base_admin_area.html' %}
+{#{% load bootstrap3 %}#}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block subcontent %}
+	<h4>{{ now }}</h4>
+	{% if slot %}
+		<div class="row">
+			<div class="col-sm-6">
+				<dt>{% trans 'Slot Type' %}</dt>
+				<dd>{{ slot.type }}</dd>
+				<dt>{% trans 'Slot Period' %}</dt>
+				<dd>{{ slot.slot_start_date }} - {{ slot.slot_end_date|timeuntil }}</dd>
+			</div>
+			<div class="col-sm-6">
+				<dt>{% trans 'Location' %}</dt>
+				<dd>{{ slot.location }}&nbsp;<small class="label label-primary">{% trans 'Capacity' %}: {{ slot.slots }}</small>
+				</dd>
+				<dt>{% trans 'Attender' %}</dt>
+				<dd>{{ slot.attender }}</dd>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-6">
+				<form method="post">
+					{% csrf_token %}
+					{{ form }}
+					<button>{% trans 'Attend' %}</button>
+				</form>
+			</div>
+			<div class="col-sm-6">
+				{% if not no_student %}
+					{% if student %}
+						<div class="alert alert-success">
+							<h4>
+								<span class="glyphicon glyphicon-ok"></span>&nbsp;
+								{{ student }}&nbsp;<small><strong>{{ student.kfupm_id }}</strong></small>
+							</h4>
+							<h6>
+								{{ student.preparation_course_attendance_date }}</h6>
+						</div>
+					{% else %}
+						<div class="alert alert-danger">
+							<span class="glyphicon glyphicon-remove"></span>&nbsp;
+							{% trans 'This student DOES NOT exist. Try a differnt ID!' %}
+						</div>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+	{% else %}
+		<div class="alert alert-danger">
+			<h4>
+				<span class="glyphicon glyphicon-remove"></span>&nbsp;
+				{% trans 'No Preparation Course is taking place at the moment' %}</h4>
+		</div>
+	{% endif %}
+{% endblock subcontent %}
+
+{% block scripts %}
+	<script type="application/javascript">
+        $(function () {
+            $("#id_kfupm_id").focus(function () {
+                $(this).select();
+            });
+
+            $("#id_kfupm_id").focus().bind('blur', function () {
+                $(this).focus();
+            });
+
+            $("html").click(function () {
+                $("#id_kfupm_id").val($("#id_kfupm_id").val()).focus();
+            });
+
+            //disable the tab key
+            $(document).keydown(function (objEvent) {
+                if (objEvent.keyCode == 9) {  //tab pressed
+                    objEvent.preventDefault(); // stops its action
+                }
+            });
+        });
+	</script>
+{% endblock %}
