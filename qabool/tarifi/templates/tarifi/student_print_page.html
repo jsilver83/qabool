@@ -1,0 +1,85 @@
+{% load i18n %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Undergraduate Admission | King Fahd University of Petroleum &amp;Minerals</title>
+	<link rel="icon" href="images/favicon.png">
+	<!-- Bootstrap Core CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<!-- Custom CSS -->
+	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
+	<style media="print">
+		* {
+			font-size: 90% !important;
+		}
+
+		.noprint {
+			display: none !important;
+		}
+
+		.ftr-fixed-btm {
+			position: fixed;
+			bottom: 0px;
+		}
+	</style>
+</head>
+<body>
+<div class="container-fluid noprint">
+	<div class="row">
+		<div class="col-lg-12"><br>
+			<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
+				<i class="fa fa-print" aria-hidden="true"></i> </a>
+			<a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
+		</div>
+	</div>
+	<hr>
+</div>
+<img style="width: 85%; margin: 0 auto" class="img-responsive" src="{% static 'images/kfupm_hdr.jpg' %}"><br>
+<center>
+	<h2>عقد ترخيص بالسكن</h2>
+</center>
+<p>{{ student.kfupm_id }}</p>
+<p>{{ student }}</p>
+<p>{{ reception_box }}</p>
+{% if issues %}
+	<p>{{ issues }}</p>
+{% endif %}
+<p>{{ reception_counter }}</p>
+<p>{{ tarifi_user.creation_date }}</p>
+<p>{{ tarifi_user.preparation_course_slot }}</p>
+<p>{{ tarifi_user.english_placement_test_slot }}</p>
+<p>{{ tarifi_user.get_english_speaking_test_date_time }}</p>
+<br/>
+<table style="width:100%">
+	<tr>
+		<td align=center width=35%>طرف أول (الجامعة)</td>
+		<td align=center>الختم</td>
+		<td align=center width=35%>طرف ثاني (الطالب)</td>
+	</tr>
+	<tr>
+		<td align=right>الاسم: <br/><br/> التوقيع:</td>
+		<td></td>
+		<td align=right>الاسم: <br/><br/> التوقيع:</td>
+	</tr>
+</table>
+<br/>
+<table width=100% dir=rtl style="font-size:small">
+	<tr>
+		<td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br/>
+			هاتف 2923-860 (03) - فاكس 1327-860 (03)
+		</td>
+		<td align="center">stufund@kfupm.edu.sa <br/>http://www.kfupm.edu.sa/studentaffairs</td>
+		<td align="center">P.O.Box 1404 - Dhahran 31261 Saudi Arabia <br/>Phone (03) 860-2923 - Fax (03) 860-1327</td>
+	</tr>
+</table>
+</body>
+</html>
