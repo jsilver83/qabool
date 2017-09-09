@@ -19,7 +19,7 @@
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
 		* {
-			font-size: 90% !important;
+			font-size: 94% !important;
 		}
 
 		.noprint {
@@ -43,43 +43,171 @@
 	</div>
 	<hr>
 </div>
-<img style="width: 85%; margin: 0 auto" class="img-responsive" src="{% static 'images/kfupm_hdr.jpg' %}"><br>
-<center>
-	<h2>عقد ترخيص بالسكن</h2>
-</center>
-<p>{{ student.kfupm_id }}</p>
-<p>{{ student }}</p>
-<p>{{ reception_box }}</p>
-{% if issues %}
-	<p>{{ issues }}</p>
-{% endif %}
-<p>{{ reception_counter }}</p>
-<p>{{ tarifi_user.creation_date }}</p>
-<p>{{ tarifi_user.preparation_course_slot }}</p>
-<p>{{ tarifi_user.english_placement_test_slot }}</p>
-<p>{{ tarifi_user.get_english_speaking_test_date_time }}</p>
-<br/>
-<table style="width:100%">
-	<tr>
-		<td align=center width=35%>طرف أول (الجامعة)</td>
-		<td align=center>الختم</td>
-		<td align=center width=35%>طرف ثاني (الطالب)</td>
-	</tr>
-	<tr>
-		<td align=right>الاسم: <br/><br/> التوقيع:</td>
-		<td></td>
-		<td align=right>الاسم: <br/><br/> التوقيع:</td>
-	</tr>
-</table>
-<br/>
-<table width=100% dir=rtl style="font-size:small">
-	<tr>
-		<td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br/>
-			هاتف 2923-860 (03) - فاكس 1327-860 (03)
-		</td>
-		<td align="center">stufund@kfupm.edu.sa <br/>http://www.kfupm.edu.sa/studentaffairs</td>
-		<td align="center">P.O.Box 1404 - Dhahran 31261 Saudi Arabia <br/>Phone (03) 860-2923 - Fax (03) 860-1327</td>
-	</tr>
-</table>
+<img style="width: 85%; margin: 0 auto" class="img-responsive" src="{% static 'images/kfupm_hdr.jpg' %}">
+
+<div class="container-fluid">
+	<div class="row">
+		<table class="table table-condensed" dir="rtl">
+			<tr>
+				<td colspan="3" align="center">
+					<h2>
+						بطاقة التسجيل</h2>
+				</td>
+			</tr>
+			<tr>
+				<td style="width:33%">
+					<h4 style="text-align:center;">
+						الرقم التسلسلي ( {{ student.pk }} )</h4>
+				</td>
+				<td style="width:33%">
+					<h4 style="text-align:center;">
+						رقم الاستقبال ( {{ reception_counter }} )</h4>
+				</td>
+				<td style="width:33%">
+					<h4 style="text-align:center;">
+						الصندوق ( {{ reception_box }} )
+					</h4>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="row">
+		<table class="table table-bordered">
+			<tr>
+				<td style="width:20%">
+					اسم الطالب:
+				</td>
+				<td style="width:40%">
+					{{ student }}
+				</td>
+				<td style="width:15%">
+					التاريخ:
+				</td>
+				<td>
+					{{ tarifi_user.creation_date }}
+				</td>
+			</tr>
+			<tr>
+				<td class="auto-style1">
+					الهوية الوطنية:
+				</td>
+				<td class="auto-style1">
+					{{ student.username }}
+				</td>
+				<td class="auto-style1">
+					نقطة الأصل:
+				</td>
+				<td class="auto-style1">
+					{{ student.high_school_city }}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					الرقم الجامعي:
+				</td>
+				<td>
+					{{ student.kfupm_id }}
+				</td>
+				<td>
+					السكن:
+				</td>
+				<td>
+					{{ student.eligible_for_housing|yesno }}
+				</td>
+			</tr>
+		</table>
+
+
+		<table class="table table-striped">
+			<tr>
+				<td colspan="2" align="center">
+					<h4>
+						مواعيد اختبار اللغة الإنجليزية ودورة التهيؤ</h4>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					الاختبار التحريري :
+				</td>
+				<td>
+					{{ tarifi_user.english_placement_test_slot.location }}&nbsp;-&nbsp;
+					{{ tarifi_user.english_placement_test_slot.slot_start_date }}
+				</td>
+			</tr>
+			<tr style="border-bottom:double">
+				<td>
+					الاختبار الشفهي :
+				</td>
+				<td>
+					{{ tarifi_user.english_speaking_test_slot.location }}&nbsp;-&nbsp;
+					{{ tarifi_user.english_speaking_test_start_time }}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					موعد دورة التهيؤ:
+				</td>
+				<td>
+					{{ tarifi_user.preparation_course_slot.location }}&nbsp;-&nbsp;
+					{{ tarifi_user.preparation_course_slot.slot_start_date }}
+				</td>
+			</tr>
+			{% if issues %}
+			<tr>
+				<td>
+					الملاحظات :
+				</td>
+				<td>
+					{{ issues }}
+				</td>
+			</tr>
+			{% endif %}
+		</table>
+
+		<h4 style="text-align:center">إقرار وتعهد</h4>
+		<div style="text-align:right;">
+			<p>أنا الطالب الموقع أدناه، أقر بأني استلمت الملف الخاص بي من عمادة شؤون الطلاب والذي يحتوي على الآتي:</p>
+		</div>
+
+		<div style="width:45%; float:right; text-align:right;">
+			<p><span class="glyphicon glyphicon glyphicon-ok"> البطاقة الجامعية</span></p>
+			<p><span class="glyphicon glyphicon glyphicon-ok"> بطاقة صندوق بريد الجامعة</span></p>
+			<p><span class="glyphicon glyphicon glyphicon-ok"> النشرات التعريفية</span></p>
+		</div>
+
+		<div style="width:45%; float:left; text-align:right;">
+			<p><span class="glyphicon glyphicon glyphicon-ok"> بطاقة الصراف الآلي للمكافآت</span></p>
+			<p><span class="glyphicon glyphicon glyphicon-ok"> بطاقة خدماتي</span></p>
+		</div>
+		<div style="text-align:right;">
+
+			<h4 style="text-align:right; padding-top:100px; ">كما أقر بالموافقة على ما يلي:</h4>
+			<p style="direction:rtl; text-align: justify;">
+				<span class="glyphicon glyphicon glyphicon-ok"> </span> أتعهد بأنني في حال عدم استخدامي المكافأة أو في حال الإبقاء
+				على رصيد 990 ريالاً أو أكثـر لمدة 90 يوماً أو أكثـر فإني أفوض عمادة شؤون الطلاب بسحبـها وإرجاعها لحساب صندوق
+				الطلاب حسب اللائحة المنظمة لمكافآت الطلاب بشأن سقوط حق الطالب في المطالبة بالمكافأة الشهرية بعد مضي (90)
+				يوماً من تاريخ إيداع المكافأة في حساب الطالب. وعليه ليس لي حق الاعتـراض أو المطالبة بالمبلغ حال تحويله
+				، وإنـني أعلم أن هذه البطاقة لا تعتبـر حساباً شخصياً لي في البنك،
+				كما أتعهد بمراجعة مجموعة سامبا المالية لتفعيل بطاقة الصراف الآلي قبل استخدامها.</p>
+			<p><span class="glyphicon glyphicon glyphicon-ok"> </span>
+				أتعهد بالالتـزام بأنظمة وتعليمات الجامعة وإجراءات استخدام شبكة الحاسب الآلي والبريد الإلكتروني وفي حال مخالفتي لها أكون عرضة للعقوبات المنصوص عليها بالنظام.
+			</p>
+		</div>
+		<div style="float:left;">
+			<p style="padding-top:10px">_______________________________: توقيع الطالب</p>
+		</div>
+
+		<table width=100% dir=rtl style="font-size:small">
+			<tr>
+				<td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br/>
+					هاتف 2923-860 (03) - فاكس 1327-860 (03)
+				</td>
+				<td align="center">stufund@kfupm.edu.sa <br/>http://www.kfupm.edu.sa/studentaffairs</td>
+				<td align="center">P.O.Box 1404 - Dhahran 31261 Saudi Arabia
+					<br/>Phone (03) 860-2923 - Fax (03) 860-1327
+				</td>
+			</tr>
+		</table>
 </body>
 </html>
