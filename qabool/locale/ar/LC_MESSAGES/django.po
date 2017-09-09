@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 16:52+0300\n"
-"PO-Revision-Date: 2017-08-20 16:55+0300\n"
+"POT-Creation-Date: 2017-09-08 17:14+0300\n"
+"PO-Revision-Date: 2017-09-08 17:16+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -97,6 +97,7 @@ msgstr "موعد النوم"
 #: find_roommate/templates/find_roommate/letter_housing.html:52
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
+#: tarifi/forms.py:7 tarifi/models.py:231
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:539
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:66
@@ -172,7 +173,7 @@ msgid "Request Date"
 msgstr "تاريخ الطلب"
 
 #: find_roommate/models.py:84
-#: find_roommate/templates/find_roommate/__request.html:21
+#: find_roommate/templates/find_roommate/__request.html:21 tarifi/models.py:71
 msgid "Updated On"
 msgstr "تاريخ آخر تحديث"
 
@@ -278,6 +279,7 @@ msgstr "عدد الطلاب الفرادى الذين يبحثون عن زميل
 
 #: find_roommate/templates/find_roommate/housinguser_list.html:17
 #: find_roommate/templates/find_roommate/housinguser_list.html:28
+#: tarifi/templates/tarifi/landing_page.html:9
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:12
 msgid "Search"
 msgstr "بحث"
@@ -375,6 +377,8 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing.html:37
 #: find_roommate/templates/find_roommate/letter_housing_2.html:39
 #: find_roommate/templates/find_roommate/letter_housing_3.html:39
+#: tarifi/templates/tarifi/landing_page.html:23
+#: tarifi/templates/tarifi/student_print_page.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:35
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_medical.html:37
@@ -384,6 +388,7 @@ msgstr "طباعة"
 #: find_roommate/templates/find_roommate/letter_housing.html:39
 #: find_roommate/templates/find_roommate/letter_housing_2.html:41
 #: find_roommate/templates/find_roommate/letter_housing_3.html:41
+#: tarifi/templates/tarifi/student_print_page.html:41
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:37
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:41
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_medical.html:39
@@ -461,71 +466,104 @@ msgstr "تم إلغاء الطلب بناء على رغبتك"
 #: undergraduate_admission/views/phase2_views.py:277
 #: undergraduate_admission/views/phase2_views.py:300
 #: undergraduate_admission/views/phase2_views.py:321
-#: undergraduate_admission/views/phase2_views.py:365
+#: undergraduate_admission/views/phase2_views.py:364
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
-#: qabool/settings.py:162
+#: qabool/settings.py:160
 msgid "Arabic"
 msgstr "عربي"
 
-#: qabool/settings.py:163
+#: qabool/settings.py:161
 msgid "English"
 msgstr "انجليزي"
 
-#: tarifi/models.py:17 tarifi/models.py:69
+#: tarifi/models.py:26
+msgid "Preparation Course Slot"
+msgstr "حضور محاضرة الأسبوع التعريفي"
+
+#: tarifi/models.py:32 tarifi/models.py:141
 msgid "Preparation Course Attendance Date"
 msgstr "تاريخ حضور البرنامج التعريفي"
 
-#: tarifi/models.py:24 tarifi/models.py:70
-msgid "English Placement Test Date"
-msgstr "تاريخ اختبار اللغة اﻻنجليزية التحريري"
+#: tarifi/models.py:43
+msgid "English Placement Test Slot"
+msgstr "نتيجة اختبار اللغة اﻻنجليزية التحريري"
 
-#: tarifi/models.py:31 tarifi/models.py:71
-msgid "English Speaking Test Date"
-msgstr "تاريخ اختبار اللغة اﻻنجليزية الشفوي"
+#: tarifi/models.py:50
+msgid "English Speaking Test Slot"
+msgstr "اختبار اللغة اﻻنجليزية الشفوي"
 
-#: tarifi/models.py:39
+#: tarifi/models.py:56
+msgid "English Speaking Test Time"
+msgstr "وقت اختبار اللغة اﻻنجليزية الشفوي"
+
+#: tarifi/models.py:61
 msgid "English Placement Test Score"
 msgstr "نتيجة اختبار اللغة اﻻنجليزية التحريري"
 
-#: tarifi/models.py:62 undergraduate_admission/models.py:1003
+#: tarifi/models.py:70
+msgid "Creation Date"
+msgstr "تاريخ الاستقبال"
+
+#: tarifi/models.py:82
+#, python-format
+msgid "%(slot_type)s (%(location)s) %(start_date)s %(start_time)s"
+msgstr "%(slot_type)s (%(location)s) - %(start_date)s %(start_time)s"
+
+#: tarifi/models.py:83 tarifi/models.py:187
+msgid "English Speaking Test"
+msgstr "اختبار اللغة اﻻنجليزية الشفوي"
+
+#: tarifi/models.py:142
+msgid "English Placement Test Date"
+msgstr "تاريخ اختبار اللغة اﻻنجليزية التحريري"
+
+#: tarifi/models.py:143
+msgid "English Speaking Test Date"
+msgstr "تاريخ اختبار اللغة اﻻنجليزية الشفوي"
+
+#: tarifi/models.py:154 undergraduate_admission/models.py:1003
 msgid "Start Date"
 msgstr "تاريخ البداية"
 
-#: tarifi/models.py:63 undergraduate_admission/models.py:1004
+#: tarifi/models.py:155 undergraduate_admission/models.py:1004
 msgid "End Date"
 msgstr "تاريخ الانتهاء"
 
-#: tarifi/models.py:64
+#: tarifi/models.py:156
 msgid "Location (Arabic)"
 msgstr "مكان الفعالية ( بالعربي )"
 
-#: tarifi/models.py:65
+#: tarifi/models.py:157
 msgid "Location (English)"
 msgstr "مكان الفعالية ( بالانجليزي )"
 
-#: tarifi/models.py:66 undergraduate_admission/models.py:1002
+#: tarifi/models.py:158 undergraduate_admission/models.py:1002
 msgid "Slots"
 msgstr "العدد المتاح"
 
-#: tarifi/models.py:67
+#: tarifi/models.py:160 tarifi/templates/tarifi/course_attendance.html.py:11
 msgid "Slot Type"
 msgstr "نوع الفعالية"
 
-#: tarifi/models.py:73 undergraduate_admission/models.py:808
+#: tarifi/models.py:163 tarifi/templates/tarifi/course_attendance.html.py:20
+msgid "Attender"
+msgstr "المشرف"
+
+#: tarifi/models.py:168 undergraduate_admission/models.py:808
 msgid "Description"
 msgstr "شرح"
 
-#: tarifi/models.py:74 undergraduate_admission/models.py:699
-#: undergraduate_admission/models.py:736 undergraduate_admission/models.py:809
-#: undergraduate_admission/models.py:851 undergraduate_admission/models.py:935
-#: undergraduate_admission/models.py:965
+#: tarifi/models.py:169 tarifi/models.py:233
+#: undergraduate_admission/models.py:699 undergraduate_admission/models.py:736
+#: undergraduate_admission/models.py:809 undergraduate_admission/models.py:851
+#: undergraduate_admission/models.py:935 undergraduate_admission/models.py:965
 #: undergraduate_admission/models.py:1005
 msgid "Show"
 msgstr "اظهر"
 
-#: tarifi/models.py:75 undergraduate_admission/models.py:700
+#: tarifi/models.py:170 undergraduate_admission/models.py:700
 #: undergraduate_admission/models.py:737 undergraduate_admission/models.py:810
 #: undergraduate_admission/models.py:852 undergraduate_admission/models.py:936
 #: undergraduate_admission/models.py:966
@@ -533,26 +571,64 @@ msgstr "اظهر"
 msgid "Display Order"
 msgstr "عرض الترتيب"
 
-#: tarifi/models.py:78
+#: tarifi/models.py:173
 msgid "Tarifi: Preparation Activity Slots"
 msgstr "الأسبوع التعريفي: أنشطة اﻷسبوع التعريفي"
 
-#: tarifi/models.py:87
+#: tarifi/models.py:183
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:29
 msgid "Preparation Course Attendance"
 msgstr "حضور محاضرة الأسبوع التعريفي"
 
-#: tarifi/models.py:89
+#: tarifi/models.py:185
 msgid "English Placement Test"
 msgstr "اختبار اللغة اﻻنجليزية"
 
-#: tarifi/models.py:91
-msgid "English Speaking Test"
-msgstr "اختبار اللغة اﻻنجليزية الشفوي"
-
-#: tarifi/models.py:95
+#: tarifi/models.py:191
 #, python-format
-msgid "%(slot_type)s (%(location)s) - %(start_date)s to %(end_date)s"
-msgstr "%(slot_type)s (%(location)s) - %(start_date)s إلى %(end_date)s"
+msgid "%(slot_type)s (%(location)s) %(start_date)s"
+msgstr "%(slot_type)s (%(location)s) - %(start_date)s"
+
+#: tarifi/models.py:222
+msgid "From KFUPM ID"
+msgstr "بداية الأرقام الجامعية"
+
+#: tarifi/models.py:223
+msgid "To KFUPM ID"
+msgstr "نهاية الأرقام الجامعية"
+
+#: tarifi/models.py:224 tarifi/models.py:232
+msgid "Box No"
+msgstr "رقم الصندوق"
+
+#: tarifi/templates/tarifi/course_attendance.html:13
+msgid "Slot Period"
+msgstr "فترة الفعالية"
+
+#: tarifi/templates/tarifi/course_attendance.html:17
+msgid "Location"
+msgstr "المكان"
+
+#: tarifi/templates/tarifi/course_attendance.html:18
+msgid "Capacity"
+msgstr "السعة"
+
+#: tarifi/templates/tarifi/course_attendance.html:30
+msgid "Attend"
+msgstr "حضر"
+
+#: tarifi/templates/tarifi/course_attendance.html:47
+#: tarifi/templates/tarifi/landing_page.html:33
+msgid "This student DOES NOT exist. Try a differnt ID!"
+msgstr "هذا الطالب غير موجود، ادخل رقم آخر!"
+
+#: tarifi/templates/tarifi/course_attendance.html:57
+msgid "No Preparation Course is taking place at the moment"
+msgstr "لا يوجد محاضرة للبرنامج التعريفي بالوقت الراهن"
+
+#: tarifi/templates/tarifi/landing_page.html:26
+msgid "Can NOT Print"
+msgstr "ﻻ يمكن الطباعة"
 
 #: undergraduate_admission/admin.py:161
 msgid "Sync with Yesser"
@@ -1630,7 +1706,7 @@ msgstr "مرحبا"
 
 #: undergraduate_admission/templates/base.html:46
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:65
-#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:20
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:38
 msgid "Logout"
 msgstr "خروج"
 
@@ -1728,11 +1804,19 @@ msgstr "اسم المستخدم"
 msgid "Superuser"
 msgstr "مستخدم خارق"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:15
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:12
+msgid "Groups"
+msgstr "المجموعات"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:21
 msgid "Verify Students"
 msgstr "التحقق من بيانات الطلاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:17
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:26
+msgid "Tarifi Reception"
+msgstr "استقبال اﻷسبوع التعريفي"
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:34
 msgid "Cut-off Point"
 msgstr "نغيير حالة الطلاب"
 
@@ -2538,6 +2622,9 @@ msgstr ""
 msgid "No IDs to assign. Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
 
+#~ msgid "%(slot_type)s (%(location)s) %(start_date)s to %(end_date)s"
+#~ msgstr "%(slot_type)s (%(location)s) %(start_date)s إلى %(end_date)s"
+
 #~ msgid "Looking for roommate"
 #~ msgstr "نعم - (أبحث عن زميل للسكن)"
 
@@ -2754,9 +2841,6 @@ msgstr "عليك التواصل حالا مع إدارة القبول."
 #~| msgid "Contact Info was updated successfully..."
 #~ msgid "Contacts Info was saved successfully..."
 #~ msgstr "لقد تم تعديل بيانات التواصل بنجاح"
-
-#~ msgid "Education"
-#~ msgstr "التعليم"
 
 #~ msgid "Contacts"
 #~ msgstr "أرقام التواصل"
