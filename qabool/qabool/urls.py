@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 import find_roommate.urls
+import tarifi.urls
 import undergraduate_admission.urls
 from undergraduate_admission.views import phase2_views
 
@@ -27,6 +28,7 @@ urlpatterns = i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include(undergraduate_admission.urls)),
     url(r'', include(find_roommate.urls)),
+    url(r'^admin/tarifiweek/', include(tarifi.urls)),
 )
 
 urlpatterns += [

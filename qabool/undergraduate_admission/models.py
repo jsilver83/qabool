@@ -490,7 +490,7 @@ class AdmissionSemester(models.Model):
         return sem
 
     @staticmethod
-    def get_phase4_active_semester(user):
+    def get_phase4_active_semester():
         now = timezone.now()
         sem = AdmissionSemester.objects.filter(phase4_start_date__lte=now, phase4_end_date__gte=now).first()
 

@@ -252,3 +252,15 @@ class PlainTextWidget(forms.Widget):
         else:
             field = "<input type='hidden' name='%s' value='' readonly> <span>-</span>" % (name)
         return field
+
+
+def format_date_time(date_time):
+    return timezone.localtime(date_time).strftime('%d-%m-%Y %I:%M %p')
+
+
+def format_date(date_time):
+    return timezone.localtime(date_time).strftime('%d-%m-%Y')
+
+
+def format_time(date_time):
+    return timezone.localtime(date_time).strftime('%I:%M %p')
