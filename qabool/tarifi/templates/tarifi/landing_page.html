@@ -1,0 +1,60 @@
+{% extends 'undergraduate_admission/admin/base_admin_area.html' %}
+{#{% load bootstrap3 %}#}
+{% load i18n %}
+{% load floppyforms %}
+
+{% block subcontent %}
+	<form method="get">
+		{{ form }}
+		<button>{% trans 'Search' %}</button>
+	</form>
+	<br><br>
+	{% if show_result %}
+		{% if student %}
+			<div class="alert alert-success">
+				<strong>{{ student.kfupm_id }}</strong><br>
+				<h4>{{ student }}</h4>
+				<small>{{ student.tarifi_week_attendance_date }}</small>
+				<hr>
+				{% if can_print %}
+					<a class="btn btn-primary btn-lg"
+					   target="_blank"
+					   href="{% url 'student_print_page' student.pk %}">
+						<span class="glyphicon glyphicon-print"></span>&nbsp;{% trans 'Print' %}</a>
+				{% else %}
+					<a href="#" class="btn btn-danger btn-lg disabled">
+						<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;{% trans 'Can NOT Print' %}
+					</a>
+				{% endif %}
+			</div>
+		{% else %}
+			<div class="alert alert-danger">
+				<span class="glyphicon glyphicon-remove"></span>&nbsp;
+				{% trans 'This student DOES NOT exist. Try a differnt ID!' %}
+			</div>
+		{% endif %}
+	{% endif %}
+{% endblock subcontent %}
+
+{% block scripts %}
+	<script type="application/javascript">
+		$(function(){
+			$("#id_kfupm_id").focus(function() { $(this).select(); } );
+
+			$("#id_kfupm_id").focus().bind('blur', function() {
+		        $(this).focus();
+		    });
+
+		    $("html").click(function() {
+		        $("#id_kfupm_id").val($("#id_kfupm_id").val()).focus();
+		    });
+
+		    //disable the tab key
+		    $(document).keydown(function(objEvent) {
+		        if (objEvent.keyCode == 9) {  //tab pressed
+		            objEvent.preventDefault(); // stops its action
+		       }
+		    });
+		});
+	</script>
+{% endblock %}
