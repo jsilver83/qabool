@@ -14,7 +14,8 @@ class TarifiBaseView(UserPassesTestMixin, LoginRequiredMixin):
     login_url = reverse_lazy('admin:index')
 
     def test_func(self):
-        return ('Tarifi Admin' in self.request.user.groups.all()
+        return ((self.request.user.groups.filter(name='Tarifi Admin').exists()
+                 or self.request.user.groups.filter(name='Tarifi Super Admin').exists())
                 and self.request.user.is_staff) \
                or self.request.user.is_superuser
 
@@ -53,7 +54,7 @@ class TarifiLandingPage(TarifiBaseView, FormView):
             context['can_print'] = (user.tarifi_week_attendance_date.slot_start_date <= now <=
                                     user.tarifi_week_attendance_date.slot_end_date) \
                                    or self.request.user.is_superuser \
-                                   or 'Tarifi Super Admin' in self.request.user.groups.all()
+                                   or self.request.user.groups.filter(name='Tarifi Super Admin').exists()
         except ObjectDoesNotExist:  # the student is not admitted
             if self.request.GET.get('kfupm_id', None):
                 context['show_result'] = True
