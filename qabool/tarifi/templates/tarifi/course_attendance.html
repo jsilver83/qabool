@@ -24,8 +24,7 @@
 		<hr>
 		<div class="row">
 			<div class="col-sm-6">
-				<form method="post">
-					{% csrf_token %}
+				<form>
 					{{ form }}
 					<button>{% trans 'Attend' %}</button>
 				</form>
@@ -39,7 +38,7 @@
 								{{ student }}&nbsp;<small><strong>{{ student.kfupm_id }}</strong></small>
 							</h4>
 							<h6>
-								{{ student.preparation_course_attendance_date }}</h6>
+								{{ student.preparation_course_attendance }}</h6>
 						</div>
 					{% else %}
 						<div class="alert alert-danger">

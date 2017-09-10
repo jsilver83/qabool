@@ -113,6 +113,7 @@
 				</td>
 				<td>
 					{{ student.eligible_for_housing|yesno }}
+					{% if student.eligible_for_housing %}&nbsp;-&nbsp;{{ room }}{% endif %}
 				</td>
 			</tr>
 		</table>
