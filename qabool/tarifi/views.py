@@ -24,7 +24,7 @@ class TarifiSimulation(TarifiBaseView, TemplateView):
     template_name = 'find_roommate/landing_page.html'
 
     def get(self, *args, **kwargs):
-        users = User.objects.all()[:60]
+        users = User.objects.filter(status_message=RegistrationStatusMessage.get_status_admitted())[:200]
         counter = 0
         for user in users:
             print(counter)
@@ -102,16 +102,20 @@ class CourseAttendance(TarifiBaseView, FormView):
         semester = AdmissionSemester.get_phase4_active_semester()
         now = timezone.now()
         context['now'] = now
-        acceptable_slot_start_date = now - timezone.timedelta(minutes=60)
-        acceptable_slot_end_date = now + timezone.timedelta(minutes=60)
-        slots = TarifiActivitySlot.objects.filter(slot_start_date__gte=acceptable_slot_start_date,
-                                                  slot_end_date__lte=acceptable_slot_end_date,
-                                                  attender=self.request.user,
-                                                  type=TarifiActivitySlot.TarifiActivitySlotTypes.PREPARATION_COURSE,
-                                                  show=True,
-                                                  semester=semester)
-        if slots.count() == 1:
-            context['slot'] = slots.first()
+        upcoming_slots = TarifiActivitySlot.objects.filter(slot_end_date__gte=now,
+                                                           attender=self.request.user,
+                                                           type=TarifiActivitySlot.TarifiActivitySlotTypes.PREPARATION_COURSE,
+                                                           show=True,
+                                                           semester=semester)
+
+        slot = None
+        for s in upcoming_slots:
+            if s.slot_attendance_start_date <= now <= s.slot_attendance_end_date:
+                slot = s
+                break
+
+        if slot:
+            context['slot'] = slot
 
             kfupm_id = self.request.GET.get('kfupm_id', -1)
             if kfupm_id != -1:
@@ -122,7 +126,7 @@ class CourseAttendance(TarifiBaseView, FormView):
                                                      preparation_course_slot=context['slot'], )
 
                     context['student'] = student
-                    student.preparation_course_attendance_date = now
+                    student.preparation_course_attendance = now
                     student.preparation_course_attended_by = self.request.user
                     student.save()
 
@@ -137,5 +141,6 @@ class CourseAttendance(TarifiBaseView, FormView):
                     pass
             else:
                 context['no_student'] = True
-
+        else:
+            context['upcoming_slots'] = upcoming_slots
         return context
