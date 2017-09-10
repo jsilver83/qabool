@@ -74,17 +74,20 @@ class TarifiUser(models.Model):
         return str(self.user)
 
     def get_english_speaking_test_date_time(self):
-        if translation.get_language() == "ar":
-            location = self.english_speaking_test_slot.location_ar
-        else:
-            location = self.english_speaking_test_slot.location_en
+        try:
+            if translation.get_language() == "ar":
+                location = self.english_speaking_test_slot.location_ar
+            else:
+                location = self.english_speaking_test_slot.location_en
 
-        return _('%(slot_type)s (%(location)s) %(start_date)s %(start_time)s') % {
-            'slot_type': _('English Speaking Test'),
-            'location': location,
-            'start_date': format_date(self.english_speaking_test_slot.slot_start_date),
-            'start_time': format_time(self.english_speaking_test_start_time)
-        }
+            return _('%(slot_type)s (%(location)s) %(start_date)s %(start_time)s') % {
+                'slot_type': _('English Speaking Test'),
+                'location': location,
+                'start_date': format_date(self.english_speaking_test_slot.slot_start_date),
+                'start_time': format_time(self.english_speaking_test_start_time)
+            }
+        except AttributeError:
+            return ''
 
     def save(self, *args, **kwargs):
         current_date = timezone.now() + timezone.timedelta(minutes=30)
