@@ -8,13 +8,31 @@
 			<dd>{{ username }}</dd>
 			<dt>{% trans 'Superuser' %}</dt>
 			<dd>{{ is_superuser }}</dd>
+			{% if groups %}
+				<dt>{% trans 'Groups' %}</dt>
+				<dd>{% for group in groups %}<span class="label label-primary">{{ group }}</span><br>{% endfor %}</dd>
+			{% endif %}
 		</dl>
 	</div>
 </div>
 <div class="list-group">
-	<a href="{% url 'verify_list' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Verify Students' %}</a>
+	{% if is_verifier %}
+		<a href="{% url 'verify_list' %}" class="list-group-item">
+			<i class="fa fa-print" aria-hidden="true"></i> {% trans 'Verify Students' %}
+		</a>
+	{% endif %}
+	{% if is_tarifi_admin %}
+		<a href="{% url 'tarifi_landing_page' %}" class="list-group-item">
+			<i class="fa fa-search" aria-hidden="true"></i> {% trans 'Tarifi Reception' %}
+		</a>
+		<a href="{% url 'preparation_course_attendance' %}" class="list-group-item">
+			<i class="fa fa-inbox" aria-hidden="true"></i> {% trans 'Preparation Course Attendance' %}
+		</a>
+	{% endif %}
 	{% if is_superuser %}
-		<a href="{% url 'cut_off_point' %}" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Cut-off Point' %}</a>
+		<a href="{% url 'cut_off_point' %}" class="list-group-item">
+			<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Cut-off Point' %}
+		</a>
 	{% endif %}
 	<hr>
 	<a href="{% url 'logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
