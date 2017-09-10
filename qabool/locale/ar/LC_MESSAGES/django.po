@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-08 17:14+0300\n"
-"PO-Revision-Date: 2017-09-08 17:16+0300\n"
+"POT-Creation-Date: 2017-09-10 22:14+0300\n"
+"PO-Revision-Date: 2017-09-10 22:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -93,18 +93,18 @@ msgstr "زيارات الأصدقاء والمعارف"
 msgid "Sleeping"
 msgstr "موعد النوم"
 
-#: find_roommate/forms.py:101
+#: find_roommate/forms.py:105
 #: find_roommate/templates/find_roommate/letter_housing.html:52
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
-#: tarifi/forms.py:7 tarifi/models.py:231
+#: tarifi/forms.py:7 tarifi/models.py:242
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:539
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:20
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:66
 msgid "KFUPM ID"
 msgstr "الرقم الجامعي"
 
-#: find_roommate/forms.py:104
+#: find_roommate/forms.py:108
 msgid "Invalid KFUPM ID"
 msgstr "رقم جامعي غير صالح"
 
@@ -388,7 +388,6 @@ msgstr "طباعة"
 #: find_roommate/templates/find_roommate/letter_housing.html:39
 #: find_roommate/templates/find_roommate/letter_housing_2.html:41
 #: find_roommate/templates/find_roommate/letter_housing_3.html:41
-#: tarifi/templates/tarifi/student_print_page.html:41
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:37
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:41
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_medical.html:39
@@ -433,30 +432,30 @@ msgid ""
 msgstr ""
 "الرقم الجامعي المدخل ﻻ ينتمي إلى أي من الطلاب المقبولين المسموح لهم بالسكن."
 
-#: find_roommate/views.py:173
+#: find_roommate/views.py:176
 msgid "Request was accepted and room was assigned to you successfully..."
 msgstr ""
 "تمت الموافقة على الطلب بنجاح وتم تحديد الغرفة بشكل آلي من طرف النظام..."
 
-#: find_roommate/views.py:175
+#: find_roommate/views.py:178
 msgid ""
 "There was an issue in assigning a room to you. Kindly try again in 24 hours!"
 msgstr "تعذر تنفيذ طلبك بالوقت الحالي، عاود المحاولة بعد 24 ساعة..."
 
-#: find_roommate/views.py:178 find_roommate/views.py:195
-#: find_roommate/views.py:210
+#: find_roommate/views.py:181 find_roommate/views.py:198
+#: find_roommate/views.py:213
 msgid "Invalid request"
 msgstr "طلب غير صالح"
 
-#: find_roommate/views.py:193
+#: find_roommate/views.py:196
 msgid "Request was rejected successfully..."
 msgstr "لقد تم رفض الطلب بنجاح"
 
-#: find_roommate/views.py:208
+#: find_roommate/views.py:211
 msgid "Request was cancelled as per your request..."
 msgstr "تم إلغاء الطلب بناء على رغبتك"
 
-#: find_roommate/views.py:254
+#: find_roommate/views.py:257
 #: undergraduate_admission/views/phase2_views.py:111
 #: undergraduate_admission/views/phase2_views.py:135
 #: undergraduate_admission/views/phase2_views.py:159
@@ -482,7 +481,7 @@ msgstr "انجليزي"
 msgid "Preparation Course Slot"
 msgstr "حضور محاضرة الأسبوع التعريفي"
 
-#: tarifi/models.py:32 tarifi/models.py:141
+#: tarifi/models.py:32 tarifi/models.py:144
 msgid "Preparation Course Attendance Date"
 msgstr "تاريخ حضور البرنامج التعريفي"
 
@@ -506,56 +505,56 @@ msgstr "نتيجة اختبار اللغة اﻻنجليزية التحريري"
 msgid "Creation Date"
 msgstr "تاريخ الاستقبال"
 
-#: tarifi/models.py:82
+#: tarifi/models.py:83
 #, python-format
 msgid "%(slot_type)s (%(location)s) %(start_date)s %(start_time)s"
 msgstr "%(slot_type)s (%(location)s) - %(start_date)s %(start_time)s"
 
-#: tarifi/models.py:83 tarifi/models.py:187
+#: tarifi/models.py:84 tarifi/models.py:190
 msgid "English Speaking Test"
 msgstr "اختبار اللغة اﻻنجليزية الشفوي"
 
-#: tarifi/models.py:142
+#: tarifi/models.py:145
 msgid "English Placement Test Date"
 msgstr "تاريخ اختبار اللغة اﻻنجليزية التحريري"
 
-#: tarifi/models.py:143
+#: tarifi/models.py:146
 msgid "English Speaking Test Date"
 msgstr "تاريخ اختبار اللغة اﻻنجليزية الشفوي"
 
-#: tarifi/models.py:154 undergraduate_admission/models.py:1003
+#: tarifi/models.py:157 undergraduate_admission/models.py:1003
 msgid "Start Date"
 msgstr "تاريخ البداية"
 
-#: tarifi/models.py:155 undergraduate_admission/models.py:1004
+#: tarifi/models.py:158 undergraduate_admission/models.py:1004
 msgid "End Date"
 msgstr "تاريخ الانتهاء"
 
-#: tarifi/models.py:156
+#: tarifi/models.py:159
 msgid "Location (Arabic)"
 msgstr "مكان الفعالية ( بالعربي )"
 
-#: tarifi/models.py:157
+#: tarifi/models.py:160
 msgid "Location (English)"
 msgstr "مكان الفعالية ( بالانجليزي )"
 
-#: tarifi/models.py:158 undergraduate_admission/models.py:1002
+#: tarifi/models.py:161 undergraduate_admission/models.py:1002
 msgid "Slots"
 msgstr "العدد المتاح"
 
-#: tarifi/models.py:160 tarifi/templates/tarifi/course_attendance.html.py:11
+#: tarifi/models.py:163 tarifi/templates/tarifi/course_attendance.html.py:11
 msgid "Slot Type"
 msgstr "نوع الفعالية"
 
-#: tarifi/models.py:163 tarifi/templates/tarifi/course_attendance.html.py:20
+#: tarifi/models.py:166 tarifi/templates/tarifi/course_attendance.html.py:20
 msgid "Attender"
 msgstr "المشرف"
 
-#: tarifi/models.py:168 undergraduate_admission/models.py:808
+#: tarifi/models.py:171 undergraduate_admission/models.py:808
 msgid "Description"
 msgstr "شرح"
 
-#: tarifi/models.py:169 tarifi/models.py:233
+#: tarifi/models.py:172 tarifi/models.py:244
 #: undergraduate_admission/models.py:699 undergraduate_admission/models.py:736
 #: undergraduate_admission/models.py:809 undergraduate_admission/models.py:851
 #: undergraduate_admission/models.py:935 undergraduate_admission/models.py:965
@@ -563,7 +562,7 @@ msgstr "شرح"
 msgid "Show"
 msgstr "اظهر"
 
-#: tarifi/models.py:170 undergraduate_admission/models.py:700
+#: tarifi/models.py:173 undergraduate_admission/models.py:700
 #: undergraduate_admission/models.py:737 undergraduate_admission/models.py:810
 #: undergraduate_admission/models.py:852 undergraduate_admission/models.py:936
 #: undergraduate_admission/models.py:966
@@ -571,33 +570,33 @@ msgstr "اظهر"
 msgid "Display Order"
 msgstr "عرض الترتيب"
 
-#: tarifi/models.py:173
+#: tarifi/models.py:176
 msgid "Tarifi: Preparation Activity Slots"
 msgstr "الأسبوع التعريفي: أنشطة اﻷسبوع التعريفي"
 
-#: tarifi/models.py:183
+#: tarifi/models.py:186
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:29
 msgid "Preparation Course Attendance"
 msgstr "حضور محاضرة الأسبوع التعريفي"
 
-#: tarifi/models.py:185
+#: tarifi/models.py:188
 msgid "English Placement Test"
 msgstr "اختبار اللغة اﻻنجليزية"
 
-#: tarifi/models.py:191
+#: tarifi/models.py:194
 #, python-format
 msgid "%(slot_type)s (%(location)s) %(start_date)s"
 msgstr "%(slot_type)s (%(location)s) - %(start_date)s"
 
-#: tarifi/models.py:222
+#: tarifi/models.py:233
 msgid "From KFUPM ID"
 msgstr "بداية الأرقام الجامعية"
 
-#: tarifi/models.py:223
+#: tarifi/models.py:234
 msgid "To KFUPM ID"
 msgstr "نهاية الأرقام الجامعية"
 
-#: tarifi/models.py:224 tarifi/models.py:232
+#: tarifi/models.py:235 tarifi/models.py:243
 msgid "Box No"
 msgstr "رقم الصندوق"
 
@@ -625,6 +624,18 @@ msgstr "هذا الطالب غير موجود، ادخل رقم آخر!"
 #: tarifi/templates/tarifi/course_attendance.html:57
 msgid "No Preparation Course is taking place at the moment"
 msgstr "لا يوجد محاضرة للبرنامج التعريفي بالوقت الراهن"
+
+#: tarifi/templates/tarifi/course_attendance.html:60
+msgid "Upcoming Courses Slots"
+msgstr "المحاضرات القادمة"
+
+#: tarifi/templates/tarifi/course_attendance.html:75
+msgid ""
+"Attendance will open 10 minutes prior to the course start time and will "
+"close in 40 minutes"
+msgstr ""
+"التحضير سيبدأ قبل بداية المحاضرة بعشرة دقائق وسيغلق بعد بداية المحاضرة بنصف "
+"ساعة"
 
 #: tarifi/templates/tarifi/landing_page.html:26
 msgid "Can NOT Print"
@@ -1705,7 +1716,7 @@ msgid "Welcome"
 msgstr "مرحبا"
 
 #: undergraduate_admission/templates/base.html:46
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:65
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:71
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:38
 msgid "Logout"
 msgstr "خروج"
@@ -1762,36 +1773,36 @@ msgstr "تأكيد الرغبة واستكمال البيانات"
 msgid "Print Documents"
 msgstr "طباعة الخطابات"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:42
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:44
 msgid "Student Housing"
 msgstr "سكن الطلاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:48
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:54
 msgid "Print Withdrawal Letter"
 msgstr "طباعة خطاب اﻻنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:51
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:57
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:9
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
 msgid "Edit Info"
 msgstr "تعديل البيانات"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:54
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:60
 msgid "Edit Contact Information"
 msgstr "تعديل بيانات التواصل"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:58
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:64
 msgid ""
 "If you don't want to proceed with the application you can still withdraw "
 "your application by clicking below on the red button."
 msgstr "في حال رغبتكم في الإنسحاب ، الرجاء الضغط على زر اﻹنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:59
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:61
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:65
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:67
 msgid "Withdraw Application"
 msgstr "اﻻنسحاب"
 
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:63
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:69
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 msgid "Change Password"
 msgstr "تغيير كلمة السر"
@@ -2523,6 +2534,10 @@ msgstr " رصيد الغرف المتبقي 100"
 #: undergraduate_admission/utils.py:117
 msgid "Remaining rooms is 50"
 msgstr " رصيد الغرف المتبقي 50"
+
+#: undergraduate_admission/utils.py:119
+msgid "Remaining rooms is 10"
+msgstr " رصيد الغرف المتبقي 10"
 
 #: undergraduate_admission/validators.py:13
 #: undergraduate_admission/validators.py:25

@@ -220,6 +220,14 @@ class TarifiActivitySlot(models.Model):
                 english_speaking_test_slot=self.pk,
                 user__status_message=RegistrationStatusMessage.get_status_admitted()).count()
 
+    @property
+    def slot_attendance_start_date(self):
+        return self.slot_start_date - timezone.timedelta(minutes=10)
+
+    @property
+    def slot_attendance_end_date(self):
+        return self.slot_start_date + timezone.timedelta(minutes=30)
+
 
 class BoxesForIDRanges(models.Model):
     from_kfupm_id = models.PositiveIntegerField(null=True, blank=False, verbose_name=_('From KFUPM ID'))
