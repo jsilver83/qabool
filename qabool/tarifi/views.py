@@ -1,3 +1,4 @@
+import requests
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse_lazy
@@ -117,16 +118,23 @@ class CourseAttendance(TarifiBaseView, FormView):
                     student = TarifiUser.objects.get(user__kfupm_id=kfupm_id,
                                                      user__semester=semester,
                                                      user__status_message=RegistrationStatusMessage.get_status_admitted(),
-                                                     preparation_course_slot=context['slot'],)
+                                                     preparation_course_slot=context['slot'], )
 
                     context['student'] = student
                     student.preparation_course_attendance_date = now
                     student.preparation_course_attended_by = self.request.user
                     student.save()
+
+                    # make the student attended in Hussain Almuslim bookstore system
+                    try:
+                        request_link = 'http://10.142.5.182:1345/api/bookstore-update/%s' % (kfupm_id)
+                        r = requests.get(request_link)
+                        return r
+                    except:  # usually TimeoutError but made it general so it will never raise an exception
+                        pass
                 except ObjectDoesNotExist:
                     pass
             else:
                 context['no_student'] = True
 
         return context
-
