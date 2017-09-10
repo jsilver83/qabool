@@ -29,9 +29,9 @@ class TarifiUser(models.Model):
                                                 blank=True,
                                                 related_name='students_in_course_slot',
                                                 limit_choices_to={'type': 'PREPARATION_COURSE'})
-    preparation_course_attendance_date = models.DateTimeField(_('Preparation Course Attendance Date'),
-                                                              null=True,
-                                                              blank=True, )
+    preparation_course_attendance = models.DateTimeField(_('Preparation Course Attendance Date'),
+                                                         null=True,
+                                                         blank=True, )
     preparation_course_attended_by = models.ForeignKey('undergraduate_admission.User',
                                                        verbose_name='Preparation Course Attended By',
                                                        on_delete=models.SET_NULL,
