@@ -5,6 +5,7 @@ apache_server_names:
   - "{{ inventory_hostname }}"
 # required for proper SSL termination on load-balancer while using CAS
 apache_public_url: https://qabool.kfupm.edu.sa
+apache_load_balancer_ip: 10.142.4.1
 
 database_engine: django.db.backends.postgresql
 database_name: qabool2017
