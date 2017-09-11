@@ -23,7 +23,7 @@ class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 class TarifiUserAdmin(admin.ModelAdmin):
-    list_display = ('user', 'preparation_course_slot', 'english_placement_test_slot',
+    list_display = ('user', 'user__kfupm_id', 'preparation_course_slot', 'english_placement_test_slot',
                     'get_english_speaking_test_date_time',
                     'received_by', 'creation_date')
     list_filter = ('user__semester', 'user__status_message',)

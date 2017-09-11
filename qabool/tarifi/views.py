@@ -2,9 +2,11 @@ import requests
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse_lazy
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, TemplateView, FormView
 
+from find_roommate.models import Room
 from tarifi.forms import TarifiSearchForm
 from undergraduate_admission.models import User
 from .models import *
@@ -75,21 +77,25 @@ class StudentPrintPage(TarifiBaseView, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(StudentPrintPage, self).get_context_data(**kwargs)
         print(self.request.user)
-        # try:
-        student = User.objects.get(pk=self.kwargs['pk'],
-                                   status_message=RegistrationStatusMessage.get_status_admitted(), )
-        context['student'] = student
-        tarifi_user, d = TarifiUser.objects.get_or_create(user=student, received_by=self.request.user)
-        context['tarifi_user'] = tarifi_user
-        context['reception_box'] = BoxesForIDRanges.objects.filter(from_kfupm_id__lte=student.kfupm_id,
-                                                                   to_kfupm_id__gte=student.kfupm_id).first()
-        context['issues'] = StudentIssue.objects.filter(kfupm_id=student.kfupm_id,
-                                                        show=True)
-        context['reception_counter'] = str(student.kfupm_id)[5]
-        # except ObjectDoesNotExist:
-        #     pass
-        # finally:
-        return context
+        try:
+            student = User.objects.get(pk=self.kwargs['pk'],
+                                       status_message=RegistrationStatusMessage.get_status_admitted(), )
+            context['student'] = student
+            try:
+                tarifi_user, d = TarifiUser.objects.get_or_create(user=student, received_by=self.request.user)
+            except IntegrityError:  # student was received and printed by a different user
+                tarifi_user, d = TarifiUser.objects.get_or_create(user=student)
+            context['tarifi_user'] = tarifi_user
+            context['reception_box'] = BoxesForIDRanges.objects.filter(from_kfupm_id__lte=student.kfupm_id,
+                                                                       to_kfupm_id__gte=student.kfupm_id).first()
+            context['issues'] = StudentIssue.objects.filter(kfupm_id=student.kfupm_id,
+                                                            show=True)
+            context['reception_counter'] = str(student.kfupm_id)[5]
+            context['room'] = Room.get_assigned_room(student)
+        except ObjectDoesNotExist:
+            pass
+        finally:
+            return context
 
 
 class CourseAttendance(TarifiBaseView, FormView):
@@ -133,8 +139,7 @@ class CourseAttendance(TarifiBaseView, FormView):
                     # make the student attended in Hussain Almuslim bookstore system
                     try:
                         request_link = 'http://10.142.5.182:1345/api/bookstore-update/%s' % (kfupm_id)
-                        r = requests.get(request_link)
-                        return r
+                        requests.get(request_link, timeout=(3, 1))
                     except:  # usually TimeoutError but made it general so it will never raise an exception
                         pass
                 except ObjectDoesNotExist:
