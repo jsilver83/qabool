@@ -89,6 +89,9 @@ class TarifiUser(models.Model):
         except AttributeError:
             return ''
 
+    def user__kfupm_id(self):
+        return self.user.kfupm_id
+
     def save(self, *args, **kwargs):
         current_date = timezone.now() + timezone.timedelta(minutes=30)
 
