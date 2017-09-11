@@ -25,7 +25,7 @@ from undergraduate_admission.validators import is_eligible_for_housing, is_eligi
 class HousingBaseView(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted() \
-               and AdmissionSemester.get_phase4_active_semester(self.request.user)
+               and AdmissionSemester.get_phase4_active_semester()
 
 
 class HousingLandingPage(HousingBaseView, TemplateView):
@@ -58,7 +58,7 @@ class HousingAgreement(HousingBaseView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(HousingAgreement, self).get_context_data(**kwargs)
-        sem = AdmissionSemester.get_phase4_active_semester(self.request.user)
+        sem = AdmissionSemester.get_phase4_active_semester()
         context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
         context['items'] = context['agreement'].items.filter(show=True)
         return context
@@ -91,14 +91,14 @@ class NewRoommateRequest(HousingBaseView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(NewRoommateRequest, self).get_context_data(**kwargs)
-        sem = AdmissionSemester.get_phase4_active_semester(self.request.user)
+        sem = AdmissionSemester.get_phase4_active_semester()
         context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
         context['items'] = context['agreement'].items.filter(show=True)
         return context
 
     def form_valid(self, form):
         gov_id_or_kfupm_id = form.cleaned_data.get('gov_id_or_kfupm_id')
-        semester = AdmissionSemester.get_phase4_active_semester(self.request.user)
+        semester = AdmissionSemester.get_phase4_active_semester()
         roommate = User.objects.filter(Q(kfupm_id=gov_id_or_kfupm_id) |
                                        Q(username=gov_id_or_kfupm_id),
                                        status_message=RegistrationStatusMessage.get_status_admitted(),
@@ -241,7 +241,7 @@ class HousingInfoUpdate(HousingBaseView, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(HousingInfoUpdate, self).get_context_data(**kwargs)
-        sem = AdmissionSemester.get_phase4_active_semester(self.request.user)
+        sem = AdmissionSemester.get_phase4_active_semester()
         context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
         context['items'] = context['agreement'].items.filter(show=True)
         return context

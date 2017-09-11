@@ -19,7 +19,7 @@ def student_info_commands(context):
                   and user.status_message != RegistrationStatusMessage.get_status_confirmed()
     can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)
     can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing
-                       and AdmissionSemester.get_phase4_active_semester(user))
+                       and AdmissionSemester.get_phase4_active_semester())
     pending_housing_roommate_requests = \
         RoommateRequest.objects.filter(requested_user=user,
                                        status=RoommateRequest.RequestStatuses.PENDING).count()
