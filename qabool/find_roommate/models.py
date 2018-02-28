@@ -112,9 +112,12 @@ class Room(models.Model):
     def get_next_available_room():
         return Room.objects.filter(available=True). \
             exclude(pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
+                    .exclude(assigned_room__isnull=True)
                     .values_list('assigned_room', flat=True)).order_by('?').first()
 
     @staticmethod
     def get_assigned_room(user):
-        return RoommateRequest.objects.filter(Q(requesting_user=user) | Q(requested_user=user),
-                                              status=RoommateRequest.RequestStatuses.ACCEPTED).first().assigned_room
+        request = RoommateRequest.objects.filter(Q(requesting_user=user) | Q(requested_user=user),
+                                                 status=RoommateRequest.RequestStatuses.ACCEPTED).first()
+        if request:
+            return request.assigned_room

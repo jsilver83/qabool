@@ -2,6 +2,8 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportMixin
 
+from django.utils.translation import ugettext_lazy as _
+
 from .models import *
 
 
@@ -27,6 +29,12 @@ class TarifiUserAdmin(admin.ModelAdmin):
                     'get_english_speaking_test_date_time',
                     'received_by', 'creation_date')
     list_filter = ('user__semester', 'user__status_message',)
+    search_fields = ['user__username', 'user__kfupm_id']
+
+    def user__kfupm_id(self, obj):
+        return obj.user.kfupm_id
+    user__kfupm_id.short_description = _('KFUPM ID')
+    user__kfupm_id.admin_order_field = 'user__kfupm_id'
 
 
 class BoxesForIDRangesResource(resources.ModelResource):
