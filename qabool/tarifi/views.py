@@ -31,6 +31,7 @@ class TarifiSimulation(TarifiBaseView, TemplateView):
         for user in users:
             print(counter)
             tarifi_user, d = TarifiUser.objects.get_or_create(user=user)
+            TarifiUser.assign_tarifi_activities(tarifi_user, self.request.user)
             counter += 1
             print(d)
 
@@ -76,15 +77,18 @@ class StudentPrintPage(TarifiBaseView, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(StudentPrintPage, self).get_context_data(**kwargs)
-        print(self.request.user)
         try:
             student = User.objects.get(pk=self.kwargs['pk'],
                                        status_message=RegistrationStatusMessage.get_status_admitted(), )
             context['student'] = student
-            try:
-                tarifi_user, d = TarifiUser.objects.get_or_create(user=student, received_by=self.request.user)
-            except IntegrityError:  # student was received and printed by a different user
-                tarifi_user, d = TarifiUser.objects.get_or_create(user=student)
+
+            tarifi_user, d = TarifiUser.objects.get_or_create(user=student)
+
+            if tarifi_user.preparation_course_slot is None \
+                    or tarifi_user.english_placement_test_slot is None \
+                    or tarifi_user.english_speaking_test_slot is None:
+                TarifiUser.assign_tarifi_activities(tarifi_user, self.request.user)
+
             context['tarifi_user'] = tarifi_user
             context['reception_box'] = BoxesForIDRanges.objects.filter(from_kfupm_id__lte=student.kfupm_id,
                                                                        to_kfupm_id__gte=student.kfupm_id).first()

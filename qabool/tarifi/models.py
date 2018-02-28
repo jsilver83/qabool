@@ -88,51 +88,56 @@ class TarifiUser(models.Model):
             }
         except AttributeError:
             return ''
+        
+    @staticmethod
+    def assign_tarifi_activities(tarifi_user, receiving_user):
+        if tarifi_user.received_by is None:
+            tarifi_user.received_by = receiving_user
 
-    def user__kfupm_id(self):
-        return self.user.kfupm_id
-
-    def save(self, *args, **kwargs):
         current_date = timezone.now() + timezone.timedelta(minutes=30)
 
-        if self.preparation_course_slot is None:
-            available_course_slots = TarifiActivitySlot.objects.filter(type='PREPARATION_COURSE',
-                                                                       show=True,
-                                                                       slot_start_date__gt=current_date)
-            for course_slot in available_course_slots:
-                if course_slot.remaining_slots > 0:
-                    self.preparation_course_slot = course_slot
-                    break
+        available_course_slots = TarifiActivitySlot.objects.filter(type='PREPARATION_COURSE',
+                                                                   show=True,
+                                                                   slot_start_date__gt=current_date)
 
-        if self.english_placement_test_slot is None:
-            acceptable_written_start_date = self.preparation_course_slot.slot_end_date \
+        course_slot = None
+        for course_slot in available_course_slots:
+            if course_slot.remaining_slots > 0:
+                tarifi_user.preparation_course_slot = course_slot
+                break
+
+        if course_slot:
+            acceptable_written_start_date = course_slot.slot_end_date \
                                             + timezone.timedelta(minutes=30)
             available_written_slots = TarifiActivitySlot.objects.filter(type='ENGLISH_PLACEMENT_TEST',
                                                                         show=True,
                                                                         slot_start_date__gt=acceptable_written_start_date)
+
+            written_slot = None
             for written_slot in available_written_slots:
                 if written_slot.remaining_slots > 0:
-                    self.english_placement_test_slot = written_slot
+                    tarifi_user.english_placement_test_slot = written_slot
                     break
 
-        if self.english_speaking_test_slot is None:
-            acceptable_oral_start_date = self.english_placement_test_slot.slot_end_date \
-                                         + timezone.timedelta(minutes=30)
-            available_oral_slots = TarifiActivitySlot.objects \
-                .filter(type='ENGLISH_SPEAKING_TEST',
-                        show=True,
-                        slot_start_date__gt=acceptable_oral_start_date,
-                        location_en=self.english_placement_test_slot.location_en)
-            for oral_slot in available_oral_slots:
-                if oral_slot.remaining_slots > 0:
-                    self.english_speaking_test_slot = oral_slot
-                    time_offset = (timezone.localtime(oral_slot.slot_end_date)
-                                   - timezone.localtime(oral_slot.slot_start_date)).seconds / oral_slot.slots \
-                                  * (oral_slot.slots - oral_slot.remaining_slots)
-                    self.english_speaking_test_start_time = timezone.localtime(oral_slot.slot_start_date) \
-                                                            + timezone.timedelta(seconds=time_offset)
-                    break
-        super(TarifiUser, self).save(*args, **kwargs)
+            if written_slot:
+                acceptable_oral_start_date = written_slot.slot_end_date \
+                                             + timezone.timedelta(minutes=30)
+                available_oral_slots = TarifiActivitySlot.objects \
+                    .filter(type='ENGLISH_SPEAKING_TEST',
+                            show=True,
+                            slot_start_date__gt=acceptable_oral_start_date,
+                            location_en=written_slot.location_en)
+                for oral_slot in available_oral_slots:
+                    if oral_slot.remaining_slots > 0:
+                        tarifi_user.english_speaking_test_slot = oral_slot
+                        time_offset = (timezone.localtime(oral_slot.slot_end_date)
+                                       - timezone.localtime(oral_slot.slot_start_date)).seconds / oral_slot.slots \
+                                      * (oral_slot.slots - oral_slot.remaining_slots)
+                        tarifi_user.english_speaking_test_start_time = timezone.localtime(oral_slot.slot_start_date) \
+                                                                       + timezone.timedelta(seconds=time_offset)
+                        break
+
+        tarifi_user.save()
 
 
 class TarifiActivitySlot(models.Model):
