@@ -117,8 +117,9 @@ class User(AbstractUser):
     third_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Third Name (English)'))
     family_name_en = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Family Name (English)'))
     student_full_name_en = models.CharField(null=True, blank=True, max_length=400,
-                                            verbose_name=_('Student Full Name (English)'), help_text=_(
-            'Your English full name should be similar to Passport or high school certificate.'))
+                                            verbose_name=_('Student Full Name (English)'),
+                                            help_text=_('Your English full name should be similar to Passport '
+                                                        'or high school certificate.'))
 
     GENDER_CHOICES = (
         ('M', _('Male')),
@@ -349,10 +350,10 @@ class User(AbstractUser):
     get_verification_status.short_description = _('Issues With Uploaded Docs')
 
     def get_student_full_name(self):
-        if self.first_name_ar and self.second_name_ar and self.third_name_ar and self.family_name_ar:
+        if self.first_name_ar and self.second_name_ar and self.family_name_ar:
             return '%s %s %s %s' % (self.first_name_ar, self.second_name_ar, self.third_name_ar, self.family_name_ar)
         elif self.student_full_name_ar:
-            return '%s' % (self.student_full_name_ar)
+            return '%s' % (self.student_full_name_ar, )
         elif self.is_staff:
             return self.username
         else:
