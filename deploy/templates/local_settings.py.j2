@@ -34,6 +34,8 @@ EMAIL_HOST_PASSWORD = '{{ email_password.json.data.value }}'
 SERVER_EMAIL = '{{ email_user }}'
 DEFAULT_FROM_EMAIL = 'KFUPM Admission <{{ email_user }}>'
 
+LOGOUT_REDIRECT_URL = '{{ cas_logout_url }}'
+
 UNIFONIC_APP_SID = "{{ sms_gateway_app_sid.json.data.value }}"
 
 DISABLE_SMS = {{ disable_sms }}
