@@ -9,7 +9,7 @@ from qabool import settings
 from undergraduate_admission.models import User, AdmissionSemester
 import floppyforms.__future__ as forms
 
-from undergraduate_admission.utils import try_parse_int
+from undergraduate_admission.utils import parse_non_standard_numerals
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
@@ -61,8 +61,6 @@ class BaseContactForm(forms.ModelForm):
         except:
             pass
 
-        print(self.user_id)
-
         super(BaseContactForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
 
@@ -88,7 +86,7 @@ class BaseContactForm(forms.ModelForm):
         return email2
 
     def clean_mobile(self):
-        mobile = try_parse_int(self.cleaned_data.get("mobile"))
+        mobile = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
         found = User.objects.filter(mobile=mobile, semester=semester).exclude(id=self.user_id)
         if mobile and found:
@@ -99,8 +97,8 @@ class BaseContactForm(forms.ModelForm):
         return mobile
 
     def clean_mobile2(self):
-        mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
-        mobile2 = try_parse_int(self.cleaned_data.get("mobile2"))
+        mobile1 = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
+        mobile2 = parse_non_standard_numerals(self.cleaned_data.get("mobile2"))
         if mobile1 and mobile2 and mobile1 != mobile2:
             raise forms.ValidationError(
                 self.error_messages['mobile_mismatch'],
@@ -122,7 +120,7 @@ class MyAuthenticationForm(AuthenticationForm):
             self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
     def clean_username(self):
-        return try_parse_int(self.cleaned_data.get("username"))
+        return parse_non_standard_numerals(self.cleaned_data.get("username"))
 
 
 class ForgotPasswordForm(forms.ModelForm):
@@ -136,10 +134,10 @@ class ForgotPasswordForm(forms.ModelForm):
         required=True,
     )
 
-    id2 = forms.IntegerField(
-        label=_('Registration Number'),
-        required=False,
-    )
+    # id2 = forms.IntegerField(
+    #     label=_('Registration Number'),
+    #     required=False,
+    # )
 
     password1 = forms.CharField(
         label=_('New Password'),
@@ -159,7 +157,7 @@ class ForgotPasswordForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['govid', 'id2', 'email', 'mobile', 'password1', 'password2']
+        fields = ['govid', 'email', 'mobile', 'password1', 'password2']
 
         help_texts = {
             'govid': _('National ID for Saudis, Iqama Number for non-Saudis.'),
@@ -190,26 +188,26 @@ class ForgotPasswordForm(forms.ModelForm):
         return password2
 
     def clean_username(self):
-        return try_parse_int(self.cleaned_data.get("username"))
+        return parse_non_standard_numerals(self.cleaned_data.get("username"))
 
     def save(self):
         username = self.cleaned_data.get("govid")
         password = self.cleaned_data.get("password1")
         email = self.cleaned_data.get("email")
         mobile = self.cleaned_data.get("mobile")
-        id2 = self.cleaned_data.get("id2")
+        # id2 = self.cleaned_data.get("id2")
 
         # match 2 out of three values supplied by user
-        try:
-            user = User.objects.get(username=username, email=email, mobile=mobile)
-        except User.DoesNotExist:
-            try:
-                user = User.objects.get(username=username, email=email, id=id2)
-            except User.DoesNotExist:
-                try:
-                    user = User.objects.get(username=username, mobile=mobile, id=id2)
-                except User.DoesNotExist:
-                    user = None
+        # try:
+        user = User.objects.get(username=username, email=email, mobile=mobile)
+        # except User.DoesNotExist:
+        #     try:
+        #         user = User.objects.get(username=username, email=email, id=id2)
+        #     except User.DoesNotExist:
+        #         try:
+        #             user = User.objects.get(username=username, mobile=mobile, id=id2)
+        #         except User.DoesNotExist:
+        #             user = None
 
         if user is not None:
             user.set_password(password)
