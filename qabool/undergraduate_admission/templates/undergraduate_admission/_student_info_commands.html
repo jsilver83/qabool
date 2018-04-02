@@ -4,7 +4,6 @@
 	<div class="panel-body">
 		{% if has_pic %}
 		{% if user.personal_picture %}
-		<!--<img width="100%" src="{{ user.personal_picture.url }}">-->
 		<img width="100%" src="{% url 'download_user_file' 'personal_picture' user.id %}">
 		{% else %}
 		<img width="100%" src="http://placehold.it/150x140">
@@ -12,8 +11,8 @@
 		{% endif %}
 		<h4>{{ user }}</h4>
 		<dl>
-			<dt>{% trans 'Registration ID' %}</dt>
-			<dd>{{ user.id }}</dd>
+{#			<dt>{% trans 'Registration ID' %}</dt>#}
+{#			<dd>{{ user.id }}</dd>#}
 			<dt>{% trans 'Government ID' %}</dt>
 			<dd>{{ user.username }}</dd>
 			{% if can_see_kfupm_id %}
@@ -47,9 +46,6 @@
 		{% endif %}
 	</a>
 	{% endif %}
-{#	{% if can_search_in_housing %}#}
-{#	<a href="{% url 'housing_search' %}" class="list-group-item"><i class="fa fa-search" aria-hidden="true"></i> {% trans 'Housing Search' %}</a>#}
-{#	{% endif %}#}
 	{% if can_print_withdrawal_letter %}
 	<a href="{% url 'withdrawal_letter' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Withdrawal Letter' %}</a>
 	{% endif %}
@@ -60,10 +56,6 @@
 	<a href="{% url 'edit_contact_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
 	{% endif %}
 	{% if can_withdraw %}
-	<!--<br>-->
-	<!--<span class="text-warning">{% trans "If you don't want to proceed with the application you can still withdraw your application by clicking below on the red button." %}</span><br><br>-->
-	<!--<a href="#" class="btn btn-withdraw btn-block"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>-->
-	<!--<hr>-->
 	<a style="color:#D9534F" href="{% url 'withdraw' %}" class="list-group-item"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
 	{% endif %}
 	<a href="{% url 'change_password' %}" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
