@@ -3,6 +3,7 @@ import os
 import random
 import requests
 from django import forms
+from django.core.validators import RegexValidator
 from django.utils.safestring import mark_safe
 
 from django.core.mail import send_mail
@@ -233,6 +234,16 @@ def try_parse_float(str_to_float):
         return 0.0
 
 
+# convert strings with non standard numerals to standard numerals while preserving initial zeroes
+# like ۰۰۰۱ or ٠٠٠١ or ໐໐໐໑ will be converted to 0001
+def parse_non_standard_numerals(str_numerals):
+    new_string = ''
+    for single_char in str_numerals:
+        new_string += str(try_parse_int(single_char))
+
+    return new_string
+
+
 def merge_dicts(*dict_args):
     """
     Given any number of dicts, shallow copy and merge into a new dict,
@@ -264,3 +275,20 @@ def format_date(date_time):
 
 def format_time(date_time):
     return timezone.localtime(date_time).strftime('%I:%M %p')
+
+
+def add_validators_to_arabic_and_english_names(fields):
+        for field in fields:
+            if field in ['first_name_en', 'second_name_en', 'third_name_en', 'family_name_en']:
+                fields[field].validators = [
+                    RegexValidator(
+                        '^[A-Za-z.\- ]+$',
+                        message=_("Use English alphabet only! You can also use the dot, hyphen and spaces")
+                    ), ]
+
+            if field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar']:
+                fields[field].validators = [
+                    RegexValidator(
+                        '^[\u0600-\u06FF ]+$',
+                        message=_("Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)")
+                    ), ]

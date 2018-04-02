@@ -2,6 +2,8 @@ import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponse
@@ -10,6 +12,7 @@ from django.utils import timezone
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import UpdateView
 
 from qabool import settings
 from qabool.local_settings import API_SECURITY_TOKEN
@@ -98,20 +101,20 @@ def student_area(request):
                                                                         })
 
 
-@login_required()
-def edit_contact_info(request):
-    form = BaseContactForm((request.POST or None), request=request, instance=request.user)
+class EditContactInfo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'undergraduate_admission/edit_contact_info.html'
+    form_class = BaseContactForm
+    success_message = _('Contact Info was updated successfully...')
+    success_url = reverse_lazy('student_area')
 
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Contact Info was updated successfully...'))
-                return redirect('student_area')
-            else:
-                messages.error(request, _('Error updating contact info. Try again later!'))
+    def get_object(self, queryset=None):
+        return self.request.user
 
-    return render(request, 'undergraduate_admission/edit_contact_info.html', {'form': form})
+    def get_form_kwargs(self):
+        kwargs = super(EditContactInfo, self).get_form_kwargs()
+        kwargs['request'] = self.request
+
+        return kwargs
 
 
 def csrf_failure(request, reason=""):

@@ -1,11 +1,12 @@
 import base64
-
 import floppyforms.__future__ as forms
 import re
+from django.core.validators import RegexValidator
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage
-from django.utils.translation import ugettext_lazy as _, get_language
+from undergraduate_admission.utils import add_validators_to_arabic_and_english_names
 
 YES_NO_CHOICES = (
     ('True', _("Yes")),
@@ -100,6 +101,8 @@ class PersonalInfoForm(Phase2GenericForm):
                 self.fields[field].widget.attrs.update(
                     {'required': ''}
                 )
+
+        add_validators_to_arabic_and_english_names(self.fields)
 
 
 class GuardianContactForm(Phase2GenericForm):
@@ -239,7 +242,7 @@ class PersonalPhotoForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('personal_picture', 'data_uri', )
+        fields = ('personal_picture', 'data_uri',)
         widgets = {
             'file': forms.FileInput(attrs={
                 'accept': 'image/*'
