@@ -151,14 +151,15 @@ class User(AbstractUser):
         upload_to=upload_location_govid,
         validators=[validate_file_extension],
     )
-    government_id_issue = models.DateTimeField(null=True, blank=True, verbose_name=_('Government ID Issue Date'))
+    government_id_type = models.CharField(_('Government ID Type'), null=True, blank=True, max_length=100)
+    government_id_issue = models.DateField(null=True, blank=True, verbose_name=_('Government ID Issue Date'))
     government_id_expiry = models.CharField(null=True, blank=True, max_length=20,
                                             verbose_name=_('Government ID Expiry Date'))
     government_id_place = models.CharField(null=True, blank=True, max_length=50,
                                            verbose_name=_('Government ID Place of Issue'))
     passport_number = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Passport Number'))
     passport_place = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Passport Place of Issue '))
-    passport_expiry = models.DateTimeField(null=True, blank=True, verbose_name=_('Passport Expiry Date'))
+    passport_expiry = models.DateField(null=True, blank=True, verbose_name=_('Passport Expiry Date'))
     passport_file = models.FileField(
         null=True,
         blank=True,
@@ -167,12 +168,36 @@ class User(AbstractUser):
         upload_to=upload_location_passport,
         validators=[validate_file_extension],
     )
-    high_school_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Name'))
+
+    high_school_id = models.CharField(null=True, blank=True, max_length=20, verbose_name=_('High School ID'))
+    high_school_name = models.CharField(null=True, blank=True, max_length=100,
+                                        verbose_name=_('High School Name (Arabic)'))
+    high_school_name_en = models.CharField(null=True, blank=True, max_length=100,
+                                           verbose_name=_('High School Name (English)'))
+
     high_school_system = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School System'))
-    high_school_major = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School Major'))
+
+    high_school_major_code = models.CharField(null=True, blank=True, max_length=20,
+                                              verbose_name=_('High School Major Code'))
+    high_school_major_name = models.CharField(null=True, blank=True, max_length=100,
+                                              verbose_name=_('High School Major Name (Arabic)'))
+    high_school_major_name_en = models.CharField(null=True, blank=True, max_length=100,
+                                                 verbose_name=_('High School Major Name (English)'))
+
+    high_school_province_code = models.CharField(null=True, blank=True, max_length=20,
+                                                 verbose_name=_('High School Province Code'))
     high_school_province = models.CharField(null=True, blank=True, max_length=100,
-                                            verbose_name=_('High School Province'))
-    high_school_city = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School City'))
+                                            verbose_name=_('High School Province (Arabic)'))
+    high_school_province_en = models.CharField(null=True, blank=True, max_length=100,
+                                               verbose_name=_('High School Province (English)'))
+
+    high_school_city_code = models.CharField(null=True, blank=True, max_length=20,
+                                             verbose_name=_('High School City Code'))
+    high_school_city = models.CharField(null=True, blank=True, max_length=100,
+                                        verbose_name=_('High School City (Arabic)'))
+    high_school_city_en = models.CharField(null=True, blank=True, max_length=100,
+                                           verbose_name=_('High School City (English)'))
+
     high_school_certificate = models.FileField(
         null=True,
         blank=True,
@@ -278,8 +303,8 @@ class User(AbstractUser):
         default=False,
         help_text=_('This will let us help you better to get you a permit to enter campus.'),
     )
-    vehicle_plate_no = models.CharField(null=True, blank=True, max_length=100,
-                                        verbose_name=_('Vehicle Plate No.'))
+    vehicle_plate_no = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Vehicle Plate No.'))
+    vehicle_owner = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Vehicle Owner'))
     vehicle_registration_file = models.FileField(
         null=True,
         blank=True,
@@ -368,7 +393,7 @@ class User(AbstractUser):
             pass
 
     def get_actual_student_status(self):
-        return self.status_message
+        return self.status_message.registration_status_message
 
     def get_student_phase(self):
         try:
@@ -447,6 +472,9 @@ class AdmissionSemester(models.Model):
     qudrat_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Qudrat Score Weight'))
     tahsili_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Tahsili Score Weight'))
     cutoff_point = models.FloatField(null=True, blank=True, verbose_name=_('Cutoff Point'))
+    active = models.BooleanField(verbose_name=_('Active Semester'), default=True,
+                                 help_text=_('Indicator of the current active semester. This will be used in the '
+                                             'admin-side and committee pages'))
 
     class Meta:
         verbose_name = _('Admission Semester')
@@ -454,6 +482,14 @@ class AdmissionSemester(models.Model):
 
     def __str__(self):
         return self.semester_name
+
+    @staticmethod
+    def get_active_semester():
+        try:
+            sem = AdmissionSemester.objects.filter(active=True).first()
+            return sem
+        except ObjectDoesNotExist:
+            return None
 
     @staticmethod
     def get_phase1_active_semester():
@@ -597,6 +633,7 @@ class RegistrationStatusMessage(models.Model):
 
     class Meta:
         verbose_name_plural = _('Admission: Registration Status Messages')
+        ordering = ('status_message_code', )
 
     @property
     def registration_status_message(self):
@@ -607,7 +644,13 @@ class RegistrationStatusMessage(models.Model):
             return self.status_message_en
 
     def __str__(self):
-        return self.registration_status_message
+        try:
+            if self.status.status_code != self.status_message_code:
+                return '%s (%s)' % (self.status.status_code, self.status_message_code)
+            else:
+                return self.status_message_code
+        except:
+            return self.status_message_code
 
     @staticmethod
     def get_registration_status_choices(add_dashes=True):
