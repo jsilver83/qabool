@@ -1,5 +1,7 @@
+import json
 import time
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,22 +17,17 @@ from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
-from extra_views import ModelFormSetView
 from floppyforms.__future__ import modelformset_factory
-
 from zeep import Client
 from zeep.transports import Transport
-import json
-import os
-import csv
 
-from django.conf import settings
 from undergraduate_admission.filters import UserListFilter
 from undergraduate_admission.forms.admin_side_forms import *
 from undergraduate_admission.models import User, AdmissionSemester, GraduationYear, RegistrationStatusMessage
-from undergraduate_admission.utils import try_parse_float, merge_dicts
+from undergraduate_admission.utils import try_parse_float
 
 YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
+YESSER_MOHE_WSDL = settings.YESSER_MOHE_WSDL
 YESSER_QIYAS_WSDL = settings.YESSER_QIYAS_WSDL
 BASE_DIR = settings.BASE_DIR
 
@@ -62,7 +59,7 @@ class CutOffPointView(AdminBaseView, View):
         cut_off_total_operand = request.GET.get('admission_total_operand', 'GTE')
         filtered = UserListFilter(request.GET, queryset=User.objects.filter(is_staff=False))
 
-        filtered_with_properties = filtered.qs.select_related('semester', 'nationality')\
+        filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
             .annotate(
             admission_percent=F('semester__high_school_gpa_weight') * F('high_school_gpa') / 100
                               + F('semester__qudrat_score_weight') * F('qudrat_score') / 100
@@ -130,7 +127,7 @@ class CutOffPointView(AdminBaseView, View):
         if form2.is_valid():
             try:
                 status = RegistrationStatusMessage.objects.get(pk=form2.cleaned_data.get('status_message'))
-                records_updated = filtered.update(status_message = status)
+                records_updated = filtered.update(status_message=status)
                 students_count = filtered.count()
                 messages.success(request, _('New status has been applied to %(count)d of %(all)d students chosen...')
                                  % ({'count': records_updated,
@@ -151,9 +148,17 @@ class VerifyList(StaffBaseView, ListView):
         logged_in_username = self.request.user.username
         status = [RegistrationStatusMessage.get_status_confirmed(),
                   RegistrationStatusMessage.get_status_confirmed_non_saudi()]
-        students_to_verified = User.objects.filter(is_staff=False,
-                                                   status_message__in=status,
-                                                   verification_committee_member= logged_in_username)\
+        semester = AdmissionSemester.get_active_semester()
+        if self.request.user.is_superuser:
+            students_to_verified = User.objects.filter(is_staff=False,
+                                                       status_message__in=status,
+                                                       semester=semester) \
+            .order_by('-phase2_submit_date')
+        else:
+            students_to_verified = User.objects.filter(is_staff=False,
+                                                       status_message__in=status,
+                                                       semester=semester,
+                                                       verification_committee_member=logged_in_username) \
             .order_by('-phase2_submit_date')
         return students_to_verified
 
@@ -166,50 +171,6 @@ class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('verify_student', kwargs={'pk': self.kwargs['pk']})
-
-
-class StudentGenderView(AdminBaseView, TemplateView):
-    formset = modelformset_factory(User, form=StudentGenderForm, extra=0)
-    template_name = 'undergraduate_admission/admin/student_gender.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(StudentGenderView, self).get_context_data(**kwargs)
-        sem = AdmissionSemester.get_phase1_active_semester()
-        students = User.objects.filter(semester=sem,
-                                       is_staff=False,
-                                       is_superuser=False).order_by('date_joined')
-
-        paginator = Paginator(students, 25)
-        page = self.request.GET.get('page')
-        try:
-            page_obj = paginator.page(page)
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)
-        page_query = students.filter(id__in=[object.id for object in page_obj])
-        formset = self.formset(queryset=page_query)
-        context['page_obj'] = page_obj
-        context['paginator'] = paginator
-        context['formset'] = formset
-        context['is_paginated'] = True
-
-        return context
-
-    # def get(self, request, *args, **kwargs):
-    #     return render(request, self.template_name, self.get_context_data())
-
-    def post(self, request, *args, **kwargs):
-        formset = self.formset(request.POST)
-
-        if formset.is_valid():
-            for form in formset:
-                form.save()
-            messages.success(request, _('Gender updated successfully'))
-
-            return render_to_response(self.template_name,
-                                      self.get_context_data(**kwargs),
-                                      context_instance=RequestContext(request))
 
 
 class YesserDataUpdate(AdminBaseView, TemplateView):
@@ -234,7 +195,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
                                            is_staff=False,
                                            is_superuser=False)
             for student in students:
-                get_student_record_serialized(student)
+                serialized_data = get_student_record_serialized(student)
 
         return super(YesserDataUpdate, self).get(request, *args, **kwargs)
 
@@ -308,8 +269,7 @@ def get_student_record_serialized(student, change_status=False):
         tahsili_data = get_tahsili_from_yesser(student.username)
         hs_data = get_high_school_from_yesser(student.username)
 
-        # print(data)
-        final_data['status_before'] = student.status_message.status.status_en
+        final_data['status_before'] = student.status_message
 
         final_data['qudrat_before'] = student.qudrat_score
         if not qudrat_data['q_error']:
@@ -350,7 +310,7 @@ def get_student_record_serialized(student, change_status=False):
                 this is the case of a student who has old hs status but he has recent hs in his application
                 """
                 if year and student.high_school_graduation_year == year and \
-                                student.status_message == RegistrationStatusMessage.get_status_old_high_school():
+                        student.status_message == RegistrationStatusMessage.get_status_old_high_school():
                     if change_status:
                         student.status_message = RegistrationStatusMessage.get_status_applied()
                     special_cases_log += \
@@ -375,11 +335,28 @@ def get_student_record_serialized(student, change_status=False):
                             student.status_message = RegistrationStatusMessage.get_status_old_high_school()
                         special_cases_log += \
                             '{%s} has old hs in MOE but has a status of applied<br>' % (student.username)
-            if hs_data['Gender'] and student.gender != hs_data['Gender']:
+            if hs_data['Gender']:
                 student.gender = hs_data['Gender']
-                special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username, hs_data['Gender'])
+                if hs_data['Gender'] == 'F':
+                    special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username, hs_data['Gender'])
+                    if change_status:
+                        student.status_message = RegistrationStatusMessage.get_status_girls()
+
+            student.government_id_type = hs_data['MoeIdentifierTypeDesc']
+            student.birthday = hs_data['GregorianDate']
+            student.birthday_ah = hs_data['HijriDate']
+            student.high_school_id = hs_data['SchoolID']
             student.high_school_name = hs_data['SchoolNameAr']
-            student.high_school_province = hs_data['AdministrativeAreaNameAr']
+            student.high_school_name_en = hs_data['SchoolNameEn']
+            student.high_school_province_code = hs_data['EducationAreaCode']
+            student.high_school_province = hs_data['EducationAreaNameAr']
+            student.high_school_province_en = hs_data['EducationAreaNameEn']
+            student.high_school_city_code = hs_data['AdministrativeAreaCode']
+            student.high_school_city = hs_data['AdministrativeAreaNameAr']
+            student.high_school_city_en = hs_data['AdministrativeAreaNameEn']
+            student.high_school_major_code = hs_data['MajorCode']
+            student.high_school_major_name = hs_data['MajorTypeAr']
+            student.high_school_major_name_en = hs_data['MajorTypeEn']
 
         if changed:
             student.save()
@@ -434,7 +411,6 @@ def get_tahsili_from_yesser(gov_id):
     try:
         client = Client(YESSER_QIYAS_WSDL, transport=transport)
         resultTahsili = client.service.GetExamResult(gov_id, '02', '01')
-        # print(resultTahsili)
 
         if not resultTahsili.ServiceError:
             data['t_error'] = 0
@@ -458,25 +434,124 @@ def get_high_school_from_yesser(gov_id):
             data['hs_error'] = 0
             data['high_school_gpa'] = result.getHighSchoolCertificateResponseDetailObject. \
                 CertificationDetails.GPA
+            data['MoeIdentifierTypeDesc'] = result.getHighSchoolCertificateResponseDetailObject.\
+                StudentBasicInfo.MoeIdentifierTypeDesc
             data['CertificationHijriYear'] = result.getHighSchoolCertificateResponseDetailObject. \
                 CertificationDetails.CertificationHijriYear
             data['Gender'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.Gender
+            data['SchoolID'] = result.getHighSchoolCertificateResponseDetailObject.SchoolInfo.SchoolID
             data['SchoolNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
                 SchoolInfo.SchoolNameAr
+            data['SchoolNameEn'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.SchoolNameEn
+            data['EducationAreaCode'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.EducationAreaCode
+            data['EducationAreaNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.EducationAreaNameAr
+            data['EducationAreaNameEn'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.EducationAreaNameEn
+            data['AdministrativeAreaCode'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.AdministrativeAreaCode
             data['AdministrativeAreaNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
                 SchoolInfo.AdministrativeAreaNameAr
+            data['AdministrativeAreaNameEn'] = result.getHighSchoolCertificateResponseDetailObject. \
+                SchoolInfo.AdministrativeAreaNameEn
+            data['MajorCode'] = result.getHighSchoolCertificateResponseDetailObject. \
+                CertificationDetails.MajorCode
+            data['MajorTypeAr'] = result.getHighSchoolCertificateResponseDetailObject. \
+                CertificationDetails.MajorTypeAr
+            data['MajorTypeEn'] = result.getHighSchoolCertificateResponseDetailObject. \
+                CertificationDetails.MajorTypeEn
+            data['GregorianDate'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.DateOfBirth.\
+                GregorianDate
+            data['HijriDate'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.DateOfBirth.\
+                HijriDate
         else:
             data['hs_error'] = result.ServiceError.Code
             data['high_school_gpa'] = 0
+            data['MoeIdentifierTypeDesc'] = ''
             data['CertificationHijriYear'] = ''
             data['Gender'] = ''
+            data['SchoolID'] = ''
             data['SchoolNameAr'] = ''
+            data['SchoolNameEn'] = ''
+            data['EducationAreaCode'] = ''
+            data['EducationAreaNameAr'] = ''
+            data['EducationAreaNameEn'] = ''
+            data['AdministrativeAreaCode'] = ''
             data['AdministrativeAreaNameAr'] = ''
+            data['AdministrativeAreaNameEn'] = ''
+            data['MajorCode'] = ''
+            data['MajorTypeAr'] = ''
+            data['MajorTypeEn'] = ''
     except:
         data['hs_error'] = 'general error'
         data['high_school_gpa'] = 0
+        data['MoeIdentifierTypeDesc'] = ''
         data['CertificationHijriYear'] = ''
         data['Gender'] = ''
+        data['SchoolID'] = ''
         data['SchoolNameAr'] = ''
+        data['SchoolNameEn'] = ''
+        data['EducationAreaCode'] = ''
+        data['EducationAreaNameAr'] = ''
+        data['EducationAreaNameEn'] = ''
+        data['AdministrativeAreaCode'] = ''
         data['AdministrativeAreaNameAr'] = ''
+        data['AdministrativeAreaNameEn'] = ''
+        data['MajorCode'] = ''
+        data['MajorTypeAr'] = ''
+        data['MajorTypeEn'] = ''
     return data
+
+
+####################################
+####### OPERATIONAL CODE ###########
+####################################
+def fetch_all_moe_from_yesser():
+    students = User.objects.filter(is_staff=False)  # .order_by('-id')[:50]
+
+    for student in students:
+        time.sleep(0.2)
+        fetch_moe_data_from_yesser_and_write_to_file(student.username)
+
+
+def fetch_moe_data_from_yesser_and_write_to_file(government_id):
+    try:
+        client = Client(YESSER_MOE_WSDL, transport=transport)
+
+        result = client.service.GetHighSchoolCertificate(government_id)
+        if not result.ServiceError:
+            file = open('fetched_from_yesser/%s.txt' % (government_id,), 'w')
+            file.write(str(result))
+            file.close()
+    except:
+        pass
+
+
+def fetch_all_mohe_from_yesser():
+    students = User.objects.filter(is_staff=False)  # .order_by('-id')[:1000]
+
+    for student in students:
+        time.sleep(1)
+        # print('========')
+        fetch_mohe_data_from_yesser_and_write_to_file(student.username)
+
+
+def fetch_mohe_data_from_yesser_and_write_to_file(government_id):
+    # print(government_id)
+    try:
+        client = Client(YESSER_MOHE_WSDL, transport=transport)
+        result = client.service.GetStudentAdmissionStatusByNationalID(government_id, 'NationalID')
+
+        file = open('fetched_from_yesser/all.csv', 'a')
+        # print(result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[0].University.UniversityID)
+        file.write(
+            str("%s,%s\n" % (
+                government_id,
+                result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[0].University.UniversityID
+                ))
+        )
+        file.close()
+    except:
+        pass

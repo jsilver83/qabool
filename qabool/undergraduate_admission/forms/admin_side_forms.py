@@ -4,6 +4,7 @@ import floppyforms.__future__ as forms
 import re
 from django.utils import timezone
 
+from .phase2_forms import YES_NO_CHOICES
 from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, GraduationYear, AdmissionSemester
 from django.utils.translation import ugettext_lazy as _, get_language
 
@@ -66,7 +67,7 @@ class VerifyCommitteeForm(forms.ModelForm):
 
                   'mobile', 'high_school_gpa',
                   # 'qudrat_score', 'tahsili_score',
-                  'high_school_graduation_year', 'high_school_system', 'high_school_major',
+                  'high_school_graduation_year', 'high_school_system',  # 'high_school_major',
 
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry',
@@ -83,6 +84,9 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'passport_file',
                   'courses_certificate',
 
+                  'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                  'vehicle_registration_file', 'driving_license_file',
+
                   'verification_documents_incomplete',
                   'verification_picture_acceptable',
                   'verification_status',
@@ -95,13 +99,15 @@ class VerifyCommitteeForm(forms.ModelForm):
             'birthday_ah': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'government_id_expiry': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'passport_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
+            'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
         }
 
     def __init__(self, *args, **kwargs):
         super(VerifyCommitteeForm, self).__init__(*args, **kwargs)
 
         readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
-                           'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score', ]
+                           'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
+                           'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no', ]
         for field in self.fields:
             if field in readonly_fields:
                 self.fields[field].disabled = True
@@ -113,6 +119,7 @@ class VerifyCommitteeForm(forms.ModelForm):
         self.fields['verification_documents_incomplete'].required = True
         self.fields['verification_picture_acceptable'].required = True
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
+        self.fields['vehicle_owner'].widget = forms.Select(choices=Lookup.get_lookup_choices('VEHICLE_OWNER'))
         self.fields['verification_status'].widget = forms.CheckboxSelectMultiple(
                 choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
 
@@ -121,7 +128,7 @@ class VerifyCommitteeForm(forms.ModelForm):
 
         verification_documents_incomplete = self.cleaned_data.get('verification_documents_incomplete')
         verification_picture_acceptable = self.cleaned_data.get('verification_picture_acceptable')
-        if (verification_documents_incomplete or verification_picture_acceptable):
+        if verification_documents_incomplete or verification_picture_acceptable:
             if student.student_type in ('S', 'M'):
                 status = RegistrationStatusMessage.get_status_confirmed()
             else:
@@ -146,10 +153,10 @@ class VerifyCommitteeForm(forms.ModelForm):
 
         if commit:
             student.save()
-            if (verification_documents_incomplete or verification_picture_acceptable):
+            if verification_documents_incomplete or verification_picture_acceptable:
                 SMS.send_sms_docs_issue_message(student.mobile)
                 SMS.send_sms_docs_issue_message(student.guardian_mobile)
-            elif verification_documents_incomplete == False and verification_picture_acceptable == False \
+            elif verification_documents_incomplete is False and verification_picture_acceptable is False \
                     and student.student_type in ('S', 'M'):
                 SMS.send_sms_admitted(student.mobile)
                 SMS.send_sms_admitted(student.guardian_mobile)

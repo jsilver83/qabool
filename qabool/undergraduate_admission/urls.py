@@ -33,7 +33,7 @@ urlpatterns = [
 
     url(r'^choosetarifitimeslot/$', phase3_views.ChooseTarifiTimeSlot.as_view(), name='choose_tarifi_time_slot'),
     url(r'^admin/sendmasssms/$', admin_side_views.SendMassSMSView.as_view(), name='send_mass_sms'),
-    url(r'^admin/studentgender/$', admin_side_views.StudentGenderView.as_view(), name='student_gender'),
+    # url(r'^admin/studentgender/$', admin_side_views.StudentGenderView.as_view(), name='student_gender'),
     url(r'^admin/verify/(?P<pk>\d+)/$', admin_side_views.VerifyStudent.as_view(), name='verify_student'),
     url(r'^admin/verifylist/$', admin_side_views.VerifyList.as_view(), name='verify_list'),
     url(r'^admin/cutoffpoint/$', admin_side_views.CutOffPointView.as_view(), name='cut_off_point'),
