@@ -7,6 +7,7 @@ from import_export.admin import ImportExportMixin
 from reversion.admin import VersionAdmin
 from django.utils.translation import ugettext_lazy as _
 
+from .forms.phase2_forms import YES_NO_CHOICES
 from undergraduate_admission.views.admin_side_views import get_student_record_serialized
 from .models import *
 
@@ -23,7 +24,7 @@ class StudentResource(resources.ModelResource):
                   'high_school_province', 'admission_note', 'admission_note2', 'admission_note3', 'government_id_place',
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
                   'eligible_for_housing', 'high_school_gpa_student_entry', 'student_full_name_ar',
-                  'student_full_name_en', 'gender', 'verification_committee_member', 'high_school_major',
+                  'student_full_name_en', 'gender', 'verification_committee_member',
                   'email', 'mobile', 'nationality', 'guardian_mobile', 'student_notes')
         skip_unchanged = True
         report_skipped = True
@@ -51,33 +52,37 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
 
     fieldsets = (
         (None, {
-            'fields': (('username', 'semester', 'status_message'),
-                       ('student_full_name_ar', 'student_full_name_en', 'gender'),
+            'fields': (('username', 'semester', 'status_message', 'gender', ),
+                       ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
+                       ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
                        ('student_type', 'nationality', 'saudi_mother', 'saudi_mother_gov_id'),
                        'email', 'mobile', 'guardian_mobile',
-                       ('high_school_gpa', 'qudrat_score', 'tahsili_score'),
-                       'admission_total', 'high_school_gpa_student_entry',
+                       ('high_school_gpa', 'qudrat_score', 'tahsili_score', 'admission_total', ),
+                       'high_school_gpa_student_entry',
                        ('high_school_graduation_year', 'high_school_system'), 'student_notes',
-                       'admission_note', 'admission_note2', 'admission_note3', )
+                       ('admission_note', 'admission_note2', 'admission_note3', ), )
         }),
         ('Phase 2 Fields - Personal Information', {
-            'classes': ('collapse',),
-            'fields': (('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
-                       ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
-                       'government_id_issue', 'government_id_expiry', 'government_id_place',
-                       'passport_number', 'passport_place', 'passport_expiry',
-                       'birthday', 'birthday_ah', 'birth_place', 'high_school_name', 'high_school_province',
-                       'high_school_city', 'blood_type', 'student_address', 'social_status',
-                       'kids_no',
-                       'is_employed', 'employer_name', 'is_disabled', 'disability_needs', 'disability_needs_notes',
-                       'is_diseased',
-                       'chronic_diseases', 'chronic_diseases_notes',
-                       'have_a_vehicle', 'vehicle_plate_no', 'driving_license_file',
+            'classes': ('wide',),
+            'fields': (
+                       ('government_id_type', 'government_id_issue', 'government_id_expiry', 'government_id_place', ),
+                       ('passport_number', 'passport_place', 'passport_expiry', ),
+                       ('birthday', 'birthday_ah', 'birth_place', ),
+                       ('high_school_id', 'high_school_name', 'high_school_name_en', ),
+                       ('high_school_province_code', 'high_school_province', 'high_school_province_en', ),
+                       ('high_school_city_code', 'high_school_city', 'high_school_city_en', ),
+                       ('high_school_major_code', 'high_school_major_name', 'high_school_major_name_en', ),
+                       ('blood_type', 'student_address', ),
+                       ('social_status', 'kids_no', ),
+                       ('is_employed', 'employer_name', ),
+                       ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
+                       ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
+                       ('have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no', 'driving_license_file', ),
                        'phase2_start_date', 'phase2_end_date', 'phase2_submit_date'
                        ),
         }),
         ('Phase 2 Fields - Uploaded Documents', {
-            'classes': ('collapse',),
+            'classes': ('wide' 'collapse',),
             'fields': ('high_school_certificate',
                        'personal_picture',
                        'mother_gov_id_file',
@@ -121,7 +126,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
             'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason'),
 
         }),
-        ('Tarifi Fields', {
+        ('Awareness Week Fields', {
             'classes': ('collapse',),
             'fields': ('eligible_for_housing',
                        'tarifi_week_attendance_date', ),
@@ -142,6 +147,28 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
         formfield = super(StudentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name in['admission_note', 'admission_note2', 'admission_note3']:
             formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
+
+        if db_field.name == 'high_school_system':
+            formfield.widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
+
+        if db_field.name in ['have_a_vehicle', 'is_employed', 'is_disabled', 'is_diseased']:
+            formfield.widget = forms.RadioSelect(choices=YES_NO_CHOICES)
+
+        if db_field.name == 'guardian_relation':
+            formfield.widget = forms.Select(choices=Lookup.get_lookup_choices('PERSON_RELATION'))
+
+        if db_field.name == 'social_status':
+            formfield.widget = forms.RadioSelect(choices=Lookup.get_lookup_choices('SOCIAL_STATUS', False))
+
+        if db_field.name == 'disability_needs':
+            formfield.widget = forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('DISABILITY', False))
+
+        if db_field.name == 'chronic_diseases':
+            formfield.widget = forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False))
+
+        if db_field.name == 'blood_type':
+            formfield.widget = forms.Select(choices=Lookup.get_lookup_choices('BLOOD_TYPE', add_dashes=True))
+
         return formfield
 
     # Update selected students and sync them with Yesser
@@ -149,7 +176,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
         log = ''
         changed_students = 0
         for student in queryset:
-            result = get_student_record_serialized(student, False)
+            result = get_student_record_serialized(student, True)
             if result['changed']:
                 changed_students += 1
             if result['log']:
