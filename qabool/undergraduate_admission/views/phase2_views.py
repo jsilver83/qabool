@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
@@ -323,47 +324,52 @@ def upload_withdrawal_proof(request):
     return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
 
 
-@login_required()
-@user_passes_test(is_eligible_to_withdraw)
-def withdraw(request):
-    form = WithdrawalForm(request.POST or None, instance=request.user)
+class WithdrawView(LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin, UpdateView):
+    template_name = 'undergraduate_admission/phase2/withdraw.html'
+    form_class = WithdrawalForm
+    success_url = reverse_lazy('withdrawal_letter')
+    success_message = _('You have withdrawn from the university successfully...')
 
-    if request.method == "GET":
-        if request.user.get_student_phase() == 'WITHDRAWN':
-            return redirect("withdrawal_letter")
+    def test_func(self):
+        return is_eligible_to_withdraw(self.request.user)
 
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('You have withdrawn from the university successfully...'))
+    def get_object(self, queryset=None):
+        return self.request.user
 
-                SMS.send_sms_withdrawn(request.user.mobile)
+    def get(self, request, *args, **kwargs):
+        if request.method == "GET":
+            if request.user.get_student_phase() == 'WITHDRAWN':
+                return redirect("withdrawal_letter")
 
-                # added for housing module
-                roommate_requests = RoommateRequest.objects.filter(requesting_user=request.user,
-                                                                   status__in=[
-                                                                       RoommateRequest.RequestStatuses.PENDING,
-                                                                       RoommateRequest.RequestStatuses.ACCEPTED])
-                if roommate_requests.count():
-                    for roommate_request in roommate_requests:
-                        SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
-                    roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
+        return super(WithdrawView, self).get(request, *args, **kwargs)
 
-                roommate_requests = RoommateRequest.objects.filter(requested_user=request.user,
-                                                                   status__in=[
-                                                                       RoommateRequest.RequestStatuses.PENDING,
-                                                                       RoommateRequest.RequestStatuses.ACCEPTED])
-                if roommate_requests.count():
-                    for roommate_request in roommate_requests:
-                        SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
-                    roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
+    def form_valid(self, form):
+        saved = form.save(commit=False)
+        if saved:
+            SMS.send_sms_withdrawn(self.object.mobile)
 
-                return redirect('withdrawal_letter')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
+            # added for housing module
+            roommate_requests = RoommateRequest.objects.filter(requesting_user=self.object,
+                                                               status__in=[
+                                                                   RoommateRequest.RequestStatuses.PENDING,
+                                                                   RoommateRequest.RequestStatuses.ACCEPTED])
+            if roommate_requests.count() > 0:
+                for roommate_request in roommate_requests:
+                    SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
+                roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
 
-    return render(request, 'undergraduate_admission/phase2/withdraw.html', {'form': form, })
+            roommate_requests = RoommateRequest.objects.filter(requested_user=self.object,
+                                                               status__in=[
+                                                                   RoommateRequest.RequestStatuses.PENDING,
+                                                                   RoommateRequest.RequestStatuses.ACCEPTED])
+
+            print(roommate_requests.count())
+            if roommate_requests.count() > 0:
+                for roommate_request in roommate_requests:
+                    SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
+                roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
+
+        return super(WithdrawView, self).form_valid(form)
 
 
 @login_required()
