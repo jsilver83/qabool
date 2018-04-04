@@ -1,7 +1,7 @@
 import base64
-import floppyforms.__future__ as forms
 import re
-from django.core.validators import RegexValidator
+
+import floppyforms.__future__ as forms
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -31,11 +31,6 @@ class Phase2GenericForm(forms.ModelForm):
 
 
 class PersonalInfoForm(Phase2GenericForm):
-    YES_NO_CHOICES = (
-        ('True', _("Yes")),
-        ('No', _("No")),
-    )
-
     class Meta:
         model = User
 
@@ -45,7 +40,7 @@ class PersonalInfoForm(Phase2GenericForm):
                   'birthday_ah', 'birthday', 'birth_place',
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry', 'social_status',
-                  'is_employed', 'employer_name',  # 'employment',
+                  'is_employed', 'employer_name',
                   'blood_type',
                   'is_disabled', 'disability_needs', 'disability_needs_notes',
                   'is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ]
@@ -55,12 +50,6 @@ class PersonalInfoForm(Phase2GenericForm):
             'birthday_ah': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'government_id_expiry': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'passport_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
-            'social_status': forms.RadioSelect(choices=Lookup.get_lookup_choices('SOCIAL_STATUS', False)),
-            'employment': forms.RadioSelect(choices=Lookup.get_lookup_choices('EMPLOYMENT_STATUS', False)),
-            'disability_needs': forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('DISABILITY', False)),
-            'chronic_diseases': forms.CheckboxSelectMultiple(
-                choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False)),
-            'blood_type': forms.Select(choices=Lookup.get_lookup_choices('BLOOD_TYPE', add_dashes=True)),
             'is_employed': forms.RadioSelect(choices=YES_NO_CHOICES),
             'is_disabled': forms.RadioSelect(choices=YES_NO_CHOICES),
             'is_diseased': forms.RadioSelect(choices=YES_NO_CHOICES),
@@ -99,10 +88,25 @@ class PersonalInfoForm(Phase2GenericForm):
                              'disability_needs', 'chronic_diseases', 'chronic_diseases_notes', ]:
                 self.fields[field].required = True
                 self.fields[field].widget.attrs.update(
-                    {'required': ''}
+                    {'required': '', }
+                )
+
+            if field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                         'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+                         'high_school_name', 'high_school_province', 'high_school_city', ]:
+                self.fields[field].widget.attrs.update(
+                    {'class': 'updateOnce', }
                 )
 
         add_validators_to_arabic_and_english_names(self.fields)
+        self.fields['social_status'].widget = forms.RadioSelect(
+            choices=Lookup.get_lookup_choices('SOCIAL_STATUS', False))
+        self.fields['disability_needs'].widget = forms.CheckboxSelectMultiple(
+            choices=Lookup.get_lookup_choices('DISABILITY', False))
+        self.fields['chronic_diseases'].widget = forms.CheckboxSelectMultiple(
+            choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False))
+        self.fields['blood_type'].widget = forms.Select(
+            choices=Lookup.get_lookup_choices('BLOOD_TYPE', add_dashes=True))
 
 
 class GuardianContactForm(Phase2GenericForm):
@@ -114,16 +118,14 @@ class GuardianContactForm(Phase2GenericForm):
                   'guardian_email', 'guardian_po_box', 'guardian_postal_code', 'guardian_city', 'guardian_job',
                   'guardian_employer']
 
-        widgets = {
-            'guardian_relation': forms.Select(choices=Lookup.get_lookup_choices('PERSON_RELATION')),
-        }
-
     def __init__(self, *args, **kwargs):
         super(GuardianContactForm, self).__init__(*args, **kwargs)
 
         # make all fields required
         for field in self.fields:
             self.fields[field].required = True
+
+        self.fields['guardian_relation'].widget = forms.Select(choices=Lookup.get_lookup_choices('PERSON_RELATION'))
 
 
 class RelativeContactForm(Phase2GenericForm):
@@ -144,7 +146,8 @@ class RelativeContactForm(Phase2GenericForm):
 class VehicleInfoForm(Phase2GenericForm):
     class Meta:
         model = User
-        fields = ['have_a_vehicle', 'vehicle_plate_no', 'vehicle_registration_file', 'driving_license_file', ]
+        fields = ['have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                  'vehicle_registration_file', 'driving_license_file', ]
         widgets = {
             'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
         }
@@ -152,14 +155,21 @@ class VehicleInfoForm(Phase2GenericForm):
     def clean(self):
         cleaned_data = super(VehicleInfoForm, self).clean()
         have_a_vehicle = cleaned_data.get('have_a_vehicle')
+        vehicle_owner = cleaned_data.get('vehicle_owner')
         vehicle_plate_no = cleaned_data.get('vehicle_plate_no')
         vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
         driving_license_file = cleaned_data.get('driving_license_file')
 
-        if have_a_vehicle and not (vehicle_plate_no and vehicle_registration_file and driving_license_file):
+        if have_a_vehicle and not (vehicle_owner and vehicle_plate_no and vehicle_registration_file
+                                   and driving_license_file):
             raise forms.ValidationError(_('Vehicle info is required.'))
 
         return cleaned_data
+
+    def __init__(self, *args, **kwargs):
+        super(VehicleInfoForm, self).__init__(*args, **kwargs)
+        self.fields['vehicle_owner'].widget = \
+            forms.RadioSelect(choices=Lookup.get_lookup_choices('VEHICLE_OWNER', False))
 
 
 class DocumentsForm(Phase2GenericForm):
@@ -215,7 +225,7 @@ class WithdrawalForm(forms.ModelForm):
         fields = ['withdrawal_university', 'withdrawal_reason', ]
 
         widgets = {
-            'withdrawal_university': forms.Select(choices=Lookup.get_lookup_choices('UNIVERSITY')),
+            'withdrawal_reason': forms.Textarea,
         }
 
     def __init__(self, *args, **kwargs):
@@ -224,6 +234,8 @@ class WithdrawalForm(forms.ModelForm):
         # make all fields required
         for field in self.fields:
             self.fields[field].required = True
+
+        self.fields['withdrawal_university'].widget = forms.Select(choices=Lookup.get_lookup_choices('UNIVERSITY'))
 
     def save(self, commit=True):
         instance = super(WithdrawalForm, self).save(commit=False)
