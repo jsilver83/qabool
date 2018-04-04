@@ -52,7 +52,7 @@ class RoommateRequest(models.Model):
 
     requesting_user = models.ForeignKey(
         'undergraduate_admission.User',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='roommate_request_sent',
         null=True,
         blank=False,
@@ -90,7 +90,10 @@ class RoommateRequest(models.Model):
         return self.requested_user.kfupm_id
 
     def __str__(self):
-        return '%s & %s' % (self.requesting_user, self.requested_user)
+        if self.requesting_user and self.requested_user:
+            return '%s & %s' % (self.requesting_user, self.requested_user)
+        else:
+            return 'INVALID REQUEST'
 
 
 class Room(models.Model):
