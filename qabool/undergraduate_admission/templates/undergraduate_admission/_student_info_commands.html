@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n staticfiles %}
 
 <div class="panel panel-default">
 	<div class="panel-body">
@@ -6,7 +6,7 @@
 		{% if user.personal_picture %}
 		<img width="100%" src="{% url 'download_user_file' 'personal_picture' user.id %}">
 		{% else %}
-		<img width="100%" src="http://placehold.it/150x140">
+		<img width="100%" src="{% static 'images/placeholder.png' %}" />
 		{% endif %}
 		{% endif %}
 		<h4>{{ user }}</h4>
