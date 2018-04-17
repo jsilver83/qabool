@@ -237,11 +237,15 @@ def try_parse_float(str_to_float):
 # convert strings with non standard numerals to standard numerals while preserving initial zeroes
 # like ۰۰۰۱ or ٠٠٠١ or ໐໐໐໑ will be converted to 0001
 def parse_non_standard_numerals(str_numerals):
-    new_string = ''
-    for single_char in str_numerals:
-        new_string += str(try_parse_int(single_char))
+    # print(str_numerals)
+    if str_numerals:
+        new_string = ''
+        for single_char in str_numerals:
+            new_string += str(try_parse_int(single_char))
 
-    return new_string
+        return new_string
+    else:
+        return ''
 
 
 def merge_dicts(*dict_args):
