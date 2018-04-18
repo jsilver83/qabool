@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-04 17:31+0300\n"
-"PO-Revision-Date: 2018-04-04 17:35+0300\n"
+"PO-Revision-Date: 2018-04-18 16:35+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -792,7 +792,7 @@ msgstr "أعد إدخال البريد الإلكتروني السابق وذل�
 #: undergraduate_admission/forms/general_forms.py:39
 #: undergraduate_admission/forms/phase1_forms.py:101
 msgid "Mobile Confirmation"
-msgstr "تأكيد رقم الجوال"
+msgstr "تأكيد جوال الطالب"
 
 #: undergraduate_admission/forms/general_forms.py:42
 #: undergraduate_admission/forms/phase1_forms.py:104
@@ -965,7 +965,7 @@ msgstr "الدولة والمدينة، مثال: المملكة العربية 
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:25
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:26
 msgid "Mobile"
-msgstr "رقم الجوال"
+msgstr "جوال الطالب"
 
 #: undergraduate_admission/models.py:76
 msgid ""
