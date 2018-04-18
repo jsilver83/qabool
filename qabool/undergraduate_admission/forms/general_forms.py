@@ -157,7 +157,7 @@ class ForgotPasswordForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['govid', 'email', 'mobile', 'password1', 'password2']
+        fields = ['govid', 'mobile', 'password1', 'password2']
 
         help_texts = {
             'govid': _('National ID for Saudis, Iqama Number for non-Saudis.'),
@@ -166,10 +166,10 @@ class ForgotPasswordForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ForgotPasswordForm, self).__init__(*args, **kwargs)
 
-        self.fields['email'].required = False
-        self.fields['email'].widget.is_required = False
-        self.fields['mobile'].required = False
-        self.fields['mobile'].widget.is_required = False
+        # self.fields['email'].required = False
+        # self.fields['email'].widget.is_required = False
+        self.fields['mobile'].required = True
+        self.fields['mobile'].widget.is_required = True
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
@@ -193,13 +193,14 @@ class ForgotPasswordForm(forms.ModelForm):
     def save(self):
         username = self.cleaned_data.get("govid")
         password = self.cleaned_data.get("password1")
-        email = self.cleaned_data.get("email")
+        # email = self.cleaned_data.get("email")
         mobile = self.cleaned_data.get("mobile")
         # id2 = self.cleaned_data.get("id2")
 
         # match 2 out of three values supplied by user
         # try:
-        user = User.objects.get(username=username, email=email, mobile=mobile)
+        user = User.objects.get(username=username, mobile=mobile)
+        print(username)
         # except User.DoesNotExist:
         #     try:
         #         user = User.objects.get(username=username, email=email, id=id2)
