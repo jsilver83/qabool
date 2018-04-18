@@ -150,6 +150,9 @@ class RegistrationForm(UserCreationForm):
                 self.fields[field].required = True
                 self.fields[field].widget.attrs.update({'required': ''})
 
+            if field in ['username2', 'email2', 'mobile2']:
+                self.fields[field].widget.attrs.update({'class': 'nocopy'})
+
         add_validators_to_arabic_and_english_names(self.fields)
 
         self.fields['nationality'].widget.attrs['class'] = 'select2 form-control'
