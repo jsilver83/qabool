@@ -20,6 +20,9 @@ $(function () {
         e.preventDefault(); //disable cut,copy,paste
         //alert('cut,copy & paste options are disabled !!');
     });
+
+    $('#id_gender').hide();
+    $('.field-gender .help-block').attr('style', 'color:red');
 });
 
 function sm(nat) {

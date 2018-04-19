@@ -37,6 +37,7 @@ api_security_token: aA6sFghhJ46tYu09iL0o
 qabool_media_files_remote_path: 196.15.32.133:/vol/volf2/qabool_test
 
 yesser_qiyas_wsdl: http://10.140.8.226/GSBExpress/Education/QiyasExamResult/3.3/ExamResultService.svc?wsdl
-yesser_moe_wsdl: http://10.140.8.226/GSBExpress/Education/MOEStudentRecord/2.0/StudentRecordService.svc?wsdl
+yesser_moe_wsdl: http://10.140.8.226/GSBExpress/Education/MOEStudentRecord/3.0/SchoolStudentRecordService.svc?wsdl
+yesser_mohe_wsdl: http://10.140.8.226/GSBExpress/Education/MOHEStudentAdmission/MOHEStudentAdmission.svc?wsdl
 yesser_sms_wsdl: http://10.140.8.226/GSBExpress/Other/GSBNotification/3.0/NotificationService.svc?wsdl
 

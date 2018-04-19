@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 from django.utils.translation import ugettext_lazy as _
 from django.core.cache import cache
 
@@ -29,14 +31,15 @@ def initial_agreement(request):
     agreement_items = agreement.items.filter(show=True)
     return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement,
                                                                       'items': agreement_items,
-                                                                      'form': form,})
+                                                                      'form': form, })
+
 
 class RegisterView(CreateView):
     model = User
     context_object_name = "user"
     template_name = 'undergraduate_admission/register.html'
-    # success_url = reverse_lazy("login")
     form_class = RegistrationForm
+    success_url = reverse_lazy('registration_success')
 
     # changed from "dispatch" to "get" so that it will check only when the user loads the form not when he submits
     def get(self, request, *args, **kwargs):
@@ -61,8 +64,14 @@ class RegisterView(CreateView):
             user = User.objects.create_user(form.cleaned_data['username'],
                                             form.cleaned_data['email'],
                                             form.cleaned_data['password1'],
-                                            student_full_name_ar=form.cleaned_data['student_full_name_ar'],
-                                            student_full_name_en=form.cleaned_data['student_full_name_en'],
+                                            first_name_ar=form.cleaned_data.get('first_name_ar'),
+                                            second_name_ar=form.cleaned_data.get('second_name_ar'),
+                                            third_name_ar=form.cleaned_data.get('third_name_ar'),
+                                            family_name_ar=form.cleaned_data.get('family_name_ar'),
+                                            first_name_en=form.cleaned_data.get('first_name_en'),
+                                            second_name_en=form.cleaned_data.get('second_name_en'),
+                                            third_name_en=form.cleaned_data.get('third_name_en'),
+                                            family_name_en=form.cleaned_data.get('family_name_en'),
                                             high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
                                             status_message=old_high_school_reg_msg,
                                             semester=semester,
@@ -82,8 +91,14 @@ class RegisterView(CreateView):
             user = User.objects.create_user(form.cleaned_data['username'],
                                             form.cleaned_data['email'],
                                             form.cleaned_data['password1'],
-                                            student_full_name_ar=form.cleaned_data['student_full_name_ar'],
-                                            student_full_name_en=form.cleaned_data['student_full_name_en'],
+                                            first_name_ar=form.cleaned_data.get('first_name_ar'),
+                                            second_name_ar=form.cleaned_data.get('second_name_ar'),
+                                            third_name_ar=form.cleaned_data.get('third_name_ar'),
+                                            family_name_ar=form.cleaned_data.get('family_name_ar'),
+                                            first_name_en=form.cleaned_data.get('first_name_en'),
+                                            second_name_en=form.cleaned_data.get('second_name_en'),
+                                            third_name_en=form.cleaned_data.get('third_name_en'),
+                                            family_name_en=form.cleaned_data.get('family_name_en'),
                                             high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
                                             status_message=non_saudi_reg_msg,
                                             semester=semester,
@@ -103,8 +118,14 @@ class RegisterView(CreateView):
             user = User.objects.create_user(form.cleaned_data['username'],
                                             form.cleaned_data['email'],
                                             form.cleaned_data['password1'],
-                                            student_full_name_ar=form.cleaned_data['student_full_name_ar'],
-                                            student_full_name_en=form.cleaned_data['student_full_name_en'],
+                                            first_name_ar=form.cleaned_data.get('first_name_ar'),
+                                            second_name_ar=form.cleaned_data.get('second_name_ar'),
+                                            third_name_ar=form.cleaned_data.get('third_name_ar'),
+                                            family_name_ar=form.cleaned_data.get('family_name_ar'),
+                                            first_name_en=form.cleaned_data.get('first_name_en'),
+                                            second_name_en=form.cleaned_data.get('second_name_en'),
+                                            third_name_en=form.cleaned_data.get('third_name_en'),
+                                            family_name_en=form.cleaned_data.get('family_name_en'),
                                             high_school_graduation_year=form.cleaned_data['high_school_graduation_year'],
                                             status_message=reg_msg,
                                             semester=semester,
@@ -124,30 +145,35 @@ class RegisterView(CreateView):
         Email.send_email_registration_success(user)
 
         self.request.session['user'] = user.id
-        success_url = reverse('registration_success')
-        return redirect(success_url)
+
+        return redirect(self.success_url)
 
 
-def registration_success(request):
-    user_id = request.session.get('user')
-    if user_id is not None:
-        user = get_object_or_404(User, pk=user_id)
-        return render(request, 'undergraduate_admission/registration_success.html', context={'user': user})
-    else:
-        return redirect('register')
+class RegistrationSuccess(TemplateView):
+    template_name = 'undergraduate_admission/registration_success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationSuccess, self).get_context_data(**kwargs)
+        user_id = self.request.session.get('user')
+        if user_id is not None:
+            context['user'] = get_object_or_404(User, pk=user_id)
+        else:
+            return redirect('register')
+
+        return context
 
 
-@login_required()
-def edit_info(request):
-    form = Phase1UserEditForm(request.POST or None, instance=request.user, request=request)
+class EditInfo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'undergraduate_admission/edit_info.html'
+    form_class = Phase1UserEditForm
+    success_message = _('Info was updated successfully...')
+    success_url = reverse_lazy('student_area')
 
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Info was updated successfully...'))
-                return redirect('student_area')
-            else:
-                messages.error(request, _('Error updating info. Try again later!'))
+    def get_object(self, queryset=None):
+        return self.request.user
 
-    return render(request, 'undergraduate_admission/edit_info.html', context={'form': form})
+    def get_form_kwargs(self):
+        kwargs = super(EditInfo, self).get_form_kwargs()
+        kwargs['request'] = self.request
+
+        return kwargs

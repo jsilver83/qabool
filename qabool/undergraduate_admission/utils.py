@@ -3,6 +3,7 @@ import os
 import random
 import requests
 from django import forms
+from django.core.validators import RegexValidator
 from django.utils.safestring import mark_safe
 
 from django.core.mail import send_mail
@@ -24,19 +25,20 @@ class Email(object):
             _('Dear %(student_name)s,<br>Your request has been successfully submitted and the Admission results '
               'will be announced on Thursday July 6, 2017 ... <br>'
               '<h4>Registration Details</h4><hr>'
-              'Registration ID: %(user_id)s<br>'
+              # 'Registration ID: %(user_id)s<br>'
+              'Name: %(student_name)s<br>'
               'Mobile: %(mobile)s<br>'
               'Registration Date: %(reg_date)s<br><hr><br>'
+              'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . <br><hr><br>'
               'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
               '<hr><br>'
-              'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . '
               '<br><br> Admissions Office, <br>King Fahd '
               'University of Petroleum and Minerals'),
         'registration_success_old_high_school': _('Dear %(student_name)s,<br>We regret to inform you that your '
                                                   'application has been rejected because your old high school '
                                                   'certificate. '
                                                   '<h4>Registration Details</h4><hr>'
-                                                  'Registration ID: %(user_id)s<br>'
+                                                  # 'Registration ID: %(user_id)s<br>'
                                                   'Mobile: %(mobile)s<br>'
                                                   'Registration Date: %(reg_date)s<br><hr><br>'
                                                   'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
@@ -64,10 +66,11 @@ class Email(object):
             a_items += '<li>%s</li>' % (a_item)
 
         html_message = Email.email_messages['registration_success'] % (
-            {'student_name': user.first_name,
+            {'student_name': user.get_student_full_name(),
+             # 'student_name': user.first_name,
              'user_id': user.id,
              'mobile': user.mobile,
-             'reg_date': timezone.now().strftime('%x'),
+             'reg_date': timezone.datetime.now().strftime('%x'),
              'agree_header': agreement.agreement_header,
              'agree_items': a_items,
              })
@@ -233,6 +236,20 @@ def try_parse_float(str_to_float):
         return 0.0
 
 
+# convert strings with non standard numerals to standard numerals while preserving initial zeroes
+# like ۰۰۰۱ or ٠٠٠١ or ໐໐໐໑ will be converted to 0001
+def parse_non_standard_numerals(str_numerals):
+    # print(str_numerals)
+    if str_numerals:
+        new_string = ''
+        for single_char in str_numerals:
+            new_string += str(try_parse_int(single_char))
+
+        return new_string
+    else:
+        return ''
+
+
 def merge_dicts(*dict_args):
     """
     Given any number of dicts, shallow copy and merge into a new dict,
@@ -264,3 +281,20 @@ def format_date(date_time):
 
 def format_time(date_time):
     return timezone.localtime(date_time).strftime('%I:%M %p')
+
+
+def add_validators_to_arabic_and_english_names(fields):
+        for field in fields:
+            if field in ['first_name_en', 'second_name_en', 'third_name_en', 'family_name_en']:
+                fields[field].validators = [
+                    RegexValidator(
+                        '^[A-Za-z.\- ]+$',
+                        message=_("Use English alphabet only! You can also use the dot, hyphen and spaces")
+                    ), ]
+
+            if field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar']:
+                fields[field].validators = [
+                    RegexValidator(
+                        '^[\u0600-\u06FF ]+$',
+                        message=_("Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)")
+                    ), ]

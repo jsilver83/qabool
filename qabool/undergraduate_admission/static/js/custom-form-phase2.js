@@ -113,11 +113,15 @@ function diseases(value){
 
 function have_a_vehicle(value){
     if(value == "True"){
+        $(".field-vehicle_owner").parents(".form-group").show();
         $(".field-vehicle_plate_no").parents(".form-group").show();
         $(".field-vehicle_registration_file").parents(".form-group").show();
         $(".field-driving_license_file").parents(".form-group").show();
     }
     else{
+        $("#id_vehicle_owner").val("");
+        $(".field-vehicle_owner").parents(".form-group").hide();
+        $("#id_vehicle_plate_no").val("");
         $(".field-vehicle_plate_no").parents(".form-group").hide();
         $(".field-vehicle_registration_file").parents(".form-group").hide();
         $(".field-driving_license_file").parents(".form-group").hide();
