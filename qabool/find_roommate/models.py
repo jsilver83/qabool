@@ -52,7 +52,7 @@ class RoommateRequest(models.Model):
 
     requesting_user = models.ForeignKey(
         'undergraduate_admission.User',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='roommate_request_sent',
         null=True,
         blank=False,
@@ -90,7 +90,10 @@ class RoommateRequest(models.Model):
         return self.requested_user.kfupm_id
 
     def __str__(self):
-        return '%s & %s' % (self.requesting_user, self.requested_user)
+        if self.requesting_user and self.requested_user:
+            return '%s & %s' % (self.requesting_user, self.requested_user)
+        else:
+            return 'INVALID REQUEST'
 
 
 class Room(models.Model):
@@ -112,9 +115,12 @@ class Room(models.Model):
     def get_next_available_room():
         return Room.objects.filter(available=True). \
             exclude(pk__in=RoommateRequest.objects.filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
+                    .exclude(assigned_room__isnull=True)
                     .values_list('assigned_room', flat=True)).order_by('?').first()
 
     @staticmethod
     def get_assigned_room(user):
-        return RoommateRequest.objects.filter(Q(requesting_user=user) | Q(requested_user=user),
-                                              status=RoommateRequest.RequestStatuses.ACCEPTED).first().assigned_room
+        request = RoommateRequest.objects.filter(Q(requesting_user=user) | Q(requested_user=user),
+                                                 status=RoommateRequest.RequestStatuses.ACCEPTED).first()
+        if request:
+            return request.assigned_room

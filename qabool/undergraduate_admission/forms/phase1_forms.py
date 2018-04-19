@@ -1,3 +1,5 @@
+import re
+
 from captcha.fields import CaptchaField
 # from captcha.fields import ReCaptchaFieldfrom django.utils import translation
 
@@ -9,7 +11,7 @@ from django.core.validators import RegexValidator
 from qabool import settings
 from undergraduate_admission.forms.general_forms import BaseContactForm
 from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup, Nationality, GraduationYear
-from undergraduate_admission.utils import try_parse_int
+from undergraduate_admission.utils import parse_non_standard_numerals, add_validators_to_arabic_and_english_names
 
 
 class BaseAgreementForm(forms.Form):
@@ -38,31 +40,22 @@ class AgreementForm(BaseAgreementForm):
 
 class Phase1UserEditForm(BaseContactForm):
     class Meta(BaseContactForm.Meta):
-        fields = ['student_full_name_ar', 'student_full_name_en', 'mobile', 'mobile2',
-                  'email', 'email2', 'high_school_system',
+        fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+                  'mobile', 'mobile2', 'email', 'email2', 'high_school_system',
                   'high_school_gpa_student_entry', 'student_notes']
-
-        SAUDI_MOTHER_CHOICES = (
-            ('', "---"),
-            (True, _("Yes")),
-            (False, _("No")),
-        )
-
-        widgets = {
-            'student_full_name_ar': forms.TextInput(attrs={'required': ''}),
-            'student_full_name_en': forms.TextInput(attrs={'required': ''}),
-            'mobile': forms.TextInput(attrs={'required': ''}),
-            'high_school_gpa_student_entry': forms.TextInput(attrs={'required': ''}),
-            'high_school_system': forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE')),
-        }
 
     def __init__(self, *args, **kwargs):
         super(Phase1UserEditForm, self).__init__(*args, **kwargs)
-        self.fields['student_full_name_ar'].required = True
-        self.fields['student_full_name_en'].required = True
-        self.fields['mobile'].required = True
-        self.fields['high_school_gpa_student_entry'].required = True
-        self.fields['high_school_system'].required = True
+
+        for field in self.fields:
+            if field not in ['student_notes', 'third_name_ar', 'second_name_en', 'third_name_en']:
+                self.fields[field].required = True
+                self.fields[field].widget.attrs.update({'required': ''})
+
+        add_validators_to_arabic_and_english_names(self.fields)
+
+        self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
 
 
 class RegistrationForm(UserCreationForm):
@@ -91,21 +84,15 @@ class RegistrationForm(UserCreationForm):
     )
     username = forms.CharField(
         label=_('Government ID'),
-        max_length=12,
-        min_length=9,
+        max_length=13,
+        # min_length=7,
         help_text=_(
             'National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx.'),
-        validators=[
-            RegexValidator(
-                '^\d{9,11}$',
-                message=UserCreationForm.error_messages['govid_invalid']
-            ),
-        ]
     )
     username2 = forms.CharField(
         label=_('Government ID Confirmation'),
-        max_length=11,
-        min_length=9,
+        max_length=13,
+        # min_length=7,
         required=True,
         help_text=_('Enter the same government ID as before, for verification'),
         widget=forms.TextInput(attrs={'class': 'nocopy'})
@@ -133,9 +120,11 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['student_full_name_ar', 'student_full_name_en', 'gender', 'username', 'username2', 'mobile',
-                  'mobile2',
-                  'nationality', 'saudi_mother', 'saudi_mother_gov_id',
+        fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+                  'gender',
+                  'nationality', 'username', 'username2', 'mobile', 'mobile2',
+                  'saudi_mother', 'saudi_mother_gov_id',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
                   'high_school_gpa_student_entry',
                   'password1', 'password2', 'student_notes']
@@ -147,50 +136,37 @@ class RegistrationForm(UserCreationForm):
         )
 
         widgets = {
-            # workaround since __init__ setting to required doesnt work
-            'email': forms.TextInput(attrs={'required': ''}),
-            'student_full_name_ar': forms.TextInput(attrs={'required': ''}),
-            'student_full_name_en': forms.TextInput(attrs={'required': ''}),
-            'high_school_graduation_year': forms.Select(attrs={'required': ''}),
-            'nationality': forms.Select(attrs={
-                'required': '',
-                'class': 'select2', }),
-            'mobile': forms.TextInput(attrs={'required': '',
-                                             'placeholder': '9665xxxxxxxx',
-                                             }),
-            'guardian_mobile': forms.TextInput(attrs={'required': '',
-                                                      'placeholder': '9665xxxxxxxx',
-                                                      }),
             'saudi_mother': forms.Select(choices=SAUDI_MOTHER_CHOICES),
-            'saudi_mother_gov_id': forms.TextInput,
         }
-        # help_texts = {
-        #     'username': _('National ID for Saudis, Iqama Number for non-Saudis.'),
-        # }
-        # initial = {'username': _('Government ID')}
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['email'].required = True
-        self.fields['student_full_name_ar'].required = True
-        self.fields['student_full_name_en'].required = True
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+            if field not in ['student_notes', 'third_name_ar', 'second_name_en', 'third_name_en',
+                             'gender', 'saudi_mother_gov_id']:
+                self.fields[field].required = True
+                self.fields[field].widget.attrs.update({'required': ''})
+
+            if field in ['username2', 'email2', 'mobile2']:
+                self.fields[field].widget.attrs.update({'class': 'nocopy'})
+
+        add_validators_to_arabic_and_english_names(self.fields)
+
+        self.fields['nationality'].widget.attrs['class'] = 'select2 form-control'
+        self.fields['mobile'].widget.attrs['placeholder'] = '9665xxxxxxxx'
+
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
-        self.fields['high_school_system'].required = True
         self.fields['saudi_mother_gov_id'].validators = [
             RegexValidator(
                 '^\d{9,11}$',
                 message=UserCreationForm.error_messages['govid_invalid']
             )]
-        try:  # to make this form reusable for edit info
 
-            self.fields['high_school_gpa_student_entry'].required = True
-            self.fields['guardian_mobile'].required = True
-            self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
-            self.fields['password2'].help_text = _('Enter the same password as before, for verification')
-            self.fields['password1'].widget = forms.PasswordInput(attrs={'required': ''})
-            self.fields['password2'].widget = forms.PasswordInput(attrs={'required': ''})
-        except:
-            pass
+        self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
+        self.fields['password2'].help_text = _('Enter the same password as before, for verification')
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
@@ -198,22 +174,35 @@ class RegistrationForm(UserCreationForm):
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
-        username1 = try_parse_int(cleaned_data.get("username"))
+        username1 = parse_non_standard_numerals(cleaned_data.get("username"))
         denial = DeniedStudent.check_if_student_is_denied(username1)
 
         if denial:
             raise forms.ValidationError(
                 self.error_messages['govid_denied'] + denial,
                 code='govid_denied',
-            )
+                )
+
+        is_saudi = 'Saudi' in cleaned_data.get('nationality').nationality_en
+
+        if is_saudi:
+            match = re.match(r'^\d{9,11}$', str(username1))
+        else:
+            match = re.match(r'^\d{7,13}$', str(username1))
+
+        if not match:
+            raise forms.ValidationError(
+                UserCreationForm.error_messages['govid_invalid'],
+                code='govid_invalid',
+                )
 
     def clean_username(self):
-        username = try_parse_int(self.cleaned_data.get("username"))
+        username = parse_non_standard_numerals(self.cleaned_data.get("username"))
         return username
 
     def clean_username2(self):
-        username1 = try_parse_int(self.cleaned_data.get("username"))
-        username2 = try_parse_int(self.cleaned_data.get("username2"))
+        username1 = parse_non_standard_numerals(self.cleaned_data.get("username"))
+        username2 = parse_non_standard_numerals(self.cleaned_data.get("username2"))
         if username1 and username2 and username1 != username2:
             raise forms.ValidationError(
                 self.error_messages['govid_mismatch'],
@@ -243,7 +232,7 @@ class RegistrationForm(UserCreationForm):
         return email2
 
     def clean_mobile(self):
-        mobile = try_parse_int(self.cleaned_data.get("mobile"))
+        mobile = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
         found = User.objects.filter(mobile=mobile, semester=semester)
         if mobile and found:
@@ -254,8 +243,8 @@ class RegistrationForm(UserCreationForm):
         return mobile
 
     def clean_mobile2(self):
-        mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
-        mobile2 = try_parse_int(self.cleaned_data.get("mobile2"))
+        mobile1 = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
+        mobile2 = parse_non_standard_numerals(self.cleaned_data.get("mobile2"))
         if mobile1 and mobile2 and mobile1 != mobile2:
             raise forms.ValidationError(
                 self.error_messages['mobile_mismatch'],
@@ -264,8 +253,8 @@ class RegistrationForm(UserCreationForm):
         return mobile2
 
     def clean_guardian_mobile(self):
-        mobile1 = try_parse_int(self.cleaned_data.get("mobile"))
-        mobile2 = try_parse_int(self.cleaned_data.get("guardian_mobile"))
+        mobile1 = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
+        mobile2 = parse_non_standard_numerals(self.cleaned_data.get("guardian_mobile"))
         if mobile1 and mobile2 and mobile1 == mobile2:
             raise forms.ValidationError(
                 self.error_messages['guardian_mobile_match'],
@@ -278,29 +267,10 @@ class RegistrationForm(UserCreationForm):
         saudi_mother_gov_id = self.cleaned_data.get("saudi_mother_gov_id")
         if saudi_mother:
             if saudi_mother_gov_id:
-                saudi_mother_gov_id = try_parse_int(saudi_mother_gov_id)
+                saudi_mother_gov_id = parse_non_standard_numerals(saudi_mother_gov_id)
             else:
                 raise forms.ValidationError(
                     self.error_messages['no_saudi_mother_gov_id'],
                     code='no_saudi_mother_gov_id',
                 )
         return saudi_mother_gov_id
-
-
-class EditInfoForm(RegistrationForm):
-    class Meta:
-        model = User
-        fields = ['student_full_name_ar', 'student_full_name_en', 'mobile', 'mobile2',
-                  'email', 'email2', 'student_notes']
-
-        # def __init__(self, *args, **kwargs):
-        #     super(EditInfoForm, self).__init__(*args, **kwargs)
-        # self.fields['email'].required = True
-        # self.fields['first_name'].required = True
-        # self.fields['last_name'].required = True
-        # self.fields['high_school_system'].widget = forms.Select(choices= Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
-        # self.fields['high_school_system'].required = True
-
-        # if not settings.DISABLE_CAPTCHA:
-        #     # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
-        #     self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))

@@ -81,6 +81,24 @@
 					{% endif %}
 				</div>
 			</div>
+			<hr>
+			<div class="row">
+				<div class="col-sm-6">
+					{% formrow form.have_a_vehicle using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
+					{% formrow form.vehicle_owner using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
+					{% formrow form.vehicle_plate_no using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
+				</div>
+				<div class="col-sm-6">
+					<a href="{% url 'download_user_file_admin' 'vehicle_registration_file' form.instance.pk %}" target="_blank">
+						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'vehicle_registration_file' form.instance.pk %}"/></a><br>
+					{% if form.instance.courses_certificate %}
+						<br>
+						<a href="{% url 'download_user_file_admin' 'driving_license_file' form.instance.pk %}" target="_blank">
+							<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'driving_license_file' form.instance.pk %}"/>
+						</a>
+					{% endif %}
+				</div>
+			</div>
 			{% if form.instance.student_type == 'M' or form.instance.student_type == 'N' %}
 				<hr>
 				<div class="row">
