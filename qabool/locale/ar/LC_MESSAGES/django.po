@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-04 17:31+0300\n"
-"PO-Revision-Date: 2018-04-19 14:03+0300\n"
+"POT-Creation-Date: 2018-04-19 14:36+0300\n"
+"PO-Revision-Date: 2018-04-19 14:52+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -804,7 +804,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:120
 #: undergraduate_admission/forms/general_forms.py:176
-#: undergraduate_admission/forms/phase1_forms.py:170
+#: undergraduate_admission/forms/phase1_forms.py:173
 msgid "Confirmation Code"
 msgstr "رمز التحقق"
 
@@ -817,7 +817,7 @@ msgid "New Password"
 msgstr "كلمة السر الجديدة"
 
 #: undergraduate_admission/forms/general_forms.py:146
-#: undergraduate_admission/forms/phase1_forms.py:165
+#: undergraduate_admission/forms/phase1_forms.py:168
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
 
@@ -826,7 +826,7 @@ msgid "New Password confirmation"
 msgstr "تأكيد كلمة السر الجديدة"
 
 #: undergraduate_admission/forms/general_forms.py:154
-#: undergraduate_admission/forms/phase1_forms.py:166
+#: undergraduate_admission/forms/phase1_forms.py:169
 msgid "Enter the same password as before, for verification"
 msgstr "أعد إدخال كلمة السر السابقة وذلك للتحقق"
 
@@ -2157,7 +2157,7 @@ msgstr ""
 "\t\t\t\t<li>رفع الصور عبر الماسح الضوئي بشكل واضح وبدقة عالية</li>\n"
 "\t\t\t\t<li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
 "\t\t\t\t<li>الصور الملتقطة عن طريق الجوال غير مقبولة.</li>\n"
-"\t\t\t\t<li>أقصى حجم للملف: 2 ميغابايت.</li>\n"
+"\t\t\t\t<li>يجب أن لا يزيد كل ملف عن 2 ميغابايت.</li>\n"
 "\t\t\t</ul>\n"
 "\t\t"
 
@@ -2427,41 +2427,40 @@ msgstr "طبـــــاعة<br>خطاب القبول"
 msgid ""
 "Dear %(student_name)s,<br>Your request has been successfully submitted and "
 "the Admission results will be announced on Thursday July 6, 2017 ... "
-"<br><h4>Registration Details</h4><hr>Registration ID: %(user_id)s<br>Mobile: "
-"%(mobile)s<br>Registration Date: %(reg_date)s<br><hr><br>You agreed to the "
-"following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br>We "
-"appreciate your feedback: <a href=\"http://goo.gl/erw8HQ\">http://goo.gl/"
-"erw8HQ</a> . <br><br> Admissions Office, <br>King Fahd University of "
-"Petroleum and Minerals"
+"<br><h4>Registration Details</h4><hr>Name: %(student_name)s<br>Mobile: "
+"%(mobile)s<br>Registration Date: %(reg_date)s<br><hr><br>We appreciate your "
+"feedback: <a href=\"http://goo.gl/erw8HQ\">http://goo.gl/erw8HQ</a> . "
+"<br><hr><br>You agreed to the following:<br>%(agree_header)s<br><br><ul>"
+"%(agree_items)s</ul><hr><br><br><br> Admissions Office, <br>King Fahd "
+"University of Petroleum and Minerals"
 msgstr ""
 "<div style=\"direction:rtl\">عزيزي الطالب %(student_name)s,<br>تم استلام طلبك "
-"بنجاح وسيتم إعلان النتائج يوم الخميس ( 1 ظهراً ) 12 شوال 1438ه حسب تقويم أم "
-"القرى  ... <br><h4>تفاصيل الطلب</h4><hr>رقم التسجيل: %(user_id)s<br>رقم "
-"الجوال: %(mobile)s<br>تاريخ التسجيل: %(reg_date)s<br><hr><br>الشروط و اﻷحكام:"
-"<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br>فضلا شارك معنا في "
+"بنسيتم إعلان النتائج يوم الخميس ( 1 ظهراً ) 12 شوال 1438ه حسب تقويم أم "
+"القرى  ... <br><h4>تفاصيل الطلب</h4><hr>اسم الطالب: %(student_name)s<br>رقم "
+"الجوال: %(mobile)s<br>تاريخ التسجيل: %(reg_date)s<br> فضلا شارك معنا في "
 "اﻻستبيان: <a href=\"http://goo.gl/erw8HQ\">http://goo.gl/erw8HQ</a> . "
-"<br><br> إدارة القبول، <br>جامعة الملك فهد للبترول والمعادن.</div>"
+"<br><hr><br>الشروط و اﻷحكام:<br>%(agree_header)s<br><br><ul>%(agree_items)s</"
+"ul><hr><br><br> إدارة القبول، <br>جامعة الملك فهد للبترول والمعادن.</div>"
 
-#: undergraduate_admission/utils.py:36
+#: undergraduate_admission/utils.py:37
 #, python-format
 msgid ""
 "Dear %(student_name)s,<br>We regret to inform you that your application has "
 "been rejected because your old high school certificate. <h4>Registration "
-"Details</h4><hr>Registration ID: %(user_id)s<br>Mobile: "
-"%(mobile)s<br>Registration Date: %(reg_date)s<br><hr><br>You agreed to the "
-"following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</"
-"ul><hr><br><br><br> Admissions Office, <br>King Fahd University of Petroleum "
-"and Minerals"
+"Details</h4><hr>Mobile: %(mobile)s<br>Registration Date: "
+"%(reg_date)s<br><hr><br>You agreed to the following:<br>"
+"%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br><br><br> Admissions "
+"Office, <br>King Fahd University of Petroleum and Minerals"
 msgstr ""
 "<div style=\"direction:rtl\">عزيزي الطالب %(student_name)s,<br>نشعرك بأنه قد "
 "تم رفض طلبك ﻷن شهادة الثانوية أقدم من عامين... <br><h4>تفاصيل الطلب</"
-"h4><hr>رقم التسجيل: %(user_id)s<br>رقم الجوال: %(mobile)s<br>تاريخ التسجيل: "
-"%(reg_date)s<br><hr><br>الشروط و اﻷحكام:<br>%(agree_header)s<br><br><ul>"
-"%(agree_items)s</ul><hr><br>فضلا شارك معنا في اﻻستبيان: <a href=\"http://goo."
-"gl/erw8HQ\">http://goo.gl/erw8HQ</a> . <br><br> إدارة القبول، <br>جامعة الملك "
-"فهد للبترول والمعادن.</div>"
+"h4><hr>اسم الطالب: %(student_name)s<br>رقم الجوال: %(mobile)s<br>تاريخ "
+"التسجيل: %(reg_date)s<br><hr><br>فضلا شارك معنا في اﻻستبيان: <a href=\"http://"
+"goo.gl/erw8HQ\">http://goo.gl/erw8HQ</a> .  <hr><br> الشروط و اﻷحكام:<br>"
+"%(agree_header)s<br><br><ul>%(agree_items)s</ul><hr><br><br> إدارة القبول، "
+"<br>جامعة الملك فهد للبترول والمعادن.</div>"
 
-#: undergraduate_admission/utils.py:49
+#: undergraduate_admission/utils.py:50
 msgid ""
 "Dear Student, You have been admitted successfully and you have to attend the "
 "orientationweek as specified in the admission letter"
@@ -2472,7 +2471,7 @@ msgstr ""
 "وصورة الهوية الوطنية وصورة شهادة الثانوية وصورتين شخصية حديثة ملونة وبالزي "
 "السعودي."
 
-#: undergraduate_admission/utils.py:53
+#: undergraduate_admission/utils.py:54
 msgid ""
 "Dear Student, Your application has been withdrawn as per your request. We "
 "wish you luck in your future..."
@@ -2480,17 +2479,17 @@ msgstr ""
 "عزيز الطالب، لقد تم الغاء قبولك في جامعة الملك فهد للبترول والمعادن بناء على "
 "طلبك، نتمنى لك التوفيق والنجاح في مكان آخر."
 
-#: undergraduate_admission/utils.py:85
+#: undergraduate_admission/utils.py:87
 msgid "KFUPM Admission"
 msgstr "إدارة القبول بجامعة الملك فهد للبترول والمعادن"
 
-#: undergraduate_admission/utils.py:94
+#: undergraduate_admission/utils.py:96
 msgid "Your request was submitted. Share feedback http://goo.gl/erw8HQ, KFUPM"
 msgstr ""
 "تم استلام طلبك. رأيك يهمنا http://goo.gl/erw8HQ \n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:95
+#: undergraduate_admission/utils.py:97
 msgid ""
 "Application was rejected because of old HS certificate. Share feedback: "
 "http://goo.gl/erw8HQ.KFUPM"
@@ -2499,78 +2498,78 @@ msgstr ""
 "erw8HQ \n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:99
+#: undergraduate_admission/utils.py:101
 msgid "Congrats, you have been admitted into KFUPM. Check our website"
 msgstr "نهنئك بقبولك في جامعة الملك فهد للبترول والمعادن، راجع الموقع"
 
-#: undergraduate_admission/utils.py:100
+#: undergraduate_admission/utils.py:102
 msgid "Your admission result is out. Check our website. KFUPM"
 msgstr ""
 "ظهرت نتيجة قبولك، راجع الموقع\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:101
+#: undergraduate_admission/utils.py:103
 msgid "Documents were submitted and being checked. Check website later. KFUPM"
 msgstr ""
 "تم استلام مستنداتك وجاري التحقق منها، راجع الموقع\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:102
+#: undergraduate_admission/utils.py:104
 msgid "You have issues in documents. Check website to fix them. KFUPM"
 msgstr ""
 "لديك مشكلة بمستنداتك، راجع الموقع لإعادة رفعها\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:104
+#: undergraduate_admission/utils.py:106
 msgid ""
 "Your admission is confirmed. Check website to print admission letter. KFUPM"
 msgstr ""
 "تم تأكيد قبولك، راجع الموقع لطباعة خطاب القبول\n"
 "جامعة الملك فهد"
 
-#: undergraduate_admission/utils.py:106
+#: undergraduate_admission/utils.py:108
 msgid "Your admission was withdrawn as per your request. Good luck. KFUPM"
 msgstr "لقد تم إلغاء قبولك في جامعة الملك فهد بناء على طلبك. بالتوفيق"
 
-#: undergraduate_admission/utils.py:108
+#: undergraduate_admission/utils.py:110
 msgid "You received a roommate request. Login to our site to accept"
 msgstr ""
 " لديك طلب للسكن من أحد زملائك، بادر بالدخول على الموقع للرد وإنهاء الاجراءات"
 
-#: undergraduate_admission/utils.py:110
+#: undergraduate_admission/utils.py:112
 msgid "Your roommate request was accepted. Login to our site to print docs"
 msgstr ""
 " تم قبول طلبك من زميل السكن، بادر بالدخول إلى الموقع لإنهاء إجراءات السكن"
 
-#: undergraduate_admission/utils.py:112
+#: undergraduate_admission/utils.py:114
 msgid ""
 "Your roommate request was rejected. Login to our site to send another one"
 msgstr ""
 " تم إلغاء طلبك في السكن بسبب اعتذار زميلك، وينبغي عليك البحث عن زميل آخر"
 
-#: undergraduate_admission/utils.py:114
+#: undergraduate_admission/utils.py:116
 msgid ""
 "Your roommate has withdrawn. Login to our site to search for another roommate"
 msgstr ""
 " تم إلغاء طلبك في السكن بسبب انسحاب زميلك، وينبغي عليك البحث عن زميل آخر"
 
-#: undergraduate_admission/utils.py:116
+#: undergraduate_admission/utils.py:118
 msgid "Remaining rooms is 100"
 msgstr " رصيد الغرف المتبقي 100"
 
-#: undergraduate_admission/utils.py:118
+#: undergraduate_admission/utils.py:120
 msgid "Remaining rooms is 50"
 msgstr " رصيد الغرف المتبقي 50"
 
-#: undergraduate_admission/utils.py:120
+#: undergraduate_admission/utils.py:122
 msgid "Remaining rooms is 10"
 msgstr " رصيد الغرف المتبقي 10"
 
-#: undergraduate_admission/utils.py:286
+#: undergraduate_admission/utils.py:292
 msgid "Use English alphabet only! You can also use the dot, hyphen and spaces"
 msgstr "استخدم الحروف الانجليزية فقط"
 
-#: undergraduate_admission/utils.py:293
+#: undergraduate_admission/utils.py:299
 msgid ""
 "Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)"
 msgstr "استخدم الحروف العربية فقط"
