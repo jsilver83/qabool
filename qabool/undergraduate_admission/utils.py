@@ -25,19 +25,20 @@ class Email(object):
             _('Dear %(student_name)s,<br>Your request has been successfully submitted and the Admission results '
               'will be announced on Thursday July 6, 2017 ... <br>'
               '<h4>Registration Details</h4><hr>'
-              'Registration ID: %(user_id)s<br>'
+              # 'Registration ID: %(user_id)s<br>'
+              'Name: %(student_name)s<br>'
               'Mobile: %(mobile)s<br>'
               'Registration Date: %(reg_date)s<br><hr><br>'
+              'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . <br><hr><br>'
               'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
               '<hr><br>'
-              'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . '
               '<br><br> Admissions Office, <br>King Fahd '
               'University of Petroleum and Minerals'),
         'registration_success_old_high_school': _('Dear %(student_name)s,<br>We regret to inform you that your '
                                                   'application has been rejected because your old high school '
                                                   'certificate. '
                                                   '<h4>Registration Details</h4><hr>'
-                                                  'Registration ID: %(user_id)s<br>'
+                                                  # 'Registration ID: %(user_id)s<br>'
                                                   'Mobile: %(mobile)s<br>'
                                                   'Registration Date: %(reg_date)s<br><hr><br>'
                                                   'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
@@ -65,10 +66,11 @@ class Email(object):
             a_items += '<li>%s</li>' % (a_item)
 
         html_message = Email.email_messages['registration_success'] % (
-            {'student_name': user.first_name,
+            {'student_name': user.get_student_full_name(),
+             # 'student_name': user.first_name,
              'user_id': user.id,
              'mobile': user.mobile,
-             'reg_date': timezone.now().strftime('%x'),
+             'reg_date': timezone.datetime.now().strftime('%x'),
              'agree_header': agreement.agreement_header,
              'agree_items': a_items,
              })
