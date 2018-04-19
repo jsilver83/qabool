@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-04 17:31+0300\n"
-"PO-Revision-Date: 2018-04-18 16:35+0300\n"
+"PO-Revision-Date: 2018-04-19 14:03+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -982,7 +982,7 @@ msgstr "لقد ادخلت رقم جوال بشكل غير صحيح"
 
 #: undergraduate_admission/models.py:85
 msgid "High School GPA (Ministry)"
-msgstr "نسبة شهادة الثانوية (الوزارة)"
+msgstr "نسبة الثانوية (الوزارة)"
 
 #: undergraduate_admission/models.py:91
 msgid "Phone"
@@ -1353,7 +1353,7 @@ msgstr "تاريخ الإنسحاب"
 
 #: undergraduate_admission/models.py:334
 msgid "Withdrew To University"
-msgstr "الجهة التي ترغب الاتحاق بها"
+msgstr "الجهة التي ترغب الالتحاق بها"
 
 #: undergraduate_admission/models.py:338
 msgid "Withdrawal Reason"
@@ -2100,6 +2100,7 @@ msgstr ""
 "\t\t\t\t<li>رفع الصور عبر الماسح الضوئي بشكل واضح وبدقة عالية</li>\n"
 "\t\t\t\t<li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
 "\t\t\t\t<li>الصور الملتقطة عن طريق الجوال غير مقبولة.</li>\n"
+"\t\t\t\t<li>أقصى حجم للصورة: 2 ميغابايت.</li>\n"
 "\t\t\t</ul>\n"
 "\t\t"
 
@@ -2156,6 +2157,7 @@ msgstr ""
 "\t\t\t\t<li>رفع الصور عبر الماسح الضوئي بشكل واضح وبدقة عالية</li>\n"
 "\t\t\t\t<li>الصيغ المسموحة: jpg, jpeg, png, bmp, gif.</li>\n"
 "\t\t\t\t<li>الصور الملتقطة عن طريق الجوال غير مقبولة.</li>\n"
+"\t\t\t\t<li>أقصى حجم للملف: 2 ميغابايت.</li>\n"
 "\t\t\t</ul>\n"
 "\t\t"
 
@@ -2566,12 +2568,12 @@ msgstr " رصيد الغرف المتبقي 10"
 
 #: undergraduate_admission/utils.py:286
 msgid "Use English alphabet only! You can also use the dot, hyphen and spaces"
-msgstr "الرجاء استخدام الحروف الانجليزية أو (.) أو (-) فقط"
+msgstr "استخدم الحروف الانجليزية فقط"
 
 #: undergraduate_admission/utils.py:293
 msgid ""
 "Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)"
-msgstr "الرجاء استخدام الحروف العربية و التشكيل فقط"
+msgstr "استخدم الحروف العربية فقط"
 
 #: undergraduate_admission/validators.py:31
 #: undergraduate_admission/validators.py:49
