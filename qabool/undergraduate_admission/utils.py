@@ -85,7 +85,7 @@ class Email(object):
 
         try:
             send_mail(_('KFUPM Admission'), plain_message,
-                  'admissions@kfupm.edu.sa', [user.email], fail_silently=True,
+                  'qabool-noreply@kfupm.edu.sa', [user.email], fail_silently=True,
                   html_message=html_message)
         except: # usually TimeoutError but made it general so it will never raise an exception
             pass
@@ -124,7 +124,7 @@ class SMS(object):
 
     # using UNIFONIC gateway to send SMS
     @staticmethod
-    def send_sms_deprecated(mobile, body):
+    def send_sms(mobile, body):
         if settings.DISABLE_SMS:
             return None
 
@@ -140,7 +140,7 @@ class SMS(object):
 
     # using Yesser Tarasol service to send SMS
     @staticmethod
-    def send_sms(mobile, body):
+    def send_sms_deprecated(mobile, body):
         if settings.DISABLE_SMS:
             return None
 
