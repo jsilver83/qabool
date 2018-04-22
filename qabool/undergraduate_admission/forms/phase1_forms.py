@@ -167,6 +167,7 @@ class RegistrationForm(UserCreationForm):
 
         self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
         self.fields['password2'].help_text = _('Enter the same password as before, for verification')
+        self.fields['high_school_graduation_year'].queryset = GraduationYear.objects.filter(show=True)
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
