@@ -298,6 +298,8 @@ class KFUPMIDsPoolResource(resources.ModelResource):
 class KFUPMIDsPoolAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'kfupm_id', 'assigned_student',)
     resource_class = KFUPMIDsPoolResource
+    search_fields = ['kfupm_id']
+    list_filter = ['semester']
 
 
 class AgreementItemResource(resources.ModelResource):
