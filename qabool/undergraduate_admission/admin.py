@@ -323,8 +323,9 @@ class AgreementItemInline(admin.TabularInline):
 
 class AgreementAdmin(admin.ModelAdmin):
     inlines = [
-        AgreementItemInline,
-    ]
+        AgreementItemInline,]
+    list_display = ['agreement_type','semester', ]
+    list_filter = ['semester']
 
 
 class LookupResource(resources.ModelResource):
@@ -411,5 +412,4 @@ admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
-admin.site.register(VerifyStudent, VerifyStudentAdmin)
 # admin.site.register(CutOff, CutOffAdmin)
