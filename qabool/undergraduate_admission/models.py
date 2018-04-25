@@ -1050,7 +1050,7 @@ class TarifiReceptionDate(models.Model):
     display_order = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Display Order'))
 
     class Meta:
-        verbose_name_plural = _('Tarifi: Tarifi Reception Dates')
+        verbose_name_plural = _('Orientation Week: Schedule')
         ordering = ['slot_start_date']
 
     @property
