@@ -4,102 +4,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>Undergraduate Admission | King Fahd University of Petroleum &amp;Minerals</title>
-	<link rel="icon" href="images/favicon.png">
-	<!-- Bootstrap Core CSS -->
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-	<!-- Custom CSS -->
-	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
-	<style media="print">
-		html {
-			font-size: 120%;
-		}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Undergraduate Admission | King Fahd University of Petroleum &amp;Minerals</title>
+    <link rel="icon" href="images/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <!-- Custom CSS -->
+    <link href="{% static 'css/rtl.css' %}" rel="stylesheet">
+    <style media="print">
+        html {
+            font-size: 120%;
+        }
 
-		.noprint {
-			display: none !important;
-		}
+        .noprint {
+            display: none !important;
+        }
 
-		.ftr-fixed-btm {
-			position: fixed;
-			bottom: 0px;
-		}
-	</style>
+        .ftr-fixed-btm {
+            position: fixed;
+            bottom: 0px;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid noprint">
-	<div class="row">
-		<div class="col-lg-12"><br>
-			<a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
-				<i class="fa fa-print" aria-hidden="true"></i> </a>
-			<a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
-		</div>
-	</div>
-	<hr>
+    <div class="row">
+        <div class="col-lg-12"><br>
+            <a class="btn btn-success btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="#" role="button" onclick="window.print();">{% trans 'Print' %}
+                <i class="fa fa-print" aria-hidden="true"></i> </a>
+            <a class="btn btn-default btn-lg" style="font-family:Arial, Helvetica, sans-serif;" href="{% url 'student_area' %}" role="button">{% trans 'Go Back' %}</a>
+        </div>
+    </div>
+    <hr>
 </div>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center">
-	<tr>
-		<td><img class="img-responsive" style="width: 90%" src="{% static 'images/letter-head.jpg' %}"></td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>
-			<center>
-				<h2>خطــاب القبــول<br>
-					<small> للعام الدراسي 1438 / 1439هـ</small>
-				</h2>
-			</center>
-			<div class="date">التاريخ: 26 شوال 1438هـ</div>
-			<br>
-			<div><strong>{% trans 'Dear Student' %}/ {{ user.get_student_full_name }}</strong></div>
-			<div>
-				<strong>
-					{% if user.kfupm_id %}
-						{% trans 'KFUPM ID' %} / {{ user.kfupm_id }}
-					{% else %}
-						<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
-					{% endif %}
-				</strong>
-			</div>
-			<br>
-			<p>
-				السلام عليكم ورحمة الله وبركاته
-				<br><br>
-				يطيب لعمادة القبول والتسجيل أن تهنئك بالقبول في الجامعة للعام الدراسي 1438/ 1439هـ
-				متمنين لك حياة دراسية موفقة. ونود إفادتك بأن القبول في الجامعة هو لبرنامج السنة التحضيرية
-				وفي حالة إنهائك لجميع متطلبات هذا البرنامج يحق لك مواصلة الدراسة في المرحلة الجامعية
-				، ولإنهاء الإجراءات الخاصة بالطلاب المستجدين
-				يجب عليك الحضور إلى الجامعة في الموعد المحدد أدناه (مصطحباً المستندات التالية): خطاب القبول والكشف الطبي وصورة الهوية الوطنية وصورة شهادة الثانوية وصورتين شخصية حديثة ملونة وبالزي السعودي.
-				<br><br>
-				{% if user.tarifi_week_attendance_date %}
-					<strong>{{ user.tarifi_week_attendance_date }}</strong>
-				{% else %}
-					<strong style="color:red">ERROR: contact admins about this ASAP</strong>
-				{% endif %}
-				<br><br>
-				مقر البرنامج التعريفي: مبنى السنة التحضيرية (مبنى 57) بجوار مجمع الجامعة في سكن الطلاب.
-				<br><br>
-				علماً بأن حضور جميع فعاليات البرنامج التعريفي – بما في ذلك اختبار تحديد المستوى
-				في اللغة الإنجليزية - إلزامي، وسوف يستمر البرنامج التعريفي حتى يوم الخميس 23 ذوالحجة 1438هـ الموافق 14 سبتمبر 2017م، وستبدأ الدراسة يوم الأحد 26 ذوالحجة 1438هـ الموافق 17 سبتمبر 2017م.
-			</p>
-		</td>
-	</tr>
-	<tr>
-		<td><img class="pull-left" width="200" src="{% static 'images/admissionletter-signature.jpg' %}"/></td>
-	</tr>
-	<tr>
-		<td align="center" class="ftr-fixed-btm">
-			<img style="width: 90%" class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></td>
-	</tr>
+    <tr>
+        <td><img class="img-responsive" style="width: 90%" src="{% static 'images/letter-head.jpg' %}"></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            <center>
+                <h2>خطــاب القبــول<br>
+                    <small> للعام الدراسي 1439 / 1440هـ</small>
+                </h2>
+            </center>
+            <div class="date">التاريخ: 26 شوال 1439هـ</div>
+            <br>
+            <div><strong>{% trans 'Dear Student' %}/ {{ user.get_student_full_name }}</strong></div>
+            <div>
+                <strong>
+                    {% if user.kfupm_id %}
+                        {% trans 'KFUPM ID' %} / {{ user.kfupm_id }}
+                    {% else %}
+                        <strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
+                    {% endif %}
+                </strong>
+            </div>
+            <br>
+            <p>
+                السلام عليكم ورحمة الله وبركاته
+                <br><br>
+                يطيب لعمادة القبول والتسجيل أن تهنئك بالقبول في الجامعة للعام الدراسي  1439 / 1440هـ
+                متمنين لك حياة دراسية موفقة. ونود إفادتك بأن القبول في الجامعة هو لبرنامج السنة التحضيرية
+                وفي حالة إنهائك لجميع متطلبات هذا البرنامج يحق لك مواصلة الدراسة في المرحلة الجامعية
+                ، ولإنهاء الإجراءات الخاصة بالطلاب المستجدين
+                يجب عليك الحضور إلى الجامعة في الموعد المحدد أدناه (مصطحباً المستندات التالية): خطاب القبول والكشف الطبي وصورة الهوية الوطنية وصورة شهادة الثانوية وصورتين شخصية حديثة ملونة وبالزي السعودي.
+                <br><br>
+                {% if user.tarifi_week_attendance_date %}
+                    <strong>{{ user.tarifi_week_attendance_date }}</strong>
+                {% else %}
+                    <strong style="color:red">ERROR: contact admins about this ASAP</strong>
+                {% endif %}
+                <br><br>
+                مقر البرنامج التعريفي: مبنى السنة التحضيرية (مبنى 57) بجوار مجمع الجامعة في سكن الطلاب.
+                <br><br>
+                علماً بأن حضور جميع فعاليات البرنامج التعريفي – بما في ذلك اختبار تحديد المستوى
+                في اللغة الإنجليزية - إلزامي، وسوف يستمر البرنامج التعريفي حتى يوم الخميس 000 ذوالحجة 1439هـ الموافق 00 سبتمبر 2018م، وستبدأ الدراسة يوم الأحد 00 ذوالحجة 1439هـ الموافق 00 سبتمبر 2018م.
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td><img class="pull-left" width="200" src="{% static 'images/admissionletter-signature.jpg' %}"/></td>
+    </tr>
 </table>
+<div style="margin-top: 5px">
+    <div align="center" class="ftr-fixed-btm">
+        <img style="width: 90%" class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></div>
+</div>
 
+<table style="font-size:65%" width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td colspan="3" align="center" valign="top"><img style="width: 90%" src="{% static 'images/letter-head.jpg' %}">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" valign="top"><h3>كشف طبي</h3></td>
+    </tr>
+    <tr>
+        <td width="626" align="right" valign="top"><strong>اسم الطالب: {{ user }}</strong></td>
+        <td width="53" valign="top">&nbsp;</td>
+        <td width="621" align="right" valign="top"><strong>الرقم الجامعي: {{ user.kfupm_id }}</strong></td>
+    </tr>
+    <tr>
+        <td align="right" valign="top">سعادة مدير مستشفى / مستوصف الموقر<br>
+            السلام عليكم ورحمة الله وبركاته – وبعد <br>
+            نأمل إجراء الفحوص الطبية اللازمة للطالب الموضح اسمه أعلاه
+        </td>
+        <td></td>
+        <td align="left" valign="top">
+            <img class="pull-left" width="150" src="{% static 'images/withdrawletter-signature.jpg' %}"/></td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" valign="top"><img class="img-responsive" src="{% static 'images/form.png' %}"
+                                                         width="100%"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="right" valign="top" style="width: 50%">المكرم مدير عام القبول بجامعة الملك فهد للبترول والمعادن  الموقر<br>
+            السلام عليكم ورحمة الله وبركاته – وبعد
+        </td>
+        <td>&nbsp;</td>
+        <td align="left" valign="middle"></td>
+    </tr>
+    <tr>
+        <td height="38" align="right" valign="top">أعيد إليكم التقرير الطبي. ولدى الكشف على الطالب اتضح أنه</td>
+        <td>&nbsp;</td>
+        <td align="left" valign="top"></td>
+    </tr>
+    <tr>
+        <td align="right" valign="top" style="padding-right: 5px">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; سليم
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; يحتاج إلى رعاية طبية
+                </label>
+            </div>
+        </td>
+        <td align="right" valign="top">&nbsp;</td>
+        <td align="right" valign="top" style="margin-bottom: 5px; float: left; padding-left: 20px;">
+            <strong>مدير المستشفى / المستوصف</strong><br>
+            الاسم: ....................................................................<br>
+            التوقيع: ....................................................................<br>
+            التاريخ: ....................................................................
+        </td>
+    </tr>
+    <tr>
+        <td><br><br></td>
+    </tr>
+</table>
+<div style="margin: 20px">
+    <div align="center" class="ftr-fixed-btm">
+        <img style="width: 90%" class="img-responsive" src="{% static 'images/letter-footer.jpg' %}">
+    </div>
+</div>
 </body>
 </html>

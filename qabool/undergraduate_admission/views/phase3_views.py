@@ -128,6 +128,7 @@ class AdmissionLetter(BasePrintDocuments):
         return super(AdmissionLetter, self).dispatch(request, *args, **kwargs)
 
 
+## TODO: this section will remove because we combine two letters in one page in above view.
 class MedicalLetter(BasePrintDocuments):
     template_name = 'undergraduate_admission/phase3/letter_medical.html'
 
