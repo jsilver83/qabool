@@ -133,7 +133,7 @@ class SMS(object):
                               data={'AppSid': settings.UNIFONIC_APP_SID,
                                     'Recipient': mobile,
                                     'Body': body,
-                                    'SenderID': 'KFUPM-ADM'})
+                                    'SenderID': 'KFUPMQABOOL'}) # It was KFUPM-ADM
             return r
         except:  # usually TimeoutError but made it general so it will never raise an exception
             pass
