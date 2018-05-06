@@ -85,7 +85,7 @@ class Email(object):
 
         try:
             send_mail(_('KFUPM Admission'), plain_message,
-                  'qabool-noreply@kfupm.edu.sa', [user.email], fail_silently=True,
+                  settings.EMAIL_HOST_USER, [user.email], fail_silently=True,
                   html_message=html_message)
         except: # usually TimeoutError but made it general so it will never raise an exception
             pass
