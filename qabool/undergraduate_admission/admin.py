@@ -153,35 +153,35 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
         if obj.high_school_certificate:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('High School Certificate'),
-                                           url=reverse('download_user_file', args=('high_school_certificate', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('high_school_certificate', obj.id)))
         if obj.personal_picture:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('Personal Picture'),
-                                           url=reverse('download_user_file', args=('personal_picture', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('personal_picture', obj.id)))
         if obj.mother_gov_id_file:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('Mother Government ID'),
-                                           url=reverse('download_user_file', args=('mother_gov_id_file', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('mother_gov_id_file', obj.id)))
         if obj.birth_certificate:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('Birth Date Certificate'),
-                                           url=reverse('download_user_file', args=('birth_certificate', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('birth_certificate', obj.id)))
         if obj.government_id_file:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('Government ID File'),
-                                           url=reverse('download_user_file', args=('government_id_file', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('government_id_file', obj.id)))
         if obj.passport_file:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('Upload Passport'),
-                                           url=reverse('download_user_file', args=('passport_file', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('passport_file', obj.id)))
         if obj.courses_certificate:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('Courses Certificate'),
-                                           url=reverse('download_user_file', args=('courses_certificate', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('courses_certificate', obj.id)))
         if obj.vehicle_registration_file:
             docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
                                            text=_('Vehicle Registration File'),
-                                           url=reverse('download_user_file', args=('vehicle_registration_file', obj.id)))
+                                           url=reverse('download_user_file_admin', args=('vehicle_registration_file', obj.id)))
 
         return format_html(docs_links_html)
 
