@@ -48,7 +48,6 @@
         method: POST
         body: {"password": "{{ ad_password }}"}
         body_format: json
-        validate_certs: no
       connection: local
       become: no
       register: auth
@@ -56,8 +55,8 @@
     - name: Retrieve secret key from Vault
       uri:
         url: "{{ vault_url }}/v1/secret/{{ env }}/operations/apps/qabool/secret_key"
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: secret_key
@@ -65,8 +64,8 @@
     - name: Retrieve database password from Vault
       uri:
         url: "{{ vault_url }}/v1/secret/{{ env }}/database/apps/qabool/database_password"
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: database_password
@@ -74,8 +73,8 @@
     - name: Retrieve email password from Vault
       uri:
         url: "{{ vault_url }}/v1/secret/{{ env }}/email/apps/qabool/email_password"
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: email_password
@@ -83,8 +82,8 @@
     - name: Retrieve sms gateway app sid from Vault
       uri:
         url: "{{ vault_url }}/v1/secret/{{ env }}/operations/apps/qabool/sms_gateway_app_sid"
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: sms_gateway_app_sid
