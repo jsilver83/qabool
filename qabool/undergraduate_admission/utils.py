@@ -107,13 +107,13 @@ class SMS(object):
         'withdrawn_msg':
             _('Your admission was withdrawn as per your request. Good luck. KFUPM'),
         'housing_roommate_request_sent':
-            _('You received a roommate request. Login to our site to accept'),
+            _('You received a roommate request. Login to our site to accept. Student housing 3609'),
         'housing_roommate_request_accepted':
-            _('Your roommate request was accepted. Login to our site to print docs'),
+            _('Your roommate request was accepted. Login to our site to print docs. Student housing 3609'),
         'housing_roommate_request_rejected':
-            _('Your roommate request was rejected. Login to our site to send another one'),
+            _('Your roommate request was rejected. Login to our site to send another one. Student housing 3609'),
         'housing_roommate_request_withdrawn':
-            _('Your roommate has withdrawn. Login to our site to search for another roommate'),
+            _('Your roommate has withdrawn. Login to our site to search for another roommate. Student housing 3609'),
         'housing_rooms_threshold_100':
             _('Remaining rooms is 100'),
         'housing_rooms_threshold_50':
