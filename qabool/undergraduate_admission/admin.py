@@ -80,13 +80,13 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
                        ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
                        ('have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no', 'driving_license_file', ),
+                       ('show_docs_links',),
                        'phase2_start_date', 'phase2_end_date', 'phase2_submit_date'
                        ),
         }),
         ('Phase 2 Fields - Uploaded Documents', {
             'classes': ('wide' 'collapse',),
-            'fields': ('show_docs_links',
-                       'high_school_certificate',
+            'fields': ('high_school_certificate',
                        'personal_picture',
                        'mother_gov_id_file',
                        'birth_certificate',
@@ -151,35 +151,35 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
         docs_links_html = '<br><br>'
 
         if obj.high_school_certificate:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('High School Certificate'),
                                            url=reverse('download_user_file_admin', args=('high_school_certificate', obj.id)))
         if obj.personal_picture:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Personal Picture'),
                                            url=reverse('download_user_file_admin', args=('personal_picture', obj.id)))
         if obj.mother_gov_id_file:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url} target='_blank''>{text}</a><br>",
                                            text=_('Mother Government ID'),
                                            url=reverse('download_user_file_admin', args=('mother_gov_id_file', obj.id)))
         if obj.birth_certificate:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Birth Date Certificate'),
                                            url=reverse('download_user_file_admin', args=('birth_certificate', obj.id)))
         if obj.government_id_file:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Government ID File'),
                                            url=reverse('download_user_file_admin', args=('government_id_file', obj.id)))
         if obj.passport_file:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Upload Passport'),
                                            url=reverse('download_user_file_admin', args=('passport_file', obj.id)))
         if obj.courses_certificate:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Courses Certificate'),
                                            url=reverse('download_user_file_admin', args=('courses_certificate', obj.id)))
         if obj.vehicle_registration_file:
-            docs_links_html += format_html("<a href='{url}'>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Vehicle Registration File'),
                                            url=reverse('download_user_file_admin', args=('vehicle_registration_file', obj.id)))
 
