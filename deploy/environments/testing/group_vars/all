@@ -13,7 +13,7 @@ database_port: 5432
 django_debug: no
 apache_debug: yes
 
-email_user: admissions@kfupm.edu.sa
+email_user: test-qabool@kfupm.edu.sa
 
 # pick a unique port that is not used by any other application on the target
 # application server

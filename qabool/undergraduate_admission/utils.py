@@ -85,7 +85,7 @@ class Email(object):
 
         try:
             send_mail(_('KFUPM Admission'), plain_message,
-                  'admissions@kfupm.edu.sa', [user.email], fail_silently=True,
+                  settings.EMAIL_HOST_USER, [user.email], fail_silently=True,
                   html_message=html_message)
         except: # usually TimeoutError but made it general so it will never raise an exception
             pass
@@ -107,13 +107,13 @@ class SMS(object):
         'withdrawn_msg':
             _('Your admission was withdrawn as per your request. Good luck. KFUPM'),
         'housing_roommate_request_sent':
-            _('You received a roommate request. Login to our site to accept'),
+            _('You received a roommate request. Login to our site to accept. Student housing 3609'),
         'housing_roommate_request_accepted':
-            _('Your roommate request was accepted. Login to our site to print docs'),
+            _('Your roommate request was accepted. Login to our site to print docs. Student housing 3609'),
         'housing_roommate_request_rejected':
-            _('Your roommate request was rejected. Login to our site to send another one'),
+            _('Your roommate request was rejected. Login to our site to send another one. Student housing 3609'),
         'housing_roommate_request_withdrawn':
-            _('Your roommate has withdrawn. Login to our site to search for another roommate'),
+            _('Your roommate has withdrawn. Login to our site to search for another roommate. Student housing 3609'),
         'housing_rooms_threshold_100':
             _('Remaining rooms is 100'),
         'housing_rooms_threshold_50':
@@ -124,7 +124,7 @@ class SMS(object):
 
     # using UNIFONIC gateway to send SMS
     @staticmethod
-    def send_sms_deprecated(mobile, body):
+    def send_sms(mobile, body):
         if settings.DISABLE_SMS:
             return None
 
@@ -133,14 +133,14 @@ class SMS(object):
                               data={'AppSid': settings.UNIFONIC_APP_SID,
                                     'Recipient': mobile,
                                     'Body': body,
-                                    'SenderID': 'KFUPM-ADM'})
+                                    'SenderID': 'KFUPMQABOOL'}) # It was KFUPM-ADM
             return r
         except:  # usually TimeoutError but made it general so it will never raise an exception
             pass
 
     # using Yesser Tarasol service to send SMS
     @staticmethod
-    def send_sms(mobile, body):
+    def send_sms_deprecated(mobile, body):
         if settings.DISABLE_SMS:
             return None
 

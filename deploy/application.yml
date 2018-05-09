@@ -8,6 +8,7 @@
   # environments/<env-name>/group_vars/all/vars.yml
   vars:
     django_project_name: qabool
+    vault_url: https://vault.itc.kfupm.edu.sa
     django_project_admin_username: joud
     django_project_admin_email: joud@kfupm.edu.sa
     django_project_package_name: qabool
@@ -43,47 +44,46 @@
   pre_tasks:
     - name: Vault authentication
       uri:
-        url: https://vault-1.test.kfupm.edu.sa:8200/v1/auth/ldap/login/{{ ad_username }}
+        url: "{{ vault_url }}/v1/auth/ldap/login/{{ ad_username }}"
         method: POST
         body: {"password": "{{ ad_password }}"}
         body_format: json
-        validate_certs: no
       connection: local
       become: no
       register: auth
 
     - name: Retrieve secret key from Vault
       uri:
-        url: https://vault-1.test.kfupm.edu.sa:8200/v1/secret/{{ env }}/apps/qabool/secret_key
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        url: "{{ vault_url }}/v1/secret/{{ env }}/operations/apps/qabool/secret_key"
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: secret_key
 
     - name: Retrieve database password from Vault
       uri:
-        url: https://vault-1.test.kfupm.edu.sa:8200/v1/secret/{{ env }}/apps/qabool/database_password
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        url: "{{ vault_url }}/v1/secret/{{ env }}/database/apps/qabool/database_password"
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: database_password
 
     - name: Retrieve email password from Vault
       uri:
-        url: https://vault-1.test.kfupm.edu.sa:8200/v1/secret/{{ env }}/apps/qabool/email_password
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        url: "{{ vault_url }}/v1/secret/{{ env }}/email/apps/qabool/email_password"
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: email_password
 
     - name: Retrieve sms gateway app sid from Vault
       uri:
-        url: https://vault-1.test.kfupm.edu.sa:8200/v1/secret/{{ env }}/apps/qabool/sms_gateway_app_sid
-        HEADER_X-Vault-Token: "{{ auth.json.auth.client_token }}"
-        validate_certs: no
+        url: "{{ vault_url }}/v1/secret/{{ env }}/operations/apps/qabool/sms_gateway_app_sid"
+        headers:
+          X-Vault-Token: "{{ auth.json.auth.client_token }}"
       connection: local
       become: no
       register: sms_gateway_app_sid
