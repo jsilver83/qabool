@@ -202,7 +202,7 @@ EMAIL_USE_TLS = True
 EMAIL_TIMEOUT = 1
 
 ADMINS = [('joud', 'joud@kfupm.edu.sa'), ('Dr. Ahmad Khayyat', 'akhayyat@kfupm.edu.sa'), ('almaaesh', 'almaaesh@kfupm.edu.sa')]
-SERVER_EMAIL = 'admissions@kfupm.edu.sa'
+SERVER_EMAIL = 'qabool-noreplay@kfupm.edu.sa'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/

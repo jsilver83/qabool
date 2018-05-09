@@ -453,7 +453,7 @@ class User(AbstractUser):
 
     class Meta:
         verbose_name = "user"
-        verbose_name_plural = "users"
+        verbose_name_plural = "Users: Change Password"
 
 
 # TODO: add a flag for active semester that will be used in mau places
@@ -1050,7 +1050,7 @@ class TarifiReceptionDate(models.Model):
     display_order = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('Display Order'))
 
     class Meta:
-        verbose_name_plural = _('Tarifi: Tarifi Reception Dates')
+        verbose_name_plural = _('Orientation Week: Schedule')
         ordering = ['slot_start_date']
 
     @property

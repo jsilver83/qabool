@@ -1,5 +1,7 @@
 import floppyforms.__future__ as forms
+from django.core.urlresolvers import reverse
 
+from django.utils.html import format_html
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from import_export import resources
@@ -25,7 +27,7 @@ class StudentResource(resources.ModelResource):
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
                   'eligible_for_housing', 'high_school_gpa_student_entry', 'student_full_name_ar',
                   'student_full_name_en', 'gender', 'verification_committee_member',
-                  'email', 'mobile', 'nationality', 'guardian_mobile', 'student_notes')
+                  'email', 'mobile', 'nationality', 'guardian_mobile', 'student_notes', )
         skip_unchanged = True
         report_skipped = True
 
@@ -46,7 +48,7 @@ class Student(User):
 
 class StudentAdmin(ImportExportMixin, VersionAdmin):
     list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
-                    'student_type', 'admission_total', 'status_message',)
+                    'student_type', 'admission_total', 'status_message', )
 
     # high_school_gpa_student_entry.short_description = "high_school_gpa_student_entry"
 
@@ -78,6 +80,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
                        ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
                        ('have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no', 'driving_license_file', ),
+                       ('show_docs_links',),
                        'phase2_start_date', 'phase2_end_date', 'phase2_submit_date'
                        ),
         }),
@@ -136,12 +139,53 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
     date_hierarchy = 'date_joined'
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('id', 'date_joined', 'student_type', 'admission_total', 'phase2_submit_date',
-                       'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date', )
+                       'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
+                       'show_docs_links', )
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
     actions = ['yesser_update']
     resource_class = StudentResource
+
+    def show_docs_links(self, obj):
+        docs_links_html = '<br><br>'
+
+        if obj.high_school_certificate:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('High School Certificate'),
+                                           url=reverse('download_user_file_admin', args=('high_school_certificate', obj.id)))
+        if obj.personal_picture:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Personal Picture'),
+                                           url=reverse('download_user_file_admin', args=('personal_picture', obj.id)))
+        if obj.mother_gov_id_file:
+            docs_links_html += format_html("<a href='{url} target='_blank''>{text}</a><br>",
+                                           text=_('Mother Government ID'),
+                                           url=reverse('download_user_file_admin', args=('mother_gov_id_file', obj.id)))
+        if obj.birth_certificate:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Birth Date Certificate'),
+                                           url=reverse('download_user_file_admin', args=('birth_certificate', obj.id)))
+        if obj.government_id_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Government ID File'),
+                                           url=reverse('download_user_file_admin', args=('government_id_file', obj.id)))
+        if obj.passport_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Upload Passport'),
+                                           url=reverse('download_user_file_admin', args=('passport_file', obj.id)))
+        if obj.courses_certificate:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Courses Certificate'),
+                                           url=reverse('download_user_file_admin', args=('courses_certificate', obj.id)))
+        if obj.vehicle_registration_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Vehicle Registration File'),
+                                           url=reverse('download_user_file_admin', args=('vehicle_registration_file', obj.id)))
+
+        return format_html(docs_links_html)
+
+    show_docs_links.short_description = _("Documents")
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(StudentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
@@ -298,6 +342,8 @@ class KFUPMIDsPoolResource(resources.ModelResource):
 class KFUPMIDsPoolAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'kfupm_id', 'assigned_student',)
     resource_class = KFUPMIDsPoolResource
+    search_fields = ['kfupm_id']
+    list_filter = ['semester']
 
 
 class AgreementItemResource(resources.ModelResource):
@@ -321,8 +367,9 @@ class AgreementItemInline(admin.TabularInline):
 
 class AgreementAdmin(admin.ModelAdmin):
     inlines = [
-        AgreementItemInline,
-    ]
+        AgreementItemInline,]
+    list_display = ['agreement_type','semester', ]
+    list_filter = ['semester']
 
 
 class LookupResource(resources.ModelResource):
@@ -409,5 +456,4 @@ admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
-admin.site.register(VerifyStudent, VerifyStudentAdmin)
 # admin.site.register(CutOff, CutOffAdmin)
