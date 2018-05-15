@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-09 08:26+0300\n"
-"PO-Revision-Date: 2018-05-09 08:30+0300\n"
+"POT-Creation-Date: 2018-05-09 16:33+0300\n"
+"PO-Revision-Date: 2018-05-09 16:34+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -96,7 +96,7 @@ msgstr "موعد النوم"
 #: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:250
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:576
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
-#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:66
+#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:73
 msgid "KFUPM ID"
 msgstr "الرقم الجامعي"
 
@@ -376,7 +376,7 @@ msgstr ""
 #: tarifi/templates/tarifi/landing_page.html:23
 #: tarifi/templates/tarifi/student_print_page.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:35
-#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:39
+#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:45
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_medical.html:37
 msgid "Print"
 msgstr "طباعة"
@@ -385,7 +385,7 @@ msgstr "طباعة"
 #: find_roommate/templates/find_roommate/letter_housing_2.html:41
 #: find_roommate/templates/find_roommate/letter_housing_3.html:41
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:37
-#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:41
+#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:47
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_medical.html:39
 msgid "Go Back"
 msgstr "العودة"
@@ -393,7 +393,7 @@ msgstr "العودة"
 #: find_roommate/templates/find_roommate/letter_housing.html:48
 #: find_roommate/templates/find_roommate/letter_housing_2.html:52
 #: find_roommate/templates/find_roommate/letter_housing_3.html:52
-#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:62
+#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:69
 msgid "Dear Student"
 msgstr "عزيزي الطالب"
 
@@ -2206,7 +2206,6 @@ msgid "Agree to Terms <br>&amp; Conditions"
 msgstr "الموافقة على<br>الشروط واﻷحكام"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:31
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:40
 msgid ""
 "Choose your\n"
@@ -2271,42 +2270,51 @@ msgstr ""
 "\t"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:25
+msgid ""
+"Agree to Terms\n"
+"                            <br>&amp; Conditions"
+msgstr "الموافقة على<br>الشروط واﻷحكام"
+
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:39
+msgid ""
+"Choose your\n"
+"                                <br>Tarifi time slot"
+msgstr "اختر موعد في<br>البرنامج التعريفي"
+
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:52
+msgid ""
+"Print your\n"
+"                                <br>Admission Letter"
+msgstr "طبـــــاعة<br>خطاب القبول"
+
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:65
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:19
+msgid "Print Admission Letter and Medical Checkup Letter"
+msgstr "طباعة خطاب القبول والكشف الطبي"
+
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:66
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:73
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:20
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:27
+msgid "Click Here"
+msgstr "اضغط هنا"
+
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:71
+#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:25
+msgid "Student Guide"
+msgstr "دليل الطالب"
+
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:26
 msgid ""
 "Agree to Terms\n"
 "\t\t\t\t\t\t\t<br>&amp; Conditions"
 msgstr "الموافقة على<br>الشروط واﻷحكام"
 
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:52
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:53
 msgid ""
 "Print your\n"
 "\t\t\t\t\t\t\t\t<br>Admission Letter"
 msgstr "طبـــــاعة<br>خطاب القبول"
-
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:64
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:18
-msgid "Admission Letter"
-msgstr "خطاب القبول"
-
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:65
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:67
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:74
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:19
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:21
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:28
-msgid "Click Here"
-msgstr "اضغط هنا"
-
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:66
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:20
-msgid "Medical Checkup Letter"
-msgstr "نموذج الكشف الطبي"
-
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:72
-#: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:26
-msgid "Student Guide"
-msgstr "دليل الطالب"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:62
 msgid "Tarifi Time Slot"
@@ -2688,6 +2696,9 @@ msgstr ""
 msgid "No IDs to assign. Contact the site admins..."
 msgstr "عليك التواصل حالا مع إدارة القبول."
 
+#~ msgid "Admission Letter"
+#~ msgstr "خطاب القبول"
+
 #~ msgid "Tarifi: Tarifi Reception Dates"
 #~ msgstr "Tarifi: Tarifi Reception Dates"
 
@@ -2811,9 +2822,6 @@ msgstr "عليك التواصل حالا مع إدارة القبول."
 
 #~ msgid "Choose Roommate"
 #~ msgstr "اختيار زميل السكن"
-
-#~ msgid "Choose your<br>Tarifi time slot"
-#~ msgstr "اختبر موعد في<br>البرنامج التعريفي"
 
 #~ msgid "You are not eligible for housing..."
 #~ msgstr "أنت غير مستحق للسكن"
