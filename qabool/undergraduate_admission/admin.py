@@ -109,6 +109,12 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                 'relative_city', 'relative_job', 'relative_employer',
             ),
         }),
+        ('Phase 2 Fields - Bank Account', {
+            'classes': ('collapse',),
+            'fields': (
+                'bank_name', 'bank_account', 'bank_account_identification_file',
+            ),
+        }),
         ('Committee Fields', {
             'classes': ('collapse',),
             'fields': ('verification_committee_member',
@@ -182,6 +188,12 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
             docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Vehicle Registration File'),
                                            url=reverse('download_user_file_admin', args=('vehicle_registration_file', obj.id)))
+
+        if obj.bank_account_identification_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Bank Account Identification File'),
+                                           url=reverse('download_user_file_admin',
+                                                       args=('bank_account_identification_file', obj.id)))
 
         return format_html(docs_links_html)
 

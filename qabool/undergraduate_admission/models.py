@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
     upload_location_mother_govid, upload_location_passport, upload_location_certificate, \
     upload_location_picture, upload_location_courses, upload_location_withdrawal_proof, \
-    upload_location_driving_license, upload_location_vehicle_registration
+    upload_location_driving_license, upload_location_vehicle_registration, upload_bank_account_identification
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
 
 
@@ -319,6 +319,16 @@ class User(AbstractUser):
         max_length=100,
         verbose_name=_('Driving License File'),
         upload_to=upload_location_driving_license,
+        validators=[validate_file_extension],
+    )
+    bank_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Bank Name'))
+    bank_account = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Bank Account'))
+    bank_account_identification_file = models.FileField(
+        null=True,
+        blank=True,
+        max_length=100,
+        verbose_name=_('Bank Account Identification File'),
+        upload_to=upload_bank_account_identification,
         validators=[validate_file_extension],
     )
     admission_letter_print_date = models.DateTimeField(null=True,

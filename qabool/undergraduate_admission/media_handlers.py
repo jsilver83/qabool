@@ -43,6 +43,10 @@ def upload_location_vehicle_registration(instance, filename):
     return upload_location('vehicle_registration', instance, filename)
 
 
+def upload_bank_account_identification(instance, filename):
+    return upload_location('bank_account', instance, filename)
+
+
 # defines where to save uploaded student documents
 def upload_location(sub_folder, instance, filename):
     semester_name = instance.semester.semester_name
