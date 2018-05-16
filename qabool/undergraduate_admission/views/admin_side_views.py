@@ -138,6 +138,83 @@ class CutOffPointView(AdminBaseView, View):
         return redirect('cut_off_point')
 
 
+class DistributeStudentsOnVerifiersView(AdminBaseView, View):
+    def get_students_matching(self, request):
+        selected_student_types = request.GET.getlist('student_type', [])
+        filtered = UserListFilter(request.GET, queryset=User.objects.filter(is_staff=False))
+
+        filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
+            .annotate(
+            admission_percent=F('semester__high_school_gpa_weight') * F('high_school_gpa') / 100
+                              + F('semester__qudrat_score_weight') * F('qudrat_score') / 100
+                              + F('semester__tahsili_score_weight') * F('tahsili_score') / 100,
+            student_nationality_type=Case(When(nationality__nationality_en__icontains='Saudi', then=Value('S')),
+                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                               & Q(nationality__isnull=False)
+                                               & Q(saudi_mother=True),
+                                               then=Value('M')),
+                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                               & Q(nationality__isnull=False)
+                                               & (Q(saudi_mother=False) | Q(saudi_mother__isnull=True)),
+                                               then=Value('N')),
+                                          default=Value('N/A'),
+                                          output_field=CharField())) \
+            .order_by('-admission_percent')
+
+        if selected_student_types:
+            filtered_with_properties = filtered_with_properties.filter(
+                student_nationality_type__in=selected_student_types)
+
+        return filtered_with_properties
+
+    def get(self, request, *args, **kwargs):
+        form = DistributeForm(request.GET or None)
+        filtered = self.get_students_matching(request)
+        form2 = SelectCommitteeMemberForm()
+        show_detailed_results = request.GET.get('show_detailed_results', '')
+
+        paginator = Paginator(filtered, 10)
+        page = request.GET.get('page')
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
+        return render(request,
+                      template_name='undergraduate_admission/admin/distribute_committee.html',
+                      context={'form': form,
+                               'students': page_obj,
+                               'students_count': len(filtered),
+                               'form2': form2,
+                               'show_detailed_results': show_detailed_results})
+
+    def post(self, request, *args, **kwargs):
+        filtered = User.objects.filter(pk__in=self.get_students_matching(request))
+        form2 = SelectCommitteeMemberForm(request.POST or None)
+
+        if form2.is_valid():
+            try:
+                members = request.POST.getlist('members', [])
+                counter = 0
+                for student in filtered:
+                    student.verification_committee_member = members[counter]
+                    student.save()
+                    if counter < len(members)-1:
+                        counter += 1
+                    else:
+                        counter = 0
+
+                messages.success(request, _('%(count)d students were distributed amongst following members %(all)s ...')
+                                 % ({'count': len(filtered),
+                                     'all': members}))
+            except ObjectDoesNotExist:
+                messages.error(request, _('Error in updating status...'))
+
+        return redirect('distribute_committee')
+
+
 class VerifyList(StaffBaseView, ListView):
     template_name = 'undergraduate_admission/admin/verify_list.html'
     model = User
@@ -153,13 +230,13 @@ class VerifyList(StaffBaseView, ListView):
             students_to_verified = User.objects.filter(is_staff=False,
                                                        status_message__in=status,
                                                        semester=semester) \
-            .order_by('-phase2_submit_date')
+                .order_by('-phase2_submit_date')
         else:
             students_to_verified = User.objects.filter(is_staff=False,
                                                        status_message__in=status,
                                                        semester=semester,
                                                        verification_committee_member=logged_in_username) \
-            .order_by('-phase2_submit_date')
+                .order_by('-phase2_submit_date')
         return students_to_verified
 
 

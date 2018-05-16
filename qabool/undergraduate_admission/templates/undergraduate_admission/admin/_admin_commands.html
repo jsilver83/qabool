@@ -33,6 +33,9 @@
 		<a href="{% url 'cut_off_point' %}" class="list-group-item">
 			<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Cut-off Point' %}
 		</a>
+		<a href="{% url 'distribute_committee' %}" class="list-group-item">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Distribute' %}
+		</a>
 	{% endif %}
 	<hr>
 	<a href="{% url 'logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
