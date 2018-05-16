@@ -37,6 +37,8 @@ urlpatterns = [
     url(r'^admin/verify/(?P<pk>\d+)/$', admin_side_views.VerifyStudent.as_view(), name='verify_student'),
     url(r'^admin/verifylist/$', admin_side_views.VerifyList.as_view(), name='verify_list'),
     url(r'^admin/cutoffpoint/$', admin_side_views.CutOffPointView.as_view(), name='cut_off_point'),
+    url(r'^admin/distributecommittee/$', admin_side_views.DistributeStudentsOnVerifiersView.as_view(),
+        name='distribute_committee'),
     # url(r'^admin/yesserupdateb/$', admin_side_views.YesserDataUpdateBackup.as_view(), name='yesser_update_backup'),
     url(r'^admin/yesserupdate/$', admin_side_views.YesserDataUpdate.as_view(), name='yesser_update'),
     url(r'^admin/qiyasupdate/$', admin_side_views.QiyasDataUpdate.as_view(), name='qiyas_update'),

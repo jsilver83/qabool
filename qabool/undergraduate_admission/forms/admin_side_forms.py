@@ -55,6 +55,35 @@ class CutOffForm(forms.ModelForm):
         # self.fields['high_school_graduation_year'].required = False
 
 
+class DistributeForm(forms.ModelForm):
+    STUDENT_TYPES = (
+        ('S', _('Saudi')),
+        ('M', _('Saudi Mother')),
+        ('N', _('Non-Saudi')),
+    )
+    student_type = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=STUDENT_TYPES),
+                                   required=False, label=_('Student Type'))
+    show_detailed_results = forms.BooleanField(required=False, label=_('Show Detailed Results'))
+
+    class Meta:
+        model = User
+        fields = ['semester', 'student_type', 'status_message']
+
+    def __init__(self, *args, **kwargs):
+        super(DistributeForm, self).__init__(*args, **kwargs)
+
+
+class SelectCommitteeMemberForm(forms.Form):
+    members = forms.CharField(required=False, label=_('Select Member(s)'))
+
+    def __init__(self, *args, **kwargs):
+        super(SelectCommitteeMemberForm, self).__init__(*args, **kwargs)
+        choices = User.objects.filter(is_staff=True)
+
+        ch = [(o.username, o.username) for o in choices]
+        self.fields['members'].widget = forms.CheckboxSelectMultiple(choices=ch)
+
+
 class VerifyCommitteeForm(forms.ModelForm):
     data_uri = forms.CharField(widget=forms.HiddenInput, required=False)
 
@@ -211,4 +240,3 @@ class SendMassSMSForm(forms.Form):
         self.fields['semester'].widget = forms.Select(choices=AdmissionSemester.get_semesters_choices())
         self.fields['status_message'].widget = \
             forms.Select(choices=RegistrationStatusMessage.get_registration_status_choices())
-

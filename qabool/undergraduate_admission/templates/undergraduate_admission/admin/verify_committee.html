@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load floppyforms %}
 {% load staticfiles %}
+{% load admin_tags %}
 
 {% block subcontent %}
 	{{ form.errors }}
@@ -41,8 +42,7 @@
 					{% formrow form.birthday_ah using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 				</div>
 				<div class="col-sm-6">
-					<a href="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%"
-					                                                                                                          src="{% url 'download_user_file_admin' 'government_id_file' form.instance.pk %}"/></a>
+					{% render_uploaded_file 'government_id_file' form.instance %}<br>
 				</div>
 			</div>
 			<hr>
@@ -71,13 +71,10 @@
 					{% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
 				</div>
 				<div class="col-sm-6">
-					<a href="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}" target="_blank">
-						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'high_school_certificate' form.instance.pk %}"/></a><br>
+					{% render_uploaded_file 'high_school_certificate' form.instance %}<br>
 					{% if form.instance.courses_certificate %}
 						<br>
-						<a href="{% url 'download_user_file_admin' 'courses_certificate' form.instance.pk %}" target="_blank">
-							<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'courses_certificate' form.instance.pk %}"/>
-						</a>
+						{% render_uploaded_file 'courses_certificate' form.instance %}
 					{% endif %}
 				</div>
 			</div>
@@ -89,13 +86,10 @@
 					{% formrow form.vehicle_plate_no using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
 				</div>
 				<div class="col-sm-6">
-					<a href="{% url 'download_user_file_admin' 'vehicle_registration_file' form.instance.pk %}" target="_blank">
-						<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'vehicle_registration_file' form.instance.pk %}"/></a><br>
-					{% if form.instance.courses_certificate %}
+					{% if form.instance.have_a_vehicle %}
+						{% render_uploaded_file 'vehicle_registration_file' form.instance %}<br>
 						<br>
-						<a href="{% url 'download_user_file_admin' 'driving_license_file' form.instance.pk %}" target="_blank">
-							<img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'driving_license_file' form.instance.pk %}"/>
-						</a>
+						{% render_uploaded_file 'driving_license_file' form.instance %}
 					{% endif %}
 				</div>
 			</div>
@@ -108,7 +102,7 @@
 						{% formrow form.passport_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					</div>
 					<div class="col-sm-6">
-						<a href="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'passport_file' form.instance.pk %}"/></a>
+						{% render_uploaded_file 'passport_file' form.instance %}
 					</div>
 				</div>
 			{% endif %}
@@ -116,11 +110,11 @@
 				<hr>
 				<div class="row">
 					<div class="col-sm-6">
-						<a href="{% url 'download_user_file_admin' 'mother_gov_id_file' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'mother_gov_id_file' form.instance.pk %}"/></a><br>
+						{% render_uploaded_file 'mother_gov_id_file' form.instance %}<br>
 						{% formrow form.saudi_mother_gov_id using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
 					</div>
 					<div class="col-sm-6">
-						<a href="{% url 'download_user_file_admin' 'birth_certificate' form.instance.pk %}" target="_blank"><img class="img-popup" style="width: 100%" src="{% url 'download_user_file_admin' 'birth_certificate' form.instance.pk %}"/></a>
+						{% render_uploaded_file 'birth_certificate' form.instance %}
 					</div>
 				</div>
 			{% endif %}
