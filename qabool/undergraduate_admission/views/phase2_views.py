@@ -93,7 +93,7 @@ def confirm(request):
 @login_required()
 @user_passes_test(is_phase2_eligible)
 def personal_info(request):
-    form = PersonalInfoForm(request.POST or None,
+    form = PersonalInfoForm(request.POST or None, request.FILES or None,
                             instance=request.user, )
 
     if request.method == 'GET':

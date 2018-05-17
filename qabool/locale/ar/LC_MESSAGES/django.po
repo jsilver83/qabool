@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-16 15:13+0300\n"
-"PO-Revision-Date: 2018-05-15 18:04+0300\n"
+"PO-Revision-Date: 2018-05-17 16:50+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -1347,18 +1347,16 @@ msgid "Driving License File"
 msgstr "صورة من الرخصة"
 
 #: undergraduate_admission/models.py:324
-#, fuzzy
-#| msgid "Guardian Name"
 msgid "Bank Name"
-msgstr "اسم ولي الأمر"
+msgstr "اسم البنك أو المصرف"
 
 #: undergraduate_admission/models.py:325
 msgid "Bank Account"
-msgstr ""
+msgstr "رقم الحساب الجاري (الايبان)"
 
 #: undergraduate_admission/models.py:330
 msgid "Bank Account Identification File"
-msgstr ""
+msgstr "صورة مصادقة من البنك على رقم الحساب"
 
 #: undergraduate_admission/models.py:336
 msgid "Admission Letter Print Date"
@@ -1661,7 +1659,7 @@ msgstr "تاريخ الاستقبال"
 
 #: undergraduate_admission/models.py:1063
 msgid "Orientation Week: Schedule"
-msgstr ""
+msgstr "مواعيد الاسبوع التعريفي"
 
 #: undergraduate_admission/templates/base-sidebar.html:16
 msgid ""
