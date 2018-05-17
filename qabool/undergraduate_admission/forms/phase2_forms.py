@@ -33,7 +33,6 @@ class Phase2GenericForm(forms.ModelForm):
 class PersonalInfoForm(Phase2GenericForm):
     class Meta:
         model = User
-
         fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
                   'second_name_en', 'third_name_en', 'family_name_en', 'phone',
                   'high_school_name', 'high_school_province', 'high_school_city',
@@ -41,6 +40,7 @@ class PersonalInfoForm(Phase2GenericForm):
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry', 'social_status',
                   'is_employed', 'employer_name',
+                  'bank_name', 'bank_account', 'bank_account_identification_file',
                   'blood_type',
                   'is_disabled', 'disability_needs', 'disability_needs_notes',
                   'is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ]
@@ -85,6 +85,7 @@ class PersonalInfoForm(Phase2GenericForm):
         for field in self.fields:
             if field not in ['second_name_en', 'third_name_en', 'is_employed', 'is_disabled', 'is_diseased',
                              'employer_name', 'disability_needs_notes',
+                             'bank_name', 'bank_account', 'bank_account_identification_file',
                              'disability_needs', 'chronic_diseases', 'chronic_diseases_notes', ]:
                 self.fields[field].required = True
                 self.fields[field].widget.attrs.update(
@@ -97,7 +98,6 @@ class PersonalInfoForm(Phase2GenericForm):
                 self.fields[field].widget.attrs.update(
                     {'class': 'updateOnce', }
                 )
-
         add_validators_to_arabic_and_english_names(self.fields)
         self.fields['social_status'].widget = forms.RadioSelect(
             choices=Lookup.get_lookup_choices('SOCIAL_STATUS', False))
@@ -107,6 +107,8 @@ class PersonalInfoForm(Phase2GenericForm):
             choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False))
         self.fields['blood_type'].widget = forms.Select(
             choices=Lookup.get_lookup_choices('BLOOD_TYPE', add_dashes=True))
+        self.fields['bank_name'].widget = forms.Select(
+            choices=Lookup.get_lookup_choices('BANK_NAMES', add_dashes=True))
 
 
 class GuardianContactForm(Phase2GenericForm):
@@ -176,7 +178,7 @@ class DocumentsForm(Phase2GenericForm):
     class Meta:
         model = User
 
-        fields = ['high_school_certificate', 'courses_certificate', 'government_id_file',
+        fields = ['high_school_certificate', 'courses_certificate', 'government_id_file', 'bank_account_identification_file',
                   'mother_gov_id_file', 'passport_file', 'birth_certificate', ]
 
     def __init__(self, *args, **kwargs):
