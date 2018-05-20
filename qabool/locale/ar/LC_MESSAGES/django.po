@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-16 15:13+0300\n"
-"PO-Revision-Date: 2018-05-17 16:50+0300\n"
+"POT-Creation-Date: 2018-05-20 11:13+0300\n"
+"PO-Revision-Date: 2018-05-20 11:21+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -154,6 +154,7 @@ msgstr "تم إلغاء الطلب من قبل المرسل"
 #: find_roommate/models.py:72
 #: find_roommate/templates/find_roommate/__request.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:28
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:28
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:27
 msgid "Status"
 msgstr "حالة الطلب"
@@ -205,7 +206,7 @@ msgid "Reject"
 msgstr "غير موافق"
 
 #: find_roommate/templates/find_roommate/__request.html:46
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:186
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:180
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:134
 msgid "Cancel"
@@ -233,9 +234,11 @@ msgstr "لائحـة مخالفـات السكـــن"
 #: find_roommate/templates/find_roommate/request_roommate.html:37
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:11
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:66
 #: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:51
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:155
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:149
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:33
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
@@ -277,6 +280,7 @@ msgstr "عدد الطلاب الفرادى الذين يبحثون عن زميل
 #: find_roommate/templates/find_roommate/housinguser_list.html:28
 #: tarifi/templates/tarifi/landing_page.html:9
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:12
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:12
 msgid "Search"
 msgstr "بحث"
 
@@ -635,89 +639,96 @@ msgstr ""
 msgid "Can NOT Print"
 msgstr "ﻻ يمكن الطباعة"
 
-#: undergraduate_admission/admin.py:155 undergraduate_admission/models.py:205
+#: undergraduate_admission/admin.py:161 undergraduate_admission/models.py:205
 msgid "High School Certificate"
 msgstr "صورة الشهادة الثانوية"
 
-#: undergraduate_admission/admin.py:159 undergraduate_admission/models.py:222
+#: undergraduate_admission/admin.py:165 undergraduate_admission/models.py:222
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:22
 msgid "Personal Picture"
 msgstr "رفع الصورة الشخصية"
 
-#: undergraduate_admission/admin.py:163 undergraduate_admission/models.py:134
+#: undergraduate_admission/admin.py:169 undergraduate_admission/models.py:134
 msgid "Mother Government ID"
 msgstr "صورة الهوية الوطنية للأم"
 
-#: undergraduate_admission/admin.py:167 undergraduate_admission/models.py:142
+#: undergraduate_admission/admin.py:173 undergraduate_admission/models.py:142
 msgid "Birth Date Certificate"
 msgstr "صورة شهادة الميلاد"
 
-#: undergraduate_admission/admin.py:171 undergraduate_admission/models.py:150
+#: undergraduate_admission/admin.py:177 undergraduate_admission/models.py:150
 msgid "Government ID File"
 msgstr "صورة الهوية الوطنية أو هوية مقيم"
 
-#: undergraduate_admission/admin.py:175 undergraduate_admission/models.py:167
+#: undergraduate_admission/admin.py:181 undergraduate_admission/models.py:167
 msgid "Upload Passport"
 msgstr "صورة الجواز"
 
-#: undergraduate_admission/admin.py:179 undergraduate_admission/models.py:213
+#: undergraduate_admission/admin.py:185 undergraduate_admission/models.py:213
 msgid "Courses Certificate"
 msgstr "صورة شهادة المقررات (إن وجدت)"
 
-#: undergraduate_admission/admin.py:183 undergraduate_admission/models.py:312
+#: undergraduate_admission/admin.py:189 undergraduate_admission/models.py:312
 msgid "Vehicle Registration File"
 msgstr "صورة من الاستمارة"
 
-#: undergraduate_admission/admin.py:188
+#: undergraduate_admission/admin.py:194 undergraduate_admission/models.py:330
+msgid "Bank Account Identification File"
+msgstr "صورة مصادقة من البنك على رقم الحساب الجاري (الايبان)"
+
+#: undergraduate_admission/admin.py:200
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:23
 msgid "Documents"
 msgstr "رفع المستندات"
 
-#: undergraduate_admission/admin.py:232
+#: undergraduate_admission/admin.py:244
 msgid "Sync with Yesser"
 msgstr "التحديث من يسر"
 
-#: undergraduate_admission/admin.py:435
+#: undergraduate_admission/admin.py:447
 msgid "Qabool"
 msgstr "نظام القبول"
 
-#: undergraduate_admission/admin.py:436
+#: undergraduate_admission/admin.py:448
 msgid "Qabool Administration"
 msgstr "إدارة القبول"
 
-#: undergraduate_admission/admin.py:437
+#: undergraduate_admission/admin.py:449
 msgid "Administration"
 msgstr "إدارة"
 
 #: undergraduate_admission/forms/admin_side_forms.py:16
-#: undergraduate_admission/forms/admin_side_forms.py:175
+#: undergraduate_admission/forms/admin_side_forms.py:204
 msgid "Unknown"
 msgstr "غير معروف"
 
 #: undergraduate_admission/forms/admin_side_forms.py:17
-#: undergraduate_admission/forms/admin_side_forms.py:176
+#: undergraduate_admission/forms/admin_side_forms.py:205
 #: undergraduate_admission/forms/phase1_forms.py:109
 #: undergraduate_admission/models.py:125
 msgid "Male"
 msgstr "ذكر"
 
 #: undergraduate_admission/forms/admin_side_forms.py:18
-#: undergraduate_admission/forms/admin_side_forms.py:177
+#: undergraduate_admission/forms/admin_side_forms.py:206
 #: undergraduate_admission/forms/phase1_forms.py:110
 #: undergraduate_admission/models.py:126
 msgid "Female"
 msgstr "أنثى"
 
 #: undergraduate_admission/forms/admin_side_forms.py:21
+#: undergraduate_admission/forms/admin_side_forms.py:60
 msgid "Saudi"
 msgstr "سعودي"
 
 #: undergraduate_admission/forms/admin_side_forms.py:22
+#: undergraduate_admission/forms/admin_side_forms.py:61
 #: undergraduate_admission/models.py:48
 msgid "Saudi Mother"
 msgstr "الأم سعودية"
 
 #: undergraduate_admission/forms/admin_side_forms.py:23
+#: undergraduate_admission/forms/admin_side_forms.py:62
 msgid "Non-Saudi"
 msgstr "غير سعودي"
 
@@ -730,7 +741,9 @@ msgid "Less Than"
 msgstr "أقل من"
 
 #: undergraduate_admission/forms/admin_side_forms.py:30
+#: undergraduate_admission/forms/admin_side_forms.py:65
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:29
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:29
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:16
 msgid "Student Type"
 msgstr "نوع الطالب"
@@ -738,11 +751,13 @@ msgstr "نوع الطالب"
 #: undergraduate_admission/forms/admin_side_forms.py:35
 #: undergraduate_admission/models.py:68
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:31
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:31
 msgid "Graduation Year"
 msgstr "سنة التخرج"
 
 #: undergraduate_admission/forms/admin_side_forms.py:36
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:30
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:30
 msgid "Admission Total"
 msgstr "النسبة الموزونة"
 
@@ -751,10 +766,15 @@ msgid "Admission Total Operand"
 msgstr "معامل النسبة الموزونة"
 
 #: undergraduate_admission/forms/admin_side_forms.py:39
+#: undergraduate_admission/forms/admin_side_forms.py:66
 msgid "Show Detailed Results"
 msgstr "إظهار نتائج البحث"
 
-#: undergraduate_admission/forms/admin_side_forms.py:114
+#: undergraduate_admission/forms/admin_side_forms.py:77
+msgid "Select Member(s)"
+msgstr ""
+
+#: undergraduate_admission/forms/admin_side_forms.py:143
 #: undergraduate_admission/forms/general_forms.py:114
 #: undergraduate_admission/forms/general_forms.py:132
 #: undergraduate_admission/forms/phase1_forms.py:86
@@ -762,6 +782,7 @@ msgstr "إظهار نتائج البحث"
 #: undergraduate_admission/models.py:847
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:22
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:13
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:43
@@ -769,8 +790,8 @@ msgstr "إظهار نتائج البحث"
 msgid "Government ID"
 msgstr "الهوية الوطنية أو هوية مقيم"
 
-#: undergraduate_admission/forms/admin_side_forms.py:170
-#: undergraduate_admission/forms/admin_side_forms.py:203
+#: undergraduate_admission/forms/admin_side_forms.py:199
+#: undergraduate_admission/forms/admin_side_forms.py:232
 #: undergraduate_admission/models.py:35
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:45
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:46
@@ -778,18 +799,18 @@ msgstr "الهوية الوطنية أو هوية مقيم"
 msgid "Message Status"
 msgstr "تفصيل حالة الطلب"
 
-#: undergraduate_admission/forms/admin_side_forms.py:202
+#: undergraduate_admission/forms/admin_side_forms.py:231
 #: undergraduate_admission/models.py:27 undergraduate_admission/models.py:490
 #: undergraduate_admission/models.py:583
 msgid "Admission Semester"
 msgstr "فصل القبول"
 
-#: undergraduate_admission/forms/admin_side_forms.py:204
+#: undergraduate_admission/forms/admin_side_forms.py:233
 #: undergraduate_admission/models.py:374
 msgid "Eligible For Housing"
 msgstr "يستحق السكن"
 
-#: undergraduate_admission/forms/admin_side_forms.py:207
+#: undergraduate_admission/forms/admin_side_forms.py:236
 msgid "SMS Message To Be Sent"
 msgstr "نص الرسالة"
 
@@ -924,6 +945,7 @@ msgstr "أعد إدخال الهوية الوطنية أو هوية مقيم  و
 #: undergraduate_admission/forms/phase1_forms.py:114
 #: undergraduate_admission/models.py:128
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:32
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:32
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:28
 msgid "Gender"
 msgstr "الجنس"
@@ -938,19 +960,25 @@ msgstr "التقديم للطلاب الذكور فقط."
 msgid "With country and area code. e.g. 966138602722"
 msgstr "مع رمز الدولة والمدينة. مثال: 966138600000"
 
-#: undergraduate_admission/forms/phase2_forms.py:69
+#: undergraduate_admission/forms/phase2_forms.py:59
+msgid "Allowed formats: pdf, jpg, jpeg, png, bmp, gif. Max Size: 2 MB"
+msgstr ""
+"ملاحظة هامة: الصيغ المسموح: jpg, jpeg, png, bmp, gif. pdf  أقصى حجم للملف "
+"المرفوع: 2 ميغابايت."
+
+#: undergraduate_admission/forms/phase2_forms.py:70
 msgid "Chronic diseases list can not be empty"
 msgstr "اختر واحد (على اﻷقل) من الأمراض المزمنة بالقائمة"
 
-#: undergraduate_admission/forms/phase2_forms.py:72
+#: undergraduate_admission/forms/phase2_forms.py:73
 msgid "Disability type(s) can not be empty"
 msgstr "اختر واحد (على اﻷقل) من قائمة اﻻحتياجات الخاصة"
 
-#: undergraduate_admission/forms/phase2_forms.py:165
+#: undergraduate_admission/forms/phase2_forms.py:168
 msgid "Vehicle info is required."
 msgstr "بيانات المركبة مطلوبة"
 
-#: undergraduate_admission/forms/phase2_forms.py:217
+#: undergraduate_admission/forms/phase2_forms.py:220
 msgid ""
 "Please upload clear scanned images with good quality. Allowed formats: jpg, "
 "jpeg, png, bmp, gif. Max Size: 2 MB"
@@ -977,6 +1005,7 @@ msgstr "ملاحظة القبول 3"
 #: undergraduate_admission/models.py:46
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:27
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:27
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:26
 msgid "Nationality"
 msgstr "الجنسية"
@@ -1354,10 +1383,6 @@ msgstr "اسم البنك أو المصرف"
 msgid "Bank Account"
 msgstr "رقم الحساب الجاري (الايبان)"
 
-#: undergraduate_admission/models.py:330
-msgid "Bank Account Identification File"
-msgstr "صورة مصادقة من البنك على رقم الحساب"
-
 #: undergraduate_admission/models.py:336
 msgid "Admission Letter Print Date"
 msgstr "تاريخ  طباعة خطاب القبول"
@@ -1403,6 +1428,7 @@ msgid "Phase 3 Submit Date"
 msgstr "تاريخ ارسال الطلب للمرحلة الثالثة"
 
 #: undergraduate_admission/models.py:357
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:33
 msgid "Assigned Committee Member"
 msgstr "الشخص المسؤول عن التحقق"
 
@@ -1761,7 +1787,7 @@ msgstr "مرحبا"
 
 #: undergraduate_admission/templates/base.html:45
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:63
-#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:38
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:41
 msgid "Logout"
 msgstr "خروج"
 
@@ -1863,11 +1889,18 @@ msgstr "استقبال اﻷسبوع التعريفي"
 msgid "Cut-off Point"
 msgstr "نغيير حالة الطلاب"
 
+#: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:37
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:67
+msgid "Distribute"
+msgstr "التوزيع"
+
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:19
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:19
 msgid "Number of students matching search criteria"
 msgstr "نتائج البحث"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:25
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:25
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:14
 msgid "Student Full Name"
 msgstr "اسم الطالب"
@@ -1880,6 +1913,10 @@ msgstr "اختر الحالة الجديدة لتطبيقها على قائمة 
 msgid "Apply Status"
 msgstr "تغيير حالة قبول الطلاب"
 
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:54
+msgid "Choose member(s) from the list to distribute the students above:"
+msgstr "اختر الحالة الجديدة لتطبيقها على قائمة الطلاب أعلاه"
+
 #: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:16
 msgid "Send SMS"
 msgstr "إرسال الرسالة"
@@ -1888,33 +1925,33 @@ msgstr "إرسال الرسالة"
 msgid "Update Gender"
 msgstr "تحديث الجنس"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:155
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:149
 msgid "are u sure?"
 msgstr "هل أنت متأكد؟"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:156
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:150
 msgid "Verify Student"
 msgstr "تم التحقق من البيانات"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:169
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:163
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:50
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:118
 msgid "Crop the photo"
 msgstr "اقتصاص الصورة"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:184
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:178
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:64
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:132
 msgid "Rot-right"
 msgstr "تدوير يمين"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:185
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:179
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:65
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:133
 msgid "Rot-left"
 msgstr "تدوير يسار"
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:187
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:181
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:67
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:135
 msgid "Crop and upload"
@@ -2612,10 +2649,17 @@ msgid "New status has been applied to %(count)d of %(all)d students chosen..."
 msgstr "الحالة الجديدة تم تطبيقها على %(count)d من %(all)d طالب..."
 
 #: undergraduate_admission/views/admin_side_views.py:136
+#: undergraduate_admission/views/admin_side_views.py:213
 msgid "Error in updating status..."
 msgstr "خطأ بتعديل حالة الطلاب"
 
-#: undergraduate_admission/views/admin_side_views.py:170
+#: undergraduate_admission/views/admin_side_views.py:209
+#, python-format
+msgid ""
+"%(count)d students were distributed amongst following members %(all)s ..."
+msgstr ""
+
+#: undergraduate_admission/views/admin_side_views.py:247
 msgid "Verification submitted successfully!!!!"
 msgstr "لقد تم حفظ معلومات التحقق من البيانات"
 
