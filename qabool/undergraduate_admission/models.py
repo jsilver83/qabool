@@ -321,7 +321,7 @@ class User(AbstractUser):
         upload_to=upload_location_driving_license,
         validators=[validate_file_extension],
     )
-    bank_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Bank Name'))
+    bank_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Bank Account'))
     bank_account = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Bank Account'))
     bank_account_identification_file = models.FileField(
         null=True,
