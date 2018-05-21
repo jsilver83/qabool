@@ -12,6 +12,8 @@ qabool/locale/ar/LC_MESSAGES/django.mo
 *.retry
 .DS_Store
 *.mo
+*.hg
+deploy/roles
 qabool/uploaded_docs
 qabool/.idea/.name
 qabool/.idea/codeStyleSettings.xml
