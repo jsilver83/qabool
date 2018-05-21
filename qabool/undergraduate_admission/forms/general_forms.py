@@ -112,8 +112,13 @@ class MyAuthenticationForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(MyAuthenticationForm, self).__init__(self, *args, **kwargs)
         self.fields['username'].label = _('Government ID')
-        self.fields['username'].widget = forms.TextInput(attrs={'required': ''})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'required': ''})
+
+        self.fields['username'].widget = forms.TextInput(attrs={'required': '',
+                                                                'placeholder': _('Government ID')
+                                                                })
+        self.fields['password'].widget = forms.PasswordInput(attrs={'required': '',
+                                                                    'placeholder': _('password')
+                                                                    })
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})

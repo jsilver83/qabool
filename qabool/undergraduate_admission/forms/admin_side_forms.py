@@ -116,6 +116,11 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
                   'vehicle_registration_file', 'driving_license_file',
 
+                  'bank_name',
+                  'bank_account',
+                  'bank_account_identification_file',
+
+
                   'verification_documents_incomplete',
                   'verification_picture_acceptable',
                   'verification_status',
@@ -136,7 +141,9 @@ class VerifyCommitteeForm(forms.ModelForm):
 
         readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
                            'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
-                           'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no', ]
+                           'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                           'bank_name', 'bank_account', 'bank_account_identification_file',
+                           ]
         for field in self.fields:
             if field in readonly_fields:
                 self.fields[field].disabled = True

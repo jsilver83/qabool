@@ -17,7 +17,7 @@ from django.views.generic import UpdateView
 from qabool import settings
 from qabool.local_settings import API_SECURITY_TOKEN
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
-from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, User
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, User, ImportantDateSidebar
 
 
 def index(request, template_name='undergraduate_admission/login.html'):
@@ -44,10 +44,12 @@ def index(request, template_name='undergraduate_admission/login.html'):
     if AdmissionSemester.check_if_phase1_is_active():
         phase1_active = True
 
+    important_dates = ImportantDateSidebar.objects.filter(show=True)
     return render(request, template_name, {
         'form': form,
         'phase1_active': phase1_active,
         'next': redirect_to,
+        'important_dates': important_dates
     })
 
 
