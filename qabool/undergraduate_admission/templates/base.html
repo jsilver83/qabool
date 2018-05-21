@@ -4,87 +4,92 @@
 <!DOCTYPE html>
 <html lang="{% trans 'en' %}">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>{% trans 'Undergraduate Admission | King Fahd University of Petroleum &amp; Minerals' %}</title>
-	<link rel="icon" href="{% static 'images/favicon.png' %}">
-	<!-- Bootstrap Core CSS -->
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-	<link href="https://fonts.googleapis.com/css?family=Amiri:400,400italic,700,700italic" rel="stylesheet" type="text/css">
-	<link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% trans 'Undergraduate Admission | King Fahd University of Petroleum &amp; Minerals' %}</title>
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+    <!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Amiri:400,400italic,700,700italic" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css">
 
-	<!-- Custom CSS -->
-	{% block styles %}
-	{% endblock styles %}
-	<link href="{% static 'css/custom.css' %}" rel="stylesheet">
-	{% if LANGUAGE_CODE == 'ar' %}
-	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
-	{% endif %}
+    <!-- Custom CSS -->
+    {% block styles %}
+    {% endblock styles %}
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+    {% if LANGUAGE_CODE == 'ar' %}
+        <link href="{% static 'css/rtl.css' %}" rel="stylesheet">
+        <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+    {% endif %}
 </head>
 <body>
 <div class="container-fluid" id="kfupm">
-	<div class="container">
-		<div class="row-fluid">
-			<!--<div class="pull-left">-->
-				<!--<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>-->
-			<!--</div>-->
-			<div class="pull-left">
-				<a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a>
-				<span class="text-muted"> | </span>
-				<a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>
-			</div>
-			<div class="pull-right">
-				{% if user.is_authenticated %}
-				<!--<div class="pull-right">-->
-				<span class="text-welcome">{% trans 'Welcome' %}, {{ user.first_name }} </span>
-				&nbsp;<a style="color:white" href="{% url 'logout' %}" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}</a>
-				<!--</div>-->
-				{% endif %}
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row-fluid">
+            <!--<div class="pull-left">-->
+            <!--<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>-->
+            <!--</div>-->
+            <div class="pull-left">
+                {% if LANGUAGE_CODE == 'en' %}
+                <a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a>
+                {% else %}
+                <a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>
+                {% endif %}
+            </div>
+            <div class="pull-right">
+                {% if user.is_authenticated %}
+                    <!--<div class="pull-right">-->
+                    <span class="text-welcome">{% trans 'Welcome' %}, {{ user.first_name }} </span>
+                    &nbsp;
+                    <a style="color:white" href="{% url 'logout' %}" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
+                    </a>
+                    <!--</div>-->
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 <!--<div class="container-fluid" id="kfupm">-->
-	<!--<div class="container">-->
-		<!--<div class="row-fluid">-->
-			<!--<div class="pull-left">-->
-				<!--<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>-->
-			<!--</div>-->
-			<!--<div class="pull-right">-->
-				<!--<a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a> | <a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>-->
-				 <!--&nbsp; <span class="text-welcome">Welcome, Ahmed </span> &nbsp;<button type="button" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
+<!--<div class="container">-->
+<!--<div class="row-fluid">-->
+<!--<div class="pull-left">-->
+<!--<a href="http://www.kfupm.edu.sa/"><i class="fa fa-arrow-right"></i> kfupm.edu.sa</a>-->
+<!--</div>-->
+<!--<div class="pull-right">-->
+<!--<a href="/ar{{ request.get_full_path|slice:'3:' }}">عربي</a> | <a href="/en{{ request.get_full_path|slice:'3:' }}">English</a>-->
+<!--&nbsp; <span class="text-welcome">Welcome, Ahmed </span> &nbsp;<button type="button" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</div>-->
 <div class="container-fluid header-bg">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-7">
-				<div class="ug-logo">
-					{% if LANGUAGE_CODE == 'ar' %}
-					<a href="/"><img class="img-responsive" src="{% static 'images/ug-logo-ar.png' %}" width="100%" alt="KFUPM Undergraduate Admission"></a>
-					{% else %}
-					<a href="/"><img class="img-responsive" src="{% static 'images/ug-logo.png' %}" alt="KFUPM Undergraduate Admission"></a>
-					{% endif %}
-				</div>
-			</div>
-			<div class="col-lg-5">
-				<div class="hdr-pic pull-right">
-					{% if LANGUAGE_CODE == 'ar' %}
-					<img class="img-responsive-ar" src="{% static 'images/hdr-pic.png' %}" alt="KFUPM">
-					{% else %}
-					<img class="img-responsive" src="{% static 'images/hdr-pic.png' %}" alt="KFUPM">
-					{% endif %}
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="ug-logo">
+                    {% if LANGUAGE_CODE == 'ar' %}
+                        <a href="/"><img class="img-responsive" src="{% static 'images/ug-logo-ar.png' %}" width="100%" alt="KFUPM Undergraduate Admission"></a>
+                    {% else %}
+                        <a href="/"><img class="img-responsive" src="{% static 'images/ug-logo.png' %}" alt="KFUPM Undergraduate Admission"></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hdr-pic pull-right">
+                    {% if LANGUAGE_CODE == 'ar' %}
+                        <img class="img-responsive-ar" src="{% static 'images/hdr-pic.png' %}" alt="KFUPM">
+                    {% else %}
+                        <img class="img-responsive" src="{% static 'images/hdr-pic.png' %}" alt="KFUPM">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Page Content -->
 {% block content %}
@@ -93,58 +98,66 @@
 <hr>
 <!-- Footer -->
 <div class="container">
-	<div class="row">
-		<div class="col-lg-12" align="center">
-			<p>
-				{% blocktrans %}
-				&copy; Admissions Office, King Fahd University of Petroleum &amp; Minerals<br>
-				Dhahran, 31261 | Saudi Arabia | +966 (13) 860 2901<br>
-				<a href="http://www.kfupm.edu.sa/admissions">www.kfupm.edu.sa/admissions</a>
-				<br><br>
-				{% endblocktrans %}
-			</p>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-lg-12" align="center">
+            <p>
+                {% blocktrans %}
+                    &copy; Admissions Office, King Fahd University of Petroleum &amp; Minerals<br>
+                    Dhahran, 31261 | Saudi Arabia | +966 (13) 860 2901<br>
+                    <a href="http://www.kfupm.edu.sa/admissions">www.kfupm.edu.sa/admissions</a>
+                    <br><br>
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
 </div>
 
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script>
-    $(function(){
+    $(function () {
         <!--$("form").attr("autocomplete","off");-->
         <!--$('input[type=text]').attr('autocomplete', 'off');-->
         <!--$('input, textarea').bind("cut copy paste",function(e) {-->
-          <!--e.preventDefault();-->
+        <!--e.preventDefault();-->
         <!--});-->
-        try{
-	        {% if LANGUAGE_CODE == 'ar' %}$(".select2").select2({
-			  dir: "rtl"
-			});
-			{% else %}
-			$(".select2").select2();{% endif %}
-		}catch(e){}
+        try {
+            {% if LANGUAGE_CODE == 'ar' %}$(".select2").select2({
+                dir: "rtl"
+            });
+            {% else %}
+                $(".select2").select2();{% endif %}
+        } catch (e) {
+        }
     });
 </script>
 
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/5742cdf66ac600ab3a5d1b46/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/5742cdf66ac600ab3a5d1b46/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 </script>
 
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-78444182-1', 'auto');
-  ga('send', 'pageview');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-78444182-1', 'auto');
+    ga('send', 'pageview');
 </script>
 
 {% block scripts %}

@@ -1,7 +1,6 @@
 from django import template
-from django.core.exceptions import ObjectDoesNotExist
-
-from undergraduate_admission.models import AdmissionSemester
+from django.core.urlresolvers import reverse
+from django.utils.html import format_html
 
 register = template.Library()
 
@@ -22,3 +21,20 @@ def admin_commands(context):
         'username': user.username,
         'groups': user.groups.all(),
     }
+
+
+@register.simple_tag
+def render_uploaded_file(file_type, student_instance):
+    file = getattr(student_instance, file_type)
+    if file:
+        served_file_url = reverse('download_user_file_admin', args=(file_type, student_instance.pk))
+        if file.url.endswith('.pdf'):
+            return format_html('<a title="{title}" target="_blank" href="{url}">'
+                               '<i class="fa fa-file" aria-hidden="true"></i> Download PDF</a>',
+                               url=served_file_url,
+                               title=file_type)
+        else:
+            return format_html('<a href="{url}" target="_blank">'
+                               '<img class="img-popup" style="width: 100%" src="{url}" alt="{alt}" /></a>',
+                               url=served_file_url,
+                               alt=file_type)
