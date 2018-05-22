@@ -11,7 +11,7 @@
 Already applied for admission? <a href="/"><u>Log in</u></a> to review your application.
 {% endblocktrans %}
 <hr>
-<form class="form-horizontal" action="{% url 'register' %}" method="post">
+<form class="form-horizontal" method="post">
 	{% csrf_token %}
 
 	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}

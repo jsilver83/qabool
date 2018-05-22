@@ -8,7 +8,7 @@ import floppyforms.__future__ as forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 
-from qabool import settings
+from django.conf import settings
 from undergraduate_admission.forms.general_forms import BaseContactForm
 from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup, Nationality, GraduationYear
 from undergraduate_admission.utils import parse_non_standard_numerals, add_validators_to_arabic_and_english_names

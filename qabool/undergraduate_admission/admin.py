@@ -61,7 +61,9 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        'email', 'mobile', 'guardian_mobile',
                        ('high_school_gpa', 'qudrat_score', 'tahsili_score', 'admission_total', ),
                        'high_school_gpa_student_entry',
-                       ('high_school_graduation_year', 'high_school_system'), 'student_notes',
+                       ('high_school_graduation_year', 'high_school_system'),
+                       ('show_docs_links',),
+                       'student_notes',
                        ('admission_note', 'admission_note2', 'admission_note3', ), )
         }),
         ('Phase 2 Fields - Personal Information', {
@@ -79,21 +81,26 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        ('is_employed', 'employer_name', ),
                        ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
                        ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
-                       ('have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no', 'driving_license_file', ),
-                       ('show_docs_links',),
                        'phase2_start_date', 'phase2_end_date', 'phase2_submit_date'
                        ),
         }),
         ('Phase 2 Fields - Uploaded Documents', {
-            'classes': ('wide' 'collapse',),
+            'classes': ('collapse',),
             'fields': ('high_school_certificate',
                        'personal_picture',
                        'mother_gov_id_file',
                        'birth_certificate',
                        'government_id_file',
                        'passport_file',
-                       'courses_certificate', 'vehicle_registration_file',
+                       'courses_certificate',
                        ),
+        }),
+        ('Phase 2 Fields - Vehicle Info', {
+            'classes': ('collapse',),
+            'fields': (
+                       'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                       ('driving_license_file', 'vehicle_registration_file')
+            ),
         }),
         ('Phase 2 Fields - Guardian Information', {
             'classes': ('collapse',),
@@ -165,6 +172,34 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                                            text=_('Personal Picture'),
                                            url=reverse('download_user_file_admin', args=('personal_picture', obj.id)))
         if obj.mother_gov_id_file:
+            docs_links_html += format_html("<a href='{url} target='_blank''>{text}</a><br>",
+                                           text=_('Mother Government ID'),
+                                           url=reverse('download_user_file_admin', args=('mother_gov_id_file', obj.id)))
+        if obj.birth_certificate:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Birth Date Certificate'),
+                                           url=reverse('download_user_file_admin', args=('birth_certificate', obj.id)))
+        if obj.government_id_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Government ID File'),
+                                           url=reverse('download_user_file_admin', args=('government_id_file', obj.id)))
+        if obj.passport_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Upload Passport'),
+                                           url=reverse('download_user_file_admin', args=('passport_file', obj.id)))
+        if obj.courses_certificate:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Courses Certificate'),
+                                           url=reverse('download_user_file_admin', args=('courses_certificate', obj.id)))
+        if obj.vehicle_registration_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Vehicle Registration File'),
+                                           url=reverse('download_user_file_admin', args=('vehicle_registration_file', obj.id)))
+
+        if obj.driving_license_file:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Driving License File'),
+                                           url=reverse('download_user_file_admin', args=('driving_license_file', obj.id)))
             docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Mother Government ID'),
                                            url=reverse('download_user_file_admin', args=('mother_gov_id_file', obj.id)))

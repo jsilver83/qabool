@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, FormView
 from django.views.generic.base import View
 from django.http import Http404
 from django.views.decorators.cache import never_cache
@@ -19,10 +19,10 @@ from find_roommate.models import RoommateRequest
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
-    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm
+    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm, TransferForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
-from undergraduate_admission.utils import SMS
+from undergraduate_admission.utils import SMS, parse_non_standard_numerals
 from undergraduate_admission.validators import is_eligible_for_roommate_search
 
 
@@ -248,37 +248,44 @@ class PersonalPictureUnacceptableView(Phase2BaseView, UpdateView):
             messages.error(self.request, _('Error saving info. Try again later!'))
 
 
-@login_required()
-@user_passes_test(is_phase2_eligible)
-def upload_documents(request):
-    if request.method == 'GET':
-        personal_picture_completed = request.GET.get('f', '')
-        if not personal_picture_completed:
-            return redirect('personal_picture')
+class UploadDocumentsView(Phase2BaseView, UpdateView):
+    template_name = 'undergraduate_admission/phase2/form-uploads.html'
+    form_class = DocumentsForm
+    success_url = reverse_lazy('student_area')
 
-    form = DocumentsForm(request.POST or None, request.FILES or None, instance=request.user)
+    def test_func(self):
+        original_test_result = super(UploadDocumentsView, self).test_func()
+        return original_test_result and self.request.GET.get('f', '')
 
-    if request.method == 'POST':
-        if form.is_valid():
-            if request.user.student_type == 'N':
-                reg_msg = RegistrationStatusMessage.get_status_confirmed_non_saudi()
-            else:
-                reg_msg = RegistrationStatusMessage.get_status_confirmed()
+    def get_context_data(self, **kwargs):
+        context = super(UploadDocumentsView, self).get_context_data(**kwargs)
+        context['step6'] = 'active'
+        return context
 
-            saved_user = form.save(commit=False)
-            saved_user.status_message = reg_msg
-            saved_user.save()
+    def get_object(self):
+        return self.request.user
 
-            if saved_user:
-                SMS.send_sms_confirmed(request.user.mobile)
-                messages.success(request, _('Documents were uploaded successfully. We will verify your information '
-                                            'and get back to you soon...'))
-                return redirect('student_area')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
+    def form_valid(self, form):
+        if self.request.user.student_type == 'N':
+            reg_msg = RegistrationStatusMessage.get_status_confirmed_non_saudi()
+        elif self.request.user.status_message == RegistrationStatusMessage.get_status_transfer():
+            reg_msg = RegistrationStatusMessage.get_status_confirmed_transfer()
+        else:
+            reg_msg = RegistrationStatusMessage.get_status_confirmed()
 
-    return render(request, 'undergraduate_admission/phase2/form-uploads.html', {'form': form,
-                                                                                'step6': 'active'})
+        saved_user = form.save(commit=False)
+        saved_user.status_message = reg_msg
+        saved_user.save()
+
+        if saved_user:
+            SMS.send_sms_confirmed(self.request.user.mobile)
+            messages.success(self.request, _('Documents were uploaded successfully. We will verify your information '
+                                             'and get back to you soon...'))
+            return redirect(self.success_url)
+        else:
+            messages.error(self.request, _('Error saving info. Try again later!'))
+
+        return super(UploadDocumentsView, self).form_valid(form)
 
 
 @login_required()
@@ -381,3 +388,19 @@ def withdrawal_letter(request):
     user = request.user
 
     return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user, })
+
+
+class TransferView(SuccessMessageMixin, FormView):
+    template_name = 'undergraduate_admission/register.html'
+    form_class = TransferForm
+    success_url = reverse_lazy('login')
+    success_message = _('Your transfer request was approved')
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(TransferView, self).get_form_kwargs()
+        kwargs['user'] = None
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        return super(TransferView, self).form_valid(form)

@@ -2,11 +2,18 @@ import base64
 import re
 
 import floppyforms.__future__ as forms
+from captcha.fields import CaptchaField
+from django.conf import settings
+from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage
-from undergraduate_admission.utils import add_validators_to_arabic_and_english_names
+from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, AdmissionSemester
+from undergraduate_admission.utils import add_validators_to_arabic_and_english_names, parse_non_standard_numerals
+
+# from captcha.fields import ReCaptchaFieldfrom django.utils import translation
 
 YES_NO_CHOICES = (
     ('True', _("Yes")),
@@ -274,3 +281,81 @@ class PersonalPhotoForm(forms.ModelForm):
         output.close()
 
         return photo
+
+
+class TransferForm(AdminPasswordChangeForm):
+    username = forms.CharField(
+        label=_('Government ID'),
+        max_length=13,
+        # min_length=7,
+        help_text=_(
+            'National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx.'),
+    )
+    kfupm_id = forms.IntegerField(
+        label=_('KFUPM ID'),
+        required=True,
+        help_text=_('Enter the ID given to you by KFUPM'),
+    )
+
+    student_notes = forms.CharField(max_length=500, label=_('Student Notes'), required=False,
+                                    widget=forms.Textarea)
+
+    field_order = ['username', 'kfupm_id', 'password1', 'password2', 'student_notes']
+
+    def __init__(self, *args, **kwargs):
+        super(TransferForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+            if field not in ['student_notes', ]:
+                self.fields[field].required = True
+                self.fields[field].widget.attrs.update({'required': ''})
+
+            if field in ['username', 'kfupm_id', ]:
+                self.fields[field].widget.attrs.update({'class': 'nocopy'})
+
+        self.fields['kfupm_id'].validators = [
+            MinValueValidator(
+                limit_value=1,
+                message=_('Invalid KFUPM ID')
+            )]
+
+        self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
+        self.fields['password2'].help_text = _('Enter the same password as before, for verification')
+
+        if not settings.DISABLE_CAPTCHA:
+            # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
+            self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
+
+    def clean(self):
+        cleaned_data = super(TransferForm, self).clean()
+        username = parse_non_standard_numerals(cleaned_data.get("username"))
+        kfupm_id = cleaned_data.get('kfupm_id', 0)
+        active_semester = AdmissionSemester.get_active_semester()
+        status_message = RegistrationStatusMessage.get_status_transfer()
+
+        try:
+            student = User.objects.get(username=username,
+                                       kfupm_id=kfupm_id,
+                                       semester=active_semester,
+                                       status_message=status_message)
+            self.user = student
+        except ObjectDoesNotExist:
+            raise forms.ValidationError(
+                _('You are not eligible for a transfer to KFUPM'),
+                code='not_a_transfer_student',
+            )
+
+        return cleaned_data
+
+    def clean_username(self):
+        username = parse_non_standard_numerals(self.cleaned_data.get("username"))
+        return username
+
+    def save(self, commit=True):
+        user = super(TransferForm, self).save(commit=False)
+        user.student_notes = self.cleaned_data.get('student_notes', '')
+        if commit:
+            user.save()
+        return user
