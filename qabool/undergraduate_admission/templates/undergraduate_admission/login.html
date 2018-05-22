@@ -41,15 +41,15 @@
             <input type="hidden" name="next" value="{{ next }}"/>
         </form>
     </div>
-
-    <div class="col-lg-7 pull-right">
+    <div class="col-lg-1 pull-right"></div>
+    <div class="col-lg-6 pull-right">
         <h3>{% trans 'Important Dates' %}</h3>
         <hr>
         <div class="row">
             <div class="col-md-12" id="home-dates">
                 <ul>
                     {% for date in important_dates %}
-                        <li><h3>{{ date.title }} : </h3>
+                        <li><h3>{{ date.title }}</h3>
                             <p>{{ date.description }}</p>
                         </li>
                     {% endfor %}

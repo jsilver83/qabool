@@ -403,7 +403,10 @@ class User(AbstractUser):
             pass
 
     def get_actual_student_status(self):
-        return self.status_message.registration_status_message
+        try:
+            return self.status_message.registration_status_message
+        except:
+            pass
 
     def get_student_phase(self):
         try:
