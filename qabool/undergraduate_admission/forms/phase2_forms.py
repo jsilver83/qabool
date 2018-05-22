@@ -33,7 +33,7 @@ class Phase2GenericForm(forms.ModelForm):
 class PersonalInfoForm(Phase2GenericForm):
     bank_account2 = forms.CharField(
         label=_('Repeat bank account'),
-        required=True,
+        required=False,
         help_text=_('Enter the same bank account as before, for verification'),
         widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
@@ -47,7 +47,7 @@ class PersonalInfoForm(Phase2GenericForm):
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry', 'social_status',
                   'is_employed', 'employer_name',
-                  'bank_name', 'bank_account', 'bank_account2', 'bank_account_identification_file',
+                  'bank_name', 'bank_account', 'bank_account_identification_file',
                   'blood_type',
                   'is_disabled', 'disability_needs', 'disability_needs_notes',
                   'is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ]
@@ -69,16 +69,6 @@ class PersonalInfoForm(Phase2GenericForm):
     error_messages = {
         'bank_account_mismatch': _("The two bank account fields didn't match."),
     }
-
-    def clean_bank_account2(self):
-        bank_account1 = self.cleaned_data.get("bank_account")
-        bank_account2 = self.cleaned_data.get("bank_account2")
-        if bank_account1 and bank_account2 and bank_account1 != bank_account2:
-            raise forms.ValidationError(
-                self.error_messages['bank_account_mismatch'],
-                code='bank_account_mismatch',
-            )
-        return bank_account2
 
     def clean(self):
         cleaned_data = super(PersonalInfoForm, self).clean()
