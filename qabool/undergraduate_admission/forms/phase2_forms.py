@@ -31,13 +31,6 @@ class Phase2GenericForm(forms.ModelForm):
 
 
 class PersonalInfoForm(Phase2GenericForm):
-    bank_account2 = forms.CharField(
-        label=_('Repeat bank account'),
-        required=False,
-        help_text=_('Enter the same bank account as before, for verification'),
-        widget=forms.TextInput(attrs={'class': 'nocopy'})
-    )
-
     class Meta:
         model = User
         fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
@@ -65,10 +58,6 @@ class PersonalInfoForm(Phase2GenericForm):
             'phone': _('With country and area code. e.g. 966138602722'),
             'bank_account_identification_file': _('Allowed formats: pdf, jpg, jpeg, png, bmp, gif. Max Size: 2 MB'),
         }
-
-    error_messages = {
-        'bank_account_mismatch': _("The two bank account fields didn't match."),
-    }
 
     def clean(self):
         cleaned_data = super(PersonalInfoForm, self).clean()
