@@ -687,6 +687,14 @@ class RegistrationStatusMessage(models.Model):
             return
 
     @staticmethod
+    def get_status_transfer():
+        try:
+            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED').status_messages. \
+                get(status_message_code='TRANSFER')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
     def get_status_non_saudi():
         try:
             return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
@@ -745,6 +753,14 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
                 .status_messages.get(status_message_code='CONFIRMED-N')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_confirmed_transfer():
+        try:
+            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
+                .status_messages.get(status_message_code='CONFIRMED-T')
         except ObjectDoesNotExist:
             return
 
