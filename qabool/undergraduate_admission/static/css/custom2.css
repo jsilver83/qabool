@@ -401,6 +401,7 @@ a.list-group-item:hover {
     list-style: none;
     padding: 0px;
     margin: 0px;
+    direction: ltr;
 }
 
 #other-details .contact-details ul li {
