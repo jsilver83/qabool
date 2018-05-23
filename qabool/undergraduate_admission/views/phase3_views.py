@@ -85,6 +85,10 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
     template_name = 'undergraduate_admission/phase3/tarifi_time_slot.html'
     success_url = 'print_documents'
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer():
+            return redirect('student_area')
+
     def get_object(self, queryset=None):
         return self.request.user
 
@@ -106,34 +110,16 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
             return redirect('student_area')
 
 
-class PrintDocuments(Phase3BaseView, TemplateView):
-    template_name = 'undergraduate_admission/phase3/print_documents.html'
-
-
-class BasePrintDocuments(Phase3BaseView, TemplateView):
-    template_name = 'undergraduate_admission/phase3/print_documents_no_steps.html'
-
-    def test_func(self):
-        return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted() \
-           and self.request.user.tarifi_week_attendance_date
-
-
-class AdmissionLetter(BasePrintDocuments):
+class AdmissionLetters(Phase3BaseView, TemplateView):
     template_name = 'undergraduate_admission/phase3/letter_admission.html'
 
     def dispatch(self, request, *args, **kwargs):
+        if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer():
+            return redirect('student_area')
+
         if not request.user.admission_letter_print_date:
             request.user.admission_letter_print_date = timezone.now()
-            request.user.save()
-        return super(AdmissionLetter, self).dispatch(request, *args, **kwargs)
-
-
-## TODO: this section will remove because we combine two letters in one page in above view.
-class MedicalLetter(BasePrintDocuments):
-    template_name = 'undergraduate_admission/phase3/letter_medical.html'
-
-    def dispatch(self, request, *args, **kwargs):
         if not request.user.medical_report_print_date:
             request.user.medical_report_print_date = timezone.now()
-            request.user.save()
-        return super(MedicalLetter, self).dispatch(request, *args, **kwargs)
+        request.user.save()
+        return super(AdmissionLetters, self).dispatch(request, *args, **kwargs)

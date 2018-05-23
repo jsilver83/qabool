@@ -321,8 +321,16 @@ class User(AbstractUser):
         upload_to=upload_location_driving_license,
         validators=[validate_file_extension],
     )
-    bank_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Bank Account'))
-    bank_account = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Bank Account'))
+    bank_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('Bank Name'))
+    bank_account = models.CharField(null=True, blank=True, max_length=50, verbose_name=_('Your IBAN'),
+                                    help_text=_('Your International Bank Account Number (IBAN) for your own Saudi bank '
+                                                'account. Your IBAN format should be SA followed by 22 digits.'),
+                                    validators=[
+                                        RegexValidator(
+                                            '^(SA)\d{22}$',
+                                            message=_('You have entered an invalid IBAN')
+                                        ),
+                                    ],)
     bank_account_identification_file = models.FileField(
         null=True,
         blank=True,
@@ -726,9 +734,26 @@ class RegistrationStatusMessage(models.Model):
             return
 
     @staticmethod
+    def get_status_partially_admitted():
+        try:
+            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
+                .status_messages.get(status_message_code='PARTIALLY-ADMITTED')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
     def get_status_admitted():
         try:
-            return RegistrationStatus.objects.get(status_code='ADMITTED').status_messages.first()
+            return RegistrationStatus.objects.get(status_code='ADMITTED') \
+                .status_messages.get(status_message_code='ADMITTED')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_admitted_transfer():
+        try:
+            return RegistrationStatus.objects.get(status_code='ADMITTED') \
+                .status_messages.get(status_message_code='ADMITTED-T')
         except ObjectDoesNotExist:
             return
 

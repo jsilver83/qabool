@@ -186,7 +186,7 @@ class DocumentsForm(Phase2GenericForm):
     class Meta:
         model = User
 
-        fields = ['high_school_certificate', 'courses_certificate', 'government_id_file', 'bank_account_identification_file',
+        fields = ['high_school_certificate', 'courses_certificate', 'government_id_file',
                   'mother_gov_id_file', 'passport_file', 'birth_certificate', ]
 
     def __init__(self, *args, **kwargs):
@@ -209,6 +209,32 @@ class DocumentsForm(Phase2GenericForm):
             #       'pdf, jpg, jpeg, png, bmp, gif. Max Size: 2 MB')
 
         self.fields['courses_certificate'].required = False
+
+
+class MissingDocumentsForm(DocumentsForm):
+    class Meta:
+        model = User
+        fields = ['high_school_certificate', 'courses_certificate', 'government_id_file',
+                  'mother_gov_id_file', 'passport_file', 'birth_certificate',
+                  'bank_account_identification_file',
+                  'vehicle_registration_file', 'driving_license_file', ]
+
+    def __init__(self, *args, **kwargs):
+        super(MissingDocumentsForm, self).__init__(*args, **kwargs)
+        self.fields['bank_account_identification_file'].required = False
+        self.fields['vehicle_registration_file'].required = False
+        self.fields['driving_license_file'].required = False
+
+    def clean(self):
+        cleaned_data = super(MissingDocumentsForm, self).clean()
+        have_a_vehicle = self.instance.have_a_vehicle
+        vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
+        driving_license_file = cleaned_data.get('driving_license_file')
+
+        if have_a_vehicle and not (vehicle_registration_file and driving_license_file):
+            raise forms.ValidationError(_('Vehicle info is required.'))
+
+        return cleaned_data
 
 
 class WithdrawalProofForm(Phase2GenericForm):
