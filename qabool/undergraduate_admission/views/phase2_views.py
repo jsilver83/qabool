@@ -19,7 +19,8 @@ from find_roommate.models import RoommateRequest
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
-    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm, TransferForm
+    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm, TransferForm, \
+    MissingDocumentsForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS, parse_non_standard_numerals
@@ -269,7 +270,7 @@ class UploadDocumentsView(Phase2BaseView, UpdateView):
         if self.request.user.student_type == 'N':
             reg_msg = RegistrationStatusMessage.get_status_confirmed_non_saudi()
         elif self.request.user.status_message == RegistrationStatusMessage.get_status_transfer():
-            reg_msg = RegistrationStatusMessage.get_status_confirmed_transfer()
+            reg_msg = RegistrationStatusMessage.get_status_admitted_transfer()
         else:
             reg_msg = RegistrationStatusMessage.get_status_confirmed()
 
@@ -288,26 +289,27 @@ class UploadDocumentsView(Phase2BaseView, UpdateView):
         return super(UploadDocumentsView, self).form_valid(form)
 
 
-@login_required()
-@user_passes_test(is_phase2_eligible)
-def upload_documents_for_incomplete(request):
-    # it is ok to come here unconditionally if uploaded docs are incomplete
-    if request.method == 'GET' and not request.user.verification_documents_incomplete:
-        return redirect('student_area')
+class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
+    template_name = 'undergraduate_admission/phase2/plain_form.html'
+    form_class = MissingDocumentsForm
+    success_url = reverse_lazy('student_area')
 
-    form = DocumentsForm(request.POST or None, request.FILES or None, instance=request.user)
+    def test_func(self):
+        original_test_result = super(UploadMissingDocumentsView, self).test_func()
+        return original_test_result and self.request.user.verification_documents_incomplete
 
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Documents were uploaded successfully. We will verify your information '
-                                            'and get back to you soon...'))
-                return redirect('student_area')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
+    def get_object(self):
+        return self.request.user
 
-    return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
+    def form_valid(self, form):
+        saved = form.save()
+        if saved:
+            messages.success(self.request, _('Documents were uploaded successfully. We will verify your information '
+                                             'and get back to you soon...'))
+        else:
+            messages.error(self.request, _('Error saving info. Try again later!'))
+
+        return super(UploadMissingDocumentsView, self).form_valid(form)
 
 
 @login_required()

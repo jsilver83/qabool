@@ -14,9 +14,12 @@ def student_info_commands(context):
     can_withdraw = (phase == 'ADMITTED'
                     or user.status_message == RegistrationStatusMessage.get_status_confirmed())
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
-    can_print_docs = (phase == 'ADMITTED' and user.tarifi_week_attendance_date)
-    can_confirm = phase == 'PARTIALLY-ADMITTED' \
-                  and user.status_message != RegistrationStatusMessage.get_status_confirmed()
+    can_print_docs = (user.status_message == RegistrationStatusMessage.get_status_admitted()
+                      and user.tarifi_week_attendance_date)
+
+    can_confirm = (user.status_message == RegistrationStatusMessage.get_status_partially_admitted()
+                   and AdmissionSemester.get_phase2_active_semester(user))
+
     can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)
     can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing
                        and AdmissionSemester.get_phase4_active_semester())
@@ -29,10 +32,10 @@ def student_info_commands(context):
         can_search_in_housing = False
     has_pic = phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED'
     can_edit_phase1_info = phase == 'APPLIED' and AdmissionSemester.check_if_phase1_is_active()
-    can_edit_contact_info = phase != 'REJECTED' \
-                            and phase != 'WITHDRAWN' \
-                            and phase != 'ADMITTED' \
-                            and not can_edit_phase1_info
+    can_edit_contact_info = (phase != 'REJECTED'
+                             and phase != 'WITHDRAWN'
+                             and phase != 'ADMITTED'
+                             and not can_edit_phase1_info)
 
     status_css_class = 'info'
     if phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED':

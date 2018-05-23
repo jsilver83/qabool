@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-22 13:21+0300\n"
+"POT-Creation-Date: 2018-05-23 16:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,14 +90,14 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
 #: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:250
-#: undergraduate_admission/forms/phase2_forms.py:295
-#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:589
+#: undergraduate_admission/forms/phase2_forms.py:321
+#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:597
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:73
 msgid "KFUPM ID"
 msgstr ""
 
-#: find_roommate/forms.py:108 undergraduate_admission/forms/phase2_forms.py:321
+#: find_roommate/forms.py:108 undergraduate_admission/forms/phase2_forms.py:347
 msgid "Invalid KFUPM ID"
 msgstr ""
 
@@ -391,7 +391,7 @@ msgstr ""
 
 #: find_roommate/views.py:71 find_roommate/views.py:143
 #: undergraduate_admission/views/phase1_views.py:28
-#: undergraduate_admission/views/phase2_views.py:83
+#: undergraduate_admission/views/phase2_views.py:84
 #: undergraduate_admission/views/phase3_views.py:52
 msgid "Error."
 msgstr ""
@@ -437,15 +437,15 @@ msgstr ""
 msgid "Request was cancelled as per your request..."
 msgstr ""
 
-#: find_roommate/views.py:257 undergraduate_admission/views/phase2_views.py:112
-#: undergraduate_admission/views/phase2_views.py:136
-#: undergraduate_admission/views/phase2_views.py:160
-#: undergraduate_admission/views/phase2_views.py:184
-#: undergraduate_admission/views/phase2_views.py:218
-#: undergraduate_admission/views/phase2_views.py:248
-#: undergraduate_admission/views/phase2_views.py:286
-#: undergraduate_admission/views/phase2_views.py:308
-#: undergraduate_admission/views/phase2_views.py:329
+#: find_roommate/views.py:257 undergraduate_admission/views/phase2_views.py:113
+#: undergraduate_admission/views/phase2_views.py:137
+#: undergraduate_admission/views/phase2_views.py:161
+#: undergraduate_admission/views/phase2_views.py:185
+#: undergraduate_admission/views/phase2_views.py:219
+#: undergraduate_admission/views/phase2_views.py:249
+#: undergraduate_admission/views/phase2_views.py:287
+#: undergraduate_admission/views/phase2_views.py:310
+#: undergraduate_admission/views/phase2_views.py:331
 msgid "Error saving info. Try again later!"
 msgstr ""
 
@@ -502,11 +502,11 @@ msgstr ""
 msgid "English Speaking Test Date"
 msgstr ""
 
-#: tarifi/models.py:165 undergraduate_admission/models.py:1076
+#: tarifi/models.py:165 undergraduate_admission/models.py:1101
 msgid "Start Date"
 msgstr ""
 
-#: tarifi/models.py:166 undergraduate_admission/models.py:1077
+#: tarifi/models.py:166 undergraduate_admission/models.py:1102
 msgid "End Date"
 msgstr ""
 
@@ -518,7 +518,7 @@ msgstr ""
 msgid "Location (English)"
 msgstr ""
 
-#: tarifi/models.py:169 undergraduate_admission/models.py:1075
+#: tarifi/models.py:169 undergraduate_admission/models.py:1100
 msgid "Slots"
 msgstr ""
 
@@ -530,24 +530,24 @@ msgstr ""
 msgid "Attender"
 msgstr ""
 
-#: tarifi/models.py:179 undergraduate_admission/models.py:881
+#: tarifi/models.py:179 undergraduate_admission/models.py:906
 msgid "Description"
 msgstr ""
 
 #: tarifi/models.py:180 tarifi/models.py:252
-#: undergraduate_admission/models.py:772 undergraduate_admission/models.py:809
-#: undergraduate_admission/models.py:882 undergraduate_admission/models.py:924
-#: undergraduate_admission/models.py:1008
-#: undergraduate_admission/models.py:1038
-#: undergraduate_admission/models.py:1078
+#: undergraduate_admission/models.py:797 undergraduate_admission/models.py:834
+#: undergraduate_admission/models.py:907 undergraduate_admission/models.py:949
+#: undergraduate_admission/models.py:1033
+#: undergraduate_admission/models.py:1063
+#: undergraduate_admission/models.py:1103
 msgid "Show"
 msgstr ""
 
-#: tarifi/models.py:181 undergraduate_admission/models.py:773
-#: undergraduate_admission/models.py:810 undergraduate_admission/models.py:883
-#: undergraduate_admission/models.py:925 undergraduate_admission/models.py:1009
-#: undergraduate_admission/models.py:1039
-#: undergraduate_admission/models.py:1079
+#: tarifi/models.py:181 undergraduate_admission/models.py:798
+#: undergraduate_admission/models.py:835 undergraduate_admission/models.py:908
+#: undergraduate_admission/models.py:950 undergraduate_admission/models.py:1034
+#: undergraduate_admission/models.py:1064
+#: undergraduate_admission/models.py:1104
 msgid "Display Order"
 msgstr ""
 
@@ -620,61 +620,71 @@ msgstr ""
 msgid "Can NOT Print"
 msgstr ""
 
-#: undergraduate_admission/admin.py:161 undergraduate_admission/models.py:205
+#: undergraduate_admission/admin.py:168 undergraduate_admission/models.py:205
 msgid "High School Certificate"
 msgstr ""
 
-#: undergraduate_admission/admin.py:165 undergraduate_admission/models.py:222
+#: undergraduate_admission/admin.py:172 undergraduate_admission/models.py:222
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:27
 msgid "Personal Picture"
 msgstr ""
 
-#: undergraduate_admission/admin.py:169 undergraduate_admission/models.py:134
+#: undergraduate_admission/admin.py:176 undergraduate_admission/admin.py:204
+#: undergraduate_admission/models.py:134
 msgid "Mother Government ID"
 msgstr ""
 
-#: undergraduate_admission/admin.py:173 undergraduate_admission/models.py:142
+#: undergraduate_admission/admin.py:180 undergraduate_admission/admin.py:208
+#: undergraduate_admission/models.py:142
 msgid "Birth Date Certificate"
 msgstr ""
 
-#: undergraduate_admission/admin.py:177 undergraduate_admission/models.py:150
+#: undergraduate_admission/admin.py:184 undergraduate_admission/admin.py:212
+#: undergraduate_admission/models.py:150
 msgid "Government ID File"
 msgstr ""
 
-#: undergraduate_admission/admin.py:181 undergraduate_admission/models.py:167
+#: undergraduate_admission/admin.py:188 undergraduate_admission/admin.py:216
+#: undergraduate_admission/models.py:167
 msgid "Upload Passport"
 msgstr ""
 
-#: undergraduate_admission/admin.py:185 undergraduate_admission/models.py:213
+#: undergraduate_admission/admin.py:192 undergraduate_admission/admin.py:220
+#: undergraduate_admission/models.py:213
 msgid "Courses Certificate"
 msgstr ""
 
-#: undergraduate_admission/admin.py:189 undergraduate_admission/models.py:312
+#: undergraduate_admission/admin.py:196 undergraduate_admission/admin.py:224
+#: undergraduate_admission/models.py:312
 msgid "Vehicle Registration File"
 msgstr ""
 
-#: undergraduate_admission/admin.py:194 undergraduate_admission/models.py:330
+#: undergraduate_admission/admin.py:201 undergraduate_admission/models.py:320
+msgid "Driving License File"
+msgstr ""
+
+#: undergraduate_admission/admin.py:229 undergraduate_admission/models.py:338
 msgid "Bank Account Identification File"
 msgstr ""
 
-#: undergraduate_admission/admin.py:200
+#: undergraduate_admission/admin.py:235
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:29
 msgid "Documents"
 msgstr ""
 
-#: undergraduate_admission/admin.py:244
+#: undergraduate_admission/admin.py:279
 msgid "Sync with Yesser"
 msgstr ""
 
-#: undergraduate_admission/admin.py:447
+#: undergraduate_admission/admin.py:482
 msgid "Qabool"
 msgstr ""
 
-#: undergraduate_admission/admin.py:448
+#: undergraduate_admission/admin.py:483
 msgid "Qabool Administration"
 msgstr ""
 
-#: undergraduate_admission/admin.py:449
+#: undergraduate_admission/admin.py:484
 msgid "Administration"
 msgstr ""
 
@@ -760,9 +770,9 @@ msgstr ""
 #: undergraduate_admission/forms/general_forms.py:117
 #: undergraduate_admission/forms/general_forms.py:137
 #: undergraduate_admission/forms/phase1_forms.py:86
-#: undergraduate_admission/forms/phase2_forms.py:288
-#: undergraduate_admission/models.py:462 undergraduate_admission/models.py:829
-#: undergraduate_admission/models.py:866
+#: undergraduate_admission/forms/phase2_forms.py:314
+#: undergraduate_admission/models.py:470 undergraduate_admission/models.py:854
+#: undergraduate_admission/models.py:891
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:26
@@ -783,13 +793,13 @@ msgid "Message Status"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:238
-#: undergraduate_admission/models.py:27 undergraduate_admission/models.py:493
-#: undergraduate_admission/models.py:586
+#: undergraduate_admission/models.py:27 undergraduate_admission/models.py:501
+#: undergraduate_admission/models.py:594
 msgid "Admission Semester"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:240
-#: undergraduate_admission/models.py:374
+#: undergraduate_admission/models.py:382
 msgid "Eligible For Housing"
 msgstr ""
 
@@ -848,7 +858,7 @@ msgstr ""
 #: undergraduate_admission/forms/general_forms.py:125
 #: undergraduate_admission/forms/general_forms.py:181
 #: undergraduate_admission/forms/phase1_forms.py:174
-#: undergraduate_admission/forms/phase2_forms.py:329
+#: undergraduate_admission/forms/phase2_forms.py:355
 msgid "Confirmation Code"
 msgstr ""
 
@@ -862,7 +872,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:151
 #: undergraduate_admission/forms/phase1_forms.py:168
-#: undergraduate_admission/forms/phase2_forms.py:324
+#: undergraduate_admission/forms/phase2_forms.py:350
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr ""
 
@@ -872,7 +882,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:159
 #: undergraduate_admission/forms/phase1_forms.py:169
-#: undergraduate_admission/forms/phase2_forms.py:325
+#: undergraduate_admission/forms/phase2_forms.py:351
 msgid "Enter the same password as before, for verification"
 msgstr ""
 
@@ -912,7 +922,7 @@ msgid ""
 msgstr ""
 
 #: undergraduate_admission/forms/phase1_forms.py:90
-#: undergraduate_admission/forms/phase2_forms.py:292
+#: undergraduate_admission/forms/phase2_forms.py:318
 msgid ""
 "National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or "
 "2xxxxxxxxx."
@@ -957,25 +967,26 @@ msgid "Disability type(s) can not be empty"
 msgstr ""
 
 #: undergraduate_admission/forms/phase2_forms.py:175
+#: undergraduate_admission/forms/phase2_forms.py:235
 msgid "Vehicle info is required."
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:227
+#: undergraduate_admission/forms/phase2_forms.py:253
 msgid ""
 "Please upload clear scanned images with good quality. Allowed formats: jpg, "
 "jpeg, png, bmp, gif. Max Size: 2 MB"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:297
+#: undergraduate_admission/forms/phase2_forms.py:323
 msgid "Enter the ID given to you by KFUPM"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:300
+#: undergraduate_admission/forms/phase2_forms.py:326
 #: undergraduate_admission/models.py:217
 msgid "Student Notes"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:346
+#: undergraduate_admission/forms/phase2_forms.py:372
 msgid "You are not eligible for a transfer to KFUPM"
 msgstr ""
 
@@ -1355,314 +1366,324 @@ msgstr ""
 msgid "Vehicle Owner"
 msgstr ""
 
-#: undergraduate_admission/models.py:320
-msgid "Driving License File"
+#: undergraduate_admission/models.py:324
+msgid "Bank Name"
 msgstr ""
 
-#: undergraduate_admission/models.py:324 undergraduate_admission/models.py:325
-msgid "Bank Account"
+#: undergraduate_admission/models.py:325
+msgid "Your IBAN"
 msgstr ""
 
-#: undergraduate_admission/models.py:336
-msgid "Admission Letter Print Date"
+#: undergraduate_admission/models.py:326
+msgid ""
+"Your International Bank Account Number (IBAN) for your own Saudi bank "
+"account. Your IBAN format should be SA followed by 22 digits."
 msgstr ""
 
-#: undergraduate_admission/models.py:339
-msgid "Medical Report Print Date"
-msgstr ""
-
-#: undergraduate_admission/models.py:340
-msgid "Withdrawal Date"
+#: undergraduate_admission/models.py:331
+msgid "You have entered an invalid IBAN"
 msgstr ""
 
 #: undergraduate_admission/models.py:344
-msgid "Withdrew To University"
+msgid "Admission Letter Print Date"
+msgstr ""
+
+#: undergraduate_admission/models.py:347
+msgid "Medical Report Print Date"
 msgstr ""
 
 #: undergraduate_admission/models.py:348
+msgid "Withdrawal Date"
+msgstr ""
+
+#: undergraduate_admission/models.py:352
+msgid "Withdrew To University"
+msgstr ""
+
+#: undergraduate_admission/models.py:356
 msgid "Withdrawal Reason"
 msgstr ""
 
-#: undergraduate_admission/models.py:349 undergraduate_admission/models.py:477
+#: undergraduate_admission/models.py:357 undergraduate_admission/models.py:485
 msgid "Phase 2 Start Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:350 undergraduate_admission/models.py:478
+#: undergraduate_admission/models.py:358 undergraduate_admission/models.py:486
 msgid "Phase 2 End Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:351 undergraduate_admission/models.py:479
+#: undergraduate_admission/models.py:359 undergraduate_admission/models.py:487
 msgid "Phase 3 Start Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:352 undergraduate_admission/models.py:480
+#: undergraduate_admission/models.py:360 undergraduate_admission/models.py:488
 msgid "Phase 3 End Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:353
+#: undergraduate_admission/models.py:361
 msgid "Phase 2 Submit Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:354
+#: undergraduate_admission/models.py:362
 msgid "Phase 3 Submit Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:357
+#: undergraduate_admission/models.py:365
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:33
 msgid "Assigned Committee Member"
 msgstr ""
 
-#: undergraduate_admission/models.py:359
+#: undergraduate_admission/models.py:367
 msgid "Uploaded docs are incomplete?"
 msgstr ""
 
-#: undergraduate_admission/models.py:362
+#: undergraduate_admission/models.py:370
 msgid "Uploaded picture is rejected?"
 msgstr ""
 
-#: undergraduate_admission/models.py:364 undergraduate_admission/models.py:385
+#: undergraduate_admission/models.py:372 undergraduate_admission/models.py:393
 msgid "Issues With Uploaded Docs"
 msgstr ""
 
-#: undergraduate_admission/models.py:365
+#: undergraduate_admission/models.py:373
 msgid "Verification Note"
 msgstr ""
 
-#: undergraduate_admission/models.py:370
+#: undergraduate_admission/models.py:378
 msgid "Withdrawal Proof Letter"
 msgstr ""
 
-#: undergraduate_admission/models.py:375
+#: undergraduate_admission/models.py:383
 msgid "Roommate ID"
 msgstr ""
 
-#: undergraduate_admission/models.py:377
+#: undergraduate_admission/models.py:385
 msgid "Tarifi Week Attendance Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:397
+#: undergraduate_admission/models.py:405
 msgid "Full Name"
 msgstr ""
 
-#: undergraduate_admission/models.py:474
+#: undergraduate_admission/models.py:482
 msgid "Semester Name"
 msgstr ""
 
-#: undergraduate_admission/models.py:475
+#: undergraduate_admission/models.py:483
 msgid "Phase 1 Start Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:476
+#: undergraduate_admission/models.py:484
 msgid "Phase 1 End Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:481
+#: undergraduate_admission/models.py:489
 msgid "Phase 4 Start Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:482
+#: undergraduate_admission/models.py:490
 msgid "Phase 4 End Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:484
+#: undergraduate_admission/models.py:492
 msgid "High School GPA Weight"
 msgstr ""
 
-#: undergraduate_admission/models.py:485
+#: undergraduate_admission/models.py:493
 msgid "Qudrat Score Weight"
 msgstr ""
 
-#: undergraduate_admission/models.py:486
+#: undergraduate_admission/models.py:494
 msgid "Tahsili Score Weight"
 msgstr ""
 
-#: undergraduate_admission/models.py:487
+#: undergraduate_admission/models.py:495
 msgid "Cutoff Point"
 msgstr ""
 
-#: undergraduate_admission/models.py:488
+#: undergraduate_admission/models.py:496
 msgid "Active Semester"
 msgstr ""
 
-#: undergraduate_admission/models.py:489
+#: undergraduate_admission/models.py:497
 msgid ""
 "Indicator of the current active semester. This will be used in the admin-"
 "side and committee pages"
 msgstr ""
 
-#: undergraduate_admission/models.py:494
+#: undergraduate_admission/models.py:502
 msgid "Admission: Admission Semesters"
 msgstr ""
 
-#: undergraduate_admission/models.py:592
+#: undergraduate_admission/models.py:600
 msgid "Registrar: KFUPM ID Pools"
 msgstr ""
 
-#: undergraduate_admission/models.py:616
+#: undergraduate_admission/models.py:624
 msgid "Status (Arabic)"
 msgstr ""
 
-#: undergraduate_admission/models.py:617
+#: undergraduate_admission/models.py:625
 msgid "Status (English)"
 msgstr ""
 
-#: undergraduate_admission/models.py:632
+#: undergraduate_admission/models.py:640
 msgid "Admission: Registration Status"
 msgstr ""
 
-#: undergraduate_admission/models.py:636
+#: undergraduate_admission/models.py:644
 msgid "Registration Status Message AR"
 msgstr ""
 
-#: undergraduate_admission/models.py:637
+#: undergraduate_admission/models.py:645
 msgid "Registration Status Message EN"
 msgstr ""
 
-#: undergraduate_admission/models.py:648
+#: undergraduate_admission/models.py:656
 msgid "Admission: Registration Status Messages"
 msgstr ""
 
-#: undergraduate_admission/models.py:776
+#: undergraduate_admission/models.py:801
 msgid "Admission: Look ups"
 msgstr ""
 
-#: undergraduate_admission/models.py:807
+#: undergraduate_admission/models.py:832
 msgid "City Name Arabic"
 msgstr ""
 
-#: undergraduate_admission/models.py:808
+#: undergraduate_admission/models.py:833
 msgid "City Name English"
 msgstr ""
 
-#: undergraduate_admission/models.py:825
+#: undergraduate_admission/models.py:850
 msgid "Admission: Cities"
 msgstr ""
 
-#: undergraduate_admission/models.py:830 undergraduate_admission/models.py:867
+#: undergraduate_admission/models.py:855 undergraduate_admission/models.py:892
 msgid "Student Name"
 msgstr ""
 
-#: undergraduate_admission/models.py:831
+#: undergraduate_admission/models.py:856
 msgid "Message"
 msgstr ""
 
-#: undergraduate_admission/models.py:832
+#: undergraduate_admission/models.py:857
 msgid "University Code"
 msgstr ""
 
-#: undergraduate_admission/models.py:841
+#: undergraduate_admission/models.py:866
 msgid "Last Trial Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:842
+#: undergraduate_admission/models.py:867
 msgid "Count Trial"
 msgstr ""
 
-#: undergraduate_admission/models.py:845
+#: undergraduate_admission/models.py:870
 msgid "Admission: Denied Students"
 msgstr ""
 
-#: undergraduate_admission/models.py:868
+#: undergraduate_admission/models.py:893
 msgid "City"
 msgstr ""
 
-#: undergraduate_admission/models.py:869
+#: undergraduate_admission/models.py:894
 msgid "Attended"
 msgstr ""
 
-#: undergraduate_admission/models.py:872
+#: undergraduate_admission/models.py:897
 msgid "Admission: Distinguished Students"
 msgstr ""
 
-#: undergraduate_admission/models.py:879
+#: undergraduate_admission/models.py:904
 msgid "Graduation Year (English)"
 msgstr ""
 
-#: undergraduate_admission/models.py:880
+#: undergraduate_admission/models.py:905
 msgid "Graduation Year (Arabic)"
 msgstr ""
 
-#: undergraduate_admission/models.py:887
+#: undergraduate_admission/models.py:912
 msgid "Admission: Graduation Years"
 msgstr ""
 
-#: undergraduate_admission/models.py:922
+#: undergraduate_admission/models.py:947
 msgid "Nationality (Arabic)"
 msgstr ""
 
-#: undergraduate_admission/models.py:923
+#: undergraduate_admission/models.py:948
 msgid "Nationality (English)"
 msgstr ""
 
-#: undergraduate_admission/models.py:953
+#: undergraduate_admission/models.py:978
 msgid "Admission: Nationalities"
 msgstr ""
 
-#: undergraduate_admission/models.py:965
+#: undergraduate_admission/models.py:990
 msgid "Agreement Type"
 msgstr ""
 
-#: undergraduate_admission/models.py:967
+#: undergraduate_admission/models.py:992
 msgid "Agreement Header (Arabic)"
 msgstr ""
 
-#: undergraduate_admission/models.py:969
+#: undergraduate_admission/models.py:994
 msgid "Agreement Header (English)"
 msgstr ""
 
-#: undergraduate_admission/models.py:971
+#: undergraduate_admission/models.py:996
 msgid "Agreement Footer (Arabic)"
 msgstr ""
 
-#: undergraduate_admission/models.py:973
+#: undergraduate_admission/models.py:998
 msgid "Agreement Footer (English)"
 msgstr ""
 
-#: undergraduate_admission/models.py:976
+#: undergraduate_admission/models.py:1001
 msgid "Admission and Student Affairs: Agreements"
 msgstr ""
 
-#: undergraduate_admission/models.py:1006
+#: undergraduate_admission/models.py:1031
 msgid "Agreement Text (Arabic)"
 msgstr ""
 
-#: undergraduate_admission/models.py:1007
+#: undergraduate_admission/models.py:1032
 msgid "Agreement Text (English)"
 msgstr ""
 
-#: undergraduate_admission/models.py:1023
+#: undergraduate_admission/models.py:1048
 msgid "Admission and Student Affairs: Agreement Items"
 msgstr ""
 
-#: undergraduate_admission/models.py:1029
+#: undergraduate_admission/models.py:1054
 msgid "Counter"
 msgstr ""
 
-#: undergraduate_admission/models.py:1034
+#: undergraduate_admission/models.py:1059
 msgid "Arabic Title"
 msgstr ""
 
-#: undergraduate_admission/models.py:1035
+#: undergraduate_admission/models.py:1060
 msgid "English Title"
 msgstr ""
 
-#: undergraduate_admission/models.py:1036
+#: undergraduate_admission/models.py:1061
 msgid "Arabic Description"
 msgstr ""
 
-#: undergraduate_admission/models.py:1037
+#: undergraduate_admission/models.py:1062
 msgid "English Description"
 msgstr ""
 
-#: undergraduate_admission/models.py:1062
+#: undergraduate_admission/models.py:1087
 msgid "Admission: Important Date Sidebar"
 msgstr ""
 
-#: undergraduate_admission/models.py:1074
+#: undergraduate_admission/models.py:1099
 msgid "Reception Date"
 msgstr ""
 
-#: undergraduate_admission/models.py:1082
+#: undergraduate_admission/models.py:1107
 msgid "Orientation Week: Schedule"
 msgstr ""
 
@@ -1719,17 +1740,17 @@ msgid ""
 "Undergraduate Admission | King Fahd University of Petroleum &amp; Minerals"
 msgstr ""
 
-#: undergraduate_admission/templates/base.html:47
+#: undergraduate_admission/templates/base.html:46
 msgid "Welcome"
 msgstr ""
 
-#: undergraduate_admission/templates/base.html:49
+#: undergraduate_admission/templates/base.html:48
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:63
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:41
 msgid "Logout"
 msgstr ""
 
-#: undergraduate_admission/templates/base.html:104
+#: undergraduate_admission/templates/base.html:103
 msgid ""
 "\n"
 "                    &copy; Admissions Office, King Fahd University of "
@@ -1750,7 +1771,6 @@ msgid "Re-upload file"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/_important_dates.html:6
-#: undergraduate_admission/templates/undergraduate_admission/login.html:46
 msgid "Important Dates"
 msgstr ""
 
@@ -2015,9 +2035,9 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/login.html:23
 msgid ""
 "\n"
-"            <h1>Review your Application</h1>\n"
-"            <h4>If you have applied before, you can login below to review "
-"your application for admission</h4>\n"
+"            <h3>Review your Application</h3>\n"
+"            If you have applied before, you can login below to review your "
+"application for admission\n"
 "        "
 msgstr ""
 
@@ -2492,7 +2512,7 @@ msgstr ""
 msgid "Error resetting password. Make sure you enter the correct info."
 msgstr ""
 
-#: undergraduate_admission/views/general_views.py:109
+#: undergraduate_admission/views/general_views.py:107
 msgid "Contact Info was updated successfully..."
 msgstr ""
 
@@ -2504,50 +2524,50 @@ msgstr ""
 msgid "Info was updated successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:108
+#: undergraduate_admission/views/phase2_views.py:109
 msgid "Personal Info was saved successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:132
+#: undergraduate_admission/views/phase2_views.py:133
 msgid "Guardian Contact Info was saved successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:156
+#: undergraduate_admission/views/phase2_views.py:157
 msgid "Relative Info was saved successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:180
+#: undergraduate_admission/views/phase2_views.py:181
 msgid "Vehicle info was submitted successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:214
-#: undergraduate_admission/views/phase2_views.py:244
+#: undergraduate_admission/views/phase2_views.py:215
+#: undergraduate_admission/views/phase2_views.py:245
 msgid "Personal picture was uploaded successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:282
-#: undergraduate_admission/views/phase2_views.py:304
+#: undergraduate_admission/views/phase2_views.py:283
+#: undergraduate_admission/views/phase2_views.py:307
 msgid ""
 "Documents were uploaded successfully. We will verify your information and "
 "get back to you soon..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:325
+#: undergraduate_admission/views/phase2_views.py:327
 msgid "Documents were uploaded successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:338
+#: undergraduate_admission/views/phase2_views.py:340
 msgid "You have withdrawn from the university successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:397
+#: undergraduate_admission/views/phase2_views.py:399
 msgid "Your transfer request was approved"
 msgstr ""
 
-#: undergraduate_admission/views/phase3_views.py:102
+#: undergraduate_admission/views/phase3_views.py:106
 msgid "Tarifi time slot was chosen successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase3_views.py:105
+#: undergraduate_admission/views/phase3_views.py:109
 msgid "No IDs to assign. Contact the site admins..."
 msgstr ""

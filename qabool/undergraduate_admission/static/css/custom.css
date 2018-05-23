@@ -6,7 +6,7 @@
 @font-face {
   font-family: 'RotisSansSerifStd-Bold';
   src: url('../RotisSansSerifStd-Bold.eot') format('embedded-opentype');
-	src: local('☺'), url('../fonts/RotisSansSerifStd-Bold.woff') format('woff'), url('../fonts/RotisSansSerifStd-Bold.ttf') format('truetype'), url('../fonts/RotisSansSerifStd-Bold.svg') format('svg');
+	src: local('â˜º'), url('../fonts/RotisSansSerifStd-Bold.woff') format('woff'), url('../fonts/RotisSansSerifStd-Bold.ttf') format('truetype'), url('../fonts/RotisSansSerifStd-Bold.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }

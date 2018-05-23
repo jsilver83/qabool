@@ -1,11 +1,11 @@
-{% extends "base-home.html" %}
+{% extends "base-sidebar.html" %}
 {% load i18n %}
 {% load l10n %}
 {% load floppyforms %}
 
 {% block subcontent %}
 
-    <div class="col-lg-5" id="home-loginform">
+    <div class="col-lg-12" id="home-loginform">
         {% if phase1_active %}
             <h3>{% trans 'New Application For Admission' %}</h3>
             <center>
@@ -21,8 +21,8 @@
         {% endif %}
 
         {% blocktrans %}
-            <h1>Review your Application</h1>
-            <h4>If you have applied before, you can login below to review your application for admission</h4>
+            <h3>Review your Application</h3>
+            If you have applied before, you can login below to review your application for admission
         {% endblocktrans %}
 <hr/>
         {% if messages %}
@@ -34,51 +34,12 @@
         {% endif %}
         <form class="form-horizontal" role="form" method="post">
             {% csrf_token %}
-            {% form form using 'floppyforms/layouts/bootstrap3-inline.html' %}
+            {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
             <br>
             <input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{% url 'forgot_password' %}">{% trans 'Forgot Password?' %}</a>
             <input type="hidden" name="next" value="{{ next }}"/>
         </form>
     </div>
-    <div class="col-lg-1 pull-right"></div>
-    <div class="col-lg-6 pull-right">
-        <h3>{% trans 'Important Dates' %}</h3>
-        <hr>
-        <div class="row">
-            <div class="col-md-12" id="home-dates">
-                <ul>
-                    {% for date in important_dates %}
-                        <li><h3>{{ date.title }}</h3>
-                            <p>{{ date.description }}</p>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <hr>
-        <div class="row" id="other-details">
-            <div class="col-md-6 contact-details">
-                <ul>
-                    <li>+966 (13) 860 2901</li>
-                    <li>+966 (13) 860 2722</li>
-                    <li><a href="mailto:admissions@kfupm.edu.sa">admissions@kfupm.edu.sa</a></li>
-                    <li><a href="http://www.kfupm.edu.sa/admissions" target="_blank">www.kfupm.edu.sa/admissions</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-6 useful-links">
-                <ul>
-                    <li class="faq-icon">
-                        <a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/ContentDetailsPage.aspx?CUSTOMID=12&LinkID=LinkV3" target="_blank">اسئلة شائعة</a>
-                    </li>
-                    <li class="calculator-icon">
-                        <a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/QaboolCalculator.aspx" target="_blank">احسب نسبتك المركبة</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
 
 {% endblock subcontent %}
