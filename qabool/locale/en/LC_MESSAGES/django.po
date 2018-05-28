@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-23 16:59+0300\n"
+"POT-Creation-Date: 2018-05-28 11:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,14 +90,14 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
 #: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:250
-#: undergraduate_admission/forms/phase2_forms.py:321
+#: undergraduate_admission/forms/phase2_forms.py:323
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:597
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:73
 msgid "KFUPM ID"
 msgstr ""
 
-#: find_roommate/forms.py:108 undergraduate_admission/forms/phase2_forms.py:347
+#: find_roommate/forms.py:108 undergraduate_admission/forms/phase2_forms.py:349
 msgid "Invalid KFUPM ID"
 msgstr ""
 
@@ -620,88 +620,82 @@ msgstr ""
 msgid "Can NOT Print"
 msgstr ""
 
-#: undergraduate_admission/admin.py:168 undergraduate_admission/models.py:205
+#: undergraduate_admission/admin.py:171 undergraduate_admission/models.py:205
 msgid "High School Certificate"
 msgstr ""
 
-#: undergraduate_admission/admin.py:172 undergraduate_admission/models.py:222
+#: undergraduate_admission/admin.py:175 undergraduate_admission/models.py:222
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:27
 msgid "Personal Picture"
 msgstr ""
 
-#: undergraduate_admission/admin.py:176 undergraduate_admission/admin.py:204
-#: undergraduate_admission/models.py:134
+#: undergraduate_admission/admin.py:179 undergraduate_admission/models.py:134
 msgid "Mother Government ID"
 msgstr ""
 
-#: undergraduate_admission/admin.py:180 undergraduate_admission/admin.py:208
-#: undergraduate_admission/models.py:142
+#: undergraduate_admission/admin.py:183 undergraduate_admission/models.py:142
 msgid "Birth Date Certificate"
 msgstr ""
 
-#: undergraduate_admission/admin.py:184 undergraduate_admission/admin.py:212
-#: undergraduate_admission/models.py:150
+#: undergraduate_admission/admin.py:187 undergraduate_admission/models.py:150
 msgid "Government ID File"
 msgstr ""
 
-#: undergraduate_admission/admin.py:188 undergraduate_admission/admin.py:216
-#: undergraduate_admission/models.py:167
+#: undergraduate_admission/admin.py:191 undergraduate_admission/models.py:167
 msgid "Upload Passport"
 msgstr ""
 
-#: undergraduate_admission/admin.py:192 undergraduate_admission/admin.py:220
-#: undergraduate_admission/models.py:213
+#: undergraduate_admission/admin.py:195 undergraduate_admission/models.py:213
 msgid "Courses Certificate"
 msgstr ""
 
-#: undergraduate_admission/admin.py:196 undergraduate_admission/admin.py:224
-#: undergraduate_admission/models.py:312
+#: undergraduate_admission/admin.py:199 undergraduate_admission/models.py:312
 msgid "Vehicle Registration File"
 msgstr ""
 
-#: undergraduate_admission/admin.py:201 undergraduate_admission/models.py:320
+#: undergraduate_admission/admin.py:204 undergraduate_admission/models.py:320
 msgid "Driving License File"
 msgstr ""
 
-#: undergraduate_admission/admin.py:229 undergraduate_admission/models.py:338
+#: undergraduate_admission/admin.py:209 undergraduate_admission/models.py:338
 msgid "Bank Account Identification File"
 msgstr ""
 
-#: undergraduate_admission/admin.py:235
+#: undergraduate_admission/admin.py:215
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:29
 msgid "Documents"
 msgstr ""
 
-#: undergraduate_admission/admin.py:279
+#: undergraduate_admission/admin.py:259
 msgid "Sync with Yesser"
 msgstr ""
 
-#: undergraduate_admission/admin.py:482
+#: undergraduate_admission/admin.py:462
 msgid "Qabool"
 msgstr ""
 
-#: undergraduate_admission/admin.py:483
+#: undergraduate_admission/admin.py:463
 msgid "Qabool Administration"
 msgstr ""
 
-#: undergraduate_admission/admin.py:484
+#: undergraduate_admission/admin.py:464
 msgid "Administration"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:16
-#: undergraduate_admission/forms/admin_side_forms.py:211
+#: undergraduate_admission/forms/admin_side_forms.py:213
 msgid "Unknown"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:17
-#: undergraduate_admission/forms/admin_side_forms.py:212
+#: undergraduate_admission/forms/admin_side_forms.py:214
 #: undergraduate_admission/forms/phase1_forms.py:109
 #: undergraduate_admission/models.py:125
 msgid "Male"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:18
-#: undergraduate_admission/forms/admin_side_forms.py:213
+#: undergraduate_admission/forms/admin_side_forms.py:215
 #: undergraduate_admission/forms/phase1_forms.py:110
 #: undergraduate_admission/models.py:126
 msgid "Female"
@@ -757,20 +751,28 @@ msgid "Admission Total Operand"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:39
-#: undergraduate_admission/forms/admin_side_forms.py:66
+#: undergraduate_admission/forms/admin_side_forms.py:68
 msgid "Show Detailed Results"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:77
+#: undergraduate_admission/forms/admin_side_forms.py:66
+msgid "Reassign?"
+msgstr ""
+
+#: undergraduate_admission/forms/admin_side_forms.py:67
+msgid "Reassign students who has already been assigned to a committee member?"
+msgstr ""
+
+#: undergraduate_admission/forms/admin_side_forms.py:79
 msgid "Select Member(s)"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:150
+#: undergraduate_admission/forms/admin_side_forms.py:152
 #: undergraduate_admission/forms/general_forms.py:114
 #: undergraduate_admission/forms/general_forms.py:117
 #: undergraduate_admission/forms/general_forms.py:137
 #: undergraduate_admission/forms/phase1_forms.py:86
-#: undergraduate_admission/forms/phase2_forms.py:314
+#: undergraduate_admission/forms/phase2_forms.py:316
 #: undergraduate_admission/models.py:470 undergraduate_admission/models.py:854
 #: undergraduate_admission/models.py:891
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
@@ -783,8 +785,8 @@ msgstr ""
 msgid "Government ID"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:206
-#: undergraduate_admission/forms/admin_side_forms.py:239
+#: undergraduate_admission/forms/admin_side_forms.py:208
+#: undergraduate_admission/forms/admin_side_forms.py:241
 #: undergraduate_admission/models.py:35
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:45
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:46
@@ -792,18 +794,18 @@ msgstr ""
 msgid "Message Status"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:238
+#: undergraduate_admission/forms/admin_side_forms.py:240
 #: undergraduate_admission/models.py:27 undergraduate_admission/models.py:501
 #: undergraduate_admission/models.py:594
 msgid "Admission Semester"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:240
+#: undergraduate_admission/forms/admin_side_forms.py:242
 #: undergraduate_admission/models.py:382
 msgid "Eligible For Housing"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:243
+#: undergraduate_admission/forms/admin_side_forms.py:245
 msgid "SMS Message To Be Sent"
 msgstr ""
 
@@ -858,7 +860,7 @@ msgstr ""
 #: undergraduate_admission/forms/general_forms.py:125
 #: undergraduate_admission/forms/general_forms.py:181
 #: undergraduate_admission/forms/phase1_forms.py:174
-#: undergraduate_admission/forms/phase2_forms.py:355
+#: undergraduate_admission/forms/phase2_forms.py:357
 msgid "Confirmation Code"
 msgstr ""
 
@@ -872,7 +874,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:151
 #: undergraduate_admission/forms/phase1_forms.py:168
-#: undergraduate_admission/forms/phase2_forms.py:350
+#: undergraduate_admission/forms/phase2_forms.py:352
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr ""
 
@@ -882,7 +884,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:159
 #: undergraduate_admission/forms/phase1_forms.py:169
-#: undergraduate_admission/forms/phase2_forms.py:351
+#: undergraduate_admission/forms/phase2_forms.py:353
 msgid "Enter the same password as before, for verification"
 msgstr ""
 
@@ -922,7 +924,7 @@ msgid ""
 msgstr ""
 
 #: undergraduate_admission/forms/phase1_forms.py:90
-#: undergraduate_admission/forms/phase2_forms.py:318
+#: undergraduate_admission/forms/phase2_forms.py:320
 msgid ""
 "National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or "
 "2xxxxxxxxx."
@@ -967,26 +969,26 @@ msgid "Disability type(s) can not be empty"
 msgstr ""
 
 #: undergraduate_admission/forms/phase2_forms.py:175
-#: undergraduate_admission/forms/phase2_forms.py:235
+#: undergraduate_admission/forms/phase2_forms.py:237
 msgid "Vehicle info is required."
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:253
+#: undergraduate_admission/forms/phase2_forms.py:255
 msgid ""
 "Please upload clear scanned images with good quality. Allowed formats: jpg, "
 "jpeg, png, bmp, gif. Max Size: 2 MB"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:323
+#: undergraduate_admission/forms/phase2_forms.py:325
 msgid "Enter the ID given to you by KFUPM"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:326
+#: undergraduate_admission/forms/phase2_forms.py:328
 #: undergraduate_admission/models.py:217
 msgid "Student Notes"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:372
+#: undergraduate_admission/forms/phase2_forms.py:374
 msgid "You are not eligible for a transfer to KFUPM"
 msgstr ""
 
@@ -2102,7 +2104,7 @@ msgid ""
 "\t\t\t<strong>Important Note:</strong>\n"
 "\t\t\t<ul>\n"
 "\t\t\t\t<li>Please upload clear scanned images with good quality.</li>\n"
-"\t\t\t\t<li>Allowed formats: jpg, jpeg, png, bmp, gif.</li>\n"
+"\t\t\t\t<li>Allowed formats: pdf, jpg, jpeg, png, bmp, gif.</li>\n"
 "\t\t\t\t<li>Mobile-taken pictures will not be accepted.</li>\n"
 "\t\t\t</ul>\n"
 "\t\t"
@@ -2490,17 +2492,17 @@ msgid "New status has been applied to %(count)d of %(all)d students chosen..."
 msgstr ""
 
 #: undergraduate_admission/views/admin_side_views.py:136
-#: undergraduate_admission/views/admin_side_views.py:213
+#: undergraduate_admission/views/admin_side_views.py:220
 msgid "Error in updating status..."
 msgstr ""
 
-#: undergraduate_admission/views/admin_side_views.py:209
+#: undergraduate_admission/views/admin_side_views.py:216
 #, python-format
 msgid ""
 "%(count)d students were distributed amongst following members %(all)s ..."
 msgstr ""
 
-#: undergraduate_admission/views/admin_side_views.py:247
+#: undergraduate_admission/views/admin_side_views.py:254
 msgid "Verification submitted successfully!!!!"
 msgstr ""
 
@@ -2564,10 +2566,10 @@ msgstr ""
 msgid "Your transfer request was approved"
 msgstr ""
 
-#: undergraduate_admission/views/phase3_views.py:106
+#: undergraduate_admission/views/phase3_views.py:108
 msgid "Tarifi time slot was chosen successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase3_views.py:109
+#: undergraduate_admission/views/phase3_views.py:111
 msgid "No IDs to assign. Contact the site admins..."
 msgstr ""
