@@ -141,7 +141,14 @@ class CutOffPointView(AdminBaseView, View):
 class DistributeStudentsOnVerifiersView(AdminBaseView, View):
     def get_students_matching(self, request):
         selected_student_types = request.GET.getlist('student_type', [])
-        filtered = UserListFilter(request.GET, queryset=User.objects.filter(is_staff=False))
+        reassign = request.GET.get('reassign', False)
+        if reassign:
+            filtered = UserListFilter(request.GET,
+                                      queryset=User.objects.filter(is_staff=False))
+        else:
+            filtered = UserListFilter(request.GET,
+                                      queryset=User.objects.filter(is_staff=False,
+                                                                   verification_committee_member__isnull=True))
 
         filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
             .annotate(

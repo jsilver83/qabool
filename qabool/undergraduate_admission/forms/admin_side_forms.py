@@ -63,6 +63,8 @@ class DistributeForm(forms.ModelForm):
     )
     student_type = forms.CharField(widget=forms.CheckboxSelectMultiple(choices=STUDENT_TYPES),
                                    required=False, label=_('Student Type'))
+    reassign = forms.BooleanField(required=False, label=_('Reassign?'),
+                                  help_text=_('Reassign students who has already been assigned to a committee member?'))
     show_detailed_results = forms.BooleanField(required=False, label=_('Show Detailed Results'))
 
     class Meta:
@@ -78,7 +80,8 @@ class SelectCommitteeMemberForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(SelectCommitteeMemberForm, self).__init__(*args, **kwargs)
-        choices = User.objects.filter(is_staff=True)
+        choices = User.objects.filter(is_staff=True,
+                                      groups__name__in=['Verifying Committee', ])
 
         ch = [(o.username, o.username) for o in choices]
         self.fields['members'].widget = forms.CheckboxSelectMultiple(choices=ch)
