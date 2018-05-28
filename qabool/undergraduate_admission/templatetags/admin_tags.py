@@ -23,13 +23,17 @@ def admin_commands(context):
     }
 
 
-@register.simple_tag
-def render_uploaded_file(file_type, student_instance):
+@register.simple_tag(takes_context=True)
+def render_uploaded_file(context, file_type, student_instance):
+    request = context['request']
     file = getattr(student_instance, file_type)
     if file:
         served_file_url = reverse('download_user_file_admin', args=(file_type, student_instance.pk))
+        served_file_url = request.build_absolute_uri(served_file_url)
         if file.url.endswith('.pdf'):
-            return format_html('<a title="{title}" target="_blank" href="{url}">'
+            return format_html('<iframe src="http://docs.google.com/gview?url={url}" '
+                               'style="width:100%; height: 500px" frameborder="0"></iframe><br>'
+                               '<a title="{title}" target="_blank" href="{url}">'
                                '<i class="fa fa-file" aria-hidden="true"></i> Download PDF</a>',
                                url=served_file_url,
                                title=file_type)
