@@ -102,3 +102,45 @@ font-size: 70%!important;
     }
 }
 /* end of add by j and a */
+
+/* SIDEBAR */
+#sidebar .sidebar-nav ul li{
+    padding: 0px 30px 0px 0px;
+    background: url(../images/calendar-icon.svg) no-repeat top right;
+}
+#sidebar .sidebar-info ul li{
+    padding:0px 30px 5px 0px;
+}
+#sidebar .sidebar-nav .heading h2{
+	font-family: 'Hacen Tunisia Lt', serif;	
+}
+#sidebar .sidebar-info ul li a{
+    text-decoration: underline;
+}
+#sidebar .sidebar-info .heading h2{
+	font-family: 'Hacen Tunisia Lt', serif;
+}
+#sidebar .sidebar-info ul li.info{
+    background: url(../images/info-icon.svg) no-repeat top 5px right;
+}
+#sidebar .sidebar-info ul li.calculator{
+    background: url(../images/calculator-icon.svg) no-repeat top 5px right;
+}
+#sidebar .sidebar-info ul li.faq{
+    background: url(../images/faq-icon.svg) no-repeat top 5px right;
+}
+#sidebar .sidebar-info ul li.phone{
+    background: url(../images/phone-icon.svg) no-repeat top 5px right;
+    direction: ltr;
+}
+#sidebar .sidebar-info ul li.email{
+    background: url(../images/email-icon.svg) no-repeat top 5px right;
+}
+
+/* HOME PAGE FORM */
+#home-loginform h1{
+	font-family: 'Hacen Tunisia Lt', serif;
+}
+#home-loginform .btn{
+    margin: 0 0 0 20px;
+}

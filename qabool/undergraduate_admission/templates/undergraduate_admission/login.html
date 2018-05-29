@@ -32,14 +32,13 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <form class="form-horizontal" role="form" method="post">
+        <form id="home-loginform" class="form-group form-horizontal" role="form" method="post">
             {% csrf_token %}
-            {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+            {% form form using 'floppyforms/layouts/bootstrap3-inline.html' %}
             <br>
-            <input type="submit" class="btn btn-primary" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="submit" class="btn btn-primary btn-lg" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{% url 'forgot_password' %}">{% trans 'Forgot Password?' %}</a>
             <input type="hidden" name="next" value="{{ next }}"/>
         </form>
     </div>
-
 {% endblock subcontent %}

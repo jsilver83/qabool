@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 11:37+0300\n"
+"POT-Creation-Date: 2018-05-29 12:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -683,19 +683,19 @@ msgid "Administration"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:16
-#: undergraduate_admission/forms/admin_side_forms.py:213
+#: undergraduate_admission/forms/admin_side_forms.py:214
 msgid "Unknown"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:17
-#: undergraduate_admission/forms/admin_side_forms.py:214
+#: undergraduate_admission/forms/admin_side_forms.py:215
 #: undergraduate_admission/forms/phase1_forms.py:109
 #: undergraduate_admission/models.py:125
 msgid "Male"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:18
-#: undergraduate_admission/forms/admin_side_forms.py:215
+#: undergraduate_admission/forms/admin_side_forms.py:216
 #: undergraduate_admission/forms/phase1_forms.py:110
 #: undergraduate_admission/models.py:126
 msgid "Female"
@@ -767,7 +767,7 @@ msgstr ""
 msgid "Select Member(s)"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:152
+#: undergraduate_admission/forms/admin_side_forms.py:153
 #: undergraduate_admission/forms/general_forms.py:114
 #: undergraduate_admission/forms/general_forms.py:117
 #: undergraduate_admission/forms/general_forms.py:137
@@ -785,8 +785,8 @@ msgstr ""
 msgid "Government ID"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:208
-#: undergraduate_admission/forms/admin_side_forms.py:241
+#: undergraduate_admission/forms/admin_side_forms.py:209
+#: undergraduate_admission/forms/admin_side_forms.py:242
 #: undergraduate_admission/models.py:35
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:45
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:46
@@ -794,18 +794,18 @@ msgstr ""
 msgid "Message Status"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:240
+#: undergraduate_admission/forms/admin_side_forms.py:241
 #: undergraduate_admission/models.py:27 undergraduate_admission/models.py:501
 #: undergraduate_admission/models.py:594
 msgid "Admission Semester"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:242
+#: undergraduate_admission/forms/admin_side_forms.py:243
 #: undergraduate_admission/models.py:382
 msgid "Eligible For Housing"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:245
+#: undergraduate_admission/forms/admin_side_forms.py:246
 msgid "SMS Message To Be Sent"
 msgstr ""
 
@@ -1689,48 +1689,31 @@ msgstr ""
 msgid "Orientation Week: Schedule"
 msgstr ""
 
-#: undergraduate_admission/templates/base-sidebar.html:16
+#: undergraduate_admission/templates/base-sidebar.html:17
 msgid ""
 "\n"
-"\t\t\t<div class=\"media\">\n"
-"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-question-circle fa-2x\"></"
-"i></div>\n"
-"\t\t\t\t<div class=\"media-body\">\n"
-"\t\t\t\t\t<h4 class=\"media-heading\">FAQs</h4>\n"
-"\t\t\t\t\t<ul class=\"sidebar\">\n"
-"\t\t\t\t\t\t<li><strong>Registration is for male students only</strong></"
+"\t\t\t\t\t\t<div class=\"sidebar-info\">\n"
+"\t\t\t\t\t\t\t<div class=\"heading\">\n"
+"\t\t\t\t\t\t\t\t<h2>Important Information</h2>\n"
+"\t\t\t\t\t\t\t</div>\n"
+"\t\t\t\t\t\t\t<ul>\n"
+"\t\t\t\t\t\t\t\t<li class=\"info\">Registration is for male students only</"
 "li>\n"
-"\t\t\t\t\t\t<li><a href=\"http://www.kfupm.edu.sa/departments/admissions/"
-"SitePages/\n"
-"\t\t\t\t\tar/QaboolCalculator.aspx\" target=\"_blank\">Qabool Calculator</"
-"a>\n"
-"\t\t\t\t\t\t</li>\n"
-"\t\t\t\t\t\t<li><a href=\"http://www.kfupm.edu.sa/departments/admissions/"
-"SitePages/\n"
-"\t\t\t\t\tar/ContentDetailsPage.aspx?CUSTOMID=12&LinkID=LinkV3\" target="
-"\"_blank\">More FAQs</a>\n"
-"\t\t\t\t\t\t</li>\n"
-"\t\t\t\t\t</ul>\n"
-"\t\t\t\t</div>\n"
-"\t\t\t</div>\n"
-"\t\t\t<div class=\"media\">\n"
-"\t\t\t\t<div class=\"media-left\"><i class=\"fa fa-info-circle fa-2x\"></i></"
-"div>\n"
-"\t\t\t\t<div class=\"media-body\">\n"
-"\t\t\t\t\t<h4 class=\"media-heading text-uppercase\">Need Help?</h4>\n"
-"\t\t\t\t\t<ul class=\"sidebar\" style=\"font-family:Helvetica,Arial,sans-"
-"serif!important; font-size: 14px\">\n"
-"\t\t\t\t\t\t<li><i class=\"fa fa-volume-control-phone\"></i> +966 (13) 860 "
-"2901</li>\n"
-"\t\t\t\t\t\t<li><i class=\"fa fa-fax\"></i>  +966 (13) 860 2722</li>\n"
-"\t\t\t\t\t\t<li><i class=\"fa fa-envelope\"></i>  <a href=\"mailto:"
-"admissions@kfupm.edu.sa\">admissions@kfupm.edu.sa</a></li>\n"
-"\t\t\t\t\t\t<li><i class=\"fa fa-internet-explorer\"></i>  <a href=\"http://"
-"www.kfupm.edu.sa/admissions\">www.kfupm.edu.sa/admissions</a></li>\n"
-"\t\t\t\t\t</ul>\n"
-"\t\t\t\t</div>\n"
-"\t\t\t</div>\n"
-"\t\t\t"
+"\t\t\t\t\t\t\t\t<li class=\"calculator\"><a href=\"http://www.kfupm.edu.sa/"
+"departments/admissions/SitePages/\n"
+"\t\t\t\t\tar/QaboolCalculator.aspx\">Qabool Calculator</a></li>\n"
+"\t\t\t\t\t\t\t\t<li class=\"faq\"><a href=\"http://www.kfupm.edu.sa/"
+"departments/admissions/SitePages/\n"
+"\t\t\t\t\tar/ContentDetailsPage.aspx?CUSTOMID=12&LinkID=LinkV3\">FAQs</a></"
+"li>\n"
+"\t\t\t\t\t\t\t\t<li class=\"phone phone-no\">+966 (13) 860 2901<br>+966 (13) "
+"860 2722 (fax)</li>\n"
+"\t\t\t\t\t\t\t\t<li class=\"email\"><a href=\"mailto:admissions@kfupm.edu.sa"
+"\">admissions@kfupm.edu.sa</a>\n"
+"\t\t\t\t\t\t\t\t</li>\n"
+"\t\t\t\t\t\t\t</ul>\n"
+"\t\t\t\t\t\t</div>\n"
+"\t\t\t\t\t"
 msgstr ""
 
 #: undergraduate_admission/templates/base.html:5

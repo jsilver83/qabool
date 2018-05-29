@@ -3,46 +3,36 @@
 {% load important_dates %}
 
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="col-md-6 col-md-offset-1">
-			{% block subcontent %}
-			{% endblock subcontent %}
-			<br>&nbsp;<br>&nbsp;<br>
-		</div>
-		<div class="col-md-4 col-md-offset-1">
-			<hr  class="visible-xs visible-sm">
-            {% important_dates %}
-			{% blocktrans %}
-			<div class="media">
-				<div class="media-left"><i class="fa fa-question-circle fa-2x"></i></div>
-				<div class="media-body">
-					<h4 class="media-heading">FAQs</h4>
-					<ul class="sidebar">
-						<li><strong>Registration is for male students only</strong></li>
-						<li><a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/
-					ar/QaboolCalculator.aspx" target="_blank">Qabool Calculator</a>
-						</li>
-						<li><a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/
-					ar/ContentDetailsPage.aspx?CUSTOMID=12&LinkID=LinkV3" target="_blank">More FAQs</a>
-						</li>
-					</ul>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-1">
+				{% block subcontent %}
+				{% endblock subcontent %}
+				<br>&nbsp;<br>&nbsp;<br>
+			</div>
+			<div class="col-md-4 col-md-offset-1">
+				<hr class="visible-xs visible-sm">
+				<div id="sidebar">
+					{% important_dates %}
+					{% blocktrans %}
+						<div class="sidebar-info">
+							<div class="heading">
+								<h2>Important Information</h2>
+							</div>
+							<ul>
+								<li class="info">Registration is for male students only</li>
+								<li class="calculator"><a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/
+					ar/QaboolCalculator.aspx">Qabool Calculator</a></li>
+								<li class="faq"><a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/
+					ar/ContentDetailsPage.aspx?CUSTOMID=12&LinkID=LinkV3">FAQs</a></li>
+								<li class="phone phone-no">+966 (13) 860 2901<br>+966 (13) 860 2722 (fax)</li>
+								<li class="email"><a href="mailto:admissions@kfupm.edu.sa">admissions@kfupm.edu.sa</a>
+								</li>
+							</ul>
+						</div>
+					{% endblocktrans %}
 				</div>
 			</div>
-			<div class="media">
-				<div class="media-left"><i class="fa fa-info-circle fa-2x"></i></div>
-				<div class="media-body">
-					<h4 class="media-heading text-uppercase">Need Help?</h4>
-					<ul class="sidebar" style="font-family:Helvetica,Arial,sans-serif!important; font-size: 14px">
-						<li><i class="fa fa-volume-control-phone"></i> +966 (13) 860 2901</li>
-						<li><i class="fa fa-fax"></i>  +966 (13) 860 2722</li>
-						<li><i class="fa fa-envelope"></i>  <a href="mailto:admissions@kfupm.edu.sa">admissions@kfupm.edu.sa</a></li>
-						<li><i class="fa fa-internet-explorer"></i>  <a href="http://www.kfupm.edu.sa/admissions">www.kfupm.edu.sa/admissions</a></li>
-					</ul>
-				</div>
-			</div>
-			{% endblocktrans %}
 		</div>
 	</div>
-</div>
 {% endblock content %}
