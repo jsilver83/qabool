@@ -222,17 +222,19 @@ class MissingDocumentsForm(DocumentsForm):
     def __init__(self, *args, **kwargs):
         super(MissingDocumentsForm, self).__init__(*args, **kwargs)
         self.fields['bank_account_identification_file'].required = False
-        self.fields['vehicle_registration_file'].required = False
-        self.fields['driving_license_file'].required = False
+        have_a_vehicle = self.instance.have_a_vehicle
+        if not have_a_vehicle:
+            del self.fields['vehicle_registration_file']
+            del self.fields['driving_license_file']
 
     def clean(self):
         cleaned_data = super(MissingDocumentsForm, self).clean()
         have_a_vehicle = self.instance.have_a_vehicle
-        vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
-        driving_license_file = cleaned_data.get('driving_license_file')
-
-        if have_a_vehicle and not (vehicle_registration_file and driving_license_file):
-            raise forms.ValidationError(_('Vehicle info is required.'))
+        if have_a_vehicle:
+            vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
+            driving_license_file = cleaned_data.get('driving_license_file')
+            if not (vehicle_registration_file and driving_license_file):
+                raise forms.ValidationError(_('Vehicle info is required.'))
 
         return cleaned_data
 

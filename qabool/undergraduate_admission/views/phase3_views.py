@@ -88,6 +88,8 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer():
             return redirect('student_area')
+        else:
+            return super(ChooseTarifiTimeSlot, self).dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         return self.request.user
