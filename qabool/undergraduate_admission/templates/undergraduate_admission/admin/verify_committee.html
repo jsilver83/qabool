@@ -82,16 +82,16 @@
 
             {% if form.instance.bank_name %}
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                     {% formrow form.bank_name using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
                     {% formrow form.bank_account using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     {% render_uploaded_file 'bank_account_identification_file' form.instance %}<br>
                 </div>
             </div>
-            {% endif %}
             <hr>
+            {% endif %}
 
             <div class="row">
                 <div class="col-sm-6">

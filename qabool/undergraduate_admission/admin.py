@@ -66,8 +66,49 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        'student_notes',
                        ('admission_note', 'admission_note2', 'admission_note3', ), )
         }),
+        ('Important Dates', {
+            'classes': ('collapse',),
+            'fields': ('phase2_start_date', 'phase2_end_date',
+                       'phase3_start_date', 'phase3_end_date',),
+        }),
+        ('Committee Fields', {
+            'classes': ('collapse',),
+            'fields': ('verification_committee_member',
+                       'verification_documents_incomplete',
+                       'verification_picture_acceptable',
+                       'verification_status',
+                       'verification_notes'),
+        }),
+        ('Phase 3 Fields', {
+            'classes': ('collapse',),
+            'fields': (
+                'kfupm_id',
+                'admission_letter_print_date', 'medical_report_print_date', 'roommate_id', 'phase3_submit_date'),
+        }),
+        ('Withdrawal Fields', {
+            'classes': ('collapse',),
+            'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason'),
+
+        }),
+        ('Awareness Week Fields', {
+            'classes': ('collapse',),
+            'fields': ('eligible_for_housing',
+                       'tarifi_week_attendance_date', ),
+
+        }),
+        ('Phase 2 Fields - Uploaded Documents', {
+            'classes': ('collapse',),
+            'fields': ('high_school_certificate',
+                       'personal_picture',
+                       'mother_gov_id_file',
+                       'birth_certificate',
+                       'government_id_file',
+                       'passport_file',
+                       'courses_certificate',
+                       ),
+        }),
         ('Phase 2 Fields - Personal Information', {
-            'classes': ('wide',),
+            'classes': ('collapse',),
             'fields': (
                        ('government_id_type', 'government_id_issue', 'government_id_expiry', 'government_id_place', ),
                        ('passport_number', 'passport_place', 'passport_expiry', ),
@@ -80,19 +121,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        ('social_status', 'kids_no', ),
                        ('is_employed', 'employer_name', ),
                        ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
-                       ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
-                       'phase2_start_date', 'phase2_end_date', 'phase2_submit_date'
-                       ),
-        }),
-        ('Phase 2 Fields - Uploaded Documents', {
-            'classes': ('collapse',),
-            'fields': ('high_school_certificate',
-                       'personal_picture',
-                       'mother_gov_id_file',
-                       'birth_certificate',
-                       'government_id_file',
-                       'passport_file',
-                       'courses_certificate',
+                       ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ), 'phase2_submit_date'
                        ),
         }),
         ('Phase 2 Fields - Vehicle Info', {
@@ -121,32 +150,6 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
             'fields': (
                 'bank_name', 'bank_account', 'bank_account_identification_file',
             ),
-        }),
-        ('Committee Fields', {
-            'classes': ('collapse',),
-            'fields': ('verification_committee_member',
-                       'verification_documents_incomplete',
-                       'verification_picture_acceptable',
-                       'verification_status',
-                       'verification_notes'),
-        }),
-        ('Phase 3 Fields', {
-            'classes': ('collapse',),
-            'fields': (
-                'kfupm_id',
-                'admission_letter_print_date', 'medical_report_print_date', 'roommate_id',
-                'phase3_start_date', 'phase3_end_date', 'phase3_submit_date'),
-        }),
-        ('Withdrawal Fields', {
-            'classes': ('collapse',),
-            'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason'),
-
-        }),
-        ('Awareness Week Fields', {
-            'classes': ('collapse',),
-            'fields': ('eligible_for_housing',
-                       'tarifi_week_attendance_date', ),
-
         }),
     )
     date_hierarchy = 'date_joined'
@@ -200,29 +203,6 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
             docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
                                            text=_('Driving License File'),
                                            url=reverse('download_user_file_admin', args=('driving_license_file', obj.id)))
-            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
-                                           text=_('Mother Government ID'),
-                                           url=reverse('download_user_file_admin', args=('mother_gov_id_file', obj.id)))
-        if obj.birth_certificate:
-            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
-                                           text=_('Birth Date Certificate'),
-                                           url=reverse('download_user_file_admin', args=('birth_certificate', obj.id)))
-        if obj.government_id_file:
-            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
-                                           text=_('Government ID File'),
-                                           url=reverse('download_user_file_admin', args=('government_id_file', obj.id)))
-        if obj.passport_file:
-            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
-                                           text=_('Upload Passport'),
-                                           url=reverse('download_user_file_admin', args=('passport_file', obj.id)))
-        if obj.courses_certificate:
-            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
-                                           text=_('Courses Certificate'),
-                                           url=reverse('download_user_file_admin', args=('courses_certificate', obj.id)))
-        if obj.vehicle_registration_file:
-            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
-                                           text=_('Vehicle Registration File'),
-                                           url=reverse('download_user_file_admin', args=('vehicle_registration_file', obj.id)))
 
         if obj.bank_account_identification_file:
             docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
