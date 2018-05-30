@@ -30,7 +30,7 @@ ADMINS = [
 ]
 
 EMAIL_HOST_USER = '{{ email_user }}'
-EMAIL_HOST_PASSWORD = '{{ email_password.json.data.value|replace("'","\\'") }}'
+EMAIL_HOST_PASSWORD = '{{ email_password.json.data.value|replace("'","\'") }}'
 SERVER_EMAIL = '{{ email_user }}'
 DEFAULT_FROM_EMAIL = 'KFUPM Admission <{{ email_user }}>'
 
