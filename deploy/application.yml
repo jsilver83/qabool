@@ -28,7 +28,7 @@
     admins:
       - name: Abdullah Joud
         email: joud@kfupm.edu.sa
-    uwsgi_processes: 2
+    uwsgi_processes: 64
 
   vars_prompt:
     - name: ad_username
