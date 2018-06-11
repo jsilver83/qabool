@@ -96,6 +96,15 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        'tarifi_week_attendance_date', ),
 
         }),
+        ('Yesser Data Dump', {
+            'classes': ('collapse',),
+            'fields': (
+                ('yesser_high_school_data_dump', ),
+                ('yesser_qudrat_data_dump', ),
+                ('yesser_tahsili_data_dump', ),
+            ),
+        }),
+
         ('Phase 2 Fields - Uploaded Documents', {
             'classes': ('collapse',),
             'fields': ('high_school_certificate',
@@ -156,7 +165,8 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('id', 'date_joined', 'student_type', 'admission_total', 'phase2_submit_date',
                        'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
-                       'show_docs_links', )
+                       'show_docs_links', 'yesser_high_school_data_dump', 'yesser_qudrat_data_dump',
+                       'yesser_tahsili_data_dump', )
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
