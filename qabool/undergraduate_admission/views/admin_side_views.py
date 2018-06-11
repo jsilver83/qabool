@@ -17,7 +17,7 @@ from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
-from floppyforms.__future__ import modelformset_factory
+from django.utils import timezone
 from zeep import Client
 from zeep.transports import Transport
 
@@ -262,7 +262,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(YesserDataUpdate, self).get_context_data(**kwargs)
-        sem = AdmissionSemester.get_phase1_active_semester()
+        sem = AdmissionSemester.get_active_semester()
         students = User.objects.filter(semester=sem,
                                        is_staff=False,
                                        is_superuser=False)
@@ -274,7 +274,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
         manual_update = request.GET.get('manual_update', 0)
 
         if manual_update:
-            sem = AdmissionSemester.get_phase1_active_semester()
+            sem = AdmissionSemester.get_active_semester()
             students = User.objects.filter(semester=sem,
                                            is_staff=False,
                                            is_superuser=False)
@@ -358,6 +358,9 @@ def get_student_record_serialized(student, change_status=False):
         final_data['qudrat_before'] = student.qudrat_score
         if not qudrat_data['q_error']:
             changed = True
+
+            student.yesser_qudrat_data_dump = 'Fetched On %s================%s' % (timezone.now(), qudrat_data,)
+
             student.first_name_ar = qudrat_data['FirstName']
             student.second_name_ar = qudrat_data['SecondName']
             student.third_name_ar = qudrat_data['ThirdName']
@@ -367,42 +370,50 @@ def get_student_record_serialized(student, change_status=False):
         final_data['tahsili_before'] = student.tahsili_score
         if not tahsili_data['t_error']:
             changed = True
+
+            student.yesser_tahsili_data_dump = 'Fetched On %s================%s' % (timezone.now(), tahsili_data,)
+
             student.tahsili_score = tahsili_data['tahsili']
 
         final_data['high_school_gpa_before'] = student.high_school_gpa
         if not hs_data['hs_error']:
             changed = True
+
+            student.yesser_high_school_data_dump = 'Fetched On %s================%s' % (timezone.now(), hs_data,)
+
             student.high_school_gpa = hs_data['high_school_gpa']
+
             if hs_data['CertificationHijriYear']:
                 year = GraduationYear.get_graduation_year(hs_data['CertificationHijriYear'])
-                """
-                this is the case of student who entered his hs year wrong
-                """
-                if year and student.high_school_graduation_year != year:
-                    student.high_school_graduation_year = year
-                    special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % (student.username)
+
+                if year:
+                    """
+                    this is the case of student who entered his hs year wrong
+                    """
+                    if student.high_school_graduation_year != year:
+                        student.high_school_graduation_year = year
+                        special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % student.username
+
                     """
                     this is the case of a student who was marked as old hs but actually has recent hs in MOE
                     """
-                    if hs_data['CertificationHijriYear'] in ['2015-2016', '2016-2017'] \
+                    if year.type in [GraduationYear.GraduationYearTypes.CURRENT_YEAR,
+                                     GraduationYear.GraduationYearTypes.LAST_YEAR] \
                             and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
                         if change_status:
                             student.status_message = RegistrationStatusMessage.get_status_applied()
                         special_cases_log += \
-                            '{%s} was marked as old hs but actually has recent hs in MOE<br>' % (student.username)
-                """
-                this is the case of a student who has old hs status but he has recent hs in his application
-                """
-                if year and student.high_school_graduation_year == year and \
-                        student.status_message == RegistrationStatusMessage.get_status_old_high_school():
-                    if change_status:
-                        student.status_message = RegistrationStatusMessage.get_status_applied()
-                    special_cases_log += \
-                        "{%s} has old hs status but he has recent hs in his application<br>" % (student.username)
-                """
-                this is the case of a student who has old hs
-                """
-                if not year:
+                            '{%s} was marked as old hs but actually has recent hs in MOE<br>' % student.username
+                    """
+                    this is the case of a student who was marked as applied but actually has old hs in MOE
+                    """
+                    if year.type == GraduationYear.GraduationYearTypes.OLD_HS \
+                            and student.status_message == RegistrationStatusMessage.get_status_applied():
+                        if change_status:
+                            student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                        special_cases_log += \
+                            '{%s} was marked as applied but he actually has old hs in MOE<br>' % student.username
+                else:
                     try:
                         student.high_school_graduation_year = \
                             GraduationYear.objects.get(description__contains='Other')
@@ -411,14 +422,33 @@ def get_student_record_serialized(student, change_status=False):
                                                     description='Other', show=True, display_order=100000)
                         other_year.save()
                         student.high_school_graduation_year = other_year
+
+                    if student.status_message != RegistrationStatusMessage.get_status_old_high_school() and change_status:
+                        student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                    special_cases_log += \
+                        '{%s} was marked as old hs<br>' % student.username
                     """
-                    this is the case of a student who has old hs in MOE but has a status of applied
+                    this is the case of a student who has old hs year that is not included in the system
                     """
-                    if student.status_message == RegistrationStatusMessage.get_status_applied():
-                        if change_status:
-                            student.status_message = RegistrationStatusMessage.get_status_old_high_school()
-                        special_cases_log += \
-                            '{%s} has old hs in MOE but has a status of applied<br>' % (student.username)
+
+                """
+                this a case of a student with no CertificationHijriYear from yesser
+                """
+            else:
+                try:
+                    student.high_school_graduation_year = GraduationYear.objects.get(description__contains='Other')
+                except ObjectDoesNotExist:
+                    other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
+                                                description='Other', show=True, display_order=100000)
+                    other_year.save()
+                    student.high_school_graduation_year = other_year
+
+                if student.status_message != RegistrationStatusMessage.get_status_old_high_school() and change_status:
+                    student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+
+                special_cases_log += \
+                    '{%s} has no graduation year in yesser and so he was marked as old HS<br>' % student.username
+
             if hs_data['Gender']:
                 student.gender = hs_data['Gender']
                 if hs_data['Gender'] == 'F':

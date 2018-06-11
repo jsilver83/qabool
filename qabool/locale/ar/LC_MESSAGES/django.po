@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-03 15:39+0300\n"
-"PO-Revision-Date: 2018-06-03 15:47+0300\n"
+"POT-Creation-Date: 2018-06-10 08:15+0300\n"
+"PO-Revision-Date: 2018-06-10 08:17+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -95,7 +95,7 @@ msgstr "موعد النوم"
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
 #: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:250
 #: undergraduate_admission/forms/phase2_forms.py:323
-#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:597
+#: undergraduate_admission/models.py:106 undergraduate_admission/models.py:600
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:73
 msgid "KFUPM ID"
@@ -521,11 +521,11 @@ msgstr "تاريخ اختبار اللغة اﻻنجليزية التحريري"
 msgid "English Speaking Test Date"
 msgstr "تاريخ اختبار اللغة اﻻنجليزية الشفوي"
 
-#: tarifi/models.py:165 undergraduate_admission/models.py:1101
+#: tarifi/models.py:165 undergraduate_admission/models.py:1119
 msgid "Start Date"
 msgstr "تاريخ البداية"
 
-#: tarifi/models.py:166 undergraduate_admission/models.py:1102
+#: tarifi/models.py:166 undergraduate_admission/models.py:1120
 msgid "End Date"
 msgstr "تاريخ الانتهاء"
 
@@ -537,7 +537,7 @@ msgstr "مكان الفعالية ( بالعربي )"
 msgid "Location (English)"
 msgstr "مكان الفعالية ( بالانجليزي )"
 
-#: tarifi/models.py:169 undergraduate_admission/models.py:1100
+#: tarifi/models.py:169 undergraduate_admission/models.py:1118
 msgid "Slots"
 msgstr "العدد المتاح"
 
@@ -549,24 +549,24 @@ msgstr "نوع الفعالية"
 msgid "Attender"
 msgstr "المشرف"
 
-#: tarifi/models.py:179 undergraduate_admission/models.py:906
+#: tarifi/models.py:179 undergraduate_admission/models.py:922
 msgid "Description"
 msgstr "شرح"
 
 #: tarifi/models.py:180 tarifi/models.py:252
-#: undergraduate_admission/models.py:797 undergraduate_admission/models.py:834
-#: undergraduate_admission/models.py:907 undergraduate_admission/models.py:949
-#: undergraduate_admission/models.py:1033
-#: undergraduate_admission/models.py:1063
-#: undergraduate_admission/models.py:1103
+#: undergraduate_admission/models.py:800 undergraduate_admission/models.py:837
+#: undergraduate_admission/models.py:925 undergraduate_admission/models.py:967
+#: undergraduate_admission/models.py:1051
+#: undergraduate_admission/models.py:1081
+#: undergraduate_admission/models.py:1121
 msgid "Show"
 msgstr "اظهر"
 
-#: tarifi/models.py:181 undergraduate_admission/models.py:798
-#: undergraduate_admission/models.py:835 undergraduate_admission/models.py:908
-#: undergraduate_admission/models.py:950 undergraduate_admission/models.py:1034
-#: undergraduate_admission/models.py:1064
-#: undergraduate_admission/models.py:1104
+#: tarifi/models.py:181 undergraduate_admission/models.py:801
+#: undergraduate_admission/models.py:838 undergraduate_admission/models.py:926
+#: undergraduate_admission/models.py:968 undergraduate_admission/models.py:1052
+#: undergraduate_admission/models.py:1082
+#: undergraduate_admission/models.py:1122
 msgid "Display Order"
 msgstr "عرض الترتيب"
 
@@ -794,8 +794,8 @@ msgstr "اختر الأعضاء"
 #: undergraduate_admission/forms/general_forms.py:137
 #: undergraduate_admission/forms/phase1_forms.py:86
 #: undergraduate_admission/forms/phase2_forms.py:316
-#: undergraduate_admission/models.py:470 undergraduate_admission/models.py:854
-#: undergraduate_admission/models.py:891
+#: undergraduate_admission/models.py:473 undergraduate_admission/models.py:857
+#: undergraduate_admission/models.py:894
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:26
@@ -816,8 +816,8 @@ msgid "Message Status"
 msgstr "تفصيل حالة الطلب"
 
 #: undergraduate_admission/forms/admin_side_forms.py:241
-#: undergraduate_admission/models.py:27 undergraduate_admission/models.py:501
-#: undergraduate_admission/models.py:594
+#: undergraduate_admission/models.py:27 undergraduate_admission/models.py:504
+#: undergraduate_admission/models.py:597
 msgid "Admission Semester"
 msgstr "فصل القبول"
 
@@ -1445,19 +1445,19 @@ msgstr "الجهة التي ترغب الالتحاق بها"
 msgid "Withdrawal Reason"
 msgstr "سبب الإنسحاب"
 
-#: undergraduate_admission/models.py:357 undergraduate_admission/models.py:485
+#: undergraduate_admission/models.py:357 undergraduate_admission/models.py:488
 msgid "Phase 2 Start Date"
 msgstr "بداية المرحلة الثانية"
 
-#: undergraduate_admission/models.py:358 undergraduate_admission/models.py:486
+#: undergraduate_admission/models.py:358 undergraduate_admission/models.py:489
 msgid "Phase 2 End Date"
 msgstr "نهاية المرحلة الثانية"
 
-#: undergraduate_admission/models.py:359 undergraduate_admission/models.py:487
+#: undergraduate_admission/models.py:359 undergraduate_admission/models.py:490
 msgid "Phase 3 Start Date"
 msgstr "بداية المرحلة الثالثة"
 
-#: undergraduate_admission/models.py:360 undergraduate_admission/models.py:488
+#: undergraduate_admission/models.py:360 undergraduate_admission/models.py:491
 msgid "Phase 3 End Date"
 msgstr "نهاية المرحلة الثالثة"
 
@@ -1482,7 +1482,7 @@ msgstr "هل توجد ملاحظات على المستندات؟"
 msgid "Uploaded picture is rejected?"
 msgstr "هل توجد ملاحظات على الصورة؟"
 
-#: undergraduate_admission/models.py:372 undergraduate_admission/models.py:393
+#: undergraduate_admission/models.py:372 undergraduate_admission/models.py:396
 msgid "Issues With Uploaded Docs"
 msgstr "المشاكل بالمستندات المرفوعة"
 
@@ -1502,230 +1502,258 @@ msgstr "رقم هوية زميل السكن"
 msgid "Tarifi Week Attendance Date"
 msgstr "تاريخ حضور البرنامج التعريفي"
 
-#: undergraduate_admission/models.py:405
+#: undergraduate_admission/models.py:389
+msgid "Fetched Yesser High School Data Dump"
+msgstr "بيانات يسر (الثانوية)"
+
+#: undergraduate_admission/models.py:390
+msgid "Fetched Yesser Qudrat Data Dump"
+msgstr "بيانات يسر (قدرات)"
+
+#: undergraduate_admission/models.py:391
+msgid "Fetched Yesser Tahsili Data Dump"
+msgstr "بيانات يسر (تحصيلي)"
+
+#: undergraduate_admission/models.py:408
 msgid "Full Name"
 msgstr "اﻻسم الكامل"
 
-#: undergraduate_admission/models.py:482
+#: undergraduate_admission/models.py:485
 msgid "Semester Name"
 msgstr "تفاصيل الفصل"
 
-#: undergraduate_admission/models.py:483
+#: undergraduate_admission/models.py:486
 msgid "Phase 1 Start Date"
 msgstr "بداية المرحلة الأولى"
 
-#: undergraduate_admission/models.py:484
+#: undergraduate_admission/models.py:487
 msgid "Phase 1 End Date"
 msgstr "نهاية المرحلة الأولى"
 
-#: undergraduate_admission/models.py:489
+#: undergraduate_admission/models.py:492
 msgid "Phase 4 Start Date"
 msgstr "بداية المرحلة الرابعة"
 
-#: undergraduate_admission/models.py:490
+#: undergraduate_admission/models.py:493
 msgid "Phase 4 End Date"
 msgstr "نهاية المرحلة الرابعة"
 
-#: undergraduate_admission/models.py:492
+#: undergraduate_admission/models.py:495
 msgid "High School GPA Weight"
 msgstr "نسبة شهادة الثانوية"
 
-#: undergraduate_admission/models.py:493
+#: undergraduate_admission/models.py:496
 msgid "Qudrat Score Weight"
 msgstr "وزن درجة القدرات"
 
-#: undergraduate_admission/models.py:494
+#: undergraduate_admission/models.py:497
 msgid "Tahsili Score Weight"
 msgstr "وزن درجة التحصيلي"
 
-#: undergraduate_admission/models.py:495
+#: undergraduate_admission/models.py:498
 msgid "Cutoff Point"
 msgstr "درجة القبول"
 
-#: undergraduate_admission/models.py:496
+#: undergraduate_admission/models.py:499
 msgid "Active Semester"
 msgstr "فصل القبول نشط"
 
-#: undergraduate_admission/models.py:497
+#: undergraduate_admission/models.py:500
 msgid ""
 "Indicator of the current active semester. This will be used in the admin-"
 "side and committee pages"
 msgstr ""
 "هذا الحقل يحدد فصل القبول النشط والذي سوف يستخدم بصفحات اﻹدارة و التدقيق"
 
-#: undergraduate_admission/models.py:502
+#: undergraduate_admission/models.py:505
 msgid "Admission: Admission Semesters"
 msgstr "Admission: Admission Semesters"
 
-#: undergraduate_admission/models.py:600
+#: undergraduate_admission/models.py:603
 msgid "Registrar: KFUPM ID Pools"
 msgstr "Registrar: KFUPM ID Pools"
 
-#: undergraduate_admission/models.py:624
+#: undergraduate_admission/models.py:627
 msgid "Status (Arabic)"
 msgstr "الحالة ( بالعربي )"
 
-#: undergraduate_admission/models.py:625
+#: undergraduate_admission/models.py:628
 msgid "Status (English)"
 msgstr "الحالة ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:640
+#: undergraduate_admission/models.py:643
 msgid "Admission: Registration Status"
 msgstr "Admission: Registration Status"
 
-#: undergraduate_admission/models.py:644
+#: undergraduate_admission/models.py:647
 msgid "Registration Status Message AR"
 msgstr "رسالة حالة التسجيل ( بالعربي )"
 
-#: undergraduate_admission/models.py:645
+#: undergraduate_admission/models.py:648
 msgid "Registration Status Message EN"
 msgstr "رسالة حالة التسجيل ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:656
+#: undergraduate_admission/models.py:659
 msgid "Admission: Registration Status Messages"
 msgstr "Admission: Registration Status Messages"
 
-#: undergraduate_admission/models.py:801
+#: undergraduate_admission/models.py:804
 msgid "Admission: Look ups"
 msgstr "Admission: Look ups"
 
-#: undergraduate_admission/models.py:832
+#: undergraduate_admission/models.py:835
 msgid "City Name Arabic"
 msgstr "اسم المدينة ( بالعربي )"
 
-#: undergraduate_admission/models.py:833
+#: undergraduate_admission/models.py:836
 msgid "City Name English"
 msgstr "اسم المدينة ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:850
+#: undergraduate_admission/models.py:853
 msgid "Admission: Cities"
 msgstr "Admission: Cities"
 
-#: undergraduate_admission/models.py:855 undergraduate_admission/models.py:892
+#: undergraduate_admission/models.py:858 undergraduate_admission/models.py:895
 msgid "Student Name"
 msgstr "اسم الطالب"
 
-#: undergraduate_admission/models.py:856
+#: undergraduate_admission/models.py:859
 msgid "Message"
 msgstr "الرسالة"
 
-#: undergraduate_admission/models.py:857
+#: undergraduate_admission/models.py:860
 msgid "University Code"
 msgstr "رمز الجامعة"
 
-#: undergraduate_admission/models.py:866
+#: undergraduate_admission/models.py:869
 msgid "Last Trial Date"
 msgstr "تاريخ آخر محاولة"
 
-#: undergraduate_admission/models.py:867
+#: undergraduate_admission/models.py:870
 msgid "Count Trial"
 msgstr "عدد المحاولات"
 
-#: undergraduate_admission/models.py:870
+#: undergraduate_admission/models.py:873
 msgid "Admission: Denied Students"
 msgstr "Admission: Denied Students"
 
-#: undergraduate_admission/models.py:893
+#: undergraduate_admission/models.py:896
 msgid "City"
 msgstr "المدينة"
 
-#: undergraduate_admission/models.py:894
+#: undergraduate_admission/models.py:897
 msgid "Attended"
 msgstr "حضر"
 
-#: undergraduate_admission/models.py:897
+#: undergraduate_admission/models.py:900
 msgid "Admission: Distinguished Students"
 msgstr "Admission: Distinguished Students"
 
-#: undergraduate_admission/models.py:904
+#: undergraduate_admission/models.py:915
+msgid "Current high school graduation year"
+msgstr "تاريخ تخرج من الثانوية العام الحالي"
+
+#: undergraduate_admission/models.py:916
+msgid "Previous high school graduation year"
+msgstr "تاريخ تخرج من الثانوية العام الماضي"
+
+#: undergraduate_admission/models.py:917
+msgid "Old High school graduation year"
+msgstr "تاريخ تخرج من الثانوية قديم"
+
+#: undergraduate_admission/models.py:920
 msgid "Graduation Year (English)"
 msgstr "سنة التخرج ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:905
+#: undergraduate_admission/models.py:921
 msgid "Graduation Year (Arabic)"
 msgstr "سنة التخرج ( بالعربي )"
 
-#: undergraduate_admission/models.py:912
+#: undergraduate_admission/models.py:923
+msgid "Type"
+msgstr "النوع"
+
+#: undergraduate_admission/models.py:930
 msgid "Admission: Graduation Years"
 msgstr "Admission: Graduation Years"
 
-#: undergraduate_admission/models.py:947
+#: undergraduate_admission/models.py:965
 msgid "Nationality (Arabic)"
 msgstr "الجنسية ( بالعربي )"
 
-#: undergraduate_admission/models.py:948
+#: undergraduate_admission/models.py:966
 msgid "Nationality (English)"
 msgstr "الجنسية ( بالانجليزي )"
 
-#: undergraduate_admission/models.py:978
+#: undergraduate_admission/models.py:996
 msgid "Admission: Nationalities"
 msgstr "Admission: Nationalities"
 
-#: undergraduate_admission/models.py:990
+#: undergraduate_admission/models.py:1008
 msgid "Agreement Type"
 msgstr "نوع الموافقة"
 
-#: undergraduate_admission/models.py:992
+#: undergraduate_admission/models.py:1010
 msgid "Agreement Header (Arabic)"
 msgstr "رأسية الموافقة ( بالعربي )"
 
-#: undergraduate_admission/models.py:994
+#: undergraduate_admission/models.py:1012
 msgid "Agreement Header (English)"
 msgstr "رأسية الموافقة بالإنجليزي )"
 
-#: undergraduate_admission/models.py:996
+#: undergraduate_admission/models.py:1014
 msgid "Agreement Footer (Arabic)"
 msgstr "اسفل  الموافقة ( بالعربي )"
 
-#: undergraduate_admission/models.py:998
+#: undergraduate_admission/models.py:1016
 msgid "Agreement Footer (English)"
 msgstr "اسفل الموافقة (باﻹنجليزي ):"
 
-#: undergraduate_admission/models.py:1001
+#: undergraduate_admission/models.py:1019
 msgid "Admission and Student Affairs: Agreements"
 msgstr "Admission and Student Affairs: Agreements"
 
-#: undergraduate_admission/models.py:1031
+#: undergraduate_admission/models.py:1049
 msgid "Agreement Text (Arabic)"
 msgstr "نص الموافقة ( بالعربي )"
 
-#: undergraduate_admission/models.py:1032
+#: undergraduate_admission/models.py:1050
 msgid "Agreement Text (English)"
 msgstr "نص الموافقة ( بالإنجليزي )"
 
-#: undergraduate_admission/models.py:1048
+#: undergraduate_admission/models.py:1066
 msgid "Admission and Student Affairs: Agreement Items"
 msgstr "Admission and Student Affairs: Agreement Items"
 
-#: undergraduate_admission/models.py:1054
+#: undergraduate_admission/models.py:1072
 msgid "Counter"
 msgstr "عداد"
 
-#: undergraduate_admission/models.py:1059
+#: undergraduate_admission/models.py:1077
 msgid "Arabic Title"
 msgstr "العنوان بالعربي"
 
-#: undergraduate_admission/models.py:1060
+#: undergraduate_admission/models.py:1078
 msgid "English Title"
 msgstr "العنوان بالانجليزي"
 
-#: undergraduate_admission/models.py:1061
+#: undergraduate_admission/models.py:1079
 msgid "Arabic Description"
 msgstr "تفاصيل بالعربي"
 
-#: undergraduate_admission/models.py:1062
+#: undergraduate_admission/models.py:1080
 msgid "English Description"
 msgstr "تفاصيل بالانجليزي"
 
-#: undergraduate_admission/models.py:1087
+#: undergraduate_admission/models.py:1105
 msgid "Admission: Important Date Sidebar"
 msgstr "Admission: Important Date Sidebar"
 
-#: undergraduate_admission/models.py:1099
+#: undergraduate_admission/models.py:1117
 msgid "Reception Date"
 msgstr "تاريخ الاستقبال"
 
-#: undergraduate_admission/models.py:1107
+#: undergraduate_admission/models.py:1125
 msgid "Orientation Week: Schedule"
 msgstr "مواعيد برنامج التعريفي"
 
