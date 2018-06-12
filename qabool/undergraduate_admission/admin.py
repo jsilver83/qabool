@@ -1,3 +1,5 @@
+import time
+
 import floppyforms.__future__ as forms
 from django.core.urlresolvers import reverse
 
@@ -257,6 +259,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
         log = ''
         changed_students = 0
         for student in queryset:
+            time.sleep(0.2)
             result = get_student_record_serialized(student, True)
             if result['changed']:
                 changed_students += 1

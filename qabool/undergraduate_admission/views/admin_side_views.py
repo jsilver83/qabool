@@ -279,6 +279,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
                                            is_staff=False,
                                            is_superuser=False)
             for student in students:
+                time.sleep(0.2)
                 serialized_data = get_student_record_serialized(student)
 
         return super(YesserDataUpdate, self).get(request, *args, **kwargs)
