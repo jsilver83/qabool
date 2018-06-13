@@ -920,7 +920,7 @@ class GraduationYear(models.Model):
     graduation_year_en = models.CharField(max_length=50, verbose_name=_('Graduation Year (English)'))
     graduation_year_ar = models.CharField(max_length=50, verbose_name=_('Graduation Year (Arabic)'))
     description = models.CharField(max_length=200, verbose_name=_('Description'))
-    type = models.CharField(max_length=10, verbose_name=_('Type'), choices=GraduationYearTypes.choices(),
+    type = models.CharField(max_length=20, verbose_name=_('Type'), choices=GraduationYearTypes.choices(),
                             null=True, blank=False, default=GraduationYearTypes.OLD_HS)
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
