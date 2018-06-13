@@ -386,6 +386,9 @@ class User(AbstractUser):
                                                     on_delete=models.SET_NULL,
                                                     null=True,
                                                     blank=True, )
+    yesser_high_school_data_dump = models.TextField(_('Fetched Yesser High School Data Dump'), null=True, blank=True, )
+    yesser_qudrat_data_dump = models.TextField(_('Fetched Yesser Qudrat Data Dump'), null=True, blank=True, )
+    yesser_tahsili_data_dump = models.TextField(_('Fetched Yesser Tahsili Data Dump'), null=True, blank=True, )
 
     def get_verification_status(self):
         return self.verification_status
@@ -901,9 +904,24 @@ class DistinguishedStudent(models.Model):
 
 
 class GraduationYear(models.Model):
+    class GraduationYearTypes:
+        CURRENT_YEAR = 'CURRENT-YEAR'
+        LAST_YEAR = 'LAST-YEAR'
+        OLD_HS = 'OLD-HS'
+
+        @classmethod
+        def choices(cls):
+            return (
+                (cls.CURRENT_YEAR, _('Current high school graduation year')),
+                (cls.LAST_YEAR, _('Previous high school graduation year')),
+                (cls.OLD_HS, _('Old High school graduation year')),
+            )
+
     graduation_year_en = models.CharField(max_length=50, verbose_name=_('Graduation Year (English)'))
     graduation_year_ar = models.CharField(max_length=50, verbose_name=_('Graduation Year (Arabic)'))
     description = models.CharField(max_length=200, verbose_name=_('Description'))
+    type = models.CharField(max_length=20, verbose_name=_('Type'), choices=GraduationYearTypes.choices(),
+                            null=True, blank=False, default=GraduationYearTypes.OLD_HS)
     show = models.BooleanField(verbose_name=_('Show'), default=True)
     display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
 
@@ -921,7 +939,7 @@ class GraduationYear(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch any weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @staticmethod
@@ -959,7 +977,7 @@ class Nationality(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch any weird exceptions like ProgrammingError
             return [('--', '--')]
 
     @property
@@ -1127,4 +1145,3 @@ class TarifiReceptionDate(models.Model):
 
     def __str__(self):
         return self.reception_date
-
