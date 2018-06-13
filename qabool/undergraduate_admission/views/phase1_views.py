@@ -60,7 +60,7 @@ class RegisterView(CreateView):
         old_high_school_reg_msg = RegistrationStatusMessage.get_status_old_high_school()
         semester = AdmissionSemester.get_phase1_active_semester()
 
-        if 'Other' in form.cleaned_data['high_school_graduation_year'].graduation_year_en:
+        if 'OLD-HS' in form.cleaned_data['high_school_graduation_year'].description:
             user = User.objects.create_user(form.cleaned_data['username'],
                                             form.cleaned_data['email'],
                                             form.cleaned_data['password1'],
