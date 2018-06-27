@@ -101,9 +101,9 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
         ('Yesser Data Dump', {
             'classes': ('collapse',),
             'fields': (
-                ('yesser_high_school_data_dump', ),
-                ('yesser_qudrat_data_dump', ),
-                ('yesser_tahsili_data_dump', ),
+                ('show_yesser_high_school_data_dump', ),
+                ('show_yesser_qudrat_data_dump', ),
+                ('show_yesser_tahsili_data_dump', ),
             ),
         }),
 
@@ -167,13 +167,36 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
     exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
     readonly_fields = ('id', 'date_joined', 'student_type', 'admission_total', 'phase2_submit_date',
                        'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
-                       'show_docs_links', 'yesser_high_school_data_dump', 'yesser_qudrat_data_dump',
-                       'yesser_tahsili_data_dump', )
+                       'show_docs_links', 'show_yesser_high_school_data_dump', 'show_yesser_qudrat_data_dump',
+                       'show_yesser_tahsili_data_dump', )
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
-    list_filter = ('high_school_graduation_year', 'status_message__status', 'nationality',)
+    list_filter = ('high_school_graduation_year', 'gender', 'status_message__status', 'status_message', 'nationality',)
     actions = ['yesser_update']
     resource_class = StudentResource
+
+    def make_yesser_data_dump_readable(self, obj, which_dump):
+        attr = getattr(obj, which_dump)
+
+        if attr:
+            html_to_be_displayed = '<div style="direction:ltr"><br><br>' \
+                                   '==============================================<br>'
+            attr = attr.replace('\n', '<br>').replace('\'', '').replace('{', '').replace('}', '').replace(' ', '&nbsp;')
+            html_to_be_displayed += attr + '==============================================<br></div>'
+            return format_html(html_to_be_displayed)
+
+    def show_yesser_high_school_data_dump(self, obj):
+        return self.make_yesser_data_dump_readable(obj, 'yesser_high_school_data_dump')
+
+    def show_yesser_qudrat_data_dump(self, obj):
+        return self.make_yesser_data_dump_readable(obj, 'yesser_qudrat_data_dump')
+
+    def show_yesser_tahsili_data_dump(self, obj):
+        return self.make_yesser_data_dump_readable(obj, 'yesser_tahsili_data_dump')
+
+    show_yesser_high_school_data_dump.short_description = _('Fetched Yesser High School Data Dump')
+    show_yesser_qudrat_data_dump.short_description = _('Fetched Yesser Qudrat Data Dump')
+    show_yesser_tahsili_data_dump.short_description = _('Fetched Yesser Tahsili Data Dump')
 
     def show_docs_links(self, obj):
         docs_links_html = '<br><br>'
