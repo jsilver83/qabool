@@ -10,14 +10,12 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q, F, Case, When, Value, CharField
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, render_to_response
-from django.template import RequestContext
+from django.shortcuts import render, redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
-from django.utils import timezone
 from zeep import Client
 from zeep.transports import Transport
 
@@ -208,7 +206,7 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
                 for student in filtered:
                     student.verification_committee_member = members[counter]
                     student.save()
-                    if counter < len(members)-1:
+                    if counter < len(members) - 1:
                         counter += 1
                     else:
                         counter = 0
@@ -280,7 +278,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
                                            is_superuser=False)
             for student in students:
                 time.sleep(0.2)
-                serialized_data = get_student_record_serialized(student)
+                serialized_data = get_student_record_serialized(student, change_status=True)
 
         return super(YesserDataUpdate, self).get(request, *args, **kwargs)
 
@@ -357,10 +355,12 @@ def get_student_record_serialized(student, change_status=False):
         final_data['status_before'] = student.status_message
 
         final_data['qudrat_before'] = student.qudrat_score
+
         if not qudrat_data['q_error']:
             changed = True
 
-            student.yesser_qudrat_data_dump = 'Fetched On %s================%s' % (timezone.now(), qudrat_data,)
+            student.yesser_qudrat_data_dump = 'Fetched On %s<br>%s' % (timezone.now(),
+                                                                       qudrat_data['all_data'],)
 
             student.first_name_ar = qudrat_data['FirstName']
             student.second_name_ar = qudrat_data['SecondName']
@@ -372,7 +372,8 @@ def get_student_record_serialized(student, change_status=False):
         if not tahsili_data['t_error']:
             changed = True
 
-            student.yesser_tahsili_data_dump = 'Fetched On %s================%s' % (timezone.now(), tahsili_data,)
+            student.yesser_tahsili_data_dump = 'Fetched On %s<br>%s' % (timezone.now(),
+                                                                        tahsili_data['all_data'],)
 
             student.tahsili_score = tahsili_data['tahsili']
 
@@ -380,7 +381,8 @@ def get_student_record_serialized(student, change_status=False):
         if not hs_data['hs_error']:
             changed = True
 
-            student.yesser_high_school_data_dump = 'Fetched On %s================%s' % (timezone.now(), hs_data,)
+            student.yesser_high_school_data_dump = 'Fetched On %s<br>%s' % (timezone.now(),
+                                                                            hs_data['all_data'],)
 
             student.high_school_gpa = hs_data['high_school_gpa']
 
@@ -389,7 +391,7 @@ def get_student_record_serialized(student, change_status=False):
 
                 if year:
                     """
-                    this is the case of student who entered his hs year wrong
+                    this is the case of a student who entered his hs year wrong
                     """
                     if student.high_school_graduation_year != year:
                         student.high_school_graduation_year = year
@@ -402,14 +404,18 @@ def get_student_record_serialized(student, change_status=False):
                                      GraduationYear.GraduationYearTypes.LAST_YEAR] \
                             and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
                         if change_status:
-                            student.status_message = RegistrationStatusMessage.get_status_applied()
+                            if student.nationality.nationality_en != 'Saudi Arabia' and not student.saudi_mother:
+                                student.status_message = RegistrationStatusMessage.get_status_non_saudi()
+                            else:
+                                student.status_message = RegistrationStatusMessage.get_status_applied()
                         special_cases_log += \
                             '{%s} was marked as old hs but actually has recent hs in MOE<br>' % student.username
                     """
                     this is the case of a student who was marked as applied but actually has old hs in MOE
                     """
                     if year.type == GraduationYear.GraduationYearTypes.OLD_HS \
-                            and student.status_message == RegistrationStatusMessage.get_status_applied():
+                            and student.status_message in [RegistrationStatusMessage.get_status_applied(),
+                                                           RegistrationStatusMessage.get_status_non_saudi()]:
                         if change_status:
                             student.status_message = RegistrationStatusMessage.get_status_old_high_school()
                         special_cases_log += \
@@ -453,7 +459,8 @@ def get_student_record_serialized(student, change_status=False):
             if hs_data['Gender']:
                 student.gender = hs_data['Gender']
                 if hs_data['Gender'] == 'F':
-                    special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username, hs_data['Gender'])
+                    special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username,
+                                                                                      hs_data['Gender'])
                     if change_status:
                         student.status_message = RegistrationStatusMessage.get_status_girls()
 
@@ -499,6 +506,7 @@ def get_qudrat_from_yesser(gov_id):
 
         if not resultQudrat.ServiceError:
             data['q_error'] = 0
+            data['all_data'] = resultQudrat
             data['qudrat'] = resultQudrat.GetExamResultResponseDetailObject.ExamResult.ExamResult
             data['FirstName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.FirstName
             data['SecondName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.SecondName
@@ -506,6 +514,7 @@ def get_qudrat_from_yesser(gov_id):
             data['LastName'] = resultQudrat.GetExamResultResponseDetailObject.ApplicantName.PersonNameBody.LastName
         else:  # no qudrat result from Qiyas
             data['q_error'] = resultQudrat.ServiceError.Code
+            data['all_data'] = ''
             data['qudrat'] = 0
             data['FirstName'] = ''
             data['SecondName'] = ''
@@ -513,6 +522,7 @@ def get_qudrat_from_yesser(gov_id):
             data['LastName'] = ''
     except:
         data['q_error'] = 'general error'  # Client request message schema validation failure'
+        data['all_data'] = ''
         data['qudrat'] = 0
         data['FirstName'] = ''
         data['SecondName'] = ''
@@ -529,12 +539,15 @@ def get_tahsili_from_yesser(gov_id):
 
         if not resultTahsili.ServiceError:
             data['t_error'] = 0
+            data['all_data'] = resultTahsili
             data['tahsili'] = resultTahsili.GetExamResultResponseDetailObject.ExamResult.ExamResult
         else:  # no tahsili result from Qiyas
             data['t_error'] = resultTahsili.ServiceError.Code
+            data['all_data'] = ''
             data['tahsili'] = 0
     except:
         data['t_error'] = 'general error'
+        data['all_data'] = ''
         data['tahsili'] = 0
     return data
 
@@ -547,9 +560,10 @@ def get_high_school_from_yesser(gov_id):
 
         if not result.ServiceError:
             data['hs_error'] = 0
+            data['all_data'] = result
             data['high_school_gpa'] = result.getHighSchoolCertificateResponseDetailObject. \
                 CertificationDetails.GPA
-            data['MoeIdentifierTypeDesc'] = result.getHighSchoolCertificateResponseDetailObject.\
+            data['MoeIdentifierTypeDesc'] = result.getHighSchoolCertificateResponseDetailObject. \
                 StudentBasicInfo.MoeIdentifierTypeDesc
             data['CertificationHijriYear'] = result.getHighSchoolCertificateResponseDetailObject. \
                 CertificationDetails.CertificationHijriYear
@@ -577,12 +591,13 @@ def get_high_school_from_yesser(gov_id):
                 CertificationDetails.MajorTypeAr
             data['MajorTypeEn'] = result.getHighSchoolCertificateResponseDetailObject. \
                 CertificationDetails.MajorTypeEn
-            data['GregorianDate'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.DateOfBirth.\
+            data['GregorianDate'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.DateOfBirth. \
                 GregorianDate
-            data['HijriDate'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.DateOfBirth.\
+            data['HijriDate'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.DateOfBirth. \
                 HijriDate
         else:
             data['hs_error'] = result.ServiceError.Code
+            data['all_data'] = ''
             data['high_school_gpa'] = 0
             data['MoeIdentifierTypeDesc'] = ''
             data['CertificationHijriYear'] = ''
@@ -601,6 +616,7 @@ def get_high_school_from_yesser(gov_id):
             data['MajorTypeEn'] = ''
     except:
         data['hs_error'] = 'general error'
+        data['all_data'] = ''
         data['high_school_gpa'] = 0
         data['MoeIdentifierTypeDesc'] = ''
         data['CertificationHijriYear'] = ''
@@ -664,8 +680,9 @@ def fetch_mohe_data_from_yesser_and_write_to_file(government_id):
         file.write(
             str("%s,%s\n" % (
                 government_id,
-                result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[0].University.UniversityID
-                ))
+                result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[
+                    0].University.UniversityID
+            ))
         )
         file.close()
     except:
