@@ -174,11 +174,12 @@ class VerifyCommitteeForm(forms.ModelForm):
                 status = RegistrationStatusMessage.get_status_confirmed_non_saudi()
             student.status_message = status
             student.phase2_start_date = timezone.now()
-            student.phase2_end_date = timezone.datetime(day=19, month=7, year=2017, hour=13, minute=30)
-        elif verification_documents_incomplete == False and verification_picture_acceptable == False \
+            student.phase2_end_date = timezone.datetime(day=3, month=7, year=2018, hour=13, minute=00)
+        elif verification_documents_incomplete is False and verification_picture_acceptable is False \
                 and student.student_type in ('S', 'M'):
             status = RegistrationStatusMessage.get_status_admitted()
             student.status_message = status
+
 
         try:
             data_uri = self.cleaned_data.get('data_uri')
