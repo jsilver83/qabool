@@ -12,7 +12,8 @@ from django.core.cache import cache
 
 from undergraduate_admission.filters import UserListFilter
 from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm, Phase1UserEditForm
-from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement, ImportantDateSidebar
+from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement, \
+    ImportantDateSidebar, GraduationYear
 from undergraduate_admission.utils import SMS, Email, try_parse_float
 
 
@@ -60,7 +61,7 @@ class RegisterView(CreateView):
         old_high_school_reg_msg = RegistrationStatusMessage.get_status_old_high_school()
         semester = AdmissionSemester.get_phase1_active_semester()
 
-        if 'OLD-HS' in form.cleaned_data['high_school_graduation_year'].description:
+        if form.cleaned_data['high_school_graduation_year'].type == GraduationYear.GraduationYearTypes.OLD_HS:
             user = User.objects.create_user(form.cleaned_data['username'],
                                             form.cleaned_data['email'],
                                             form.cleaned_data['password1'],
