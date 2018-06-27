@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-10 08:15+0300\n"
-"PO-Revision-Date: 2018-06-10 08:17+0300\n"
+"PO-Revision-Date: 2018-06-27 10:00+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -881,7 +881,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:120
 msgid "password"
-msgstr "كلمة السر"
+msgstr "كلمة المرور"
 
 #: undergraduate_admission/forms/general_forms.py:125
 #: undergraduate_admission/forms/general_forms.py:181
@@ -892,11 +892,11 @@ msgstr "رمز التحقق"
 
 #: undergraduate_admission/forms/general_forms.py:133
 msgid "The two password fields didn't match."
-msgstr "كلمة السر غير متطابقة"
+msgstr "كلمة المرور غير متطابقة"
 
 #: undergraduate_admission/forms/general_forms.py:148
 msgid "New Password"
-msgstr "كلمة السر الجديدة"
+msgstr "كلمة المرور الجديدة"
 
 #: undergraduate_admission/forms/general_forms.py:151
 #: undergraduate_admission/forms/phase1_forms.py:168
@@ -906,13 +906,13 @@ msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
 
 #: undergraduate_admission/forms/general_forms.py:156
 msgid "New Password confirmation"
-msgstr "تأكيد كلمة السر الجديدة"
+msgstr "تأكيد كلمة المرور الجديدة"
 
 #: undergraduate_admission/forms/general_forms.py:159
 #: undergraduate_admission/forms/phase1_forms.py:169
 #: undergraduate_admission/forms/phase2_forms.py:353
 msgid "Enter the same password as before, for verification"
-msgstr "أعد إدخال كلمة السر السابقة وذلك للتحقق"
+msgstr "أعد إدخال كلمة المرور السابقة وذلك للتحقق"
 
 #: undergraduate_admission/forms/general_forms.py:168
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
@@ -1904,7 +1904,7 @@ msgstr "اﻻنسحاب"
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:61
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 msgid "Change Password"
-msgstr "تغيير كلمة السر"
+msgstr "تغيير كلمة المرور"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:7
 msgid "Username"
@@ -2067,7 +2067,7 @@ msgid ""
 "<h3>Change Password</h3>\n"
 msgstr ""
 "\n"
-"<h3>تغيير كلمة السر</h3>\n"
+"<h3>تغيير كلمة المرور</h3>\n"
 
 #: undergraduate_admission/templates/undergraduate_admission/csrf_failure.html:8
 msgid ""
@@ -2102,15 +2102,15 @@ msgstr "أتعهد بأن المعلومات المدخلة أعلاه صحيح�
 
 #: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:7
 msgid "Reset Your Password"
-msgstr "تغيير كلمة السر"
+msgstr "تغيير كلمة المرور"
 
 #: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:8
 msgid "Fill the form below to reset your password"
-msgstr "عليك تعبئة النموذج لاستعادة كلمة السر"
+msgstr "عليك تعبئة النموذج لاستعادة كلمة المرور"
 
 #: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:39
 msgid "Reset Password"
-msgstr "تغيير كلمة السر"
+msgstr "تغيير كلمة المرور"
 
 #: undergraduate_admission/templates/undergraduate_admission/login(NO_LOGIN).html:9
 #: undergraduate_admission/templates/undergraduate_admission/login.html:10
@@ -2153,7 +2153,7 @@ msgstr "الدخول"
 
 #: undergraduate_admission/templates/undergraduate_admission/login.html:40
 msgid "Forgot Password?"
-msgstr "نسيت كلمة السر"
+msgstr "نسيت كلمة المرور"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:9
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:80
@@ -2604,15 +2604,16 @@ msgstr ""
 #: undergraduate_admission/utils.py:104
 msgid "You have issues in documents. Check website to fix them. KFUPM"
 msgstr ""
-"لديك مشكلة بمستنداتك، راجع الموقع لإعادة رفعها\n"
-"جامعة الملك فهد"
+"لديك مشكلة بمستنداتك، راجع الموقع لإعادة رفعها خلال 24 ساعة فقط\n"
+"إدارة القبول 0138602901"
 
 #: undergraduate_admission/utils.py:106
 msgid ""
 "Your admission is confirmed. Check website to print admission letter. KFUPM"
 msgstr ""
-"تم تأكيد قبولك، راجع الموقع لطباعة خطاب القبول\n"
-"جامعة الملك فهد"
+"تم تأكيد قبولك في جامعة الملك فهد للبترول والمعادن، وعليك طباعة خطاب القبول "
+"والكشف الطبي يوم الثلاثاء 26 شوال\n"
+"إدارة القبول 0138602901"
 
 #: undergraduate_admission/utils.py:108
 msgid "Your admission was withdrawn as per your request. Good luck. KFUPM"
@@ -2707,11 +2708,11 @@ msgstr "لقد تم حفظ معلومات التحقق من البيانات"
 
 #: undergraduate_admission/views/general_views.py:63
 msgid "Password was reset successfully..."
-msgstr "لقد تم تغيير كلمة السر بنجاح"
+msgstr "لقد تم تغيير كلمة المرور بنجاح"
 
 #: undergraduate_admission/views/general_views.py:66
 msgid "Error resetting password. Make sure you enter the correct info."
-msgstr "خطأ بتغيير كلمة السر، فضلاً تأكد من صحة البيانات المدخلة."
+msgstr "خطأ بتغيير كلمة المرور، فضلاً تأكد من صحة البيانات المدخلة."
 
 #: undergraduate_admission/views/general_views.py:107
 msgid "Contact Info was updated successfully..."
