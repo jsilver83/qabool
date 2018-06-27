@@ -30,6 +30,12 @@ def render_uploaded_file(context, file_type, student_instance):
     if file:
         served_file_url = reverse('download_user_file_admin', args=(file_type, student_instance.pk))
         served_file_url = request.build_absolute_uri(served_file_url)
+
+        # to solve the problem of static content served with http and the browser refusing to embed it within secure
+        # link https://qabool.kfupm.edu.sa/...
+        if 'qabool.kfupm' in served_file_url:
+            served_file_url = served_file_url.replace('http', 'https')
+
         if file.url.endswith('.pdf'):
             return format_html('<embed src="{url}" width="450" height="650" type="application/pdf"><br>'
                                '<a title="{title}" target="_blank" href="{url}">'
