@@ -144,7 +144,6 @@ class VerifyCommitteeForm(forms.ModelForm):
 
         readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
                            'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
-                           'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
                            'bank_name', 'bank_account', 'bank_account_identification_file',
                            ]
         for field in self.fields:
