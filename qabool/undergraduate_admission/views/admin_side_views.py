@@ -252,7 +252,7 @@ class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
     success_message = _('Verification submitted successfully!!!!')
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('verify_student', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('verify_list')
 
 
 class YesserDataUpdate(AdminBaseView, TemplateView):
@@ -479,6 +479,10 @@ def get_student_record_serialized(student, change_status=False):
             student.high_school_major_code = hs_data['MajorCode']
             student.high_school_major_name = hs_data['MajorTypeAr']
             student.high_school_major_name_en = hs_data['MajorTypeEn']
+
+        # TODO: handle students with missing data
+        if not (qudrat_data['qudrat'] and tahsili_data['tahsili'] and hs_data['high_school_gpa']):
+            pass
 
         if changed:
             student.save()
