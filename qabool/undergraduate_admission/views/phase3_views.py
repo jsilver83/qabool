@@ -123,5 +123,9 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
             request.user.admission_letter_print_date = timezone.now()
         if not request.user.medical_report_print_date:
             request.user.medical_report_print_date = timezone.now()
+
+        status = RegistrationStatusMessage.get_status_admitted_printed()
+        request.user.status_message = status
         request.user.save()
+
         return super(AdmissionLetters, self).dispatch(request, *args, **kwargs)
