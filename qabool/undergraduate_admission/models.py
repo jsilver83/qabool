@@ -757,7 +757,15 @@ class RegistrationStatusMessage(models.Model):
     def get_status_admitted_transfer():
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
-                .status_messages.get(status_message_code='ADMITTED-T')
+                .status_messages.get(status_message_code='ADMITTED-TRANSFER')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_admitted_printed():
+        try:
+            return RegistrationStatus.objects.get(status_code='ADMITTED') \
+                .status_messages.get(status_message_code='ADMITTED-PRINTED')
         except ObjectDoesNotExist:
             return
 
