@@ -14,7 +14,7 @@ def student_info_commands(context):
     can_withdraw = (phase == 'ADMITTED'
                     or user.status_message == RegistrationStatusMessage.get_status_confirmed())
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
-    can_print_docs = (user.status_message == RegistrationStatusMessage.get_status_admitted()
+    can_print_docs = (user.status_message == RegistrationStatusMessage.get_status_admitted_final()
                       and user.tarifi_week_attendance_date)
 
     can_confirm = (user.status_message == RegistrationStatusMessage.get_status_partially_admitted()

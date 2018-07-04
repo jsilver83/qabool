@@ -115,16 +115,18 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
 class AdmissionLetters(Phase3BaseView, TemplateView):
     template_name = 'undergraduate_admission/phase3/letter_admission.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer():
-            return redirect('student_area')
+    def test_func(self):
+        return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_final() \
+           and AdmissionSemester.get_phase3_active_semester(self.request.user) \
+           and self.request.user.tarifi_week_attendance_date
 
+    def dispatch(self, request, *args, **kwargs):
         if not request.user.admission_letter_print_date:
             request.user.admission_letter_print_date = timezone.now()
         if not request.user.medical_report_print_date:
             request.user.medical_report_print_date = timezone.now()
 
-        status = RegistrationStatusMessage.get_status_admitted_printed()
+        status = RegistrationStatusMessage.get_status_admitted_final()
         request.user.status_message = status
         request.user.save()
 
