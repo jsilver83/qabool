@@ -27,6 +27,7 @@ from undergraduate_admission.utils import SMS, parse_non_standard_numerals
 from undergraduate_admission.validators import is_eligible_for_roommate_search
 
 
+# TODO: refactor all is_eligible_to_??? to be functions in the class User
 def is_phase2_eligible(user):
     phase = user.get_student_phase()
     return phase == 'PARTIALLY-ADMITTED'
@@ -43,8 +44,9 @@ def is_withdrawn(user):
 
 
 def is_eligible_to_withdraw(user):
-    return user.status_message == RegistrationStatusMessage.get_status_admitted() \
-           or user.status_message == RegistrationStatusMessage.get_status_confirmed()
+    return user.status_message in [RegistrationStatusMessage.get_status_admitted(),
+                                   RegistrationStatusMessage.get_status_admitted_final(),
+                                   RegistrationStatusMessage.get_status_confirmed()]
 
 
 @method_decorator(never_cache, name='dispatch')
