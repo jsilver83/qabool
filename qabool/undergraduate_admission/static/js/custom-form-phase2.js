@@ -13,28 +13,11 @@ $(function(){
         }
     });
     $("input[type=file]").removeClass("form-control");
+    $('.hijri').change(function() {
+        alert('test');
+    });
     try{
-        $(".hijri").calendarsPicker($.extend(
-            {calendar: $.calendars.instance('ummalqura', 'ar')},
-            $.calendarsPicker.regionalOptions['ar']));
-        $('.hijri').change(function() {
-            calendar = $.calendars.instance($(this).val());
-            var convert = function(value) {
-                return (!value || typeof value != 'object' ? value :
-                    calendar.fromJD(value.toJD()));
-            };
-            $('.is-calendarsPicker').each(function() {
-                var current = $(this).calendarsPicker('option');
-                $(this).calendarsPicker('option', {calendar: calendar,
-                        onSelect: null, onChangeMonthYear: null,
-                        defaultDate: convert(current.defaultDate),
-                        minDate: convert(current.minDate),
-                        maxDate: convert(current.maxDate)}).
-                    calendarsPicker('option',
-                        {onSelect: current.onSelect,
-                        onChangeMonthYear: current.onChangeMonthYear});
-            });
-        });
+        $(".hijri").calendarsPicker({calendar: $.calendars.instance('ummalqura', 'ar'),dateFormat: 'dd-mm-yyyy'});
     }catch(e){}
 
     $(".updateOnce").each(function(){
