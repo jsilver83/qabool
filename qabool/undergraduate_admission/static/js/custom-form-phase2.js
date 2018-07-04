@@ -13,9 +13,6 @@ $(function(){
         }
     });
     $("input[type=file]").removeClass("form-control");
-    $('.hijri').change(function() {
-        alert('test');
-    });
     try{
         $(".hijri").calendarsPicker({calendar: $.calendars.instance('ummalqura', 'ar'),dateFormat: 'dd-mm-yyyy'});
     }catch(e){}
