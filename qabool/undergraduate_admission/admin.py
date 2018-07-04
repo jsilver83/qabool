@@ -210,7 +210,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                                            text=_('Personal Picture'),
                                            url=reverse('download_user_file_admin', args=('personal_picture', obj.id)))
         if obj.mother_gov_id_file:
-            docs_links_html += format_html("<a href='{url} target='_blank''>{text}</a><br>",
+            docs_links_html += format_html("<a href='{url} target='_blank'>{text}</a><br>",
                                            text=_('Mother Government ID'),
                                            url=reverse('download_user_file_admin', args=('mother_gov_id_file', obj.id)))
         if obj.birth_certificate:
