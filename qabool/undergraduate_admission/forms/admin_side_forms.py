@@ -193,12 +193,14 @@ class VerifyCommitteeForm(forms.ModelForm):
         if commit:
             student.save()
             if verification_documents_incomplete or verification_picture_acceptable:
-                SMS.send_sms_docs_issue_message(student.mobile)
-                SMS.send_sms_docs_issue_message(student.guardian_mobile)
+                pass
+                # SMS.send_sms_docs_issue_message(student.mobile)
+                # SMS.send_sms_docs_issue_message(student.guardian_mobile)
             elif verification_documents_incomplete is False and verification_picture_acceptable is False \
                     and student.student_type in ('S', 'M'):
-                SMS.send_sms_admitted(student.mobile)
-                SMS.send_sms_admitted(student.guardian_mobile)
+                pass
+                # SMS.send_sms_admitted(student.mobile)
+                # SMS.send_sms_admitted(student.guardian_mobile)
             return student
         else:
             return student
