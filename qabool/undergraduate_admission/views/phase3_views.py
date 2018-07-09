@@ -91,6 +91,14 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
         else:
             return super(ChooseTarifiTimeSlot, self).dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(ChooseTarifiTimeSlot, self).get_context_data(**kwargs)
+        sem = AdmissionSemester.get_active_semester()
+        context['agreement'] = get_object_or_404(Agreement, agreement_type='AWARENESS_WEEK_AGREEMENT', semester=sem)
+        context['items'] = context['agreement'].items.filter(show=True)
+
+        return context
+
     def get_object(self, queryset=None):
         return self.request.user
 
