@@ -218,15 +218,15 @@ class TarifiActivitySlot(models.Model):
         if self.type == 'PREPARATION_COURSE':
             return self.slots - TarifiUser.objects.filter(
                 preparation_course_slot=self.pk,
-                user__status_message=RegistrationStatusMessage.get_status_admitted()).count()
+                user__status_message=RegistrationStatusMessage.get_status_admitted_final()).count()
         elif self.type == 'ENGLISH_PLACEMENT_TEST':
             return self.slots - TarifiUser.objects.filter(
                 english_placement_test_slot=self.pk,
-                user__status_message=RegistrationStatusMessage.get_status_admitted()).count()
+                user__status_message=RegistrationStatusMessage.get_status_admitted_final()).count()
         elif self.type == 'ENGLISH_SPEAKING_TEST':
             return self.slots - TarifiUser.objects.filter(
                 english_speaking_test_slot=self.pk,
-                user__status_message=RegistrationStatusMessage.get_status_admitted()).count()
+                user__status_message=RegistrationStatusMessage.get_status_admitted_final()).count()
 
     @property
     def slot_attendance_start_date(self):

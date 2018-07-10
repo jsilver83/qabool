@@ -26,7 +26,7 @@ class TarifiSimulation(TarifiBaseView, TemplateView):
     template_name = 'find_roommate/landing_page.html'
 
     def get(self, *args, **kwargs):
-        users = User.objects.filter(status_message=RegistrationStatusMessage.get_status_admitted())[:200]
+        users = User.objects.filter(status_message=RegistrationStatusMessage.get_status_admitted_final())[:200]
         counter = 0
         for user in users:
             print(counter)
@@ -48,7 +48,7 @@ class TarifiLandingPage(TarifiBaseView, FormView):
             now = timezone.now()
 
             user = User.objects.get(kfupm_id=self.request.GET.get('kfupm_id', -1),
-                                    status_message=RegistrationStatusMessage.get_status_admitted(), )
+                                    status_message=RegistrationStatusMessage.get_status_admitted_final(), )
             semester = AdmissionSemester.get_phase4_active_semester()
             if semester and user:
                 context['student'] = user
@@ -132,7 +132,7 @@ class CourseAttendance(TarifiBaseView, FormView):
                 try:
                     student = TarifiUser.objects.get(user__kfupm_id=kfupm_id,
                                                      user__semester=semester,
-                                                     user__status_message=RegistrationStatusMessage.get_status_admitted(),
+                                                     user__status_message=RegistrationStatusMessage.get_status_admitted_final(),
                                                      preparation_course_slot=context['slot'], )
 
                     context['student'] = student

@@ -1,8 +1,7 @@
 import floppyforms.__future__ as forms
-from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, TarifiReceptionDate
-from django.utils.translation import ugettext_lazy as _, get_language
+from undergraduate_admission.models import User, RegistrationStatusMessage, TarifiReceptionDate
 
 
 class TarifiTimeSlotForm(forms.ModelForm):
@@ -25,8 +24,8 @@ class ChooseRoommateForm(forms.ModelForm):
     def clean_roommate_id(self):
         roommate_id = self.cleaned_data.get("roommate_id")
         if not User.objects.filter(username=roommate_id,
-                               eligible_for_housing=True,
-                               status_message=RegistrationStatusMessage.get_status_admitted()):
+                                   eligible_for_housing=True,
+                                   status_message=RegistrationStatusMessage.get_status_admitted_final()):
             raise forms.ValidationError(
                 _('This ID does not exist.'),
                 code='roommate_does_not_exist',
