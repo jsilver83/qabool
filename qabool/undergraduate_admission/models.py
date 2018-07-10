@@ -1137,7 +1137,7 @@ class TarifiReceptionDate(models.Model):
     @property
     def remaining_slots(self):
         return self.slots - User.objects.filter(tarifi_week_attendance_date=self.pk,
-                                                status_message=RegistrationStatusMessage.get_status_admitted()).count()
+                                                status_message=RegistrationStatusMessage.get_status_admitted_final()).count()
 
     @staticmethod
     def get_all_available_slots(user, add_dashes=True):
