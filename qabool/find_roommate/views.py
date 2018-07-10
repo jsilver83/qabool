@@ -24,7 +24,7 @@ from undergraduate_admission.validators import is_eligible_for_housing, is_eligi
 
 class HousingBaseView(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted() \
+        return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_final() \
                and AdmissionSemester.get_phase4_active_semester()
 
 
