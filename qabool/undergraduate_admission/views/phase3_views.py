@@ -103,7 +103,7 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        kfupm_id = KFUPMIDsPool.get_next_available_id()
+        kfupm_id = KFUPMIDsPool.get_next_available_id(self.request.user)
 
         if kfupm_id:
             saved = form.save(commit=False)
