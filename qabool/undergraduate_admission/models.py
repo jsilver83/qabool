@@ -1147,7 +1147,8 @@ class TarifiReceptionDate(models.Model):
     @staticmethod
     def get_all_available_slots(user, add_dashes=True):
         try:
-            choices = TarifiReceptionDate.objects.filter(semester=AdmissionSemester.get_phase3_active_semester(user))
+            choices = TarifiReceptionDate.objects.filter(semester=AdmissionSemester.get_phase3_active_semester(user),
+                                                         show=True)
 
             ch = [(o.id, str(o)) for o in choices if o.remaining_slots > 0]
             if add_dashes:
