@@ -615,11 +615,16 @@ class KFUPMIDsPool(models.Model):
             return None
 
     @staticmethod
-    def get_next_available_id():
-        kid = KFUPMIDsPool.objects.exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
-                                           .values_list('kfupm_id', flat=True)).order_by('?').first()
-        if kid:
-            return kid.kfupm_id
+    def get_next_available_id(student):
+        if student:
+            kid = KFUPMIDsPool.objects.filter(semester=student.semester)\
+                .exclude(kfupm_id__in=User.objects.filter(kfupm_id__isnull=False)
+                         .values_list('kfupm_id', flat=True)).order_by('?').first()
+
+            if kid:
+                return kid.kfupm_id
+            else:
+                return 0
         else:
             return 0
 
