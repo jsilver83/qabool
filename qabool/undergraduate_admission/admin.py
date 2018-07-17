@@ -171,7 +171,8 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
                        'show_yesser_tahsili_data_dump', )
     search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
                      'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
-    list_filter = ('high_school_graduation_year', 'gender', 'status_message__status', 'status_message', 'nationality',)
+    list_filter = ('semester', 'high_school_graduation_year', 'gender', 'status_message__status', 'status_message',
+                   'nationality',)
     actions = ['yesser_update']
     resource_class = StudentResource
 
@@ -286,11 +287,10 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
             result = get_student_record_serialized(student, True)
             if result['changed']:
                 changed_students += 1
-            if result['log']:
-                log += '<br>' + result['log']
+            # if result['log']:
+            #     log += '<br>' + result['log']
 
-        self.message_user(request, "%d student(s) were successfully sync'd with yesser. Here is the sync log: %s "
-                                % (changed_students, log))
+        self.message_user(request, "%d student(s) were successfully sync'd with yesser." % changed_students)
 
     yesser_update.short_description = _("Sync with Yesser")
 
