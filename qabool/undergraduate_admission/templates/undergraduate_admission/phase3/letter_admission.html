@@ -50,6 +50,7 @@
     <hr>
 </div>
 
+{% if show_admission_letter %}
 <div class="page-break">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align:right;" align="center">
         <tr>
@@ -109,6 +110,7 @@
             <img style="width: 90%" class="img-responsive" src="{% static 'images/letter-footer.jpg' %}"></div>
     </div>
 </div>
+{% endif %}
 
 <div>
     <table style="font-size:65%" width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -123,7 +125,11 @@
         <tr>
             <td width="626" align="right" valign="top"><strong>اسم الطالب: {{ user }}</strong></td>
             <td width="53" valign="top">&nbsp;</td>
-            <td width="621" align="right" valign="top"><strong>الرقم الجامعي: {{ user.kfupm_id }}</strong></td>
+            <td width="621" align="right" valign="top">
+	            {% if show_admission_letter %}
+	            <strong>الرقم الجامعي: {{ user.kfupm_id }}</strong>
+	            {% endif %}
+            </td>
         </tr>
         <tr>
             <td align="right" valign="top">سعادة مدير مستشفى / مستوصف الموقر<br>

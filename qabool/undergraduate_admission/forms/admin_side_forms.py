@@ -178,7 +178,10 @@ class VerifyCommitteeForm(forms.ModelForm):
                 and student.student_type in ('S', 'M'):
             status = RegistrationStatusMessage.get_status_admitted()
             student.status_message = status
-
+        elif verification_documents_incomplete is False and verification_picture_acceptable is False \
+                and student.student_type == 'N':
+            status = RegistrationStatusMessage.get_status_admitted_non_saudi()
+            student.status_message = status
 
         try:
             data_uri = self.cleaned_data.get('data_uri')

@@ -79,7 +79,8 @@ def student_area(request):
     can_confirm = request.user.status_message == RegistrationStatusMessage.get_status_partially_admitted() \
                   and AdmissionSemester.get_phase2_active_semester(request.user)
 
-    can_finish_phase3 = request.user.status_message == RegistrationStatusMessage.get_status_admitted() \
+    can_finish_phase3 = request.user.status_message in [RegistrationStatusMessage.get_status_admitted(),
+                                                        RegistrationStatusMessage.get_status_admitted_non_saudi()] \
                         and not request.user.tarifi_week_attendance_date \
                         and AdmissionSemester.get_phase3_active_semester(request.user)
 
