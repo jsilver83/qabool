@@ -759,6 +759,14 @@ class RegistrationStatusMessage(models.Model):
             return
 
     @staticmethod
+    def get_status_admitted_non_saudi():
+        try:
+            return RegistrationStatus.objects.get(status_code='ADMITTED') \
+                .status_messages.get(status_message_code='ADMITTED-N')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
     def get_status_admitted_transfer():
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
@@ -771,6 +779,14 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
                 .status_messages.get(status_message_code='ADMITTED-FINAL')
+        except ObjectDoesNotExist:
+            return
+
+    @staticmethod
+    def get_status_admitted_final_non_saudi():
+        try:
+            return RegistrationStatus.objects.get(status_code='ADMITTED') \
+                .status_messages.get(status_message_code='ADMITTED-FINAL-N')
         except ObjectDoesNotExist:
             return
 
