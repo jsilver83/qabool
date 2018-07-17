@@ -494,7 +494,7 @@ def get_student_record_serialized(student, change_status=False):
         final_data['high_school_gpa'] = student.high_school_gpa
         final_data['qudrat'] = student.qudrat_score
         final_data['tahsili'] = student.tahsili_score
-        final_data['log'] = special_cases_log
+        final_data['log'] = ''  # special_cases_log
         final_data['error'] = False
     except:
         pass
