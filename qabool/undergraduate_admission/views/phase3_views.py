@@ -88,7 +88,7 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
     success_url = reverse_lazy('print_documents')
 
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer():
+        if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer_final():
             return redirect('student_area')
         else:
             return super(ChooseTarifiTimeSlot, self).dispatch(request, *args, **kwargs)
