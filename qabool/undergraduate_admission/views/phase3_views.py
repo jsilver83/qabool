@@ -108,15 +108,15 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
         saved = form.save(commit=False)
         saved.phase3_submit_date = timezone.now()
 
-        if self.request.user.student_type in ['S', 'M']:
-            kfupm_id = KFUPMIDsPool.get_next_available_id(self.request.user)
+        # if self.request.user.student_type in ['S', 'M']:
+        kfupm_id = KFUPMIDsPool.get_next_available_id(self.request.user)
 
-            if kfupm_id:
-                if not saved.kfupm_id:
-                    saved.kfupm_id = kfupm_id
-            else:
-                messages.error(self.request, _('No IDs to assign. Contact the site admins...'))
-                return redirect('student_area')
+        if kfupm_id:
+            if not saved.kfupm_id:
+                saved.kfupm_id = kfupm_id
+        else:
+            messages.error(self.request, _('No IDs to assign. Contact the site admins...'))
+            return redirect('student_area')
 
         messages.success(self.request, _('Tarifi time slot was chosen successfully...'))
 
