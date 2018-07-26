@@ -767,10 +767,10 @@ class RegistrationStatusMessage(models.Model):
             return
 
     @staticmethod
-    def get_status_admitted_transfer():
+    def get_status_admitted_transfer_final():
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
-                .status_messages.get(status_message_code='ADMITTED-TRANSFER')
+                .status_messages.get(status_message_code='ADMITTED-FINAL-T')
         except ObjectDoesNotExist:
             return
 
