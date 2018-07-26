@@ -18,7 +18,8 @@ def student_info_commands(context):
                                               RegistrationStatusMessage.get_status_admitted_final_non_saudi()]
                       and user.tarifi_week_attendance_date)
 
-    can_confirm = (user.status_message == RegistrationStatusMessage.get_status_partially_admitted()
+    can_confirm = ((user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+                    user.status_message == RegistrationStatusMessage.get_status_transfer())
                    and AdmissionSemester.get_phase2_active_semester(user))
 
     can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)

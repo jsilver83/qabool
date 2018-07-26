@@ -28,9 +28,10 @@ from undergraduate_admission.validators import is_eligible_for_roommate_search
 
 
 # TODO: refactor all is_eligible_to_??? to be functions in the class User
-def is_phase2_eligible(user):
-    phase = user.get_student_phase()
-    return phase == 'PARTIALLY-ADMITTED'
+def can_confirm(user):
+    return ((user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+             user.status_message == RegistrationStatusMessage.get_status_transfer())
+            and AdmissionSemester.get_phase2_active_semester(user))
 
 
 def is_admitted(user):
@@ -70,11 +71,11 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
 
 class Phase2BaseView(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
-        return is_phase2_eligible(self.request.user)
+        return can_confirm(self.request.user)
 
 
 @login_required()
-@user_passes_test(is_phase2_eligible)
+@user_passes_test(can_confirm)
 def confirm(request):
     form = BaseAgreementForm(request.POST or None)
 
@@ -94,7 +95,7 @@ def confirm(request):
 
 
 @login_required()
-@user_passes_test(is_phase2_eligible)
+@user_passes_test(can_confirm)
 def personal_info(request):
     form = PersonalInfoForm(request.POST or None, request.FILES or None,
                             instance=request.user, )
@@ -119,7 +120,7 @@ def personal_info(request):
 
 
 @login_required()
-@user_passes_test(is_phase2_eligible)
+@user_passes_test(can_confirm)
 def guardian_contact(request):
     if request.method == 'GET':
         personal_info_completed = request.session.get('personal_info_completed')
@@ -143,7 +144,7 @@ def guardian_contact(request):
 
 
 @login_required()
-@user_passes_test(is_phase2_eligible)
+@user_passes_test(can_confirm)
 def relative_contact(request):
     if request.method == 'GET':
         guardian_contact_completed = request.session.get('guardian_contact_completed')
@@ -167,7 +168,7 @@ def relative_contact(request):
 
 
 @login_required()
-@user_passes_test(is_phase2_eligible)
+@user_passes_test(can_confirm)
 def vehicle_info(request):
     if request.method == 'GET':
         relative_contact_completed = request.session.get('relative_contact_completed')
@@ -269,10 +270,10 @@ class UploadDocumentsView(Phase2BaseView, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        if self.request.user.student_type == 'N':
+        if self.request.user.status_message == RegistrationStatusMessage.get_status_transfer():
+            reg_msg = RegistrationStatusMessage.get_status_admitted_transfer_final()
+        elif self.request.user.student_type == 'N':
             reg_msg = RegistrationStatusMessage.get_status_confirmed_non_saudi()
-        elif self.request.user.status_message == RegistrationStatusMessage.get_status_transfer():
-            reg_msg = RegistrationStatusMessage.get_status_admitted_transfer()
         else:
             reg_msg = RegistrationStatusMessage.get_status_confirmed()
 
@@ -280,11 +281,13 @@ class UploadDocumentsView(Phase2BaseView, UpdateView):
         saved_user.status_message = reg_msg
         saved_user.save()
 
-        if saved_user:
+        if self.request.user.student_type in [RegistrationStatusMessage.get_status_confirmed_non_saudi(),
+                                              RegistrationStatusMessage.get_status_confirmed()]:
             SMS.send_sms_confirmed(self.request.user.mobile)
+
+        if saved_user:
             messages.success(self.request, _('Documents were uploaded successfully. We will verify your information '
                                              'and get back to you soon...'))
-            return redirect(self.success_url)
         else:
             messages.error(self.request, _('Error saving info. Try again later!'))
 
