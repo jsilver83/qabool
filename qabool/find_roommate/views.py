@@ -19,12 +19,17 @@ from find_roommate.models import HousingUser, RoommateRequest, Room
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from undergraduate_admission.models import RegistrationStatusMessage, AdmissionSemester, Agreement, User
 from undergraduate_admission.utils import SMS
-from undergraduate_admission.validators import is_eligible_for_housing, is_eligible_for_roommate_search
+from undergraduate_admission.validators import is_eligible_for_roommate_search
+
+
+allowed_statuses_for_housing = [RegistrationStatusMessage.get_status_admitted_final(),
+                                RegistrationStatusMessage.get_status_admitted_final_non_saudi(),
+                                RegistrationStatusMessage.get_status_admitted_transfer_final()]
 
 
 class HousingBaseView(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_final() \
+        return self.request.user.status_message in allowed_statuses_for_housing \
                and AdmissionSemester.get_phase4_active_semester()
 
 
@@ -101,7 +106,7 @@ class NewRoommateRequest(HousingBaseView, FormView):
         semester = AdmissionSemester.get_phase4_active_semester()
         roommate = User.objects.filter(Q(kfupm_id=gov_id_or_kfupm_id) |
                                        Q(username=gov_id_or_kfupm_id),
-                                       status_message=RegistrationStatusMessage.get_status_admitted(),
+                                       status_message__in=allowed_statuses_for_housing,
                                        eligible_for_housing=True,
                                        semester=semester).exclude(pk=self.request.user.pk).first()
 
@@ -262,7 +267,7 @@ class HousingInfoUpdate(HousingBaseView, UpdateView):
 @user_passes_test(is_eligible_for_roommate_search)
 def housing_search(request):
     students = HousingUser.objects \
-        .filter(user__status_message__status_message_code='ADMITTED',
+        .filter(user__status_message__in=allowed_statuses_for_housing,
                 searchable=True,
                 user__eligible_for_housing=True) \
         .exclude(user__pk__in=RoommateRequest.objects.
