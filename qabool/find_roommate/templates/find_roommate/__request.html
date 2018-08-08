@@ -4,7 +4,7 @@
 	<td>
 		<table>
 			<tr>
-				<td><strong>{% trans 'Roommate' %}</strong></td>
+				<td style="width: 25%"><strong>{% trans 'Roommate' %}</strong></td>
 				<td>
 					{% if request.requesting_user != user %}
 						{{ request.requesting_user }}
@@ -28,19 +28,19 @@
 					<td>{{ request.assigned_room }}</td>
 				{% elif request.status == 'P' and request.requesting_user != user %}
 					<td><a onclick="return confirm('{% trans "Are you sure?" %}');"
-					       class="btn btn-success btn-lg btn-block"
+					       class="btn btn-success btn-block"
 					       href="{% url 'accept_request' request.pk %}">
 						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 						{% trans 'Accept' %}</a></td>
 					<td><a onclick="return confirm('{% trans "Are you sure?" %}');"
-					       class="btn btn-danger btn-lg btn-block"
+					       class="btn btn-danger btn-block"
 					       href="{% url 'reject_request' request.pk %}">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						{% trans 'Reject' %}</a></td>
 				{% elif request.status == 'P' and request.requesting_user == user %}
 					<td></td>
 					<td><a onclick="return confirm('{% trans "Are you sure?" %}');"
-					       class="btn btn-danger btn-lg btn-block"
+					       class="btn btn-danger btn-block"
 					       href="{% url 'cancel_request' request.pk %}">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						{% trans 'Cancel' %}</a></td>
@@ -51,8 +51,8 @@
 			</tr>
 			{% if request.status == 'A' %}
 				<tr>
-					<td colspan="2">{% trans 'Kindly print two copies of each of the following documents: ' %}</td>
-					<td colspan="2">
+					<td>{% trans 'Kindly print two copies of each of the following documents: ' %}</td>
+					<td colspan="3">
 						<a target="_blank" class="btn btn-primary btn-lg" href="{% url 'housing_letter1' %}">
 							<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;{% trans 'Housing Letter 1' %}</a>&nbsp;&nbsp;
 						<a target="_blank" class="btn btn-primary btn-lg" href="{% url 'housing_letter2' %}">
