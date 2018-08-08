@@ -7,7 +7,6 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import CreateView
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
@@ -164,9 +163,21 @@ def check_remaining_rooms_threshold():
         SMS.send_sms_housing_rooms_threshold_100()
 
 
-class AcceptRequest(HousingBaseView, View):
-    def get(self, *args, **kwargs):
-        roommate_request = RoommateRequest.objects.get(pk=kwargs.get('pk'),
+class AcceptRequest(HousingBaseView, FormView):
+    template_name = 'find_roommate/accept_request.html'
+    form_class = AgreementForm
+    agreement_type = 'HOUSING_AGREEMENT'
+    next_url = reverse_lazy('housing_landing_page')
+
+    def get_context_data(self, **kwargs):
+        context = super(AcceptRequest, self).get_context_data(**kwargs)
+        sem = AdmissionSemester.get_phase4_active_semester()
+        context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
+        context['items'] = context['agreement'].items.filter(show=True)
+        return context
+
+    def form_valid(self, form):
+        roommate_request = RoommateRequest.objects.get(pk=self.kwargs.get('pk'),
                                                        requested_user=self.request.user,
                                                        status=RoommateRequest.RequestStatuses.PENDING)
         if roommate_request:
@@ -184,7 +195,11 @@ class AcceptRequest(HousingBaseView, View):
                                                  'Kindly try again in 24 hours!'))
         else:
             messages.error(self.request, _('Invalid request'))
-        return redirect('housing_landing_page')
+        return redirect(self.next_url)
+
+    def form_invalid(self, form):
+        messages.error(self.request, _('Error.'))
+        return super(AcceptRequest, self).form_invalid(form)
 
 
 class RejectRequest(HousingBaseView, View):
