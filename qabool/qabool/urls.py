@@ -18,6 +18,7 @@ from django.conf.urls import url, include, patterns
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views
 
 import find_roommate.urls
 import tarifi.urls
@@ -29,6 +30,8 @@ urlpatterns = i18n_patterns(
     url(r'', include(undergraduate_admission.urls)),
     url(r'', include(find_roommate.urls)),
     url(r'^admin/tarifiweek/', include(tarifi.urls)),
+    url(r'^logout/', views.logout, {'template_name': 'logout.html'}, name='logout'),
+
 )
 
 urlpatterns += [
