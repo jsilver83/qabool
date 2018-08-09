@@ -64,7 +64,7 @@
 <strong>أولاً: جامعة الملك فهد للبترول والمعادن – عمادة شؤون الطلاب ( صندوق الطلاب )</strong>
 <strong>( المالك ويشار إليه بالطرف الأول )</strong>
 <p>
-	<strong>ثانياً : الطالب / </strong> {{ user.get_student_full_name }}&nbsp;&nbsp;<strong>رقم البطاقة الجامعية /</strong> {{ user.kfupm_id }}
+	<strong>ثانياً : الطالب / </strong> {{ user.get_student_full_name }}&nbsp;&nbsp;<strong>رقم البطاقة الجامعية /</strong> {{ user.kfupm_id }} {% trans 'Government ID' %} / {{ user }}
 </p>
 <p>عنوانه بالجامعة : ص .ب :.......................................
 	هاتف الجوال : {{ user.mobile }}
