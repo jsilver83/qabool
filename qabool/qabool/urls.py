@@ -30,7 +30,7 @@ urlpatterns = i18n_patterns(
     url(r'', include(undergraduate_admission.urls)),
     url(r'', include(find_roommate.urls)),
     url(r'^admin/tarifiweek/', include(tarifi.urls)),
-    url(r'^logout/', views.logout, {'template_name': 'logout.html'}, name='logout'),
+    url(r'^logout/$', views.logout, {'template_name': 'logout.html'}, name='logout'),
 
 )
 
