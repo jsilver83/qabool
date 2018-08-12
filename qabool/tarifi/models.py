@@ -67,7 +67,7 @@ class TarifiUser(models.Model):
                                                                    validators=[MinValueValidator(1),
                                                                                MaxValueValidator(100)], )
     english_level = models.CharField(max_length=20, null=True, blank=True, verbose_name='English Level')
-    creation_date = models.DateTimeField(null=True, blank=True, auto_now_add=True, verbose_name=_('Creation Date'), )
+    creation_date = models.DateTimeField(null=True, blank=True, auto_now_add=True, verbose_name=_('Reception Date'), )
     updated_on = models.DateTimeField(null=True, blank=True, auto_now=True, verbose_name=_('Updated On'), )
 
     def __str__(self):
