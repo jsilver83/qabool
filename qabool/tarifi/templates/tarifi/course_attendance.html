@@ -11,7 +11,7 @@
 				<dt>{% trans 'Slot Type' %}</dt>
 				<dd>{{ slot.get_type_display }}</dd>
 				<dt>{% trans 'Slot Period' %}</dt>
-				<dd>{{ slot.slot_start_date }} - {{ slot.slot_end_date|timeuntil }}
+				<dd>{{ slot.slot_start_date }} - {{ slot.slot_end_date|time }}
 			</div>
 			<div class="col-sm-6">
 				<dt>{% trans 'Location' %}</dt>
@@ -22,6 +22,7 @@
 			</div>
 		</div>
 		<hr>
+	{% endif %}
 		<div class="row">
 			<div class="col-sm-6">
 				<form>
@@ -30,8 +31,9 @@
 				</form>
 			</div>
 			<div class="col-sm-6">
-				{% if not no_student %}
+				{% if student_entered %}
 					{% if student %}
+						{% if student.preparation_course_attendance %}
 						<div class="alert alert-success">
 							<h4>
 								<span class="glyphicon glyphicon-ok"></span>&nbsp;
@@ -40,6 +42,19 @@
 							<h6>
 								{{ student.preparation_course_attendance }}</h6>
 						</div>
+						{% else %}
+							{% if early_or_late %}
+							<div class="alert alert-danger">
+								<b>{% trans 'Slot Period' %}: {{ slot.slot_start_date }} - {{ slot.slot_end_date|time }}</b>
+								<h6>{% trans 'This student is' %}&nbsp;{{ early_or_late }}</h6>
+								{% if enable_attendance_anyways %}
+								<a class="btn btn-success"
+								   href="{% url 'preparation_course_attendance' %}?attend_anyways=1&{{ request.GET.urlencode }}">
+									{% trans 'Attend Anyways' %}</a>
+								{% endif %}
+							</div>
+							{% endif %}
+						{% endif %}
 					{% else %}
 						<div class="alert alert-danger">
 							<span class="glyphicon glyphicon-remove"></span>&nbsp;
@@ -49,26 +64,26 @@
 				{% endif %}
 			</div>
 		</div>
-	{% else %}
-		<div class="alert alert-danger">
-			<h4>
-				<span class="glyphicon glyphicon-remove"></span>&nbsp;
-				{% trans 'No Preparation Course is taking place at the moment' %}</h4>
-			{% if upcoming_slots %}
-				<hr>
-				<h4>{% trans 'Upcoming Courses Slots' %}</h4>
-				<table class="table">
-				{% for slot in upcoming_slots %}
-					<tr>
-						<td>{{ slot.location }}</td>
-						<td>{{ slot.slot_attendance_start_date|timeuntil }}</td>
-						<td>{{ slot.slot_attendance_end_date }}</td>
-					</tr>
-				{% endfor %}
-				</table>
-			{% endif %}
-		</div>
-	{% endif %}
+{#	{% else %}#}
+{#		<div class="alert alert-danger">#}
+{#			<h4>#}
+{#				<span class="glyphicon glyphicon-remove"></span>&nbsp;#}
+{#				{% trans 'No Preparation Course is taking place at the moment' %}</h4>#}
+{#			{% if upcoming_slots %}#}
+{#				<hr>#}
+{#				<h4>{% trans 'Upcoming Courses Slots' %}</h4>#}
+{#				<table class="table">#}
+{#				{% for slot in upcoming_slots %}#}
+{#					<tr>#}
+{#						<td>{{ slot.location }}</td>#}
+{#						<td>{{ slot.slot_attendance_start_date|timeuntil }}</td>#}
+{#						<td>{{ slot.slot_attendance_end_date }}</td>#}
+{#					</tr>#}
+{#				{% endfor %}#}
+{#				</table>#}
+{#			{% endif %}#}
+{#		</div>#}
+{#	{% endif %}#}
 	<hr>
 	<div class="alert alert-warning">
 		{% trans 'Attendance will open 10 minutes prior to the course start time and will close in 40 minutes' %}
