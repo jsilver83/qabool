@@ -14,7 +14,11 @@ Internal
 [cols="1,3,1,4",options="header",small]
 |==================================================
 | Version | Author(s) | Date      | Change
-| 2.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03-20 | new version
+| 2.0     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2017-03-20 |
+| 2.1     | Bassam Almaaesh  <almaaesh@kfupm.edu.sa> |  2018-09-16 | new changes in student criteria,
+student confirmation, student reservation and printing documents,
+sync data from Yesser sections, Attendance System for Preparation Course and added a new section called
+'Distribute Partial Admitted Students Among Committee'
 |==================================================
 
 == Students
@@ -34,7 +38,8 @@ Fit Criteria::
 In addition what we have in the current system in step/phase 1 we should add the following criteria:
 
 . Add new fields called:
-.. High School , Qudurat and Tahseel grades.
+.. High School, Qudurat and Tahseel grades.
+.. Bank information: Bank Name, IBAN and Bank Account Identification File.
 .. Student Full Name (Arabic) same as Identification ID/Iqama (show this field in student dashboard).
 .. Student Full Name (English) same as passport or high school certificate (show this field in student dashboard).
 .. Gender, default value is male.
@@ -44,8 +49,6 @@ In addition what we have in the current system in step/phase 1 we should add the
 . Change status message from : ('تم التقديم') to ('تم تقديم طلبك')
 . Add note above the form (for best browser use Google Chrome or Firefox).
 . Add note below mobile number (to receive a message you have to activate promotion message from your network provider).
-. (Deleted) In the student dashboard move up student name and change caption name: "اسم الطالب الثنائي".
-. (Deleted) Add new caption/label called gender: only for male.
 . Student can edit the following fields till the end of phase 1:
 .. Student Full Name Arabic and English.
 .. Email and student mobile.
@@ -81,6 +84,8 @@ Source::	Students.
 Fit Criteria::
 
 In addition what we have in the current system step/phase 2, we should add the following criteria:
+. Add new fields for student bank account information as optional: name, IBAN and attached with
+bank account identification.
 . Add new field called (do you have a car) and it is optional.
 . If yes, the student can enter vehicle registration number and driving license.
 . Also, the student can upload these two documents (vehicle registration number and driving license).
@@ -107,10 +112,11 @@ Approval::	Not yet approved.
 [horizontal]
 Capability ID::	Q.03
 
-Description::	Admitted students can make reservations in order to visit building 54 and also printing
-admission letter and medical report.
+Description::	Admitted students can make reservations in order to visit building 57 (Preparation Year Building)
+ and also printing admission letter and medical report.
 
-Rationale:: To attend the orientation week and receive student schedule.
+Rationale:: To attend the orientation week and receive student schedule for English test exam and schedule
+preparation course.
 
 Source:: Students.
 
@@ -119,12 +125,11 @@ Fit Criteria::
 In addition what we have in the current system, we move printing admission letter
 and medical report to new step/phase 3 add the following criteria:
 . This module will be open during step/phase 3.
-. Only admitted students can access the system in order to make a reservation to visit building 54.
+. Only admitted students can access the system in order to make a reservation.
 . Admitted student can not change the reservation once he select and submit form.
-. The system will assign KFUPM ID to the student automatically once he make reservation.
-. Admitted students can print admission letter after he select the reservation.
-. Admitted students can print medical report.
-. The admission letter contains the time-slot to visit building 54.
+. The system will assign KFUPM ID to the student automatically once he makes reservation.
+. Admitted students can print admission letter and medical report in one click after he select the reservation.
+. The admission letter contains the time-slot to visit building 57.
 
 Dependencies::	login screen and Q.09
 
@@ -152,16 +157,20 @@ Source::	Students.
 
 Fit Criteria::
 In addition what we have in the current system step/phase 3, we should add the following criteria:
-. This module will start in step/phase 3 after printing admission letter and it will close before orientation week.
-. Admitted student can answer the questionnaire.
+. This module will start in step/phase 4 after printing admission letter and it will close
+before orientation week.
+. Admitted student who are eligible for housing can answer the questionnaire and use the system.
 . Add a new field called "Enter Your Partner KFUPM ID" to send a request to the partner.
 . The roommate should be able to accept or reject the request.
 . If both students agree, their information will not show in the search page.
+. If both students agree, they have to print three documents in one click and the system will generate random room for both.
+. Students who withdraw from the University will not show in search page.
+. Students who found roommate and then withdraw from the University, the room should be unoccupied again.
+. The system should send SMS to requester and receiver when they received a new request, accept or reject requests.
 
 Dependencies::	login screen , Q.03 and Q.09.
 
 Conflicts::	None.
-
 
 Priority::	4
 
@@ -242,16 +251,16 @@ Approval::	Not yet approved.
 
 Capability ID::	Q.07
 
-Description::	The English department should be able to upload the results of English written exam
+Description:: The English department should be able to upload the results of English written exam
 for current semester.
 
-Rationale:: For statistic purpose and the report will create through BI.
+Rationale:: For statistic purpose and the report will be create through BI.
 
-Source::	English Department.
+Source:: English Department.
 
 Fit Criteria::
 . English department will able to upload list of student results.
-It contains only two fields (student ID and student level) for the current year/semester.
+. It contains only two fields (student ID and student level) for the current year/semester.
 
 Dependencies::	who-attend-orientation-week and take English exam
 
@@ -281,10 +290,8 @@ Source::	English Department.
 Fit Criteria::
 . English department should able to add exam dates and sections information in the current semester
 (note: usually they schedule only for two dates).
-// And the fields are date and day.
-
-// . Each date has many sections information ( the fields are : building number, section number,
-//   maximum enrollment, interview start time, interview students per 10 minutes).
+. The fields are : building number, section number, maximum enrollment,
+interview start time, interview students per 10 minutes).
 
 Dependencies::	None.
 
@@ -298,12 +305,6 @@ Effort::	3
 
 Approval::	Not yet approved.
 
-=== BI Reports
-
-Fit Criteria::
-
-. Display list of students per section for English exam and Interview.
-
 
 == Committee
 
@@ -312,35 +313,31 @@ Fit Criteria::
 
 Capability ID::	Q.09
 
-Description::	The committee can view student's information and correct it if need.
+Description::	The committee verify student's information and correct it if need.
 It starts on the second day of step/phase 2.
 
 Rationale:: To verify student's information.
 
-Source::	Committee.
+Source:: Committee.
 
 Fit Criteria::
 . This module will open on second day of step/phase 2 once the student submit his application.
-. Committee should be able to correct student full names bilingual (only full names).
 . All fields should be "read only" except
-.. full names
 .. high school name, province, high school city, country,
 .. eligible for housing,
 .. expire Gov ID / Iqama and
 .. birth of date and place
 .. committee note and type of the problems.
+. All dates format should be dd/mm/YYYY.
 . Committee should be able to review and verify student information.
 . Committee should be able to remove/delete student's documents if any document is missing and it will go back to
 the student in order to correct and re-upload the documents.
 . Committee should be able to remove the student's picture and return back to student in order to re-upload it.
-. The system should be able to assign KFUPM ID automatically (student ID)
-if the application is valid.
 . If the student not respond to correct his application during second step/phase 2,
 his application will be rejected.
 
-// And the fields are date and day.
+//. The system should be able to assign KFUPM ID automatically (student ID) if the application is valid.
 // . Each date has many sections information ( the fields are : building number, section number,
-//   maximum enrollment, interview start time, interview students per 10 minutes).
 
 Dependencies::	Q.01 , Q.03 and login screen.
 
@@ -354,6 +351,11 @@ Effort::	3
 
 Approval::	Not yet approved.
 
+=== BI Reports
+.. General statistic report who completed the verification.
+.. List of students who has some missing documents.
+.. List of students with no issues.
+
 
 == Admission Office
 
@@ -366,7 +368,7 @@ to select proper time to attend orientation week and then print the admission le
 
 Rationale:: To organize scheduling for the orientation week.
 
-Source::	Admission Office.
+Source:: Admission Office.
 
 Fit Criteria::
 . Admission office should be able to add time-slot in order to organize
@@ -401,8 +403,11 @@ Fit Criteria::
 . Admission office should be able to retrieve student information from Yesser.
 .. Student Arabic name separated.
 .. Student English name separated.
-.. (another new fields especially for Yesser) High School , Qudurat and Tahseel grades.
-.. High school name, province and city.
+.. Get more information about students from Yesser and it should be read only: High School, Qudurat and Tahseel.
+.. Get grades from Yesser and these fields should should be editable:
+High School, Qudurat, Tahseel grades, High School ID, High school name (Ar and En),
+High School Province Code, High School Province (Ar and En),
+High School City Code, High School City (Ar and En).
 .. Birth of date and place.
 .. Gender
 
@@ -446,8 +451,33 @@ Effort::	3
 
 Approval::	Not yet approved.
 
-=== BI Reports
-We should enhance and update current reports based on the new capabilities.
+
+=== Distribute Partial Admitted Students Among Committee
+[horizontal]
+Capability ID:: Q.13
+
+Description::	The admission office can distribute list of partial admitted students to the committee with specific criteria like
+ students types (S, M and N ) and student nationalities.
+
+Rationale:: To distribute students among committee and let them to verify.
+
+Source:: Admission Office.
+
+Fit Criteria::
+. Admission office should be able to distribute list of partial admitted students based on students type
+(S, M and N), graduation year, high school types and nationality.
+
+Dependencies:: Q.09.
+
+Conflicts::	None.
+
+Priority::	5
+
+Risk::	3
+
+Effort::	3
+
+Approval::	Not yet approved.
 
 
 == Student Housing
@@ -460,12 +490,13 @@ Fit Criteria::
 
 == Student Affairs
 
-=== Reception System (in Building 54)
+=== Reception System (in preparation building 57)
 [horizontal]
-Capability ID:: Q.13
+Capability ID:: Q.14
 
 Description::	This capability will allow the student affairs to print schedule for English exams and
-preparation university course. And then give two copies: one for student and the other will print inside for student affairs.
+preparation university course. And then give two copies: one for student and the other will print inside
+for student affairs.
 
 Rationale::	In order to get student folder and schedule English exams and preparation university course.
 
@@ -476,8 +507,6 @@ Fit Criteria::
 . The system will schedule only for admitted students.
 . Student affairs should be able to enter student ID in order to print schedule for English exams and the course time and location.
 . The system should schedule course time without any conflicts with English written exams and interview.
-. If the student does not visit building 54 and print his scheduled exams and course,
-he cannot attend the course of preparation university course.
 
 Dependencies:: Q.03
 
@@ -494,7 +523,7 @@ Approval::	Not yet approved.
 
 === Attendance System for Preparation Course
 [horizontal]
-Capability ID:: Q.14
+Capability ID:: Q.15
 
 Description::	This capability will allow the staff of student affairs to record
 attendance for the students based on their schedule.
@@ -506,11 +535,11 @@ Source::	Student Affairs.
 Fit Criteria::
 
 . Student affairs should be able to make attendance of each student per section.
-. If the student does not visit building 54 and print his scheduled exams and course,
-he cannot attend the course of preparation university course.
+. The student cannot attend the preparation university course unless he pass the reception and get schedule.
 . If the student does not attend preparation course, the system will not allow him to receive books from bookstore.
 
-Dependencies::	Q.12
+
+Dependencies::	Q.14
 
 Conflicts::	None.
 
@@ -526,9 +555,15 @@ Approval::	Not yet approved.
 
 Fit Criteria::
 
+. Statistics for orientation week reception.
+. List of students who attend preparation course.
 . Display list of students per section for preparation course.
 . Display list of students who did not attend the course.
 . Display list of students who attend orientation week and who did not.
+. List of students per section for English exam and Interview.
+. Housing eligibility statistics.
+. Student housing roommate requests.
+. List of rooms with student informations.
 
 == Security Department
 
