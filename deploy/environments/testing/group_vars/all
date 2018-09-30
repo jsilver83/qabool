@@ -3,6 +3,16 @@ django_project_branch: default
 apache_server_names:
   - qabool.test.kfupm.edu.sa
 
+# required for proper SSL termination on load-balancer while using CAS
+apache_public_url: https://qabool.test.kfupm.edu.sa
+apache_load_balancer_ips: ["10.180.24.1"]
+apache_proxy:
+  - path: /
+    protocol: uwsgi
+    host: localhost
+    port: 5656
+    remote_path: /
+
 database_engine: django.db.backends.postgresql
 database_name: qabool2
 database_user: qabool
