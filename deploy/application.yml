@@ -14,13 +14,27 @@
     django_project_package_name: qabool
     apache_authn: cas
     apache_authn_urls:
-      - /ar/admin/
-      - /en/admin/
-      - /ar/manage/
-      - /en/manage/
-      - /admin_files/
-      - /ar/logout/
-      - /en/logout/
+      - path: /ar/admin/
+        authn_type: cas
+        authz_type: none
+      - path: /en/admin/
+        authn_type: cas
+        authz_type: none
+      - path: /ar/manage/
+        authn_type: cas
+        authz_type: none
+      - path: /en/manage/
+        authn_type: cas
+        authz_type: none
+      - path: /ar/logout/
+        authn_type: cas
+        authz_type: none
+      - path: /en/logout/
+        authn_type: cas
+        authz_type: none
+      - path: /admin_files/
+        authn_type: cas
+        authz_type: none
 
     apache_extra_modules:
       - xsendfile
