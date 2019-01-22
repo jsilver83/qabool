@@ -1,7 +1,7 @@
 import base64
 import re
 
-import floppyforms.__future__ as forms
+from django import forms
 from captcha.fields import CaptchaField
 from django.conf import settings
 from django.contrib.auth.forms import AdminPasswordChangeForm

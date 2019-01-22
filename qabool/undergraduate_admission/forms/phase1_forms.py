@@ -4,11 +4,13 @@ from captcha.fields import CaptchaField
 # from captcha.fields import ReCaptchaFieldfrom django.utils import translation
 
 from django.utils.translation import ugettext_lazy as _, get_language
-import floppyforms.__future__ as forms
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 
 from django.conf import settings
+
+from qabool.base_forms import BaseCrispyForm
 from undergraduate_admission.forms.general_forms import BaseContactForm
 from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup, Nationality, GraduationYear
 from undergraduate_admission.utils import parse_non_standard_numerals, add_validators_to_arabic_and_english_names
@@ -58,7 +60,7 @@ class Phase1UserEditForm(BaseContactForm):
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
 
 
-class RegistrationForm(UserCreationForm):
+class RegistrationForm(BaseCrispyForm, UserCreationForm):
     UserCreationForm.error_messages.update(
         {
             'email_mismatch': _("The two email fields didn't match."),
@@ -151,7 +153,7 @@ class RegistrationForm(UserCreationForm):
                 self.fields[field].widget.attrs.update({'required': ''})
 
             if field in ['username2', 'email2', 'mobile2']:
-                self.fields[field].widget.attrs.update({'class': 'nocopy'})
+                self.fields[field].widget.attrs.update({'class': 'nocopy form-control'})
 
         add_validators_to_arabic_and_english_names(self.fields)
 

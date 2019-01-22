@@ -1,6 +1,6 @@
 import base64
 
-import floppyforms.__future__ as forms
+from django import forms
 import re
 from django.utils import timezone
 

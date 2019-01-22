@@ -5,9 +5,10 @@ from django.utils.translation import ugettext_lazy as _, get_language
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
-from qabool import settings
+from django.conf import settings
+from qabool.base_forms import BaseCrispyForm
 from undergraduate_admission.models import User, AdmissionSemester
-import floppyforms.__future__ as forms
+from django import forms
 
 from undergraduate_admission.utils import parse_non_standard_numerals
 
@@ -128,7 +129,7 @@ class MyAuthenticationForm(AuthenticationForm):
         return parse_non_standard_numerals(self.cleaned_data.get("username"))
 
 
-class ForgotPasswordForm(forms.ModelForm):
+class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
     }

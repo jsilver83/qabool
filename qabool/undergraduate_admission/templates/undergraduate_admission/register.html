@@ -1,8 +1,5 @@
 {% extends 'base-sidebar.html' %}
-{% load i18n %}
-{% load l10n %}
-{% load static %}
-{% load floppyforms %}
+{% load i18n l10n static crispy_forms_tags %}
 
 {% block subcontent %}
 {% blocktrans %}
@@ -13,8 +10,7 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 <hr>
 <form class="form-horizontal" method="post">
 	{% csrf_token %}
-
-	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	{% crispy form %}
 	<div class="checkbox form-group">
 		<div class="col-sm-5">&nbsp;</div>
 		<label class="col-sm-7">
@@ -22,7 +18,6 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 		</label>
 	</div>
 	<div class="subBtn">
-		<!--<hr>-->
 		<br>
 		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Apply for Admission' %}"/>
 	</div>
