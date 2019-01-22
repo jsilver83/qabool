@@ -8,6 +8,13 @@ class ForceDefaultLanguageMiddleware(object):
     Should be installed *before* any middleware that checks request.META['HTTP_ACCEPT_LANGUAGE'],
     namely django.middleware.locale.LocaleMiddleware
     """
-    def process_request(self, request):
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
         if request.META.get('HTTP_ACCEPT_LANGUAGE'):
             del request.META['HTTP_ACCEPT_LANGUAGE']
+
+        response = self.get_response(request)
+        return response

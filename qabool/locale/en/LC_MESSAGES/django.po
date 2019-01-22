@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 16:49+0300\n"
+"POT-Creation-Date: 2019-01-22 10:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,21 +35,21 @@ msgstr ""
 
 #: find_roommate/forms.py:22
 #: find_roommate/templates/find_roommate/landing_page.html:19
-#: undergraduate_admission/forms/phase1_forms.py:134
+#: undergraduate_admission/forms/phase1_forms.py:136
 #: undergraduate_admission/forms/phase2_forms.py:19
 msgid "Yes"
 msgstr ""
 
 #: find_roommate/forms.py:23
 #: find_roommate/templates/find_roommate/landing_page.html:31
-#: undergraduate_admission/forms/phase1_forms.py:135
+#: undergraduate_admission/forms/phase1_forms.py:137
 #: undergraduate_admission/forms/phase2_forms.py:20
 msgid "No"
 msgstr ""
 
 #: find_roommate/forms.py:39 find_roommate/forms.py:47
-#: find_roommate/forms.py:55 undergraduate_admission/forms/phase1_forms.py:25
-#: undergraduate_admission/forms/phase1_forms.py:37
+#: find_roommate/forms.py:55 undergraduate_admission/forms/phase1_forms.py:27
+#: undergraduate_admission/forms/phase1_forms.py:39
 msgid "You have to check this box"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing.html:54
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
-#: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:250
+#: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:251
 #: undergraduate_admission/forms/phase2_forms.py:323
 #: undergraduate_admission/models.py:106 undergraduate_admission/models.py:601
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
@@ -241,7 +241,7 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:39
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:27
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:31
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:44
 #: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
@@ -249,7 +249,7 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/phase2/withdraw.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:79
-#: undergraduate_admission/templates/undergraduate_admission/register.html:27
+#: undergraduate_admission/templates/undergraduate_admission/register.html:22
 msgid "btn-align"
 msgstr ""
 
@@ -387,59 +387,78 @@ msgstr ""
 msgid "Dear Student"
 msgstr ""
 
+#: find_roommate/templates/find_roommate/letter_housing.html:67
+#: undergraduate_admission/forms/admin_side_forms.py:152
+#: undergraduate_admission/forms/general_forms.py:115
+#: undergraduate_admission/forms/general_forms.py:118
+#: undergraduate_admission/forms/general_forms.py:138
+#: undergraduate_admission/forms/phase1_forms.py:88
+#: undergraduate_admission/forms/phase2_forms.py:316
+#: undergraduate_admission/models.py:474 undergraduate_admission/models.py:887
+#: undergraduate_admission/models.py:924
+#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
+#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:26
+#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:22
+#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:13
+#: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:43
+#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:25
+msgid "Government ID"
+msgstr ""
+
 #: find_roommate/templates/find_roommate/request_roommate.html:37
 msgid "Send Request"
 msgstr ""
 
-#: find_roommate/views.py:71 find_roommate/views.py:143
-#: find_roommate/views.py:197 undergraduate_admission/views/phase1_views.py:29
+#: find_roommate/views.py:75 find_roommate/views.py:147
+#: find_roommate/views.py:201 undergraduate_admission/views/phase1_views.py:29
 #: undergraduate_admission/views/phase2_views.py:87
 #: undergraduate_admission/views/phase3_views.py:54
 msgid "Error."
 msgstr ""
 
-#: find_roommate/views.py:123
+#: find_roommate/views.py:127
 msgid "Request was sent to the student you have chosen..."
 msgstr ""
 
-#: find_roommate/views.py:132
+#: find_roommate/views.py:136
 msgid ""
 "The entered KFUPM ID belong to a student who has a pending roommate request."
 msgstr ""
 
-#: find_roommate/views.py:135
+#: find_roommate/views.py:139
 msgid "The entered KFUPM ID belong to a student who already has a roommate."
 msgstr ""
 
-#: find_roommate/views.py:138
+#: find_roommate/views.py:142
 msgid ""
 "The entered KFUPM ID doesnt belong to an existing student who is both "
 "admitted and eligible for housing"
 msgstr ""
 
-#: find_roommate/views.py:188
+#: find_roommate/views.py:192
 msgid "Request was accepted and room was assigned to you successfully..."
 msgstr ""
 
-#: find_roommate/views.py:190
+#: find_roommate/views.py:194
 msgid ""
 "There was an issue in assigning a room to you. Kindly try again in 24 hours!"
 msgstr ""
 
-#: find_roommate/views.py:193 find_roommate/views.py:214
-#: find_roommate/views.py:229
+#: find_roommate/views.py:197 find_roommate/views.py:218
+#: find_roommate/views.py:233
 msgid "Invalid request"
 msgstr ""
 
-#: find_roommate/views.py:212
+#: find_roommate/views.py:216
 msgid "Request was rejected successfully..."
 msgstr ""
 
-#: find_roommate/views.py:227
+#: find_roommate/views.py:231
 msgid "Request was cancelled as per your request..."
 msgstr ""
 
-#: find_roommate/views.py:273 undergraduate_admission/views/phase2_views.py:116
+#: find_roommate/views.py:277 undergraduate_admission/views/phase2_views.py:116
 #: undergraduate_admission/views/phase2_views.py:140
 #: undergraduate_admission/views/phase2_views.py:164
 #: undergraduate_admission/views/phase2_views.py:188
@@ -451,12 +470,16 @@ msgstr ""
 msgid "Error saving info. Try again later!"
 msgstr ""
 
-#: qabool/settings.py:160
+#: qabool/settings.py:175
 msgid "Arabic"
 msgstr ""
 
-#: qabool/settings.py:161
+#: qabool/settings.py:176
 msgid "English"
+msgstr ""
+
+#: tarifi/models.py:19
+msgid "Received By"
 msgstr ""
 
 #: tarifi/models.py:26
@@ -465,6 +488,10 @@ msgstr ""
 
 #: tarifi/models.py:32 tarifi/models.py:152
 msgid "Preparation Course Attendance Date"
+msgstr ""
+
+#: tarifi/models.py:36
+msgid "Preparation Course Attended By"
 msgstr ""
 
 #: tarifi/models.py:43
@@ -483,6 +510,14 @@ msgstr ""
 msgid "English Placement Test Score"
 msgstr ""
 
+#: tarifi/models.py:66
+msgid "English Speaking Test Score"
+msgstr ""
+
+#: tarifi/models.py:69
+msgid "English Level"
+msgstr ""
+
 #: tarifi/models.py:70 undergraduate_admission/models.py:1147
 msgid "Reception Date"
 msgstr ""
@@ -492,7 +527,7 @@ msgstr ""
 msgid "%(slot_type)s (%(location)s) %(start_date)s %(start_time)s"
 msgstr ""
 
-#: tarifi/models.py:84 tarifi/models.py:198
+#: tarifi/models.py:84 tarifi/models.py:199
 msgid "English Speaking Test"
 msgstr ""
 
@@ -502,6 +537,10 @@ msgstr ""
 
 #: tarifi/models.py:154
 msgid "English Speaking Test Date"
+msgstr ""
+
+#: tarifi/models.py:163
+msgid "Semester"
 msgstr ""
 
 #: tarifi/models.py:165 undergraduate_admission/models.py:1149
@@ -524,19 +563,19 @@ msgstr ""
 msgid "Slots"
 msgstr ""
 
-#: tarifi/models.py:171 tarifi/templates/tarifi/course_attendance.html.py:11
+#: tarifi/models.py:171 tarifi/templates/tarifi/course_attendance.html:11
 msgid "Slot Type"
 msgstr ""
 
-#: tarifi/models.py:174 tarifi/templates/tarifi/course_attendance.html.py:20
+#: tarifi/models.py:174 tarifi/templates/tarifi/course_attendance.html:20
 msgid "Attender"
 msgstr ""
 
-#: tarifi/models.py:179 undergraduate_admission/models.py:952
+#: tarifi/models.py:180 undergraduate_admission/models.py:952
 msgid "Description"
 msgstr ""
 
-#: tarifi/models.py:180 tarifi/models.py:252
+#: tarifi/models.py:181 tarifi/models.py:253
 #: undergraduate_admission/models.py:830 undergraduate_admission/models.py:867
 #: undergraduate_admission/models.py:955 undergraduate_admission/models.py:997
 #: undergraduate_admission/models.py:1081
@@ -545,7 +584,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: tarifi/models.py:181 undergraduate_admission/models.py:831
+#: tarifi/models.py:182 undergraduate_admission/models.py:831
 #: undergraduate_admission/models.py:868 undergraduate_admission/models.py:956
 #: undergraduate_admission/models.py:998 undergraduate_admission/models.py:1082
 #: undergraduate_admission/models.py:1112
@@ -553,33 +592,33 @@ msgstr ""
 msgid "Display Order"
 msgstr ""
 
-#: tarifi/models.py:184
+#: tarifi/models.py:185
 msgid "Tarifi: Preparation Activity Slots"
 msgstr ""
 
-#: tarifi/models.py:194
+#: tarifi/models.py:195
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:29
 msgid "Preparation Course Attendance"
 msgstr ""
 
-#: tarifi/models.py:196
+#: tarifi/models.py:197
 msgid "English Placement Test"
 msgstr ""
 
-#: tarifi/models.py:202
+#: tarifi/models.py:203
 #, python-format
 msgid "%(slot_type)s (%(location)s) %(start_date)s"
 msgstr ""
 
-#: tarifi/models.py:241
+#: tarifi/models.py:242
 msgid "From KFUPM ID"
 msgstr ""
 
-#: tarifi/models.py:242
+#: tarifi/models.py:243
 msgid "To KFUPM ID"
 msgstr ""
 
-#: tarifi/models.py:243 tarifi/models.py:251
+#: tarifi/models.py:244 tarifi/models.py:252
 msgid "Box No"
 msgstr ""
 
@@ -712,14 +751,14 @@ msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:17
 #: undergraduate_admission/forms/admin_side_forms.py:220
-#: undergraduate_admission/forms/phase1_forms.py:109
+#: undergraduate_admission/forms/phase1_forms.py:111
 #: undergraduate_admission/models.py:125
 msgid "Male"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:18
 #: undergraduate_admission/forms/admin_side_forms.py:221
-#: undergraduate_admission/forms/phase1_forms.py:110
+#: undergraduate_admission/forms/phase1_forms.py:112
 #: undergraduate_admission/models.py:126
 msgid "Female"
 msgstr ""
@@ -790,24 +829,6 @@ msgstr ""
 msgid "Select Member(s)"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:152
-#: undergraduate_admission/forms/general_forms.py:114
-#: undergraduate_admission/forms/general_forms.py:117
-#: undergraduate_admission/forms/general_forms.py:137
-#: undergraduate_admission/forms/phase1_forms.py:86
-#: undergraduate_admission/forms/phase2_forms.py:316
-#: undergraduate_admission/models.py:474 undergraduate_admission/models.py:887
-#: undergraduate_admission/models.py:924
-#: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
-#: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:26
-#: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:22
-#: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:13
-#: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:43
-#: undergraduate_admission/templates/undergraduate_admission/registration_success.html:25
-msgid "Government ID"
-msgstr ""
-
 #: undergraduate_admission/forms/admin_side_forms.py:214
 #: undergraduate_admission/forms/admin_side_forms.py:247
 #: undergraduate_admission/models.py:35
@@ -832,136 +853,136 @@ msgstr ""
 msgid "SMS Message To Be Sent"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:24
-#: undergraduate_admission/forms/phase1_forms.py:64
-msgid "The two email fields didn't match."
-msgstr ""
-
 #: undergraduate_admission/forms/general_forms.py:25
 #: undergraduate_admission/forms/phase1_forms.py:66
-msgid "The two mobile fields didn't match."
+msgid "The two email fields didn't match."
 msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:26
 #: undergraduate_admission/forms/phase1_forms.py:68
+msgid "The two mobile fields didn't match."
+msgstr ""
+
+#: undergraduate_admission/forms/general_forms.py:27
+#: undergraduate_admission/forms/phase1_forms.py:70
 msgid ""
 "The Email entered is associated with another applicant. Please use a "
 "different Email"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:28
-#: undergraduate_admission/forms/phase1_forms.py:70
+#: undergraduate_admission/forms/general_forms.py:29
+#: undergraduate_admission/forms/phase1_forms.py:72
 msgid ""
 "The Mobile entered is associated with another applicant. Please use a "
 "different Mobile"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:33
-#: undergraduate_admission/forms/phase1_forms.py:80
+#: undergraduate_admission/forms/general_forms.py:34
+#: undergraduate_admission/forms/phase1_forms.py:82
 msgid "Email Address Confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:35
-#: undergraduate_admission/forms/phase1_forms.py:82
+#: undergraduate_admission/forms/general_forms.py:36
+#: undergraduate_admission/forms/phase1_forms.py:84
 msgid "Enter the same email address as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:39
-#: undergraduate_admission/forms/phase1_forms.py:101
+#: undergraduate_admission/forms/general_forms.py:40
+#: undergraduate_admission/forms/phase1_forms.py:103
 msgid "Mobile Confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:42
-#: undergraduate_admission/forms/phase1_forms.py:104
+#: undergraduate_admission/forms/general_forms.py:43
+#: undergraduate_admission/forms/phase1_forms.py:106
 msgid "Enter the same mobile number as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:120
+#: undergraduate_admission/forms/general_forms.py:121
 msgid "password"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:125
-#: undergraduate_admission/forms/general_forms.py:181
-#: undergraduate_admission/forms/phase1_forms.py:174
+#: undergraduate_admission/forms/general_forms.py:126
+#: undergraduate_admission/forms/general_forms.py:182
+#: undergraduate_admission/forms/phase1_forms.py:176
 #: undergraduate_admission/forms/phase2_forms.py:357
 msgid "Confirmation Code"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:133
+#: undergraduate_admission/forms/general_forms.py:134
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:148
+#: undergraduate_admission/forms/general_forms.py:149
 msgid "New Password"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:151
-#: undergraduate_admission/forms/phase1_forms.py:168
+#: undergraduate_admission/forms/general_forms.py:152
+#: undergraduate_admission/forms/phase1_forms.py:170
 #: undergraduate_admission/forms/phase2_forms.py:352
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:156
+#: undergraduate_admission/forms/general_forms.py:157
 msgid "New Password confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:159
-#: undergraduate_admission/forms/phase1_forms.py:169
+#: undergraduate_admission/forms/general_forms.py:160
+#: undergraduate_admission/forms/phase1_forms.py:171
 #: undergraduate_admission/forms/phase2_forms.py:353
 msgid "Enter the same password as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:168
+#: undergraduate_admission/forms/general_forms.py:169
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:18
+#: undergraduate_admission/forms/phase1_forms.py:20
 msgid "I have read all of the above terms and conditions"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:30
+#: undergraduate_admission/forms/phase1_forms.py:32
 msgid "I accept all the above terms and conditions"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:65
+#: undergraduate_admission/forms/phase1_forms.py:67
 msgid "The two government ID fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:67
+#: undergraduate_admission/forms/phase1_forms.py:69
 msgid "You have been denied from applying for the following reason(s): "
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:72
+#: undergraduate_admission/forms/phase1_forms.py:74
 #: undergraduate_admission/models.py:54
 msgid "You have entered an invalid Government ID"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:73
+#: undergraduate_admission/forms/phase1_forms.py:75
 msgid "You have entered the guardian mobile same as your own mobile"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:74
+#: undergraduate_admission/forms/phase1_forms.py:76
 msgid ""
 "You have entered the mother to be Saudi but you did NOT enter her Saudi "
 "Government ID"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:90
+#: undergraduate_admission/forms/phase1_forms.py:92
 #: undergraduate_admission/forms/phase2_forms.py:320
 msgid ""
 "National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or "
 "2xxxxxxxxx."
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:93
+#: undergraduate_admission/forms/phase1_forms.py:95
 msgid "Government ID Confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:97
+#: undergraduate_admission/forms/phase1_forms.py:99
 msgid "Enter the same government ID as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:114
+#: undergraduate_admission/forms/phase1_forms.py:116
 #: undergraduate_admission/models.py:128
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:32
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:32
@@ -969,7 +990,7 @@ msgstr ""
 msgid "Gender"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:115
+#: undergraduate_admission/forms/phase1_forms.py:117
 msgid "Only male students can apply"
 msgstr ""
 
@@ -2021,7 +2042,7 @@ msgid "Update Contact Info"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:26
-#: undergraduate_admission/templates/undergraduate_admission/register.html:21
+#: undergraduate_admission/templates/undergraduate_admission/register.html:17
 msgid "I confirm that all entered info above are correct"
 msgstr ""
 
@@ -2033,7 +2054,7 @@ msgstr ""
 msgid "Fill the form below to reset your password"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:39
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:27
 msgid "Reset Password"
 msgstr ""
 
@@ -2065,12 +2086,12 @@ msgid ""
 "        "
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/login.html:39
+#: undergraduate_admission/templates/undergraduate_admission/login.html:40
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:13
 msgid "Login"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/login.html:40
+#: undergraduate_admission/templates/undergraduate_admission/login.html:41
 msgid "Forgot Password?"
 msgstr ""
 
@@ -2275,7 +2296,7 @@ msgstr ""
 msgid "Tarifi Time Slot"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/register.html:8
+#: undergraduate_admission/templates/undergraduate_admission/register.html:5
 msgid ""
 "\n"
 "<h3>To get started, please set up an account so you can return to the site "
@@ -2285,7 +2306,7 @@ msgid ""
 "your application.\n"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/register.html:27
+#: undergraduate_admission/templates/undergraduate_admission/register.html:22
 msgid "Apply for Admission"
 msgstr ""
 
@@ -2510,15 +2531,15 @@ msgstr ""
 msgid "Verification submitted successfully!!!!"
 msgstr ""
 
-#: undergraduate_admission/views/general_views.py:63
+#: undergraduate_admission/views/general_views.py:64
 msgid "Password was reset successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/general_views.py:66
+#: undergraduate_admission/views/general_views.py:67
 msgid "Error resetting password. Make sure you enter the correct info."
 msgstr ""
 
-#: undergraduate_admission/views/general_views.py:109
+#: undergraduate_admission/views/general_views.py:110
 msgid "Contact Info was updated successfully..."
 msgstr ""
 
