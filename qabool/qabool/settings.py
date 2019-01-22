@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'captcha',
     'floppyforms',
     'crispy_forms',
-
+    'pagedown',
+    'markdown_deux',
     'import_export',
     'django_filters',
 
