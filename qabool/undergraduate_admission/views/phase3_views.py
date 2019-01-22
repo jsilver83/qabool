@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -85,7 +85,7 @@ class StudentAgreement4(BaseStudentAgreement):
 class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
     form_class = TarifiTimeSlotForm
     template_name = 'undergraduate_admission/phase3/tarifi_time_slot.html'
-    success_url = reverse_lazy('print_documents')
+    success_url = reverse_lazy('undergraduate_admission:print_documents')
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer_final():

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
@@ -24,7 +24,7 @@ def initial_agreement(request):
     if request.method == 'POST':
         if form.is_valid():
             request.session['agreed'] = True
-            return redirect('register')
+            return redirect('undergraduate_admission:register')
         else:
             messages.error(request, _('Error.'))
     sem = AdmissionSemester.get_phase1_active_semester()
@@ -40,17 +40,17 @@ class RegisterView(CreateView):
     context_object_name = "user"
     template_name = 'undergraduate_admission/register.html'
     form_class = RegistrationForm
-    success_url = reverse_lazy('registration_success')
+    success_url = reverse_lazy('undergraduate_admission:registration_success')
 
     # changed from "dispatch" to "get" so that it will check only when the user loads the form not when he submits
     def get(self, request, *args, **kwargs):
         if not AdmissionSemester.check_if_phase1_is_active():
             messages.error(request, _('Registration is closed...'))
-            return redirect('index')
+            return redirect('undergraduate_admission:index')
 
         agreed = request.session.get('agreed')
         if agreed is None:
-            return redirect('initial_agreement')
+            return redirect('undergraduate_admission:initial_agreement')
         else:
             return super(RegisterView, self).get(request, *args, **kwargs)
 
@@ -159,7 +159,7 @@ class RegistrationSuccess(TemplateView):
         if user_id is not None:
             context['user'] = get_object_or_404(User, pk=user_id)
         else:
-            return redirect('register')
+            return redirect('undergraduate_admission:register')
 
         return context
 
@@ -168,7 +168,7 @@ class EditInfo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/edit_info.html'
     form_class = Phase1UserEditForm
     success_message = _('Info was updated successfully...')
-    success_url = reverse_lazy('student_area')
+    success_url = reverse_lazy('undergraduate_admission:student_area')
 
     def get_object(self, queryset=None):
         return self.request.user

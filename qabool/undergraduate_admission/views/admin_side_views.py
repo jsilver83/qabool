@@ -7,10 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q, F, Case, When, Value, CharField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 from django.views.generic import ListView
@@ -133,7 +133,7 @@ class CutOffPointView(AdminBaseView, View):
             except ObjectDoesNotExist:
                 messages.error(request, _('Error in updating status...'))
 
-        return redirect('cut_off_point')
+        return redirect('undergraduate_admission:cut_off_point')
 
 
 class DistributeStudentsOnVerifiersView(AdminBaseView, View):
@@ -217,7 +217,7 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
             except ObjectDoesNotExist:
                 messages.error(request, _('Error in updating status...'))
 
-        return redirect('distribute_committee')
+        return redirect('undergraduate_admission:distribute_committee')
 
 
 class VerifyList(StaffBaseView, ListView):
@@ -252,7 +252,7 @@ class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
     success_message = _('Verification submitted successfully!!!!')
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('verify_list')
+        return reverse_lazy('undergraduate_admission:verify_list')
 
 
 class YesserDataUpdate(AdminBaseView, TemplateView):

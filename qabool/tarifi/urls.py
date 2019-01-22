@@ -1,10 +1,12 @@
-from django.conf.urls import url
+from django.urls import path
 
 from .views import *
 
+app_name = 'tarifi'
+
 urlpatterns = [
-    url(r'^simulation/$', TarifiSimulation.as_view(), name='tarifi_simulation'),
-    url(r'^student/(?P<pk>\d+)/$', StudentPrintPage.as_view(), name='student_print_page'),
-    url(r'^attendance/$', CourseAttendance.as_view(), name='preparation_course_attendance'),
-    url(r'^reception/$', TarifiLandingPage.as_view(), name='tarifi_landing_page'),
+    path('simulation/', TarifiSimulation.as_view(), name='tarifi_simulation'),
+    path('student/<int:pk>/', StudentPrintPage.as_view(), name='student_print_page'),
+    path('attendance/', CourseAttendance.as_view(), name='preparation_course_attendance'),
+    path('reception/', TarifiLandingPage.as_view(), name='tarifi_landing_page'),
 ]
