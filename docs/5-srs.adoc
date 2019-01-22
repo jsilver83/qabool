@@ -14,8 +14,9 @@ include::includes/proprietary-information.adoc[]
 | 1.0 | Abdullah Joud, Bassam Almaaesh | 2016-04-10 | First version
 | 2.0 | Abdullah Joud, Bassam Almaaesh | 2017-01-01 | Update
 product functions and business process
-| 2.0 | Bassam Almaaesh | 2017-02-15 | Update business process for phase 1,2,3 and 4
-| 2.0 | Bassam Almaaesh | 2017-03-15 | Update phase 1 screens
+| 2.0 | Bassam Almaaesh | 2017-02-15 | Updated business process for phase 1,2,3 and 4
+| 2.0 | Bassam Almaaesh | 2017-03-15 | Updated phase 1 screens
+| 2.0 | Bassam Almaaesh | 2018-06-15 | added business process for phase 5
 |==================================================
 
 
@@ -65,7 +66,7 @@ This system will cover the whole admission life-cycle including the following sc
 * student affairs screens.
 * registrar office screen.
 * English department screens.
-* attendance system for orientation week.
+* Reception system for orientation week.
 * attendance system for university preparation course.
 * student housing screens.
 
@@ -121,9 +122,7 @@ belong to student housing.
 * Choosing student roommate.
 * Upload & Re-upload personal picture.
 * Reset password.
-* Select time to visit building 54.
-// * Select time for English written exam and interview.
-// * Select time to attend University preparation course.
+* Select time to visit building 57.
 
 
 ==== For Admission Office
@@ -131,20 +130,21 @@ belong to student housing.
 * Upload list of denied students.
 * Create new semester and enter start and end date for each phase.
 * Review and correct student information.
-* Manage schedule to attend building 54.
-* Apply cut-off points and generate results based on student type (S, M and N) and nationality
-* Calculate and take cut-off based on student GPAs using business intelligence (BI).
+* Manage schedule to attend building 57.
+* Apply cut-off points and generate results based on student type (S, M and N) and nationality.
+* Distribute partial admitted students among committee.
+* Calculate and take cut-off points based on student GPAs using business intelligence (BI).
 * Change password.
 
 ==== For Committee
 
-* Review and correct student information.
+* Verify student information.
 
 ==== For Student Affairs
 
 * Manage schedule for university preparation course.
-* Attendance for orientation week in building 54.
-* Attendance for preparation course.
+* Reception system for orientation week in building 57.
+* Attendance system for preparation course.
 
 ==== For Registrar
 
@@ -153,16 +153,51 @@ belong to student housing.
 ==== For English Dept.
 
 * Manage schedule for English written and oral exams.
-* Above all, the business intelligence (BI) will provide different type of reports for
-student affairs, registrar office, information and communication technology center and admission office.
 
 ==== BI Reports
 
-* View general statistics and reports
-* General statistics
-* Students report (with filters based on high-school GPA, status, nationality, and city)
-* Denied students report
-* Withdrawn students report
+Above all, the business intelligence (BI) will provide different type of reports for admission office,
+student affairs, registrar office, information and communication technology center.
+
+. Applicants Report	Applicants Report
+. Attempters Report
+. Brief Applicants Report
+. Decision Study Sheet
+. Distinguished Student Report
+. Missing Info Report
+. Nationality ID Error Report
+. Registration Statistics Report
+. Distinguished Cutoff
+. Seats Based Report
+. Statistics Report
+. Confirmed Students (Admitted)
+. Admitted Students Complete Dump
+. Awareness Week - Date & Time
+. Bank (MADA Card)
+. Chronic Diseases
+. Distinguished Admitted Students
+. Employed Students
+. Handicapped Students
+. ICTC for Emails
+. Khadamati ( Financial Affairs )
+. Maqbool (MOE)
+. Prep Year
+. Register & Student Affairs
+. Students with cars information
+. Admitted Students by Date
+. Withdrawn Students by Date
+. Attended Awareness Week
+. Not Attended Students
+. Student Housing Report
+. Student Housing Statistics Report
+. Search students information
+. Incorrect Names Report
+. Missing Documents/Photo Report
+. All Applicants
+. KFUPM ID's Usage
+. Withdrawn Students
+. Rejected Problems Students
+. Unused KFUPM IDs
 
 ==== Business Process
 
@@ -185,7 +220,7 @@ image::images/businessProcess/3.png[]
 
 
 [[context]]
-.Phase 4 Orientation week ( Reception in Building 54 and Reception University Preparation Course )
+.Phase 4 Orientation week ( Reception and attendance for preparation course )
 image::images/businessProcess/4.png[]
 
 
