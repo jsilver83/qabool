@@ -700,7 +700,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
                 get(status_message_code='APPLIED')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -708,7 +708,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED').status_messages. \
                 get(status_message_code='TRANSFER')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -716,7 +716,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
                 get(status_message_code='NON-SAUDI')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -724,7 +724,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='REJECTED').status_messages. \
                 get(status_message_code='OLD-HS')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -732,14 +732,14 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='REJECTED').status_messages. \
                 get(status_message_code='GIRLS')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
     def get_status_withdrawn():
         try:
             return RegistrationStatus.objects.get(status_code='WITHDRAWN').status_messages.first()
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -747,7 +747,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
                 .status_messages.get(status_message_code='PARTIALLY-ADMITTED')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -755,7 +755,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
                 .status_messages.get(status_message_code='ADMITTED')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -763,7 +763,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
                 .status_messages.get(status_message_code='ADMITTED-N')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -771,7 +771,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
                 .status_messages.get(status_message_code='ADMITTED-FINAL-T')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -779,7 +779,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
                 .status_messages.get(status_message_code='ADMITTED-FINAL')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -787,7 +787,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='ADMITTED') \
                 .status_messages.get(status_message_code='ADMITTED-FINAL-N')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -795,7 +795,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='SUSPENDED') \
                 .status_messages.get(status_message_code='DUPLICATE')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -803,7 +803,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
                 .status_messages.get(status_message_code='CONFIRMED')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -811,7 +811,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
                 .status_messages.get(status_message_code='CONFIRMED-N')
-        except ObjectDoesNotExist:
+        except:
             return
 
     @staticmethod
@@ -819,7 +819,7 @@ class RegistrationStatusMessage(models.Model):
         try:
             return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
                 .status_messages.get(status_message_code='CONFIRMED-T')
-        except ObjectDoesNotExist:
+        except:
             return
 
 

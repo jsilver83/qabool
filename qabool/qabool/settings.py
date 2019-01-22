@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from django.core.urlresolvers import reverse
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.messages import constants as messages
 
@@ -31,12 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'undergraduate_admission',
-    'find_roommate',
-    'tarifi',
+    'undergraduate_admission.apps.UndergraduateAdmissionConfig',
+    'find_roommate.apps.FindRoommateConfig',
+    'tarifi.apps.TarifiConfig',
     'reversion',
     'captcha',
     'floppyforms',
+    'crispy_forms',
 
     'import_export',
     'django_filters',
@@ -51,7 +52,7 @@ INSTALLED_APPS = [
     # 'debug_toolbar',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'reversion.middleware.RevisionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,10 +62,24 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.RemoteUserMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# MIDDLEWARE_CLASSES = [
+#     'reversion.middleware.RevisionMiddleware',
+#     'django.middleware.security.SecurityMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'qabool.middleware.force_default_language.ForceDefaultLanguageMiddleware',
+#     'django.middleware.locale.LocaleMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.auth.middleware.RemoteUserMiddleware',
+#     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+# ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.RemoteUserBackend',
@@ -141,7 +156,7 @@ CACHES = {
     #}
 }
 
-LOGIN_URL = 'login'
+LOGIN_URL = reverse_lazy('undergraduate_admission:login')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -194,6 +209,8 @@ MESSAGE_TAGS = {
 }
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 EMAIL_HOST = 'mail.kfupm.edu.sa'
 EMAIL_PORT = '587'

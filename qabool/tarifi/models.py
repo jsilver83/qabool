@@ -16,7 +16,7 @@ class TarifiUser(models.Model):
         related_name='tarifi_user',
     )
     received_by = models.ForeignKey('undergraduate_admission.User',
-                                    verbose_name='Received By',
+                                    verbose_name=_('Received By'),
                                     on_delete=models.SET_NULL,
                                     null=True,
                                     blank=True,
@@ -33,7 +33,7 @@ class TarifiUser(models.Model):
                                                          null=True,
                                                          blank=True, )
     preparation_course_attended_by = models.ForeignKey('undergraduate_admission.User',
-                                                       verbose_name='Preparation Course Attended By',
+                                                       verbose_name=_('Preparation Course Attended By'),
                                                        on_delete=models.SET_NULL,
                                                        null=True,
                                                        blank=True,
@@ -63,10 +63,10 @@ class TarifiUser(models.Model):
                                                                                 MaxValueValidator(100)], )
     english_speaking_test_score = models.PositiveSmallIntegerField(null=True,
                                                                    blank=True,
-                                                                   verbose_name='English Speaking Test Score',
+                                                                   verbose_name=_('English Speaking Test Score'),
                                                                    validators=[MinValueValidator(1),
                                                                                MaxValueValidator(100)], )
-    english_level = models.CharField(max_length=20, null=True, blank=True, verbose_name='English Level')
+    english_level = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('English Level'))
     creation_date = models.DateTimeField(null=True, blank=True, auto_now_add=True, verbose_name=_('Reception Date'), )
     updated_on = models.DateTimeField(null=True, blank=True, auto_now=True, verbose_name=_('Updated On'), )
 
@@ -160,7 +160,7 @@ class TarifiActivitySlot(models.Model):
         blank=False,
         null=True,
         related_name='tarifi_activities_dates',
-        verbose_name='Semester',
+        verbose_name=_('Semester'),
     )
     slot_start_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Start Date'))
     slot_end_date = models.DateTimeField(null=True, blank=False, verbose_name=_('End Date'))
@@ -175,6 +175,7 @@ class TarifiActivitySlot(models.Model):
                                  null=True,
                                  blank=True,
                                  related_name='assigned_slots',
+                                 on_delete=models.SET_NULL,
                                  limit_choices_to={'is_staff': True})
     description = models.CharField(max_length=600, null=True, blank=True, verbose_name=_('Description'))
     show = models.BooleanField(verbose_name=_('Show'), default=True)
