@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from pagedown.widgets import AdminPagedownWidget
 from import_export import resources
 from import_export.admin import ImportExportMixin
 from reversion.admin import VersionAdmin
@@ -409,30 +410,21 @@ class KFUPMIDsPoolAdmin(ImportExportMixin, admin.ModelAdmin):
     list_filter = ['semester']
 
 
-class AgreementItemResource(resources.ModelResource):
-    class Meta:
-        model = AgreementItem
-        import_id_fields = ('id',)
-        fields = ('id', 'agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
-        skip_unchanged = True
-        report_skipped = True
+# class AgreementItemResource(resources.ModelResource):
+#     class Meta:
+#         model = AgreementItem
+#         import_id_fields = ('id',)
+#         fields = ('id', 'agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
+#         skip_unchanged = True
+#         report_skipped = True
 
-
-class AgreementItemAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
-    list_filter = ('agreement',)
-    resource_class = AgreementItemResource
-
-
-class AgreementItemInline(admin.TabularInline):
-    model = AgreementItem
-
-
+# TODO: add semester and status message in list filter
 class AgreementAdmin(admin.ModelAdmin):
-    inlines = [
-        AgreementItemInline,]
-    list_display = ['agreement_type','semester', ]
-    list_filter = ['semester']
+    formfield_overrides = {
+        models.TextField: {'widget': AdminPagedownWidget},
+    }
+    list_display = ('id', 'get_semester', 'agreement_type', 'show')
+    list_filter = ('agreement_type',)
 
 
 class LookupResource(resources.ModelResource):
@@ -511,12 +503,9 @@ admin.site.register(GraduationYear, GraduationYearAdmin)
 # Use TabularInline in the Agreement model.
 admin.site.register(Agreement, AgreementAdmin)
 # admin.site.register(Agreement)
-admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester, AdmissionSemesterAdmin)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Student, StudentAdmin)
-admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
 admin.site.register(Lookup, LookupAdmin)
-admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
 # admin.site.register(CutOff, CutOffAdmin)
