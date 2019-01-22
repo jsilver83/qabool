@@ -32,13 +32,13 @@
 </div>
 <div class="list-group">
 	{% if can_confirm %}
-	<a href="{% url 'confirm' %}" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
+	<a href="{% url 'undergraduate_admission:confirm' %}" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 	{% endif %}
 	{% if can_print_docs %}
-	<a href="{% url 'print_documents_after_phase3' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
+	<a href="{% url 'undergraduate_admission:print_documents_after_phase3' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 	{% endif %}
 	{% if can_see_housing %}
-	<a href="{% url 'housing_landing_page' %}" class="list-group-item">
+	<a href="{% url 'find_roommate:housing_landing_page' %}" class="list-group-item">
 		<i class="fa fa-home" aria-hidden="true"></i>
 		&nbsp;{% trans 'Student Housing' %}
 		{% if pending_housing_roommate_requests %}
@@ -47,18 +47,18 @@
 	</a>
 	{% endif %}
 	{% if can_print_withdrawal_letter %}
-	<a href="{% url 'withdrawal_letter' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Withdrawal Letter' %}</a>
+	<a href="{% url 'undergraduate_admission:withdrawal_letter' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Withdrawal Letter' %}</a>
 	{% endif %}
 	{% if can_edit_phase1_info %}
-	<a href="{% url 'edit_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Info' %}</a>
+	<a href="{% url 'undergraduate_admission:edit_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Info' %}</a>
 	{% endif %}
 	{% if can_edit_contact_info %}
-	<a href="{% url 'edit_contact_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
+	<a href="{% url 'undergraduate_admission:edit_contact_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
 	{% endif %}
 	{% if can_withdraw %}
-	<a style="color:#D9534F" href="{% url 'withdraw' %}" class="list-group-item"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
+	<a style="color:#D9534F" href="{% url 'undergraduate_admission:withdraw' %}" class="list-group-item"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
 	{% endif %}
-	<a href="{% url 'change_password' %}" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
+	<a href="{% url 'undergraduate_admission:change_password' %}" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
 	<hr>
-	<a href="{% url 'logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}</a>
+	<a href="{% url 'undergraduate_admission:logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}</a>
 </div>

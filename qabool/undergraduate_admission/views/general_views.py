@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -24,9 +24,10 @@ def index(request, template_name='undergraduate_admission/login.html'):
     form = MyAuthenticationForm(request.POST or None)
 
     redirect_to = request.POST.get('next',
-                                   request.GET.get('next', reverse_lazy('student_area')))
+                                   request.GET.get('next', reverse_lazy('undergraduate_admission:student_area')))
 
-    if request.method == 'GET' and request.user.is_authenticated(): return redirect(reverse('student_area'))
+    if request.method == 'GET' and request.user.is_authenticated:
+        return redirect('undergraduate_admission:student_area')
 
     if request.method == 'POST':
         if form.is_valid():
@@ -61,7 +62,7 @@ def forgot_password(request):
             saved = form.save()
             if saved:
                 messages.success(request, _('Password was reset successfully...'))
-                return redirect(reverse('index'))
+                return redirect('undergraduate_admission:index')
             else:
                 messages.error(request, _('Error resetting password. Make sure you enter the correct info.'))
 
@@ -107,7 +108,7 @@ class EditContactInfo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/edit_contact_info.html'
     form_class = BaseContactForm
     success_message = _('Contact Info was updated successfully...')
-    success_url = reverse_lazy('student_area')
+    success_url = reverse_lazy('undergraduate_admission:student_area')
 
     def get_object(self, queryset=None):
         return self.request.user

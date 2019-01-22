@@ -9,7 +9,7 @@
         {% if phase1_active %}
             <h3>{% trans 'New Application For Admission' %}</h3>
             <center>
-                <a href="{% url 'register' %}" class="btn btn-primary btn-lg" style=""><strong>{% trans 'Apply Now' %}</strong></a>
+                <a href="{% url 'undergraduate_admission:register' %}" class="btn btn-primary btn-lg" style=""><strong>{% trans 'Apply Now' %}</strong></a>
             </center>
             <br>
             <hr/>
@@ -37,7 +37,7 @@
             {% form form using 'floppyforms/layouts/bootstrap3-inline.html' %}
             <br>
             <input type="submit" class="btn btn-primary btn-lg" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{% url 'forgot_password' %}">{% trans 'Forgot Password?' %}</a>
+            <a href="{% url 'undergraduate_admission:forgot_password' %}">{% trans 'Forgot Password?' %}</a>
             <input type="hidden" name="next" value="{{ next }}"/>
         </form>
     </div>

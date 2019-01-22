@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -82,7 +82,7 @@ def confirm(request):
     if request.method == 'POST':
         if form.is_valid():
             request.session['confirmed'] = True
-            return redirect('personal_info')
+            return redirect('undergraduate_admission:personal_info')
         else:
             messages.error(request, _('Error.'))
 
@@ -103,7 +103,7 @@ def personal_info(request):
     if request.method == 'GET':
         confirmed = request.session.get('confirmed')
         if confirmed is None:
-            return redirect('confirm')
+            return redirect('undergraduate_admission:confirm')
 
     if request.method == 'POST':
         if form.is_valid():
@@ -111,7 +111,7 @@ def personal_info(request):
             if saved:
                 messages.success(request, _('Personal Info was saved successfully...'))
                 request.session['personal_info_completed'] = True
-                return redirect('guardian_contact')
+                return redirect('undergraduate_admission:guardian_contact')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
@@ -125,7 +125,7 @@ def guardian_contact(request):
     if request.method == 'GET':
         personal_info_completed = request.session.get('personal_info_completed')
         if not personal_info_completed:
-            return redirect('personal_info')
+            return redirect('undergraduate_admission:personal_info')
 
     form = GuardianContactForm(request.POST or None, instance=request.user)
 
@@ -135,7 +135,7 @@ def guardian_contact(request):
             if saved:
                 messages.success(request, _('Guardian Contact Info was saved successfully...'))
                 request.session['guardian_contact_completed'] = True
-                return redirect('relative_contact')
+                return redirect('undergraduate_admission:relative_contact')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
@@ -149,7 +149,7 @@ def relative_contact(request):
     if request.method == 'GET':
         guardian_contact_completed = request.session.get('guardian_contact_completed')
         if not guardian_contact_completed:
-            return redirect('guardian_contact')
+            return redirect('undergraduate_admission:guardian_contact')
 
     form = RelativeContactForm(request.POST or None, instance=request.user)
 
@@ -159,7 +159,7 @@ def relative_contact(request):
             if saved:
                 messages.success(request, _('Relative Info was saved successfully...'))
                 request.session['relative_contact_completed'] = True
-                return redirect('vehicle_info')
+                return redirect('undergraduate_admission:vehicle_info')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
@@ -173,7 +173,7 @@ def vehicle_info(request):
     if request.method == 'GET':
         relative_contact_completed = request.session.get('relative_contact_completed')
         if not relative_contact_completed:
-            return redirect('relative_contact')
+            return redirect('undergraduate_admission:relative_contact')
 
     form = VehicleInfoForm(request.POST or None, request.FILES or None, instance=request.user)
 
@@ -183,7 +183,7 @@ def vehicle_info(request):
             if saved:
                 messages.success(request, _('Vehicle info was submitted successfully...'))
                 request.session['vehicle_info_completed'] = True
-                return redirect('personal_picture')
+                return redirect('undergraduate_admission:personal_picture')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
@@ -194,7 +194,7 @@ def vehicle_info(request):
 class PersonalPictureView(Phase2BaseView, UpdateView):
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
     form_class = PersonalPhotoForm
-    success_url = reverse_lazy('personal_picture')
+    success_url = reverse_lazy('undergraduate_admission:personal_picture')
 
     def test_func(self):
         original_test_result = super(PersonalPictureView, self).test_func()
@@ -225,7 +225,7 @@ class PersonalPictureView(Phase2BaseView, UpdateView):
 class PersonalPictureUnacceptableView(Phase2BaseView, UpdateView):
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
     form_class = PersonalPhotoForm
-    success_url = reverse_lazy('personal_picture_re_upload')
+    success_url = reverse_lazy('undergraduate_admission:personal_picture_re_upload')
 
     def test_func(self):
         original_test_result = super(PersonalPictureUnacceptableView, self).test_func()
@@ -255,7 +255,7 @@ class PersonalPictureUnacceptableView(Phase2BaseView, UpdateView):
 class UploadDocumentsView(Phase2BaseView, UpdateView):
     template_name = 'undergraduate_admission/phase2/form-uploads.html'
     form_class = DocumentsForm
-    success_url = reverse_lazy('student_area')
+    success_url = reverse_lazy('undergraduate_admission:student_area')
 
     def test_func(self):
         original_test_result = super(UploadDocumentsView, self).test_func()
@@ -297,7 +297,7 @@ class UploadDocumentsView(Phase2BaseView, UpdateView):
 class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
     template_name = 'undergraduate_admission/phase2/plain_form.html'
     form_class = MissingDocumentsForm
-    success_url = reverse_lazy('student_area')
+    success_url = reverse_lazy('undergraduate_admission:student_area')
 
     def test_func(self):
         original_test_result = super(UploadMissingDocumentsView, self).test_func()
@@ -321,7 +321,7 @@ class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
 def upload_withdrawal_proof(request):
     # it is ok to come here unconditionally if student has duplicate admission in other universities
     if request.method == 'GET' and not request.user.status_message == RegistrationStatusMessage.get_status_duplicate():
-        return redirect('student_area')
+        return redirect('undergraduate_admission:student_area')
 
     form = WithdrawalProofForm(request.POST or None, request.FILES or None, instance=request.user)
 
@@ -331,7 +331,7 @@ def upload_withdrawal_proof(request):
             if saved:
                 messages.success(request, _('Documents were uploaded successfully...'))
                 request.session['upload_documents_completed'] = True
-                return redirect('student_area')
+                return redirect('undergraduate_admission:student_area')
             else:
                 messages.error(request, _('Error saving info. Try again later!'))
 
@@ -341,7 +341,7 @@ def upload_withdrawal_proof(request):
 class WithdrawView(LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     template_name = 'undergraduate_admission/phase2/withdraw.html'
     form_class = WithdrawalForm
-    success_url = reverse_lazy('withdrawal_letter')
+    success_url = reverse_lazy('undergraduate_admission:withdrawal_letter')
     success_message = _('You have withdrawn from the university successfully...')
 
     def test_func(self):
@@ -353,7 +353,7 @@ class WithdrawView(LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin,
     def get(self, request, *args, **kwargs):
         if request.method == "GET":
             if request.user.get_student_phase() == 'WITHDRAWN':
-                return redirect("withdrawal_letter")
+                return redirect("undergraduate_admission:withdrawal_letter")
 
         return super(WithdrawView, self).get(request, *args, **kwargs)
 
@@ -390,7 +390,7 @@ class WithdrawView(LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin,
 @user_passes_test(is_withdrawn)
 def withdrawal_letter(request):
     if request.method == "GET" and request.user.get_student_phase() != 'WITHDRAWN':
-        return redirect("student_area")
+        return redirect("undergraduate_admission:student_area")
 
     user = request.user
 
@@ -400,7 +400,7 @@ def withdrawal_letter(request):
 class TransferView(SuccessMessageMixin, FormView):
     template_name = 'undergraduate_admission/register.html'
     form_class = TransferForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('undergraduate_admission:login')
     success_message = _('Your transfer request was approved')
 
     def get_form_kwargs(self, *args, **kwargs):

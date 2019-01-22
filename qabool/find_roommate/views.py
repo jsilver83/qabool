@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -58,7 +58,7 @@ class HousingAgreement(HousingBaseView, FormView):
     template_name = 'find_roommate/housing_agreement.html'
     form_class = AgreementForm
     agreement_type = 'HOUSING_AGREEMENT'
-    next_url = reverse_lazy('housing_landing_page')
+    next_url = reverse_lazy('find_roommate:housing_landing_page')
 
     def get_context_data(self, **kwargs):
         context = super(HousingAgreement, self).get_context_data(**kwargs)
@@ -80,10 +80,10 @@ class NewRoommateRequest(HousingBaseView, FormView):
     template_name = 'find_roommate/request_roommate.html'
     form_class = RoommateRequestForm
     agreement_type = 'HOUSING_ROOMMATE_REQUEST_INSTRUCTIONS'
-    success_url = reverse_lazy('housing_landing_page')
+    success_url = reverse_lazy('find_roommate:housing_landing_page')
 
     def test_func(self):
-        self.login_url = reverse_lazy('housing_landing_page')
+        self.login_url = reverse_lazy('find_roommate:housing_landing_page')
         test_result = super(NewRoommateRequest, self).test_func()
         can_make_a_new_request = \
             RoommateRequest.objects.filter(Q(requesting_user=self.request.user) |
@@ -141,7 +141,7 @@ class NewRoommateRequest(HousingBaseView, FormView):
         else:
             messages.error(self.request, _('The entered KFUPM ID doesnt belong to an existing '
                                            'student who is both admitted and eligible for housing'))
-        return redirect(reverse_lazy('roommate_request'))
+        return redirect('find_roommate:roommate_request')
 
     def form_invalid(self, form):
         messages.error(self.request, _('Error.'))
@@ -167,7 +167,7 @@ class AcceptRequest(HousingBaseView, FormView):
     template_name = 'find_roommate/accept_request.html'
     form_class = AgreementForm
     agreement_type = 'HOUSING_AGREEMENT'
-    next_url = reverse_lazy('housing_landing_page')
+    next_url = reverse_lazy('find_roommate:housing_landing_page')
 
     def get_context_data(self, **kwargs):
         context = super(AcceptRequest, self).get_context_data(**kwargs)
@@ -216,7 +216,7 @@ class RejectRequest(HousingBaseView, View):
             messages.warning(self.request, _('Request was rejected successfully...'))
         else:
             messages.error(self.request, _('Invalid request'))
-        return redirect('housing_landing_page')
+        return redirect('find_roommate:housing_landing_page')
 
 
 class CancelRequest(HousingBaseView, View):
@@ -231,18 +231,18 @@ class CancelRequest(HousingBaseView, View):
             messages.warning(self.request, _('Request was cancelled as per your request...'))
         else:
             messages.error(self.request, _('Invalid request'))
-        return redirect('housing_landing_page')
+        return redirect('find_roommate:housing_landing_page')
 
 
 class HousingInfoUpdate(HousingBaseView, UpdateView):
     template_name = 'find_roommate/housing_update_form.html'
     form_class = HousingInfoUpdateForm
     agreement_type = 'HOUSING_ROOMMATE_SEARCH_INSTRUCTIONS'
-    success_url = reverse_lazy('housing_search')
+    success_url = reverse_lazy('find_roommate:housing_search')
     housing_user = None
 
     def test_func(self):
-        self.login_url = reverse_lazy('housing_landing_page')
+        self.login_url = reverse_lazy('find_roommate:housing_landing_page')
         test_result = super(HousingInfoUpdate, self).test_func()
         can_search = \
             RoommateRequest.objects.filter(Q(requesting_user=self.request.user) |
@@ -270,12 +270,12 @@ class HousingInfoUpdate(HousingBaseView, UpdateView):
         saved = form.save()
         if saved:
             if saved.searchable:
-                return redirect('housing_search')
+                return redirect('find_roommate:housing_search')
             else:
-                return redirect('student_area')
+                return redirect('find_roommate:student_area')
         else:
             messages.error(self.request, _('Error saving info. Try again later!'))
-        return redirect(reverse_lazy('student_area'))
+        return redirect('undergraduate_admission:student_area')
 
 
 @login_required()

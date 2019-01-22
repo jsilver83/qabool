@@ -3,8 +3,8 @@ from datetime import timedelta
 import requests
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, FormView
 
@@ -40,7 +40,7 @@ class TarifiSimulation(TarifiMixin, TemplateView):
             counter += 1
             print(d)
 
-        return redirect('student_area')
+        return redirect('undergraduate_admission:student_area')
 
 
 class TarifiLandingPage(TarifiMixin, FormView):

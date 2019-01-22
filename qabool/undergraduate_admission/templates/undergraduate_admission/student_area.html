@@ -95,14 +95,14 @@
 						{% if can_re_upload_picture %}
 							<br>
 							<strong>{% trans 'Please re-upload your picture' %}:</strong><br>
-							<a href="{% url 'personal_picture_re_upload' %}" class="btn btn-warning btn-lg btn-block">
+							<a href="{% url 'undergraduate_admission:personal_picture_re_upload' %}" class="btn btn-warning btn-lg btn-block">
 								<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Picture' %}
 							</a>
 						{% endif %}
 						{% if can_re_upload_docs %}
 							<br>
 							<strong>{% trans 'Please re-upload your docs' %}:</strong><br>
-							<a href="{% url 'upload_documents_incomplete' %}" class="btn btn-warning btn-lg btn-block">
+							<a href="{% url 'undergraduate_admission:upload_documents_incomplete' %}" class="btn btn-warning btn-lg btn-block">
 								<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Missing Documents' %}
 							</a>
 						{% endif %}
@@ -114,7 +114,7 @@
 					<strong>{{ user.get_actual_student_status|safe }}</strong><br>
 				</div>
 				{% if can_confirm %}
-					<a href="{% url 'confirm' %}" class="btn btn-success btn-lg btn-block">
+					<a href="{% url 'undergraduate_admission:confirm' %}" class="btn btn-success btn-lg btn-block">
 						<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 				{% endif %}
 
@@ -122,13 +122,13 @@
 					<div class="alert alert-danger" role="alert">
 						{% trans 'Please upload proof that you have withdrawn from the other university(s)' %}:
 						<br><br>
-						<a href="{% url 'upload_withdrawal_proof' %}" class="btn btn-warning btn-lg btn-block">
+						<a href="{% url 'undergraduate_admission:upload_withdrawal_proof' %}" class="btn btn-warning btn-lg btn-block">
 							<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Upload Withdrawal Proof' %}</a>
 					</div>
 				{% endif %}
 
 				{% if can_finish_phase3 %}
-					<a href="{% url 'student_agreement_1' %}" class="btn btn-success btn-lg btn-block">
+					<a href="{% url 'undergraduate_admission:student_agreement_1' %}" class="btn btn-success btn-lg btn-block">
 						<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 				{% endif %}
 

@@ -14,34 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 import captcha.urls
-from django.conf.urls import url, include, patterns
+from django.conf.urls import include
 from django.conf.urls.i18n import i18n_patterns
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views
+from django.urls import path
 
-import find_roommate.urls
-import tarifi.urls
-import undergraduate_admission.urls
 from undergraduate_admission.views import phase2_views
 
 urlpatterns = i18n_patterns(
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'', include(undergraduate_admission.urls)),
-    url(r'', include(find_roommate.urls)),
-    url(r'^admin/tarifiweek/', include(tarifi.urls)),
-    url(r'^logout/$', views.logout, {'template_name': 'logout.html'}, name='logout'),
-
+    path('admin/', admin.site.urls),
+    path('', include('undergraduate_admission.urls')),
+    path('roommate/', include('find_roommate.urls')),
+    path('admin/tarifi/', include('tarifi.urls')),
+    path('logout/', views.LoginView.as_view(), {'template_name': 'logout.html'}, name='logout'),
 )
 
 urlpatterns += [
-    url(r'^captcha/', include(captcha.urls)),
+    path('captcha/', include(captcha.urls)),
 
-    url(r'^files/(?P<filetype>[\w\-]+)/(?P<pk>\d+)/$',
-        phase2_views.UserFileView.as_view(),
-        name='download_user_file'),
+    path('files/<slug:filetype>/<int:pk>/',
+         phase2_views.UserFileView.as_view(),
+         name='download_user_file'),
 
-    url(r'^admin_files/(?P<filetype>[\w\-]+)/(?P<pk>\d+)/$',
-        phase2_views.UserFileView.as_view(),
-        name='download_user_file_admin'),
+    path('admin_files/<slug:filetype>/<int:pk>/',
+         phase2_views.UserFileView.as_view(),
+         name='download_user_file_admin'),
 ]
