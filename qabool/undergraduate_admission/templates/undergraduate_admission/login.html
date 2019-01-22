@@ -1,7 +1,7 @@
 {% extends "base-sidebar.html" %}
 {% load i18n %}
 {% load l10n %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 
 {% block subcontent %}
 
@@ -34,7 +34,8 @@
         {% endif %}
         <form id="home-loginform" class="form-group form-horizontal" role="form" method="post">
             {% csrf_token %}
-            {% form form using 'floppyforms/layouts/bootstrap3-inline.html' %}
+{#            {% form form using 'floppyforms/layouts/bootstrap3-inline.html' %}#}
+	        {{ form|crispy }}
             <br>
             <input type="submit" class="btn btn-primary btn-lg" value="{% trans 'Login' %}"/>&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="{% url 'undergraduate_admission:forgot_password' %}">{% trans 'Forgot Password?' %}</a>

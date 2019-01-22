@@ -1,7 +1,7 @@
 import time
 
-import floppyforms.__future__ as forms
-from django.core.urlresolvers import reverse
+from django import forms
+from django.urls import reverse
 
 from django.utils.html import format_html
 from django.contrib import admin
