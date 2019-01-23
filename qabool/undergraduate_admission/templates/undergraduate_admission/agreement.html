@@ -1,18 +1,11 @@
 {% extends 'base-sidebar.html' %}
 {% load i18n %}
+{% load markdown_deux_tags %}
+{% load crispy_forms_tags %}
 
 {% block subcontent %}
-    {{ agreement.agreement_header|linebreaks }}
+    {{ agreement.agreement|markdown|linebreaks }}
     <br>
-    <ul>
-        {% for item in items %}
-            <li>{{ item|safe|linebreaks }}</li>
-        {% endfor %}
-    </ul>
-    {% if  agreement.agreement_footer %}
-        {{ agreement.agreement_footer|linebreaks }}
-    {% endif %}
-
     <form method="post">
         {% csrf_token %}
 

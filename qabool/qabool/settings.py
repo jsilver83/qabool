@@ -26,8 +26,6 @@ SECRET_KEY = 'tzb6lrxanv9^ne46ig%u^l16-yzw6*v!s2kn2ien9v)@e21ja+'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,7 +38,8 @@ INSTALLED_APPS = [
     'captcha',
     'floppyforms',
     'crispy_forms',
-
+    'pagedown',
+    'markdown_deux',
     'import_export',
     'django_filters',
     'django_countries',
