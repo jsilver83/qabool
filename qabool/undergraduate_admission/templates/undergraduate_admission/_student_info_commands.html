@@ -3,30 +3,30 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		{% if has_pic %}
-		{% if user.personal_picture %}
-		<img width="100%" src="{% url 'download_user_file' 'personal_picture' user.id %}">
+		{% if admission_request.personal_picture %}
+		<img width="100%" src="{% url 'download_user_file' 'personal_picture' admission_request.id %}">
 		{% else %}
 		<img width="100%" src="{% static 'images/placeholder.png' %}" />
 		{% endif %}
 		{% endif %}
-		<h4>{{ user }}</h4>
+		<h4>{{ admission_request }}</h4>
 		<dl>
 {#			<dt>{% trans 'Registration ID' %}</dt>#}
-{#			<dd>{{ user.id }}</dd>#}
+{#			<dd>{{ admission_request.id }}</dd>#}
 			<dt>{% trans 'Government ID' %}</dt>
-			<dd>{{ user.username }}</dd>
+			<dd>{{ admission_request.user.username }}</dd>
 			{% if can_see_kfupm_id %}
 			<dt>{% trans 'KFUPM ID' %}</dt>
-			<dd>{{ user.kfupm_id }}</dd>
+			<dd>{{ admission_request.kfupm_id }}</dd>
 			{% endif %}
 {#			<dt>{% trans 'Mobile' %}</dt>#}
-{#			<dd>{{ user.mobile }}</dd>#}
+{#			<dd>{{ admission_request.mobile }}</dd>#}
 {#			<dt>{% trans 'Email' %}</dt>#}
-{#			<dd>{{ user.email }}</dd>#}
+{#			<dd>{{ admission_request.email }}</dd>#}
 			<dt>{% trans 'Nationality' %}</dt>
-			<dd>{{ user.nationality }}</dd>
+			<dd>{{ admission_request.nationality.name }}</dd>
 			<dt>{% trans 'Registration Status' %}</dt>
-			<dd><h2 class="label label-{{ status_css_class }}">{{ user.get_student_registration_status }}</h2></dd>
+			<dd><h2 class="label label-{{ status_css_class }}">{{ admission_request.get_student_registration_status }}</h2></dd>
 		</dl>
 	</div>
 </div>

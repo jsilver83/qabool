@@ -3,16 +3,13 @@ import re
 from captcha.fields import CaptchaField
 # from captcha.fields import ReCaptchaFieldfrom django.utils import translation
 
-from django.utils.translation import ugettext_lazy as _, get_language
+from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.core.validators import RegexValidator
 
-from django.conf import settings
-
-from qabool.base_forms import BaseCrispyForm
+from shared_app.base_forms import BaseCrispyForm
 from undergraduate_admission.forms.general_forms import BaseContactForm
-from undergraduate_admission.models import AdmissionSemester, DeniedStudent, User, Lookup, Nationality, GraduationYear
+from ..models import *
 from undergraduate_admission.utils import parse_non_standard_numerals, add_validators_to_arabic_and_english_names
 
 
@@ -78,6 +75,11 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
         }
     )
 
+    email = forms.EmailField(
+        label=_('Email Address'),
+        required=True,
+        widget=forms.EmailInput(),
+    )
     email2 = forms.EmailField(
         label=_('Email Address Confirmation'),
         required=True,
@@ -121,7 +123,7 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
     )
 
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                   'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
                   'gender',
@@ -215,8 +217,7 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        semester = AdmissionSemester.get_phase1_active_semester()
-        found = User.objects.filter(email=email, semester=semester)
+        found = User.objects.filter(email=email)
         if email and found:
             raise forms.ValidationError(
                 self.error_messages['email_not_unique'],
@@ -237,7 +238,7 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
     def clean_mobile(self):
         mobile = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
-        found = User.objects.filter(mobile=mobile, semester=semester)
+        found = AdmissionRequest.objects.filter(mobile=mobile, semester=semester)
         if mobile and found:
             raise forms.ValidationError(
                 self.error_messages['mobile_not_unique'],

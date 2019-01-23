@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, FormView
 
 from find_roommate.models import Room
+from undergraduate_admission.models import AdmissionRequest
 from tarifi.forms import TarifiSearchForm
 from .models import *
 
@@ -31,7 +32,7 @@ class TarifiSimulation(TarifiMixin, TemplateView):
     template_name = 'find_roommate/landing_page.html'
 
     def get(self, *args, **kwargs):
-        users = User.objects.filter(status_message=RegistrationStatusMessage.get_status_admitted_final())[:200]
+        users = AdmissionRequest.objects.filter(status_message=RegistrationStatusMessage.get_status_admitted_final())[:200]
         counter = 0
         for user in users:
             print(counter)
@@ -52,8 +53,8 @@ class TarifiLandingPage(TarifiMixin, FormView):
         try:
             now = timezone.now()
 
-            user = User.objects.get(kfupm_id=self.request.GET.get('kfupm_id', -1),
-                                    status_message__in=allowed_statuses_for_tarifi_week)
+            user = AdmissionRequest.objects.get(kfupm_id=self.request.GET.get('kfupm_id', -1),
+                                                status_message__in=allowed_statuses_for_tarifi_week)
             semester = AdmissionSemester.get_active_semester()
             if semester and user:
                 context['student'] = user
@@ -84,8 +85,8 @@ class StudentPrintPage(TarifiMixin, TemplateView):
         context = super(StudentPrintPage, self).get_context_data(**kwargs)
         try:
             student = \
-                User.objects.get(pk=self.kwargs['pk'],
-                                 status_message__in=allowed_statuses_for_tarifi_week)
+                AdmissionRequest.objects.get(pk=self.kwargs['pk'],
+                                             status_message__in=allowed_statuses_for_tarifi_week)
             context['student'] = student
 
             tarifi_user, d = TarifiUser.objects.get_or_create(user=student)

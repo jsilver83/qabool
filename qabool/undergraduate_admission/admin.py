@@ -18,10 +18,10 @@ from .models import *
 
 class StudentResource(resources.ModelResource):
     class Meta:
-        model = User
+        model = AdmissionRequest
         exclude = ('id',)
-        import_id_fields = ('username',)
-        fields = ('semester', 'username', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
+        # import_id_fields = ('username',)
+        fields = ('semester', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
@@ -34,33 +34,19 @@ class StudentResource(resources.ModelResource):
         report_skipped = True
 
 
-class MyUserAdmin(VersionAdmin, UserAdmin):
-    list_display = ('id', 'username', 'kfupm_id', 'get_student_full_name', 'email', 'admission_total',
-                    'status_message_id',)
-    date_hierarchy = 'date_joined'
-
-
-class Student(User):
-    class Meta:
-        proxy = True
-        # labels = {
-        #     'high_school_gpa_student_entry': 'high_school_gpa_student_entry Name',
-        # }
-
-
-class StudentAdmin(ImportExportMixin, VersionAdmin):
-    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'mobile',
+class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
+    list_display = ('kfupm_id', 'get_student_full_name', 'mobile',
                     'student_type', 'admission_total', 'status_message', )
 
     # high_school_gpa_student_entry.short_description = "high_school_gpa_student_entry"
 
     fieldsets = (
         (None, {
-            'fields': (('username', 'semester', 'status_message', 'gender', ),
+            'fields': (('user', 'government_id', 'semester', 'status_message', 'gender', ),
                        ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
                        ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
                        ('student_type', 'nationality', 'saudi_mother', 'saudi_mother_gov_id'),
-                       'email', 'mobile', 'guardian_mobile',
+                       'mobile', 'guardian_mobile',
                        ('high_school_gpa', 'qudrat_score', 'tahsili_score', 'admission_total', ),
                        'high_school_gpa_student_entry',
                        ('high_school_graduation_year', 'high_school_system'),
@@ -85,7 +71,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
             'classes': ('collapse',),
             'fields': (
                 'kfupm_id',
-                'admission_letter_print_date', 'medical_report_print_date', 'roommate_id', 'phase3_submit_date'),
+                'admission_letter_print_date', 'medical_report_print_date', 'phase3_submit_date'),
         }),
         ('Withdrawal Fields', {
             'classes': ('collapse',),
@@ -152,7 +138,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
         ('Phase 2 Fields - Relative Information', {
             'classes': ('collapse',),
             'fields': (
-                'relative_name', 'relative_relation', 'relative_phone', 'relative_po_box', 'relative_po_stal_code',
+                'relative_name', 'relative_relation', 'relative_phone', 'relative_po_box', 'relative_postal_code',
                 'relative_city', 'relative_job', 'relative_employer',
             ),
         }),
@@ -163,14 +149,13 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
             ),
         }),
     )
-    date_hierarchy = 'date_joined'
-    exclude = ('password', 'groups', 'last_login', 'is_superuser', 'is_staff', 'user_permissions')
-    readonly_fields = ('id', 'date_joined', 'student_type', 'admission_total', 'phase2_submit_date',
+    date_hierarchy = 'request_date'
+    readonly_fields = ('id', 'government_id', 'student_type', 'admission_total', 'phase2_submit_date',
                        'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
                        'show_docs_links', 'show_yesser_high_school_data_dump', 'show_yesser_qudrat_data_dump',
                        'show_yesser_tahsili_data_dump', )
-    search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
-                     'nationality__nationality_en', 'student_full_name_ar', 'student_full_name_en', ]
+    search_fields = ['user__username', 'kfupm_id', 'mobile', 'email',
+                     'nationality', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('semester', 'high_school_graduation_year', 'gender', 'status_message__status', 'status_message',
                    'nationality',)
     actions = ['yesser_update']
@@ -251,7 +236,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
     show_docs_links.short_description = _("Documents")
 
     def formfield_for_dbfield(self, db_field, **kwargs):
-        formfield = super(StudentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        formfield = super(AdmissionRequestAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name in['admission_note', 'admission_note2', 'admission_note3']:
             formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
 
@@ -295,75 +280,7 @@ class StudentAdmin(ImportExportMixin, VersionAdmin):
     yesser_update.short_description = _("Sync with Yesser")
 
     def get_queryset(self, request):
-        return self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False).order_by('date_joined')
-
-
-class VerifyStudent(User):
-    class Meta:
-        proxy = True
-
-
-class VerifyStudentAdminForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('id',)  # dummy but necessary syntactically
-
-    def __init__(self, *args, **kwargs):
-        super(VerifyStudentAdminForm, self).__init__(*args, **kwargs)
-        self.fields['verification_status'].widget = \
-            forms.CheckboxSelectMultiple(choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
-        self.fields['verification_notes'].widget = admin.widgets.AdminTextareaWidget()
-
-
-# TODO: Enhance the form and add script to manage student pictures for the committee.
-class VerifyStudentAdmin(VersionAdmin):
-    list_display = ('username', 'kfupm_id', 'get_student_full_name', 'email', 'mobile',
-                    'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message_id', 'student_type',)
-    date_hierarchy = 'date_joined'
-    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
-    fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'email', 'mobile',
-              'is_active', 'date_joined', 'high_school_gpa',
-              'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
-              'second_name_en', 'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
-              'high_school_province', 'high_school_city', 'birthday', 'birthday_ah',
-              'nationality', 'saudi_mother', 'birth_place', 'government_id_expiry',
-              'personal_picture', 'government_id_file', 'high_school_certificate',
-              'courses_certificate', 'mother_gov_id_file', 'birth_certificate', 'passport_file',
-              'verification_documents_incomplete', 'get_verification_status', 'verification_status',
-              'verification_notes',)
-    readonly_fields = ('get_student_full_name', 'id', 'kfupm_id', 'username', 'status_message_id', 'email', 'mobile',
-                       'is_active', 'date_joined', 'high_school_gpa', 'get_verification_status',
-                       'nationality', 'saudi_mother',)
-    form = VerifyStudentAdminForm
-    search_fields = ['username', 'kfupm_id', 'mobile', 'email', 'nationality__nationality_ar',
-                     'nationality__nationality_en']
-
-    def get_queryset(self, request):
-        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
-        return qs
-
-
-class HelpDiskForStudent(User):
-    class Meta:
-        proxy = True
-
-
-class HelpDiskForStudentAdmin(VersionAdmin):
-    list_display = (
-        'username', 'get_student_full_name', 'email', 'mobile', 'student_type', 'kfupm_id', 'status_message_id')
-    date_hierarchy = 'date_joined'
-    fields = readonly_fields = ('username', 'get_student_full_name', 'mobile', 'email',
-                                'nationality', 'saudi_mother', 'status_message',
-                                'guardian_mobile', 'id',
-                                'date_joined', 'high_school_graduation_year', 'kfupm_id',
-                                'high_school_name', 'high_school_province', 'high_school_gpa',)
-    search_fields = ['username', 'mobile', 'email', 'nationality__nationality_ar',
-                     'nationality__nationality_en', 'kfupm_id']
-    list_filter = ('high_school_graduation_year', 'saudi_mother', 'nationality',)
-
-    def get_queryset(self, request):
-        qs = self.model.objects.filter(is_active=True, is_superuser=False, is_staff=False)
-        return qs
+        return self.model.objects.all().order_by('request_date')
 
 
 class StatusMessagesInline(admin.TabularInline):
@@ -375,11 +292,6 @@ class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
     inlines = [
         StatusMessagesInline,
     ]
-
-
-class NationalityAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('id', 'nationality_ar', 'nationality_en', 'show', 'display_order')
-    search_fields = ['nationality_en']
 
 
 class DistinguishedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
@@ -500,7 +412,6 @@ admin.site.index_title = _('Qabool Administration')
 admin.site.site_title = _('Administration')
 
 admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
-admin.site.register(Nationality, NationalityAdmin)
 admin.site.register(ImportantDateSidebar, ImportantDateSidebarAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 # Use TabularInline in the RegistrationStatusMessage model.
@@ -513,9 +424,7 @@ admin.site.register(Agreement, AgreementAdmin)
 # admin.site.register(Agreement)
 admin.site.register(AgreementItem, AgreementItemAdmin)
 admin.site.register(AdmissionSemester, AdmissionSemesterAdmin)
-admin.site.register(User, MyUserAdmin)
-admin.site.register(Student, StudentAdmin)
-admin.site.register(HelpDiskForStudent, HelpDiskForStudentAdmin)
+admin.site.register(AdmissionRequest, AdmissionRequestAdmin)
 admin.site.register(Lookup, LookupAdmin)
 admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)

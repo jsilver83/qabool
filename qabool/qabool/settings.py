@@ -26,14 +26,16 @@ SECRET_KEY = 'tzb6lrxanv9^ne46ig%u^l16-yzw6*v!s2kn2ien9v)@e21ja+'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'shared_app.apps.SharedAppConfig',
     'undergraduate_admission.apps.UndergraduateAdmissionConfig',
-    'find_roommate.apps.FindRoommateConfig',
-    'tarifi.apps.TarifiConfig',
+    # 'find_roommate.apps.FindRoommateConfig',
+    # 'tarifi.apps.TarifiConfig',
     'reversion',
     'captcha',
     'floppyforms',
@@ -41,7 +43,9 @@ INSTALLED_APPS = [
 
     'import_export',
     'django_filters',
+    'django_countries',
 
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,21 +69,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-# MIDDLEWARE_CLASSES = [
-#     'reversion.middleware.RevisionMiddleware',
-#     'django.middleware.security.SecurityMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'qabool.middleware.force_default_language.ForceDefaultLanguageMiddleware',
-#     'django.middleware.locale.LocaleMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     'django.contrib.auth.middleware.RemoteUserMiddleware',
-#     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-#     'django.contrib.messages.middleware.MessageMiddleware',
-#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-# ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.RemoteUserBackend',
@@ -225,8 +214,6 @@ SERVER_EMAIL = 'qabool-noreplay@kfupm.edu.sa'
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-
-AUTH_USER_MODEL = 'undergraduate_admission.User'
 
 NOCAPTCHA = True
 RECAPTCHA_USE_SSL = True

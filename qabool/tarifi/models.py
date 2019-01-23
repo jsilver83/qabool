@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.models import RegistrationStatusMessage, User, AdmissionSemester
+from undergraduate_admission.models import RegistrationStatusMessage, AdmissionSemester
 from undergraduate_admission.utils import format_date_time, format_date, format_time
 
 

@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load l10n %}
 {% load static %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 
 {% block subcontent %}
 
@@ -17,9 +17,9 @@
 {% endif %}
 
 <hr>
-<form class="form-horizontal" action="{% url 'edit_info' %}" method="post">
+<form class="form-horizontal" action="{% url 'undergraduate_admission:edit_info' %}" method="post">
 	{% csrf_token %}
-	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	{% crispy form %}
 	<div class="checkbox form-group">
 		<div class="col-sm-5">&nbsp;</div>
 		<label class="col-sm-7">

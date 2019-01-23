@@ -15,7 +15,7 @@ from django.views.decorators.cache import never_cache
 
 from sendfile import sendfile, os
 
-from find_roommate.models import RoommateRequest
+# from find_roommate.models import RoommateRequest
 from qabool.local_settings import SENDFILE_ROOT
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
@@ -357,33 +357,33 @@ class WithdrawView(LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin,
 
         return super(WithdrawView, self).get(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        saved = form.save(commit=False)
-        if saved:
-            SMS.send_sms_withdrawn(self.object.mobile)
-
-            # added for housing module
-            roommate_requests = RoommateRequest.objects.filter(requesting_user=self.object,
-                                                               status__in=[
-                                                                   RoommateRequest.RequestStatuses.PENDING,
-                                                                   RoommateRequest.RequestStatuses.ACCEPTED])
-            if roommate_requests.count() > 0:
-                for roommate_request in roommate_requests:
-                    SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
-                roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
-
-            roommate_requests = RoommateRequest.objects.filter(requested_user=self.object,
-                                                               status__in=[
-                                                                   RoommateRequest.RequestStatuses.PENDING,
-                                                                   RoommateRequest.RequestStatuses.ACCEPTED])
-
-            print(roommate_requests.count())
-            if roommate_requests.count() > 0:
-                for roommate_request in roommate_requests:
-                    SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
-                roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
-
-        return super(WithdrawView, self).form_valid(form)
+    # def form_valid(self, form):
+    #     saved = form.save(commit=False)
+    #     if saved:
+    #         SMS.send_sms_withdrawn(self.object.mobile)
+    #
+    #         # added for housing module
+    #         roommate_requests = RoommateRequest.objects.filter(requesting_user=self.object,
+    #                                                            status__in=[
+    #                                                                RoommateRequest.RequestStatuses.PENDING,
+    #                                                                RoommateRequest.RequestStatuses.ACCEPTED])
+    #         if roommate_requests.count() > 0:
+    #             for roommate_request in roommate_requests:
+    #                 SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
+    #             roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
+    #
+    #         roommate_requests = RoommateRequest.objects.filter(requested_user=self.object,
+    #                                                            status__in=[
+    #                                                                RoommateRequest.RequestStatuses.PENDING,
+    #                                                                RoommateRequest.RequestStatuses.ACCEPTED])
+    #
+    #         print(roommate_requests.count())
+    #         if roommate_requests.count() > 0:
+    #             for roommate_request in roommate_requests:
+    #                 SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
+    #             roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
+    #
+    #     return super(WithdrawView, self).form_valid(form)
 
 
 @login_required()

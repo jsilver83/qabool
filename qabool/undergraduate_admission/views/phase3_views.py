@@ -11,7 +11,7 @@ from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm
-from undergraduate_admission.forms.phase3_forms import TarifiTimeSlotForm, ChooseRoommateForm
+from undergraduate_admission.forms.phase3_forms import TarifiTimeSlotForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
 from undergraduate_admission.utils import SMS
 
