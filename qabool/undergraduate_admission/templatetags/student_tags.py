@@ -16,10 +16,12 @@ def student_info_commands(context):
                     or admission_request.status_message == RegistrationStatusMessage.get_status_confirmed())
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
     can_print_docs = (admission_request.status_message in [RegistrationStatusMessage.get_status_admitted_final(),
-                                              RegistrationStatusMessage.get_status_admitted_final_non_saudi()]
+                                                           RegistrationStatusMessage.get_status_admitted_final_non_saudi()]
                       and admission_request.tarifi_week_attendance_date)
 
     can_confirm = ((admission_request.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+                    admission_request.status_message == RegistrationStatusMessage.get_status_partially_admitted_non_saudi() or
+                    admission_request.status_message == RegistrationStatusMessage.get_status_partially_admitted_transfer() or
                     admission_request.status_message == RegistrationStatusMessage.get_status_transfer())
                    and AdmissionSemester.get_phase2_active_semester(admission_request))
 

@@ -294,11 +294,6 @@ class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
     ]
 
 
-class DistinguishedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('government_id', 'student_name', 'city', 'attended')
-    search_fields = ['government_id', ]
-
-
 class DeniedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'government_id', 'student_name', 'message',
                     'last_trial_date', 'trials_count')
@@ -318,32 +313,6 @@ class KFUPMIDsPoolAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'kfupm_id', 'assigned_student',)
     resource_class = KFUPMIDsPoolResource
     search_fields = ['kfupm_id']
-    list_filter = ['semester']
-
-
-class AgreementItemResource(resources.ModelResource):
-    class Meta:
-        model = AgreementItem
-        import_id_fields = ('id',)
-        fields = ('id', 'agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
-        skip_unchanged = True
-        report_skipped = True
-
-
-class AgreementItemAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('agreement', 'agreement_text_ar', 'agreement_text_en', 'show', 'display_order')
-    list_filter = ('agreement',)
-    resource_class = AgreementItemResource
-
-
-class AgreementItemInline(admin.TabularInline):
-    model = AgreementItem
-
-
-class AgreementAdmin(admin.ModelAdmin):
-    inlines = [
-        AgreementItemInline,]
-    list_display = ['agreement_type','semester', ]
     list_filter = ['semester']
 
 
@@ -419,13 +388,8 @@ admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear, GraduationYearAdmin)
-# Use TabularInline in the Agreement model.
-admin.site.register(Agreement, AgreementAdmin)
-# admin.site.register(Agreement)
-admin.site.register(AgreementItem, AgreementItemAdmin)
+admin.site.register(Agreement)
 admin.site.register(AdmissionSemester, AdmissionSemesterAdmin)
 admin.site.register(AdmissionRequest, AdmissionRequestAdmin)
 admin.site.register(Lookup, LookupAdmin)
-admin.site.register(DistinguishedStudent, DistinguishedStudentAdmin)
 admin.site.register(KFUPMIDsPool, KFUPMIDsPoolAdmin)
-# admin.site.register(CutOff, CutOffAdmin)

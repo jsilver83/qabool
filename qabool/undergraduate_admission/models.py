@@ -383,7 +383,7 @@ class AdmissionRequest(models.Model):
                                             '^(SA)\d{22}$',
                                             message=_('You have entered an invalid IBAN')
                                         ),
-                                    ],)
+                                    ], )
     bank_account_identification_file = models.FileField(
         null=True,
         blank=True,
@@ -581,7 +581,7 @@ class AdmissionSemester(models.Model):
         # if phase 2 expired globally but the student is given an exception
         if not sem:
             if user and user.phase2_start_date and user.phase2_end_date and \
-                                    user.phase2_start_date <= now <= user.phase2_end_date:
+                    user.phase2_start_date <= now <= user.phase2_end_date:
                 sem = user.semester
 
         return sem
@@ -594,7 +594,7 @@ class AdmissionSemester(models.Model):
         # if phase 3 expired globally but the student is given an exception
         if not sem:
             if user and user.phase3_start_date and user.phase3_end_date and \
-                                    user.phase3_start_date <= now <= user.phase3_end_date:
+                    user.phase3_start_date <= now <= user.phase3_end_date:
                 sem = user.semester
 
         return sem
@@ -714,7 +714,7 @@ class RegistrationStatusMessage(models.Model):
 
     class Meta:
         verbose_name_plural = _('Admission: Registration Status Messages')
-        ordering = ('status_message_code', )
+        ordering = ('status_message_code',)
 
     @property
     def registration_status_message(self):
@@ -796,8 +796,21 @@ class RegistrationStatusMessage(models.Model):
     @staticmethod
     def get_status_partially_admitted():
         try:
-            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
-                .status_messages.get(status_message_code='PARTIALLY-ADMITTED')
+            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED')
+        except:
+            return
+
+    @staticmethod
+    def get_status_partially_admitted_non_saudi():
+        try:
+            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED-NON-SAUDI')
+        except:
+            return
+
+    @staticmethod
+    def get_status_partially_admitted_transfer():
+        try:
+            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED-TRANSFER')
         except:
             return
 
@@ -1078,74 +1091,81 @@ class Nationality(models.Model):
 
 
 class Agreement(models.Model):
+    class AgreementTypes:
+        INITIAL = 'INITIAL'
+        CONFIRMED = 'CONFIRMED'
+        CONFIRMED_N = 'CONFIRMED-N'
+        CONFIRMED_T = 'CONFIRMED-T'
+        STUDENT_AGREEMENT_1 = 'STUDENT-AGREEMENT_1'
+        STUDENT_AGREEMENT_2 = 'STUDENT-AGREEMENT_2'
+        STUDENT_AGREEMENT_3 = 'STUDENT-AGREEMENT_3'
+        STUDENT_AGREEMENT_4 = 'STUDENT-AGREEMENT_4'
+        HOUSING_AGREEMENT = 'HOUSING-AGREEMENT'
+        HOUSING_ROOMMATE_REQUEST_AGREEMENT = 'HOUSING-ROOMMATE-REQUEST-AGREEMENT'
+        HOUSING_ROOMMATE_SEARCH_INSTRUCTIONS = 'HOUSING-ROOMMATE-SEARCH-INSTRUCTIONS'
+        HOUSING_ROOMMATE_REQUEST_INSTRUCTIONS = 'HOUSING-ROOMMATE-REQUEST-INSTRUCTIONS'
+        AWARENESS_WEEK_AGREEMENT = 'AWARENESS-WEEK-AGREEMENT'
+
+        @classmethod
+        def choices(cls):
+            return (
+                (cls.INITIAL, _('Initial agreements')),
+                (cls.CONFIRMED, _('Confirmation agreements')),
+                (cls.CONFIRMED_N, _('Confirmation agreements for None Saudi')),
+                (cls.CONFIRMED_T, _('Confirmation agreements for Transfer students')),
+                (cls.STUDENT_AGREEMENT_1, _('Student agreements 1')),
+                (cls.STUDENT_AGREEMENT_2, _('Student agreements 2')),
+                (cls.STUDENT_AGREEMENT_3, _('Student agreements 3')),
+                (cls.STUDENT_AGREEMENT_4, _('Student agreements 4')),
+                (cls.HOUSING_AGREEMENT, _('Student Housing: Initial agreements')),
+                (cls.HOUSING_ROOMMATE_REQUEST_AGREEMENT, _('Student Housing: Request agreements')),
+                (cls.HOUSING_ROOMMATE_SEARCH_INSTRUCTIONS, _('Student Housing: Search Instructions')),
+                (cls.HOUSING_ROOMMATE_REQUEST_INSTRUCTIONS, _('Student Housing: Request Instructions')),
+                (cls.AWARENESS_WEEK_AGREEMENT, _('Awareness week agreements')),
+            )
+
     semester = models.ForeignKey(
         'AdmissionSemester',
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
-        related_name='agreement',
+        related_name='agreements',
         verbose_name='Semester',
     )
-    agreement_type = models.CharField(max_length=100, null=True, blank=False, verbose_name=_('Agreement Type'))
-    agreement_header_ar = models.TextField(max_length=2000, null=True, blank=True,
-                                           verbose_name=_('Agreement Header (Arabic)'))
-    agreement_header_en = models.TextField(max_length=2000, null=True, blank=True,
-                                           verbose_name=_('Agreement Header (English)'))
-    agreement_footer_ar = models.TextField(max_length=2000, null=True, blank=True,
-                                           verbose_name=_('Agreement Footer (Arabic)'))
-    agreement_footer_en = models.TextField(max_length=2000, null=True, blank=True,
-                                           verbose_name=_('Agreement Footer (English)'))
+    status = models.ForeignKey(
+        'RegistrationStatusMessage',
+        on_delete=models.SET_NULL,
+        blank=False,
+        null=True,
+        related_name='status_messages',
+        verbose_name='Status Message',
+    )
+    agreement_type = models.CharField(max_length=100, null=True, blank=False, verbose_name=_('Agreement Type'),
+                                      choices=AgreementTypes.choices())
+    agreement_text_ar = models.TextField(max_length=2000, verbose_name=_('Agreement Text (Arabic)'), blank=True,
+                                         null=True)
+    agreement_text_en = models.TextField(max_length=2000, verbose_name=_('Agreement Text (English)'), blank=True,
+                                         null=True)
+    show = models.BooleanField(verbose_name=_('Show'), default=True)
 
     class Meta:
         verbose_name_plural = _('Admission and Student Affairs: Agreements')
 
     @property
-    def agreement_header(self):
-        lang = translation.get_language()
-        if lang == "ar":
-            return self.agreement_header_ar
-        else:
-            return self.agreement_header_en
-
-    @property
-    def agreement_footer(self):
-        lang = translation.get_language()
-        if lang == "ar":
-            return self.agreement_footer_ar
-        else:
-            return self.agreement_footer_en
-
-    def __str__(self):
-        return self.agreement_type
-
-
-class AgreementItem(models.Model):
-    agreement = models.ForeignKey(
-        'Agreement',
-        on_delete=models.CASCADE,
-        blank=False,
-        null=True,
-        related_name='items',
-    )
-    agreement_text_ar = models.TextField(max_length=2000, verbose_name=_('Agreement Text (Arabic)'))
-    agreement_text_en = models.TextField(max_length=2000, verbose_name=_('Agreement Text (English)'))
-    show = models.BooleanField(verbose_name=_('Show'), default=True)
-    display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
-
-    @property
-    def agreement_item(self):
+    def agreement(self):
         lang = translation.get_language()
         if lang == "ar":
             return self.agreement_text_ar
         else:
             return self.agreement_text_en
 
-    def __str__(self):
-        return self.agreement_item
+    @property
+    def get_semester(self):
+        semester = AdmissionSemester.objects.filter(active=True).first()
+        return semester
 
-    class Meta:
-        verbose_name_plural = _('Admission and Student Affairs: Agreement Items')
-        ordering = ['agreement', '-display_order']
+    def __str__(self):
+        return str(self.agreement_type)
 
 
 # Auxiliary table in the database for BI reports
