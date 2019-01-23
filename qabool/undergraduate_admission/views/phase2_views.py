@@ -30,6 +30,7 @@ from undergraduate_admission.validators import is_eligible_for_roommate_search
 # TODO: refactor all is_eligible_to_??? to be functions in the class User
 def can_confirm(user):
     return ((user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+             user.status_message == RegistrationStatusMessage.get_status_partially_admitted_non_saudi() or
              user.status_message == RegistrationStatusMessage.get_status_transfer())
             and AdmissionSemester.get_phase2_active_semester(user))
 
@@ -87,10 +88,8 @@ def confirm(request):
             messages.error(request, _('Error.'))
 
     sem = AdmissionSemester.get_phase2_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type='CONFIRM', semester=sem)
-    agreement_items = agreement.items.filter(show=True)
+    agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.CONFIRMED_N, semester=sem)
     return render(request, 'undergraduate_admission/phase2/confirm.html', {'agreement': agreement,
-                                                                           'items': agreement_items,
                                                                            'form': form, })
 
 
