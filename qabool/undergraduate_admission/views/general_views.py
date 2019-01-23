@@ -78,6 +78,7 @@ def student_area(request):
     show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
 
     can_confirm = ((request.user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+                    request.user.status_message == RegistrationStatusMessage.get_status_partially_admitted_non_saudi() or
                     request.user.status_message == RegistrationStatusMessage.get_status_transfer())
                    and AdmissionSemester.get_phase2_active_semester(request.user))
 

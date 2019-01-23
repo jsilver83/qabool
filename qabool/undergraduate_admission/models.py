@@ -745,8 +745,21 @@ class RegistrationStatusMessage(models.Model):
     @staticmethod
     def get_status_partially_admitted():
         try:
-            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
-                .status_messages.get(status_message_code='PARTIALLY-ADMITTED')
+            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED')
+        except:
+            return
+
+    @staticmethod
+    def get_status_partially_admitted_non_saudi():
+        try:
+            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED-NON-SAUDI')
+        except:
+            return
+
+    @staticmethod
+    def get_status_partially_admitted_transfer():
+        try:
+            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED-TRANSFER')
         except:
             return
 
@@ -1029,7 +1042,9 @@ class Nationality(models.Model):
 class Agreement(models.Model):
     class AgreementTypes:
         INITIAL = 'INITIAL'
-        CONFIRM = 'CONFIRM'
+        CONFIRMED = 'CONFIRMED'
+        CONFIRMED_N = 'CONFIRMED-N'
+        CONFIRMED_T = 'CONFIRMED-T'
         STUDENT_AGREEMENT_1 = 'STUDENT-AGREEMENT_1'
         STUDENT_AGREEMENT_2 = 'STUDENT-AGREEMENT_2'
         STUDENT_AGREEMENT_3 = 'STUDENT-AGREEMENT_3'
@@ -1044,7 +1059,9 @@ class Agreement(models.Model):
         def choices(cls):
             return (
                 (cls.INITIAL, _('Initial agreements')),
-                (cls.CONFIRM, _('Confirmation agreements')),
+                (cls.CONFIRMED, _('Confirmation agreements')),
+                (cls.CONFIRMED_N, _('Confirmation agreements for None Saudi')),
+                (cls.CONFIRMED_T, _('Confirmation agreements for Transfer students')),
                 (cls.STUDENT_AGREEMENT_1, _('Student agreements 1')),
                 (cls.STUDENT_AGREEMENT_2, _('Student agreements 2')),
                 (cls.STUDENT_AGREEMENT_3, _('Student agreements 3')),

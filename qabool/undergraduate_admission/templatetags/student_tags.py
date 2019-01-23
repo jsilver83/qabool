@@ -19,6 +19,8 @@ def student_info_commands(context):
                       and user.tarifi_week_attendance_date)
 
     can_confirm = ((user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+                    user.status_message == RegistrationStatusMessage.get_status_partially_admitted_non_saudi() or
+                    user.status_message == RegistrationStatusMessage.get_status_partially_admitted_transfer() or
                     user.status_message == RegistrationStatusMessage.get_status_transfer())
                    and AdmissionSemester.get_phase2_active_semester(user))
 
