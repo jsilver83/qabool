@@ -1,57 +1,44 @@
-import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse, reverse_lazy
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.utils import timezone
-from django.utils.http import is_safe_url
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, FormView, TemplateView
 
-from qabool import settings
-from qabool.local_settings import API_SECURITY_TOKEN
+from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
-from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, User, ImportantDateSidebar
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
 
 
-def index(request, template_name='undergraduate_admission/login.html'):
-    form = MyAuthenticationForm(request.POST or None)
+class IndexView(FormView):
+    template_name = 'undergraduate_admission/login.html'
+    form_class = MyAuthenticationForm
 
-    redirect_to = request.POST.get('next',
-                                   request.GET.get('next', reverse_lazy('undergraduate_admission:student_area')))
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('undergraduate_admission:student_area')
+        return super().dispatch(request, *args, **kwargs)
 
-    if request.method == 'GET' and request.user.is_authenticated:
-        return redirect('undergraduate_admission:student_area')
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['next'] = self.request.POST.get(
+            'next', self.request.GET.get('next', reverse_lazy('undergraduate_admission:student_area'))
+        )
+        context['phase1_active'] = False
+        if AdmissionSemester.check_if_phase1_is_active():
+            context['phase1_active'] = True
+        return context
 
-    if request.method == 'POST':
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    # if not is_safe_url(url=redirect_to, host=request.get_host()):
-                    #     redirect_to = reverse('student_area')
-                    return redirect(redirect_to)
-
-    phase1_active = False
-    if AdmissionSemester.check_if_phase1_is_active():
-        phase1_active = True
-
-    important_dates = ImportantDateSidebar.objects.filter(show=True)
-    return render(request, template_name, {
-        'form': form,
-        'phase1_active': phase1_active,
-        'next': redirect_to,
-        'important_dates': important_dates
-    })
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(self.request, user)
+                return redirect(self.get_context_data().get('next'))
+        return super().form_valid(form)
 
 
 def forgot_password(request):
@@ -69,49 +56,55 @@ def forgot_password(request):
     return render(request, 'undergraduate_admission/forgot_password.html', {'form': form})
 
 
-@login_required
-def student_area(request):
-    phase = request.user.get_student_phase()
+class StudentArea(StudentMixin, TemplateView):
+    template_name = 'undergraduate_admission/student_area.html'
 
-    status_message = request.user.status_message
+    def get_context_data(self, **kwargs):
+        context = super(StudentArea, self).get_context_data(**kwargs)
+        # TODO: fix and make it unified in business logic
+        phase = self.admission_request.get_student_phase()
 
-    show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
+        status_message = self.admission_request.status_message
 
-    can_confirm = ((request.user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
-                    request.user.status_message == RegistrationStatusMessage.get_status_transfer())
-                   and AdmissionSemester.get_phase2_active_semester(request.user))
+        show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
 
-    can_finish_phase3 = request.user.status_message in [RegistrationStatusMessage.get_status_admitted(),
-                                                        RegistrationStatusMessage.get_status_admitted_non_saudi()] \
-                        and not request.user.tarifi_week_attendance_date \
-                        and AdmissionSemester.get_phase3_active_semester(request.user)
+        can_confirm = ((
+                                   self.admission_request.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+                                   self.admission_request.status_message == RegistrationStatusMessage.get_status_transfer())
+                       and AdmissionSemester.get_phase2_active_semester(self.admission_request.user))
 
-    can_re_upload_docs = phase == 'PARTIALLY-ADMITTED' and request.user.verification_documents_incomplete
+        can_finish_phase3 = self.admission_request.status_message in [RegistrationStatusMessage.get_status_admitted(),
+                                                                      RegistrationStatusMessage.get_status_admitted_non_saudi()] \
+                            and not self.admission_request.tarifi_week_attendance_date \
+                            and AdmissionSemester.get_phase3_active_semester(self.admission_request.user)
 
-    can_re_upload_picture = phase == 'PARTIALLY-ADMITTED' and request.user.verification_picture_acceptable
+        can_re_upload_docs = phase == ('PARTIALLY-ADMITTED'
+                                       and self.admission_request.verification_documents_incomplete)
 
-    can_upload_withdrawal_proof = status_message == RegistrationStatusMessage.get_status_duplicate()
+        can_re_upload_picture = phase == ('PARTIALLY-ADMITTED'
+                                          and self.admission_request.verification_picture_acceptable)
 
-    return render(request,
-                  'undergraduate_admission/student_area.html', context={'user': request.user,
-                                                                        'show_result': show_result,
-                                                                        'can_confirm': can_confirm,
-                                                                        'can_re_upload_docs': can_re_upload_docs,
-                                                                        'can_re_upload_picture': can_re_upload_picture,
-                                                                        'can_upload_withdrawal_proof':
-                                                                            can_upload_withdrawal_proof,
-                                                                        'can_finish_phase3': can_finish_phase3,
-                                                                        })
+        can_upload_withdrawal_proof = status_message == RegistrationStatusMessage.get_status_duplicate()
+
+        context['user'] = self.admission_request
+        context['show_result'] = show_result
+        context['can_confirm'] = can_confirm
+        context['can_re_upload_docs'] = can_re_upload_docs
+        context['can_re_upload_picture'] = can_re_upload_picture
+        context['can_upload_withdrawal_proof'] = can_upload_withdrawal_proof
+        context['can_finish_phase3'] = can_finish_phase3
+
+        return context
 
 
-class EditContactInfo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class EditContactInfo(StudentMixin, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/edit_contact_info.html'
     form_class = BaseContactForm
     success_message = _('Contact Info was updated successfully...')
     success_url = reverse_lazy('undergraduate_admission:student_area')
 
     def get_object(self, queryset=None):
-        return self.request.user
+        return self.admission_request
 
     def get_form_kwargs(self):
         kwargs = super(EditContactInfo, self).get_form_kwargs()
@@ -122,52 +115,3 @@ class EditContactInfo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 def csrf_failure(request, reason=""):
     return render(request, 'undergraduate_admission/csrf_failure.html')
-
-
-def check_student_status(kfupm_id, security_token):
-    try:
-        if security_token == API_SECURITY_TOKEN:
-            student_status = User.objects.get(kfupm_id=kfupm_id).get_student_phase()
-
-            if student_status == 'ADMITTED':
-                return 'ADMITTED'
-            else:
-                return 'NOT'
-        else:
-            return 'WRONG TOKEN'
-
-    except ObjectDoesNotExist:
-        return 'STUDENT DOESNT EXIST'
-    except:
-        return 'GENERAL ERROR'
-
-
-# @csrf_exempt
-def check_if_student_is_admitted(request):
-    if request.method == 'GET':
-        security_token = request.GET['security_token']
-        kfupm_id = request.GET['kfupm_id']
-
-        return HttpResponse(check_student_status(kfupm_id, security_token))
-    else:
-        return HttpResponse('VERB NOT ALLOWED')
-
-
-# @csrf_exempt
-def mark_student_as_attended(request):
-    if request.method == 'GET':
-        security_token = request.GET['security_token']
-        kfupm_id = request.GET['kfupm_id']
-
-        result = check_student_status(kfupm_id, security_token)
-
-        if result == 'ADMITTED':
-            user = User.objects.get(kfupm_id=kfupm_id)
-            if user:
-                user.tarifi_week_attendance_date = timezone.now()
-                user.save()
-                return HttpResponse('DONE')
-        else:
-            return HttpResponse(result)
-    else:
-        return HttpResponse('VERB NOT ALLOWED')

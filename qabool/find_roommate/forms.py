@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from .models import HousingUser
-from undergraduate_admission.models import Lookup, User
+from undergraduate_admission.models import Lookup, AdmissionRequest
 
 
 class HousingInfoUpdateForm(forms.ModelForm):
@@ -74,7 +74,7 @@ class HousingInfoUpdateForm(forms.ModelForm):
 class HousingSearchForm(forms.Form):
     high_school_city = forms.CharField(
         # queryset = User.objects.order_by().values_list('high_school_city').distinct(),
-        widget=forms.Select(choices=User.get_distinct_high_school_city()),
+        widget=forms.Select(choices=AdmissionRequest.get_distinct_high_school_city()),
         required=False,
         label=_('High School City'),
     )
@@ -98,7 +98,7 @@ class HousingSearchForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(HousingSearchForm, self).__init__(*args, **kwargs)
-        self.fields['high_school_city'].widget = forms.Select(choices=User.get_distinct_high_school_city())
+        self.fields['high_school_city'].widget = forms.Select(choices=AdmissionRequest.get_distinct_high_school_city())
 
 
 class RoommateRequestForm(AgreementForm):

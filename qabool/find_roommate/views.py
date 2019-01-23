@@ -16,10 +16,9 @@ from django.views.generic import View
 from find_roommate.forms import HousingInfoUpdateForm, HousingSearchForm, RoommateRequestForm
 from find_roommate.models import HousingUser, RoommateRequest, Room
 from undergraduate_admission.forms.phase1_forms import AgreementForm
-from undergraduate_admission.models import RegistrationStatusMessage, AdmissionSemester, Agreement, User
+from undergraduate_admission.models import RegistrationStatusMessage, AdmissionSemester, Agreement, AdmissionRequest
 from undergraduate_admission.utils import SMS
 from undergraduate_admission.validators import is_eligible_for_roommate_search
-
 
 allowed_statuses_for_housing = [RegistrationStatusMessage.get_status_admitted_final(),
                                 RegistrationStatusMessage.get_status_admitted_final_non_saudi(),
@@ -103,11 +102,11 @@ class NewRoommateRequest(HousingBaseView, FormView):
     def form_valid(self, form):
         gov_id_or_kfupm_id = form.cleaned_data.get('gov_id_or_kfupm_id')
         semester = AdmissionSemester.get_phase4_active_semester()
-        roommate = User.objects.filter(Q(kfupm_id=gov_id_or_kfupm_id) |
-                                       Q(username=gov_id_or_kfupm_id),
-                                       status_message__in=allowed_statuses_for_housing,
-                                       eligible_for_housing=True,
-                                       semester=semester).exclude(pk=self.request.user.pk).first()
+        roommate = AdmissionRequest.objects.filter(Q(kfupm_id=gov_id_or_kfupm_id) |
+                                                   Q(user__username=gov_id_or_kfupm_id),
+                                                   status_message__in=allowed_statuses_for_housing,
+                                                   eligible_for_housing=True,
+                                                   semester=semester).exclude(pk=self.request.user.pk).first()
 
         if roommate:
             can_receive_a_new_request = \

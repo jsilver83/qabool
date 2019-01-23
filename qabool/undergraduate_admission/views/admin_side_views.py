@@ -21,7 +21,7 @@ from zeep.transports import Transport
 
 from undergraduate_admission.filters import UserListFilter
 from undergraduate_admission.forms.admin_side_forms import *
-from undergraduate_admission.models import User, AdmissionSemester, GraduationYear, RegistrationStatusMessage
+from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatusMessage
 from undergraduate_admission.utils import try_parse_float
 
 YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
@@ -55,7 +55,7 @@ class CutOffPointView(AdminBaseView, View):
         # selected_high_school_graduation_year = list(map(int, selected_high_school_graduation_year))
         cut_off_total = try_parse_float(request.GET.get('admission_total', 0.0))
         cut_off_total_operand = request.GET.get('admission_total_operand', 'GTE')
-        filtered = UserListFilter(request.GET, queryset=User.objects.filter(is_staff=False))
+        filtered = UserListFilter(request.GET, queryset=AdmissionRequest.objects.all())
 
         filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
             .annotate(
@@ -119,7 +119,7 @@ class CutOffPointView(AdminBaseView, View):
     def post(self, request, *args, **kwargs):
         # Django Bug: cant update a queryset with annotation; workaround from this:
         # https://stackoverflow.com/questions/13559944/how-to-update-a-queryset-that-has-been-annotated
-        filtered = User.objects.filter(pk__in=self.get_students_matching(request))
+        filtered = AdmissionRequest.objects.filter(pk__in=self.get_students_matching(request))
         form2 = ApplyStatusForm(request.POST or None)
 
         if form2.is_valid():
@@ -142,11 +142,11 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
         reassign = request.GET.get('reassign', False)
         if reassign:
             filtered = UserListFilter(request.GET,
-                                      queryset=User.objects.filter(is_staff=False))
+                                      queryset=AdmissionRequest.objects.all())
         else:
             filtered = UserListFilter(request.GET,
-                                      queryset=User.objects.filter(is_staff=False,
-                                                                   verification_committee_member__isnull=True))
+                                      queryset=AdmissionRequest.objects.filter(
+                                          verification_committee_member__isnull=True))
 
         filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
             .annotate(
@@ -196,7 +196,7 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
                                'show_detailed_results': show_detailed_results})
 
     def post(self, request, *args, **kwargs):
-        filtered = User.objects.filter(pk__in=self.get_students_matching(request))
+        filtered = AdmissionRequest.objects.filter(pk__in=self.get_students_matching(request))
         form2 = SelectCommitteeMemberForm(request.POST or None)
 
         if form2.is_valid():
@@ -222,7 +222,7 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
 
 class VerifyList(StaffBaseView, ListView):
     template_name = 'undergraduate_admission/admin/verify_list.html'
-    model = User
+    model = AdmissionRequest
     context_object_name = 'students'
     paginate_by = 25
 
@@ -232,15 +232,15 @@ class VerifyList(StaffBaseView, ListView):
                   RegistrationStatusMessage.get_status_confirmed_non_saudi()]
         semester = AdmissionSemester.get_active_semester()
         if self.request.user.is_superuser:
-            students_to_verified = User.objects.filter(is_staff=False,
-                                                       status_message__in=status,
-                                                       semester=semester) \
+            students_to_verified = AdmissionRequest.objects.filter(
+                status_message__in=status,
+                semester=semester) \
                 .order_by('-phase2_submit_date')
         else:
-            students_to_verified = User.objects.filter(is_staff=False,
-                                                       status_message__in=status,
-                                                       semester=semester,
-                                                       verification_committee_member=logged_in_username) \
+            students_to_verified = AdmissionRequest.objects.filter(
+                status_message__in=status,
+                semester=semester,
+                verification_committee_member=logged_in_username) \
                 .order_by('-phase2_submit_date')
         return students_to_verified
 
@@ -248,7 +248,7 @@ class VerifyList(StaffBaseView, ListView):
 class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/admin/verify_committee.html'
     form_class = VerifyCommitteeForm
-    model = User
+    model = AdmissionRequest
     success_message = _('Verification submitted successfully!!!!')
 
     def get_success_url(self, **kwargs):
@@ -261,9 +261,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(YesserDataUpdate, self).get_context_data(**kwargs)
         sem = AdmissionSemester.get_active_semester()
-        students = User.objects.filter(semester=sem,
-                                       is_staff=False,
-                                       is_superuser=False)
+        students = AdmissionRequest.objects.filter(semester=sem)
         context['students_count'] = students.count()
 
         return context
@@ -273,9 +271,7 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
 
         if manual_update:
             sem = AdmissionSemester.get_active_semester()
-            students = User.objects.filter(semester=sem,
-                                           is_staff=False,
-                                           is_superuser=False)
+            students = AdmissionRequest.objects.filter(semester=sem)
             for student in students:
                 time.sleep(0.2)
                 serialized_data = get_student_record_serialized(student, change_status=True)
@@ -303,9 +299,7 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
         # time.sleep(3)
         page = request.GET.get('page', 1)
         sem = AdmissionSemester.get_phase1_active_semester()
-        students = User.objects.filter(semester=sem,
-                                       is_staff=False,
-                                       is_superuser=False)
+        students = AdmissionRequest.objects.filter(semester=sem)
         paginator = Paginator(students, 25)
         try:
             student = paginator.page(page).object_list[0]
@@ -644,7 +638,7 @@ def get_high_school_from_yesser(gov_id):
 ####### OPERATIONAL CODE ###########
 ####################################
 def fetch_all_moe_from_yesser():
-    students = User.objects.filter(is_staff=False)  # .order_by('-id')[:50]
+    students = AdmissionRequest.objects.all()  # .order_by('-id')[:50]
 
     for student in students:
         time.sleep(0.2)
@@ -665,7 +659,7 @@ def fetch_moe_data_from_yesser_and_write_to_file(government_id):
 
 
 def fetch_all_mohe_from_yesser():
-    students = User.objects.filter(is_staff=False)  # .order_by('-id')[:1000]
+    students = AdmissionRequest.objects.all()  # .order_by('-id')[:1000]
 
     for student in students:
         time.sleep(1)

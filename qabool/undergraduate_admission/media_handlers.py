@@ -54,7 +54,7 @@ def upload_location(sub_folder, instance, filename):
         ext = '.jpg'  # personal picture will always come in jpg format from cropper.js
     else:
         ext = os.path.splitext(filename)[1]
-    file_name = '%s/%s/%s%s'%(sub_folder, semester_name, instance.username, ext)
+    file_name = '%s/%s/%s%s'%(sub_folder, semester_name, instance.user.username, ext)
     full_path = os.path.join(settings.MEDIA_ROOT, file_name)
     if os.path.exists(full_path):
         os.remove(full_path)

@@ -1,6 +1,6 @@
 {% extends "base_student_area.html" %}
 {% load i18n %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 
 {% block subcontent %}
 {% blocktrans %}
@@ -17,9 +17,9 @@ Fill the form below to update your contact info<br>
 </div>
 {% endif %}
 
-<form class="form-horizontal" role="form" method="post" action="{% url 'edit_contact_info' %}">
+<form class="form-horizontal" role="form" method="post" action="{% url 'undergraduate_admission:edit_contact_info' %}">
 	{% csrf_token %}
-	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	{% crispy form %}
 
 	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Update Contact Info' %}"/>
 </form>

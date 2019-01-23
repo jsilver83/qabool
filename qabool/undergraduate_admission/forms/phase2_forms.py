@@ -5,12 +5,9 @@ from django import forms
 from captcha.fields import CaptchaField
 from django.conf import settings
 from django.contrib.auth.forms import AdminPasswordChangeForm
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.validators import MinValueValidator
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, AdmissionSemester
+from ..models import *
 from undergraduate_admission.utils import add_validators_to_arabic_and_english_names, parse_non_standard_numerals
 
 # from captcha.fields import ReCaptchaFieldfrom django.utils import translation
@@ -24,7 +21,7 @@ YES_NO_CHOICES = (
 # to save phase 2 submit date on all phase 2 forms
 class Phase2GenericForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['id', ]
 
     def save(self, commit=True):
@@ -39,7 +36,7 @@ class Phase2GenericForm(forms.ModelForm):
 
 class PersonalInfoForm(Phase2GenericForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
                   'second_name_en', 'third_name_en', 'family_name_en', 'phone',
                   'high_school_name', 'high_school_province', 'high_school_city',
@@ -121,7 +118,7 @@ class PersonalInfoForm(Phase2GenericForm):
 
 class GuardianContactForm(Phase2GenericForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
 
         fields = ['guardian_name', 'guardian_government_id', 'guardian_relation', 'guardian_phone',
                   # 'guardian_mobile',
@@ -140,10 +137,10 @@ class GuardianContactForm(Phase2GenericForm):
 
 class RelativeContactForm(Phase2GenericForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
 
         fields = ['relative_name', 'relative_relation', 'relative_phone', 'relative_po_box',
-                  'relative_po_stal_code', 'relative_city', 'relative_job', 'relative_employer']
+                  'relative_postal_code', 'relative_city', 'relative_job', 'relative_employer']
 
     def __init__(self, *args, **kwargs):
         super(RelativeContactForm, self).__init__(*args, **kwargs)
@@ -155,7 +152,7 @@ class RelativeContactForm(Phase2GenericForm):
 
 class VehicleInfoForm(Phase2GenericForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
                   'vehicle_registration_file', 'driving_license_file', ]
         widgets = {
@@ -184,7 +181,7 @@ class VehicleInfoForm(Phase2GenericForm):
 
 class DocumentsForm(Phase2GenericForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
 
         fields = ['high_school_certificate', 'courses_certificate', 'government_id_file',
                   'mother_gov_id_file', 'passport_file', 'birth_certificate', ]
@@ -213,7 +210,7 @@ class DocumentsForm(Phase2GenericForm):
 
 class MissingDocumentsForm(DocumentsForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['high_school_certificate', 'courses_certificate', 'government_id_file',
                   'mother_gov_id_file', 'passport_file', 'birth_certificate',
                   'bank_account_identification_file',
@@ -241,7 +238,7 @@ class MissingDocumentsForm(DocumentsForm):
 
 class WithdrawalProofForm(Phase2GenericForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
 
         fields = ['withdrawal_proof_letter', ]
 
@@ -258,7 +255,7 @@ class WithdrawalProofForm(Phase2GenericForm):
 
 class WithdrawalForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = AdmissionRequest
 
         fields = ['withdrawal_university', 'withdrawal_reason', ]
 
@@ -291,7 +288,7 @@ class PersonalPhotoForm(forms.ModelForm):
     data_uri = forms.CharField(widget=forms.HiddenInput)
 
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ('personal_picture', 'data_uri',)
         widgets = {
             'file': forms.FileInput(attrs={
@@ -364,10 +361,10 @@ class TransferForm(AdminPasswordChangeForm):
         status_message = RegistrationStatusMessage.get_status_transfer()
 
         try:
-            student = User.objects.get(username=username,
-                                       kfupm_id=kfupm_id,
-                                       semester=active_semester,
-                                       status_message=status_message)
+            student = AdmissionRequest.objects.get(user__username=username,
+                                                   kfupm_id=kfupm_id,
+                                                   semester=active_semester,
+                                                   status_message=status_message)
             self.user = student
         except ObjectDoesNotExist:
             raise forms.ValidationError(

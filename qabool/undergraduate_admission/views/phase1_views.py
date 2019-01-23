@@ -1,20 +1,16 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
+from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView, TemplateView, UpdateView
-from django.utils.translation import ugettext_lazy as _
-from django.core.cache import cache
 
-from undergraduate_admission.filters import UserListFilter
+from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.phase1_forms import AgreementForm, RegistrationForm, Phase1UserEditForm
-from undergraduate_admission.models import User, RegistrationStatusMessage, AdmissionSemester, Agreement, \
-    ImportantDateSidebar, GraduationYear
-from undergraduate_admission.utils import SMS, Email, try_parse_float
+from undergraduate_admission.utils import SMS, Email
+from ..models import *
 
 
 @cache_page(60 * 15)
@@ -36,7 +32,7 @@ def initial_agreement(request):
 
 
 class RegisterView(CreateView):
-    model = User
+    model = AdmissionRequest
     context_object_name = "user"
     template_name = 'undergraduate_admission/register.html'
     form_class = RegistrationForm
@@ -164,14 +160,14 @@ class RegistrationSuccess(TemplateView):
         return context
 
 
-class EditInfo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class EditInfo(StudentMixin, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/edit_info.html'
     form_class = Phase1UserEditForm
     success_message = _('Info was updated successfully...')
     success_url = reverse_lazy('undergraduate_admission:student_area')
 
     def get_object(self, queryset=None):
-        return self.request.user
+        return self.admission_request
 
     def get_form_kwargs(self):
         kwargs = super(EditInfo, self).get_form_kwargs()

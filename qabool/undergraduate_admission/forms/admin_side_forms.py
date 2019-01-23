@@ -5,7 +5,7 @@ import re
 from django.utils import timezone
 
 from .phase2_forms import YES_NO_CHOICES
-from undergraduate_admission.models import User, Lookup, RegistrationStatusMessage, GraduationYear, AdmissionSemester
+from ..models import *
 from django.utils.translation import ugettext_lazy as _, get_language
 
 from undergraduate_admission.utils import SMS
@@ -39,7 +39,7 @@ class CutOffForm(forms.ModelForm):
     show_detailed_results = forms.BooleanField(required=False, label=_('Show Detailed Results'))
 
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['semester', 'gender', 'student_type', 'nationality', 'status_message', 'admission_total',
                   'admission_total_operand', 'selected_high_school_graduation_year']
 
@@ -68,31 +68,32 @@ class DistributeForm(forms.ModelForm):
     show_detailed_results = forms.BooleanField(required=False, label=_('Show Detailed Results'))
 
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['semester', 'student_type', 'status_message']
 
     def __init__(self, *args, **kwargs):
         super(DistributeForm, self).__init__(*args, **kwargs)
 
 
+# TODO: To be reworked along with the view
 class SelectCommitteeMemberForm(forms.Form):
     members = forms.CharField(required=False, label=_('Select Member(s)'))
 
     def __init__(self, *args, **kwargs):
         super(SelectCommitteeMemberForm, self).__init__(*args, **kwargs)
-        choices = User.objects.filter(is_staff=True,
-                                      groups__name__in=['Verifying Committee', ])
+        # choices = User.objects.filter(is_staff=True,
+        #                               groups__name__in=['Verifying Committee', ])
 
-        ch = [(o.username, o.username) for o in choices]
-        self.fields['members'].widget = forms.CheckboxSelectMultiple(choices=ch)
+        # ch = [(o.username, o.username) for o in choices]
+        # self.fields['members'].widget = forms.CheckboxSelectMultiple(choices=ch)
 
 
 class VerifyCommitteeForm(forms.ModelForm):
     data_uri = forms.CharField(widget=forms.HiddenInput, required=False)
 
     class Meta:
-        model = User
-        fields = ['username', 'nationality', 'saudi_mother',
+        model = AdmissionRequest
+        fields = ['nationality', 'saudi_mother',
 
                   'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                   'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
@@ -222,7 +223,7 @@ class StudentGenderForm(forms.ModelForm):
     )
 
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['gender']
 
     def __init__(self, *args, **kwargs):

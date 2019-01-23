@@ -1,7 +1,8 @@
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
 
-from find_roommate.models import RoommateRequest
+# from find_roommate.models import RoommateRequest
+from shared_app.utils import get_current_admission_request_for_logged_in_user
 from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
 
 register = template.Library()
@@ -9,27 +10,27 @@ register = template.Library()
 
 @register.inclusion_tag('undergraduate_admission/_student_info_commands.html', takes_context=True)
 def student_info_commands(context):
-    user = context['request'].user
-    phase = user.get_student_phase()
+    admission_request = get_current_admission_request_for_logged_in_user(context['request'])
+    phase = admission_request.get_student_phase()
     can_withdraw = (phase == 'ADMITTED'
-                    or user.status_message == RegistrationStatusMessage.get_status_confirmed())
+                    or admission_request.status_message == RegistrationStatusMessage.get_status_confirmed())
     can_print_withdrawal_letter = phase == 'WITHDRAWN'
-    can_print_docs = (user.status_message in [RegistrationStatusMessage.get_status_admitted_final(),
+    can_print_docs = (admission_request.status_message in [RegistrationStatusMessage.get_status_admitted_final(),
                                               RegistrationStatusMessage.get_status_admitted_final_non_saudi()]
-                      and user.tarifi_week_attendance_date)
+                      and admission_request.tarifi_week_attendance_date)
 
-    can_confirm = ((user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
-                    user.status_message == RegistrationStatusMessage.get_status_transfer())
-                   and AdmissionSemester.get_phase2_active_semester(user))
+    can_confirm = ((admission_request.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+                    admission_request.status_message == RegistrationStatusMessage.get_status_transfer())
+                   and AdmissionSemester.get_phase2_active_semester(admission_request))
 
-    can_see_kfupm_id = (phase == 'ADMITTED' and user.kfupm_id)
-    can_see_housing = (phase == 'ADMITTED' and user.eligible_for_housing
+    can_see_kfupm_id = (phase == 'ADMITTED' and admission_request.kfupm_id)
+    can_see_housing = (phase == 'ADMITTED' and admission_request.eligible_for_housing
                        and AdmissionSemester.get_phase4_active_semester())
-    pending_housing_roommate_requests = \
-        RoommateRequest.objects.filter(requested_user=user,
-                                       status=RoommateRequest.RequestStatuses.PENDING).count()
+    # pending_housing_roommate_requests = \
+    #     RoommateRequest.objects.filter(requested_user=admission_request,
+    #                                    status=RoommateRequest.RequestStatuses.PENDING).count()
     try:
-        can_search_in_housing = can_see_housing and user.housing_user.searchable
+        can_search_in_housing = can_see_housing and admission_request.housing_user.searchable
     except ObjectDoesNotExist:
         can_search_in_housing = False
     has_pic = phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED'
@@ -50,7 +51,7 @@ def student_info_commands(context):
     #     status_css_class = 'info'
 
     return {
-        'user': user,
+        'admission_request': admission_request,
         'can_withdraw': can_withdraw,
         'can_print_docs': can_print_docs,
         'can_confirm': can_confirm,
@@ -62,5 +63,5 @@ def student_info_commands(context):
         'can_see_kfupm_id': can_see_kfupm_id,
         'can_see_housing': can_see_housing,
         'can_search_in_housing': can_search_in_housing,
-        'pending_housing_roommate_requests': pending_housing_roommate_requests,
+        # 'pending_housing_roommate_requests': pending_housing_roommate_requests,
     }

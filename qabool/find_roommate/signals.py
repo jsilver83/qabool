@@ -2,7 +2,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from find_roommate.models import RoommateRequest
-from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS
 
 

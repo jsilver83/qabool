@@ -1,16 +1,17 @@
 from captcha.fields import CaptchaField
 # from captcha.fields import ReCaptchaField
-from django.utils import translation
-from django.utils.translation import ugettext_lazy as _, get_language
-from django.contrib.auth import password_validation
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import password_validation, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
-from django.conf import settings
-from qabool.base_forms import BaseCrispyForm
-from undergraduate_admission.models import User, AdmissionSemester
+from shared_app.base_forms import BaseCrispyForm
+from ..models import *
 from django import forms
 
 from undergraduate_admission.utils import parse_non_standard_numerals
+
+
+User = get_user_model()
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
@@ -20,7 +21,7 @@ class MyPasswordChangeForm(PasswordChangeForm):
         super(MyPasswordChangeForm, self).__init__(*args, **kwargs)
 
 
-class BaseContactForm(forms.ModelForm):
+class BaseContactForm(BaseCrispyForm, forms.ModelForm):
     error_messages = {
         'email_mismatch': _("The two email fields didn't match."),
         'mobile_mismatch': _("The two mobile fields didn't match."),
@@ -30,6 +31,11 @@ class BaseContactForm(forms.ModelForm):
                                "Please use a different Mobile"),
     }
 
+    email = forms.EmailField(
+        label=_('Email Address'),
+        required=True,
+        widget=forms.EmailInput()
+    )
     email2 = forms.EmailField(
         label=_('Email Address Confirmation'),
         required=True,
@@ -45,7 +51,7 @@ class BaseContactForm(forms.ModelForm):
     )
 
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['email', 'email2', 'mobile', 'mobile2']
         widgets = {
             'email': forms.TextInput(attrs={'required': ''}),
@@ -55,20 +61,21 @@ class BaseContactForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        self.user_id = -1
+        self.user = None
         try:
             request = kwargs.pop('request', None)
-            self.user_id = request.user.id
+            self.user = request.user
         except:
             pass
 
         super(BaseContactForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
+        self.initial['email'] = self.user.email
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        semester = AdmissionSemester.get_phase1_active_semester()
-        found = User.objects.filter(email=email, semester=semester).exclude(id=self.user_id)
+        # TODO: fIX
+        found = User.objects.filter(email=email).exclude(id=self.user.pk)
         if email and found:
             raise forms.ValidationError(
                 self.error_messages['email_not_unique'],
@@ -89,7 +96,7 @@ class BaseContactForm(forms.ModelForm):
     def clean_mobile(self):
         mobile = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
-        found = User.objects.filter(mobile=mobile, semester=semester).exclude(id=self.user_id)
+        found = AdmissionRequest.objects.filter(mobile=mobile, semester=semester).exclude(id=self.instance.pk)
         if mobile and found:
             raise forms.ValidationError(
                 self.error_messages['mobile_not_unique'],
@@ -106,6 +113,16 @@ class BaseContactForm(forms.ModelForm):
                 code='mobile_mismatch',
             )
         return mobile2
+
+    def save(self, commit=True):
+        saved = super(BaseContactForm, self).save(commit=False)
+        saved.user.email = self.cleaned_data['email']
+
+        if commit:
+            saved.user.save()
+            saved.save()
+
+        return saved
 
 
 class MyAuthenticationForm(AuthenticationForm):
@@ -162,7 +179,7 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
     )
 
     class Meta:
-        model = User
+        model = AdmissionRequest
         fields = ['govid', 'mobile', 'password1', 'password2']
 
         help_texts = {
@@ -172,8 +189,6 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ForgotPasswordForm, self).__init__(*args, **kwargs)
 
-        # self.fields['email'].required = False
-        # self.fields['email'].widget.is_required = False
         self.fields['mobile'].required = True
         self.fields['mobile'].widget.is_required = True
 
@@ -189,36 +204,23 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
                 self.error_messages['password_mismatch'],
                 code='password_mismatch',
             )
-        self.instance.username = self.cleaned_data.get('username')
-        password_validation.validate_password(self.cleaned_data.get('password2'), self.instance)
+        self.instance.user.username = self.cleaned_data.get('username')
+        password_validation.validate_password(self.cleaned_data.get('password2'), self.instance.user)
         return password2
 
     def clean_username(self):
         return parse_non_standard_numerals(self.cleaned_data.get("username"))
 
-    def save(self):
+    def save(self, commit=True):
         username = self.cleaned_data.get("govid")
         password = self.cleaned_data.get("password1")
-        # email = self.cleaned_data.get("email")
         mobile = self.cleaned_data.get("mobile")
-        # id2 = self.cleaned_data.get("id2")
 
-        # match 2 out of three values supplied by user
-        # try:
-        user = User.objects.get(username=username, mobile=mobile)
-        print(username)
-        # except User.DoesNotExist:
-        #     try:
-        #         user = User.objects.get(username=username, email=email, id=id2)
-        #     except User.DoesNotExist:
-        #         try:
-        #             user = User.objects.get(username=username, mobile=mobile, id=id2)
-        #         except User.DoesNotExist:
-        #             user = None
+        admission_request = AdmissionRequest.objects.filter(user_username=username, mobile=mobile)
 
-        if user is not None:
-            user.set_password(password)
-            user.save()
-            return user
+        if admission_request and admission_request.user:
+            admission_request.user.set_password(password)
+            admission_request.user.save()
+            return admission_request.user
         else:
             return None
