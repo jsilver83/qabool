@@ -1,16 +1,18 @@
 import re
 
 from captcha.fields import CaptchaField
-# from captcha.fields import ReCaptchaFieldfrom django.utils import translation
+from django.contrib.auth import get_user_model, password_validation
 
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from shared_app.base_forms import BaseCrispyForm
 from undergraduate_admission.forms.general_forms import BaseContactForm
 from ..models import *
 from undergraduate_admission.utils import parse_non_standard_numerals, add_validators_to_arabic_and_english_names
+
+
+User = get_user_model()
 
 
 class BaseAgreementForm(forms.Form):
@@ -37,83 +39,38 @@ class AgreementForm(BaseAgreementForm):
             )
 
 
-class Phase1UserEditForm(BaseContactForm):
-    class Meta(BaseContactForm.Meta):
-        fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
-                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
-                  'mobile', 'mobile2', 'email', 'email2', 'high_school_system',
-                  'high_school_gpa_student_entry', 'student_notes']
+class RegistrationForm(BaseContactForm, forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(Phase1UserEditForm, self).__init__(*args, **kwargs)
-
-        for field in self.fields:
-            if field not in ['student_notes', 'third_name_ar', 'second_name_en', 'third_name_en']:
-                self.fields[field].required = True
-                self.fields[field].widget.attrs.update({'required': ''})
-
-        add_validators_to_arabic_and_english_names(self.fields)
-
-        self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
-
-
-class RegistrationForm(BaseCrispyForm, UserCreationForm):
-    UserCreationForm.error_messages.update(
-        {
-            'email_mismatch': _("The two email fields didn't match."),
-            'govid_mismatch': _("The two government ID fields didn't match."),
-            'mobile_mismatch': _("The two mobile fields didn't match."),
-            'govid_denied': _("You have been denied from applying for the following reason(s): "),
-            'email_not_unique': _("The Email entered is associated with another applicant. "
-                                  "Please use a different Email"),
-            'mobile_not_unique': _("The Mobile entered is associated with another applicant. "
-                                   "Please use a different Mobile"),
-            'govid_invalid': _("You have entered an invalid Government ID"),
-            'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile"),
-            'no_saudi_mother_gov_id': _("You have entered the mother to be Saudi but you did NOT enter her Saudi"
-                                        " Government ID")
-        }
-    )
-
-    email = forms.EmailField(
-        label=_('Email Address'),
-        required=True,
-        widget=forms.EmailInput(),
-    )
-    email2 = forms.EmailField(
-        label=_('Email Address Confirmation'),
-        required=True,
-        help_text=_('Enter the same email address as before, for verification'),
-        widget=forms.EmailInput(attrs={'class': 'nocopy'})
-    )
     username = forms.CharField(
         label=_('Government ID'),
         max_length=13,
-        # min_length=7,
         help_text=_(
             'National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or 2xxxxxxxxx.'),
     )
     username2 = forms.CharField(
         label=_('Government ID Confirmation'),
         max_length=13,
-        # min_length=7,
         required=True,
         help_text=_('Enter the same government ID as before, for verification'),
         widget=forms.TextInput(attrs={'class': 'nocopy'})
     )
-    mobile2 = forms.CharField(
-        label=_('Mobile Confirmation'),
-        max_length=12,
-        required=True,
-        help_text=_('Enter the same mobile number as before, for verification'),
-        widget=forms.TextInput(attrs={'class': 'nocopy'})
+    password1 = forms.CharField(
+        label=_("Password"),
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label=_("Password confirmation"),
+        widget=forms.PasswordInput,
+        strip=False,
+        help_text=_("Enter the same password as before, for verification."),
     )
 
     GENDER_CHOICES = (
         ('M', _('Male')),
         ('F', _('Female'))
     )
-
     gender = forms.CharField(
         label=_('Gender'),
         help_text=_('Only male students can apply'),
@@ -146,6 +103,17 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
+        BaseContactForm.error_messages.update({
+            'password_mismatch': _("The two password fields didn't match."),
+            'govid_mismatch': _("The two government ID fields didn't match."),
+            'govid_denied': _("You have been denied from applying for the following reason(s): "),
+            'govid_invalid': _("You have entered an invalid Government ID"),
+            'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile"),
+            'no_saudi_mother_gov_id': _("You have entered the mother to be Saudi but you did NOT enter her Saudi"
+                                        " Government ID")
+        })
+        self.error_messages = BaseContactForm.error_messages
+
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
 
@@ -159,19 +127,22 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
 
         add_validators_to_arabic_and_english_names(self.fields)
 
-        self.fields['nationality'].widget.attrs['class'] = 'select2 form-control'
-        self.fields['mobile'].widget.attrs['placeholder'] = '9665xxxxxxxx'
-
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
-        self.fields['saudi_mother_gov_id'].validators = [
-            RegexValidator(
-                '^\d{9,11}$',
-                message=UserCreationForm.error_messages['govid_invalid']
-            )]
 
-        self.fields['password1'].help_text = _('Minimum length is 8. Use both numbers and characters.')
-        self.fields['password2'].help_text = _('Enter the same password as before, for verification')
-        self.fields['high_school_graduation_year'].queryset = GraduationYear.objects.filter(show=True)
+        try:
+            # this try..except is added for when in Phase1UserEditForm those fields wont exist
+            self.fields['nationality'].widget.attrs['class'] = 'select2 form-control'
+
+            self.fields['saudi_mother_gov_id'].validators = [
+                RegexValidator(
+                    '^\d{9,11}$',
+                    message=self.error_messages['govid_invalid']
+                )]
+
+            self.fields['password2'].help_text = _('Enter the same password as before, for verification')
+            self.fields['high_school_graduation_year'].queryset = GraduationYear.objects.filter(show=True)
+        except:
+            pass
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
@@ -179,7 +150,46 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
-        username1 = parse_non_standard_numerals(cleaned_data.get("username"))
+        username1 = cleaned_data.get("username")
+        if username1:
+            is_saudi = cleaned_data.get('nationality') == 'SA'
+
+            if is_saudi:
+                match = re.match(r'^\d{9,11}$', str(username1))
+            else:
+                match = re.match(r'^\d{7,13}$', str(username1))
+
+            if not match:
+                raise forms.ValidationError(
+                    UserCreationForm.error_messages['govid_invalid'],
+                    code='govid_invalid',
+                    )
+        return cleaned_data
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+        return password2
+
+    def _post_clean(self):
+        super()._post_clean()
+        # Validate the password after self.instance is updated with form data
+        # by super().
+        password = self.cleaned_data.get('password2')
+        if password:
+            try:
+                password_validation.validate_password(password, self.instance)
+            except forms.ValidationError as error:
+                self.add_error('password2', error)
+
+    def clean_username(self):
+        username1 = parse_non_standard_numerals(self.cleaned_data.get("username"))
+        # username1 = parse_non_standard_numerals(cleaned_data.get("username"))
         denial = DeniedStudent.check_if_student_is_denied(username1)
 
         if denial:
@@ -188,22 +198,7 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
                 code='govid_denied',
                 )
 
-        is_saudi = 'Saudi' in cleaned_data.get('nationality').nationality_en
-
-        if is_saudi:
-            match = re.match(r'^\d{9,11}$', str(username1))
-        else:
-            match = re.match(r'^\d{7,13}$', str(username1))
-
-        if not match:
-            raise forms.ValidationError(
-                UserCreationForm.error_messages['govid_invalid'],
-                code='govid_invalid',
-                )
-
-    def clean_username(self):
-        username = parse_non_standard_numerals(self.cleaned_data.get("username"))
-        return username
+        return username1
 
     def clean_username2(self):
         username1 = parse_non_standard_numerals(self.cleaned_data.get("username"))
@@ -214,47 +209,6 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
                 code='govid_mismatch',
             )
         return username2
-
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        found = User.objects.filter(email=email)
-        if email and found:
-            raise forms.ValidationError(
-                self.error_messages['email_not_unique'],
-                code='email_not_unique',
-            )
-        return email
-
-    def clean_email2(self):
-        email1 = self.cleaned_data.get("email")
-        email2 = self.cleaned_data.get("email2")
-        if email1 and email2 and email1 != email2:
-            raise forms.ValidationError(
-                self.error_messages['email_mismatch'],
-                code='email_mismatch',
-            )
-        return email2
-
-    def clean_mobile(self):
-        mobile = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
-        semester = AdmissionSemester.get_phase1_active_semester()
-        found = AdmissionRequest.objects.filter(mobile=mobile, semester=semester)
-        if mobile and found:
-            raise forms.ValidationError(
-                self.error_messages['mobile_not_unique'],
-                code='mobile_not_unique',
-            )
-        return mobile
-
-    def clean_mobile2(self):
-        mobile1 = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
-        mobile2 = parse_non_standard_numerals(self.cleaned_data.get("mobile2"))
-        if mobile1 and mobile2 and mobile1 != mobile2:
-            raise forms.ValidationError(
-                self.error_messages['mobile_mismatch'],
-                code='mobile_mismatch',
-            )
-        return mobile2
 
     def clean_guardian_mobile(self):
         mobile1 = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
@@ -278,3 +232,20 @@ class RegistrationForm(BaseCrispyForm, UserCreationForm):
                     code='no_saudi_mother_gov_id',
                 )
         return saudi_mother_gov_id
+
+
+class Phase1UserEditForm(RegistrationForm):
+    class Meta(RegistrationForm.Meta):
+        fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+                  'mobile', 'mobile2', 'email', 'email2', 'high_school_system',
+                  'high_school_gpa_student_entry', 'student_notes']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # those fields are in the RegistrationForm but not needed here
+        del(self.fields['username'])
+        del(self.fields['username2'])
+        del(self.fields['password1'])
+        del(self.fields['password2'])
+        del(self.fields['gender'])
