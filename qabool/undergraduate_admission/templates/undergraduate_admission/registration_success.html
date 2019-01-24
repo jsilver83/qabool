@@ -10,7 +10,7 @@
 </div>
 {% endblocktrans %}
 <br>
-<a href="{% url 'login' %}" class="btn btn-success">{% trans 'Login' %}</a>
+<a href="{% url 'undergraduate_admission:login' %}" class="btn btn-success">{% trans 'Login' %}</a>
 <br>
 <br>
 <div class="panel panel-default bg-grey">
@@ -20,12 +20,12 @@
 			<!--<img src="http://placehold.it/170x180">-->
 			<!--</div>-->
 			<div class="col-lg-12">
-				<h4>{{ user }}</h4>
-{#				<strong>{% trans 'Registration ID' %}:</strong> {{ user.id }}<br>#}
-				<strong>{% trans 'Government ID' %}:</strong> {{ user.username }}<br>
-				<strong>{% trans 'Mobile' %}:</strong> {{ user.mobile }}<br>
+				<h4>{{ admission_request }}</h4>
+{#				<strong>{% trans 'Registration ID' %}:</strong> {{ admission_request.id }}<br>#}
+				<strong>{% trans 'Government ID' %}:</strong> {{ admission_request.user.username }}<br>
+				<strong>{% trans 'Mobile' %}:</strong> {{ admission_request.mobile }}<br>
 				<strong>{% trans 'Application Status' %}:</strong>
-				<span class="text-info">{{ user.get_actual_student_status }}</span>
+				<span class="text-info">{{ admission_request.get_actual_student_status }}</span>
 				<hr>
 			</div>
 		</div>

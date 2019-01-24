@@ -56,8 +56,7 @@ class BaseContactForm(BaseCrispyForm, forms.ModelForm):
         widgets = {
             'email': forms.TextInput(attrs={'required': ''}),
             'mobile': forms.TextInput(attrs={'required': '',
-                                             'placeholder': '9665xxxxxxxx',
-                                             }),
+                                             'placeholder': '9665xxxxxxxx', }),
         }
 
     def __init__(self, *args, **kwargs):
@@ -70,12 +69,15 @@ class BaseContactForm(BaseCrispyForm, forms.ModelForm):
 
         super(BaseContactForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
-        self.initial['email'] = self.user.email
+        if self.user:
+            self.initial['email'] = self.user.email
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        # TODO: fIX
-        found = User.objects.filter(email=email).exclude(id=self.user.pk)
+        if self.user:
+            found = User.objects.filter(email=email).exclude(id=self.user.pk)
+        else:
+            found = User.objects.filter(email=email)
         if email and found:
             raise forms.ValidationError(
                 self.error_messages['email_not_unique'],
@@ -96,7 +98,10 @@ class BaseContactForm(BaseCrispyForm, forms.ModelForm):
     def clean_mobile(self):
         mobile = parse_non_standard_numerals(self.cleaned_data.get("mobile"))
         semester = AdmissionSemester.get_phase1_active_semester()
-        found = AdmissionRequest.objects.filter(mobile=mobile, semester=semester).exclude(id=self.instance.pk)
+        if self.instance.pk:
+            found = AdmissionRequest.objects.filter(mobile=mobile, semester=semester).exclude(id=self.instance.pk)
+        else:
+            found = AdmissionRequest.objects.filter(mobile=mobile, semester=semester)
         if mobile and found:
             raise forms.ValidationError(
                 self.error_messages['mobile_not_unique'],
