@@ -5,8 +5,6 @@ from django.utils import timezone
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
-from .student import AdmissionRequest
-
 
 class AdmissionSemester(models.Model):
     semester_name = models.CharField(max_length=200, verbose_name=_('Semester Name'))
@@ -114,47 +112,6 @@ class AdmissionSemester(models.Model):
         # except to catch an weird exceptions like ProgrammingError
         except:
             return [('--', '--')]
-
-
-class KFUPMIDsPool(models.Model):
-    semester = models.ForeignKey(
-        'AdmissionSemester',
-        on_delete=models.SET_NULL,
-        blank=False,
-        null=True,
-        related_name='semester_ids',
-        verbose_name=_('Admission Semester'),
-        db_index=True,
-    )
-    kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
-
-    class Meta:
-        verbose_name_plural = _('Registrar: KFUPM ID Pools')
-
-    def __str__(self):
-        return str(self.kfupm_id)
-
-    @property
-    def assigned_student(self):
-        try:
-            student = AdmissionRequest.objects.get(kfupm_id=self.kfupm_id)
-            return '%s - (%s)' % (str(student), student.user.username)
-        except ObjectDoesNotExist:
-            return None
-
-    @staticmethod
-    def get_next_available_id(student):
-        if student:
-            kid = KFUPMIDsPool.objects.filter(semester=student.semester) \
-                .exclude(kfupm_id__in=AdmissionRequest.objects.filter(kfupm_id__isnull=False)
-                         .values_list('kfupm_id', flat=True)).order_by('?').first()
-
-            if kid:
-                return kid.kfupm_id
-            else:
-                return 0
-        else:
-            return 0
 
 
 # TODO: combine the two below models into one and add order and note (optional)
