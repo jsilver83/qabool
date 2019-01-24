@@ -481,14 +481,13 @@ class AdmissionRequest(models.Model):
     def student_type(self):
         student_type = 'S'
 
-        # TODO: fix
-        # if self.nationality:
-        #     if self.nationality.nationality_en != 'Saudi Arabia' and self.saudi_mother:
-        #         student_type = 'M'
-        #     elif self.nationality.nationality_en != 'Saudi Arabia':
-        #         student_type = 'N'
-        # else:
-        #     student_type = 'N/A'
+        if self.nationality:
+            if self.nationality != 'SA' and self.saudi_mother:
+                student_type = 'M'
+            elif self.nationality != 'SA':
+                student_type = 'N'
+        else:
+            student_type = 'N/A'
 
         return student_type
 
@@ -509,7 +508,10 @@ class AdmissionRequest(models.Model):
 
     @property
     def government_id(self):
-        return self.user.username
+        try:
+            return self.user.username
+        except:
+            return 'None'
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
