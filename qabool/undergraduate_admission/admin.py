@@ -1,18 +1,17 @@
 import time
 
 from django import forms
-from django.urls import reverse
-
-from django.utils.html import format_html
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.urls import reverse
+from django.utils.html import format_html
+from django.utils.translation import ugettext_lazy as _
 from import_export import resources
 from import_export.admin import ImportExportMixin
+from pagedown.widgets import AdminPagedownWidget
 from reversion.admin import VersionAdmin
-from django.utils.translation import ugettext_lazy as _
 
-from .forms.phase2_forms import YES_NO_CHOICES
 from undergraduate_admission.views.admin_side_views import get_student_record_serialized
+from .forms.phase2_forms import YES_NO_CHOICES
 from .models import *
 
 
@@ -375,6 +374,14 @@ class TarifiReceptionDateAdmin(admin.ModelAdmin):
     list_filter = ('semester',)
 
 
+class AgreementAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': AdminPagedownWidget},
+    }
+    list_display = ('id', 'get_semester', 'agreement_type', 'show')
+    list_filter = ('agreement_type',)
+
+
 # Display Qabool in the page title and header
 admin.site.site_header = _('Qabool')
 admin.site.index_title = _('Qabool Administration')
@@ -388,7 +395,7 @@ admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear, GraduationYearAdmin)
-admin.site.register(Agreement)
+admin.site.register(Agreement, AgreementAdmin)
 admin.site.register(AdmissionSemester, AdmissionSemesterAdmin)
 admin.site.register(AdmissionRequest, AdmissionRequestAdmin)
 admin.site.register(Lookup, LookupAdmin)
