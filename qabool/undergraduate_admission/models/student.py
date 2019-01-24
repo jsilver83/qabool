@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
@@ -526,6 +527,47 @@ class AdmissionRequest(models.Model):
 
     def __str__(self):
         return self.get_student_full_name()
+
+
+class KFUPMIDsPool(models.Model):
+    semester = models.ForeignKey(
+        'AdmissionSemester',
+        on_delete=models.SET_NULL,
+        blank=False,
+        null=True,
+        related_name='semester_ids',
+        verbose_name=_('Admission Semester'),
+        db_index=True,
+    )
+    kfupm_id = models.PositiveIntegerField(unique=True, null=True, blank=True, verbose_name=_('KFUPM ID'))
+
+    class Meta:
+        verbose_name_plural = _('Registrar: KFUPM ID Pools')
+
+    def __str__(self):
+        return str(self.kfupm_id)
+
+    @property
+    def assigned_student(self):
+        try:
+            student = AdmissionRequest.objects.get(kfupm_id=self.kfupm_id)
+            return '%s - (%s)' % (str(student), student.user.username)
+        except ObjectDoesNotExist:
+            return None
+
+    @staticmethod
+    def get_next_available_id(student):
+        if student:
+            kid = KFUPMIDsPool.objects.filter(semester=student.semester) \
+                .exclude(kfupm_id__in=AdmissionRequest.objects.filter(kfupm_id__isnull=False)
+                         .values_list('kfupm_id', flat=True)).order_by('?').first()
+
+            if kid:
+                return kid.kfupm_id
+            else:
+                return 0
+        else:
+            return 0
 
 
 class DeniedStudent(models.Model):
