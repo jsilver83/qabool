@@ -763,7 +763,7 @@ class RegistrationStatusMessage(models.Model):
             return
 
     @staticmethod
-    def get_status_non_saudi():
+    def get_status_applied_non_saudi():
         try:
             return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
                 get(status_message_code='NON-SAUDI')
