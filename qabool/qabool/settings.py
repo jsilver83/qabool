@@ -145,6 +145,8 @@ CACHES = {
 }
 
 LOGIN_URL = reverse_lazy('undergraduate_admission:login')
+LOGIN_REDIRECT_URL = reverse_lazy('undergraduate_admission:student_area')
+LOGOUT_REDIRECT_URL = reverse_lazy('undergraduate_admission:login')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
