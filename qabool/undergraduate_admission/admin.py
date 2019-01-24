@@ -34,10 +34,8 @@ class StudentResource(resources.ModelResource):
 
 
 class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
-    list_display = ('kfupm_id', 'get_student_full_name', 'mobile',
+    list_display = ('government_id', 'semester', 'kfupm_id', 'get_student_full_name', 'mobile',
                     'student_type', 'admission_total', 'status_message', )
-
-    # high_school_gpa_student_entry.short_description = "high_school_gpa_student_entry"
 
     fieldsets = (
         (None, {
