@@ -399,7 +399,7 @@ def get_student_record_serialized(student, change_status=False):
                             and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
                         if change_status:
                             if student.nationality.nationality_en != 'Saudi Arabia' and not student.saudi_mother:
-                                student.status_message = RegistrationStatusMessage.get_status_non_saudi()
+                                student.status_message = RegistrationStatusMessage.get_status_applied_non_saudi()
                             else:
                                 student.status_message = RegistrationStatusMessage.get_status_applied()
                         special_cases_log += \
@@ -409,7 +409,7 @@ def get_student_record_serialized(student, change_status=False):
                     """
                     if year.type == GraduationYear.GraduationYearTypes.OLD_HS \
                             and student.status_message in [RegistrationStatusMessage.get_status_applied(),
-                                                           RegistrationStatusMessage.get_status_non_saudi()]:
+                                                           RegistrationStatusMessage.get_status_applied_non_saudi()]:
                         if change_status:
                             student.status_message = RegistrationStatusMessage.get_status_old_high_school()
                         special_cases_log += \
