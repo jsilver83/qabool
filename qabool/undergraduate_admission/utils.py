@@ -1,22 +1,18 @@
-import os
-
 import random
+
 import requests
 from django import forms
-from django.core.validators import RegexValidator
-from django.utils.safestring import mark_safe
-
+from django.conf import settings
 from django.core.mail import send_mail
+from django.core.validators import RegexValidator
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-
-from django.conf import settings
 from zeep import Client
 from zeep import Transport
 
 from undergraduate_admission.models import Agreement, AdmissionSemester, RegistrationStatusMessage
-from django.utils.safestring import mark_safe
 
 
 class Email(object):
@@ -30,7 +26,7 @@ class Email(object):
               'Mobile: %(mobile)s<br>'
               'Registration Date: %(reg_date)s<br><hr><br>'
               'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . <br><hr><br>'
-              'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
+              'You agreed to the following:<br>%(agreement)s'
               '<hr><br>'
               '<br><br> Admissions Office, <br>King Fahd '
               'University of Petroleum and Minerals'),
@@ -41,7 +37,7 @@ class Email(object):
                                                   # 'Registration ID: %(user_id)s<br>'
                                                   'Mobile: %(mobile)s<br>'
                                                   'Registration Date: %(reg_date)s<br><hr><br>'
-                                                  'You agreed to the following:<br>%(agree_header)s<br><br><ul>%(agree_items)s</ul>'
+                                                  'You agreed to the following:<br>%(agreement)s'
                                                   '<hr><br>'
                                                   '<br><br> Admissions Office, <br>King Fahd '
                                                   'University of Petroleum and Minerals'),
@@ -58,12 +54,7 @@ class Email(object):
     @staticmethod
     def send_email_registration_success(user):
         sem = AdmissionSemester.get_phase1_active_semester()
-        agreement = get_object_or_404(Agreement, agreement_type='INITIAL', semester=sem)
-        agreement_items = agreement.items.all()
-
-        a_items = ''
-        for a_item in agreement_items:
-            a_items += '<li>%s</li>' % (a_item)
+        agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.INITIAL, semester=sem)
 
         html_message = Email.email_messages['registration_success'] % (
             {'student_name': user.get_student_full_name(),
@@ -71,11 +62,10 @@ class Email(object):
              'user_id': user.id,
              'mobile': user.mobile,
              'reg_date': timezone.datetime.now().strftime('%x'),
-             'agree_header': agreement.agreement_header,
-             'agree_items': a_items,
+             'agreement': mark_safe(agreement),
              })
 
-        if(user.status_message == RegistrationStatusMessage.get_status_old_high_school()):
+        if user.status_message == RegistrationStatusMessage.get_status_old_high_school():
             plain_message = SMS.sms_messages['registration_success_old_high_school']
         else:
             plain_message = SMS.sms_messages['registration_success']
@@ -85,9 +75,9 @@ class Email(object):
 
         try:
             send_mail(_('KFUPM Admission'), plain_message,
-                  settings.EMAIL_HOST_USER, [user.email], fail_silently=True,
-                  html_message=html_message)
-        except: # usually TimeoutError but made it general so it will never raise an exception
+                      settings.EMAIL_HOST_USER, [user.email], fail_silently=True,
+                      html_message=html_message)
+        except:  # usually TimeoutError but made it general so it will never raise an exception
             pass
 
 
