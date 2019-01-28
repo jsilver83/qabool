@@ -116,7 +116,8 @@ class NewRoommateRequest(HousingBaseView, FormView):
                                                    RoommateRequest.RequestStatuses.PENDING,
                                                    RoommateRequest.RequestStatuses.ACCEPTED]).count() == 0
 
-            if can_receive_a_new_request:
+            self.request = can_receive_a_new_request
+            if self.request:
                 roommate_request = RoommateRequest()
                 roommate_request.requesting_user = self.request.user
                 roommate_request.requested_user = roommate

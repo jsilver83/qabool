@@ -19,7 +19,7 @@ from django.views.generic import UpdateView, View
 from zeep import Client
 from zeep.transports import Transport
 
-from undergraduate_admission.filters import UserListFilter
+from undergraduate_admission.filters import AdmissionRequestListFilter
 from undergraduate_admission.forms.admin_side_forms import *
 from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatusMessage
 from undergraduate_admission.utils import try_parse_float
@@ -55,19 +55,19 @@ class CutOffPointView(AdminBaseView, View):
         # selected_high_school_graduation_year = list(map(int, selected_high_school_graduation_year))
         cut_off_total = try_parse_float(request.GET.get('admission_total', 0.0))
         cut_off_total_operand = request.GET.get('admission_total_operand', 'GTE')
-        filtered = UserListFilter(request.GET, queryset=AdmissionRequest.objects.all())
+        filtered = AdmissionRequestListFilter(request.GET, queryset=AdmissionRequest.objects.all())
 
-        filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
+        filtered_with_properties = filtered.qs.select_related('semester') \
             .annotate(
             admission_percent=F('semester__high_school_gpa_weight') * F('high_school_gpa') / 100
                               + F('semester__qudrat_score_weight') * F('qudrat_score') / 100
                               + F('semester__tahsili_score_weight') * F('tahsili_score') / 100,
-            student_nationality_type=Case(When(nationality__nationality_en__icontains='Saudi', then=Value('S')),
-                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+            student_nationality_type=Case(When(nationality='SA', then=Value('S')),
+                                          When(~ Q(nationality='SA')
                                                & Q(nationality__isnull=False)
                                                & Q(saudi_mother=True),
                                                then=Value('M')),
-                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                          When(~ Q(nationality='SA')
                                                & Q(nationality__isnull=False)
                                                & (Q(saudi_mother=False) | Q(saudi_mother__isnull=True)),
                                                then=Value('N')),
@@ -141,12 +141,12 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
         selected_student_types = request.GET.getlist('student_type', [])
         reassign = request.GET.get('reassign', False)
         if reassign:
-            filtered = UserListFilter(request.GET,
-                                      queryset=AdmissionRequest.objects.all())
+            filtered = AdmissionRequestListFilter(request.GET,
+                                                  queryset=AdmissionRequest.objects.all())
         else:
-            filtered = UserListFilter(request.GET,
-                                      queryset=AdmissionRequest.objects.filter(
-                                          verification_committee_member__isnull=True))
+            filtered = AdmissionRequestListFilter(request.GET,
+                                                  queryset=AdmissionRequest.objects.filter(
+                                                      verification_committee_member__isnull=True))
 
         filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
             .annotate(
@@ -154,11 +154,11 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
                               + F('semester__qudrat_score_weight') * F('qudrat_score') / 100
                               + F('semester__tahsili_score_weight') * F('tahsili_score') / 100,
             student_nationality_type=Case(When(nationality__nationality_en__icontains='Saudi', then=Value('S')),
-                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                          When(~ Q(nationality='SA')
                                                & Q(nationality__isnull=False)
                                                & Q(saudi_mother=True),
                                                then=Value('M')),
-                                          When(~ Q(nationality__nationality_en__icontains='Saudi')
+                                          When(~ Q(nationality='SA')
                                                & Q(nationality__isnull=False)
                                                & (Q(saudi_mother=False) | Q(saudi_mother__isnull=True)),
                                                then=Value('N')),
@@ -233,7 +233,7 @@ class VerifyList(StaffBaseView, ListView):
         semester = AdmissionSemester.get_active_semester()
         if self.request.user.is_superuser:
             students_to_verified = AdmissionRequest.objects.filter(
-                status_message__in=status,
+                # status_message__in=status,
                 semester=semester) \
                 .order_by('-phase2_submit_date')
         else:

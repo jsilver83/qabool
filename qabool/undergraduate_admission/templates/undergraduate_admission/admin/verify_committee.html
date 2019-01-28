@@ -1,214 +1,204 @@
 {% extends 'undergraduate_admission/admin/base_admin_area.html' %}
 {% load i18n %}
 {% load floppyforms %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 {% load admin_tags %}
 
 {% block subcontent %}
-    {{ form.errors }}
-    {{ form.non_field_errors }}
-    <br><br>
-    <form method="post">
-        {% csrf_token %}
-        {% form form using %}
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.username using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-                <div class="col-sm-6">{% formrow form.mobile using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.nationality using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-                <div class="col-sm-6">{% formrow form.saudi_mother using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-12"><h4>{{ form.instance.first_name_ar }}&nbsp;{{ form.instance.second_name_ar }}&nbsp;
-                    {{ form.instance.third_name_ar }}&nbsp;{{ form.instance.family_name_ar }}</h4></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.first_name_ar using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-                <div class="col-sm-6">{% formrow form.second_name_ar using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.third_name_ar using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-                <div class="col-sm-6">{% formrow form.family_name_ar using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    {% formrow form.username using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.government_id_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                    {% formrow form.government_id_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                    {% formrow form.birth_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                    {% formrow form.birthday_ah using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                </div>
-                <div class="col-sm-6">
-                    {% render_uploaded_file 'government_id_file' form.instance %}<br>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-12"><h4>{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;
-                    {{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</h4></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.first_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-                <div class="col-sm-6">{% formrow form.second_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">{% formrow form.third_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-                <div class="col-sm-6">{% formrow form.family_name_en using "floppyforms/rows/bootstrap3-horizontal.html" %}</div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    {% formrow form.high_school_gpa using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.high_school_graduation_year using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                    {% formrow form.high_school_system using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.high_school_major using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.high_school_name using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.high_school_province using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.high_school_city using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.birthday using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                </div>
-                <div class="col-sm-6">
-                    {% render_uploaded_file 'high_school_certificate' form.instance %}<br>
-                    {% if form.instance.courses_certificate %}
-                        <br>
-                        {% render_uploaded_file 'courses_certificate' form.instance %}
-                    {% endif %}
-                </div>
-            </div>
-            <hr>
+	{{ form.errors }}
+	{{ form.non_field_errors }}
+	<br><br>
+	<form method="post" class="form-horizontal">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-sm-6"><label>{% trans 'Government ID' %}</label>&nbsp;&nbsp;&nbsp;{{ form.instance.user.username }}</div>
+			<div class="col-sm-6">{{ form.mobile|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.nationality|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.saudi_mother|as_crispy_field }}</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-12"><h4>{{ form.instance.first_name_ar }}&nbsp;{{ form.instance.second_name_ar }}&nbsp;
+				{{ form.instance.third_name_ar }}&nbsp;{{ form.instance.family_name_ar }}</h4></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.first_name_ar|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.second_name_ar|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.third_name_ar|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.family_name_ar|as_crispy_field }}</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-6">
+				<label>{% trans 'Government ID' %}</label>&nbsp;&nbsp;&nbsp;{{ form.instance.user.username }}<br><br>
+				{{ form.government_id_expiry|as_crispy_field }}<br>
+				{{ form.government_id_place|as_crispy_field }}<br>
+				{{ form.birth_place|as_crispy_field }}<br>
+				{{ form.birthday_ah|as_crispy_field }}<br>
+			</div>
+			<div class="col-sm-6">
+				{% render_uploaded_file 'government_id_file' form.instance %}<br>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-12"><h4>{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;
+				{{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</h4></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.first_name_en|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.second_name_en|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.third_name_en|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.family_name_en|as_crispy_field }}</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-6">
+				{{ form.high_school_gpa|as_crispy_field }}<br><br>
+				{{ form.high_school_graduation_year|as_crispy_field }}<br>
+				{{ form.high_school_system|as_crispy_field }}<br><br>
+				{{ form.high_school_major_name|as_crispy_field }}<br><br>
+				{{ form.high_school_name|as_crispy_field }}<br><br>
+				{{ form.high_school_province|as_crispy_field }}<br><br>
+				{{ form.high_school_city|as_crispy_field }}<br><br>
+				{{ form.birthday|as_crispy_field }}<br><br>
+			</div>
+			<div class="col-sm-6">
+				{% render_uploaded_file 'high_school_certificate' form.instance %}<br>
+				{% if form.instance.courses_certificate %}
+					<br>
+					{% render_uploaded_file 'courses_certificate' form.instance %}
+				{% endif %}
+			</div>
+		</div>
+		<hr>
 
-            {% if form.instance.bank_name %}
-            <div class="row">
-                <div class="col-sm-8">
-                    {% formrow form.bank_name using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.bank_account using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                </div>
-                <div class="col-sm-4">
-                    {% render_uploaded_file 'bank_account_identification_file' form.instance %}<br>
-                </div>
-            </div>
-            <hr>
-            {% endif %}
+		{% if form.instance.bank_name %}
+			<div class="row">
+				<div class="col-sm-8">
+					{{ form.bank_name|as_crispy_field }}<br><br>
+					{{ form.bank_account|as_crispy_field }}<br><br>
+				</div>
+				<div class="col-sm-4">
+					{% render_uploaded_file 'bank_account_identification_file' form.instance %}<br>
+				</div>
+			</div>
+			<hr>
+		{% endif %}
 
-            <div class="row">
-                <div class="col-sm-6">
-                    {% formrow form.have_a_vehicle using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.vehicle_owner using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                    {% formrow form.vehicle_plate_no using "floppyforms/rows/bootstrap3-horizontal.html" %}<br><br>
-                </div>
-                <div class="col-sm-6">
-                    {% if form.instance.have_a_vehicle %}
-                        {% render_uploaded_file 'vehicle_registration_file' form.instance %}<br>
-                        <br>
-                        {% render_uploaded_file 'driving_license_file' form.instance %}
-                    {% endif %}
-                </div>
-            </div>
-            {% if form.instance.student_type == 'M' or form.instance.student_type == 'N' %}
-                <hr>
-                <div class="row">
-                    <div class="col-sm-6">
-                        {% formrow form.passport_number using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                        {% formrow form.passport_place using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                        {% formrow form.passport_expiry using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                    </div>
-                    <div class="col-sm-6">
-                        {% render_uploaded_file 'passport_file' form.instance %}
-                    </div>
-                </div>
-            {% endif %}
-            {% if form.instance.student_type == 'M' %}
-                <hr>
-                <div class="row">
-                    <div class="col-sm-6">
-                        {% render_uploaded_file 'mother_gov_id_file' form.instance %}<br>
-                        {% formrow form.saudi_mother_gov_id using "floppyforms/rows/bootstrap3-horizontal.html" %}<br>
-                    </div>
-                    <div class="col-sm-6">
-                        {% render_uploaded_file 'birth_certificate' form.instance %}
-                    </div>
-                </div>
-            {% endif %}
-            <hr>
-            <div class="row">
-                {{ form.data_uri }}
-                <div class="col-sm-4 col-md-3 smart-card-div" style="width: 100%">
-                    <img class="img-popup thumbnail personal-img" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    {% formrow form.verification_picture_acceptable using "floppyforms/rows/bootstrap3-horizontal.html" %}
-                </div>
-                <div class="col-sm-6">
-                    {% formrow form.verification_documents_incomplete using "floppyforms/rows/bootstrap3-horizontal.html" %}
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                {% formrow form.verification_status using "floppyforms/rows/bootstrap3-horizontal.html" %}
-            </div>
-            <hr>
-            <div class="row">
-                {% formrow form.verification_notes using "floppyforms/rows/bootstrap3-horizontal.html" %}
-            </div>
-            <br>
-            <hr>
-            <br>
-            <div class="row">
-                <button class="btn btn-primary {% trans 'btn-align' %}" onclick="return confirm('{% trans "are u sure?" %}')">
-                    <i class="fa fa-search"></i> {% trans 'Verify Student' %}</button>
-            </div>
-        {% endform %}
-    </form>
+		<div class="row">
+			<div class="col-sm-6">
+				{{ form.have_a_vehicle|as_crispy_field }}<br><br>
+				{{ form.vehicle_owner|as_crispy_field }}<br><br>
+				{{ form.vehicle_plate_no|as_crispy_field }}<br><br>
+			</div>
+			<div class="col-sm-6">
+				{% if form.instance.have_a_vehicle %}
+					{% render_uploaded_file 'vehicle_registration_file' form.instance %}<br>
+					<br>
+					{% render_uploaded_file 'driving_license_file' form.instance %}
+				{% endif %}
+			</div>
+		</div>
+		{% if form.instance.student_type == 'M' or form.instance.student_type == 'N' %}
+			<hr>
+			<div class="row">
+				<div class="col-sm-6">
+					{{ form.passport_number|as_crispy_field }}<br>
+					{{ form.passport_place|as_crispy_field }}<br>
+					{{ form.passport_expiry|as_crispy_field }}<br>
+				</div>
+				<div class="col-sm-6">
+					{% render_uploaded_file 'passport_file' form.instance %}
+				</div>
+			</div>
+		{% endif %}
+		{% if form.instance.student_type == 'M' %}
+			<hr>
+			<div class="row">
+				<div class="col-sm-6">
+					{% render_uploaded_file 'mother_gov_id_file' form.instance %}<br>
+					{{ form.saudi_mother_gov_id|as_crispy_field }}<br>
+				</div>
+				<div class="col-sm-6">
+					{% render_uploaded_file 'birth_certificate' form.instance %}
+				</div>
+			</div>
+		{% endif %}
+		<hr>
+		<div class="row">
+			{{ form.data_uri }}
+			<div class="col-sm-4 col-md-3 smart-card-div" style="width: 100%">
+				<img class="img-popup thumbnail personal-img" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			{{ form.verification_issues|as_crispy_field }}
+		</div>
+		<hr>
+		<div class="row">
+			{{ form.verification_notes|as_crispy_field }}
+		</div>
+		<br>
+		<hr>
+		<br>
+		<div class="row">
+			<button class="btn btn-primary {% trans 'btn-align' %}" onclick="return confirm('{% trans "are u sure?" %}')">
+				<i class="fa fa-search"></i> {% trans 'Verify Student' %}</button>
+		</div>
+	</form>
 
-    <!-- MODAL TO CROP THE IMAGE -->
-    <div class="modal fade" id="modalCrop">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">{% trans 'Crop the photo' %}</h4>
-                </div>
-                <div class="modal-body">
-                    <img style="max-width: 100%;" id="image" class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
-                    {#					<img id="image" style="max-width: 100%;" class="img-popup thumbnail" src="{% static 'images/smart_card.jpg' %}">#}
-                </div>
-                <div class="modal-footer">
-                    <div class="btn-group pull-left" role="group">
-                        <button type="button" class="btn btn-default js-zoom-in">
-                            <span class="glyphicon glyphicon-zoom-in"></span>
-                        </button>
-                        <button type="button" class="btn btn-default js-zoom-out">
-                            <span class="glyphicon glyphicon-zoom-out"></span>
-                        </button>
-                    </div>
-                    <button type="button" class="btn btn-default js-rotate-right">{% trans 'Rot-right' %}</button>
-                    <button type="button" class="btn btn-default js-rotate-left">{% trans 'Rot-left' %}</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
-                    <button type="button" class="btn btn-primary js-crop-and-upload" data-dismiss="modal">{% trans 'Crop and upload' %}</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- MODAL TO CROP THE IMAGE -->
+	<div class="modal fade" id="modalCrop">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">{% trans 'Crop the photo' %}</h4>
+				</div>
+				<div class="modal-body">
+					<img style="max-width: 100%;" id="image" class="img-popup thumbnail" src="{% url 'download_user_file_admin' 'personal_picture' form.instance.pk %}">
+					{#					<img id="image" style="max-width: 100%;" class="img-popup thumbnail" src="{% static 'images/smart_card.jpg' %}">#}
+				</div>
+				<div class="modal-footer">
+					<div class="btn-group pull-left" role="group">
+						<button type="button" class="btn btn-default js-zoom-in">
+							<span class="glyphicon glyphicon-zoom-in"></span>
+						</button>
+						<button type="button" class="btn btn-default js-zoom-out">
+							<span class="glyphicon glyphicon-zoom-out"></span>
+						</button>
+					</div>
+					<button type="button" class="btn btn-default js-rotate-right">{% trans 'Rot-right' %}</button>
+					<button type="button" class="btn btn-default js-rotate-left">{% trans 'Rot-left' %}</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
+					<button type="button" class="btn btn-primary js-crop-and-upload" data-dismiss="modal">{% trans 'Crop and upload' %}</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock subcontent %}
 
 {% block scripts %}
-    {{ block.super }}
-    <link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
-    <script src="{% static 'js/cropper.min.js' %}"></script>
-    <script src="{% static 'js/custom-crop.js' %}"></script>
-    {#	<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.css" type="text/css" rel="stylesheet" />#}
-    {#	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>#}
-    {#	<script src="{% static 'css/magnific-popup.css' %}"></script>#}
-    {#	<script src="{% static 'js/magnific-popup.js' %}"></script>#}
-    <script type="application/javascript">
+	{{ block.super }}
+	<link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
+	<script src="{% static 'js/cropper.min.js' %}"></script>
+	<script src="{% static 'js/custom-crop.js' %}"></script>
+	{#	<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.css" type="text/css" rel="stylesheet" />#}
+	{#	<script src="//cdn.rawgit.com/noelboss/featherlight/1.7.6/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>#}
+	{#	<script src="{% static 'css/magnific-popup.css' %}"></script>#}
+	{#	<script src="{% static 'js/magnific-popup.js' %}"></script>#}
+	<script type="application/javascript">
         $(function () {
             /* SCRIPTS TO HANDLE THE CROPPER BOX */
             var $image = $("#image");
@@ -267,5 +257,5 @@
             var $image = $("#image");
             return $image.cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.9);//("getDataURL", "image/jpeg");
         }
-    </script>
+	</script>
 {% endblock %}

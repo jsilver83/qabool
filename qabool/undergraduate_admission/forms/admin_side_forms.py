@@ -2,8 +2,12 @@ import base64
 
 from django import forms
 import re
+
+from django.forms import CheckboxSelectMultiple
 from django.utils import timezone
 
+from shared_app.base_forms import BaseCrispyForm
+from shared_app.fields import GroupedModelMultipleChoiceField
 from .phase2_forms import YES_NO_CHOICES
 from ..models import *
 from django.utils.translation import ugettext_lazy as _, get_language
@@ -88,8 +92,13 @@ class SelectCommitteeMemberForm(forms.Form):
         # self.fields['members'].widget = forms.CheckboxSelectMultiple(choices=ch)
 
 
-class VerifyCommitteeForm(forms.ModelForm):
+class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
     data_uri = forms.CharField(widget=forms.HiddenInput, required=False)
+    verification_issues = GroupedModelMultipleChoiceField(
+        queryset=VerificationIssues.objects.all(),
+        choices_groupby='get_related_field_display',
+        widget=CheckboxSelectMultiple,
+    )
 
     class Meta:
         model = AdmissionRequest
@@ -99,14 +108,13 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
 
                   'mobile', 'high_school_gpa',
-                  # 'qudrat_score', 'tahsili_score',
-                  'high_school_graduation_year', 'high_school_system',  # 'high_school_major',
+                  'high_school_graduation_year', 'high_school_system',
 
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry',
                   'birthday', 'birthday_ah', 'birth_place',
 
-                  'high_school_name', 'high_school_province', 'high_school_city',
+                  'high_school_name', 'high_school_major_name', 'high_school_province', 'high_school_city',
 
                   'high_school_certificate',
                   'personal_picture',
@@ -125,9 +133,7 @@ class VerifyCommitteeForm(forms.ModelForm):
                   'bank_account_identification_file',
 
 
-                  'verification_documents_incomplete',
-                  'verification_picture_acceptable',
-                  'verification_status',
+                  'verification_issues',
                   'verification_notes',
                   'data_uri',
                   ]
@@ -143,46 +149,38 @@ class VerifyCommitteeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(VerifyCommitteeForm, self).__init__(*args, **kwargs)
 
-        readonly_fields = ['username', 'nationality', 'saudi_mother', 'status_message',
+        readonly_fields = ['nationality', 'saudi_mother', 'status_message',
                            'email', 'mobile', 'high_school_gpa', 'qudrat_score', 'tahsili_score',
                            'bank_name', 'bank_account', 'bank_account_identification_file',
                            ]
         for field in self.fields:
             if field in readonly_fields:
                 self.fields[field].disabled = True
-        self.fields['username'].label = _('Government ID')
-        self.fields['username'].help_text = ''
         self.fields['mobile'].help_text = ''
         self.fields['verification_notes'].widget = forms.Textarea()
         self.fields['verification_notes'].required = False
-        self.fields['verification_documents_incomplete'].required = True
-        self.fields['verification_picture_acceptable'].required = True
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         self.fields['vehicle_owner'].widget = forms.Select(choices=Lookup.get_lookup_choices('VEHICLE_OWNER'))
-        self.fields['verification_status'].widget = forms.CheckboxSelectMultiple(
-                choices=Lookup.get_lookup_choices('VERIFICATION_STATUS', False))
 
     def save(self, commit=True):
-        student = super(VerifyCommitteeForm, self).save(commit=False)
+        student = super(VerifyCommitteeForm, self).save()
 
-        verification_documents_incomplete = self.cleaned_data.get('verification_documents_incomplete')
-        verification_picture_acceptable = self.cleaned_data.get('verification_picture_acceptable')
-        if verification_documents_incomplete or verification_picture_acceptable:
+        verification_issues = self.cleaned_data.get('verification_issues')
+        if verification_issues:
             if student.student_type in ('S', 'M'):
                 status = RegistrationStatusMessage.get_status_confirmed()
             else:
                 status = RegistrationStatusMessage.get_status_confirmed_non_saudi()
             student.status_message = status
             student.phase2_start_date = timezone.now()
-            student.phase2_end_date = timezone.datetime(day=3, month=7, year=2018, hour=13, minute=00)
-        elif verification_documents_incomplete is False and verification_picture_acceptable is False \
-                and student.student_type in ('S', 'M'):
-            status = RegistrationStatusMessage.get_status_admitted()
-            student.status_message = status
-        elif verification_documents_incomplete is False and verification_picture_acceptable is False \
-                and student.student_type == 'N':
-            status = RegistrationStatusMessage.get_status_admitted_non_saudi()
-            student.status_message = status
+            student.phase2_end_date = timezone.now() + timezone.timedelta(days=1)
+        else:
+            if student.student_type in ('S', 'M'):
+                status = RegistrationStatusMessage.get_status_admitted()
+                student.status_message = status
+            else:
+                status = RegistrationStatusMessage.get_status_admitted_non_saudi()
+                student.status_message = status
 
         try:
             data_uri = self.cleaned_data.get('data_uri')
@@ -194,20 +192,17 @@ class VerifyCommitteeForm(forms.ModelForm):
         except ValueError:
             pass
 
-        if commit:
-            student.save()
-            if verification_documents_incomplete or verification_picture_acceptable:
-                pass
-                # SMS.send_sms_docs_issue_message(student.mobile)
-                # SMS.send_sms_docs_issue_message(student.guardian_mobile)
-            elif verification_documents_incomplete is False and verification_picture_acceptable is False \
-                    and student.student_type in ('S', 'M'):
-                pass
-                # SMS.send_sms_admitted(student.mobile)
-                # SMS.send_sms_admitted(student.guardian_mobile)
-            return student
-        else:
-            return student
+        student.save()
+        if verification_issues:
+            pass
+            # SMS.send_sms_docs_issue_message(student.mobile)
+            # SMS.send_sms_docs_issue_message(student.guardian_mobile)
+        elif verification_issues is None and student.student_type in ('S', 'M'):
+            pass
+            # SMS.send_sms_admitted(student.mobile)
+            # SMS.send_sms_admitted(student.guardian_mobile)
+
+        return student
 
 
 class ApplyStatusForm(forms.Form):
