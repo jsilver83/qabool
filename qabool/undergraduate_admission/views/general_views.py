@@ -8,7 +8,7 @@ from django.views.generic import UpdateView, FormView, TemplateView
 
 from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
-from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, VerificationIssues
 
 
 class IndexView(FormView):
@@ -78,15 +78,17 @@ class StudentArea(StudentMixin, TemplateView):
                             and not self.admission_request.tarifi_week_attendance_date \
                             and AdmissionSemester.get_phase3_active_semester(self.admission_request.user)
 
-        can_re_upload_docs = phase == ('PARTIALLY-ADMITTED'
-                                       and self.admission_request.verification_documents_incomplete)
+        can_re_upload_docs = (phase == 'PARTIALLY-ADMITTED'
+                                       and self.admission_request.verification_issues.exclude(
+                                        related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
-        can_re_upload_picture = phase == ('PARTIALLY-ADMITTED'
-                                          and self.admission_request.verification_picture_acceptable)
+        can_re_upload_picture = (phase == 'PARTIALLY-ADMITTED'
+                                          and self.admission_request.verification_issues.filter(
+                                            related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
         can_upload_withdrawal_proof = status_message == RegistrationStatusMessage.get_status_duplicate()
 
-        context['user'] = self.admission_request
+        context['admission_request'] = self.admission_request
         context['show_result'] = show_result
         context['can_confirm'] = can_confirm
         context['can_re_upload_docs'] = can_re_upload_docs

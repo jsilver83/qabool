@@ -378,3 +378,55 @@ class GraduationYear(models.Model):
 
     def __str__(self):
         return self.graduation_year
+
+
+class VerificationIssues(models.Model):
+    class RelatedFields:
+        PERSONAL_PICTURE = 'personal_picture'
+        HIGH_SCHOOL_CERTIFICATE = 'high_school_certificate'
+        MOTHER_GOV_ID_FILE = 'mother_gov_id_file'
+
+        @classmethod
+        def choices(cls):
+            return (
+                (cls.PERSONAL_PICTURE, _('Personal Picture')),
+                (cls.HIGH_SCHOOL_CERTIFICATE, _('High School Certificate')),
+                (cls.MOTHER_GOV_ID_FILE, _('Mother Government ID')),
+            )
+
+    related_field = models.CharField(_('Related Field'), max_length=50, null=True, blank=False,
+                                     db_index=True, choices=RelatedFields.choices())
+    verification_issue_ar = models.CharField(_('Verification Issue (AR)'), max_length=200, null=True, blank=False)
+    verification_issue_en = models.CharField(_('Verification Issue (EN)'), max_length=200, null=True, blank=False)
+    show = models.BooleanField(verbose_name=_('Show'), default=True)
+    display_order = models.PositiveSmallIntegerField(null=True, verbose_name=_('Display Order'))
+
+    class Meta:
+        verbose_name_plural = _('Verification Issues')
+        ordering = ['related_field', '-display_order']
+
+    @property
+    def verification_issue(self):
+        lang = translation.get_language()
+        if lang == "ar":
+            return self.verification_issue_ar
+        else:
+            return self.verification_issue_en
+
+    def __str__(self):
+        return self.verification_issue
+
+    @staticmethod
+    def issues_choices(add_dashes=True):
+        try:
+            choices = VerificationIssues.objects.filter(show=True)
+
+            ch = [(o.lookup_value, o.pk) for o in choices]
+            if add_dashes:
+                ch.insert(0, ('', '---------'))
+
+            return ch
+        # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch
+        # any weird exceptions like ProgrammingError
+        except:
+            return [('--', '--')]

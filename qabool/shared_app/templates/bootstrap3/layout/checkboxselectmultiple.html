@@ -1,0 +1,37 @@
+{% load crispy_forms_filters %}
+{% load l10n %}
+
+<div class="controls {{ field_class }}"{% if flat_attrs %} {{ flat_attrs|safe }}{% endif %}>
+	{% include 'bootstrap3/layout/field_errors_block.html' %}
+
+	{% if field.field.choices.is_grouped %}
+		{% for choice in field.field.choices %}
+			{% if not inline_class %}
+				{% ifchanged choice.0 %}
+					<h4 class="well success">&#9745; {{ choice.0 }}</h4>
+				{% endifchanged %}
+			{% endif %}
+			{% for ch in choice.1 %}
+				<label class="grouped-checkboxes {% if inline_class %}checkbox-{{ inline_class }}{% endif %}" for="id_{{ field.html_name }}_{{ forloop.parentloop.counter }}">
+					<input type="checkbox"
+							{% if ch.0 in field.value or ch.0|stringformat:"s" in field.value or ch.0|stringformat:"s" == field.value|default_if_none:""|stringformat:"s" %} checked="checked"{% endif %}
+                           name="{{ field.html_name }}"
+                           id="id_{{ field.html_name }}_{{ forloop.parentloop.counter }}"
+                           value="{{ ch.0|unlocalize }}" {{ field.field.widget.attrs|flatatt }}>&nbsp;&nbsp;{{ ch.1|unlocalize }}
+				</label><br>
+			{% endfor %}
+		{% endfor %}
+	{% else %}
+		{% for choice in field.field.choices %}
+			{% if not inline_class %}
+				<div class="checkbox">{% endif %}
+		<label class="{% if inline_class %}checkbox-{{ inline_class }}{% endif %}" for="id_{{ field.html_name }}_{{ forloop.counter }}">
+			<input type="checkbox"
+					{% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|default_if_none:""|stringformat:"s" %} checked="checked"{% endif %} name="{{ field.html_name }}" id="id_{{ field.html_name }}_{{ forloop.counter }}" value="{{ choice.0|unlocalize }}" {{ field.field.widget.attrs|flatatt }}>{{ choice.1|unlocalize }}
+		</label>
+		{% if not inline_class %}</div>{% endif %}
+		{% endfor %}
+	{% endif %}
+
+	{% include 'bootstrap3/layout/help_text.html' %}
+</div>

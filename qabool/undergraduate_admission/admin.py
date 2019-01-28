@@ -59,9 +59,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
         ('Committee Fields', {
             'classes': ('collapse',),
             'fields': ('verification_committee_member',
-                       'verification_documents_incomplete',
-                       'verification_picture_acceptable',
-                       'verification_status',
+                       'verification_issues',
                        'verification_notes'),
         }),
         ('Phase 3 Fields', {
@@ -391,6 +389,7 @@ admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 # Use TabularInline in the RegistrationStatusMessage model.
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)
+admin.site.register(VerificationIssues)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear, GraduationYearAdmin)
 admin.site.register(Agreement, AgreementAdmin)

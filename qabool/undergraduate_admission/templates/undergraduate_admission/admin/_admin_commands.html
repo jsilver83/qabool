@@ -17,23 +17,24 @@
 </div>
 <div class="list-group">
 	{% if is_verifier %}
-		<a href="{% url 'verify_list' %}" class="list-group-item">
+		<a href="{% url 'undergraduate_admission:verify_list' %}" class="list-group-item">
 			<i class="fa fa-print" aria-hidden="true"></i> {% trans 'Verify Students' %}
 		</a>
 	{% endif %}
-	{% if is_tarifi_admin %}
-		<a href="{% url 'tarifi_landing_page' %}" class="list-group-item">
-			<i class="fa fa-search" aria-hidden="true"></i> {% trans 'Tarifi Reception' %}
-		</a>
-		<a href="{% url 'preparation_course_attendance' %}" class="list-group-item">
-			<i class="fa fa-inbox" aria-hidden="true"></i> {% trans 'Preparation Course Attendance' %}
-		</a>
-	{% endif %}
+{# TODO: put back #}
+{#	{% if is_tarifi_admin %}#}
+{#		<a href="{% url 'tarifi:tarifi_landing_page' %}" class="list-group-item">#}
+{#			<i class="fa fa-search" aria-hidden="true"></i> {% trans 'Tarifi Reception' %}#}
+{#		</a>#}
+{#		<a href="{% url 'tarifi:preparation_course_attendance' %}" class="list-group-item">#}
+{#			<i class="fa fa-inbox" aria-hidden="true"></i> {% trans 'Preparation Course Attendance' %}#}
+{#		</a>#}
+{#	{% endif %}#}
 	{% if is_superuser %}
-		<a href="{% url 'cut_off_point' %}" class="list-group-item">
+		<a href="{% url 'undergraduate_admission:cut_off_point' %}" class="list-group-item">
 			<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Cut-off Point' %}
 		</a>
-		<a href="{% url 'distribute_committee' %}" class="list-group-item">
+		<a href="{% url 'undergraduate_admission:distribute_committee' %}" class="list-group-item">
 			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Distribute' %}
 		</a>
 	{% endif %}

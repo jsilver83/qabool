@@ -101,6 +101,10 @@ font-size: 70%!important;
         float: none;
     }
 }
+.grouped-checkboxes{
+    margin-left: inherit!important;
+    margin-right: 40px;
+}
 /* end of add by j and a */
 
 /* SIDEBAR */

@@ -17,62 +17,29 @@
 	<h3>{% trans 'Application Details' %}</h3>
 	<hr>
 	<form class="form-horizontal">
-		{#		<div class="form-group">#}
-		{#			<label class="col-sm-3 control-label">{% trans 'Graduation Year' %}</label>#}
-		{#			<div class="col-sm-5">#}
-		{#				<p class="form-control-static">{{ user.high_school_graduation_year }}</p>#}
-		{#			</div>#}
-		{#		</div>#}
-		{#		<div class="form-group">#}
-		{#			<label class="col-sm-3 control-label">{% trans 'Guardian Mobile' %}</label>#}
-		{#			<div class="col-sm-5">#}
-		{#				<p class="form-control-static">{{ user.guardian_mobile }}</p>#}
-		{#			</div>#}
-		{#		</div>#}
-		{#		<div class="form-group">#}
-		{#			<label class="col-sm-3 control-label">{% trans 'Nationality' %}</label>#}
-		{#			<div class="col-sm-5">#}
-		{#				<p class="form-control-static">{{ user.nationality }}</p>#}
-		{#			</div>#}
-		{#		</div>#}
-		{#		{% if user.saudi_mother %}#}
-		{#			<div class="form-group">#}
-		{#				<label class="col-sm-3 control-label">{% trans 'Saudi Mother' %}</label>#}
-		{#				<div class="col-sm-5">#}
-		{#					<p class="form-control-static">{% trans 'Yes' %}</p>#}
-		{#				</div>#}
-		{#			</div>#}
-		{#		{% endif %}#}
-		{#		<div class="form-group">#}
-		{#			<label class="col-sm-3 control-label">{% trans 'High School System' %}</label>#}
-		{#			<div class="col-sm-5">#}
-		{#				<p class="form-control-static">{{ user.high_school_system }}</p>#}
-		{#			</div>#}
-		{#		</div>#}
-
-		{% if show_result and user.get_student_total %}
+		{% if show_result and admission_request.get_student_total %}
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{% trans 'Total' %}</label>
 				<div class="col-sm-5">
-					<p class="form-control-static">{{ user.get_student_total }} %</p>
+					<p class="form-control-static">{{ admission_request.get_student_total }} %</p>
 				</div>
 			</div>
 		{% endif %}
 
 		{% if show_result %}
-			{% if not user.high_school_gpa or not user.qudrat_score or not user.tahsili_score %}
+			{% if not admission_request.high_school_gpa or not admission_request.qudrat_score or not admission_request.tahsili_score %}
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{% trans 'Missing Exams' %}</label>
 					<div class="col-sm-5">
 						<div class="alert alert-danger" role="alert">
 							<ul>
-								{% if not user.high_school_gpa %}
+								{% if not admission_request.high_school_gpa %}
 									<li>{% trans 'Missing High School Score' %}</li>
 								{% endif %}
-								{% if not user.qudrat_score %}
+								{% if not admission_request.qudrat_score %}
 									<li>{% trans 'Missing Qudrat Score' %}</li>
 								{% endif %}
-								{% if not user.tahsili_score %}
+								{% if not admission_request.tahsili_score %}
 									<li>{% trans 'Missing Tahsili Score' %}</li>
 								{% endif %}
 							</ul>
@@ -85,12 +52,14 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{% trans 'Message Status' %}</label>
 			<div class="col-sm-5">
+			{{ can_re_upload_docs }}
+			{{ can_re_upload_picture }}
 				{% if can_re_upload_docs or can_re_upload_picture %}
 					<br>
 					<div class="alert alert-danger" role="alert">
-						{% if user.verification_status %}
-							<strong>{% trans 'You have the following issues with your data' %}:</strong><br>
-							{{ user.verification_status }}<br>
+						{% if admission_request.verification_issues %}
+							<strong>{% trans 'You have the following issues with your data' %}:</strong><br><br>
+							{% include 'undergraduate_admission/_render_student_issues.html' with issues=admission_request.verification_issues.all %}<br>
 						{% endif %}
 						{% if can_re_upload_picture %}
 							<br>
@@ -110,12 +79,12 @@
 				{% endif %}
 
 				<div class="alert alert-info" role="alert">
-					<h4>{{ user.status_message.status }}</h4>
-					<strong>{{ user.get_actual_student_status|safe }}</strong><br>
+					<h4>{{ admission_request.status_message.status }}</h4>
+					<strong>{{ admission_request.get_actual_student_status|safe }}</strong><br>
 				</div>
 				{% if can_confirm %}
 					<a href="{% url 'undergraduate_admission:confirm' %}" class="btn btn-success btn-lg btn-block">
-						<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
+						<i class="fa fa-admission_request" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 				{% endif %}
 
 				{% if can_upload_withdrawal_proof %}
@@ -129,7 +98,7 @@
 
 				{% if can_finish_phase3 %}
 					<a href="{% url 'undergraduate_admission:student_agreement_1' %}" class="btn btn-success btn-lg btn-block">
-						<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
+						<i class="fa fa-admission_request" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 				{% endif %}
 
 			</div>
