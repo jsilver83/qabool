@@ -38,8 +38,7 @@ class Phase2GenericForm(BaseCrispyForm, forms.ModelForm):
 class PersonalInfoForm(Phase2GenericForm):
     class Meta:
         model = AdmissionRequest
-        fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en',
-                  'second_name_en', 'third_name_en', 'family_name_en', 'phone',
+        fields = ['student_full_name_ar', 'student_full_name_en', 'phone',
                   'high_school_name', 'high_school_province', 'high_school_city',
                   'birthday_ah', 'birthday', 'birth_place',
                   'government_id_expiry', 'government_id_place',
@@ -98,13 +97,14 @@ class PersonalInfoForm(Phase2GenericForm):
                     {'required': '', }
                 )
 
-            if field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+            if field in ['student_full_name_ar', 'student_full_name_en',
+                         'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                          'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
                          'high_school_name', 'high_school_province', 'high_school_city', ]:
                 self.fields[field].widget.attrs.update(
                     {'class': 'updateOnce', }
                 )
-        add_validators_to_arabic_and_english_names(self.fields)
+
         self.fields['social_status'].widget = forms.RadioSelect(
             choices=Lookup.get_lookup_choices(Lookup.LookupTypes.SOCIAL_STATUS, False))
         self.fields['disability_needs'].widget = forms.CheckboxSelectMultiple(

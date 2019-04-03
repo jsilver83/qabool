@@ -81,8 +81,9 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
 
     class Meta:
         model = AdmissionRequest
-        fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
-                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+        fields = ['student_full_name_ar', 'student_full_name_en',
+                  # 'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                  # 'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
                   'gender',
                   'nationality', 'username', 'username2', 'mobile', 'mobile2',
                   'saudi_mother', 'saudi_mother_gov_id',
@@ -124,8 +125,6 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
 
             if field in ['username2', 'email2', 'mobile2']:
                 self.fields[field].widget.attrs.update({'class': 'nocopy form-control'})
-
-        add_validators_to_arabic_and_english_names(self.fields)
 
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
 
@@ -236,8 +235,9 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
 
 class Phase1UserEditForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
-        fields = ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
-                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+        fields = ['student_full_name_ar', 'student_full_name_en',
+                  # 'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                  # 'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
                   'mobile', 'mobile2', 'email', 'email2', 'high_school_system',
                   'high_school_gpa_student_entry', 'student_notes']
 
