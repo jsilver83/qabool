@@ -17,6 +17,7 @@ class AdmissionSemester(models.Model):
     phase4_start_date = models.DateTimeField(null=True, verbose_name=_('Phase 4 Start Date'))
     phase4_end_date = models.DateTimeField(null=True, verbose_name=_('Phase 4 End Date'))
     # results_date = models.DateTimeField(null=True, blank=False, verbose_name=_('Results Announcement Date'))
+    withdrawal_deadline = models.DateTimeField(null=True, blank=False, verbose_name=_('Withdrawal Deadline'))
     high_school_gpa_weight = models.FloatField(null=True, blank=False, verbose_name=_('High School GPA Weight'))
     qudrat_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Qudrat Score Weight'))
     tahsili_score_weight = models.FloatField(null=True, blank=False, verbose_name=_('Tahsili Score Weight'))
@@ -50,15 +51,15 @@ class AdmissionSemester(models.Model):
             return None
 
     @staticmethod
-    def get_phase2_active_semester(user):
+    def get_phase2_active_semester(admission_request):
         now = timezone.now()
         sem = AdmissionSemester.objects.filter(phase2_start_date__lte=now, phase2_end_date__gte=now).first()
 
         # if phase 2 expired globally but the student is given an exception
         if not sem:
-            if user and user.phase2_start_date and user.phase2_end_date and \
-                    user.phase2_start_date <= now <= user.phase2_end_date:
-                sem = user.semester
+            if admission_request and admission_request.phase2_start_date and admission_request.phase2_end_date and \
+                    admission_request.phase2_start_date <= now <= admission_request.phase2_end_date:
+                sem = admission_request.semester
 
         return sem
 

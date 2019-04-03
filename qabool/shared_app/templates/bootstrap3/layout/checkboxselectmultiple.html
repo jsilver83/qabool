@@ -21,8 +21,18 @@
 				</label><br>
 			{% endfor %}
 		{% endfor %}
-	{% else %}
+	{% elif field.field.choices %} {# this is the case of a ForeignKey Field #}
 		{% for choice in field.field.choices %}
+			{% if not inline_class %}
+				<div class="checkbox">{% endif %}
+		<label class="{% if inline_class %}checkbox-{{ inline_class }}{% endif %}" for="id_{{ field.html_name }}_{{ forloop.counter }}">
+			<input type="checkbox"
+					{% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|default_if_none:""|stringformat:"s" %} checked="checked"{% endif %} name="{{ field.html_name }}" id="id_{{ field.html_name }}_{{ forloop.counter }}" value="{{ choice.0|unlocalize }}" {{ field.field.widget.attrs|flatatt }}>{{ choice.1|unlocalize }}
+		</label>
+		{% if not inline_class %}</div>{% endif %}
+		{% endfor %}
+	{% else %} {# this is the case of a CharField with choices #}
+		{% for choice in field.field.widget.choices %}
 			{% if not inline_class %}
 				<div class="checkbox">{% endif %}
 		<label class="{% if inline_class %}checkbox-{{ inline_class }}{% endif %}" for="id_{{ field.html_name }}_{{ forloop.counter }}">

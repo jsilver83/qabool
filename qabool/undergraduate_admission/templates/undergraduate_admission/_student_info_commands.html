@@ -2,7 +2,7 @@
 
 <div class="panel panel-default">
 	<div class="panel-body">
-		{% if has_pic %}
+		{% if admission_request.has_pic %}
 		{% if admission_request.personal_picture %}
 		<img width="100%" src="{% url 'download_user_file' 'personal_picture' admission_request.id %}">
 		{% else %}
@@ -15,7 +15,7 @@
 {#			<dd>{{ admission_request.id }}</dd>#}
 			<dt>{% trans 'Government ID' %}</dt>
 			<dd>{{ admission_request.user.username }}</dd>
-			{% if can_see_kfupm_id %}
+			{% if admission_request.can_see_kfupm_id %}
 			<dt>{% trans 'KFUPM ID' %}</dt>
 			<dd>{{ admission_request.kfupm_id }}</dd>
 			{% endif %}
@@ -31,13 +31,13 @@
 	</div>
 </div>
 <div class="list-group">
-	{% if can_confirm %}
+	{% if admission_request.can_confirm %}
 	<a href="{% url 'undergraduate_admission:confirm' %}" class="list-group-item"><i class="fa fa-user" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 	{% endif %}
-	{% if can_print_docs %}
+	{% if admission_request.can_print_docs %}
 	<a href="{% url 'undergraduate_admission:print_documents_after_phase3' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 	{% endif %}
-	{% if can_see_housing %}
+	{% if admission_request.can_see_housing %}
 	<a href="{% url 'find_roommate:housing_landing_page' %}" class="list-group-item">
 		<i class="fa fa-home" aria-hidden="true"></i>
 		&nbsp;{% trans 'Student Housing' %}
@@ -49,13 +49,13 @@
 	{% if can_print_withdrawal_letter %}
 	<a href="{% url 'undergraduate_admission:withdrawal_letter' %}" class="list-group-item"><i class="fa fa-print" aria-hidden="true"></i> {% trans 'Print Withdrawal Letter' %}</a>
 	{% endif %}
-	{% if can_edit_phase1_info %}
+	{% if admission_request.can_edit_phase1_info %}
 	<a href="{% url 'undergraduate_admission:edit_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Info' %}</a>
 	{% endif %}
-	{% if can_edit_contact_info %}
+	{% if admission_request.can_edit_contact_info %}
 	<a href="{% url 'undergraduate_admission:edit_contact_info' %}" class="list-group-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans 'Edit Contact Information' %}</a>
 	{% endif %}
-	{% if can_withdraw %}
+	{% if admission_request.can_withdraw %}
 	<a style="color:#D9534F" href="{% url 'undergraduate_admission:withdraw' %}" class="list-group-item"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> {% trans 'Withdraw Application' %}</a>
 	{% endif %}
 	<a href="{% url 'undergraduate_admission:change_password' %}" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>

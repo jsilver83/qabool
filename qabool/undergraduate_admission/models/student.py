@@ -6,12 +6,12 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 
-from .supporting_models import AdmissionSemester, RegistrationStatusMessage
 from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
     upload_location_mother_govid, upload_location_passport, upload_location_certificate, \
     upload_location_picture, upload_location_courses, upload_location_withdrawal_proof, \
     upload_location_driving_license, upload_location_vehicle_registration, upload_bank_account_identification
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
+from .supporting_models import AdmissionSemester, RegistrationStatusMessage, VerificationIssues
 
 User = settings.AUTH_USER_MODEL
 
@@ -505,6 +505,76 @@ class AdmissionRequest(models.Model):
             return self.user.username
         except:
             return 'None'
+
+    # region the can's and cant's
+    def can_confirm(self):
+        return ((self.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
+                 self.status_message == RegistrationStatusMessage.get_status_transfer())
+                and AdmissionSemester.get_phase2_active_semester(self))
+
+    def can_see_result(self):
+        return self.get_student_phase() in ['PARTIALLY-ADMITTED', 'REJECTED']
+
+    def can_print_docs(self):
+        return (self.status_message in [RegistrationStatusMessage.get_status_admitted_final(),
+                                        RegistrationStatusMessage.get_status_admitted_final_non_saudi()]
+                and self.tarifi_week_attendance_date)
+
+    def can_withdraw(self):
+        now = timezone.now()
+        return ((self.get_student_phase() == 'ADMITTED'
+                or self.status_message == RegistrationStatusMessage.get_status_confirmed())
+                and now() <= self.semester.withdrawal_deadline)
+
+    def can_print_withdrawal_letter(self):
+        return self.get_student_phase() == 'WITHDRAWN'
+
+    def can_finish_phase3(self):
+        return (self.status_message in [RegistrationStatusMessage.get_status_admitted(),
+                                        RegistrationStatusMessage.get_status_admitted_non_saudi()]
+                and not self.tarifi_week_attendance_date
+                and AdmissionSemester.get_phase3_active_semester(self.user))
+
+    def has_pic(self):
+        return self.get_student_phase() in ['PARTIALLY-ADMITTED', 'ADMITTED']
+
+    def can_see_kfupm_id(self):
+        return self.get_student_phase() == 'ADMITTED' and self.kfupm_id
+
+    def can_see_housing(self):
+        return (self.get_student_phase() == 'ADMITTED' and self.eligible_for_housing
+                and AdmissionSemester.get_phase4_active_semester())
+
+    def can_search_in_housing(self):
+        try:
+            return self.can_see_housing() and self.housing_user.searchable
+        except ObjectDoesNotExist:
+            return False
+
+    def can_re_upload_picture(self):
+        return (self.get_student_phase() == 'PARTIALLY-ADMITTED'
+                and self.verification_issues.filter(
+                    related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
+
+    def can_re_upload_docs(self):
+        return (self.get_student_phase() == 'PARTIALLY-ADMITTED'
+                and self.verification_issues.exclude(
+                    related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
+
+    def can_upload_withdrawal_proof(self):
+        return self.status_message == RegistrationStatusMessage.get_status_duplicate()
+
+    def can_edit_phase1_info(self):
+        return self.get_student_phase() == 'APPLIED' and AdmissionSemester.check_if_phase1_is_active()
+
+    def can_edit_contact_info(self):
+        return self.get_student_phase() not in ['REJECTED', 'WITHDRAWN', 'ADMITTED', self.can_edit_phase1_info()]
+    # endregion
+
+    # TODO: enable later when enabling thehousing app
+    # def pending_housing_roommate_requests_count(self):
+    #     return RoommateRequest.objects.filter(requested_user=self,
+    #                                           status=RoommateRequest.RequestStatuses.PENDING).count()
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):
