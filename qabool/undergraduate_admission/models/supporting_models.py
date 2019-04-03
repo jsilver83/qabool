@@ -64,15 +64,15 @@ class AdmissionSemester(models.Model):
         return sem
 
     @staticmethod
-    def get_phase3_active_semester(user):
+    def get_phase3_active_semester(admission_request):
         now = timezone.now()
         sem = AdmissionSemester.objects.filter(phase3_start_date__lte=now, phase3_end_date__gte=now).first()
 
         # if phase 3 expired globally but the student is given an exception
         if not sem:
-            if user and user.phase3_start_date and user.phase3_end_date and \
-                    user.phase3_start_date <= now <= user.phase3_end_date:
-                sem = user.semester
+            if admission_request and admission_request.phase3_start_date and admission_request.phase3_end_date and \
+                    admission_request.phase3_start_date <= now <= admission_request.phase3_end_date:
+                sem = admission_request.semester
 
         return sem
 

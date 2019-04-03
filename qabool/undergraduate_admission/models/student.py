@@ -533,7 +533,7 @@ class AdmissionRequest(models.Model):
         return (self.status_message in [RegistrationStatus.get_status_admitted(),
                                         RegistrationStatus.get_status_admitted_non_saudi()]
                 and not self.tarifi_week_attendance_date
-                and AdmissionSemester.get_phase3_active_semester(self.user))
+                and AdmissionSemester.get_phase3_active_semester(self))
 
     def has_pic(self):
         return self.get_student_phase() in ['PARTIALLY-ADMITTED', 'ADMITTED']
