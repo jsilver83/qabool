@@ -1,7 +1,7 @@
 {% extends base_extend %}
 {% load staticfiles %}
 {% load i18n %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 
 {% block subcontent %}
 	{% if re_upload %}
@@ -23,7 +23,7 @@
 		<div class="form-uploads">
 			<form method="post" class="form-horizontal" enctype="multipart/form-data">
 				{% csrf_token %}
-				{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+				{% crispy form  %}
 			</form>
 		</div>
 
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 20px">
-				<a href="{% url 'student_area' %}" class="btn btn-primary pull-left">
+				<a href="{% url 'undergraduate_admission:student_area' %}" class="btn btn-primary pull-left">
 					{% trans 'Done Uploading Picture' %}</a>
 			</div>
 		{% endif %}
@@ -92,7 +92,7 @@
 		</div>
 		<br>
 		<div class="form-uploads">
-			{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+			{% crispy form %}
 		</div>
 
 		{% if form.instance.personal_picture %}
@@ -102,7 +102,7 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top: 20px">
-				<a href="{% url 'upload_documents' %}?f=t" class="btn btn-primary pull-left">
+				<a href="{% url 'undergraduate_admission:upload_documents' %}?f=t" class="btn btn-primary pull-left">
 					{% trans 'Save and Next' %}</a>
 			</div>
 		{% endif %}

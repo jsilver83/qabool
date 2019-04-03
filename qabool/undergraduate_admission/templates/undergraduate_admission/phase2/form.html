@@ -1,6 +1,6 @@
 {% extends 'base_student_area.html' %}
 {% load i18n %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 
 {% block subcontent %}
@@ -16,17 +16,17 @@
         <div class="col-lg-12">
             <ul class="nav nav-tabs nav-justified student-nav-tabs">
                 <li class="{{ step1 }}" role="presentation">
-                    <a href="{% url 'personal_info' %}">{% trans 'Personal Info' %}</a></li>
+                    <a href="{% url 'undergraduate_admission:personal_info' %}">{% trans 'Personal Info' %}</a></li>
                 <li class="{{ step2 }}" role="presentation">
-                    <a href="{% url 'guardian_contact' %}">{% trans 'Guardian Contact' %}</a></li>
+                    <a href="{% url 'undergraduate_admission:guardian_contact' %}">{% trans 'Guardian Contact' %}</a></li>
                 <li class="{{ step3 }}" role="presentation">
-                    <a href="{% url 'relative_contact' %}">{% trans 'Relative Contact' %}</a></li>
+                    <a href="{% url 'undergraduate_admission:relative_contact' %}">{% trans 'Relative Contact' %}</a></li>
                 <li class="{{ step4 }}" role="presentation">
-                    <a href="{% url 'vehicle_info' %}">{% trans 'Vehicle Info' %}</a></li>
+                    <a href="{% url 'undergraduate_admission:vehicle_info' %}">{% trans 'Vehicle Info' %}</a></li>
                 <li class="{{ step5 }}" role="presentation">
-                    <a href="{% url 'personal_picture' %}">{% trans 'Personal Picture' %}</a></li>
+                    <a href="{% url 'undergraduate_admission:personal_picture' %}">{% trans 'Personal Picture' %}</a></li>
                 <li class="{{ step6 }}" role="presentation">
-                    <a href="{% url 'upload_documents' %}">{% trans 'Documents' %}</a></li>
+                    <a href="{% url 'undergraduate_admission:upload_documents' %}">{% trans 'Documents' %}</a></li>
             </ul>
             <br><br>
         </div>
@@ -37,9 +37,7 @@
 
     <form method="post" class="form-horizontal" enctype="multipart/form-data">
         {% csrf_token %}
-        {% block form %}
-            {% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
-        {% endblock form %}
+	    {% crispy form %}
         <br>&nbsp;<br>
         <input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save and Next' %}"/>
     </form>

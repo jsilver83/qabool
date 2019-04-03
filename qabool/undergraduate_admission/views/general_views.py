@@ -61,41 +61,7 @@ class StudentArea(StudentMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(StudentArea, self).get_context_data(**kwargs)
-        # TODO: fix and make it unified in business logic
-        phase = self.admission_request.get_student_phase()
-
-        status_message = self.admission_request.status_message
-
-        show_result = phase in ['PARTIALLY-ADMITTED', 'REJECTED']
-
-        can_confirm = ((
-                                   self.admission_request.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
-                                   self.admission_request.status_message == RegistrationStatusMessage.get_status_transfer())
-                       and AdmissionSemester.get_phase2_active_semester(self.admission_request.user))
-
-        can_finish_phase3 = self.admission_request.status_message in [RegistrationStatusMessage.get_status_admitted(),
-                                                                      RegistrationStatusMessage.get_status_admitted_non_saudi()] \
-                            and not self.admission_request.tarifi_week_attendance_date \
-                            and AdmissionSemester.get_phase3_active_semester(self.admission_request.user)
-
-        can_re_upload_docs = (phase == 'PARTIALLY-ADMITTED'
-                                       and self.admission_request.verification_issues.exclude(
-                                        related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
-
-        can_re_upload_picture = (phase == 'PARTIALLY-ADMITTED'
-                                          and self.admission_request.verification_issues.filter(
-                                            related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
-
-        can_upload_withdrawal_proof = status_message == RegistrationStatusMessage.get_status_duplicate()
-
         context['admission_request'] = self.admission_request
-        context['show_result'] = show_result
-        context['can_confirm'] = can_confirm
-        context['can_re_upload_docs'] = can_re_upload_docs
-        context['can_re_upload_picture'] = can_re_upload_picture
-        context['can_upload_withdrawal_proof'] = can_upload_withdrawal_proof
-        context['can_finish_phase3'] = can_finish_phase3
-
         return context
 
 

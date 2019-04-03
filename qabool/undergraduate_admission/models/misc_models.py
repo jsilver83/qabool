@@ -4,7 +4,42 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Lookup(models.Model):
-    lookup_type = models.CharField(max_length=20, null=True, blank=False, db_index=True)
+    class LookupTypes:
+        BANK_NAMES = 'BANK_NAMES'
+        BLOOD_TYPE = 'BLOOD_TYPE'
+        CHRONIC_DISEASES = 'CHRONIC_DISEASES'
+        DISABILITY = 'DISABILITY'
+        EMPLOYMENT_STATUS = 'EMPLOYMENT_STATUS'
+        HIGH_SCHOOL_TYPE = 'HIGH_SCHOOL_TYPE'
+        HOUSING_PREF_AC = 'HOUSING_PREF_AC'
+        HOUSING_PREF_LIGHT = 'HOUSING_PREF_LIGHT'
+        HOUSING_PREF_SLEEPIN = 'HOUSING_PREF_SLEEPIN'
+        HOUSING_PREF_VISITS = 'HOUSING_PREF_VISITS'
+        PERSON_RELATION = 'PERSON_RELATION'
+        SOCIAL_STATUS = 'SOCIAL_STATUS'
+        UNIVERSITY = 'UNIVERSITY'
+        VEHICLE_OWNER = 'VEHICLE_OWNER'
+
+        @classmethod
+        def choices(cls):
+            return (
+                (cls.BANK_NAMES, _('Bank Names')),
+                (cls.BLOOD_TYPE, _('Blood Type')),
+                (cls.CHRONIC_DISEASES, _('Chronic Diseases')),
+                (cls.DISABILITY, _('Disability')),
+                (cls.EMPLOYMENT_STATUS, _('Employment Status')),
+                (cls.HIGH_SCHOOL_TYPE, _('High School Type')),
+                (cls.HOUSING_PREF_AC, _('Housing Preference AC')),
+                (cls.HOUSING_PREF_LIGHT, _('Housing Preference Light')),
+                (cls.HOUSING_PREF_SLEEPIN, _('Housing Preference Sleepin')),
+                (cls.HOUSING_PREF_VISITS, _('Housing Preference Visits')),
+                (cls.PERSON_RELATION, _('Person Relation')),
+                (cls.SOCIAL_STATUS, _('Social Status')),
+                (cls.UNIVERSITY, _('University')),
+                (cls.VEHICLE_OWNER, _('Vehicle Owner')),
+            )
+
+    lookup_type = models.CharField(max_length=100, null=True, blank=False, db_index=True, choices=LookupTypes.choices())
     lookup_value_ar = models.CharField(max_length=100, null=True, blank=False)
     lookup_value_en = models.CharField(max_length=100, null=True, blank=False)
     show = models.BooleanField(verbose_name=_('Show'), default=True)
@@ -37,7 +72,9 @@ class Lookup(models.Model):
                 ch.insert(0, ('', '---------'))
 
             return ch
-        except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
+        except:
+            # was OperationalError and happened when db doesn't exist yet but later changed it to general except
+            # to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
 
@@ -66,9 +103,7 @@ class City(models.Model):
 class Agreement(models.Model):
     class AgreementTypes:
         INITIAL = 'INITIAL'
-        CONFIRMED = 'CONFIRMED'
-        CONFIRMED_N = 'CONFIRMED-N'
-        CONFIRMED_T = 'CONFIRMED-T'
+        CONFIRM = 'CONFIRM'
         STUDENT_AGREEMENT_1 = 'STUDENT-AGREEMENT_1'
         STUDENT_AGREEMENT_2 = 'STUDENT-AGREEMENT_2'
         STUDENT_AGREEMENT_3 = 'STUDENT-AGREEMENT_3'
@@ -82,19 +117,17 @@ class Agreement(models.Model):
         @classmethod
         def choices(cls):
             return (
-                (cls.INITIAL, _('Initial agreements')),
-                (cls.CONFIRMED, _('Confirmation agreements')),
-                (cls.CONFIRMED_N, _('Confirmation agreements for None Saudi')),
-                (cls.CONFIRMED_T, _('Confirmation agreements for Transfer students')),
-                (cls.STUDENT_AGREEMENT_1, _('Student agreements 1')),
-                (cls.STUDENT_AGREEMENT_2, _('Student agreements 2')),
-                (cls.STUDENT_AGREEMENT_3, _('Student agreements 3')),
-                (cls.STUDENT_AGREEMENT_4, _('Student agreements 4')),
-                (cls.HOUSING_AGREEMENT, _('Student Housing: Initial agreements')),
-                (cls.HOUSING_ROOMMATE_REQUEST_AGREEMENT, _('Student Housing: Request agreements')),
+                (cls.INITIAL, _('Initial Agreements')),
+                (cls.CONFIRM, _('Confirmation Agreements')),
+                (cls.STUDENT_AGREEMENT_1, _('Student ِAgreements 1')),
+                (cls.STUDENT_AGREEMENT_2, _('Student Agreements 2')),
+                (cls.STUDENT_AGREEMENT_3, _('Student Agreements 3')),
+                (cls.STUDENT_AGREEMENT_4, _('Student Agreements 4')),
+                (cls.HOUSING_AGREEMENT, _('Student Housing: Initial Agreements')),
+                (cls.HOUSING_ROOMMATE_REQUEST_AGREEMENT, _('Student Housing: Request Agreements')),
                 (cls.HOUSING_ROOMMATE_SEARCH_INSTRUCTIONS, _('Student Housing: Search Instructions')),
                 (cls.HOUSING_ROOMMATE_REQUEST_INSTRUCTIONS, _('Student Housing: Request Instructions')),
-                (cls.AWARENESS_WEEK_AGREEMENT, _('Awareness week agreements')),
+                (cls.AWARENESS_WEEK_AGREEMENT, _('Awareness Week Agreements')),
             )
 
     semester = models.ForeignKey(
@@ -105,12 +138,12 @@ class Agreement(models.Model):
         related_name='agreements',
         verbose_name='Semester',
     )
-    status = models.ForeignKey(
+    status_message = models.ForeignKey(
         'RegistrationStatusMessage',
         on_delete=models.SET_NULL,
-        blank=False,
+        blank=True,
         null=True,
-        related_name='status_messages',
+        related_name='agreements',
         verbose_name='Status Message',
     )
     agreement_type = models.CharField(max_length=100, null=True, blank=False, verbose_name=_('Agreement Type'),

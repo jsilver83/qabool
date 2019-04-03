@@ -52,23 +52,21 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{% trans 'Message Status' %}</label>
 			<div class="col-sm-5">
-			{{ can_re_upload_docs }}
-			{{ can_re_upload_picture }}
-				{% if can_re_upload_docs or can_re_upload_picture %}
+				{% if admission_request.can_re_upload_docs or admission_request.can_re_upload_picture %}
 					<br>
 					<div class="alert alert-danger" role="alert">
 						{% if admission_request.verification_issues %}
 							<strong>{% trans 'You have the following issues with your data' %}:</strong><br><br>
 							{% include 'undergraduate_admission/_render_student_issues.html' with issues=admission_request.verification_issues.all %}<br>
 						{% endif %}
-						{% if can_re_upload_picture %}
+						{% if admission_request.can_re_upload_picture %}
 							<br>
 							<strong>{% trans 'Please re-upload your picture' %}:</strong><br>
 							<a href="{% url 'undergraduate_admission:personal_picture_re_upload' %}" class="btn btn-warning btn-lg btn-block">
 								<i class="fa fa-file" aria-hidden="true"></i> {% trans 'Re-Upload Picture' %}
 							</a>
 						{% endif %}
-						{% if can_re_upload_docs %}
+						{% if admission_request.can_re_upload_docs %}
 							<br>
 							<strong>{% trans 'Please re-upload your docs' %}:</strong><br>
 							<a href="{% url 'undergraduate_admission:upload_documents_incomplete' %}" class="btn btn-warning btn-lg btn-block">
@@ -82,7 +80,7 @@
 					<h4>{{ admission_request.status_message.status }}</h4>
 					<strong>{{ admission_request.get_actual_student_status|safe }}</strong><br>
 				</div>
-				{% if can_confirm %}
+				{% if admission_request.can_confirm %}
 					<a href="{% url 'undergraduate_admission:confirm' %}" class="btn btn-success btn-lg btn-block">
 						<i class="fa fa-admission_request" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 				{% endif %}
@@ -96,7 +94,7 @@
 					</div>
 				{% endif %}
 
-				{% if can_finish_phase3 %}
+				{% if admission_request.can_finish_phase3 %}
 					<a href="{% url 'undergraduate_admission:student_agreement_1' %}" class="btn btn-success btn-lg btn-block">
 						<i class="fa fa-admission_request" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 				{% endif %}

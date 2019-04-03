@@ -7,10 +7,11 @@ from django.conf import settings
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.utils.translation import ugettext_lazy as _
 
+from shared_app.base_forms import BaseCrispyForm
 from ..models import *
 from undergraduate_admission.utils import add_validators_to_arabic_and_english_names, parse_non_standard_numerals
 
-# from captcha.fields import ReCaptchaFieldfrom django.utils import translation
+# from captcha.fields import ReCaptchaField
 
 YES_NO_CHOICES = (
     ('True', _("Yes")),
@@ -19,7 +20,7 @@ YES_NO_CHOICES = (
 
 
 # to save phase 2 submit date on all phase 2 forms
-class Phase2GenericForm(forms.ModelForm):
+class Phase2GenericForm(BaseCrispyForm, forms.ModelForm):
     class Meta:
         model = AdmissionRequest
         fields = ['id', ]
@@ -105,15 +106,15 @@ class PersonalInfoForm(Phase2GenericForm):
                 )
         add_validators_to_arabic_and_english_names(self.fields)
         self.fields['social_status'].widget = forms.RadioSelect(
-            choices=Lookup.get_lookup_choices('SOCIAL_STATUS', False))
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.SOCIAL_STATUS, False))
         self.fields['disability_needs'].widget = forms.CheckboxSelectMultiple(
-            choices=Lookup.get_lookup_choices('DISABILITY', False))
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.DISABILITY, False))
         self.fields['chronic_diseases'].widget = forms.CheckboxSelectMultiple(
-            choices=Lookup.get_lookup_choices('CHRONIC_DISEASES', False))
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.CHRONIC_DISEASES, False))
         self.fields['blood_type'].widget = forms.Select(
-            choices=Lookup.get_lookup_choices('BLOOD_TYPE', add_dashes=True))
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.BLOOD_TYPE, add_dashes=True))
         self.fields['bank_name'].widget = forms.Select(
-            choices=Lookup.get_lookup_choices('BANK_NAMES', add_dashes=True))
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.BANK_NAMES, add_dashes=True))
 
 
 class GuardianContactForm(Phase2GenericForm):
@@ -132,7 +133,9 @@ class GuardianContactForm(Phase2GenericForm):
         for field in self.fields:
             self.fields[field].required = True
 
-        self.fields['guardian_relation'].widget = forms.Select(choices=Lookup.get_lookup_choices('PERSON_RELATION'))
+        self.fields['guardian_relation'].widget = forms.Select(
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.PERSON_RELATION)
+        )
 
 
 class RelativeContactForm(Phase2GenericForm):
@@ -176,7 +179,7 @@ class VehicleInfoForm(Phase2GenericForm):
     def __init__(self, *args, **kwargs):
         super(VehicleInfoForm, self).__init__(*args, **kwargs)
         self.fields['vehicle_owner'].widget = \
-            forms.RadioSelect(choices=Lookup.get_lookup_choices('VEHICLE_OWNER', False))
+            forms.RadioSelect(choices=Lookup.get_lookup_choices(Lookup.LookupTypes.VEHICLE_OWNER, False))
 
 
 class DocumentsForm(Phase2GenericForm):
@@ -270,7 +273,9 @@ class WithdrawalForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].required = True
 
-        self.fields['withdrawal_university'].widget = forms.Select(choices=Lookup.get_lookup_choices('UNIVERSITY'))
+        self.fields['withdrawal_university'].widget = forms.Select(
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.UNIVERSITY)
+        )
 
     def save(self, commit=True):
         instance = super(WithdrawalForm, self).save(commit=False)
@@ -284,7 +289,7 @@ class WithdrawalForm(forms.ModelForm):
             return instance
 
 
-class PersonalPhotoForm(forms.ModelForm):
+class PersonalPhotoForm(BaseCrispyForm, forms.ModelForm):
     data_uri = forms.CharField(widget=forms.HiddenInput)
 
     class Meta:

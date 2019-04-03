@@ -52,84 +52,50 @@ $(function(){
 
 function employed(value){
     if(value == "True"){
-        $(".field-employment").parents(".form-group").show();
-        $("input[name=employment]").attr("required", "");
-        $(".field-employer_name").parents(".form-group").show();
-        $(".field-employer_name input").attr("required", "");
+        $("#div_id_employer_name").show();
+        $("#div_id_employer_name input").attr("required", "");
     }
     else{
-        $(".field-employment").parents(".form-group").hide();
-        $("input[name=employment]").removeAttr("required", "");
-        $(".field-employer_name").parents(".form-group").hide();
-        $(".field-employer_name input").removeAttr("required", "");
+        $("#div_id_employer_name").hide();
+        $("#div_id_employer_name input").removeAttr("required", "");
     }
 }
 
 function disability(value){
     if(value == "True"){
-        $(".field-disability_needs").parents(".form-group").show();
-//        $("input[name=disability_needs]").attr("required", "");
-        $(".field-disability_needs_notes").parents(".form-group").show();
+        $("#div_id_disability_needs").show();
+        $("#div_id_disability_needs_notes").show();
     }
     else{
-        $(".field-disability_needs").parents(".form-group").hide();
-//        $("input[name=disability_needs]").removeAttr("required", "");
-        $(".field-disability_needs_notes").parents(".form-group").hide();
+        $("#div_id_disability_needs").hide();
+        $("#div_id_disability_needs_notes").hide();
     }
 }
 
 function diseases(value){
     if(value == "True"){
-        $(".field-chronic_diseases").parents(".form-group").show();
-//        $("input[name=chronic_diseases]").attr("required", "");
-        $(".field-chronic_diseases_notes").parents(".form-group").show();
+        $("#div_id_chronic_diseases").show();
+        $("#div_id_chronic_diseases_notes").show();
     }
     else{
-        $(".field-chronic_diseases").parents(".form-group").hide();
-//        $("input[name=chronic_diseases]").removeAttr("required", "");
-        $(".field-chronic_diseases_notes").parents(".form-group").hide();
+        $("#div_id_chronic_diseases").hide();
+        $("#div_id_chronic_diseases_notes").hide();
     }
 }
 
 function have_a_vehicle(value){
     if(value == "True"){
-        $(".field-vehicle_owner").parents(".form-group").show();
-        $(".field-vehicle_plate_no").parents(".form-group").show();
-        $(".field-vehicle_registration_file").parents(".form-group").show();
-        $(".field-driving_license_file").parents(".form-group").show();
+        $("#div_id_vehicle_owner").show();
+        $("#div_id_vehicle_plate_no").show();
+        $("#div_id_vehicle_registration_file").show();
+        $("#div_id_driving_license_file").show();
     }
     else{
-        $("#id_vehicle_owner").val("");
-        $(".field-vehicle_owner").parents(".form-group").hide();
-        $("#id_vehicle_plate_no").val("");
-        $(".field-vehicle_plate_no").parents(".form-group").hide();
-        $(".field-vehicle_registration_file").parents(".form-group").hide();
-        $(".field-driving_license_file").parents(".form-group").hide();
+        $("input[name=vehicle_owner]").removeAttr("checked");
+        $("#div_id_vehicle_owner").hide();
+        $("#div_id_vehicle_plate_no input").val("");
+        $("#div_id_vehicle_plate_no").hide();
+        $("#div_id_vehicle_registration_file").hide();
+        $("#div_id_driving_license_file").hide();
     }
 }
-
-//function disability(value){
-//    if(value == "True"){
-//            $(".field-disability_needs").parents(".form-group").show();
-//            $("#id_disability_needs").attr("required", "");
-//            $(".field-disability_needs_notes").parents(".form-group").show();
-//        }
-//        else{
-//            $(".field-disability_needs").parents(".form-group").hide();
-//            $("#id_disability_needs").removeAttr("required", "");
-//            $(".field-disability_needs_notes").parents(".form-group").hide();
-//        }
-//}
-//
-//function diseases(value){
-//    if(value == "True"){
-//            $(".field-chronic_diseases").parents(".form-group").show();
-//            $("#id_chronic_diseases").attr("required", "");
-//            $(".field-chronic_diseases_notes").parents(".form-group").show();
-//        }
-//        else{
-//            $(".field-chronic_diseases").parents(".form-group").hide();
-//            $("#id_chronic_diseases").removeAttr("required", "");
-//            $(".field-chronic_diseases_notes").parents(".form-group").hide();
-//        }
-//}

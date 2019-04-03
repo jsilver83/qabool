@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class HousingUser(models.Model):
     user = models.OneToOneField(
-        'undergraduate_admission.User',
+        'undergraduate_admission.AdmissionRequest',
         on_delete=models.CASCADE,
         primary_key=True,
         related_name='housing_user',

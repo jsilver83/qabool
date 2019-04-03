@@ -378,6 +378,10 @@ class AgreementAdmin(admin.ModelAdmin):
     list_filter = ('agreement_type',)
 
 
+class VerificationIssuesAdmin(admin.ModelAdmin):
+    list_display = ('semester', 'agreement_type', 'show')
+
+
 # Display Qabool in the page title and header
 admin.site.site_header = _('Qabool')
 admin.site.index_title = _('Qabool Administration')
@@ -385,7 +389,6 @@ admin.site.site_title = _('Administration')
 
 admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
 admin.site.register(ImportantDateSidebar, ImportantDateSidebarAdmin)
-admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 # Use TabularInline in the RegistrationStatusMessage model.
 admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
 admin.site.register(City)

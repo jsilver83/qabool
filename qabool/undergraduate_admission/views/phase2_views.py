@@ -17,6 +17,7 @@ from sendfile import sendfile, os
 
 # from find_roommate.models import RoommateRequest
 from qabool.local_settings import SENDFILE_ROOT
+from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm, TransferForm, \
@@ -25,14 +26,6 @@ from undergraduate_admission.models import AdmissionSemester, Agreement, Registr
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS, parse_non_standard_numerals
 from undergraduate_admission.validators import is_eligible_for_roommate_search
-
-
-# TODO: refactor all is_eligible_to_??? to be functions in the class User
-def can_confirm(user):
-    return ((user.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
-             user.status_message == RegistrationStatusMessage.get_status_partially_admitted_non_saudi() or
-             user.status_message == RegistrationStatusMessage.get_status_transfer())
-            and AdmissionSemester.get_phase2_active_semester(user))
 
 
 def is_admitted(user):
@@ -70,185 +63,134 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
         return sendfile(request, user_file.path)
 
 
-class Phase2BaseView(LoginRequiredMixin, UserPassesTestMixin):
+class Phase2BaseView(StudentMixin):
     def test_func(self):
-        return can_confirm(self.request.user)
+        return super(Phase2BaseView, self).test_func() and self.admission_request.can_confirm()
 
 
-@login_required()
-@user_passes_test(can_confirm)
-def confirm(request):
-    form = BaseAgreementForm(request.POST or None)
+class Confirm(Phase2BaseView, FormView):
+    form_class = BaseAgreementForm
+    template_name = 'undergraduate_admission/phase2/confirm.html'
+    success_url = reverse_lazy('undergraduate_admission:personal_info')
 
-    if request.method == 'POST':
-        if form.is_valid():
-            request.session['confirmed'] = True
-            return redirect('undergraduate_admission:personal_info')
-        else:
-            messages.error(request, _('Error.'))
-
-    sem = AdmissionSemester.get_phase2_active_semester(request.user)
-    agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.CONFIRMED_N, semester=sem)
-    return render(request, 'undergraduate_admission/phase2/confirm.html', {'agreement': agreement,
-                                                                           'form': form, })
-
-
-@login_required()
-@user_passes_test(can_confirm)
-def personal_info(request):
-    form = PersonalInfoForm(request.POST or None, request.FILES or None,
-                            instance=request.user, )
-
-    if request.method == 'GET':
-        confirmed = request.session.get('confirmed')
-        if confirmed is None:
-            return redirect('undergraduate_admission:confirm')
-
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Personal Info was saved successfully...'))
-                request.session['personal_info_completed'] = True
-                return redirect('undergraduate_admission:guardian_contact')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-    return render(request, 'undergraduate_admission/phase2/form-personal.html', {'form': form,
-                                                                                 'step1': 'active'})
-
-
-@login_required()
-@user_passes_test(can_confirm)
-def guardian_contact(request):
-    if request.method == 'GET':
-        personal_info_completed = request.session.get('personal_info_completed')
-        if not personal_info_completed:
-            return redirect('undergraduate_admission:personal_info')
-
-    form = GuardianContactForm(request.POST or None, instance=request.user)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Guardian Contact Info was saved successfully...'))
-                request.session['guardian_contact_completed'] = True
-                return redirect('undergraduate_admission:relative_contact')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-    return render(request, 'undergraduate_admission/phase2/form.html', {'form': form,
-                                                                        'step2': 'active'})
-
-
-@login_required()
-@user_passes_test(can_confirm)
-def relative_contact(request):
-    if request.method == 'GET':
-        guardian_contact_completed = request.session.get('guardian_contact_completed')
-        if not guardian_contact_completed:
-            return redirect('undergraduate_admission:guardian_contact')
-
-    form = RelativeContactForm(request.POST or None, instance=request.user)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Relative Info was saved successfully...'))
-                request.session['relative_contact_completed'] = True
-                return redirect('undergraduate_admission:vehicle_info')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-    return render(request, 'undergraduate_admission/phase2/form-relative.html', {'form': form,
-                                                                                 'step3': 'active'})
-
-
-@login_required()
-@user_passes_test(can_confirm)
-def vehicle_info(request):
-    if request.method == 'GET':
-        relative_contact_completed = request.session.get('relative_contact_completed')
-        if not relative_contact_completed:
-            return redirect('undergraduate_admission:relative_contact')
-
-    form = VehicleInfoForm(request.POST or None, request.FILES or None, instance=request.user)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Vehicle info was submitted successfully...'))
-                request.session['vehicle_info_completed'] = True
-                return redirect('undergraduate_admission:personal_picture')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-    return render(request, 'undergraduate_admission/phase2/form-uploads.html', {'form': form,
-                                                                                'step4': 'active'})
-
-
-class PersonalPictureView(Phase2BaseView, UpdateView):
-    template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
-    form_class = PersonalPhotoForm
-    success_url = reverse_lazy('undergraduate_admission:personal_picture')
-
-    def test_func(self):
-        original_test_result = super(PersonalPictureView, self).test_func()
-        relative_contact_completed = self.request.session.get('relative_contact_completed')
-        return original_test_result and relative_contact_completed
+    def form_valid(self, form):
+        self.request.session['confirmed'] = True
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(PersonalPictureView, self).get_context_data(**kwargs)
-        context['step5'] = 'active'
+        context = super().get_context_data(**kwargs)
+        sem = AdmissionSemester.get_phase2_active_semester(self.admission_request)
+        context['agreement'] = get_object_or_404(Agreement,
+                                                 agreement_type=Agreement.AgreementTypes.CONFIRM,
+                                                 status_message=self.admission_request.status_message,
+                                                 semester=sem)
+        return context
+
+
+class BaseStudentInfoUpdateView(SuccessMessageMixin, StudentMixin, UpdateView):
+    form_class = None
+    success_message = None
+    template_name = None
+    success_url = None
+    required_session_variable = 'dumb'
+    affected_session_variable = 'and_dumber_to'
+    previous_step_url = None
+    current_step_no = None
+
+    def get(self, request, *args, **kwargs):
+        if request.session.get(self.required_session_variable) is None:
+            return redirect(self.previous_step_url)
+        return super().get(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return self.admission_request
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context[self.current_step_no] = 'active'
+        return context
+
+    def form_valid(self, form):
+        self.request.session[self.affected_session_variable] = True
+        return super().form_valid(form)
+
+
+class PersonalInfoView(BaseStudentInfoUpdateView):
+    form_class = PersonalInfoForm
+    success_message = _('Personal Info was saved successfully...')
+    template_name = 'undergraduate_admission/phase2/form-personal.html'
+    success_url = reverse_lazy('undergraduate_admission:guardian_contact')
+    required_session_variable = 'confirmed'
+    affected_session_variable = 'personal_info_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:confirm')
+    current_step_no = 'step1'
+
+
+class GuardianContactView(BaseStudentInfoUpdateView):
+    form_class = GuardianContactForm
+    success_message = _('Guardian Contact Info was saved successfully...')
+    template_name = 'undergraduate_admission/phase2/form.html'
+    success_url = reverse_lazy('undergraduate_admission:relative_contact')
+    required_session_variable = 'personal_info_completed'
+    affected_session_variable = 'guardian_contact_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:personal_info')
+    current_step_no = 'step2'
+
+
+class RelativeContactView(BaseStudentInfoUpdateView):
+    form_class = RelativeContactForm
+    success_message = _('Relative Info was saved successfully...')
+    template_name = 'undergraduate_admission/phase2/form-relative.html'
+    success_url = reverse_lazy('undergraduate_admission:vehicle_info')
+    required_session_variable = 'guardian_contact_completed'
+    affected_session_variable = 'relative_contact_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:guardian_contact')
+    current_step_no = 'step3'
+
+
+class VehicleInfoView(BaseStudentInfoUpdateView):
+    form_class = VehicleInfoForm
+    success_message = _('Vehicle info was saved successfully...')
+    template_name = 'undergraduate_admission/phase2/form-uploads.html'
+    success_url = reverse_lazy('undergraduate_admission:personal_picture')
+    required_session_variable = 'relative_contact_completed'
+    affected_session_variable = 'vehicle_info_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:relative_contact')
+    current_step_no = 'step4'
+
+
+class PersonalPictureView(BaseStudentInfoUpdateView):
+    form_class = PersonalPhotoForm
+    success_message = _('Personal picture was uploaded successfully...')
+    template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
+    success_url = reverse_lazy('undergraduate_admission:personal_picture')
+    required_session_variable = 'vehicle_info_completed'
+    affected_session_variable = 'personal_picture_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:relative_contact')
+    current_step_no = 'step5'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['base_extend'] = 'undergraduate_admission/phase2/form.html'
         context['re_upload'] = False
         return context
 
-    def get_object(self):
-        return self.request.user
 
-    def form_valid(self, form):
-        super(PersonalPictureView, self).form_valid(form)
-        saved = form.save()
-        if saved:
-            messages.success(self.request, _('Personal picture was uploaded successfully...'))
-            self.request.session['personal_picture_completed'] = True
-            return redirect(self.success_url)
-        else:
-            messages.error(self.request, _('Error saving info. Try again later!'))
-
-
-class PersonalPictureUnacceptableView(Phase2BaseView, UpdateView):
-    template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
+class PersonalPictureUnacceptableView(BaseStudentInfoUpdateView):
     form_class = PersonalPhotoForm
+    success_message = _('Personal picture was uploaded successfully...')
+    template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
     success_url = reverse_lazy('undergraduate_admission:personal_picture_re_upload')
-
-    def test_func(self):
-        original_test_result = super(PersonalPictureUnacceptableView, self).test_func()
-        can_re_upload_picture = self.request.user.verification_picture_acceptable
-        return original_test_result and can_re_upload_picture
+    required_session_variable = 'vehicle_info_completed'
+    affected_session_variable = 'personal_picture_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:relative_contact')
+    current_step_no = 'step5'
 
     def get_context_data(self, **kwargs):
-        context = super(PersonalPictureUnacceptableView, self).get_context_data(**kwargs)
-        context['base_extend'] = 'base_student_area.html'
+        context = super().get_context_data(**kwargs)
+        context['base_extend'] = 'base_student_area/phase2/form.html'
         context['re_upload'] = True
         return context
-
-    def get_object(self):
-        return self.request.user
-
-    def form_valid(self, form):
-        super(PersonalPictureUnacceptableView, self).form_valid(form)
-        saved = form.save()
-        if saved:
-            messages.success(self.request, _('Personal picture was uploaded successfully...'))
-            self.request.session['personal_picture_completed'] = True
-            return redirect(self.success_url)
-        else:
-            messages.error(self.request, _('Error saving info. Try again later!'))
 
 
 class UploadDocumentsView(Phase2BaseView, UpdateView):
