@@ -155,10 +155,7 @@ class RegistrationStatus(models.Model):
             return self.status_message_en
 
     def __str__(self):
-        if self.general_status != self.status_message_code:
-            return '%s (%s)' % (self.general_status, self.status_message_code)
-        else:
-            return self.status_message_code
+        return '%s (%s)' % (self.get_general_status_display(), self.status_message_code)
 
     @staticmethod
     def get_registration_status_choices(add_dashes=True):
