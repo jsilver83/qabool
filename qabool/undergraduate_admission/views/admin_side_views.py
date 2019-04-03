@@ -21,7 +21,7 @@ from zeep.transports import Transport
 
 from undergraduate_admission.filters import AdmissionRequestListFilter
 from undergraduate_admission.forms.admin_side_forms import *
-from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatusMessage
+from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatus
 from undergraduate_admission.utils import try_parse_float
 
 YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
@@ -124,7 +124,7 @@ class CutOffPointView(AdminBaseView, View):
 
         if form2.is_valid():
             try:
-                status = RegistrationStatusMessage.objects.get(pk=form2.cleaned_data.get('status_message'))
+                status = RegistrationStatus.objects.get(pk=form2.cleaned_data.get('status_message'))
                 records_updated = filtered.update(status_message=status)
                 students_count = filtered.count()
                 messages.success(request, _('New status has been applied to %(count)d of %(all)d students chosen...')
@@ -228,8 +228,8 @@ class VerifyList(StaffBaseView, ListView):
 
     def get_queryset(self):
         logged_in_username = self.request.user.username
-        status = [RegistrationStatusMessage.get_status_confirmed(),
-                  RegistrationStatusMessage.get_status_confirmed_non_saudi()]
+        status = [RegistrationStatus.get_status_confirmed(),
+                  RegistrationStatus.get_status_confirmed_non_saudi()]
         semester = AdmissionSemester.get_active_semester()
         if self.request.user.is_superuser:
             students_to_verified = AdmissionRequest.objects.filter(
@@ -396,22 +396,22 @@ def get_student_record_serialized(student, change_status=False):
                     """
                     if year.type in [GraduationYear.GraduationYearTypes.CURRENT_YEAR,
                                      GraduationYear.GraduationYearTypes.LAST_YEAR] \
-                            and student.status_message == RegistrationStatusMessage.get_status_old_high_school():
+                            and student.status_message == RegistrationStatus.get_status_old_high_school():
                         if change_status:
                             if student.nationality.nationality_en != 'Saudi Arabia' and not student.saudi_mother:
-                                student.status_message = RegistrationStatusMessage.get_status_applied_non_saudi()
+                                student.status_message = RegistrationStatus.get_status_applied_non_saudi()
                             else:
-                                student.status_message = RegistrationStatusMessage.get_status_applied()
+                                student.status_message = RegistrationStatus.get_status_applied()
                         special_cases_log += \
                             '{%s} was marked as old hs but actually has recent hs in MOE<br>' % student.username
                     """
                     this is the case of a student who was marked as applied but actually has old hs in MOE
                     """
                     if year.type == GraduationYear.GraduationYearTypes.OLD_HS \
-                            and student.status_message in [RegistrationStatusMessage.get_status_applied(),
-                                                           RegistrationStatusMessage.get_status_applied_non_saudi()]:
+                            and student.status_message in [RegistrationStatus.get_status_applied(),
+                                                           RegistrationStatus.get_status_applied_non_saudi()]:
                         if change_status:
-                            student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                            student.status_message = RegistrationStatus.get_status_old_high_school()
                         special_cases_log += \
                             '{%s} was marked as applied but he actually has old hs in MOE<br>' % student.username
                 else:
@@ -424,8 +424,8 @@ def get_student_record_serialized(student, change_status=False):
                         other_year.save()
                         student.high_school_graduation_year = other_year
 
-                    if student.status_message != RegistrationStatusMessage.get_status_old_high_school() and change_status:
-                        student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                    if student.status_message != RegistrationStatus.get_status_old_high_school() and change_status:
+                        student.status_message = RegistrationStatus.get_status_old_high_school()
                     special_cases_log += \
                         '{%s} was marked as old hs<br>' % student.username
                     """
@@ -444,8 +444,8 @@ def get_student_record_serialized(student, change_status=False):
                     other_year.save()
                     student.high_school_graduation_year = other_year
 
-                if student.status_message != RegistrationStatusMessage.get_status_old_high_school() and change_status:
-                    student.status_message = RegistrationStatusMessage.get_status_old_high_school()
+                if student.status_message != RegistrationStatus.get_status_old_high_school() and change_status:
+                    student.status_message = RegistrationStatus.get_status_old_high_school()
 
                 special_cases_log += \
                     '{%s} has no graduation year in yesser and so he was marked as old HS<br>' % student.username
@@ -456,7 +456,7 @@ def get_student_record_serialized(student, change_status=False):
                     special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username,
                                                                                       hs_data['Gender'])
                     if change_status:
-                        student.status_message = RegistrationStatusMessage.get_status_girls()
+                        student.status_message = RegistrationStatus.get_status_girls()
 
             student.government_id_type = hs_data['MoeIdentifierTypeDesc']
             student.birthday = hs_data['GregorianDate']

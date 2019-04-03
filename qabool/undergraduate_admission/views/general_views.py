@@ -8,7 +8,7 @@ from django.views.generic import UpdateView, FormView, TemplateView
 
 from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.general_forms import MyAuthenticationForm, ForgotPasswordForm, BaseContactForm
-from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage, VerificationIssues
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatus, VerificationIssues
 
 
 class IndexView(FormView):

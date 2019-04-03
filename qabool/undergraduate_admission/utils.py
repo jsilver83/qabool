@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from zeep import Client
 from zeep import Transport
 
-from undergraduate_admission.models import Agreement, AdmissionSemester, RegistrationStatusMessage
+from undergraduate_admission.models import Agreement, AdmissionSemester, RegistrationStatus
 
 
 class Email(object):
@@ -65,7 +65,7 @@ class Email(object):
              'agreement': mark_safe(agreement),
              })
 
-        if user.status_message == RegistrationStatusMessage.get_status_old_high_school():
+        if user.status_message == RegistrationStatus.get_status_old_high_school():
             plain_message = SMS.sms_messages['registration_success_old_high_school']
         else:
             plain_message = SMS.sms_messages['registration_success']

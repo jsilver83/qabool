@@ -168,18 +168,18 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         verification_issues = self.cleaned_data.get('verification_issues')
         if verification_issues:
             if student.student_type in ('S', 'M'):
-                status = RegistrationStatusMessage.get_status_confirmed()
+                status = RegistrationStatus.get_status_confirmed()
             else:
-                status = RegistrationStatusMessage.get_status_confirmed_non_saudi()
+                status = RegistrationStatus.get_status_confirmed_non_saudi()
             student.status_message = status
             student.phase2_start_date = timezone.now()
             student.phase2_end_date = timezone.now() + timezone.timedelta(days=1)
         else:
             if student.student_type in ('S', 'M'):
-                status = RegistrationStatusMessage.get_status_admitted()
+                status = RegistrationStatus.get_status_admitted()
                 student.status_message = status
             else:
-                status = RegistrationStatusMessage.get_status_admitted_non_saudi()
+                status = RegistrationStatus.get_status_admitted_non_saudi()
                 student.status_message = status
 
         try:
@@ -207,7 +207,7 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
 
 class ApplyStatusForm(forms.Form):
     status_message = forms.IntegerField(widget=forms.Select(
-        choices=RegistrationStatusMessage.get_registration_status_choices()), required=True, label=_('Message Status'))
+        choices=RegistrationStatus.get_registration_status_choices()), required=True, label=_('Message Status'))
 
 
 class StudentGenderForm(forms.ModelForm):
@@ -229,7 +229,7 @@ class StudentGenderForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(StudentGenderForm, self).save(commit=False)
         if instance.gender == 'F':
-            reg_msg = RegistrationStatusMessage.get_status_girls()
+            reg_msg = RegistrationStatus.get_status_girls()
             instance.status_message = reg_msg
         if commit:
             instance.save()
@@ -250,4 +250,4 @@ class SendMassSMSForm(forms.Form):
         super(SendMassSMSForm, self).__init__(*args, **kwargs)
         self.fields['semester'].widget = forms.Select(choices=AdmissionSemester.get_semesters_choices())
         self.fields['status_message'].widget = \
-            forms.Select(choices=RegistrationStatusMessage.get_registration_status_choices())
+            forms.Select(choices=RegistrationStatus.get_registration_status_choices())

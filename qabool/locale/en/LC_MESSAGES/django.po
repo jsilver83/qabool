@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-03 15:31+0300\n"
+"POT-Creation-Date: 2019-04-03 16:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,6 +130,7 @@ msgid "Accepted"
 msgstr ""
 
 #: find_roommate/models.py:44
+#: undergraduate_admission/models/supporting_models.py:134
 msgid "Rejected"
 msgstr ""
 
@@ -567,7 +568,7 @@ msgstr ""
 msgid "Attender"
 msgstr ""
 
-#: tarifi/models.py:180 undergraduate_admission/models/supporting_models.py:342
+#: tarifi/models.py:180 undergraduate_admission/models/supporting_models.py:300
 msgid "Description"
 msgstr ""
 
@@ -577,8 +578,8 @@ msgstr ""
 #: undergraduate_admission/models/misc_models.py:155
 #: undergraduate_admission/models/misc_models.py:183
 #: undergraduate_admission/models/student.py:702
-#: undergraduate_admission/models/supporting_models.py:345
-#: undergraduate_admission/models/supporting_models.py:402
+#: undergraduate_admission/models/supporting_models.py:303
+#: undergraduate_admission/models/supporting_models.py:360
 msgid "Show"
 msgstr ""
 
@@ -586,8 +587,8 @@ msgstr ""
 #: undergraduate_admission/models/misc_models.py:85
 #: undergraduate_admission/models/misc_models.py:184
 #: undergraduate_admission/models/student.py:703
-#: undergraduate_admission/models/supporting_models.py:346
-#: undergraduate_admission/models/supporting_models.py:403
+#: undergraduate_admission/models/supporting_models.py:304
+#: undergraduate_admission/models/supporting_models.py:361
 msgid "Display Order"
 msgstr ""
 
@@ -685,20 +686,20 @@ msgstr ""
 
 #: undergraduate_admission/admin.py:187
 #: undergraduate_admission/models/student.py:263
-#: undergraduate_admission/models/supporting_models.py:394
+#: undergraduate_admission/models/supporting_models.py:352
 msgid "High School Certificate"
 msgstr ""
 
 #: undergraduate_admission/admin.py:191
 #: undergraduate_admission/models/student.py:140
-#: undergraduate_admission/models/supporting_models.py:393
+#: undergraduate_admission/models/supporting_models.py:351
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:27
 msgid "Personal Picture"
 msgstr ""
 
 #: undergraduate_admission/admin.py:195
 #: undergraduate_admission/models/student.py:95
-#: undergraduate_admission/models/supporting_models.py:395
+#: undergraduate_admission/models/supporting_models.py:353
 msgid "Mother Government ID"
 msgstr ""
 
@@ -746,15 +747,15 @@ msgstr ""
 msgid "Sync with Yesser"
 msgstr ""
 
-#: undergraduate_admission/admin.py:385
+#: undergraduate_admission/admin.py:378
 msgid "Qabool"
 msgstr ""
 
-#: undergraduate_admission/admin.py:386
+#: undergraduate_admission/admin.py:379
 msgid "Qabool Administration"
 msgstr ""
 
-#: undergraduate_admission/admin.py:387
+#: undergraduate_admission/admin.py:380
 msgid "Administration"
 msgstr ""
 
@@ -1662,7 +1663,7 @@ msgid "Assigned Committee Member"
 msgstr ""
 
 #: undergraduate_admission/models/student.py:414
-#: undergraduate_admission/models/supporting_models.py:406
+#: undergraduate_admission/models/supporting_models.py:364
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:17
 msgid "Verification Issues"
 msgstr ""
@@ -1790,19 +1791,31 @@ msgstr ""
 msgid "Admission: Admission Semesters"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:120
-msgid "Status (Arabic)"
+#: undergraduate_admission/models/supporting_models.py:130
+msgid "Phase 1: Applied"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:121
-msgid "Status (English)"
+#: undergraduate_admission/models/supporting_models.py:131
+msgid "Phase 2: Partially-Admitted"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:136
-msgid "Admission: Registration Status"
+#: undergraduate_admission/models/supporting_models.py:132
+msgid "Phase 3: Admitted"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:140
+#: undergraduate_admission/models/supporting_models.py:133
+msgid "Phase 3: Suspended"
+msgstr ""
+
+#: undergraduate_admission/models/supporting_models.py:135
+msgid "Withdrawn"
+msgstr ""
+
+#: undergraduate_admission/models/supporting_models.py:137
+msgid "General Status"
+msgstr ""
+
+#: undergraduate_admission/models/supporting_models.py:139
 msgid "Registration Status Message AR"
 msgstr ""
 
@@ -1810,47 +1823,47 @@ msgstr ""
 msgid "Registration Status Message EN"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:152
-msgid "Admission: Registration Status Messages"
+#: undergraduate_admission/models/supporting_models.py:146
+msgid "Admission: Registration Status"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:335
+#: undergraduate_admission/models/supporting_models.py:293
 msgid "Current high school graduation year"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:336
+#: undergraduate_admission/models/supporting_models.py:294
 msgid "Previous high school graduation year"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:337
+#: undergraduate_admission/models/supporting_models.py:295
 msgid "Old High school graduation year"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:340
+#: undergraduate_admission/models/supporting_models.py:298
 msgid "Graduation Year (English)"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:341
+#: undergraduate_admission/models/supporting_models.py:299
 msgid "Graduation Year (Arabic)"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:343
+#: undergraduate_admission/models/supporting_models.py:301
 msgid "Type"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:350
+#: undergraduate_admission/models/supporting_models.py:308
 msgid "Admission: Graduation Years"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:398
+#: undergraduate_admission/models/supporting_models.py:356
 msgid "Related Field"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:400
+#: undergraduate_admission/models/supporting_models.py:358
 msgid "Verification Issue (AR)"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:401
+#: undergraduate_admission/models/supporting_models.py:359
 msgid "Verification Issue (EN)"
 msgstr ""
 

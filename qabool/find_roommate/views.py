@@ -16,13 +16,13 @@ from django.views.generic import View
 from find_roommate.forms import HousingInfoUpdateForm, HousingSearchForm, RoommateRequestForm
 from find_roommate.models import HousingUser, RoommateRequest, Room
 from undergraduate_admission.forms.phase1_forms import AgreementForm
-from undergraduate_admission.models import RegistrationStatusMessage, AdmissionSemester, Agreement, AdmissionRequest
+from undergraduate_admission.models import RegistrationStatus, AdmissionSemester, Agreement, AdmissionRequest
 from undergraduate_admission.utils import SMS
 from undergraduate_admission.validators import is_eligible_for_roommate_search
 
-allowed_statuses_for_housing = [RegistrationStatusMessage.get_status_admitted_final(),
-                                RegistrationStatusMessage.get_status_admitted_final_non_saudi(),
-                                RegistrationStatusMessage.get_status_admitted_transfer_final()]
+allowed_statuses_for_housing = [RegistrationStatus.get_status_admitted_final(),
+                                RegistrationStatus.get_status_admitted_final_non_saudi(),
+                                RegistrationStatus.get_status_admitted_transfer_final()]
 
 
 class HousingBaseView(LoginRequiredMixin, UserPassesTestMixin):

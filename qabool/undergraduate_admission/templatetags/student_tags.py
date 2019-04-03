@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # from find_roommate.models import RoommateRequest
 from shared_app.utils import get_current_admission_request_for_logged_in_user
-from undergraduate_admission.models import AdmissionSemester, RegistrationStatusMessage
+from undergraduate_admission.models import AdmissionSemester, RegistrationStatus
 
 register = template.Library()
 

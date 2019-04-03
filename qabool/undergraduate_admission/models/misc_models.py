@@ -139,7 +139,7 @@ class Agreement(models.Model):
         verbose_name='Semester',
     )
     status_message = models.ForeignKey(
-        'RegistrationStatusMessage',
+        'RegistrationStatus',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
