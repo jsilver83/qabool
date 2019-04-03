@@ -123,7 +123,7 @@ class SMS(object):
                               data={'AppSid': settings.UNIFONIC_APP_SID,
                                     'Recipient': mobile,
                                     'Body': body,
-                                    'SenderID': 'KFUPMQabool'}) # It was KFUPM-ADM
+                                    'SenderID': 'KFUPMQabool'})  # It was KFUPM-ADM
             return r
         except:  # usually TimeoutError but made it general so it will never raise an exception
             pass
@@ -274,17 +274,23 @@ def format_time(date_time):
 
 
 def add_validators_to_arabic_and_english_names(fields):
-        for field in fields:
-            if field in ['first_name_en', 'second_name_en', 'third_name_en', 'family_name_en']:
-                fields[field].validators = [
-                    RegexValidator(
-                        '^[A-Za-z.\- ]+$',
-                        message=_("Use English alphabet only! You can also use the dot, hyphen and spaces")
-                    ), ]
+    for field in fields:
+        if field.name in ['student_full_name_en', 'first_name_en', 'second_name_en', 'third_name_en',
+                          'family_name_en']:
+            field.validators += [
+                RegexValidator(
+                    r'^[A-Za-z.\- ]+$',
+                    message=_("Use English alphabet only! You can also use the dot, hyphen and spaces")
+                ), ]
+            if len(field.validators) > 2:
+                field.validators.pop(len(field.validators)-1)
 
-            if field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar']:
-                fields[field].validators = [
-                    RegexValidator(
-                        '^[\u0600-\u06FF ]+$',
-                        message=_("Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)")
-                    ), ]
+        elif field.name in ['student_full_name_ar', 'first_name_ar', 'second_name_ar', 'third_name_ar',
+                            'family_name_ar']:
+            field.validators += [
+                RegexValidator(
+                    r'^[\u0600-\u06FF ]+$',
+                    message=_("Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)")
+                ), ]
+            if len(field.validators) > 2:
+                field.validators.pop(len(field.validators)-1)
