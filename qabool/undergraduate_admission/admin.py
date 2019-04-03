@@ -40,8 +40,9 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
     fieldsets = (
         (None, {
             'fields': (('user', 'government_id', 'semester', 'status_message', 'gender', ),
-                       ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
-                       ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
+                       # ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
+                       # ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
+                       ('student_full_name_ar', 'student_full_name_en', ),
                        ('student_type', 'nationality', 'saudi_mother', 'saudi_mother_gov_id'),
                        'mobile', 'guardian_mobile',
                        ('high_school_gpa', 'qudrat_score', 'tahsili_score', 'admission_total', ),
@@ -348,9 +349,9 @@ class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 class AdmissionSemesterAdmin(admin.ModelAdmin):
-    list_display = ('semester_name', 'phase1_start_date', 'phase1_end_date', 'phase2_start_date', 'phase2_end_date',
-                    'phase3_start_date', 'phase3_end_date', 'high_school_gpa_weight', 'qudrat_score_weight',
-                    'tahsili_score_weight',)
+    list_display = ('semester_name', 'active', 'phase1_start_date', 'phase1_end_date', 'phase2_start_date',
+                    'phase2_end_date', 'phase3_start_date', 'phase3_end_date', 'high_school_gpa_weight',
+                    'qudrat_score_weight', 'tahsili_score_weight',)
 
 
 class GraduationYearAdmin(admin.ModelAdmin):

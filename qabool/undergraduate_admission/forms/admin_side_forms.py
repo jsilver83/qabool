@@ -104,8 +104,10 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         model = AdmissionRequest
         fields = ['nationality', 'saudi_mother',
 
-                  'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
-                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+                  # 'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                  # 'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+
+                  'student_full_name_en', 'student_full_name_ar',
 
                   'mobile', 'high_school_gpa',
                   'high_school_graduation_year', 'high_school_system',
