@@ -171,6 +171,9 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'custom_locale'),
 )
 
+COUNTRIES_FIRST = ['SA', 'BHR', 'KWT', 'YEM', 'QAT', 'ARE', 'EGY', 'SYR', 'IRQ', 'SDN', 'PSE', 'JOR']
+COUNTRIES_FIRST_BREAK = '  ____________  '
+
 
 # Logging
 # https://docs.djangoproject.com/en/1.9/topics/logging/
