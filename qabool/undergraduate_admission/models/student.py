@@ -469,11 +469,12 @@ class AdmissionRequest(models.Model):
         except:
             pass
 
+    # TODO: REMOVE THIS
     def get_student_phase(self):
         try:
-            return self.status_message.status.status_code
+            return self.status_message.general_status
         except:
-            return 'REJECTED'
+            return RegistrationStatus.GeneralStatuses.REJECTED
 
     @property
     def student_type(self):
@@ -518,7 +519,8 @@ class AdmissionRequest(models.Model):
                 and AdmissionSemester.get_phase2_active_semester(self))
 
     def can_see_result(self):
-        return self.get_student_phase() in ['PARTIALLY-ADMITTED', 'REJECTED']
+        return self.get_student_phase() in [RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                            RegistrationStatus.GeneralStatuses.REJECTED]
 
     def can_print_docs(self):
         return (self.status_message in [RegistrationStatus.get_status_admitted_final(),
@@ -527,12 +529,12 @@ class AdmissionRequest(models.Model):
 
     def can_withdraw(self):
         now = timezone.now()
-        return ((self.get_student_phase() == 'ADMITTED'
+        return ((self.get_student_phase() == RegistrationStatus.GeneralStatuses.ADMITTED
                  or self.status_message == RegistrationStatus.get_status_confirmed())
                 and now() <= self.semester.withdrawal_deadline)
 
     def can_print_withdrawal_letter(self):
-        return self.get_student_phase() == 'WITHDRAWN'
+        return self.get_student_phase() == RegistrationStatus.GeneralStatuses.WITHDRAWN
 
     def can_finish_phase3(self):
         return (self.status_message in [RegistrationStatus.get_status_admitted(),
@@ -541,13 +543,14 @@ class AdmissionRequest(models.Model):
                 and AdmissionSemester.get_phase3_active_semester(self))
 
     def has_pic(self):
-        return self.get_student_phase() in ['PARTIALLY-ADMITTED', 'ADMITTED']
+        return self.get_student_phase() in [RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                            RegistrationStatus.GeneralStatuses.ADMITTED]
 
     def can_see_kfupm_id(self):
-        return self.get_student_phase() == 'ADMITTED' and self.kfupm_id
+        return self.get_student_phase() == RegistrationStatus.GeneralStatuses.ADMITTED and self.kfupm_id
 
     def can_see_housing(self):
-        return (self.get_student_phase() == 'ADMITTED' and self.eligible_for_housing
+        return (self.get_student_phase() == RegistrationStatus.GeneralStatuses.ADMITTED and self.eligible_for_housing
                 and AdmissionSemester.get_phase4_active_semester())
 
     def can_search_in_housing(self):
@@ -557,12 +560,12 @@ class AdmissionRequest(models.Model):
             return False
 
     def can_re_upload_picture(self):
-        return (self.get_student_phase() == 'PARTIALLY-ADMITTED'
+        return (self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
                 and self.verification_issues.filter(
                     related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
     def can_re_upload_docs(self):
-        return (self.get_student_phase() == 'PARTIALLY-ADMITTED'
+        return (self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
                 and self.verification_issues.exclude(
                     related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
@@ -570,10 +573,16 @@ class AdmissionRequest(models.Model):
         return self.status_message == RegistrationStatus.get_status_duplicate()
 
     def can_edit_phase1_info(self):
-        return self.get_student_phase() == 'APPLIED' and AdmissionSemester.check_if_phase1_is_active()
+        return (self.get_student_phase() == RegistrationStatus.GeneralStatuses.APPLIED
+                and AdmissionSemester.check_if_phase1_is_active())
 
     def can_edit_contact_info(self):
-        return self.get_student_phase() not in ['REJECTED', 'WITHDRAWN', 'ADMITTED', self.can_edit_phase1_info()]
+        return self.get_student_phase() not in [
+            RegistrationStatus.GeneralStatuses.REJECTED,
+            RegistrationStatus.GeneralStatuses.WITHDRAWN,
+            RegistrationStatus.GeneralStatuses.SUSPENDED,
+        ] and not self.can_edit_phase1_info()
+
     # endregion
 
     # TODO: enable later when enabling thehousing app
