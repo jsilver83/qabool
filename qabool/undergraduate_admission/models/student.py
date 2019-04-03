@@ -436,6 +436,11 @@ class AdmissionRequest(models.Model):
         verbose_name_plural = _('Admission Requests')
         unique_together = ('user', 'semester')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        from ..utils import add_validators_to_arabic_and_english_names
+        add_validators_to_arabic_and_english_names(self._meta.fields)
+
     def get_verification_status(self):
         return self.verification_status
 
