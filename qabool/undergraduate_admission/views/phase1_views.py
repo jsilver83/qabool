@@ -72,9 +72,9 @@ class RegisterView(CreateView):
                 user.set_password(form.cleaned_data['password1'])
                 user.save()
 
-            reg_msg = RegistrationStatusMessage.get_status_applied()
-            non_saudi_reg_msg = RegistrationStatusMessage.get_status_applied_non_saudi()
-            old_high_school_reg_msg = RegistrationStatusMessage.get_status_old_high_school()
+            reg_msg = RegistrationStatus.get_status_applied()
+            non_saudi_reg_msg = RegistrationStatus.get_status_applied_non_saudi()
+            old_high_school_reg_msg = RegistrationStatus.get_status_old_high_school()
 
             student = AdmissionRequest(
                 first_name_ar=form.cleaned_data.get('first_name_ar'),

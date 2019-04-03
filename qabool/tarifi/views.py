@@ -13,9 +13,9 @@ from undergraduate_admission.models import AdmissionRequest
 from tarifi.forms import TarifiSearchForm
 from .models import *
 
-allowed_statuses_for_tarifi_week = [RegistrationStatusMessage.get_status_admitted_final(),
-                                    RegistrationStatusMessage.get_status_admitted_final_non_saudi(),
-                                    RegistrationStatusMessage.get_status_admitted_transfer_final()]
+allowed_statuses_for_tarifi_week = [RegistrationStatus.get_status_admitted_final(),
+                                    RegistrationStatus.get_status_admitted_final_non_saudi(),
+                                    RegistrationStatus.get_status_admitted_transfer_final()]
 
 
 class TarifiMixin(UserPassesTestMixin, LoginRequiredMixin):
@@ -32,7 +32,7 @@ class TarifiSimulation(TarifiMixin, TemplateView):
     template_name = 'find_roommate/landing_page.html'
 
     def get(self, *args, **kwargs):
-        users = AdmissionRequest.objects.filter(status_message=RegistrationStatusMessage.get_status_admitted_final())[:200]
+        users = AdmissionRequest.objects.filter(status_message=RegistrationStatus.get_status_admitted_final())[:200]
         counter = 0
         for user in users:
             print(counter)

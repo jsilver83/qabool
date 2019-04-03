@@ -151,8 +151,8 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                        'show_yesser_tahsili_data_dump', )
     search_fields = ['user__username', 'kfupm_id', 'mobile', 'email',
                      'nationality', 'student_full_name_ar', 'student_full_name_en', ]
-    list_filter = ('semester', 'high_school_graduation_year', 'gender', 'status_message__status', 'status_message',
-                   'nationality',)
+    list_filter = ('semester', 'high_school_graduation_year', 'gender', 'status_message__general_status',
+                   'status_message', 'nationality',)
     actions = ['yesser_update']
     resource_class = StudentResource
 
@@ -279,14 +279,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
 
 
 class StatusMessagesInline(admin.TabularInline):
-    model = RegistrationStatusMessage
-
-
-class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('status_ar', 'status_en', 'status_code')
-    inlines = [
-        StatusMessagesInline,
-    ]
+    model = RegistrationStatus
 
 
 class DeniedStudentAdmin(ImportExportMixin, admin.ModelAdmin):
@@ -340,19 +333,18 @@ class LookupAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = LookupResource
 
 
-class RegistrationStatusMessageResource(resources.ModelResource):
+class RegistrationStatusResource(resources.ModelResource):
     class Meta:
-        model = RegistrationStatusMessage
+        model = RegistrationStatus
         import_id_fields = ('id',)
-        # import_id_fields = ('status_message_code',)
-        fields = ('status_message_ar', 'status_message_en', 'status_message_code', 'status_id', 'id')
+        fields = ('general_status', 'status_message_ar', 'status_message_en', 'status_message_code', 'id')
         skip_unchanged = True
         report_skipped = True
 
 
-class RegistrationStatusMessageAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('status_message_ar', 'status_message_en', 'status_message_code', 'status_id', 'id')
-    resource_class = RegistrationStatusMessageResource
+class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('general_status', 'status_message_code', 'status_message_ar', 'status_message_en', 'id')
+    resource_class = RegistrationStatusResource
 
 
 class AdmissionSemesterAdmin(admin.ModelAdmin):
@@ -389,8 +381,7 @@ admin.site.site_title = _('Administration')
 
 admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
 admin.site.register(ImportantDateSidebar, ImportantDateSidebarAdmin)
-# Use TabularInline in the RegistrationStatusMessage model.
-admin.site.register(RegistrationStatusMessage, RegistrationStatusMessageAdmin)
+admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 admin.site.register(City)
 admin.site.register(VerificationIssues)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)

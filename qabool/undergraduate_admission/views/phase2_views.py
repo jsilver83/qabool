@@ -22,7 +22,7 @@ from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreem
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm, TransferForm, \
     MissingDocumentsForm
-from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
+from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS, parse_non_standard_numerals
 from undergraduate_admission.validators import is_eligible_for_roommate_search
@@ -39,9 +39,9 @@ def is_withdrawn(user):
 
 
 def is_eligible_to_withdraw(user):
-    return user.status_message in [RegistrationStatusMessage.get_status_admitted(),
-                                   RegistrationStatusMessage.get_status_admitted_final(),
-                                   RegistrationStatusMessage.get_status_confirmed()]
+    return user.status_message in [RegistrationStatus.get_status_admitted(),
+                                   RegistrationStatus.get_status_admitted_final(),
+                                   RegistrationStatus.get_status_confirmed()]
 
 
 @method_decorator(never_cache, name='dispatch')
@@ -211,19 +211,19 @@ class UploadDocumentsView(Phase2BaseView, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        if self.request.user.status_message == RegistrationStatusMessage.get_status_transfer():
-            reg_msg = RegistrationStatusMessage.get_status_admitted_transfer_final()
+        if self.request.user.status_message == RegistrationStatus.get_status_transfer():
+            reg_msg = RegistrationStatus.get_status_admitted_transfer_final()
         elif self.request.user.student_type == 'N':
-            reg_msg = RegistrationStatusMessage.get_status_confirmed_non_saudi()
+            reg_msg = RegistrationStatus.get_status_confirmed_non_saudi()
         else:
-            reg_msg = RegistrationStatusMessage.get_status_confirmed()
+            reg_msg = RegistrationStatus.get_status_confirmed()
 
         saved_user = form.save(commit=False)
         saved_user.status_message = reg_msg
         saved_user.save()
 
-        if self.request.user.student_type in [RegistrationStatusMessage.get_status_confirmed_non_saudi(),
-                                              RegistrationStatusMessage.get_status_confirmed()]:
+        if self.request.user.student_type in [RegistrationStatus.get_status_confirmed_non_saudi(),
+                                              RegistrationStatus.get_status_confirmed()]:
             SMS.send_sms_confirmed(self.request.user.mobile)
 
         if saved_user:
@@ -261,7 +261,7 @@ class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
 @login_required()
 def upload_withdrawal_proof(request):
     # it is ok to come here unconditionally if student has duplicate admission in other universities
-    if request.method == 'GET' and not request.user.status_message == RegistrationStatusMessage.get_status_duplicate():
+    if request.method == 'GET' and not request.user.status_message == RegistrationStatus.get_status_duplicate():
         return redirect('undergraduate_admission:student_area')
 
     form = WithdrawalProofForm(request.POST or None, request.FILES or None, instance=request.user)

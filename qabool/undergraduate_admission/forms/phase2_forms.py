@@ -280,7 +280,7 @@ class WithdrawalForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(WithdrawalForm, self).save(commit=False)
         instance.withdrawal_date = timezone.now()
-        reg_msg = RegistrationStatusMessage.get_status_withdrawn()
+        reg_msg = RegistrationStatus.get_status_withdrawn()
         instance.status_message = reg_msg
         if commit and reg_msg:
             instance.save()
@@ -363,7 +363,7 @@ class TransferForm(AdminPasswordChangeForm):
         username = parse_non_standard_numerals(cleaned_data.get("username"))
         kfupm_id = cleaned_data.get('kfupm_id', 0)
         active_semester = AdmissionSemester.get_active_semester()
-        status_message = RegistrationStatusMessage.get_status_transfer()
+        status_message = RegistrationStatus.get_status_transfer()
 
         try:
             student = AdmissionRequest.objects.get(user__username=username,

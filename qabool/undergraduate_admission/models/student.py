@@ -11,7 +11,7 @@ from undergraduate_admission.media_handlers import upload_location_govid, upload
     upload_location_picture, upload_location_courses, upload_location_withdrawal_proof, \
     upload_location_driving_license, upload_location_vehicle_registration, upload_bank_account_identification
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
-from .supporting_models import AdmissionSemester, RegistrationStatusMessage, VerificationIssues
+from .supporting_models import AdmissionSemester, RegistrationStatus, VerificationIssues
 
 User = settings.AUTH_USER_MODEL
 
@@ -42,7 +42,7 @@ class AdmissionRequest(models.Model):
         db_index=True,
     )
     status_message = models.ForeignKey(
-        'RegistrationStatusMessage',
+        'RegistrationStatus',
         on_delete=models.SET_NULL,
         blank=False,
         null=True,
@@ -508,30 +508,30 @@ class AdmissionRequest(models.Model):
 
     # region the can's and cant's
     def can_confirm(self):
-        return ((self.status_message == RegistrationStatusMessage.get_status_partially_admitted() or
-                 self.status_message == RegistrationStatusMessage.get_status_transfer())
+        return ((self.status_message == RegistrationStatus.get_status_partially_admitted() or
+                 self.status_message == RegistrationStatus.get_status_transfer())
                 and AdmissionSemester.get_phase2_active_semester(self))
 
     def can_see_result(self):
         return self.get_student_phase() in ['PARTIALLY-ADMITTED', 'REJECTED']
 
     def can_print_docs(self):
-        return (self.status_message in [RegistrationStatusMessage.get_status_admitted_final(),
-                                        RegistrationStatusMessage.get_status_admitted_final_non_saudi()]
+        return (self.status_message in [RegistrationStatus.get_status_admitted_final(),
+                                        RegistrationStatus.get_status_admitted_final_non_saudi()]
                 and self.tarifi_week_attendance_date)
 
     def can_withdraw(self):
         now = timezone.now()
         return ((self.get_student_phase() == 'ADMITTED'
-                or self.status_message == RegistrationStatusMessage.get_status_confirmed())
+                 or self.status_message == RegistrationStatus.get_status_confirmed())
                 and now() <= self.semester.withdrawal_deadline)
 
     def can_print_withdrawal_letter(self):
         return self.get_student_phase() == 'WITHDRAWN'
 
     def can_finish_phase3(self):
-        return (self.status_message in [RegistrationStatusMessage.get_status_admitted(),
-                                        RegistrationStatusMessage.get_status_admitted_non_saudi()]
+        return (self.status_message in [RegistrationStatus.get_status_admitted(),
+                                        RegistrationStatus.get_status_admitted_non_saudi()]
                 and not self.tarifi_week_attendance_date
                 and AdmissionSemester.get_phase3_active_semester(self.user))
 
@@ -562,7 +562,7 @@ class AdmissionRequest(models.Model):
                     related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
     def can_upload_withdrawal_proof(self):
-        return self.status_message == RegistrationStatusMessage.get_status_duplicate()
+        return self.status_message == RegistrationStatus.get_status_duplicate()
 
     def can_edit_phase1_info(self):
         return self.get_student_phase() == 'APPLIED' and AdmissionSemester.check_if_phase1_is_active()
@@ -710,7 +710,7 @@ class TarifiReceptionDate(models.Model):
     def remaining_slots(self):
         return self.slots - AdmissionRequest.objects.filter(
             tarifi_week_attendance_date=self.pk,
-            status_message=RegistrationStatusMessage.get_status_admitted_final()
+            status_message=RegistrationStatus.get_status_admitted_final()
         ).count()
 
     @staticmethod

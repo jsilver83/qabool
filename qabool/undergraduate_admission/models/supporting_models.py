@@ -115,42 +115,36 @@ class AdmissionSemester(models.Model):
             return [('--', '--')]
 
 
-# TODO: combine the two below models into one and add order and note (optional)
 class RegistrationStatus(models.Model):
-    status_ar = models.CharField(max_length=50, verbose_name=_('Status (Arabic)'))
-    status_en = models.CharField(max_length=50, verbose_name=_('Status (English)'))
-    status_code = models.CharField(max_length=20, null=True, blank=False, unique=True, )
+    class GeneralStatuses:
+        APPLIED = '1-APPLIED'
+        PARTIALLY_ADMITTED = '2-PARTIALLY-ADMITTED'
+        ADMITTED = '3-ADMITTED'
+        SUSPENDED = '4-SUSPENDED'
+        REJECTED = '5-REJECTED'
+        WITHDRAWN = '6-WITHDRAWN'
 
-    @property
-    def registration_status(self):
-        lang = translation.get_language()
-        if lang == "ar":
-            return self.status_ar
-        else:
-            return self.status_en
-
-    def __str__(self):
-        return self.registration_status
+        @classmethod
+        def choices(cls):
+            return (
+                (cls.APPLIED, _('Phase 1: Applied')),
+                (cls.PARTIALLY_ADMITTED, _('Phase 2: Partially-Admitted')),
+                (cls.ADMITTED, _('Phase 3: Admitted')),
+                (cls.SUSPENDED, _('Phase 3: Suspended')),
+                (cls.REJECTED, _('Rejected')),
+                (cls.WITHDRAWN, _('Withdrawn')),
+            )
+    general_status = models.CharField(max_length=200, verbose_name=_('General Status'), null=True, blank=False,
+                                      choices=GeneralStatuses.choices())
+    status_message_ar = models.CharField(max_length=500, verbose_name=_('Registration Status Message AR'),
+                                         null=True, blank=False,)
+    status_message_en = models.CharField(max_length=500, verbose_name=_('Registration Status Message EN'),
+                                         null=True, blank=False,)
+    status_message_code = models.CharField(max_length=20, null=True, blank=False, unique=True, )
 
     class Meta:
         verbose_name_plural = _('Admission: Registration Status')
-
-
-class RegistrationStatusMessage(models.Model):
-    status_message_ar = models.CharField(max_length=500, verbose_name=_('Registration Status Message AR'))
-    status_message_en = models.CharField(max_length=500, verbose_name=_('Registration Status Message EN'))
-    status_message_code = models.CharField(max_length=20, null=True, blank=False, unique=True, )
-    status = models.ForeignKey(
-        'RegistrationStatus',
-        on_delete=models.SET_NULL,
-        blank=False,
-        null=True,
-        related_name='status_messages'
-    )
-
-    class Meta:
-        verbose_name_plural = _('Admission: Registration Status Messages')
-        ordering = ('status_message_code',)
+        ordering = ('general_status', 'status_message_code',)
 
     @property
     def registration_status_message(self):
@@ -161,18 +155,15 @@ class RegistrationStatusMessage(models.Model):
             return self.status_message_en
 
     def __str__(self):
-        try:
-            if self.status.status_code != self.status_message_code:
-                return '%s (%s)' % (self.status.status_code, self.status_message_code)
-            else:
-                return self.status_message_code
-        except:
+        if self.general_status != self.status_message_code:
+            return '%s (%s)' % (self.general_status, self.status_message_code)
+        else:
             return self.status_message_code
 
     @staticmethod
     def get_registration_status_choices(add_dashes=True):
         try:
-            choices = RegistrationStatusMessage.objects.all()
+            choices = RegistrationStatus.objects.all()
 
             ch = [(o.id, str(o.status) + ' - ' + str(o)) for o in choices]
             if add_dashes:
@@ -183,144 +174,111 @@ class RegistrationStatusMessage(models.Model):
             return [('--', '--')]
 
     @staticmethod
-    def get_status_applied():
+    def get_status(general_status, status_code):
         try:
-            return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
-                get(status_message_code='APPLIED')
+            status, created = RegistrationStatus.objects.get_or_create(
+                general_status=general_status,
+                status_message_code=status_code,
+            )
+            return status
         except:
             return
+
+    @staticmethod
+    def get_status_applied():
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.APPLIED, 'APPLIED')
 
     @staticmethod
     def get_status_transfer():
-        try:
-            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED').status_messages. \
-                get(status_message_code='TRANSFER')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                                    'TRANSFER')
 
     @staticmethod
     def get_status_applied_non_saudi():
-        try:
-            return RegistrationStatus.objects.get(status_code='APPLIED').status_messages. \
-                get(status_message_code='NON-SAUDI')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.APPLIED, 'NON-SAUDI')
 
     @staticmethod
     def get_status_old_high_school():
-        try:
-            return RegistrationStatus.objects.get(status_code='REJECTED').status_messages. \
-                get(status_message_code='OLD-HS')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.REJECTED, 'OLD-HS')
 
     @staticmethod
     def get_status_girls():
-        try:
-            return RegistrationStatus.objects.get(status_code='REJECTED').status_messages. \
-                get(status_message_code='GIRLS')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.REJECTED, 'GIRLS')
 
     @staticmethod
     def get_status_withdrawn():
-        try:
-            return RegistrationStatus.objects.get(status_code='WITHDRAWN').status_messages.first()
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.WITHDRAWN, 'WITHDRAWN')
 
     @staticmethod
     def get_status_partially_admitted():
-        try:
-            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                                    'PARTIALLY-ADMITTED')
 
     @staticmethod
     def get_status_partially_admitted_non_saudi():
-        try:
-            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED-NON-SAUDI')
-        except:
-            return
-
-    @staticmethod
-    def get_status_partially_admitted_transfer():
-        try:
-            return RegistrationStatusMessage.objects.get(status_message_code='PARTIALLY-ADMITTED-TRANSFER')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                                    'NON-SAUDI')
 
     @staticmethod
     def get_status_admitted():
-        try:
-            return RegistrationStatus.objects.get(status_code='ADMITTED') \
-                .status_messages.get(status_message_code='ADMITTED')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'ADMITTED')
 
     @staticmethod
     def get_status_admitted_non_saudi():
-        try:
-            return RegistrationStatus.objects.get(status_code='ADMITTED') \
-                .status_messages.get(status_message_code='ADMITTED-N')
-        except:
-            return
-
-    @staticmethod
-    def get_status_admitted_transfer_final():
-        try:
-            return RegistrationStatus.objects.get(status_code='ADMITTED') \
-                .status_messages.get(status_message_code='ADMITTED-FINAL-T')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'NON-SAUDI')
 
     @staticmethod
     def get_status_admitted_final():
-        try:
-            return RegistrationStatus.objects.get(status_code='ADMITTED') \
-                .status_messages.get(status_message_code='ADMITTED-FINAL')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'FINAL')
+
+    @staticmethod
+    def get_status_admitted_transfer_final():
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED,
+                                                    'FINAL-TRANSFER')
 
     @staticmethod
     def get_status_admitted_final_non_saudi():
-        try:
-            return RegistrationStatus.objects.get(status_code='ADMITTED') \
-                .status_messages.get(status_message_code='ADMITTED-FINAL-N')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED,
+                                                    'FINAL-NON-SAUDI')
 
     @staticmethod
     def get_status_duplicate():
-        try:
-            return RegistrationStatus.objects.get(status_code='SUSPENDED') \
-                .status_messages.get(status_message_code='DUPLICATE')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.SUSPENDED, 'DUPLICATE')
 
     @staticmethod
     def get_status_confirmed():
-        try:
-            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
-                .status_messages.get(status_message_code='CONFIRMED')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                                    'CONFIRMED')
 
     @staticmethod
     def get_status_confirmed_non_saudi():
-        try:
-            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
-                .status_messages.get(status_message_code='CONFIRMED-N')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                                    'CONFIRMED-NON-SAUDI')
 
     @staticmethod
     def get_status_confirmed_transfer():
-        try:
-            return RegistrationStatus.objects.get(status_code='PARTIALLY-ADMITTED') \
-                .status_messages.get(status_message_code='CONFIRMED-T')
-        except:
-            return
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                                    'CONFIRMED-TRANSFER')
+
+    @staticmethod
+    def init_statuses():
+        RegistrationStatus.get_status_applied()
+        RegistrationStatus.get_status_transfer()
+        RegistrationStatus.get_status_applied_non_saudi()
+        RegistrationStatus.get_status_old_high_school()
+        RegistrationStatus.get_status_girls()
+        RegistrationStatus.get_status_withdrawn()
+        RegistrationStatus.get_status_partially_admitted()
+        RegistrationStatus.get_status_partially_admitted_non_saudi()
+        RegistrationStatus.get_status_admitted()
+        RegistrationStatus.get_status_admitted_non_saudi()
+        RegistrationStatus.get_status_admitted_final()
+        RegistrationStatus.get_status_admitted_transfer_final()
+        RegistrationStatus.get_status_admitted_final_non_saudi()
+        RegistrationStatus.get_status_duplicate()
+        RegistrationStatus.get_status_confirmed()
+        RegistrationStatus.get_status_confirmed_non_saudi()
+        RegistrationStatus.get_status_confirmed_transfer()
 
 
 class GraduationYear(models.Model):

@@ -12,14 +12,14 @@ from django.views.generic import UpdateView
 
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from undergraduate_admission.forms.phase3_forms import TarifiTimeSlotForm
-from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatusMessage, KFUPMIDsPool
+from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, KFUPMIDsPool
 from undergraduate_admission.utils import SMS
 
 
 class Phase3BaseView(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.status_message in [RegistrationStatusMessage.get_status_admitted(),
-                                                    RegistrationStatusMessage.get_status_admitted_non_saudi()] \
+        return self.request.user.status_message in [RegistrationStatus.get_status_admitted(),
+                                                    RegistrationStatus.get_status_admitted_non_saudi()] \
            and AdmissionSemester.get_phase3_active_semester(self.request.user)
 
 
@@ -88,7 +88,7 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
     success_url = reverse_lazy('undergraduate_admission:print_documents')
 
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.status_message == RegistrationStatusMessage.get_status_admitted_transfer_final():
+        if self.request.user.status_message == RegistrationStatus.get_status_admitted_transfer_final():
             return redirect('student_area')
         else:
             return super(ChooseTarifiTimeSlot, self).dispatch(request, *args, **kwargs)
@@ -127,8 +127,8 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
     template_name = 'undergraduate_admission/phase3/letter_admission.html'
 
     def test_func(self):
-        return self.request.user.status_message in [RegistrationStatusMessage.get_status_admitted_final(),
-                                                    RegistrationStatusMessage.get_status_admitted_final_non_saudi()] \
+        return self.request.user.status_message in [RegistrationStatus.get_status_admitted_final(),
+                                                    RegistrationStatus.get_status_admitted_final_non_saudi()] \
            and (AdmissionSemester.get_phase3_active_semester(self.request.user)
                 or self.request.user.tarifi_week_attendance_date)
 
@@ -139,9 +139,9 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
             request.user.medical_report_print_date = timezone.now()
 
         if self.request.user.student_type in ['S', 'M']:
-            status = RegistrationStatusMessage.get_status_admitted_final()
+            status = RegistrationStatus.get_status_admitted_final()
         else:
-            status = RegistrationStatusMessage.get_status_admitted_final_non_saudi()
+            status = RegistrationStatus.get_status_admitted_final_non_saudi()
 
         request.user.status_message = status
         request.user.save()
