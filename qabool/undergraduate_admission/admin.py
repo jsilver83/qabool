@@ -366,7 +366,7 @@ class AgreementAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': AdminPagedownWidget},
     }
-    list_display = ('id', 'semester', 'agreement_type', 'show')
+    list_display = ('id', 'semester', 'status_message', 'agreement_type', 'show')
     list_filter = ('agreement_type',)
 
 
