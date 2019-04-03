@@ -127,13 +127,12 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
                   'passport_file',
                   'courses_certificate',
 
-                  'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
-                  'vehicle_registration_file', 'driving_license_file',
+                  # 'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                  # 'vehicle_registration_file', 'driving_license_file',
 
-                  'bank_name',
-                  'bank_account',
-                  'bank_account_identification_file',
-
+                  # 'bank_name',
+                  # 'bank_account',
+                  # 'bank_account_identification_file',
 
                   'verification_issues',
                   'verification_notes',
@@ -145,7 +144,7 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
             'birthday_ah': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'government_id_expiry': forms.TextInput(attrs={'placeholder': 'YYYY/MM/DD', 'class': 'hijri'}),
             'passport_expiry': forms.DateInput(attrs={'class': 'datepicker'}),
-            'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
+            # 'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
         }
 
     def __init__(self, *args, **kwargs):
@@ -162,7 +161,7 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         self.fields['verification_notes'].widget = forms.Textarea()
         self.fields['verification_notes'].required = False
         self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
-        self.fields['vehicle_owner'].widget = forms.Select(choices=Lookup.get_lookup_choices('VEHICLE_OWNER'))
+        # self.fields['vehicle_owner'].widget = forms.Select(choices=Lookup.get_lookup_choices('VEHICLE_OWNER'))
 
     def save(self, commit=True):
         student = super(VerifyCommitteeForm, self).save()
