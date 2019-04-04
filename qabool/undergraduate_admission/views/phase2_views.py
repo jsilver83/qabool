@@ -218,48 +218,6 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
         return super().form_valid(form)
 
 
-# class UploadDocumentsViewOLD(Phase2BaseView, UpdateView):
-#     template_name = 'undergraduate_admission/phase2/form-uploads.html'
-#     form_class = DocumentsForm
-#     success_url = reverse_lazy('undergraduate_admission:student_area')
-#
-#     def test_func(self):
-#         original_test_result = super().test_func()
-#         return original_test_result and self.request.GET.get('f', '')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['step6'] = 'active'
-#         return context
-#
-#     def get_object(self):
-#         return self.admission_request
-#
-#     def form_valid(self, form):
-#         if self.request.user.status_message == RegistrationStatus.get_status_transfer():
-#             reg_msg = RegistrationStatus.get_status_admitted_transfer_final()
-#         elif self.request.user.student_type == 'N':
-#             reg_msg = RegistrationStatus.get_status_confirmed_non_saudi()
-#         else:
-#             reg_msg = RegistrationStatus.get_status_confirmed()
-#
-#         saved_user = form.save(commit=False)
-#         saved_user.status_message = reg_msg
-#         saved_user.save()
-#
-#         if self.request.user.student_type in [RegistrationStatus.get_status_confirmed_non_saudi(),
-#                                               RegistrationStatus.get_status_confirmed()]:
-#             SMS.send_sms_confirmed(self.request.user.mobile)
-#
-#         if saved_user:
-#             messages.success(self.request, _('Documents were uploaded successfully. We will verify your information '
-#                                              'and get back to you soon...'))
-#         else:
-#             messages.error(self.request, _('Error saving info. Try again later!'))
-#
-#         return super().form_valid(form)
-
-
 class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
     template_name = 'undergraduate_admission/phase2/plain_form.html'
     form_class = MissingDocumentsForm
@@ -267,10 +225,10 @@ class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
 
     def test_func(self):
         original_test_result = super(UploadMissingDocumentsView, self).test_func()
-        return original_test_result and self.request.user.verification_documents_incomplete
+        return original_test_result and self.get_object().can_re_upload_docs
 
     def get_object(self):
-        return self.request.user
+        return self.admission_request
 
     def form_valid(self, form):
         saved = form.save()

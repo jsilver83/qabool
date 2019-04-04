@@ -167,10 +167,11 @@ class DocumentsForm(Phase2GenericForm):
 
     def __init__(self, *args, **kwargs):
         super(DocumentsForm, self).__init__(*args, **kwargs)
-        self.fields['vehicle_owner'].widget = \
-            forms.RadioSelect(choices=Lookup.get_lookup_choices(Lookup.LookupTypes.VEHICLE_OWNER, False))
-
-        print(self.instance)
+        try:
+            self.fields['vehicle_owner'].widget = \
+                forms.RadioSelect(choices=Lookup.get_lookup_choices(Lookup.LookupTypes.VEHICLE_OWNER, False))
+        except:  # for the subclass form MissingDocumentsForm that doesnt have vehicle_owner field
+            pass
 
         if self.instance.student_type == 'N':
             del self.fields['mother_gov_id_file']
@@ -220,6 +221,14 @@ class MissingDocumentsForm(DocumentsForm):
         if not have_a_vehicle:
             del self.fields['vehicle_registration_file']
             del self.fields['driving_license_file']
+
+        fields_to_be_removed = []
+        for field in self.fields:
+            if field not in list(self.instance.verification_issues.all().values_list('related_field', flat=True)):
+                fields_to_be_removed.append(field)
+
+        for field_to_be_deleted in fields_to_be_removed:
+            del self.fields[field_to_be_deleted]
 
     def clean(self):
         cleaned_data = super(MissingDocumentsForm, self).clean()
