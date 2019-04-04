@@ -20,7 +20,7 @@ from qabool.local_settings import SENDFILE_ROOT
 from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
-    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, VehicleInfoForm, PersonalPhotoForm, TransferForm, \
+    RelativeContactForm, WithdrawalForm, WithdrawalProofForm, PersonalPhotoForm, TransferForm, \
     MissingDocumentsForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, KFUPMIDsPool
 from undergraduate_admission.models import User
@@ -49,8 +49,8 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
     raise_exception = True  # PermissionDenied
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.id == int(self.kwargs['pk']) \
-               or is_eligible_for_roommate_search(self.request.user)
+        return self.request.user.is_staff or self.request.user.id == int(self.kwargs['pk']) # \
+               # or is_eligible_for_roommate_search(self.request.user)
 
     def get(self, request, filetype, pk):
         user = get_object_or_404(User, pk=pk)
@@ -98,7 +98,7 @@ class BaseStudentInfoUpdateView(SuccessMessageMixin, StudentMixin, UpdateView):
     current_step_no = None
 
     def get(self, request, *args, **kwargs):
-        if request.session.get(self.required_session_variable) is None:
+        if self.required_session_variable and request.session.get(self.required_session_variable) is None:
             return redirect(self.previous_step_url)
         return super().get(request, *args, **kwargs)
 
@@ -111,7 +111,8 @@ class BaseStudentInfoUpdateView(SuccessMessageMixin, StudentMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        self.request.session[self.affected_session_variable] = True
+        if self.affected_session_variable:
+            self.request.session[self.affected_session_variable] = True
         return super().form_valid(form)
 
 
@@ -141,22 +142,11 @@ class RelativeContactView(BaseStudentInfoUpdateView):
     form_class = RelativeContactForm
     success_message = _('Relative Info was saved successfully...')
     template_name = 'undergraduate_admission/phase2/form-relative.html'
-    success_url = reverse_lazy('undergraduate_admission:vehicle_info')
+    success_url = reverse_lazy('undergraduate_admission:personal_picture')
     required_session_variable = 'guardian_contact_completed'
     affected_session_variable = 'relative_contact_completed'
     previous_step_url = reverse_lazy('undergraduate_admission:guardian_contact')
     current_step_no = 'step3'
-
-
-class VehicleInfoView(BaseStudentInfoUpdateView):
-    form_class = VehicleInfoForm
-    success_message = _('Vehicle info was saved successfully...')
-    template_name = 'undergraduate_admission/phase2/form-uploads.html'
-    success_url = reverse_lazy('undergraduate_admission:personal_picture')
-    required_session_variable = 'relative_contact_completed'
-    affected_session_variable = 'vehicle_info_completed'
-    previous_step_url = reverse_lazy('undergraduate_admission:relative_contact')
-    current_step_no = 'step4'
 
 
 class PersonalPictureView(BaseStudentInfoUpdateView):
@@ -164,10 +154,10 @@ class PersonalPictureView(BaseStudentInfoUpdateView):
     success_message = _('Personal picture was uploaded successfully...')
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
     success_url = reverse_lazy('undergraduate_admission:personal_picture')
-    required_session_variable = 'vehicle_info_completed'
+    required_session_variable = 'relative_contact_completed'
     affected_session_variable = 'personal_picture_completed'
     previous_step_url = reverse_lazy('undergraduate_admission:relative_contact')
-    current_step_no = 'step5'
+    current_step_no = 'step4'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -181,10 +171,10 @@ class PersonalPictureUnacceptableView(BaseStudentInfoUpdateView):
     success_message = _('Personal picture was uploaded successfully...')
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
     success_url = reverse_lazy('undergraduate_admission:personal_picture_re_upload')
-    required_session_variable = 'vehicle_info_completed'
-    affected_session_variable = 'personal_picture_completed'
+    required_session_variable = ''
+    affected_session_variable = ''
     previous_step_url = reverse_lazy('undergraduate_admission:relative_contact')
-    current_step_no = 'step5'
+    current_step_no = 'step4'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -193,27 +183,21 @@ class PersonalPictureUnacceptableView(BaseStudentInfoUpdateView):
         return context
 
 
-class UploadDocumentsView(Phase2BaseView, UpdateView):
-    template_name = 'undergraduate_admission/phase2/form-uploads.html'
+class UploadDocumentsView(BaseStudentInfoUpdateView):
     form_class = DocumentsForm
+    success_message = _('Documents were uploaded successfully. We will verify your information and get back to '
+                        'you soon...')
+    template_name = 'undergraduate_admission/phase2/form-uploads.html'
     success_url = reverse_lazy('undergraduate_admission:student_area')
-
-    def test_func(self):
-        original_test_result = super(UploadDocumentsView, self).test_func()
-        return original_test_result and self.request.GET.get('f', '')
-
-    def get_context_data(self, **kwargs):
-        context = super(UploadDocumentsView, self).get_context_data(**kwargs)
-        context['step6'] = 'active'
-        return context
-
-    def get_object(self):
-        return self.request.user
+    required_session_variable = ''
+    affected_session_variable = 'personal_picture_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:personal_picture')
+    current_step_no = 'step5'
 
     def form_valid(self, form):
-        if self.request.user.status_message == RegistrationStatus.get_status_transfer():
+        if self.admission_request.status_message == RegistrationStatus.get_status_transfer():
             reg_msg = RegistrationStatus.get_status_admitted_transfer_final()
-        elif self.request.user.student_type == 'N':
+        elif self.admission_request.student_type == 'N':
             reg_msg = RegistrationStatus.get_status_confirmed_non_saudi()
         else:
             reg_msg = RegistrationStatus.get_status_confirmed()
@@ -222,17 +206,58 @@ class UploadDocumentsView(Phase2BaseView, UpdateView):
         saved_user.status_message = reg_msg
         saved_user.save()
 
-        if self.request.user.student_type in [RegistrationStatus.get_status_confirmed_non_saudi(),
-                                              RegistrationStatus.get_status_confirmed()]:
-            SMS.send_sms_confirmed(self.request.user.mobile)
+        if self.admission_request.status_message in [RegistrationStatus.get_status_confirmed_non_saudi(),
+                                                     RegistrationStatus.get_status_confirmed()]:
+            SMS.send_sms_confirmed(self.admission_request.mobile)
 
         if saved_user:
-            messages.success(self.request, _('Documents were uploaded successfully. We will verify your information '
-                                             'and get back to you soon...'))
+            messages.success(self.request, self.success_message)
         else:
             messages.error(self.request, _('Error saving info. Try again later!'))
 
-        return super(UploadDocumentsView, self).form_valid(form)
+        return super().form_valid(form)
+
+
+# class UploadDocumentsViewOLD(Phase2BaseView, UpdateView):
+#     template_name = 'undergraduate_admission/phase2/form-uploads.html'
+#     form_class = DocumentsForm
+#     success_url = reverse_lazy('undergraduate_admission:student_area')
+#
+#     def test_func(self):
+#         original_test_result = super().test_func()
+#         return original_test_result and self.request.GET.get('f', '')
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['step6'] = 'active'
+#         return context
+#
+#     def get_object(self):
+#         return self.admission_request
+#
+#     def form_valid(self, form):
+#         if self.request.user.status_message == RegistrationStatus.get_status_transfer():
+#             reg_msg = RegistrationStatus.get_status_admitted_transfer_final()
+#         elif self.request.user.student_type == 'N':
+#             reg_msg = RegistrationStatus.get_status_confirmed_non_saudi()
+#         else:
+#             reg_msg = RegistrationStatus.get_status_confirmed()
+#
+#         saved_user = form.save(commit=False)
+#         saved_user.status_message = reg_msg
+#         saved_user.save()
+#
+#         if self.request.user.student_type in [RegistrationStatus.get_status_confirmed_non_saudi(),
+#                                               RegistrationStatus.get_status_confirmed()]:
+#             SMS.send_sms_confirmed(self.request.user.mobile)
+#
+#         if saved_user:
+#             messages.success(self.request, _('Documents were uploaded successfully. We will verify your information '
+#                                              'and get back to you soon...'))
+#         else:
+#             messages.error(self.request, _('Error saving info. Try again later!'))
+#
+#         return super().form_valid(form)
 
 
 class UploadMissingDocumentsView(Phase2BaseView, UpdateView):

@@ -50,7 +50,6 @@ urlpatterns = [
     path('personal-picturere-upload/', phase2_views.PersonalPictureUnacceptableView.as_view(),
          name='personal_picture_re_upload'),
     path('upload-documents/', phase2_views.UploadDocumentsView.as_view(), name='upload_documents'),
-    path('vehicle-info/', phase2_views.VehicleInfoView.as_view(), name='vehicle_info'),
     path('relative-contact/', phase2_views.RelativeContactView.as_view(), name='relative_contact'),
     path('guardian-contact/', phase2_views.GuardianContactView.as_view(), name='guardian_contact'),
     path('personal-info/', phase2_views.PersonalInfoView.as_view(), name='personal_info'),

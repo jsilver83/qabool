@@ -153,44 +153,24 @@ class RelativeContactForm(Phase2GenericForm):
             self.fields[field].required = True
 
 
-class VehicleInfoForm(Phase2GenericForm):
-    class Meta:
-        model = AdmissionRequest
-        fields = ['have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
-                  'vehicle_registration_file', 'driving_license_file', ]
-        widgets = {
-            'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
-        }
-
-    def clean(self):
-        cleaned_data = super(VehicleInfoForm, self).clean()
-        have_a_vehicle = cleaned_data.get('have_a_vehicle')
-        vehicle_owner = cleaned_data.get('vehicle_owner')
-        vehicle_plate_no = cleaned_data.get('vehicle_plate_no')
-        vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
-        driving_license_file = cleaned_data.get('driving_license_file')
-
-        if have_a_vehicle and not (vehicle_owner and vehicle_plate_no and vehicle_registration_file
-                                   and driving_license_file):
-            raise forms.ValidationError(_('Vehicle info is required.'))
-
-        return cleaned_data
-
-    def __init__(self, *args, **kwargs):
-        super(VehicleInfoForm, self).__init__(*args, **kwargs)
-        self.fields['vehicle_owner'].widget = \
-            forms.RadioSelect(choices=Lookup.get_lookup_choices(Lookup.LookupTypes.VEHICLE_OWNER, False))
-
-
 class DocumentsForm(Phase2GenericForm):
     class Meta:
         model = AdmissionRequest
 
         fields = ['high_school_certificate', 'courses_certificate', 'government_id_file',
-                  'mother_gov_id_file', 'passport_file', 'birth_certificate', ]
+                  'mother_gov_id_file', 'passport_file', 'birth_certificate',
+                  'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                  'vehicle_registration_file', 'driving_license_file', ]
+        widgets = {
+            'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
+        }
 
     def __init__(self, *args, **kwargs):
         super(DocumentsForm, self).__init__(*args, **kwargs)
+        self.fields['vehicle_owner'].widget = \
+            forms.RadioSelect(choices=Lookup.get_lookup_choices(Lookup.LookupTypes.VEHICLE_OWNER, False))
+
+        print(self.instance)
 
         if self.instance.student_type == 'N':
             del self.fields['mother_gov_id_file']
@@ -209,6 +189,20 @@ class DocumentsForm(Phase2GenericForm):
             #       'pdf, jpg, jpeg, png, bmp, gif. Max Size: 2 MB')
 
         self.fields['courses_certificate'].required = False
+
+    def clean(self):
+        cleaned_data = super().clean()
+        have_a_vehicle = cleaned_data.get('have_a_vehicle')
+        vehicle_owner = cleaned_data.get('vehicle_owner')
+        vehicle_plate_no = cleaned_data.get('vehicle_plate_no')
+        vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
+        driving_license_file = cleaned_data.get('driving_license_file')
+
+        if have_a_vehicle and not (vehicle_owner and vehicle_plate_no and vehicle_registration_file
+                                   and driving_license_file):
+            raise forms.ValidationError(_('Vehicle info is required.'))
+
+        return cleaned_data
 
 
 class MissingDocumentsForm(DocumentsForm):
