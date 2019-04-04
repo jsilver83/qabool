@@ -77,7 +77,7 @@
 				{% endif %}
 
 				<div class="alert alert-info" role="alert">
-					<h4>{{ admission_request.status_message.status }}</h4>
+					<h4>{{ admission_request.get_student_phase }}</h4>
 					<strong>{{ admission_request.get_actual_student_status|safe }}</strong><br>
 				</div>
 				{% if admission_request.can_confirm %}
