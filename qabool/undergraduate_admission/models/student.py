@@ -518,7 +518,7 @@ class AdmissionRequest(models.Model):
         now = timezone.now()
         return ((self.get_student_phase() == RegistrationStatus.GeneralStatuses.ADMITTED
                  or self.status_message == RegistrationStatus.get_status_confirmed())
-                and now() <= self.semester.withdrawal_deadline)
+                and now <= self.semester.withdrawal_deadline)
 
     def can_print_withdrawal_letter(self):
         return self.get_student_phase() == RegistrationStatus.GeneralStatuses.WITHDRAWN
