@@ -457,19 +457,6 @@ class AdmissionRequest(models.Model):
 
     get_student_full_name.short_description = _('Full Name')
 
-    def get_student_registration_status(self):
-        try:
-            return self.status_message.status
-        except AttributeError:  # admins don't have status
-            pass
-
-    def get_actual_student_status(self):
-        try:
-            return self.status_message.registration_status_message
-        except:
-            pass
-
-    # TODO: REMOVE THIS
     def get_student_phase(self):
         try:
             return self.status_message.general_status
@@ -582,7 +569,6 @@ class AdmissionRequest(models.Model):
             RegistrationStatus.GeneralStatuses.WITHDRAWN,
             RegistrationStatus.GeneralStatuses.SUSPENDED,
         ] and not self.can_edit_phase1_info()
-
     # endregion
 
     # TODO: enable later when enabling thehousing app
