@@ -4,66 +4,71 @@
 {% load staticfiles %}
 
 {% block subcontent %}
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <br>&nbsp;<br>
-    <div class="row">
-        <div class="col-lg-12">
-            <ul class="nav nav-tabs nav-justified student-nav-tabs">
-                <li class="{{ step1 }}" role="presentation">
-                    <a href="{% url 'undergraduate_admission:personal_info' %}">{% trans 'Personal Info' %}</a></li>
-                <li class="{{ step2 }}" role="presentation">
-                    <a href="{% url 'undergraduate_admission:guardian_contact' %}">{% trans 'Guardian Contact' %}</a></li>
-                <li class="{{ step3 }}" role="presentation">
-                    <a href="{% url 'undergraduate_admission:relative_contact' %}">{% trans 'Relative Contact' %}</a></li>
-                <li class="{{ step4 }}" role="presentation">
-                    <a href="{% url 'undergraduate_admission:vehicle_info' %}">{% trans 'Vehicle Info' %}</a></li>
-                <li class="{{ step5 }}" role="presentation">
-                    <a href="{% url 'undergraduate_admission:personal_picture' %}">{% trans 'Personal Picture' %}</a></li>
-                <li class="{{ step6 }}" role="presentation">
-                    <a href="{% url 'undergraduate_admission:upload_documents' %}">{% trans 'Documents' %}</a></li>
-            </ul>
-            <br><br>
-        </div>
-    </div>
+	{% if messages %}
+		<div class="messages">
+			{% for message in messages %}
+				<div{% if message.tags %} class="alert alert-{{ message.level_tag }}"{% endif %}>{{ message }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+	<br>&nbsp;<br>
+	<div class="row">
+		<div class="col-lg-12">
+			<ul class="nav nav-tabs nav-justified student-nav-tabs">
+				<li class="{{ step1 }}" role="presentation">
+					<a href="{% url 'undergraduate_admission:personal_info' %}">{% trans 'Personal Info' %}</a></li>
+				<li class="{{ step2 }}" role="presentation">
+					<a href="{% url 'undergraduate_admission:guardian_contact' %}">{% trans 'Guardian Contact' %}</a>
+				</li>
+				<li class="{{ step3 }}" role="presentation">
+					<a href="{% url 'undergraduate_admission:relative_contact' %}">{% trans 'Relative Contact' %}</a>
+				</li>
+				<li class="{{ step4 }}" role="presentation">
+					<a href="{% url 'undergraduate_admission:personal_picture' %}">{% trans 'Personal Picture' %}</a>
+				</li>
+				<li class="{{ step5 }}" role="presentation">
+					<a href="{% url 'undergraduate_admission:upload_documents' %}">{% trans 'Documents' %}</a></li>
+				<li class="{{ step6 }}" role="presentation">
+					<a href="{% url 'undergraduate_admission:upload_documents' %}">{% trans 'Preview Names' %}</a></li>
+			</ul>
+			<br><br>
+		</div>
+	</div>
 
-    {% block form-notes %}
-    {% endblock form-notes %}
+	{% block form-notes %}
+	{% endblock form-notes %}
 
-    <form method="post" class="form-horizontal" enctype="multipart/form-data">
-        {% csrf_token %}
-	    {% crispy form %}
-        <br>&nbsp;<br>
-        <input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save and Next' %}"/>
-    </form>
-    <br><br><br>
-    <hr>
+	{% block form %}
+		<form method="post" class="form-horizontal" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% crispy form %}
+			<br>&nbsp;<br>
+			<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save and Next' %}"/>
+		</form>
+	{% endblock form %}
+	<br><br><br>
+	<hr>
 {% endblock subcontent %}
 
 {% block styles %}
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'js/calendars/jquery.calendars.picker.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.11.4.custom/jquery-ui.theme.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'js/calendars/smoothness.calendars.picker.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'js/calendars/jquery.calendars.picker.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui-1.11.4.custom/jquery-ui.theme.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'js/calendars/smoothness.calendars.picker.css' %}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet"/>
 {% endblock styles %}
 
 {% block scripts %}
-    <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"
-            integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
-            crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.plus.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/calendars/jquery.plugin.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.picker.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.ummalqura.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.ummalqura-ar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/custom-form-phase2.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
-    <script src="{% static 'js/custom-register.js' %}"></script>
+	<script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"
+	        integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
+	        crossorigin="anonymous"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.plus.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.plugin.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.picker.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.ummalqura.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/calendars/jquery.calendars.ummalqura-ar.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/custom-form-phase2.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+	<script src="{% static 'js/custom-register.js' %}"></script>
 {% endblock scripts %}
