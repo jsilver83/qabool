@@ -134,12 +134,13 @@ class RegistrationStatus(models.Model):
                 (cls.REJECTED, _('Rejected')),
                 (cls.WITHDRAWN, _('Withdrawn')),
             )
+
     general_status = models.CharField(max_length=200, verbose_name=_('General Status'), null=True, blank=False,
                                       choices=GeneralStatuses.choices())
-    status_message_ar = models.CharField(max_length=500, verbose_name=_('Registration Status Message AR'),
-                                         null=True, blank=False,)
-    status_message_en = models.CharField(max_length=500, verbose_name=_('Registration Status Message EN'),
-                                         null=True, blank=False,)
+    status_message_ar = models.TextField(max_length=1500, verbose_name=_('Registration Status Message AR'),
+                                         null=True, blank=False, )
+    status_message_en = models.TextField(max_length=1500, verbose_name=_('Registration Status Message EN'),
+                                         null=True, blank=False, )
     status_message_code = models.CharField(max_length=20, null=True, blank=False, unique=True, )
 
     class Meta:
@@ -188,7 +189,7 @@ class RegistrationStatus(models.Model):
     @staticmethod
     def get_status_transfer():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
-                                                    'TRANSFER')
+                                             'TRANSFER')
 
     @staticmethod
     def get_status_applied_non_saudi():
@@ -209,12 +210,12 @@ class RegistrationStatus(models.Model):
     @staticmethod
     def get_status_partially_admitted():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
-                                                    'PARTIALLY-ADMITTED')
+                                             'PARTIALLY-ADMITTED')
 
     @staticmethod
     def get_status_partially_admitted_non_saudi():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
-                                                    'NON-SAUDI')
+                                             'NON-SAUDI')
 
     @staticmethod
     def get_status_admitted():
@@ -231,12 +232,12 @@ class RegistrationStatus(models.Model):
     @staticmethod
     def get_status_admitted_transfer_final():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED,
-                                                    'FINAL-TRANSFER')
+                                             'FINAL-TRANSFER')
 
     @staticmethod
     def get_status_admitted_final_non_saudi():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED,
-                                                    'FINAL-NON-SAUDI')
+                                             'FINAL-NON-SAUDI')
 
     @staticmethod
     def get_status_duplicate():
@@ -245,17 +246,21 @@ class RegistrationStatus(models.Model):
     @staticmethod
     def get_status_confirmed():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
-                                                    'CONFIRMED')
+                                             'CONFIRMED')
 
     @staticmethod
     def get_status_confirmed_non_saudi():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
-                                                    'CONFIRMED-NON-SAUDI')
+                                             'CONFIRMED-NON-SAUDI')
 
     @staticmethod
     def get_status_confirmed_transfer():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
-                                                    'CONFIRMED-TRANSFER')
+                                             'CONFIRMED-TRANSFER')
+
+    @staticmethod
+    def get_status_rejected():
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.REJECTED, 'REJECTED')
 
     @staticmethod
     def init_statuses():
@@ -276,6 +281,7 @@ class RegistrationStatus(models.Model):
         RegistrationStatus.get_status_confirmed()
         RegistrationStatus.get_status_confirmed_non_saudi()
         RegistrationStatus.get_status_confirmed_transfer()
+        RegistrationStatus.get_status_rejected()
 
 
 class GraduationYear(models.Model):
