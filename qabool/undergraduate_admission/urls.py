@@ -47,7 +47,7 @@ urlpatterns = [
          name='upload_documents_incomplete'),
     path('upload-withdrawal-proof/', phase2_views.upload_withdrawal_proof, name='upload_withdrawal_proof'),
     path('personal-picture/', phase2_views.PersonalPictureView.as_view(), name='personal_picture'),
-    path('personal-picturere-upload/', phase2_views.PersonalPictureUnacceptableView.as_view(),
+    path('personal-picture-re-upload/', phase2_views.PersonalPictureUnacceptableView.as_view(),
          name='personal_picture_re_upload'),
     path('upload-documents/', phase2_views.UploadDocumentsView.as_view(), name='upload_documents'),
     path('relative-contact/', phase2_views.RelativeContactView.as_view(), name='relative_contact'),

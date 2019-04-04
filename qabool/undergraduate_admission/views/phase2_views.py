@@ -170,15 +170,11 @@ class PersonalPictureUnacceptableView(BaseStudentInfoUpdateView):
     form_class = PersonalPhotoForm
     success_message = _('Personal picture was uploaded successfully...')
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
-    success_url = reverse_lazy('undergraduate_admission:personal_picture_re_upload')
-    required_session_variable = ''
-    affected_session_variable = ''
-    previous_step_url = reverse_lazy('undergraduate_admission:relative_contact')
-    current_step_no = 'step4'
+    success_url = reverse_lazy('undergraduate_admission:student_area')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['base_extend'] = 'base_student_area/phase2/form.html'
+        context['base_extend'] = 'base_student_area.html'
         context['re_upload'] = True
         return context
 
