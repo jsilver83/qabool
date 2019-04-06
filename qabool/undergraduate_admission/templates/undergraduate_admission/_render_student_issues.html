@@ -1,4 +1,8 @@
 {% for issue in issues %}
+	{% ifchanged issue.get_related_field_display and not forloop.first %}
+		</ul>
+		<br>
+	{% endifchanged %}
 	{% ifchanged issue.get_related_field_display %}
 		<h4>&#9745; {{ issue.get_related_field_display }}:</h4>
 		<ul>
@@ -6,8 +10,6 @@
 	{% else %}
 		<li>{{ issue }}</li>
 	{% endifchanged %}
-	{% ifchanged issue.get_related_field_display %}
-		</ul><br>
-	{% endifchanged %}
+
 	{% endfor %}
 </ul>
