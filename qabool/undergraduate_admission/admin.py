@@ -372,7 +372,8 @@ class AgreementAdmin(admin.ModelAdmin):
 
 
 class VerificationIssuesAdmin(admin.ModelAdmin):
-    list_display = ('semester', 'agreement_type', 'show')
+    list_display = ('related_field', 'verification_issue_ar', 'verification_issue_en', 'show', 'display_order')
+    list_filter = ('related_field', 'show', )
 
 
 # Display Qabool in the page title and header
@@ -384,7 +385,7 @@ admin.site.register(TarifiReceptionDate, TarifiReceptionDateAdmin)
 admin.site.register(ImportantDateSidebar, ImportantDateSidebarAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)
 admin.site.register(City)
-admin.site.register(VerificationIssues)
+admin.site.register(VerificationIssues, VerificationIssuesAdmin)
 admin.site.register(DeniedStudent, DeniedStudentAdmin)
 admin.site.register(GraduationYear, GraduationYearAdmin)
 admin.site.register(Agreement, AgreementAdmin)
