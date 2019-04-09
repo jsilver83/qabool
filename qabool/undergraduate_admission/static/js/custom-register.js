@@ -5,9 +5,9 @@ $(function () {
         $(".subBtn").toggle();
     });
 
-    sm($("#id_nationality").prop('selectedIndex'));
+    sm($("#id_nationality").val());
     $("#id_nationality").change(function () {
-        var vaa = $(this).prop('selectedIndex');
+        var vaa = $(this).val();
         sm(vaa);
     });
     $("#id_saudi_mother").change(function () {
@@ -26,7 +26,7 @@ $(function () {
 });
 
 function sm(nat) {
-    if (nat == 1) {
+    if (nat == 'SA') {
         $("#id_saudi_mother").parents(".form-group").hide();
         $("#id_saudi_mother").val("");
         $("#id_saudi_mother").removeAttr("required");
