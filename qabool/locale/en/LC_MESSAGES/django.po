@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-04 09:02+0300\n"
+"POT-Creation-Date: 2019-04-09 21:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
 #: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:251
-#: undergraduate_admission/forms/phase2_forms.py:319
+#: undergraduate_admission/forms/phase2_forms.py:328
 #: undergraduate_admission/models/student.py:135
 #: undergraduate_admission/models/student.py:607
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
@@ -98,7 +98,7 @@ msgstr ""
 msgid "KFUPM ID"
 msgstr ""
 
-#: find_roommate/forms.py:108 undergraduate_admission/forms/phase2_forms.py:345
+#: find_roommate/forms.py:108 undergraduate_admission/forms/phase2_forms.py:354
 msgid "Invalid KFUPM ID"
 msgstr ""
 
@@ -247,7 +247,7 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:27
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:26
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:46
-#: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
+#: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:22
 #: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:98
 #: undergraduate_admission/templates/undergraduate_admission/phase2/withdraw.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
@@ -265,7 +265,7 @@ msgid "I agree"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/housing_update_form.html:34
-#: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:23
+#: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:22
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
 msgid "Save"
 msgstr ""
@@ -395,7 +395,7 @@ msgstr ""
 #: undergraduate_admission/forms/general_forms.py:140
 #: undergraduate_admission/forms/general_forms.py:160
 #: undergraduate_admission/forms/phase1_forms.py:45
-#: undergraduate_admission/forms/phase2_forms.py:312
+#: undergraduate_admission/forms/phase2_forms.py:321
 #: undergraduate_admission/models/student.py:639
 #: undergraduate_admission/models/student.py:677
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
@@ -461,9 +461,9 @@ msgstr ""
 msgid "Request was cancelled as per your request..."
 msgstr ""
 
-#: find_roommate/views.py:277 undergraduate_admission/views/phase2_views.py:216
-#: undergraduate_admission/views/phase2_views.py:281
-#: undergraduate_admission/views/phase2_views.py:302
+#: find_roommate/views.py:277 undergraduate_admission/views/phase2_views.py:212
+#: undergraduate_admission/views/phase2_views.py:235
+#: undergraduate_admission/views/phase2_views.py:256
 msgid "Error saving info. Try again later!"
 msgstr ""
 
@@ -747,15 +747,15 @@ msgstr ""
 msgid "Sync with Yesser"
 msgstr ""
 
-#: undergraduate_admission/admin.py:379
+#: undergraduate_admission/admin.py:380
 msgid "Qabool"
 msgstr ""
 
-#: undergraduate_admission/admin.py:380
+#: undergraduate_admission/admin.py:381
 msgid "Qabool Administration"
 msgstr ""
 
-#: undergraduate_admission/admin.py:381
+#: undergraduate_admission/admin.py:382
 msgid "Administration"
 msgstr ""
 
@@ -916,7 +916,7 @@ msgstr ""
 #: undergraduate_admission/forms/general_forms.py:148
 #: undergraduate_admission/forms/general_forms.py:202
 #: undergraduate_admission/forms/phase1_forms.py:148
-#: undergraduate_admission/forms/phase2_forms.py:353
+#: undergraduate_admission/forms/phase2_forms.py:362
 msgid "Confirmation Code"
 msgstr ""
 
@@ -930,7 +930,7 @@ msgid "New Password"
 msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:174
-#: undergraduate_admission/forms/phase2_forms.py:348
+#: undergraduate_admission/forms/phase2_forms.py:357
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr ""
 
@@ -940,7 +940,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:182
 #: undergraduate_admission/forms/phase1_forms.py:141
-#: undergraduate_admission/forms/phase2_forms.py:349
+#: undergraduate_admission/forms/phase2_forms.py:358
 msgid "Enter the same password as before, for verification"
 msgstr ""
 
@@ -957,7 +957,7 @@ msgid "I accept all the above terms and conditions"
 msgstr ""
 
 #: undergraduate_admission/forms/phase1_forms.py:48
-#: undergraduate_admission/forms/phase2_forms.py:316
+#: undergraduate_admission/forms/phase2_forms.py:325
 msgid ""
 "National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or "
 "2xxxxxxxxx."
@@ -1037,27 +1037,27 @@ msgstr ""
 msgid "Disability type(s) can not be empty"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:203
-#: undergraduate_admission/forms/phase2_forms.py:231
+#: undergraduate_admission/forms/phase2_forms.py:204
+#: undergraduate_admission/forms/phase2_forms.py:240
 msgid "Vehicle info is required."
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:249
+#: undergraduate_admission/forms/phase2_forms.py:258
 msgid ""
 "Please upload clear scanned images with good quality. Allowed formats: jpg, "
 "jpeg, png, bmp, gif. Max Size: 2 MB"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:321
+#: undergraduate_admission/forms/phase2_forms.py:330
 msgid "Enter the ID given to you by KFUPM"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:324
+#: undergraduate_admission/forms/phase2_forms.py:333
 #: undergraduate_admission/models/student.py:53
 msgid "Student Notes"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:370
+#: undergraduate_admission/forms/phase2_forms.py:379
 msgid "You are not eligible for a transfer to KFUPM"
 msgstr ""
 
@@ -1875,11 +1875,6 @@ msgid ""
 "\t\t\t\t\t\t\t\t<h2>Important Information</h2>\n"
 "\t\t\t\t\t\t\t</div>\n"
 "\t\t\t\t\t\t\t<ul>\n"
-"\t\t\t\t\t\t\t\t<li class=\"info\">\n"
-"\t\t\t\t\t\t\t\t\t<a target=\"_blank\"\n"
-"\t\t\t\t\t\t\t\t\t   href=\"http://www.kfupm.edu.sa/departments/admissions/"
-"SitePages/ar/Survey.aspx\">\n"
-"\t\t\t\t\t\t\t\t\t\tApplication Experience Survey</a></li>\n"
 "\t\t\t\t\t\t\t\t<li class=\"calculator\"><a href=\"http://www.kfupm.edu.sa/"
 "departments/admissions/SitePages/\n"
 "\t\t\t\t\tar/QaboolCalculator.aspx\">Qabool Calculator</a></li>\n"
@@ -2672,22 +2667,22 @@ msgstr ""
 msgid "Personal picture was uploaded successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:188
-#: undergraduate_admission/views/phase2_views.py:278
+#: undergraduate_admission/views/phase2_views.py:184
+#: undergraduate_admission/views/phase2_views.py:232
 msgid ""
 "Documents were uploaded successfully. We will verify your information and "
 "get back to you soon..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:298
+#: undergraduate_admission/views/phase2_views.py:252
 msgid "Documents were uploaded successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:311
+#: undergraduate_admission/views/phase2_views.py:265
 msgid "You have withdrawn from the university successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/phase2_views.py:370
+#: undergraduate_admission/views/phase2_views.py:324
 msgid "Your transfer request was approved"
 msgstr ""
 
