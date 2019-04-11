@@ -49,14 +49,14 @@ class RoommateRequest(models.Model):
             )
 
     requesting_user = models.ForeignKey(
-        'undergraduate_admission.User',
+        'undergraduate_admission.AdmissionRequest',
         on_delete=models.SET_NULL,
         related_name='roommate_request_sent',
         null=True,
         blank=False,
     )
     requested_user = models.ForeignKey(
-        'undergraduate_admission.User',
+        'undergraduate_admission.AdmissionRequest',
         on_delete=models.SET_NULL,
         related_name='roommate_request_received',
         null=True,
