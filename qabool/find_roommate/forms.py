@@ -2,12 +2,13 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
+from shared_app.base_forms import BaseCrispyForm
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from .models import HousingUser
 from undergraduate_admission.models import Lookup, AdmissionRequest
 
 
-class HousingInfoUpdateForm(forms.ModelForm):
+class HousingInfoUpdateForm(BaseCrispyForm, forms.ModelForm):
     agree1 = forms.BooleanField(label=_('housing terms and conditions 1'))
     agree2 = forms.BooleanField(label=_('housing terms and conditions 2'))
     agree3 = forms.BooleanField(label=_('housing terms and conditions 3'))
@@ -71,7 +72,7 @@ class HousingInfoUpdateForm(forms.ModelForm):
                 raise forms.ValidationError(_('Enter required values'))
 
 
-class HousingSearchForm(forms.Form):
+class HousingSearchForm(BaseCrispyForm, forms.Form):
     high_school_city = forms.CharField(
         # queryset = User.objects.order_by().values_list('high_school_city').distinct(),
         widget=forms.Select(choices=AdmissionRequest.get_distinct_high_school_city()),

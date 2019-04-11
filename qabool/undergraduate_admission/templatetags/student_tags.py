@@ -14,11 +14,11 @@ def student_info_commands(context):
 
     phase = admission_request.get_student_phase()
     status_css_class = 'info'
-    if phase == 'PARTIALLY-ADMITTED' or phase == 'ADMITTED':
+    if phase in [RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED, RegistrationStatus.GeneralStatuses.ADMITTED]:
         status_css_class = 'success'
-    elif phase == 'WITHDRAWN':
+    elif phase == RegistrationStatus.GeneralStatuses.WITHDRAWN:
         status_css_class = 'default'
-    elif phase == 'REJECTED':
+    elif phase == RegistrationStatus.GeneralStatuses.REJECTED:
         status_css_class = 'danger'
 
     return {
