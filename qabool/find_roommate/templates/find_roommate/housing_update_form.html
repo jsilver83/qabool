@@ -1,18 +1,12 @@
 {% extends 'find_roommate/base_housing.html' %}
 {% load i18n %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
+{% load markdown_deux_tags %}
 
 {% block subcontent %}
-	{{ agreement.agreement_header|linebreaks }}
-	<br>
-	<ul>
-		{% for item in items %}
-			<li>{{ item|safe|linebreaks }}</li>
-		{% endfor %}
-	</ul>
-
-	<br><br><br>
+    {{ agreement.agreement|markdown|linebreaks }}
+	<br><br>
 
 	{{ block.super }}
 
@@ -20,19 +14,22 @@
 	<div class="alert alert-danger" role="alert">{{ form.errors }}</div>
 	{% endif %}
 	<form method="post" class="form-horizontal">
-		{% form form using %}
 		{% csrf_token %}
-		{% formconfig row using "floppyforms/rows/bootstrap3-horizontal.html" %}
-		{% formrow form.searchable %}
+		{{ form.searchable|as_crispy_field }}
 		<div class="form_update">
-			{% formrow form.twitter form.facebook form.sleeping form.light form.room_temperature %}
-			{% formrow form.visits form.interests_and_hobbies %}
-			{% formconfig row using "floppyforms/rows/bootstrap3-horizontal-checkboxes.html" %}
-			{% formrow form.agree1 form.agree2 form.agree3 %}
+			{{ form.twitter|as_crispy_field }}
+			{{ form.facebook|as_crispy_field }}
+			{{ form.sleeping|as_crispy_field }}
+			{{ form.light|as_crispy_field }}
+			{{ form.room_temperature|as_crispy_field }}
+			{{ form.visits|as_crispy_field }}
+			{{ form.interests_and_hobbies|as_crispy_field }}
+			{{ form.agree1|as_crispy_field }}
+			{{ form.agree2|as_crispy_field }}
+			{{ form.agree3|as_crispy_field }}
 		</div>
 		<br>&nbsp;<br>
 		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
-		{% endform %}
 	</form>
 
 	<br><br><br>
