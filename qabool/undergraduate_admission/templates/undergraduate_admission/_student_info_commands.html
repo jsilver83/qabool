@@ -26,7 +26,7 @@
 			<dt>{% trans 'Nationality' %}</dt>
 			<dd>{{ admission_request.nationality.name }}</dd>
 			<dt>{% trans 'Registration Status' %}</dt>
-			<dd><h2 class="label label-{{ status_css_class }}">{{ admission_request.get_student_registration_status }}</h2></dd>
+			<dd><h2 class="label label-{{ status_css_class }}">{{ admission_request.get_student_phase_display }}</h2></dd>
 		</dl>
 	</div>
 </div>

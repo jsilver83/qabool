@@ -77,8 +77,8 @@
 				{% endif %}
 
 				<div class="alert alert-info" role="alert">
-					<h4>{{ admission_request.get_student_phase }}</h4>
-					<strong>{{ admission_request.get_actual_student_status|safe }}</strong><br>
+					<h4>{{ admission_request.get_student_phase_display }}</h4>
+					<strong>{{ admission_request.get_student_status_display|safe|linebreaksbr }}</strong><br>
 				</div>
 				{% if admission_request.can_confirm %}
 					<a href="{% url 'undergraduate_admission:confirm' %}" class="btn btn-success btn-lg btn-block">
