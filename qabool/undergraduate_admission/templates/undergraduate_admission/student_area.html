@@ -17,7 +17,7 @@
 	<h3>{% trans 'Application Details' %}</h3>
 	<hr>
 	<form class="form-horizontal">
-		{% if show_result and admission_request.get_student_total %}
+		{% if admission_request.can_see_result and admission_request.get_student_total %}
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{% trans 'Total' %}</label>
 				<div class="col-sm-5">
@@ -26,7 +26,7 @@
 			</div>
 		{% endif %}
 
-		{% if show_result %}
+		{% if admission_request.can_see_result %}
 			{% if not admission_request.high_school_gpa or not admission_request.qudrat_score or not admission_request.tahsili_score %}
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{% trans 'Missing Exams' %}</label>
@@ -85,7 +85,7 @@
 						<i class="fa fa-admission_request" aria-hidden="true"></i> {% trans 'Complete Application' %}</a>
 				{% endif %}
 
-				{% if can_upload_withdrawal_proof %}
+				{% if admission_request.can_upload_withdrawal_proof %}
 					<div class="alert alert-danger" role="alert">
 						{% trans 'Please upload proof that you have withdrawn from the other university(s)' %}:
 						<br><br>
