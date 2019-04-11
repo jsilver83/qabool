@@ -25,7 +25,6 @@ from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, Documen
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, KFUPMIDsPool
 from undergraduate_admission.models import User
 from undergraduate_admission.utils import SMS, parse_non_standard_numerals
-from undergraduate_admission.validators import is_eligible_for_roommate_search
 
 
 def is_admitted(user):

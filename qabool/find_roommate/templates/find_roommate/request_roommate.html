@@ -2,17 +2,12 @@
 {% load i18n %}
 {% load floppyforms %}
 {% load staticfiles %}
+{% load markdown_deux_tags %}
 
 {% block subcontent %}
 	{{ block.super }}
-	{{ agreement.agreement_header|linebreaks }}
+    {{ agreement.agreement|markdown|linebreaks }}
 	<br>
-	<ul>
-		{% for item in items %}
-			<li>{{ item|safe|linebreaks }}</li>
-		{% endfor %}
-	</ul>
-	<br>&nbsp;<br>
 	{% if form.errors %}
 		<div class="alert alert-danger" role="alert">{{ form.errors }}</div>
 	{% endif %}
