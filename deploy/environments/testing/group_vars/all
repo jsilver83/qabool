@@ -3,6 +3,11 @@ django_project_branch: default
 apache_server_names:
   - qabool.test.kfupm.edu.sa
 
+
+# pick a unique port that is not used by any other application on the target
+# application server
+uwsgi_http_port: 5656
+
 # required for proper SSL termination on load-balancer while using CAS
 apache_public_url: https://qabool.test.kfupm.edu.sa
 apache_load_balancer_ips: ["10.180.24.1"]
@@ -10,7 +15,7 @@ apache_proxy:
   - path: /
     protocol: uwsgi
     host: localhost
-    port: 5656
+    port: "{{ uwsgi_http_port }}"
     remote_path: /
 
 database_engine: django.db.backends.postgresql
@@ -24,10 +29,6 @@ django_debug: no
 apache_debug: yes
 
 email_user: test-qabool@kfupm.edu.sa
-
-# pick a unique port that is not used by any other application on the target
-# application server
-uwsgi_http_port: 5656
 
 cas_login_url: "{{ test_cas_login_url }}"
 cas_validate_url: "{{ test_cas_validate_url }}"
