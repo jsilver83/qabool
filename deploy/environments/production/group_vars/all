@@ -4,6 +4,10 @@ apache_server_names:
   - qabool.kfupm.edu.sa
   - "{{ inventory_hostname }}"
 
+# pick a unique port that is not used by any other application on the target
+# application server
+uwsgi_http_port: 8002
+
 # required for proper SSL termination on load-balancer while using CAS
 apache_public_url: https://qabool.kfupm.edu.sa
 apache_load_balancer_ips: ["10.142.24.1", "10.142.26.1"]
@@ -11,7 +15,7 @@ apache_proxy:
   - path: /
     protocol: uwsgi
     host: localhost
-    port: 8002
+    port: "{{ uwsgi_http_port }}"
     remote_path: /
 
 database_engine: django.db.backends.postgresql
@@ -47,7 +51,3 @@ yesser_qiyas_wsdl: http://10.140.8.226/GSBExpress/Education/QiyasExamResult/3.3/
 yesser_moe_wsdl: http://10.140.8.226/GSBExpress/Education/MOEStudentRecord/3.0/SchoolStudentRecordService.svc?wsdl
 yesser_mohe_wsdl: http://10.140.8.226/GSBExpress/Education/MOHEStudentAdmission/MOHEStudentAdmission.svc?wsdl
 yesser_sms_wsdl: http://10.140.8.226/GSBExpress/Other/GSBNotification/3.0/NotificationService.svc?wsdl
-
-# pick a unique port that is not used by any other application on the target
-# application server
-uwsgi_http_port: 8002
