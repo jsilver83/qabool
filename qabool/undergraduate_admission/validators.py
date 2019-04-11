@@ -56,12 +56,3 @@ def validate_image_extension(value):
             _('Image size {} is larger than {}!'.format(size_format(value.size), size_format(MAX_IMAGE_UPLOAD_SIZE))),
             code='size_not_allowed',
         )
-
-
-def is_eligible_for_housing(user):
-    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing
-
-
-def is_eligible_for_roommate_search(user):
-    return user.get_student_phase() == 'ADMITTED' and user.eligible_for_housing \
-           and hasattr(user, 'housing_user') and user.housing_user.searchable

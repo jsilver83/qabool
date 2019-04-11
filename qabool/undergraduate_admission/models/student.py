@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 
+from find_roommate.models import RoommateRequest
 from undergraduate_admission.media_handlers import upload_location_govid, upload_location_birth, \
     upload_location_mother_govid, upload_location_passport, upload_location_certificate, \
     upload_location_picture, upload_location_courses, upload_location_withdrawal_proof, \
@@ -463,6 +464,18 @@ class AdmissionRequest(models.Model):
         except:
             return RegistrationStatus.GeneralStatuses.REJECTED
 
+    def get_student_phase_display(self):
+        try:
+            return self.status_message.get_general_status_display()
+        except:
+            return RegistrationStatus.GeneralStatuses.REJECTED
+
+    def get_student_status_display(self):
+        try:
+            return self.status_message.registration_status_message
+        except:
+            return RegistrationStatus.GeneralStatuses.REJECTED
+
     @property
     def student_type(self):
         student_type = 'S'
@@ -571,10 +584,9 @@ class AdmissionRequest(models.Model):
         ] and not self.can_edit_phase1_info()
     # endregion
 
-    # TODO: enable later when enabling thehousing app
-    # def pending_housing_roommate_requests_count(self):
-    #     return RoommateRequest.objects.filter(requested_user=self,
-    #                                           status=RoommateRequest.RequestStatuses.PENDING).count()
+    def pending_housing_roommate_requests_count(self):
+        return RoommateRequest.objects.filter(requested_user=self,
+                                              status=RoommateRequest.RequestStatuses.PENDING).count()
 
     @staticmethod
     def get_distinct_high_school_city(add_dashes=True):

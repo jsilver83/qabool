@@ -26,7 +26,7 @@
 			<dt>{% trans 'Nationality' %}</dt>
 			<dd>{{ admission_request.nationality.name }}</dd>
 			<dt>{% trans 'Registration Status' %}</dt>
-			<dd><h2 class="label label-{{ status_css_class }}">{{ admission_request.get_student_registration_status }}</h2></dd>
+			<dd><h2 class="label label-{{ status_css_class }}">{{ admission_request.get_student_phase_display }}</h2></dd>
 		</dl>
 	</div>
 </div>
@@ -41,7 +41,7 @@
 	<a href="{% url 'find_roommate:housing_landing_page' %}" class="list-group-item">
 		<i class="fa fa-home" aria-hidden="true"></i>
 		&nbsp;{% trans 'Student Housing' %}
-		{% if pending_housing_roommate_requests %}
+		{% if admission_request.pending_housing_roommate_requests %}
 		&nbsp;<span class="label label-danger">{{ pending_housing_roommate_requests }}</span>
 		{% endif %}
 	</a>
