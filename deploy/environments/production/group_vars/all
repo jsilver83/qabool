@@ -15,7 +15,7 @@ apache_proxy:
     remote_path: /
 
 database_engine: django.db.backends.postgresql
-database_name: qabool2017
+database_name: qabool2019
 database_user: qabool
 # database_password: set from Vault in playbook
 database_host: postgres-qabool-1.kfupm.edu.sa
