@@ -464,6 +464,18 @@ class AdmissionRequest(models.Model):
         except:
             return RegistrationStatus.GeneralStatuses.REJECTED
 
+    def get_student_phase_display(self):
+        try:
+            return self.status_message.get_general_status_display()
+        except:
+            return RegistrationStatus.GeneralStatuses.REJECTED
+
+    def get_student_status_display(self):
+        try:
+            return self.status_message.registration_status_message
+        except:
+            return RegistrationStatus.GeneralStatuses.REJECTED
+
     @property
     def student_type(self):
         student_type = 'S'
