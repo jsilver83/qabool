@@ -392,3 +392,9 @@ class TransferForm(AdminPasswordChangeForm):
         if commit:
             user.save()
         return user
+
+
+class CompareNamesForm(Phase2GenericForm):
+    class Meta:
+        model = AdmissionRequest
+        fields = ['student_full_name_ar', 'student_full_name_en', ]

@@ -576,6 +576,11 @@ class AdmissionRequest(models.Model):
         return (self.get_student_phase() == RegistrationStatus.GeneralStatuses.APPLIED
                 and AdmissionSemester.check_if_phase1_is_active())
 
+    def can_access_phase3(self):
+        return (self.status_message in [RegistrationStatus.get_status_admitted(),
+                                        RegistrationStatus.get_status_admitted_non_saudi()]
+                and AdmissionSemester.get_phase3_active_semester(self))
+
     def can_edit_contact_info(self):
         return self.get_student_phase() not in [
             RegistrationStatus.GeneralStatuses.REJECTED,
