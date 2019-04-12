@@ -71,7 +71,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
         }),
         ('Withdrawal Fields', {
             'classes': ('collapse',),
-            'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason'),
+            'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason', 'withdrawal_proof_letter'),
 
         }),
         ('Awareness Week Fields', {
@@ -226,6 +226,12 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                                            text=_('Bank Account Identification File'),
                                            url=reverse('download_user_file_admin',
                                                        args=('bank_account_identification_file', obj.id)))
+
+        if obj.withdrawal_proof_letter:
+            docs_links_html += format_html("<a href='{url}' target='_blank'>{text}</a><br>",
+                                           text=_('Withdrawal Proof Letter'),
+                                           url=reverse('download_user_file_admin',
+                                                       args=('withdrawal_proof_letter', obj.id)))
 
         return format_html(docs_links_html)
 

@@ -223,25 +223,18 @@ class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
         return super(UploadMissingDocumentsView, self).form_valid(form)
 
 
-@login_required()
-def upload_withdrawal_proof(request):
-    # it is ok to come here unconditionally if student has duplicate admission in other universities
-    if request.method == 'GET' and not request.user.status_message == RegistrationStatus.get_status_duplicate():
-        return redirect('undergraduate_admission:student_area')
+class UploadWithdrawalProofView(StudentMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'undergraduate_admission/phase2/plain_form.html'
+    form_class = WithdrawalProofForm
+    success_url = reverse_lazy('undergraduate_admission:student_area')
+    success_message = _('Documents were uploaded successfully...')
 
-    form = WithdrawalProofForm(request.POST or None, request.FILES or None, instance=request.user)
+    def get_object(self, queryset=None):
+        return self.admission_request
 
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Documents were uploaded successfully...'))
-                request.session['upload_documents_completed'] = True
-                return redirect('undergraduate_admission:student_area')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-    return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
+    def test_func(self):
+        super_test_result = super().test_func()
+        return super_test_result and self.admission_request.can_upload_withdrawal_proof()
 
 
 class WithdrawView(StudentMixin, SuccessMessageMixin, UpdateView):

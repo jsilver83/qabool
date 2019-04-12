@@ -45,7 +45,7 @@ urlpatterns = [
     path('student-agreement1/', phase3_views.StudentAgreement1.as_view(), name='student_agreement_1'),
     path('upload-documents-incomplete/', phase2_views.UploadMissingDocumentsView.as_view(),
          name='upload_documents_incomplete'),
-    path('upload-withdrawal-proof/', phase2_views.upload_withdrawal_proof, name='upload_withdrawal_proof'),
+    path('upload-withdrawal-proof/', phase2_views.UploadWithdrawalProofView.as_view(), name='upload_withdrawal_proof'),
     path('personal-picture/', phase2_views.PersonalPictureView.as_view(), name='personal_picture'),
     path('personal-picture-re-upload/', phase2_views.PersonalPictureUnacceptableView.as_view(),
          name='personal_picture_re_upload'),
