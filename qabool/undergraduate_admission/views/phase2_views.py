@@ -18,27 +18,34 @@ from sendfile import sendfile, os
 from find_roommate.models import RoommateRequest
 from qabool.local_settings import SENDFILE_ROOT
 from shared_app.base_views import StudentMixin
+from shared_app.utils import get_current_admission_request_for_logged_in_user
 from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm, WithdrawalProofForm, PersonalPhotoForm, TransferForm, \
     MissingDocumentsForm
-from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, KFUPMIDsPool
-from undergraduate_admission.models import User
+from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, AdmissionRequest
 from undergraduate_admission.utils import SMS, parse_non_standard_numerals
 
 
 @method_decorator(never_cache, name='dispatch')
 class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
     raise_exception = True  # PermissionDenied
+    admission_request = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.admission_request = get_current_admission_request_for_logged_in_user(request)
+        if self.admission_request is None:
+            self.admission_request = get_object_or_404(AdmissionRequest, pk=self.kwargs['pk'])
+
+        return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.id == int(self.kwargs['pk']) # \
-               # or is_eligible_for_roommate_search(self.request.user)
+        return self.request.user.is_staff or self.admission_request.id == int(self.kwargs['pk'])\
+               or self.admission_request.can_search_in_housing()
 
     def get(self, request, filetype, pk):
-        user = get_object_or_404(User, pk=pk)
         try:
-            user_file = getattr(user, filetype)
+            user_file = getattr(self.admission_request, filetype)
         except AttributeError:  # invalid filetype
             raise Http404
         if not user_file:  # file not uploaded
