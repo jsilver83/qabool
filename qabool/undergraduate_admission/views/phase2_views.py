@@ -18,7 +18,7 @@ from shared_app.utils import get_current_admission_request_for_logged_in_user
 from undergraduate_admission.forms.phase1_forms import BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm, WithdrawalProofForm, PersonalPhotoForm, TransferForm, \
-    MissingDocumentsForm
+    MissingDocumentsForm, CompareNamesForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, AdmissionRequest
 from undergraduate_admission.utils import SMS
 
@@ -170,11 +170,23 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
     success_message = _('Documents were uploaded successfully. We will verify your information and get back to '
                         'you soon...')
     template_name = 'undergraduate_admission/phase2/form-uploads.html'
-    success_url = reverse_lazy('undergraduate_admission:student_area')
+    success_url = reverse_lazy('undergraduate_admission:compare_names')
     required_session_variable = ''
-    affected_session_variable = 'personal_picture_completed'
+    affected_session_variable = 'upload_docs_completed'
     previous_step_url = reverse_lazy('undergraduate_admission:personal_picture')
     current_step_no = 'step5'
+
+
+class CompareNamesView(BaseStudentInfoUpdateView):
+    form_class = CompareNamesForm
+    success_message = _('Your application was submitted successfully. We will verify your information and get back to '
+                        'you soon...')
+    template_name = 'undergraduate_admission/phase2/compare-names.html'
+    success_url = reverse_lazy('undergraduate_admission:student_area')
+    required_session_variable = 'upload_docs_completed'
+    # affected_session_variable = 'upload_docs_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:upload_documents')
+    current_step_no = 'step6'
 
     def form_valid(self, form):
         if self.admission_request.status_message == RegistrationStatus.get_status_transfer():
@@ -192,9 +204,7 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
                                                      RegistrationStatus.get_status_confirmed()]:
             SMS.send_sms_confirmed(self.admission_request.mobile)
 
-        if saved_user:
-            messages.success(self.request, self.success_message)
-        else:
+        if not saved_user:
             messages.error(self.request, _('Error saving info. Try again later!'))
 
         return super().form_valid(form)
