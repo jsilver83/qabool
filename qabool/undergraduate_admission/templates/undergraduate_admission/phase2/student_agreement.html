@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load floppyforms %}
 {% load staticfiles %}
+{% load markdown_deux_tags %}
 
 {% block subcontent %}
 <div class="row">
@@ -70,14 +71,8 @@
 </div>
 <br>&nbsp;<br>
 {% endif %}
-{{ agreement.agreement_header|linebreaks }}
+{{ agreement.agreement|markdown|linebreaks }}
 <br>
-<ul>
-	{% for item in items %}
-	<li>{{ item|safe|linebreaks }}</li>
-	{% endfor %}
-</ul>
-<br>&nbsp;<br>
 <form method="post" class="form-horizontal" enctype="multipart/form-data">
 	{% csrf_token %}
 

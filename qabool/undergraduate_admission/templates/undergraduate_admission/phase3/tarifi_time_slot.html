@@ -1,6 +1,7 @@
 {% extends 'base_student_area.html' %}
 {% load floppyforms %}
 {% load i18n %}
+{% load markdown_deux_tags %}
 
 {% block subcontent %}
 
@@ -62,13 +63,8 @@
 	<h4>{% trans 'Tarifi Time Slot' %}</h4>
 	<br>
 	<div class="alert alert-warning" role="alert">
-		{{ agreement.agreement_header|linebreaks }}
+		{{ agreement.agreement|markdown|linebreaks }}
 		<br>
-		<ul>
-			{% for item in items %}
-			<li>{{ item|safe|linebreaks }}</li>
-			{% endfor %}
-		</ul>
 	</div>
 	<form method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
 		{% csrf_token %}
