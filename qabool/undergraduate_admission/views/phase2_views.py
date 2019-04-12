@@ -1,30 +1,26 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import PermissionDenied
-from django.urls import reverse_lazy
+from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
-from django.utils import timezone
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.decorators.cache import never_cache
 from django.views.generic import UpdateView, FormView
 from django.views.generic.base import View, TemplateView
-from django.http import Http404
-from django.views.decorators.cache import never_cache
-
-from sendfile import sendfile, os
+from sendfile import sendfile
 
 from find_roommate.models import RoommateRequest
-from qabool.local_settings import SENDFILE_ROOT
 from shared_app.base_views import StudentMixin
 from shared_app.utils import get_current_admission_request_for_logged_in_user
-from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
+from undergraduate_admission.forms.phase1_forms import BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm, WithdrawalProofForm, PersonalPhotoForm, TransferForm, \
     MissingDocumentsForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, AdmissionRequest
-from undergraduate_admission.utils import SMS, parse_non_standard_numerals
+from undergraduate_admission.utils import SMS
 
 
 @method_decorator(never_cache, name='dispatch')
