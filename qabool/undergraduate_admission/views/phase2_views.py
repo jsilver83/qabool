@@ -1,60 +1,47 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import PermissionDenied
-from django.urls import reverse_lazy
+from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
-from django.utils import timezone
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import UpdateView, FormView
-from django.views.generic.base import View
-from django.http import Http404
 from django.views.decorators.cache import never_cache
+from django.views.generic import UpdateView, FormView
+from django.views.generic.base import View, TemplateView
+from sendfile import sendfile
 
-from sendfile import sendfile, os
-
-# from find_roommate.models import RoommateRequest
-from qabool.local_settings import SENDFILE_ROOT
+from find_roommate.models import RoommateRequest
 from shared_app.base_views import StudentMixin
-from undergraduate_admission.forms.phase1_forms import AgreementForm, BaseAgreementForm
+from shared_app.utils import get_current_admission_request_for_logged_in_user
+from undergraduate_admission.forms.phase1_forms import BaseAgreementForm
 from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, DocumentsForm, GuardianContactForm, \
     RelativeContactForm, WithdrawalForm, WithdrawalProofForm, PersonalPhotoForm, TransferForm, \
-    MissingDocumentsForm
-from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, KFUPMIDsPool
-from undergraduate_admission.models import User
-from undergraduate_admission.utils import SMS, parse_non_standard_numerals
-
-
-def is_admitted(user):
-    phase = user.get_student_phase()
-    return phase == 'ADMITTED'
-
-
-def is_withdrawn(user):
-    phase = user.get_student_phase()
-    return phase == 'WITHDRAWN'
-
-
-def is_eligible_to_withdraw(user):
-    return user.status_message in [RegistrationStatus.get_status_admitted(),
-                                   RegistrationStatus.get_status_admitted_final(),
-                                   RegistrationStatus.get_status_confirmed()]
+    MissingDocumentsForm, CompareNamesForm
+from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, AdmissionRequest
+from undergraduate_admission.utils import SMS
 
 
 @method_decorator(never_cache, name='dispatch')
 class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
     raise_exception = True  # PermissionDenied
+    admission_request = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.admission_request = get_current_admission_request_for_logged_in_user(request)
+        if self.admission_request is None:
+            self.admission_request = get_object_or_404(AdmissionRequest, pk=self.kwargs['pk'])
+
+        return super().dispatch(request, *args, **kwargs)
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.id == int(self.kwargs['pk']) # \
-               # or is_eligible_for_roommate_search(self.request.user)
+        return self.request.user.is_staff or self.admission_request.id == int(self.kwargs['pk'])\
+               or self.admission_request.can_search_in_housing()
 
     def get(self, request, filetype, pk):
-        user = get_object_or_404(User, pk=pk)
         try:
-            user_file = getattr(user, filetype)
+            user_file = getattr(self.admission_request, filetype)
         except AttributeError:  # invalid filetype
             raise Http404
         if not user_file:  # file not uploaded
@@ -183,11 +170,23 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
     success_message = _('Documents were uploaded successfully. We will verify your information and get back to '
                         'you soon...')
     template_name = 'undergraduate_admission/phase2/form-uploads.html'
-    success_url = reverse_lazy('undergraduate_admission:student_area')
+    success_url = reverse_lazy('undergraduate_admission:compare_names')
     required_session_variable = ''
-    affected_session_variable = 'personal_picture_completed'
+    affected_session_variable = 'upload_docs_completed'
     previous_step_url = reverse_lazy('undergraduate_admission:personal_picture')
     current_step_no = 'step5'
+
+
+class CompareNamesView(BaseStudentInfoUpdateView):
+    form_class = CompareNamesForm
+    success_message = _('Your application was submitted successfully. We will verify your information and get back to '
+                        'you soon...')
+    template_name = 'undergraduate_admission/phase2/compare-names.html'
+    success_url = reverse_lazy('undergraduate_admission:student_area')
+    required_session_variable = 'upload_docs_completed'
+    # affected_session_variable = 'upload_docs_completed'
+    previous_step_url = reverse_lazy('undergraduate_admission:upload_documents')
+    current_step_no = 'step6'
 
     def form_valid(self, form):
         if self.admission_request.status_message == RegistrationStatus.get_status_transfer():
@@ -205,9 +204,7 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
                                                      RegistrationStatus.get_status_confirmed()]:
             SMS.send_sms_confirmed(self.admission_request.mobile)
 
-        if saved_user:
-            messages.success(self.request, self.success_message)
-        else:
+        if not saved_user:
             messages.error(self.request, _('Error saving info. Try again later!'))
 
         return super().form_valid(form)
@@ -236,84 +233,79 @@ class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
         return super(UploadMissingDocumentsView, self).form_valid(form)
 
 
-@login_required()
-def upload_withdrawal_proof(request):
-    # it is ok to come here unconditionally if student has duplicate admission in other universities
-    if request.method == 'GET' and not request.user.status_message == RegistrationStatus.get_status_duplicate():
-        return redirect('undergraduate_admission:student_area')
+class UploadWithdrawalProofView(StudentMixin, SuccessMessageMixin, UpdateView):
+    template_name = 'undergraduate_admission/phase2/plain_form.html'
+    form_class = WithdrawalProofForm
+    success_url = reverse_lazy('undergraduate_admission:student_area')
+    success_message = _('Documents were uploaded successfully...')
 
-    form = WithdrawalProofForm(request.POST or None, request.FILES or None, instance=request.user)
+    def get_object(self, queryset=None):
+        return self.admission_request
 
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Documents were uploaded successfully...'))
-                request.session['upload_documents_completed'] = True
-                return redirect('undergraduate_admission:student_area')
-            else:
-                messages.error(request, _('Error saving info. Try again later!'))
-
-    return render(request, 'undergraduate_admission/phase2/plain_form.html', {'form': form, })
+    def test_func(self):
+        super_test_result = super().test_func()
+        return super_test_result and self.admission_request.can_upload_withdrawal_proof()
 
 
-class WithdrawView(LoginRequiredMixin, SuccessMessageMixin, UserPassesTestMixin, UpdateView):
+class WithdrawView(StudentMixin, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/phase2/withdraw.html'
     form_class = WithdrawalForm
     success_url = reverse_lazy('undergraduate_admission:withdrawal_letter')
     success_message = _('You have withdrawn from the university successfully...')
 
     def test_func(self):
-        return is_eligible_to_withdraw(self.request.user)
+        super_test_result = super().test_func()
+        return super_test_result and self.admission_request.can_withdraw()
 
     def get_object(self, queryset=None):
-        return self.request.user
+        return self.admission_request
 
     def get(self, request, *args, **kwargs):
-        if request.method == "GET":
-            if request.user.get_student_phase() == 'WITHDRAWN':
-                return redirect("undergraduate_admission:withdrawal_letter")
+        if self.admission_request.can_print_withdrawal_letter():
+            return redirect("undergraduate_admission:withdrawal_letter")
 
         return super(WithdrawView, self).get(request, *args, **kwargs)
 
-    # def form_valid(self, form):
-    #     saved = form.save(commit=False)
-    #     if saved:
-    #         SMS.send_sms_withdrawn(self.object.mobile)
-    #
-    #         # added for housing module
-    #         roommate_requests = RoommateRequest.objects.filter(requesting_user=self.object,
-    #                                                            status__in=[
-    #                                                                RoommateRequest.RequestStatuses.PENDING,
-    #                                                                RoommateRequest.RequestStatuses.ACCEPTED])
-    #         if roommate_requests.count() > 0:
-    #             for roommate_request in roommate_requests:
-    #                 SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
-    #             roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
-    #
-    #         roommate_requests = RoommateRequest.objects.filter(requested_user=self.object,
-    #                                                            status__in=[
-    #                                                                RoommateRequest.RequestStatuses.PENDING,
-    #                                                                RoommateRequest.RequestStatuses.ACCEPTED])
-    #
-    #         print(roommate_requests.count())
-    #         if roommate_requests.count() > 0:
-    #             for roommate_request in roommate_requests:
-    #                 SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
-    #             roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
-    #
-    #     return super(WithdrawView, self).form_valid(form)
+    def form_valid(self, form):
+        saved = form.save(commit=False)
+        if saved:
+            SMS.send_sms_withdrawn(self.object.mobile)
+
+            # added for housing module
+            roommate_requests = RoommateRequest.objects.filter(requesting_user=self.object,
+                                                               status__in=[
+                                                                   RoommateRequest.RequestStatuses.PENDING,
+                                                                   RoommateRequest.RequestStatuses.ACCEPTED])
+            if roommate_requests.count() > 0:
+                for roommate_request in roommate_requests:
+                    SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requested_user.mobile)
+                roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTING_STUDENT_WITHDRAWN)
+
+            roommate_requests = RoommateRequest.objects.filter(requested_user=self.object,
+                                                               status__in=[
+                                                                   RoommateRequest.RequestStatuses.PENDING,
+                                                                   RoommateRequest.RequestStatuses.ACCEPTED])
+
+            if roommate_requests.count() > 0:
+                for roommate_request in roommate_requests:
+                    SMS.send_sms_housing_roommate_request_withdrawn(roommate_request.requesting_user.mobile)
+                roommate_requests.update(status=RoommateRequest.RequestStatuses.REQUESTED_STUDENT_WITHDRAWN)
+
+        return super(WithdrawView, self).form_valid(form)
 
 
-@login_required()
-@user_passes_test(is_withdrawn)
-def withdrawal_letter(request):
-    if request.method == "GET" and request.user.get_student_phase() != 'WITHDRAWN':
-        return redirect("undergraduate_admission:student_area")
+class WithdrawalLetterView(StudentMixin, TemplateView):
+    template_name = 'undergraduate_admission/phase2/letter_withdrawal.html'
 
-    user = request.user
+    def test_func(self):
+        super_test_result = super().test_func()
+        return super_test_result and self.admission_request.can_print_withdrawal_letter()
 
-    return render(request, 'undergraduate_admission/phase2/letter_withdrawal.html', {'user': user, })
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.admission_request
+
+        return context
 
 
 class TransferView(SuccessMessageMixin, FormView):

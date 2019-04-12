@@ -1,0 +1,49 @@
+{% extends 'undergraduate_admission/phase2/form.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load admin_tags %}
+
+{% block form-notes %}
+	<div class="alert alert-warning" role="alert">
+		{% blocktrans %}
+			<strong>Note:</strong>
+			<p>Please make sure your name in Arabic matches the name printed on your Government ID card. As for the English
+				name, it should match the English name in your passport; if you have one. Otherwise, it should match the English
+				name in you high school certificate.</p>
+		{% endblocktrans %}
+	</div>
+{% endblock form-notes %}
+
+{% block form %}
+	<form method="post" class="form-horizontal" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-sm-12">
+				{{ form.student_full_name_ar|as_crispy_field }}<br><br>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				{% render_uploaded_file 'government_id_file' form.instance %}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-12">
+				{{ form.student_full_name_en|as_crispy_field }}<br><br>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				{% if form.instance.passport_file %}
+				{% render_uploaded_file 'passport_file' form.instance %}<br>
+				{% else %}
+				{% render_uploaded_file 'high_school_certificate' form.instance %}
+				{% endif %}
+			</div>
+		</div>
+		<hr>
+		<br>&nbsp;<br>
+		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save and Next' %}"/>
+	</form>
+{% endblock form %}
