@@ -11,10 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-from undergraduate_admission.models import RegistrationStatus
+#from undergraduate_admission.models import RegistrationStatus
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qabool.settings")
 
 application = get_wsgi_application()
 
-RegistrationStatus.init_statuses()
+#RegistrationStatus.init_statuses()
