@@ -344,16 +344,24 @@ class GraduationYear(models.Model):
 
 class VerificationIssues(models.Model):
     class RelatedFields:
+        GOVERNMENT_ID_FILE = 'government_id_file'
         PERSONAL_PICTURE = 'personal_picture'
         HIGH_SCHOOL_CERTIFICATE = 'high_school_certificate'
+        COURSES_CERTIFICATE = 'courses_certificate'
         MOTHER_GOV_ID_FILE = 'mother_gov_id_file'
+        PASSPORT_FILE = 'passport_file'
+        BIRTH_CERTIFICATE = 'birth_certificate'
 
         @classmethod
         def choices(cls):
             return (
+                (cls.GOVERNMENT_ID_FILE, _('Government ID File')),
                 (cls.PERSONAL_PICTURE, _('Personal Picture')),
                 (cls.HIGH_SCHOOL_CERTIFICATE, _('High School Certificate')),
+                (cls.COURSES_CERTIFICATE, _('Courses Certificate')),
                 (cls.MOTHER_GOV_ID_FILE, _('Mother Government ID')),
+                (cls.PASSPORT_FILE, _('Upload Passport')),
+                (cls.BIRTH_CERTIFICATE, _('Birth Date Certificate')),
             )
 
     related_field = models.CharField(_('Related Field'), max_length=50, null=True, blank=False,

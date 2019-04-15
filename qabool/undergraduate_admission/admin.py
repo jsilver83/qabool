@@ -377,7 +377,7 @@ class AgreementAdmin(admin.ModelAdmin):
     list_filter = ('agreement_type',)
 
 
-class VerificationIssuesAdmin(admin.ModelAdmin):
+class VerificationIssuesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('related_field', 'verification_issue_ar', 'verification_issue_en', 'show', 'display_order')
     list_filter = ('related_field', 'show', )
 
