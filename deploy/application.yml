@@ -9,8 +9,8 @@
   vars:
     django_project_name: qabool
     vault_url: https://vault.itc.kfupm.edu.sa
-    django_project_admin_username: joud
-    django_project_admin_email: joud@kfupm.edu.sa
+    django_project_admin_username: almaaesh
+    django_project_admin_email: almaaesh@kfupm.edu.sa
     django_project_package_name: qabool
 
     apache_authn: cas
@@ -46,6 +46,7 @@
     admins:
       - name: Abdullah Joud
         email: joud@kfupm.edu.sa
+
     uwsgi_processes: 64
 
   vars_prompt:
