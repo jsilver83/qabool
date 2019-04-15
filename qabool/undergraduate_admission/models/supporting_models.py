@@ -163,7 +163,7 @@ class RegistrationStatus(models.Model):
         try:
             choices = RegistrationStatus.objects.all()
 
-            ch = [(o.id, str(o.status) + ' - ' + str(o)) for o in choices]
+            ch = [(o.id, str(o)) for o in choices]
             if add_dashes:
                 ch.insert(0, ('', '---------'))
 

@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _, get_language
 from undergraduate_admission.utils import SMS
 
 
-class CutOffForm(forms.ModelForm):
+class CutOffForm(BaseCrispyForm, forms.ModelForm):
     GENDER_CHOICES = (
         ('', _('Unknown')),
         ('M', _('Male')),
@@ -206,7 +206,7 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         return student
 
 
-class ApplyStatusForm(forms.Form):
+class ApplyStatusForm(BaseCrispyForm, forms.Form):
     status_message = forms.IntegerField(widget=forms.Select(
         choices=RegistrationStatus.get_registration_status_choices()), required=True, label=_('Message Status'))
 
