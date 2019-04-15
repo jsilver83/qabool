@@ -182,14 +182,10 @@ class DocumentsForm(Phase2GenericForm):
             del self.fields['birth_certificate']
             del self.fields['passport_file']
 
-        # make all fields required
         for field in self.fields:
-            self.fields[field].required = True
-            # self.fields[field].help_text = \
-            #     _('Please upload clear scanned images with good quality. Allowed formats: '
-            #       'pdf, jpg, jpeg, png, bmp, gif. Max Size: 2 MB')
-
-        self.fields['courses_certificate'].required = False
+            if field not in ['courses_certificate', 'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                             'vehicle_registration_file', 'driving_license_file', ]:
+                self.fields[field].required = True
 
     def clean(self):
         cleaned_data = super().clean()
