@@ -91,8 +91,12 @@
 			{% endblocktrans %}
 		</div>
 		<br>
+
 		<div class="form-uploads">
-			{% crispy form %}
+			<form method="post" class="form-horizontal" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% crispy form  %}
+			</form>
 		</div>
 
 		{% if form.instance.personal_picture %}
