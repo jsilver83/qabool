@@ -3,32 +3,33 @@
 {% load l10n %}
 
 {% block subcontent %}
-{% blocktrans %}
-<div class="alert alert-success" role="alert">
-	<h4><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Success</h4>
-	<p>Your application was submitted successfully. Please use the link below to login to the system to check your application status regularly</p>
-</div>
-{% endblocktrans %}
-<br>
-<a href="{% url 'undergraduate_admission:login' %}" class="btn btn-success">{% trans 'Login' %}</a>
-<br>
-<br>
-<div class="panel panel-default bg-grey">
-	<div class="panel-body">
-		<div class="row">
-			<!--<div class="col-lg-2">-->
-			<!--<img src="http://placehold.it/170x180">-->
-			<!--</div>-->
-			<div class="col-lg-12">
-				<h4>{{ admission_request }}</h4>
-{#				<strong>{% trans 'Registration ID' %}:</strong> {{ admission_request.id }}<br>#}
-				<strong>{% trans 'Government ID' %}:</strong> {{ admission_request.user.username }}<br>
-				<strong>{% trans 'Mobile' %}:</strong> {{ admission_request.mobile }}<br>
-				<strong>{% trans 'Application Status' %}:</strong>
-				<span class="text-info">{{ admission_request.get_student_phase_display }}</span>
-				<hr>
-			</div>
-		</div>
-	</div>
-</div>
+    {% blocktrans %}
+        <div class="alert alert-success" role="alert">
+            <h4><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Success</h4>
+            <p>Your application was submitted successfully. Please use the link below to login to the system to check your application status regularly</p>
+        </div>
+    {% endblocktrans %}
+    <br>
+    <a href="{% url 'undergraduate_admission:login' %}" class="btn btn-success">{% trans 'Login' %}</a>
+    <br>
+    <br>
+    <div class="panel panel-default bg-grey">
+        <div class="panel-body">
+            <div class="row">
+                <!--<div class="col-lg-2">-->
+                <!--<img src="http://placehold.it/170x180">-->
+                <!--</div>-->
+                <div class="col-lg-12">
+                    <h4>{{ admission_request }}</h4>
+                    {#				<strong>{% trans 'Registration ID' %}:</strong> {{ admission_request.id }}<br>#}
+                    <strong>{% trans 'Government ID' %}:</strong> {{ admission_request.user.username }}<br>
+                    <strong>{% trans 'Mobile' %}:</strong> {{ admission_request.mobile }}<br>
+                    <strong>{% trans 'Application Status' %}:</strong>
+                    <span class="text-info">{{ admission_request.get_student_phase_display }}</span><br/>
+                    <strong>{{ admission_request.get_student_status_display|safe|linebreaksbr }}</strong><br>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock subcontent %}
