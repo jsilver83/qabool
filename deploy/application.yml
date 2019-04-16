@@ -27,6 +27,12 @@
       - path: /en/manage/
         authn_type: cas
         authz_type: none
+      - path: /ar/logout/
+        authn_type: cas
+        authz_type: none
+      - path: /en/logout/
+        authn_type: cas
+        authz_type: none
       - path: /admin_files/
         authn_type: cas
         authz_type: none
