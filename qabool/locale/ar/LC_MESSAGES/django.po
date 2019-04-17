@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-17 15:54+0300\n"
-"PO-Revision-Date: 2019-04-17 15:56+0300\n"
+"POT-Creation-Date: 2019-04-17 22:42+0300\n"
+"PO-Revision-Date: 2019-04-17 22:48+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -249,7 +249,7 @@ msgstr "لائحـة مخالفـات السكـــن"
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:27
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:24
 #: undergraduate_admission/templates/undergraduate_admission/phase2/compare-names.html:47
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:26
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:46
@@ -410,9 +410,9 @@ msgid "Dear Student"
 msgstr "عزيزي الطالب"
 
 #: find_roommate/templates/find_roommate/letter_housing.html:67
-#: undergraduate_admission/forms/general_forms.py:137
-#: undergraduate_admission/forms/general_forms.py:140
-#: undergraduate_admission/forms/general_forms.py:160
+#: undergraduate_admission/forms/general_forms.py:135
+#: undergraduate_admission/forms/general_forms.py:138
+#: undergraduate_admission/forms/general_forms.py:159
 #: undergraduate_admission/forms/phase1_forms.py:45
 #: undergraduate_admission/forms/phase2_forms.py:317
 #: undergraduate_admission/models/student.py:656
@@ -900,15 +900,15 @@ msgstr "يستحق السكن"
 msgid "SMS Message To Be Sent"
 msgstr "نص الرسالة"
 
-#: undergraduate_admission/forms/general_forms.py:26
+#: undergraduate_admission/forms/general_forms.py:24
 msgid "The two email fields didn't match."
 msgstr "البريد الإلكتروني غير متطابق."
 
-#: undergraduate_admission/forms/general_forms.py:27
+#: undergraduate_admission/forms/general_forms.py:25
 msgid "The two mobile fields didn't match."
 msgstr "حقل رقم الجوال غير متطابق"
 
-#: undergraduate_admission/forms/general_forms.py:28
+#: undergraduate_admission/forms/general_forms.py:26
 msgid ""
 "The Email entered is associated with another applicant. Please use a "
 "different Email"
@@ -916,71 +916,75 @@ msgstr ""
 "لقد تم استخدام البريد الإلكتروني من قبل طالب آخر. الرجاء ادخال بريد إلكتروني "
 "جديد"
 
-#: undergraduate_admission/forms/general_forms.py:30
+#: undergraduate_admission/forms/general_forms.py:28
 msgid ""
 "The Mobile entered is associated with another applicant. Please use a "
 "different Mobile"
 msgstr "لقد تم استخدام رقم الجوال من قبل طالب آخر. الرجاء ادخال رقم جوال آخر"
 
-#: undergraduate_admission/forms/general_forms.py:35
+#: undergraduate_admission/forms/general_forms.py:33
 msgid "Email Address"
 msgstr " البريد الإلكتروني"
 
-#: undergraduate_admission/forms/general_forms.py:40
+#: undergraduate_admission/forms/general_forms.py:38
 msgid "Email Address Confirmation"
 msgstr "تأكيد البريد الإلكتروني"
 
-#: undergraduate_admission/forms/general_forms.py:42
+#: undergraduate_admission/forms/general_forms.py:40
 msgid "Enter the same email address as before, for verification"
 msgstr "أعد إدخال البريد الإلكتروني السابق وذلك للتحقق"
 
-#: undergraduate_admission/forms/general_forms.py:46
+#: undergraduate_admission/forms/general_forms.py:44
 msgid "Mobile Confirmation"
 msgstr "تأكيد جوال الطالب"
 
-#: undergraduate_admission/forms/general_forms.py:49
+#: undergraduate_admission/forms/general_forms.py:47
 msgid "Enter the same mobile number as before, for verification"
 msgstr ""
 "أعد إدخال رقم الجوال السابق  وذلك للتحقق و يجب أن يكون رقم الجوال بهذا "
 "التنسيق \"9665xxxxxxxx\". استخدم أرقام إنجليزية فقط. تأكد من تفعيل خدمة "
 "استلام الرسائل الدعائية."
 
-#: undergraduate_admission/forms/general_forms.py:143
+#: undergraduate_admission/forms/general_forms.py:141
 msgid "password"
 msgstr "كلمة المرور"
 
-#: undergraduate_admission/forms/general_forms.py:148
-#: undergraduate_admission/forms/general_forms.py:202
-#: undergraduate_admission/forms/phase1_forms.py:147
+#: undergraduate_admission/forms/general_forms.py:146
+#: undergraduate_admission/forms/general_forms.py:201
+#: undergraduate_admission/forms/phase1_forms.py:148
 #: undergraduate_admission/forms/phase2_forms.py:358
 msgid "Confirmation Code"
 msgstr "رمز التحقق"
 
-#: undergraduate_admission/forms/general_forms.py:156
+#: undergraduate_admission/forms/general_forms.py:154
 #: undergraduate_admission/forms/phase1_forms.py:107
 msgid "The two password fields didn't match."
 msgstr "كلمة المرور غير متطابقة"
 
-#: undergraduate_admission/forms/general_forms.py:171
+#: undergraduate_admission/forms/general_forms.py:155
+msgid "Error resetting password. Make sure you enter the correct info."
+msgstr "خطأ بتغيير كلمة المرور، فضلاً تأكد من صحة البيانات المدخلة."
+
+#: undergraduate_admission/forms/general_forms.py:170
 msgid "New Password"
 msgstr "كلمة المرور الجديدة"
 
-#: undergraduate_admission/forms/general_forms.py:174
+#: undergraduate_admission/forms/general_forms.py:173
 #: undergraduate_admission/forms/phase2_forms.py:353
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr "الحد الأدنى 8 ، استخدم حروف وأرقام."
 
-#: undergraduate_admission/forms/general_forms.py:179
+#: undergraduate_admission/forms/general_forms.py:178
 msgid "New Password confirmation"
 msgstr "تأكيد كلمة المرور الجديدة"
 
-#: undergraduate_admission/forms/general_forms.py:182
-#: undergraduate_admission/forms/phase1_forms.py:140
+#: undergraduate_admission/forms/general_forms.py:181
+#: undergraduate_admission/forms/phase1_forms.py:141
 #: undergraduate_admission/forms/phase2_forms.py:354
 msgid "Enter the same password as before, for verification"
 msgstr "أعد إدخال كلمة المرور السابقة وذلك للتحقق"
 
-#: undergraduate_admission/forms/general_forms.py:191
+#: undergraduate_admission/forms/general_forms.py:190
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr "رقم الهوية الوطنية للسعوديين ، ورقم هوية مقيم  لغير السعوديين."
 
@@ -2186,12 +2190,17 @@ msgid "Tahsili"
 msgstr "درجة التحصيلي"
 
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:6
+#: undergraduate_admission/templates/undergraduate_admission/change_password_done.html:5
 msgid ""
 "\n"
 "<h3>Change Password</h3>\n"
 msgstr ""
 "\n"
 "<h3>تغيير كلمة المرور</h3>\n"
+
+#: undergraduate_admission/templates/undergraduate_admission/change_password_done.html:10
+msgid "You changed your password successfully..."
+msgstr "لقد تم تغيير كلمة المرور بنجاح"
 
 #: undergraduate_admission/templates/undergraduate_admission/csrf_failure.html:8
 msgid ""
@@ -2232,7 +2241,7 @@ msgstr "تغيير كلمة المرور"
 msgid "Fill the form below to reset your password"
 msgstr "عليك تعبئة النموذج لاستعادة كلمة المرور"
 
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:27
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:24
 msgid "Reset Password"
 msgstr "تغيير كلمة المرور"
 
@@ -2562,16 +2571,6 @@ msgid "Apply for Admission"
 msgstr "تقديم طلب القبول"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:6
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "<div class=\"alert alert-success\" role=\"alert\">\n"
-#| "\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> "
-#| "Success</h4>\n"
-#| "\t<p>Your application was submitted successfully. Please use the link "
-#| "below to login to the system to check your application status regularly</"
-#| "p>\n"
-#| "</div>\n"
 msgid ""
 "\n"
 "        <div class=\"alert alert-success\" role=\"alert\">\n"
@@ -2584,11 +2583,12 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"<div class=\"alert alert-success\" role=\"alert\">\n"
-"\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> "
-"نجاح</h4>\n"
-"\t<p>لقد تم إرسال طلبك بنجاح ، </p>\n"
-"</div>\n"
+"        <div class=\"alert alert-success\" role=\"alert\">\n"
+"            <h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true"
+"\"></span> Success</h4>\n"
+"            <p>لقد تم إرسال طلبك بنجاح، الرجاء الدخول للنظام من خلال الرابط "
+"أدناه لمتابعة حالة الطلب.</p>\n"
+"        </div>"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:27
 msgid "Application Status"
@@ -2843,15 +2843,11 @@ msgstr "%(count)d تم توزيعهم على  %(all)s ..."
 msgid "Verification submitted successfully!!!!"
 msgstr "لقد تم حفظ معلومات التحقق من البيانات"
 
-#: undergraduate_admission/views/general_views.py:51
+#: undergraduate_admission/views/general_views.py:48
 msgid "Password was reset successfully..."
 msgstr "لقد تم تغيير كلمة المرور بنجاح"
 
-#: undergraduate_admission/views/general_views.py:54
-msgid "Error resetting password. Make sure you enter the correct info."
-msgstr "خطأ بتغيير كلمة المرور، فضلاً تأكد من صحة البيانات المدخلة."
-
-#: undergraduate_admission/views/general_views.py:71
+#: undergraduate_admission/views/general_views.py:68
 msgid "Contact Info was updated successfully..."
 msgstr "لقد تم حفظ بيانات التواصل بنجاح"
 

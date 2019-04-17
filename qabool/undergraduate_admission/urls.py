@@ -2,6 +2,7 @@ from django.contrib.auth.views import *
 # .views import login, logout, password_change, password_change_done
 from django.urls import path
 
+from .forms.general_forms import MyPasswordChangeForm
 from .views import general_views, phase1_views, phase2_views, phase3_views, admin_side_views
 
 app_name = 'undergraduate_admission'
@@ -11,15 +12,15 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout', kwargs={'next_page': '/'}),
     path(
         'change-password/',
-        PasswordChangeView.as_view(),
+        PasswordChangeView.as_view(template_name='undergraduate_admission/change_password.html',
+                                   form_class=MyPasswordChangeForm,
+                                   success_url=reverse_lazy('undergraduate_admission:password_change_done')),
         name='change_password',
-        kwargs={'template_name': 'undergraduate_admission/change_password.html'},
     ),
     path(
         'change-password-done/',
-        PasswordChangeDoneView.as_view(),
+        PasswordChangeDoneView.as_view(template_name='undergraduate_admission/change_password_done.html'),
         name='password_change_done',
-        kwargs={'template_name': 'undergraduate_admission/change_password.html'},
     ),
     path('choose-tarifi-time-slot/', phase3_views.ChooseTarifiTimeSlot.as_view(), name='choose_tarifi_time_slot'),
     path('admin/send-mass-sms/', admin_side_views.SendMassSMSView.as_view(), name='send_mass_sms'),
