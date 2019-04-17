@@ -171,7 +171,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'custom_locale'),
 )
 
-COUNTRIES_FIRST = ['SA', 'BHR', 'KWT', 'YEM', 'QAT', 'ARE', 'EGY', 'SYR', 'IRQ', 'SDN', 'PSE', 'JOR']
+COUNTRIES_FIRST = ['SA']
 COUNTRIES_FIRST_BREAK = '  ____________  '
 
 
