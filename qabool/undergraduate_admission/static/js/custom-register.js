@@ -10,7 +10,7 @@ $(function () {
         var vaa = $(this).val();
         sm(vaa);
     });
-    $("#id_saudi_mother").change(function () {
+    $("input[type=radio][name=saudi_mother]").change(function () {
         var vaa = $("#id_nationality").prop('selectedIndex');
         sm(vaa);
     });
@@ -27,29 +27,27 @@ $(function () {
 
 function sm(nat) {
     if (nat == 'SA') {
-        $("#id_saudi_mother").parents(".form-group").hide();
-        $("#id_saudi_mother").val("");
-        $("#id_saudi_mother").removeAttr("required");
+        $("#div_id_saudi_mother").hide();
+        $("input[type=radio][name=saudi_mother]").prop('checked', false)
+        $("input[type=radio][name=saudi_mother]").removeAttr("required");
 
-        $("#id_saudi_mother_gov_id").parents(".form-group").hide();
+        $("#div_id_saudi_mother_gov_id").hide();
         $("#id_saudi_mother_gov_id").val("");
         $("#id_saudi_mother_gov_id").removeAttr("required");
     }
     else if (nat == null || nat == "") {
-        $("#id_saudi_mother").parents(".form-group").hide();
-        $("#id_saudi_mother_gov_id").parents(".form-group").hide();
+        $("#div_id_saudi_mother").hide();
+        $("#div_id_saudi_mother_gov_id").hide();
     }
     else {
-        $("#id_saudi_mother").parents(".form-group").show();
-        $("#id_saudi_mother").attr("required", "");
+        $("#div_id_saudi_mother").show();
+        $("input[type=radio][name=saudi_mother]").attr("required", "required");
 
-        if ($("#id_saudi_mother").val() == 'True') {
-            $("#id_saudi_mother").val("True");
+        if ($("input[type=radio][name=saudi_mother]:checked").val() == 'True') {
             $("#id_saudi_mother_gov_id").parents(".form-group").show();
             $("#id_saudi_mother_gov_id").attr("required", "");
         }
         else{
-            $("#id_saudi_mother").val("False");
             $("#id_saudi_mother_gov_id").val("");
             $("#id_saudi_mother_gov_id").parents(".form-group").hide();
             $("#id_saudi_mother_gov_id").removeAttr("required");
