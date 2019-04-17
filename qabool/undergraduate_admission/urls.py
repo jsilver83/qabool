@@ -62,6 +62,6 @@ urlpatterns = [
     path('student-area/', general_views.StudentArea.as_view(), name='student_area'),
     path('registration-success/', phase1_views.RegistrationSuccess.as_view(), name='registration_success'),
     path('initial-agreement/', phase1_views.initial_agreement, name='initial_agreement'),
-    path('forgot-password/', general_views.forgot_password, name='forgot_password'),
+    path('forgot-password/', general_views.ForgotPassword.as_view(), name='forgot_password'),
     path('', general_views.IndexView.as_view(), name='index'),
 ]

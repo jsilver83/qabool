@@ -1,15 +1,13 @@
 from captcha.fields import CaptchaField
-# from captcha.fields import ReCaptchaField
-from django.utils.translation import ugettext_lazy as _
+from django import forms
 from django.contrib.auth import password_validation, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+# from captcha.fields import ReCaptchaField
+from django.utils.translation import ugettext_lazy as _
 
 from shared_app.base_forms import BaseCrispyForm
-from ..models import *
-from django import forms
-
 from undergraduate_admission.utils import parse_non_standard_numerals
-
+from ..models import *
 
 User = get_user_model()
 
@@ -154,6 +152,7 @@ class MyAuthenticationForm(AuthenticationForm):
 class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
+        'wrong_entry': _('Error resetting password. Make sure you enter the correct info.'),
     }
 
     govid = forms.CharField(
@@ -171,16 +170,16 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
         label=_('New Password'),
         max_length=50,
         required=True,
-        help_text= _('Minimum length is 8. Use both numbers and characters.'),
-        widget = forms.PasswordInput(),
+        help_text=_('Minimum length is 8. Use both numbers and characters.'),
+        widget=forms.PasswordInput(),
     )
 
     password2 = forms.CharField(
         label=_('New Password confirmation'),
         max_length=50,
         required=True,
-        help_text= _('Enter the same password as before, for verification'),
-        widget = forms.PasswordInput(),
+        help_text=_('Enter the same password as before, for verification'),
+        widget=forms.PasswordInput(),
     )
 
     class Meta:
@@ -201,31 +200,41 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
             self.fields['captcha'] = CaptchaField(label=_('Confirmation Code'))
 
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
+    def clean_govid(self):
+        return parse_non_standard_numerals(self.cleaned_data.get("govid"))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(
                 self.error_messages['password_mismatch'],
                 code='password_mismatch',
             )
-        self.instance.user.username = self.cleaned_data.get('username')
-        password_validation.validate_password(self.cleaned_data.get('password2'), self.instance.user)
-        return password2
 
-    def clean_username(self):
-        return parse_non_standard_numerals(self.cleaned_data.get("username"))
+        matching_users = User.objects.filter(username=cleaned_data.get('govid'))
+        if matching_users and matching_users.count() == 1:
+            user = matching_users.first()
+            mobile = cleaned_data.get("mobile")
+            admission_request = AdmissionRequest.objects.filter(user=user, mobile=mobile)
+
+            if admission_request:
+                self.instance = admission_request.first()
+                password_validation.validate_password(cleaned_data.get('password2'), user)
+            else:
+                raise forms.ValidationError(
+                    self.error_messages['wrong_entry'],
+                    code='wrong_entry',
+                )
+
+        return cleaned_data
 
     def save(self, commit=True):
-        username = self.cleaned_data.get("govid")
-        password = self.cleaned_data.get("password1")
-        mobile = self.cleaned_data.get("mobile")
-
-        admission_request = AdmissionRequest.objects.filter(user_username=username, mobile=mobile)
-
-        if admission_request and admission_request.user:
-            admission_request.user.set_password(password)
-            admission_request.user.save()
-            return admission_request.user
+        if self.instance:
+            password = self.cleaned_data.get("password1")
+            self.instance.user.set_password(password)
+            self.instance.user.save()
+            return self.instance
         else:
             return None
