@@ -41,19 +41,16 @@ class IndexView(FormView):
         return super().form_valid(form)
 
 
-def forgot_password(request):
-    form = ForgotPasswordForm(request.POST or None)
+class ForgotPassword(SuccessMessageMixin, FormView):
+    template_name = 'undergraduate_admission/forgot_password.html'
+    form_class = ForgotPasswordForm
+    success_url = reverse_lazy('undergraduate_admission:index')
+    success_message = _('Password was reset successfully...')
 
-    if request.method == 'POST':
-        if form.is_valid():
-            saved = form.save()
-            if saved:
-                messages.success(request, _('Password was reset successfully...'))
-                return redirect('undergraduate_admission:index')
-            else:
-                messages.error(request, _('Error resetting password. Make sure you enter the correct info.'))
+    def form_valid(self, form):
+        saved = form.save()
 
-    return render(request, 'undergraduate_admission/forgot_password.html', {'form': form})
+        return super().form_valid(form)
 
 
 class StudentArea(StudentMixin, TemplateView):
