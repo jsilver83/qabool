@@ -91,13 +91,13 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
                   'password1', 'password2', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
-            ('', "---"),
+            # ('', "---"),
             (True, _("Yes")),
             (False, _("No")),
         )
 
         widgets = {
-            'saudi_mother': forms.Select(choices=SAUDI_MOTHER_CHOICES),
+            'saudi_mother': forms.RadioSelect(choices=SAUDI_MOTHER_CHOICES),
         }
 
     def __init__(self, *args, **kwargs):
@@ -109,13 +109,14 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
             'govid_denied': _("You have been denied from applying for the following reason(s): "),
             'govid_invalid': _("You have entered an invalid Government ID"),
             'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile"),
-            'no_saudi_mother_gov_id': _("You have entered the mother to be Saudi but you did NOT enter her Saudi"
+            'saudi_mother_gov_id': _("You have entered the mother to be Saudi but you did NOT enter her Saudi"
                                         " Government ID")
         })
         self.error_messages = BaseContactForm.error_messages
 
         for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+            if field not in ['saudi_mother']:
+                self.fields[field].widget.attrs['class'] = 'form-control'
 
             if field not in ['student_notes', 'third_name_ar', 'second_name_en', 'third_name_en',
                              'gender', 'saudi_mother_gov_id']:
