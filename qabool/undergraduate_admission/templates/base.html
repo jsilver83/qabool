@@ -42,12 +42,14 @@
             </div>
             <div class="pull-right">
                 {% if user.is_authenticated %}
-                    <!--<div class="pull-right">-->
                     <span class="text-welcome">{% trans 'Welcome' %}, {{ user.first_name }} </span>
                     &nbsp;
-                    <a style="color:white" href="{% url 'undergraduate_admission:logout' %}" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
+	                {% if user.groups.all or user.is_staff or user.is_superuser %}
+                    {# staff or admin #}<a style="color:white" href="{% url 'undergraduate_admission:logout' %}" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
+		            {% else %}
+                    {# student #}<a style="color:white" href="{% url 'undergraduate_admission:logout' %}?next=/" class="btn btn-primary btn-xs"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
+                    {% endif %}
                     </a>
-                    <!--</div>-->
                 {% endif %}
             </div>
         </div>
