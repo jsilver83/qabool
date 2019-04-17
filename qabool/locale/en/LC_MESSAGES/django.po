@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-12 22:12+0300\n"
+"POT-Creation-Date: 2019-04-17 22:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,14 +35,14 @@ msgstr ""
 
 #: find_roommate/forms.py:23
 #: find_roommate/templates/find_roommate/landing_page.html:19
-#: undergraduate_admission/forms/phase1_forms.py:96
+#: undergraduate_admission/forms/phase1_forms.py:95
 #: undergraduate_admission/forms/phase2_forms.py:17
 msgid "Yes"
 msgstr ""
 
 #: find_roommate/forms.py:24
 #: find_roommate/templates/find_roommate/landing_page.html:31
-#: undergraduate_admission/forms/phase1_forms.py:97
+#: undergraduate_admission/forms/phase1_forms.py:96
 #: undergraduate_admission/forms/phase2_forms.py:18
 msgid "No"
 msgstr ""
@@ -90,15 +90,16 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
 #: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:251
-#: undergraduate_admission/forms/phase2_forms.py:328
+#: undergraduate_admission/forms/phase2_forms.py:324
 #: undergraduate_admission/models/student.py:136
-#: undergraduate_admission/models/student.py:619
+#: undergraduate_admission/models/student.py:624
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:75
+#: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:77
 msgid "KFUPM ID"
 msgstr ""
 
-#: find_roommate/forms.py:109 undergraduate_admission/forms/phase2_forms.py:354
+#: find_roommate/forms.py:109 undergraduate_admission/forms/phase2_forms.py:350
 msgid "Invalid KFUPM ID"
 msgstr ""
 
@@ -152,7 +153,7 @@ msgstr ""
 
 #: find_roommate/models.py:70
 #: find_roommate/templates/find_roommate/__request.html:15
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:28
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:27
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:28
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:27
 msgid "Status"
@@ -208,7 +209,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/__request.html:46
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:172
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:134
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:138
 msgid "Cancel"
 msgstr ""
 
@@ -233,8 +234,8 @@ msgstr ""
 #: find_roommate/templates/find_roommate/housing_update_form.html:32
 #: find_roommate/templates/find_roommate/housinguser_list.html:26
 #: find_roommate/templates/find_roommate/request_roommate.html:32
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:10
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:63
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:66
 #: undergraduate_admission/templates/undergraduate_admission/admin/send_sms_notification.html:15
@@ -244,15 +245,15 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:23
 #: undergraduate_admission/templates/undergraduate_admission/edit_contact_info.html:24
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:32
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:27
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:24
 #: undergraduate_admission/templates/undergraduate_admission/phase2/compare-names.html:47
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:26
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:46
 #: undergraduate_admission/templates/undergraduate_admission/phase2/plain_form.html:22
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:98
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:93
 #: undergraduate_admission/templates/undergraduate_admission/phase2/withdraw.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:79
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:75
 #: undergraduate_admission/templates/undergraduate_admission/register.html:25
 msgid "btn-align"
 msgstr ""
@@ -261,7 +262,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/housing_agreement.html:37
 #: undergraduate_admission/templates/undergraduate_admission/agreement.html:26
 #: undergraduate_admission/templates/undergraduate_admission/phase2/confirm.html:26
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:98
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:93
 msgid "I agree"
 msgstr ""
 
@@ -282,7 +283,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/housinguser_list.html:17
 #: find_roommate/templates/find_roommate/housinguser_list.html:28
 #: tarifi/templates/tarifi/landing_page.html:9
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:12
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:12
 msgid "Search"
 msgstr ""
@@ -392,15 +393,15 @@ msgid "Dear Student"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/letter_housing.html:67
-#: undergraduate_admission/forms/general_forms.py:137
-#: undergraduate_admission/forms/general_forms.py:140
-#: undergraduate_admission/forms/general_forms.py:160
+#: undergraduate_admission/forms/general_forms.py:135
+#: undergraduate_admission/forms/general_forms.py:138
+#: undergraduate_admission/forms/general_forms.py:159
 #: undergraduate_admission/forms/phase1_forms.py:45
-#: undergraduate_admission/forms/phase2_forms.py:321
-#: undergraduate_admission/models/student.py:651
-#: undergraduate_admission/models/student.py:689
+#: undergraduate_admission/forms/phase2_forms.py:317
+#: undergraduate_admission/models/student.py:656
+#: undergraduate_admission/models/student.py:694
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:25
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:22
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:15
@@ -417,7 +418,7 @@ msgstr ""
 
 #: find_roommate/views.py:73 find_roommate/views.py:144
 #: find_roommate/views.py:198 undergraduate_admission/views/phase1_views.py:28
-#: undergraduate_admission/views/phase3_views.py:54
+#: undergraduate_admission/views/phase3_views.py:53
 msgid "Error."
 msgstr ""
 
@@ -515,7 +516,7 @@ msgstr ""
 msgid "English Level"
 msgstr ""
 
-#: tarifi/models.py:70 undergraduate_admission/models/student.py:710
+#: tarifi/models.py:70 undergraduate_admission/models/student.py:715
 msgid "Reception Date"
 msgstr ""
 
@@ -540,11 +541,11 @@ msgstr ""
 msgid "Semester"
 msgstr ""
 
-#: tarifi/models.py:165 undergraduate_admission/models/student.py:712
+#: tarifi/models.py:165 undergraduate_admission/models/student.py:717
 msgid "Start Date"
 msgstr ""
 
-#: tarifi/models.py:166 undergraduate_admission/models/student.py:713
+#: tarifi/models.py:166 undergraduate_admission/models/student.py:718
 msgid "End Date"
 msgstr ""
 
@@ -556,7 +557,7 @@ msgstr ""
 msgid "Location (English)"
 msgstr ""
 
-#: tarifi/models.py:169 undergraduate_admission/models/student.py:711
+#: tarifi/models.py:169 undergraduate_admission/models/student.py:716
 msgid "Slots"
 msgstr ""
 
@@ -577,18 +578,18 @@ msgstr ""
 #: undergraduate_admission/models/misc_models.py:84
 #: undergraduate_admission/models/misc_models.py:155
 #: undergraduate_admission/models/misc_models.py:183
-#: undergraduate_admission/models/student.py:714
+#: undergraduate_admission/models/student.py:719
 #: undergraduate_admission/models/supporting_models.py:306
-#: undergraduate_admission/models/supporting_models.py:363
+#: undergraduate_admission/models/supporting_models.py:371
 msgid "Show"
 msgstr ""
 
 #: tarifi/models.py:182 undergraduate_admission/models/misc_models.py:46
 #: undergraduate_admission/models/misc_models.py:85
 #: undergraduate_admission/models/misc_models.py:184
-#: undergraduate_admission/models/student.py:715
+#: undergraduate_admission/models/student.py:720
 #: undergraduate_admission/models/supporting_models.py:307
-#: undergraduate_admission/models/supporting_models.py:364
+#: undergraduate_admission/models/supporting_models.py:372
 msgid "Display Order"
 msgstr ""
 
@@ -686,40 +687,44 @@ msgstr ""
 
 #: undergraduate_admission/admin.py:188
 #: undergraduate_admission/models/student.py:264
-#: undergraduate_admission/models/supporting_models.py:355
+#: undergraduate_admission/models/supporting_models.py:360
 msgid "High School Certificate"
 msgstr ""
 
 #: undergraduate_admission/admin.py:192
 #: undergraduate_admission/models/student.py:141
-#: undergraduate_admission/models/supporting_models.py:354
+#: undergraduate_admission/models/supporting_models.py:359
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:27
 msgid "Personal Picture"
 msgstr ""
 
 #: undergraduate_admission/admin.py:196
 #: undergraduate_admission/models/student.py:96
-#: undergraduate_admission/models/supporting_models.py:356
+#: undergraduate_admission/models/supporting_models.py:362
 msgid "Mother Government ID"
 msgstr ""
 
 #: undergraduate_admission/admin.py:200
 #: undergraduate_admission/models/student.py:111
+#: undergraduate_admission/models/supporting_models.py:364
 msgid "Birth Date Certificate"
 msgstr ""
 
 #: undergraduate_admission/admin.py:204
 #: undergraduate_admission/models/student.py:202
+#: undergraduate_admission/models/supporting_models.py:358
 msgid "Government ID File"
 msgstr ""
 
 #: undergraduate_admission/admin.py:208
 #: undergraduate_admission/models/student.py:222
+#: undergraduate_admission/models/supporting_models.py:363
 msgid "Upload Passport"
 msgstr ""
 
 #: undergraduate_admission/admin.py:212
 #: undergraduate_admission/models/student.py:272
+#: undergraduate_admission/models/supporting_models.py:361
 msgid "Courses Certificate"
 msgstr ""
 
@@ -809,7 +814,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:34
 #: undergraduate_admission/forms/admin_side_forms.py:69
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:29
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:28
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:29
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:16
 msgid "Student Type"
@@ -817,13 +822,13 @@ msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:39
 #: undergraduate_admission/models/student.py:234
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:31
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:30
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:31
 msgid "Graduation Year"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:40
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:30
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:29
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:30
 msgid "Admission Total"
 msgstr ""
@@ -860,7 +865,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:243
 #: undergraduate_admission/models/student.py:42
-#: undergraduate_admission/models/student.py:616
+#: undergraduate_admission/models/student.py:621
 #: undergraduate_admission/models/supporting_models.py:30
 msgid "Admission Semester"
 msgstr ""
@@ -874,82 +879,86 @@ msgstr ""
 msgid "SMS Message To Be Sent"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:26
+#: undergraduate_admission/forms/general_forms.py:24
 msgid "The two email fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:27
+#: undergraduate_admission/forms/general_forms.py:25
 msgid "The two mobile fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:28
+#: undergraduate_admission/forms/general_forms.py:26
 msgid ""
 "The Email entered is associated with another applicant. Please use a "
 "different Email"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:30
+#: undergraduate_admission/forms/general_forms.py:28
 msgid ""
 "The Mobile entered is associated with another applicant. Please use a "
 "different Mobile"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:35
+#: undergraduate_admission/forms/general_forms.py:33
 msgid "Email Address"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:40
+#: undergraduate_admission/forms/general_forms.py:38
 msgid "Email Address Confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:42
+#: undergraduate_admission/forms/general_forms.py:40
 msgid "Enter the same email address as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:46
+#: undergraduate_admission/forms/general_forms.py:44
 msgid "Mobile Confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:49
+#: undergraduate_admission/forms/general_forms.py:47
 msgid "Enter the same mobile number as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:143
+#: undergraduate_admission/forms/general_forms.py:141
 msgid "password"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:148
-#: undergraduate_admission/forms/general_forms.py:202
+#: undergraduate_admission/forms/general_forms.py:146
+#: undergraduate_admission/forms/general_forms.py:201
 #: undergraduate_admission/forms/phase1_forms.py:148
-#: undergraduate_admission/forms/phase2_forms.py:362
+#: undergraduate_admission/forms/phase2_forms.py:358
 msgid "Confirmation Code"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:156
-#: undergraduate_admission/forms/phase1_forms.py:108
+#: undergraduate_admission/forms/general_forms.py:154
+#: undergraduate_admission/forms/phase1_forms.py:107
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:171
+#: undergraduate_admission/forms/general_forms.py:155
+msgid "Error resetting password. Make sure you enter the correct info."
+msgstr ""
+
+#: undergraduate_admission/forms/general_forms.py:170
 msgid "New Password"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:174
-#: undergraduate_admission/forms/phase2_forms.py:357
+#: undergraduate_admission/forms/general_forms.py:173
+#: undergraduate_admission/forms/phase2_forms.py:353
 msgid "Minimum length is 8. Use both numbers and characters."
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:179
+#: undergraduate_admission/forms/general_forms.py:178
 msgid "New Password confirmation"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:182
+#: undergraduate_admission/forms/general_forms.py:181
 #: undergraduate_admission/forms/phase1_forms.py:141
-#: undergraduate_admission/forms/phase2_forms.py:358
+#: undergraduate_admission/forms/phase2_forms.py:354
 msgid "Enter the same password as before, for verification"
 msgstr ""
 
-#: undergraduate_admission/forms/general_forms.py:191
+#: undergraduate_admission/forms/general_forms.py:190
 msgid "National ID for Saudis, Iqama Number for non-Saudis."
 msgstr ""
 
@@ -962,7 +971,7 @@ msgid "I accept all the above terms and conditions"
 msgstr ""
 
 #: undergraduate_admission/forms/phase1_forms.py:48
-#: undergraduate_admission/forms/phase2_forms.py:325
+#: undergraduate_admission/forms/phase2_forms.py:321
 msgid ""
 "National ID for Saudis, Iqama Number for non-Saudis. e.g. 1xxxxxxxxx or "
 "2xxxxxxxxx."
@@ -990,7 +999,7 @@ msgstr ""
 
 #: undergraduate_admission/forms/phase1_forms.py:75
 #: undergraduate_admission/models/student.py:145
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:32
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:31
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:32
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:28
 msgid "Gender"
@@ -1000,24 +1009,24 @@ msgstr ""
 msgid "Only male students can apply"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:109
+#: undergraduate_admission/forms/phase1_forms.py:108
 msgid "The two government ID fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:110
+#: undergraduate_admission/forms/phase1_forms.py:109
 msgid "You have been denied from applying for the following reason(s): "
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:111
+#: undergraduate_admission/forms/phase1_forms.py:110
 #: undergraduate_admission/models/student.py:90
 msgid "You have entered an invalid Government ID"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:112
+#: undergraduate_admission/forms/phase1_forms.py:111
 msgid "You have entered the guardian mobile same as your own mobile"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:113
+#: undergraduate_admission/forms/phase1_forms.py:112
 msgid ""
 "You have entered the mother to be Saudi but you did NOT enter her Saudi "
 "Government ID"
@@ -1042,27 +1051,27 @@ msgstr ""
 msgid "Disability type(s) can not be empty"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:204
-#: undergraduate_admission/forms/phase2_forms.py:240
+#: undergraduate_admission/forms/phase2_forms.py:200
+#: undergraduate_admission/forms/phase2_forms.py:236
 msgid "Vehicle info is required."
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:258
+#: undergraduate_admission/forms/phase2_forms.py:254
 msgid ""
 "Please upload clear scanned images with good quality. Allowed formats: jpg, "
 "jpeg, png, bmp, gif. Max Size: 2 MB"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:330
+#: undergraduate_admission/forms/phase2_forms.py:326
 msgid "Enter the ID given to you by KFUPM"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:333
+#: undergraduate_admission/forms/phase2_forms.py:329
 #: undergraduate_admission/models/student.py:54
 msgid "Student Notes"
 msgstr ""
 
-#: undergraduate_admission/forms/phase2_forms.py:379
+#: undergraduate_admission/forms/phase2_forms.py:375
 msgid "You are not eligible for a transfer to KFUPM"
 msgstr ""
 
@@ -1300,7 +1309,7 @@ msgstr ""
 
 #: undergraduate_admission/models/student.py:82
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:26
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:27
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:26
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:27
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:26
 msgid "Nationality"
@@ -1664,7 +1673,7 @@ msgid "Assigned Committee Member"
 msgstr ""
 
 #: undergraduate_admission/models/student.py:415
-#: undergraduate_admission/models/supporting_models.py:367
+#: undergraduate_admission/models/supporting_models.py:375
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:17
 msgid "Verification Issues"
 msgstr ""
@@ -1693,48 +1702,48 @@ msgstr ""
 msgid "Full Name"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:622
+#: undergraduate_admission/models/student.py:627
 msgid "Registrar: KFUPM ID Pools"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:652
-#: undergraduate_admission/models/student.py:690
+#: undergraduate_admission/models/student.py:657
+#: undergraduate_admission/models/student.py:695
 msgid "Student Name"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:653
+#: undergraduate_admission/models/student.py:658
 msgid "Message"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:654
+#: undergraduate_admission/models/student.py:659
 msgid "University Code"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:663
+#: undergraduate_admission/models/student.py:668
 msgid "Last Trial Date"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:664
+#: undergraduate_admission/models/student.py:669
 msgid "Count Trial"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:667
+#: undergraduate_admission/models/student.py:672
 msgid "Admission: Denied Students"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:691
+#: undergraduate_admission/models/student.py:696
 msgid "City"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:692
+#: undergraduate_admission/models/student.py:697
 msgid "Attended"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:695
+#: undergraduate_admission/models/student.py:700
 msgid "Admission: Distinguished Students"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:718
+#: undergraduate_admission/models/student.py:723
 msgid "Orientation Week: Schedule"
 msgstr ""
 
@@ -1856,15 +1865,15 @@ msgstr ""
 msgid "Admission: Graduation Years"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:359
+#: undergraduate_admission/models/supporting_models.py:367
 msgid "Related Field"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:361
+#: undergraduate_admission/models/supporting_models.py:369
 msgid "Verification Issue (AR)"
 msgstr ""
 
-#: undergraduate_admission/models/supporting_models.py:362
+#: undergraduate_admission/models/supporting_models.py:370
 msgid "Verification Issue (EN)"
 msgstr ""
 
@@ -2004,22 +2013,22 @@ msgstr ""
 msgid "Distribute"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:19
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:18
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:19
 msgid "Number of students matching search criteria"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:25
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:24
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:25
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:14
 msgid "Student Full Name"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:52
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:51
 msgid "Choose a status from below list to apply to the students above:"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:65
+#: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:64
 msgid "Apply Status"
 msgstr ""
 
@@ -2045,25 +2054,25 @@ msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:155
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:50
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:118
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:122
 msgid "Crop the photo"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:170
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:64
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:132
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:136
 msgid "Rot-right"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:171
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:65
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:133
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:137
 msgid "Rot-left"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:173
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:67
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:135
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:139
 msgid "Crop and upload"
 msgstr ""
 
@@ -2114,9 +2123,14 @@ msgid "Tahsili"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/change_password.html:6
+#: undergraduate_admission/templates/undergraduate_admission/change_password_done.html:5
 msgid ""
 "\n"
 "<h3>Change Password</h3>\n"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/change_password_done.html:10
+msgid "You changed your password successfully..."
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/csrf_failure.html:8
@@ -2151,7 +2165,7 @@ msgstr ""
 msgid "Fill the form below to reset your password"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:27
+#: undergraduate_admission/templates/undergraduate_admission/forgot_password.html:24
 msgid "Reset Password"
 msgstr ""
 
@@ -2205,9 +2219,9 @@ msgid ""
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/phase2/compare-names.html:47
-#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:106
+#: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:110
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form.html:46
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:79
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:75
 msgid "Save and Next"
 msgstr ""
 
@@ -2279,50 +2293,50 @@ msgstr ""
 msgid "Preview Names"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:11
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:24
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:37
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:12
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:25
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:38
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:18
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:32
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:45
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:19
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:33
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:46
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:20
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:34
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:47
 msgid "Step"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:18
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:19
 msgid "Agree to Terms <br>&amp; Conditions"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:31
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:40
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:32
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:41
 msgid ""
 "Choose your\n"
 "\t\t\t\t\t\t\t\t<br>Tarifi time slot"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:44
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:45
 msgid "Print your<br>Admission Letter"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:56
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:57
 msgid "Agreement 1"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:57
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:58
 msgid "Agreement 2"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:58
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:59
 msgid "Agreement 3"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:59
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:60
 msgid "Agreement 4"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:60
+#: undergraduate_admission/templates/undergraduate_admission/phase2/student_agreement.html:61
 msgid "Agreement 5"
 msgstr ""
 
@@ -2390,19 +2404,19 @@ msgstr ""
 msgid "Student Guide"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:26
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:27
 msgid ""
 "Agree to Terms\n"
 "\t\t\t\t\t\t\t<br>&amp; Conditions"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:53
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:54
 msgid ""
 "Print your\n"
 "\t\t\t\t\t\t\t\t<br>Admission Letter"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:62
+#: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:63
 msgid "Tarifi Time Slot"
 msgstr ""
 
@@ -2426,12 +2440,14 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:6
 msgid ""
 "\n"
-"<div class=\"alert alert-success\" role=\"alert\">\n"
-"\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> "
-"Success</h4>\n"
-"\t<p>Your application was submitted successfully. Please use the link below "
-"to login to the system to check your application status regularly</p>\n"
-"</div>\n"
+"        <div class=\"alert alert-success\" role=\"alert\">\n"
+"            <h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true"
+"\"></span> Success</h4>\n"
+"            <p>Your application was submitted successfully. Please use the "
+"link below to login to the system to check your application status "
+"regularly</p>\n"
+"        </div>\n"
+"    "
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:27
@@ -2643,15 +2659,11 @@ msgstr ""
 msgid "Verification submitted successfully!!!!"
 msgstr ""
 
-#: undergraduate_admission/views/general_views.py:51
+#: undergraduate_admission/views/general_views.py:48
 msgid "Password was reset successfully..."
 msgstr ""
 
-#: undergraduate_admission/views/general_views.py:54
-msgid "Error resetting password. Make sure you enter the correct info."
-msgstr ""
-
-#: undergraduate_admission/views/general_views.py:71
+#: undergraduate_admission/views/general_views.py:68
 msgid "Contact Info was updated successfully..."
 msgstr ""
 
@@ -2709,10 +2721,10 @@ msgstr ""
 msgid "Your transfer request was approved"
 msgstr ""
 
-#: undergraduate_admission/views/phase3_views.py:118
+#: undergraduate_admission/views/phase3_views.py:112
 msgid "No IDs to assign. Contact the site admins..."
 msgstr ""
 
-#: undergraduate_admission/views/phase3_views.py:121
+#: undergraduate_admission/views/phase3_views.py:115
 msgid "Tarifi time slot was chosen successfully..."
 msgstr ""

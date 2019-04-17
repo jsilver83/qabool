@@ -12,7 +12,7 @@ from ..models import *
 User = get_user_model()
 
 
-class MyPasswordChangeForm(PasswordChangeForm):
+class MyPasswordChangeForm(BaseCrispyForm, PasswordChangeForm):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
