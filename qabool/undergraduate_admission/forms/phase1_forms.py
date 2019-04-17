@@ -85,8 +85,7 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
                   # 'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
                   # 'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
                   'gender',
-                  'nationality', 'username', 'username2', 'mobile', 'mobile2',
-                  'saudi_mother', 'saudi_mother_gov_id',
+                  'nationality', 'saudi_mother', 'saudi_mother_gov_id', 'username', 'username2', 'mobile', 'mobile2',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
                   'high_school_gpa_student_entry',
                   'password1', 'password2', 'student_notes']

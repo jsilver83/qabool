@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-16 17:30+0300\n"
-"PO-Revision-Date: 2019-04-12 23:00+0300\n"
+"POT-Creation-Date: 2019-04-17 15:54+0300\n"
+"PO-Revision-Date: 2019-04-17 15:56+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -39,14 +39,14 @@ msgstr ""
 
 #: find_roommate/forms.py:23
 #: find_roommate/templates/find_roommate/landing_page.html:19
-#: undergraduate_admission/forms/phase1_forms.py:96
+#: undergraduate_admission/forms/phase1_forms.py:95
 #: undergraduate_admission/forms/phase2_forms.py:17
 msgid "Yes"
 msgstr "نعم"
 
 #: find_roommate/forms.py:24
 #: find_roommate/templates/find_roommate/landing_page.html:31
-#: undergraduate_admission/forms/phase1_forms.py:97
+#: undergraduate_admission/forms/phase1_forms.py:96
 #: undergraduate_admission/forms/phase2_forms.py:18
 msgid "No"
 msgstr "لا"
@@ -752,12 +752,12 @@ msgstr "صورة شهادة المقررات (إن وجدت)"
 #: undergraduate_admission/admin.py:216
 #: undergraduate_admission/models/student.py:360
 msgid "Vehicle Registration File"
-msgstr "صورة من الاستمارة"
+msgstr "صورة رخصة سير السيارة"
 
 #: undergraduate_admission/admin.py:221
 #: undergraduate_admission/models/student.py:368
 msgid "Driving License File"
-msgstr "صورة من الرخصة"
+msgstr "صورة رخصة الطالب"
 
 #: undergraduate_admission/admin.py:226
 #: undergraduate_admission/models/student.py:389
@@ -951,13 +951,13 @@ msgstr "كلمة المرور"
 
 #: undergraduate_admission/forms/general_forms.py:148
 #: undergraduate_admission/forms/general_forms.py:202
-#: undergraduate_admission/forms/phase1_forms.py:148
+#: undergraduate_admission/forms/phase1_forms.py:147
 #: undergraduate_admission/forms/phase2_forms.py:358
 msgid "Confirmation Code"
 msgstr "رمز التحقق"
 
 #: undergraduate_admission/forms/general_forms.py:156
-#: undergraduate_admission/forms/phase1_forms.py:108
+#: undergraduate_admission/forms/phase1_forms.py:107
 msgid "The two password fields didn't match."
 msgstr "كلمة المرور غير متطابقة"
 
@@ -975,7 +975,7 @@ msgid "New Password confirmation"
 msgstr "تأكيد كلمة المرور الجديدة"
 
 #: undergraduate_admission/forms/general_forms.py:182
-#: undergraduate_admission/forms/phase1_forms.py:141
+#: undergraduate_admission/forms/phase1_forms.py:140
 #: undergraduate_admission/forms/phase2_forms.py:354
 msgid "Enter the same password as before, for verification"
 msgstr "أعد إدخال كلمة المرور السابقة وذلك للتحقق"
@@ -1031,24 +1031,24 @@ msgstr "الجنس"
 msgid "Only male students can apply"
 msgstr "التقديم للطلاب الذكور فقط."
 
-#: undergraduate_admission/forms/phase1_forms.py:109
+#: undergraduate_admission/forms/phase1_forms.py:108
 msgid "The two government ID fields didn't match."
 msgstr "حقل الهوية الوطنية أو هوية مقيم  غير متطابق."
 
-#: undergraduate_admission/forms/phase1_forms.py:110
+#: undergraduate_admission/forms/phase1_forms.py:109
 msgid "You have been denied from applying for the following reason(s): "
 msgstr "لا يسمح لك  التسجيل في الجامعة للأسباب التالية:"
 
-#: undergraduate_admission/forms/phase1_forms.py:111
+#: undergraduate_admission/forms/phase1_forms.py:110
 #: undergraduate_admission/models/student.py:90
 msgid "You have entered an invalid Government ID"
 msgstr "لقد ادخلت رقم هوية غير صحيح"
 
-#: undergraduate_admission/forms/phase1_forms.py:112
+#: undergraduate_admission/forms/phase1_forms.py:111
 msgid "You have entered the guardian mobile same as your own mobile"
 msgstr "لقد ادخلت رقم جوال ولي الأمر نفس رقم جوالك"
 
-#: undergraduate_admission/forms/phase1_forms.py:113
+#: undergraduate_admission/forms/phase1_forms.py:112
 msgid ""
 "You have entered the mother to be Saudi but you did NOT enter her Saudi "
 "Government ID"
@@ -2562,14 +2562,26 @@ msgid "Apply for Admission"
 msgstr "تقديم طلب القبول"
 
 #: undergraduate_admission/templates/undergraduate_admission/registration_success.html:6
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "<div class=\"alert alert-success\" role=\"alert\">\n"
+#| "\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> "
+#| "Success</h4>\n"
+#| "\t<p>Your application was submitted successfully. Please use the link "
+#| "below to login to the system to check your application status regularly</"
+#| "p>\n"
+#| "</div>\n"
 msgid ""
 "\n"
-"<div class=\"alert alert-success\" role=\"alert\">\n"
-"\t<h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> "
-"Success</h4>\n"
-"\t<p>Your application was submitted successfully. Please use the link below "
-"to login to the system to check your application status regularly</p>\n"
-"</div>\n"
+"        <div class=\"alert alert-success\" role=\"alert\">\n"
+"            <h4><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true"
+"\"></span> Success</h4>\n"
+"            <p>Your application was submitted successfully. Please use the "
+"link below to login to the system to check your application status "
+"regularly</p>\n"
+"        </div>\n"
+"    "
 msgstr ""
 "\n"
 "<div class=\"alert alert-success\" role=\"alert\">\n"
