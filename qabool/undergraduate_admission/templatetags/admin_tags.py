@@ -26,9 +26,13 @@ def admin_commands(context):
 @register.simple_tag(takes_context=True)
 def render_uploaded_file(context, file_type, student_instance):
     request = context['request']
+    is_the_user_a_student = not (request.user.groups.all() or request.user.is_staff or request.user.is_superuser)
     file = getattr(student_instance, file_type)
     if file:
-        served_file_url = reverse('download_user_file_admin', args=(file_type, student_instance.pk))
+        if is_the_user_a_student:
+            served_file_url = reverse('download_user_file', args=(file_type, student_instance.pk))
+        else:
+            served_file_url = reverse('download_user_file_admin', args=(file_type, student_instance.pk))
         served_file_url = request.build_absolute_uri(served_file_url)
 
         # to solve the problem of static content served with http and the browser refusing to embed it within secure
