@@ -41,7 +41,7 @@ zabbix_server: 10.180.17.200
 
 disable_sms: no
 disable_email: no
-disable_captcha: no
+disable_captcha: yes
 
 #upload_dir: uploaded_docs
 api_security_token: aA6sFghhJ46tYu09iL0o
