@@ -60,5 +60,5 @@
 	{% endif %}
 	<a href="{% url 'undergraduate_admission:change_password' %}" class="list-group-item"><i class="fa fa-key" aria-hidden="true"></i> {% trans 'Change Password' %}</a>
 	<hr>
-	<a href="{% url 'undergraduate_admission:logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}</a>
+	<a href="{% url 'undergraduate_admission:logout' %}?next=/" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}</a>
 </div>
