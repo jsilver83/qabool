@@ -1,5 +1,5 @@
 {% for issue in issues %}
-	{% ifchanged issue.get_related_field_display and not forloop.first %}
+	{% ifchanged issue.get_related_field_display %}
 		</ul>
 		<br>
 	{% endifchanged %}
@@ -10,6 +10,5 @@
 	{% else %}
 		<li>{{ issue }}</li>
 	{% endifchanged %}
-
 	{% endfor %}
 </ul>
