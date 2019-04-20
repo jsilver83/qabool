@@ -1,6 +1,6 @@
 {% extends 'base_student_area.html' %}
 {% load i18n %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 
 {% block subcontent %}
@@ -16,7 +16,7 @@
 <form method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
 	{% csrf_token %}
 	{% block form %}
-	{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+	{% crispy form %}
 	{% endblock form %}
 	<br>&nbsp;<br>
 	<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Save' %}"/>
