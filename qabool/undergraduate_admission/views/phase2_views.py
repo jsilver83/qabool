@@ -152,11 +152,18 @@ class PersonalPictureView(BaseStudentInfoUpdateView):
         return context
 
 
-class PersonalPictureUnacceptableView(BaseStudentInfoUpdateView):
+class PersonalPictureUnacceptableView(StudentMixin, UpdateView):
     form_class = PersonalPhotoForm
     success_message = _('Personal picture was uploaded successfully...')
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
     success_url = reverse_lazy('undergraduate_admission:student_area')
+
+    def get_object(self):
+        return self.admission_request
+
+    def test_func(self):
+        original_test_result = super().test_func()
+        return original_test_result and self.get_object().can_re_upload_picture()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -210,17 +217,17 @@ class CompareNamesView(BaseStudentInfoUpdateView):
         return super().form_valid(form)
 
 
-class UploadMissingDocumentsView(Phase2BaseView, UpdateView):
+class UploadMissingDocumentsView(StudentMixin, UpdateView):
     template_name = 'undergraduate_admission/phase2/plain_form.html'
     form_class = MissingDocumentsForm
     success_url = reverse_lazy('undergraduate_admission:student_area')
 
-    def test_func(self):
-        original_test_result = super(UploadMissingDocumentsView, self).test_func()
-        return original_test_result and self.get_object().can_re_upload_docs
-
     def get_object(self):
         return self.admission_request
+
+    def test_func(self):
+        original_test_result = super(UploadMissingDocumentsView, self).test_func()
+        return original_test_result and self.get_object().can_re_upload_docs()
 
     def form_valid(self, form):
         saved = form.save()
