@@ -98,6 +98,8 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         queryset=VerificationIssues.objects.all(),
         choices_groupby='get_related_field_display',
         widget=CheckboxSelectMultiple,
+        required=False,
+        label=_('Verification Issues')
     )
 
     class Meta:
