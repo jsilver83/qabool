@@ -137,6 +137,9 @@ class RegistrationStatus(models.Model):
 
     general_status = models.CharField(max_length=200, verbose_name=_('General Status'), null=True, blank=False,
                                       choices=GeneralStatuses.choices())
+    short_description = models.TextField(max_length=1500, verbose_name=_('Short Description'),
+                                         null=True, blank=True,
+                                         help_text=_('Short description for admin only'))
     status_message_ar = models.TextField(max_length=1500, verbose_name=_('Registration Status Message AR'),
                                          null=True, blank=False, )
     status_message_en = models.TextField(max_length=1500, verbose_name=_('Registration Status Message EN'),
