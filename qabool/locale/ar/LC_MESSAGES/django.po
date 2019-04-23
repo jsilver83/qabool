@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-23 08:41+0300\n"
-"PO-Revision-Date: 2019-04-23 08:42+0300\n"
+"PO-Revision-Date: 2019-04-23 09:12+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -137,7 +137,7 @@ msgstr "الطلب مقبول"
 #: find_roommate/models.py:44
 #: undergraduate_admission/models/supporting_models.py:134
 msgid "Rejected"
-msgstr "الطلب غير مقبول"
+msgstr "غير مقبول"
 
 #: find_roommate/models.py:45
 msgid "Requesting Student Withdrawn"
