@@ -85,7 +85,7 @@ class SMS(object):
             'Your request was submitted. Share feedback http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Survey.aspx, KFUPM'),
         'registration_success_old_high_school': _('Application was rejected '
                                                   'because of old HS certificate. '
-                                                  'Share feedback: http://goo.gl/erw8HQ.'
+                                                  'Share feedback: http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Survey.aspx.'
                                                   'KFUPM'),
         'partial_admission_message': _('Congrats, you have been admitted into KFUPM. Check our website'),
         'general_results_message': _('Your admission result is out. Check our website. KFUPM'),
