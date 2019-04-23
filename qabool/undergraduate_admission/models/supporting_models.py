@@ -144,11 +144,12 @@ class RegistrationStatus(models.Model):
                                          null=True, blank=False, )
     status_message_en = models.TextField(max_length=1500, verbose_name=_('Registration Status Message EN'),
                                          null=True, blank=False, )
-    status_message_code = models.CharField(max_length=20, null=True, blank=False, unique=True, )
+    status_message_code = models.CharField(max_length=20, null=True, blank=False)
 
     class Meta:
         verbose_name_plural = _('Admission: Registration Status')
         ordering = ('general_status', 'status_message_code',)
+        unique_together = ('general_status', 'status_message_code')
 
     @property
     def registration_status_message(self):
