@@ -1,0 +1,45 @@
+a:link, a:visited{
+    color: #007d40;
+}
+#user-tools a:focus, #user-tools a:hover {
+    border-bottom-color: #007D43;
+    color: #007D43;
+}
+.button.default, input[type=submit].default, .submit-row input.default{
+    background-color: #007d40;
+}
+.button.default:active, input[type=submit].default:active, .button.default:focus, input[type=submit].default:focus, .button.default:hover, input[type=submit].default:hover {
+    background-color: #01a656;
+}
+.button, input[type=submit], input[type=button], .submit-row input, a.button{
+    background: #43b97e;
+}
+.button:active, input[type=submit]:active, input[type=button]:active, .button:focus, input[type=submit]:focus, input[type=button]:focus, .button:hover, input[type=submit]:hover, input[type=button]:hover{
+    background-color: #01a656;
+}
+.object-tools a:focus, .object-tools a:hover{
+    background-color: #01a656;
+}
+.module h2, .module caption, .inline-group h2{
+    background-color: #929292;
+}
+#header {
+    background-color: #007d40;
+    color: #fff;
+}
+#header a:focus, #header a:hover{
+    color: #d0d0d0;
+}
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #fff;
+}
+div.breadcrumbs {
+    background-color: #eaeaea;
+    color: #a2a2a2;
+}
+div.breadcrumbs a {
+    color: #555;
+}
+div.breadcrumbs a:focus, div.breadcrumbs a:hover {
+    color: #848484;
+}
