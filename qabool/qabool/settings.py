@@ -205,8 +205,6 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-EMAIL_HOST = 'mail.kfupm.edu.sa'
-EMAIL_PORT = '587'
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
 EMAIL_TIMEOUT = 1
