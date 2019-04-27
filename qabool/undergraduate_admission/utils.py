@@ -18,16 +18,14 @@ from undergraduate_admission.models import Agreement, AdmissionSemester, Registr
 class Email(object):
     email_messages = {
         'registration_success':
-            _('Dear %(student_name)s,<br>Your request has been successfully submitted and the Admission results '
-              'will be announced on Thursday July 6, 2017 ... <br>'
+            _('Dear %(student_name)s,<br>Your request has been successfully submitted and the Admission results <br>'
               '<h4>Registration Details</h4><hr>'
               # 'Registration ID: %(user_id)s<br>'
               'Name: %(student_name)s<br>'
               'Mobile: %(mobile)s<br>'
               'Registration Date: %(reg_date)s<br><hr><br>'
-              'We appreciate your feedback: <a href="http://goo.gl/erw8HQ">http://goo.gl/erw8HQ</a> . <br><hr><br>'
+              'We appreciate your feedback: <a href="http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Survey.aspx">http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Survey.aspx</a> . <br><hr><br>'
               'You agreed to the following:<br>%(agreement)s'
-              '<hr><br>'
               '<br><br> Admissions Office, <br>King Fahd '
               'University of Petroleum and Minerals'),
         'registration_success_old_high_school': _('Dear %(student_name)s,<br>We regret to inform you that your '
@@ -62,7 +60,7 @@ class Email(object):
              'user_id': user.id,
              'mobile': user.mobile,
              'reg_date': timezone.datetime.now().strftime('%x'),
-             'agreement': mark_safe(agreement),
+             'agreement': mark_safe(agreement.agreement),
              })
 
         if user.status_message == RegistrationStatus.get_status_old_high_school():
@@ -75,7 +73,7 @@ class Email(object):
 
         try:
             send_mail(_('KFUPM Admission'), plain_message,
-                      settings.EMAIL_HOST_USER, [user.email], fail_silently=True,
+                      settings.EMAIL_HOST_USER, [user.user.email], fail_silently=True,
                       html_message=html_message)
         except:  # usually TimeoutError but made it general so it will never raise an exception
             pass
@@ -83,10 +81,11 @@ class Email(object):
 
 class SMS(object):
     sms_messages = {
-        'registration_success': _('Your request was submitted. Share feedback http://goo.gl/erw8HQ, KFUPM'),
+        'registration_success': _(
+            'Your request was submitted. Share feedback http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Survey.aspx, KFUPM'),
         'registration_success_old_high_school': _('Application was rejected '
                                                   'because of old HS certificate. '
-                                                  'Share feedback: http://goo.gl/erw8HQ.'
+                                                  'Share feedback: http://www.kfupm.edu.sa/departments/admissions/SitePages/ar/Survey.aspx.'
                                                   'KFUPM'),
         'partial_admission_message': _('Congrats, you have been admitted into KFUPM. Check our website'),
         'general_results_message': _('Your admission result is out. Check our website. KFUPM'),
@@ -283,7 +282,7 @@ def add_validators_to_arabic_and_english_names(fields):
                     message=_("Use English alphabet only! You can also use the dot, hyphen and spaces")
                 ), ]
             if len(field.validators) > 2:
-                field.validators.pop(len(field.validators)-1)
+                field.validators.pop(len(field.validators) - 1)
 
         elif field.name in ['student_full_name_ar', 'first_name_ar', 'second_name_ar', 'third_name_ar',
                             'family_name_ar']:
@@ -293,4 +292,4 @@ def add_validators_to_arabic_and_english_names(fields):
                     message=_("Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)")
                 ), ]
             if len(field.validators) > 2:
-                field.validators.pop(len(field.validators)-1)
+                field.validators.pop(len(field.validators) - 1)

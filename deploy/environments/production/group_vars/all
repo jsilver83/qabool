@@ -29,6 +29,8 @@ django_debug: no
 apache_debug: no
 
 email_user: qabool@kfupm.edu.sa
+email_host: mail.kfupm.edu.sa
+email_port: 587
 
 #cas_login_url: "{{ cas_login_url }}"
 #cas_validate_url: "{{ cas_validate_url }}"
