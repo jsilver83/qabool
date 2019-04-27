@@ -87,7 +87,7 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
                   'gender',
                   'nationality', 'saudi_mother', 'saudi_mother_gov_id', 'username', 'username2', 'mobile', 'mobile2',
                   'email', 'email2', 'guardian_mobile', 'high_school_graduation_year', 'high_school_system',
-                  'high_school_gpa_student_entry',
+                  'high_school_certificate', 'courses_certificate', 'high_school_gpa_student_entry',
                   'password1', 'password2', 'student_notes']
 
         SAUDI_MOTHER_CHOICES = (
@@ -100,6 +100,17 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
             'saudi_mother': forms.RadioSelect(choices=SAUDI_MOTHER_CHOICES),
         }
 
+        help_text_for_uploads = _("""<ol>
+        <li>Please upload clear scanned images with good quality.</li>
+        <li>Allowed formats: pdf, jpg, jpeg, png, bmp, gif.</li>
+        <li>Mobile-taken pictures will not be accepted.</li>
+        </ol>""")
+
+        help_texts = {
+            'high_school_certificate': help_text_for_uploads,
+            'courses_certificate': help_text_for_uploads,
+        }
+
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
@@ -110,23 +121,22 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
             'govid_invalid': _("You have entered an invalid Government ID"),
             'guardian_mobile_match': _("You have entered the guardian mobile same as your own mobile"),
             'saudi_mother_gov_id': _("You have entered the mother to be Saudi but you did NOT enter her Saudi"
-                                        " Government ID")
+                                     " Government ID"),
+            'hs_cert_missing': _('You need to upload your high school certificate since you selected International '
+                                 'schooling system')
         })
         self.error_messages = BaseContactForm.error_messages
 
         for field in self.fields:
-            if field not in ['saudi_mother']:
+            if field not in ['saudi_mother', 'high_school_certificate', 'courses_certificate']:
                 self.fields[field].widget.attrs['class'] = 'form-control'
 
             if field not in ['student_notes', 'third_name_ar', 'second_name_en', 'third_name_en',
-                             'gender', 'saudi_mother_gov_id']:
+                             'gender', 'saudi_mother_gov_id', 'high_school_certificate', 'courses_certificate']:
                 self.fields[field].required = True
-                self.fields[field].widget.attrs.update({'required': ''})
 
             if field in ['username2', 'email2', 'mobile2']:
                 self.fields[field].widget.attrs.update({'class': 'nocopy form-control'})
-
-        self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
 
         try:
             # this try..except is added for when in Phase1UserEditForm those fields wont exist
@@ -163,6 +173,13 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
                     self.error_messages['govid_invalid'],
                     code='govid_invalid',
                     )
+        high_school_system = cleaned_data.get("high_school_system")
+        if (high_school_system == AdmissionRequest.HighSchoolSystems.INTERNATIONAL
+                and not cleaned_data.get("high_school_certificate")):
+            raise forms.ValidationError(
+                self.error_messages['hs_cert_missing'],
+                code='high_school_certificate_missing',
+            )
         return cleaned_data
 
     def clean_password2(self):

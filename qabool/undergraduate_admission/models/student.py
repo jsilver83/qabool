@@ -29,6 +29,19 @@ class AdmissionRequest(models.Model):
                 (cls.FEMALE, _('Female')),
             )
 
+    class HighSchoolSystems:
+        PUBLIC = 'PUBLIC'
+        PRIVATE = 'PRIVATE'
+        INTERNATIONAL = 'INTERNATIONAL'
+
+        @classmethod
+        def choices(cls):
+            return (
+                (cls.PUBLIC, _('Public')),
+                (cls.PRIVATE, _('Private')),
+                (cls.INTERNATIONAL, _('International')),
+            )
+
     user = models.ForeignKey(User, related_name='admission_requests', null=True, blank=True,
                              verbose_name=_('Associated User'),
                              on_delete=models.SET_NULL,
@@ -238,7 +251,8 @@ class AdmissionRequest(models.Model):
                                         verbose_name=_('High School Name (Arabic)'))
     high_school_name_en = models.CharField(null=True, blank=True, max_length=100,
                                            verbose_name=_('High School Name (English)'))
-    high_school_system = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School System'))
+    high_school_system = models.CharField(null=True, blank=True, max_length=100, verbose_name=_('High School System'),
+                                          choices=HighSchoolSystems.choices())
     high_school_major_code = models.CharField(null=True, blank=True, max_length=20,
                                               verbose_name=_('High School Major Code'))
     high_school_major_name = models.CharField(null=True, blank=True, max_length=100,
