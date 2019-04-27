@@ -160,7 +160,7 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
 
             if not match:
                 raise forms.ValidationError(
-                    UserCreationForm.error_messages['govid_invalid'],
+                    self.error_messages['govid_invalid'],
                     code='govid_invalid',
                     )
         return cleaned_data
