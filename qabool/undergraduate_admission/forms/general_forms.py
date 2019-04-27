@@ -128,7 +128,7 @@ class BaseContactForm(BaseCrispyForm, forms.ModelForm):
         return saved
 
 
-class MyAuthenticationForm(AuthenticationForm):
+class MyAuthenticationForm(BaseCrispyForm, AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(MyAuthenticationForm, self).__init__(self, *args, **kwargs)
