@@ -8,8 +8,6 @@ from django.forms.models import ModelChoiceIterator, ModelChoiceField, ModelMult
 
 class GroupedModelChoiceIterator(ModelChoiceIterator):
     def __init__(self, field, groupby):
-        print(self)
-        print(field)
         self.groupby = groupby
         super().__init__(field)
 
