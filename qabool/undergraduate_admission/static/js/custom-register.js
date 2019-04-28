@@ -10,6 +10,11 @@ $(function () {
         var vaa = $(this).val();
         sm(vaa);
     });
+    hs_sys_change($("#id_high_school_system").val());
+    $("#id_high_school_system").change(function () {
+        var vaa = $(this).val();
+        hs_sys_change(vaa);
+    });
     $("input[type=radio][name=saudi_mother]").change(function () {
         var vaa = $("#id_nationality").prop('selectedIndex');
         sm(vaa);
@@ -52,5 +57,19 @@ function sm(nat) {
             $("#id_saudi_mother_gov_id").parents(".form-group").hide();
             $("#id_saudi_mother_gov_id").removeAttr("required");
         }
+    }
+}
+
+function hs_sys_change(hs_sys) {
+    if (hs_sys == 'INTERNATIONAL') {
+        $("#div_id_high_school_certificate").show();
+        $("#div_id_courses_certificate").show();
+    }
+    else {
+        $("#id_high_school_certificate").val("");
+        $("#id_courses_certificate").val("");
+
+        $("#div_id_high_school_certificate").hide();
+        $("#div_id_courses_certificate").hide();
     }
 }

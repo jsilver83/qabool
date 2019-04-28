@@ -44,7 +44,7 @@ class PersonalInfoForm(Phase2GenericForm):
                   'government_id_expiry', 'government_id_place',
                   'passport_number', 'passport_place', 'passport_expiry', 'social_status',
                   'is_employed', 'employer_name',
-                  # 'bank_name', 'bank_account', 'bank_account_identification_file',
+                  'bank_name', 'bank_account', 'bank_account_identification_file',
                   'blood_type',
                   'is_disabled', 'disability_needs', 'disability_needs_notes',
                   'is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ]
@@ -113,8 +113,8 @@ class PersonalInfoForm(Phase2GenericForm):
             choices=Lookup.get_lookup_choices(Lookup.LookupTypes.CHRONIC_DISEASES, False))
         self.fields['blood_type'].widget = forms.Select(
             choices=Lookup.get_lookup_choices(Lookup.LookupTypes.BLOOD_TYPE, add_dashes=True))
-        # self.fields['bank_name'].widget = forms.Select(
-        #     choices=Lookup.get_lookup_choices(Lookup.LookupTypes.BANK_NAMES, add_dashes=True))
+        self.fields['bank_name'].widget = forms.Select(
+            choices=Lookup.get_lookup_choices(Lookup.LookupTypes.BANK_NAMES, add_dashes=True))
 
 
 class GuardianContactForm(Phase2GenericForm):

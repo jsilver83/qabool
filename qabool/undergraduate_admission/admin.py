@@ -242,9 +242,6 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
         if db_field.name in['admission_note', 'admission_note2', 'admission_note3']:
             formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
 
-        if db_field.name == 'high_school_system':
-            formfield.widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
-
         if db_field.name in ['have_a_vehicle', 'is_employed', 'is_disabled', 'is_diseased']:
             formfield.widget = forms.RadioSelect(choices=YES_NO_CHOICES)
 
