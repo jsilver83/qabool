@@ -196,13 +196,13 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
 
         student.save()
         if verification_issues:
-            pass
-            # SMS.send_sms_docs_issue_message(student.mobile)
-            # SMS.send_sms_docs_issue_message(student.guardian_mobile)
+            # pass
+            SMS.send_sms_docs_issue_message(student.mobile)
+            SMS.send_sms_docs_issue_message(student.guardian_mobile)
         elif verification_issues is None and student.student_type in ('S', 'M'):
-            pass
-            # SMS.send_sms_admitted(student.mobile)
-            # SMS.send_sms_admitted(student.guardian_mobile)
+            # pass
+            SMS.send_sms_admitted(student.mobile)
+            SMS.send_sms_admitted(student.guardian_mobile)
 
         return student
 
