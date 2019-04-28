@@ -128,7 +128,7 @@ class BaseContactForm(BaseCrispyForm, forms.ModelForm):
         return saved
 
 
-class MyAuthenticationForm(AuthenticationForm):
+class MyAuthenticationForm(BaseCrispyForm, AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(MyAuthenticationForm, self).__init__(self, *args, **kwargs)
@@ -159,12 +159,15 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
         label=_('Government ID'),
         max_length=50,
         required=True,
+        help_text=_('National ID for Saudis, Iqama Number for non-Saudis.'),
     )
 
     # id2 = forms.IntegerField(
     #     label=_('Registration Number'),
     #     required=False,
     # )
+
+    email = forms.EmailField(label=_("Email"), max_length=254)
 
     password1 = forms.CharField(
         label=_('New Password'),
@@ -184,17 +187,12 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
 
     class Meta:
         model = AdmissionRequest
-        fields = ['govid', 'mobile', 'password1', 'password2']
-
-        help_texts = {
-            'govid': _('National ID for Saudis, Iqama Number for non-Saudis.'),
-        }
+        fields = ['govid', 'mobile', 'guardian_mobile', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super(ForgotPasswordForm, self).__init__(*args, **kwargs)
 
-        self.fields['mobile'].required = True
-        self.fields['mobile'].widget.is_required = True
+        self.fields['guardian_mobile'].required = True
 
         if not settings.DISABLE_CAPTCHA:
             # self.fields['captcha'] = ReCaptchaField(label=_('Captcha'), attrs={'lang': translation.get_language()})
@@ -213,17 +211,20 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
                 code='password_mismatch',
             )
 
-        matching_users = User.objects.filter(username=cleaned_data.get('govid'))
+        matching_users = User.objects.filter(username=cleaned_data.get('govid'),
+                                             email=cleaned_data.get('email'))
         if matching_users and matching_users.count() == 1:
             user = matching_users.first()
-            mobile = cleaned_data.get("mobile")
-            admission_request = AdmissionRequest.objects.filter(user=user, mobile=mobile)
+            admission_request = AdmissionRequest.objects.filter(user=user,
+                                                                mobile=cleaned_data.get("mobile"),
+                                                                guardian_mobile=cleaned_data.get("guardian_mobile"))
 
             if admission_request:
                 self.instance = admission_request.first()
                 password_validation.validate_password(cleaned_data.get('password2'), user)
-            else:
-                raise forms.ValidationError(
+
+        if self.instance.pk is None:
+            raise forms.ValidationError(
                     self.error_messages['wrong_entry'],
                     code='wrong_entry',
                 )
@@ -231,7 +232,7 @@ class ForgotPasswordForm(BaseCrispyForm, forms.ModelForm):
         return cleaned_data
 
     def save(self, commit=True):
-        if self.instance:
+        if self.instance.pk:
             password = self.cleaned_data.get("password1")
             self.instance.user.set_password(password)
             self.instance.user.save()

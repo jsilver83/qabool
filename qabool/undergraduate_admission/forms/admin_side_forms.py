@@ -162,7 +162,6 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         self.fields['mobile'].help_text = ''
         self.fields['verification_notes'].widget = forms.Textarea()
         self.fields['verification_notes'].required = False
-        self.fields['high_school_system'].widget = forms.Select(choices=Lookup.get_lookup_choices('HIGH_SCHOOL_TYPE'))
         # self.fields['vehicle_owner'].widget = forms.Select(choices=Lookup.get_lookup_choices('VEHICLE_OWNER'))
 
     def save(self, commit=True):
