@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-27 13:02+0300\n"
+"POT-Creation-Date: 2019-05-04 15:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -254,7 +254,7 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/phase2/withdraw.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:75
-#: undergraduate_admission/templates/undergraduate_admission/register.html:43
+#: undergraduate_admission/templates/undergraduate_admission/register.html:44
 msgid "btn-align"
 msgstr ""
 
@@ -474,6 +474,10 @@ msgstr ""
 
 #: qabool/settings.py:166
 msgid "English"
+msgstr ""
+
+#: qabool/settings.py:177
+msgid "Saudi Arabia"
 msgstr ""
 
 #: tarifi/models.py:19
@@ -2202,7 +2206,7 @@ msgid "Update Contact Info"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:26
-#: undergraduate_admission/templates/undergraduate_admission/register.html:38
+#: undergraduate_admission/templates/undergraduate_admission/register.html:39
 msgid "I confirm that all entered info above are correct"
 msgstr ""
 
@@ -2486,7 +2490,11 @@ msgstr ""
 msgid "Errors"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/register.html:43
+#: undergraduate_admission/templates/undergraduate_admission/register.html:19
+msgid "You have errors in the form below that you have to correct to proceed"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/register.html:44
 msgid "Apply for Admission"
 msgstr ""
 
@@ -2731,7 +2739,7 @@ msgstr ""
 msgid "You already registered for this year."
 msgstr ""
 
-#: undergraduate_admission/views/phase1_views.py:144
+#: undergraduate_admission/views/phase1_views.py:146
 msgid "Info was updated successfully..."
 msgstr ""
 

@@ -16,7 +16,8 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 	{% if form.errors %}
 	    <div class="alert alert-block alert-danger">
 	        <h4 class="alert-heading">{% trans 'Errors' %}</h4>
-	        <ul>
+	        <span class="hidden alert-tba">{% trans 'You have errors in the form below that you have to correct to proceed' %}</span>
+	        <ul class="errors-tba">
 		    {% for field in form %}
 			    {% if field.errors %}
 			    <li><strong>{{ field.label }}</strong>
