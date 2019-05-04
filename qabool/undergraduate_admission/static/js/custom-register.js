@@ -28,6 +28,10 @@ $(function () {
 
     $('#id_gender').hide();
     $('.field-gender .help-block').attr('style', 'color:red');
+
+    if ( $('ul.errors-tba li').length > 1 ) {
+        alert($('.alert-tba').html());
+    }
 });
 
 function sm(nat) {
