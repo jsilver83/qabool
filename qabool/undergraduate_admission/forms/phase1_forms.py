@@ -100,6 +100,10 @@ class RegistrationForm(BaseContactForm, forms.ModelForm):
             'saudi_mother': forms.RadioSelect(choices=SAUDI_MOTHER_CHOICES),
         }
 
+        labels = {
+            'courses_certificate': _('High School Transcript'),
+        }
+
         help_text_for_uploads = _("""<ol>
         <li>Please upload clear scanned images with good quality.</li>
         <li>Allowed formats: pdf, jpg, jpeg, png, bmp, gif.</li>
