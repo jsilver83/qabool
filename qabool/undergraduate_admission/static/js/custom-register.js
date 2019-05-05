@@ -65,8 +65,13 @@ function sm(nat) {
 }
 
 function hs_sys_change(hs_sys) {
+    var ht = $("#div_id_high_school_certificate label").html();
+
     if (hs_sys == 'INTERNATIONAL') {
         $("#div_id_high_school_certificate").show();
+        ht = ht.trim();
+        $("#div_id_high_school_certificate label").html(ht+"*");
+        $("#div_id_high_school_certificate input").attr('required', 'required');
         $("#div_id_courses_certificate").show();
     }
     else {
@@ -74,6 +79,8 @@ function hs_sys_change(hs_sys) {
         $("#id_courses_certificate").val("");
 
         $("#div_id_high_school_certificate").hide();
+        $("#div_id_high_school_certificate label").html(ht.substring(0, ht.length-1));
+        $("#div_id_high_school_certificate input").removeAttr('required');
         $("#div_id_courses_certificate").hide();
     }
 }
