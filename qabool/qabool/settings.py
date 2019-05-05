@@ -173,6 +173,10 @@ LOCALE_PATHS = (
 
 COUNTRIES_FIRST = ['SA']
 COUNTRIES_FIRST_BREAK = '  ____________  '
+COUNTRIES_OVERRIDE = {
+    'SA': _('Saudi Arabia'),
+    'IL': None,
+}
 
 
 # Logging
