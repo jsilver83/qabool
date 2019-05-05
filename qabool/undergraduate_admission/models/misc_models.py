@@ -148,6 +148,9 @@ class Agreement(models.Model):
     )
     agreement_type = models.CharField(max_length=100, null=True, blank=False, verbose_name=_('Agreement Type'),
                                       choices=AgreementTypes.choices())
+    short_description = models.TextField(max_length=1500, verbose_name=_('Short Description'),
+                                         null=True, blank=False,
+                                         help_text=_('Short description for admin only'))
     agreement_text_ar = models.TextField(max_length=2000, verbose_name=_('Agreement Text (Arabic)'), blank=True,
                                          null=True)
     agreement_text_en = models.TextField(max_length=2000, verbose_name=_('Agreement Text (English)'), blank=True,
@@ -166,7 +169,7 @@ class Agreement(models.Model):
             return self.agreement_text_en
 
     def __str__(self):
-        return str(self.agreement_type)
+        return self.short_description if self.short_description else str(self.agreement_type)
 
 
 # Auxiliary table in the database for BI reports

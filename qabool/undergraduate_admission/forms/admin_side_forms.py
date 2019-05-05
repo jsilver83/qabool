@@ -106,10 +106,10 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         model = AdmissionRequest
         fields = ['nationality', 'saudi_mother',
 
-                  # 'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
-                  # 'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
+                  'first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar',
+                  'first_name_en', 'second_name_en', 'third_name_en', 'family_name_en',
 
-                  'student_full_name_en', 'student_full_name_ar',
+                  # 'student_full_name_en', 'student_full_name_ar',
 
                   'mobile', 'high_school_gpa',
                   'high_school_graduation_year', 'high_school_system',
@@ -162,6 +162,13 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
         self.fields['mobile'].help_text = ''
         self.fields['verification_notes'].widget = forms.Textarea()
         self.fields['verification_notes'].required = False
+
+        for field in self.fields:
+            if field in ['first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar', ]:
+                self.fields[field].widget.attrs.update({'class': 'n-ar'})
+            elif field in ['first_name_en', 'second_name_en', 'third_name_en', 'family_name_en', ]:
+                self.fields[field].widget.attrs.update({'class': 'n-en'})
+
         # self.fields['vehicle_owner'].widget = forms.Select(choices=Lookup.get_lookup_choices('VEHICLE_OWNER'))
 
     def save(self, commit=True):
