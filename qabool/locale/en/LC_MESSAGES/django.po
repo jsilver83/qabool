@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-04 15:53+0300\n"
+"POT-Creation-Date: 2019-05-05 15:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -936,13 +936,13 @@ msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:146
 #: undergraduate_admission/forms/general_forms.py:199
-#: undergraduate_admission/forms/phase1_forms.py:158
+#: undergraduate_admission/forms/phase1_forms.py:162
 #: undergraduate_admission/forms/phase2_forms.py:358
 msgid "Confirmation Code"
 msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:154
-#: undergraduate_admission/forms/phase1_forms.py:118
+#: undergraduate_admission/forms/phase1_forms.py:122
 msgid "The two password fields didn't match."
 msgstr ""
 
@@ -972,7 +972,7 @@ msgid "New Password confirmation"
 msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:184
-#: undergraduate_admission/forms/phase1_forms.py:151
+#: undergraduate_admission/forms/phase1_forms.py:155
 #: undergraduate_admission/forms/phase2_forms.py:354
 msgid "Enter the same password as before, for verification"
 msgstr ""
@@ -1024,7 +1024,11 @@ msgstr ""
 msgid "Only male students can apply"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:103
+#: undergraduate_admission/forms/phase1_forms.py:104
+msgid "High School Transcript"
+msgstr ""
+
+#: undergraduate_admission/forms/phase1_forms.py:107
 msgid ""
 "<ol>\n"
 "        <li>Please upload clear scanned images with good quality.</li>\n"
@@ -1033,30 +1037,30 @@ msgid ""
 "        </ol>"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:119
+#: undergraduate_admission/forms/phase1_forms.py:123
 msgid "The two government ID fields didn't match."
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:120
+#: undergraduate_admission/forms/phase1_forms.py:124
 msgid "You have been denied from applying for the following reason(s): "
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:121
+#: undergraduate_admission/forms/phase1_forms.py:125
 #: undergraduate_admission/models/student.py:103
 msgid "You have entered an invalid Government ID"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:122
+#: undergraduate_admission/forms/phase1_forms.py:126
 msgid "You have entered the guardian mobile same as your own mobile"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:123
+#: undergraduate_admission/forms/phase1_forms.py:127
 msgid ""
 "You have entered the mother to be Saudi but you did NOT enter her Saudi "
 "Government ID"
 msgstr ""
 
-#: undergraduate_admission/forms/phase1_forms.py:125
+#: undergraduate_admission/forms/phase1_forms.py:129
 msgid ""
 "You need to upload your high school certificate since you selected "
 "International schooling system"
