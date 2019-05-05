@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-27 13:02+0300\n"
-"PO-Revision-Date: 2019-04-27 13:04+0300\n"
+"POT-Creation-Date: 2019-05-04 15:53+0300\n"
+"PO-Revision-Date: 2019-05-04 15:55+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -258,7 +258,7 @@ msgstr "لائحـة مخالفـات السكـــن"
 #: undergraduate_admission/templates/undergraduate_admission/phase2/withdraw.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:31
 #: undergraduate_admission/templates/undergraduate_admission/phase3/tarifi_time_slot.html:75
-#: undergraduate_admission/templates/undergraduate_admission/register.html:43
+#: undergraduate_admission/templates/undergraduate_admission/register.html:44
 msgid "btn-align"
 msgstr "pull-left"
 
@@ -494,6 +494,10 @@ msgstr "عربي"
 #: qabool/settings.py:166
 msgid "English"
 msgstr "انجليزي"
+
+#: qabool/settings.py:177
+msgid "Saudi Arabia"
+msgstr "المملكة العربية السعودية"
 
 #: tarifi/models.py:19
 msgid "Received By"
@@ -1962,7 +1966,7 @@ msgstr "ملاحظات التدقيق بالانجليزي"
 
 #: undergraduate_admission/templates/admin/base_site.html:4
 msgid "Django site admin"
-msgstr ""
+msgstr "موقع الإدارة"
 
 #: undergraduate_admission/templates/admin/base_site.html:12
 msgid "Django administration"
@@ -2283,7 +2287,7 @@ msgid "Update Contact Info"
 msgstr "تعديل بيانات التواصل"
 
 #: undergraduate_admission/templates/undergraduate_admission/edit_info.html:26
-#: undergraduate_admission/templates/undergraduate_admission/register.html:38
+#: undergraduate_admission/templates/undergraduate_admission/register.html:39
 msgid "I confirm that all entered info above are correct"
 msgstr "أتعهد بأن المعلومات المدخلة أعلاه صحيحة."
 
@@ -2624,7 +2628,11 @@ msgstr ""
 msgid "Errors"
 msgstr "خطأ"
 
-#: undergraduate_admission/templates/undergraduate_admission/register.html:43
+#: undergraduate_admission/templates/undergraduate_admission/register.html:19
+msgid "You have errors in the form below that you have to correct to proceed"
+msgstr "يوجد اخطــــــاء بالنموذج أدناه، عليك تعديلها للإنتقال للخطوة التالية!"
+
+#: undergraduate_admission/templates/undergraduate_admission/register.html:44
 msgid "Apply for Admission"
 msgstr "تقديم طلب القبول"
 
@@ -2923,7 +2931,7 @@ msgstr "انتهى وقت التسجيل لهذا العام..."
 msgid "You already registered for this year."
 msgstr "لقد قمت بالتسجيل لهذا العام  ..."
 
-#: undergraduate_admission/views/phase1_views.py:144
+#: undergraduate_admission/views/phase1_views.py:146
 msgid "Info was updated successfully..."
 msgstr "لقد تم حفظ البيانات بنجاح"
 
@@ -2995,9 +3003,6 @@ msgstr ""
 
 #~ msgid "Vehicle info was saved successfully..."
 #~ msgstr "لقد تم حفظ معلومات المركبة"
-
-#~ msgid "Status (Arabic)"
-#~ msgstr "الحالة ( بالعربي )"
 
 #~ msgid "Status (English)"
 #~ msgstr "الحالة ( بالإنجليزي )"
