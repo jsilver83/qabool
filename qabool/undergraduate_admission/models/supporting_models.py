@@ -127,10 +127,10 @@ class RegistrationStatus(models.Model):
         @classmethod
         def choices(cls):
             return (
-                (cls.APPLIED, _('Phase 1: Applied')),
-                (cls.PARTIALLY_ADMITTED, _('Phase 2: Partially-Admitted')),
-                (cls.ADMITTED, _('Phase 3: Admitted')),
-                (cls.SUSPENDED, _('Phase 3: Suspended')),
+                (cls.APPLIED, _('Applied')),
+                (cls.PARTIALLY_ADMITTED, _('Partially-Admitted')),
+                (cls.ADMITTED, _('Admitted')),
+                (cls.SUSPENDED, _('Suspended')),
                 (cls.REJECTED, _('Rejected')),
                 (cls.WITHDRAWN, _('Withdrawn')),
             )
