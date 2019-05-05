@@ -138,7 +138,7 @@ class RegistrationStatus(models.Model):
     general_status = models.CharField(max_length=200, verbose_name=_('General Status'), null=True, blank=False,
                                       choices=GeneralStatuses.choices())
     short_description = models.TextField(max_length=1500, verbose_name=_('Short Description'),
-                                         null=True, blank=True,
+                                         null=True, blank=False,
                                          help_text=_('Short description for admin only'))
     status_message_ar = models.TextField(max_length=1500, verbose_name=_('Registration Status Message AR'),
                                          null=True, blank=False, )
@@ -148,7 +148,7 @@ class RegistrationStatus(models.Model):
 
     class Meta:
         verbose_name_plural = _('Admission: Registration Status')
-        ordering = ('general_status', 'status_message_code',)
+        ordering = ('short_description', )
         unique_together = ('general_status', 'status_message_code')
 
     @property
@@ -160,7 +160,11 @@ class RegistrationStatus(models.Model):
             return self.status_message_en
 
     def __str__(self):
-        return '%s (%s)' % (self.get_general_status_display(), self.status_message_code)
+        return self.short_description if self.short_description else '%s (%s)' % (self.get_general_status_display(),
+                                                                                  self.status_message_code)
+
+    def get_long_code(self):
+        return '%s - %s' % (self.general_status, self.status_message_code)
 
     @staticmethod
     def get_registration_status_choices(add_dashes=True):

@@ -34,14 +34,14 @@ class StudentResource(resources.ModelResource):
 
 
 class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
-    list_display = ('government_id', 'semester', 'kfupm_id', 'get_student_full_name', 'mobile',
+    list_display = ('government_id', 'semester', 'kfupm_id', 'get_student_full_name_and_source', 'mobile',
                     'student_type', 'admission_total', 'status_message', )
 
     fieldsets = (
         (None, {
             'fields': (('user', 'government_id', 'semester', 'status_message', 'gender', ),
-                       # ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
-                       # ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
+                       ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
+                       ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
                        ('student_full_name_ar', 'student_full_name_en', ),
                        ('student_type', 'nationality', 'saudi_mother', 'saudi_mother_gov_id'),
                        'mobile', 'guardian_mobile',
@@ -347,7 +347,9 @@ class RegistrationStatusResource(resources.ModelResource):
 
 
 class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('general_status', 'short_description', 'status_message_code', 'status_message_ar', 'status_message_en', 'id')
+    list_display = ('short_description', 'general_status', 'status_message_code', 'get_long_code', 'status_message_ar',
+                    'status_message_en', 'id')
+    list_filter = ('general_status', )
     resource_class = RegistrationStatusResource
 
 
@@ -366,12 +368,20 @@ class TarifiReceptionDateAdmin(admin.ModelAdmin):
     list_filter = ('semester',)
 
 
+class AgreementAdminForm(forms.ModelForm):
+    class Meta:
+        model = Agreement
+        widgets = {
+            'agreement_text_ar': AdminPagedownWidget,
+            'agreement_text_en': AdminPagedownWidget,
+        }
+        fields = '__all__'
+
+
 class AgreementAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': AdminPagedownWidget},
-    }
-    list_display = ('id', 'semester', 'status_message', 'agreement_type', 'show')
+    list_display = ('short_description', 'semester', 'status_message', 'agreement_type', 'show')
     list_filter = ('agreement_type',)
+    form = AgreementAdminForm
 
 
 class VerificationIssuesAdmin(ImportExportMixin, admin.ModelAdmin):

@@ -21,11 +21,35 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div class="col-sm-12"><h4>{{ form.instance.student_full_name_ar }}</h4></div>
+			<div class="col-sm-12 alert text-center{% if form.instance.are_arabic_names_matching %} alert-success{% else %} alert-danger{% endif %}">
+{#				{{ form.student_full_name_ar|as_crispy_field }}#}
+				<h4><b class="name-ar">{{ form.instance.first_name_ar }}&nbsp;{{ form.instance.second_name_ar }}&nbsp;{{ form.instance.third_name_ar }}&nbsp;{{ form.instance.family_name_ar }}</b> || <span class="orig-name-ar">{{ form.instance.student_full_name_ar }}</span></h4>
+			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12">{{ form.student_full_name_ar|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.first_name_ar|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.second_name_ar|as_crispy_field }}</div>
 		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.third_name_ar|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.family_name_ar|as_crispy_field }}</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-12 alert text-center{% if form.instance.are_english_names_matching %} alert-success{% else %} alert-danger{% endif %}">
+{#				{{ form.student_full_name_en|as_crispy_field }}#}
+				<h4><b class="name-en">{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;{{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</b> || <span class="orig-name-en">{{ form.instance.student_full_name_en }}</span></h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.first_name_en|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.second_name_en|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.third_name_en|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.family_name_en|as_crispy_field }}</div>
+		</div>
+
 		<hr>
 		<div class="row">
 			<div class="col-sm-6">
@@ -43,9 +67,9 @@
 		<div class="row">
 			<div class="col-sm-12"><h4>{{ form.instance.student_full_name_en }}</h4></div>
 		</div>
-		<div class="row">
-			<div class="col-sm-12">{{ form.student_full_name_en|as_crispy_field }}</div>
-		</div>
+{#		<div class="row">#}
+{#			<div class="col-sm-12">{{ form.student_full_name_en|as_crispy_field }}</div>#}
+{#		</div>#}
 		<hr>
 		<div class="row">
 			<div class="col-sm-6">
@@ -239,6 +263,42 @@
                 $(".personal-img").attr("src", cropDataURI);
             });
             {#			$('.img-popup').magnificPopup({type:'image'});#}
+
+	        $('.n-ar').keyup(function(){
+	           var name_ar = '';
+	           $('.n-ar').each(function () {
+		          name_ar += $(this).val() + ' ';
+               });
+
+	           $('.name-ar').html(name_ar);
+
+	           if ($('.orig-name-ar').html().trim() == $('.name-ar').html().trim()){
+	               $('.name-ar').closest('div').removeClass('alert-danger');
+	               $('.name-ar').closest('div').addClass('alert-success');
+	           }
+	           else{
+	               $('.name-ar').closest('div').addClass('alert-danger');
+                   $('.name-ar').closest('div').removeClass('alert-success');
+               }
+	        });
+
+	        $('.n-en').keyup(function(){
+	           var name_en = '';
+	           $('.n-en').each(function () {
+		          name_en += $(this).val() + ' ';
+               });
+
+	           $('.name-en').html(name_en);
+
+	           if ($('.orig-name-en').html().trim() == $('.name-en').html().trim()){
+	               $('.name-en').closest('div').removeClass('alert-danger');
+	               $('.name-en').closest('div').addClass('alert-success');
+	           }
+	           else{
+	               $('.name-en').closest('div').addClass('alert-danger');
+                   $('.name-en').closest('div').removeClass('alert-success');
+               }
+	        });
         });
 
         function cropData() {

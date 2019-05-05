@@ -472,6 +472,25 @@ class AdmissionRequest(models.Model):
 
     get_student_full_name.short_description = _('Full Name')
 
+    def get_student_full_name_and_source(self):
+        if self.first_name_ar or self.second_name_ar or self.family_name_ar:
+            return '(Yesser) %s %s %s %s' % (self.first_name_ar, self.second_name_ar,
+                                             self.third_name_ar, self.family_name_ar)
+        elif self.student_full_name_ar:
+            return '(Student) %s' % self.student_full_name_ar
+        else:
+            return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
+
+    get_student_full_name.short_description = _('Full Name and Source')
+
+    def are_arabic_names_matching(self):
+        return self.student_full_name_ar == '%s %s %s %s' % (self.first_name_ar, self.second_name_ar,
+                                                             self.third_name_ar, self.family_name_ar)
+
+    def are_english_names_matching(self):
+        return self.student_full_name_en == '%s %s %s %s' % (self.first_name_en, self.second_name_en,
+                                                             self.third_name_en, self.family_name_en)
+
     def get_student_phase(self):
         try:
             return self.status_message.general_status
