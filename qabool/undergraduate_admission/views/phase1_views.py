@@ -51,6 +51,17 @@ class RegisterView(CreateView):
         else:
             return super(RegisterView, self).get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        semester = AdmissionSemester.get_phase1_active_semester()
+        context['non_saudi_agreement'] = Agreement.objects.filter(
+            agreement_type=Agreement.AgreementTypes.INITIAL,
+            status_message=RegistrationStatus.get_status_applied_non_saudi(),
+            semester=semester,
+        ).first()
+
+        return context
+
     def form_valid(self, form):
         user_exists_before = User.objects.filter(username=form.cleaned_data['username']).exists()
         if user_exists_before:

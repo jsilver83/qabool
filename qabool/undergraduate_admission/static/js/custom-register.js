@@ -32,6 +32,11 @@ $(function () {
     if ( $('ul.errors-tba li').length > 1 ) {
         alert($('.alert-tba').html());
     }
+
+    non_saudi_change();
+    $("#id_nationality, input[type=radio][name=saudi_mother]").change(function () {
+        non_saudi_change();
+    });
 });
 
 function sm(nat) {
@@ -82,5 +87,15 @@ function hs_sys_change(hs_sys) {
         $("#div_id_high_school_certificate label").html(ht.substring(0, ht.length-1));
         $("#div_id_high_school_certificate input").removeAttr('required');
         $("#div_id_courses_certificate").hide();
+    }
+}
+
+function non_saudi_change() {
+    var nationality = $("#id_nationality").val();
+    var saudi_mother = $("input[type=radio][name=saudi_mother]:checked").val();
+    if (nationality.length > 0 && nationality !== 'SA' && saudi_mother === 'False') {
+        $('.nsa, .snfns').show();
+    } else {
+        $('.nsa, .snfns').hide();
     }
 }
