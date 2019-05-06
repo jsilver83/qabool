@@ -14,7 +14,7 @@ from tarifi.forms import TarifiSearchForm
 from .models import *
 
 allowed_statuses_for_tarifi_week = [RegistrationStatus.get_status_admitted_final(),
-                                    RegistrationStatus.get_status_admitted_final_non_saudi(),
+                                    RegistrationStatus.get_status_admitted_non_saudi_final(),
                                     RegistrationStatus.get_status_admitted_transfer_final()]
 
 

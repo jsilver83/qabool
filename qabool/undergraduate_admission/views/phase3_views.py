@@ -133,7 +133,7 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
         if self.admission_request.student_type in ['S', 'M']:
             status = RegistrationStatus.get_status_admitted_final()
         else:
-            status = RegistrationStatus.get_status_admitted_final_non_saudi()
+            status = RegistrationStatus.get_status_admitted_non_saudi_final()
 
         self.admission_request.status_message = status
         self.admission_request.save()

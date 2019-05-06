@@ -362,7 +362,7 @@ class TransferForm(AdminPasswordChangeForm):
         username = parse_non_standard_numerals(cleaned_data.get("username"))
         kfupm_id = cleaned_data.get('kfupm_id', 0)
         active_semester = AdmissionSemester.get_active_semester()
-        status_message = RegistrationStatus.get_status_transfer()
+        status_message = RegistrationStatus.get_status_partially_admitted_transfer()
 
         try:
             student = AdmissionRequest.objects.get(user__username=username,
