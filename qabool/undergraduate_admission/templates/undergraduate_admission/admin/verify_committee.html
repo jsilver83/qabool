@@ -23,7 +23,7 @@
 		<div class="row">
 			<div class="col-sm-12 alert text-center{% if form.instance.are_arabic_names_matching %} alert-success{% else %} alert-danger{% endif %}">
 {#				{{ form.student_full_name_ar|as_crispy_field }}#}
-				<h4><b class="name-ar">{{ form.instance.first_name_ar }}&nbsp;{{ form.instance.second_name_ar }}&nbsp;{{ form.instance.third_name_ar }}&nbsp;{{ form.instance.family_name_ar }}</b> || <span class="orig-name-ar">{{ form.instance.student_full_name_ar }}</span></h4>
+				<h4><b class="name-ar">{{ form.instance.first_name_ar }}&nbsp;{{ form.instance.second_name_ar }}&nbsp;{{ form.instance.third_name_ar }}&nbsp;{{ form.instance.family_name_ar }}</b><span class="orig-name-ar hidden">{{ form.instance.student_full_name_ar }}</span></h4>
 			</div>
 		</div>
 		<div class="row">
@@ -34,22 +34,6 @@
 			<div class="col-sm-6">{{ form.third_name_ar|as_crispy_field }}</div>
 			<div class="col-sm-6">{{ form.family_name_ar|as_crispy_field }}</div>
 		</div>
-		<hr>
-		<div class="row">
-			<div class="col-sm-12 alert text-center{% if form.instance.are_english_names_matching %} alert-success{% else %} alert-danger{% endif %}">
-{#				{{ form.student_full_name_en|as_crispy_field }}#}
-				<h4><b class="name-en">{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;{{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</b> || <span class="orig-name-en">{{ form.instance.student_full_name_en }}</span></h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6">{{ form.first_name_en|as_crispy_field }}</div>
-			<div class="col-sm-6">{{ form.second_name_en|as_crispy_field }}</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6">{{ form.third_name_en|as_crispy_field }}</div>
-			<div class="col-sm-6">{{ form.family_name_en|as_crispy_field }}</div>
-		</div>
-
 		<hr>
 		<div class="row">
 			<div class="col-sm-6">
@@ -65,11 +49,19 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div class="col-sm-12"><h4>{{ form.instance.student_full_name_en }}</h4></div>
+			<div class="col-sm-12 alert text-center{% if form.instance.are_english_names_matching %} alert-success{% else %} alert-danger{% endif %}">
+{#				{{ form.student_full_name_en|as_crispy_field }}#}
+				<h4><b class="name-en">{{ form.instance.first_name_en }}&nbsp;{{ form.instance.second_name_en }}&nbsp;{{ form.instance.third_name_en }}&nbsp;{{ form.instance.family_name_en }}</b><span class="orig-name-en hidden">{{ form.instance.student_full_name_en }}</span></h4>
+			</div>
 		</div>
-{#		<div class="row">#}
-{#			<div class="col-sm-12">{{ form.student_full_name_en|as_crispy_field }}</div>#}
-{#		</div>#}
+		<div class="row">
+			<div class="col-sm-6">{{ form.first_name_en|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.second_name_en|as_crispy_field }}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">{{ form.third_name_en|as_crispy_field }}</div>
+			<div class="col-sm-6">{{ form.family_name_en|as_crispy_field }}</div>
+		</div>
 		<hr>
 		<div class="row">
 			<div class="col-sm-6">
