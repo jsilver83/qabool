@@ -39,12 +39,13 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
 
     fieldsets = (
         (None, {
-            'fields': (('user', 'government_id', 'semester', 'status_message', 'gender', ),
+            'fields': (('user', 'semester', 'gender', ),
+                       ('status_message', ),
                        ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
                        ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
                        ('student_full_name_ar', 'student_full_name_en', ),
                        ('student_type', 'nationality', 'saudi_mother', 'saudi_mother_gov_id'),
-                       'mobile', 'guardian_mobile',
+                       ('mobile', 'guardian_mobile', ),
                        ('high_school_gpa', 'qudrat_score', 'tahsili_score', 'admission_total', ),
                        'high_school_gpa_student_entry',
                        ('high_school_graduation_year', 'high_school_system'),
@@ -145,6 +146,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
             ),
         }),
     )
+    autocomplete_fields = ('user', )
     date_hierarchy = 'request_date'
     readonly_fields = ('id', 'government_id', 'student_type', 'admission_total', 'phase2_submit_date',
                        'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
