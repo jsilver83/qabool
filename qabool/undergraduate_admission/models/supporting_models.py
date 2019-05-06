@@ -160,8 +160,7 @@ class RegistrationStatus(models.Model):
             return self.status_message_en
 
     def __str__(self):
-        return self.short_description if self.short_description else '%s (%s)' % (self.get_general_status_display(),
-                                                                                  self.status_message_code)
+        return '%s (%s)' % (self.get_general_status_display(), self.short_description)
 
     def get_long_code(self):
         return '%s - %s' % (self.general_status, self.status_message_code)

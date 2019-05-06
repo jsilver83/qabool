@@ -349,8 +349,7 @@ class RegistrationStatusResource(resources.ModelResource):
 
 
 class RegistrationStatusAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('short_description', 'general_status', 'status_message_code', 'get_long_code', 'status_message_ar',
-                    'status_message_en', 'id')
+    list_display = ('general_status', 'status_message_code', 'short_description', 'status_message_ar', 'id')
     list_filter = ('general_status', )
     resource_class = RegistrationStatusResource
 
