@@ -359,6 +359,27 @@ class AdmissionSemesterAdmin(admin.ModelAdmin):
                     'phase2_end_date', 'phase3_start_date', 'phase3_end_date', 'high_school_gpa_weight',
                     'qudrat_score_weight', 'tahsili_score_weight',)
 
+    fieldsets = (
+        (_('Phase 1: Registration'), {
+            'fields': (('phase1_start_date', 'phase1_end_date',),)
+        }),
+        (_('Phase 2: Partial Admission And Confirmation'), {
+            'fields': (('phase2_start_date', 'phase2_end_date',),)
+        }),
+        (_('Phase 3: Choose Tarifi Week And Print Documents'), {
+            'fields': (('phase3_start_date', 'phase3_end_date',),)
+        }),
+        (_('Phase 4: Student Housing And Roommate Search'), {
+            'fields': (('phase4_start_date', 'phase4_end_date',),)
+        }),
+        (_('Admission Total Formula'), {
+            'fields': (('high_school_gpa_weight', 'qudrat_score_weight', 'tahsili_score_weight', 'cutoff_point',),)
+        }),
+        (_('Admission Settings'), {
+            'fields': (('active', 'withdrawal_deadline',), ),
+        }),
+    )
+
 
 class GraduationYearAdmin(admin.ModelAdmin):
     list_display = ('graduation_year_ar', 'graduation_year_en', 'description', 'show', 'display_order',)
