@@ -34,8 +34,8 @@ class StudentResource(resources.ModelResource):
 
 
 class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
-    list_display = ('government_id', 'semester', 'kfupm_id', 'get_student_full_name_and_source', 'mobile',
-                    'student_type', 'admission_total', 'status_message', )
+    list_display = ('government_id', 'kfupm_id', 'get_student_full_name_and_source', 'student_type', 'admission_total',
+                    'mobile', 'status_message', 'semester', )
 
     fieldsets = (
         (None, {
@@ -152,7 +152,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                        'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
                        'show_docs_links', 'show_yesser_high_school_data_dump', 'show_yesser_qudrat_data_dump',
                        'show_yesser_tahsili_data_dump', )
-    search_fields = ['user__username', 'kfupm_id', 'mobile', 'email',
+    search_fields = ['user__username', 'kfupm_id', 'mobile', 'user__email',
                      'nationality', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('semester', 'high_school_graduation_year', 'gender', 'status_message__general_status',
                    'status_message', 'nationality',)
