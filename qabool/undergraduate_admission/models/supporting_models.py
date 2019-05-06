@@ -195,11 +195,6 @@ class RegistrationStatus(models.Model):
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.APPLIED, 'APPLIED')
 
     @staticmethod
-    def get_status_transfer():
-        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
-                                             'TRANSFER')
-
-    @staticmethod
     def get_status_applied_non_saudi():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.APPLIED, 'NON-SAUDI')
 
@@ -226,6 +221,11 @@ class RegistrationStatus(models.Model):
                                              'NON-SAUDI')
 
     @staticmethod
+    def get_status_partially_admitted_transfer():
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
+                                             'TRANSFER')
+
+    @staticmethod
     def get_status_admitted():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'ADMITTED')
 
@@ -243,7 +243,7 @@ class RegistrationStatus(models.Model):
                                              'FINAL-TRANSFER')
 
     @staticmethod
-    def get_status_admitted_final_non_saudi():
+    def get_status_admitted_non_saudi_final():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED,
                                              'FINAL-NON-SAUDI')
 
@@ -273,7 +273,7 @@ class RegistrationStatus(models.Model):
     @staticmethod
     def init_statuses():
         RegistrationStatus.get_status_applied()
-        RegistrationStatus.get_status_transfer()
+        RegistrationStatus.get_status_partially_admitted_transfer()
         RegistrationStatus.get_status_applied_non_saudi()
         RegistrationStatus.get_status_old_high_school()
         RegistrationStatus.get_status_girls()
@@ -284,7 +284,7 @@ class RegistrationStatus(models.Model):
         RegistrationStatus.get_status_admitted_non_saudi()
         RegistrationStatus.get_status_admitted_final()
         RegistrationStatus.get_status_admitted_transfer_final()
-        RegistrationStatus.get_status_admitted_final_non_saudi()
+        RegistrationStatus.get_status_admitted_non_saudi_final()
         RegistrationStatus.get_status_duplicate()
         RegistrationStatus.get_status_confirmed()
         RegistrationStatus.get_status_confirmed_non_saudi()

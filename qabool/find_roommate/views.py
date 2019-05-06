@@ -19,7 +19,7 @@ from undergraduate_admission.models import RegistrationStatus, AdmissionSemester
 from undergraduate_admission.utils import SMS
 
 allowed_statuses_for_housing = [RegistrationStatus.get_status_admitted_final(),
-                                RegistrationStatus.get_status_admitted_final_non_saudi(),
+                                RegistrationStatus.get_status_admitted_non_saudi_final(),
                                 RegistrationStatus.get_status_admitted_transfer_final()]
 
 
