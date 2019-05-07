@@ -41,7 +41,9 @@ class BaseStudentAgreement(Phase3BaseView, FormView):
     def get_context_data(self, **kwargs):
         context = super(BaseStudentAgreement, self).get_context_data(**kwargs)
         sem = AdmissionSemester.get_phase3_active_semester(self.admission_request)
-        context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
+        context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type,
+                                                 status_message=self.admission_request.status_message,
+                                                 semester=sem)
         context[self.step_number] = 'active'
         return context
 
