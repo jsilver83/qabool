@@ -27,7 +27,8 @@ def initial_agreement(request):
         else:
             messages.error(request, _('Error.'))
     sem = AdmissionSemester.get_phase1_active_semester()
-    agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.INITIAL, semester=sem)
+    agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.INITIAL,
+                                  status_message=RegistrationStatus.get_status_applied(), semester=sem)
     return render(request, 'undergraduate_admission/agreement.html', {'agreement': agreement,
                                                                       'form': form, })
 
