@@ -1,5 +1,6 @@
 {% extends 'base-sidebar.html' %}
 {% load i18n l10n static crispy_forms_tags %}
+{% load markdown_deux_tags %}
 
 {% block subcontent %}
 {% blocktrans %}
@@ -34,7 +35,7 @@ Already applied for admission? <a href="/"><u>Log in</u></a> to review your appl
 	{% endif %}
 	{% crispy form %}
 	<div class="checkbox form-group nsa alert alert-warning">
-		{{ non_saudi_agreement }}
+		{{ non_saudi_agreement.agreement|markdown|linebreaks }}
 	</div>
 	<div class="checkbox form-group">
 		<label>
