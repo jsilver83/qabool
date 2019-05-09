@@ -413,12 +413,13 @@ class AdmissionRequest(models.Model):
     medical_report_print_date = models.DateTimeField(null=True,
                                                      blank=True,
                                                      verbose_name=_('Medical Report Print Date'))
-    request_date = models.DateTimeField(null=True, auto_created=True, verbose_name=_('Request Date'))
+    request_date = models.DateTimeField(null=True, auto_now_add=True, verbose_name=_('Request Date'))
     phase2_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Start Date'))
     phase2_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 End Date'))
     phase3_start_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 Start Date'))
     phase3_end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 End Date'))
     phase2_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Submit Date'))
+    phase2_re_upload_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 2 Re-Upload Date'))
     phase3_submit_date = models.DateTimeField(null=True, blank=True, verbose_name=_('Phase 3 Submit Date'))
     # endregion
 
