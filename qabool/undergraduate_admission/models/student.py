@@ -482,7 +482,7 @@ class AdmissionRequest(models.Model):
         else:
             return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
 
-    get_student_full_name.short_description = _('Full Name and Source')
+    get_student_full_name_and_source.short_description = _('Full Name and Source')
 
     def are_arabic_names_matching(self):
         return self.student_full_name_ar == '%s %s %s %s' % (self.first_name_ar, self.second_name_ar,
