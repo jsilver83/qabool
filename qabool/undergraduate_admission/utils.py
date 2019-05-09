@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from markdown2 import Markdown
 from zeep import Client
 from zeep import Transport
 
@@ -52,15 +53,24 @@ class Email(object):
     @staticmethod
     def send_email_registration_success(user):
         sem = AdmissionSemester.get_phase1_active_semester()
-        agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.INITIAL, semester=sem)
+        if user.student_type == 'N':
+            agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.INITIAL,
+                                          status_message=RegistrationStatus.get_status_applied_non_saudi(),
+                                          semester=sem)
+        else:
+            agreement = get_object_or_404(Agreement, agreement_type=Agreement.AgreementTypes.INITIAL,
+                                          status_message=RegistrationStatus.get_status_applied(),
+                                          semester=sem)
+        markdown_maker = Markdown()
+        agreement_html = markdown_maker.convert(agreement.agreement)
 
         html_message = Email.email_messages['registration_success'] % (
             {'student_name': user.get_student_full_name(),
              # 'student_name': user.first_name,
              'user_id': user.id,
              'mobile': user.mobile,
-             'reg_date': timezone.datetime.now().strftime('%x'),
-             'agreement': mark_safe(agreement.agreement),
+             'reg_date': user.request_date,
+             'agreement': agreement_html,
              })
 
         if user.status_message == RegistrationStatus.get_status_old_high_school():
