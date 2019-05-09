@@ -64,12 +64,6 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                        'verification_issues',
                        'verification_notes'),
         }),
-        ('Phase 3 Fields', {
-            'classes': ('collapse',),
-            'fields': (
-                'kfupm_id',
-                'admission_letter_print_date', 'medical_report_print_date', 'phase3_submit_date'),
-        }),
         ('Withdrawal Fields', {
             'classes': ('collapse',),
             'fields': ('withdrawal_date', 'withdrawal_university', 'withdrawal_reason', 'withdrawal_proof_letter'),
@@ -77,9 +71,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
         }),
         ('Awareness Week Fields', {
             'classes': ('collapse',),
-            'fields': ('eligible_for_housing',
-                       'tarifi_week_attendance_date', ),
-
+            'fields': ('kfupm_id', 'eligible_for_housing', 'tarifi_week_attendance_date', ),
         }),
         ('Yesser Data Dump', {
             'classes': ('collapse',),
@@ -89,7 +81,6 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                 ('show_yesser_tahsili_data_dump', ),
             ),
         }),
-
         ('Phase 2 Fields - Uploaded Documents', {
             'classes': ('collapse',),
             'fields': ('high_school_certificate',
@@ -115,7 +106,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                        ('social_status', 'kids_no', ),
                        ('is_employed', 'employer_name', ),
                        ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
-                       ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ), 'phase2_submit_date'
+                       ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
                        ),
         }),
         ('Phase 2 Fields - Vehicle Info', {
@@ -145,13 +136,24 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                 'bank_name', 'bank_account', 'bank_account_identification_file',
             ),
         }),
+        ('Submit Dates', {
+            'classes': ('collapse',),
+            'fields': (
+                'request_date',
+                'phase2_submit_date',
+                'phase2_re_upload_date',
+                'phase3_submit_date',
+                'admission_letter_print_date',
+                'medical_report_print_date',
+            ),
+        }),
     )
     autocomplete_fields = ('user', )
     date_hierarchy = 'request_date'
     readonly_fields = ('id', 'government_id', 'student_type', 'admission_total', 'phase2_submit_date',
                        'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
                        'show_docs_links', 'show_yesser_high_school_data_dump', 'show_yesser_qudrat_data_dump',
-                       'show_yesser_tahsili_data_dump', )
+                       'show_yesser_tahsili_data_dump', 'request_date', 'phase2_re_upload_date', )
     search_fields = ['user__username', 'kfupm_id', 'mobile', 'user__email',
                      'nationality', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('semester', 'high_school_graduation_year', 'gender', 'status_message__general_status',
@@ -386,7 +388,8 @@ class GraduationYearAdmin(admin.ModelAdmin):
 
 
 class TarifiReceptionDateAdmin(admin.ModelAdmin):
-    list_display = ('semester', 'reception_date', 'slots', 'remaining_slots', 'slot_start_date', 'slot_end_date',)
+    list_display = ('semester', 'reception_date', 'slots', 'remaining_slots', 'slot_start_date', 'slot_end_date',
+                    'show')
     list_filter = ('semester',)
 
 
