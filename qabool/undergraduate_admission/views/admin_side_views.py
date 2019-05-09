@@ -342,9 +342,9 @@ def get_student_record_serialized(student, change_status=False):
         special_cases_log = ''
         changed = False
 
-        qudrat_data = get_qudrat_from_yesser(student.username)
-        tahsili_data = get_tahsili_from_yesser(student.username)
-        hs_data = get_high_school_from_yesser(student.username)
+        qudrat_data = get_qudrat_from_yesser(student.government_id)
+        tahsili_data = get_tahsili_from_yesser(student.government_id)
+        hs_data = get_high_school_from_yesser(student.government_id)
 
         final_data['status_before'] = student.status_message
 
@@ -389,7 +389,7 @@ def get_student_record_serialized(student, change_status=False):
                     """
                     if student.high_school_graduation_year != year:
                         student.high_school_graduation_year = year
-                        special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % student.username
+                        special_cases_log += '{%s} entered his hs year wrong and got updated<br>' % student.government_id
 
                     """
                     this is the case of a student who was marked as old hs but actually has recent hs in MOE
@@ -403,7 +403,7 @@ def get_student_record_serialized(student, change_status=False):
                             else:
                                 student.status_message = RegistrationStatus.get_status_applied()
                         special_cases_log += \
-                            '{%s} was marked as old hs but actually has recent hs in MOE<br>' % student.username
+                            '{%s} was marked as old hs but actually has recent hs in MOE<br>' % student.government_id
                     """
                     this is the case of a student who was marked as applied but actually has old hs in MOE
                     """
@@ -413,7 +413,7 @@ def get_student_record_serialized(student, change_status=False):
                         if change_status:
                             student.status_message = RegistrationStatus.get_status_old_high_school()
                         special_cases_log += \
-                            '{%s} was marked as applied but he actually has old hs in MOE<br>' % student.username
+                            '{%s} was marked as applied but he actually has old hs in MOE<br>' % student.government_id
                 else:
                     try:
                         student.high_school_graduation_year = \
@@ -427,7 +427,7 @@ def get_student_record_serialized(student, change_status=False):
                     if student.status_message != RegistrationStatus.get_status_old_high_school() and change_status:
                         student.status_message = RegistrationStatus.get_status_old_high_school()
                     special_cases_log += \
-                        '{%s} was marked as old hs<br>' % student.username
+                        '{%s} was marked as old hs<br>' % student.government_id
                     """
                     this is the case of a student who has old hs year that is not included in the system
                     """
@@ -448,12 +448,12 @@ def get_student_record_serialized(student, change_status=False):
                     student.status_message = RegistrationStatus.get_status_old_high_school()
 
                 special_cases_log += \
-                    '{%s} has no graduation year in yesser and so he was marked as old HS<br>' % student.username
+                    '{%s} has no graduation year in yesser and so he was marked as old HS<br>' % student.government_id
 
             if hs_data['Gender']:
                 student.gender = hs_data['Gender']
                 if hs_data['Gender'] == 'F':
-                    special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.username,
+                    special_cases_log += '{%s} has his gender changed to {%s}<br>' % (student.government_id,
                                                                                       hs_data['Gender'])
                     if change_status:
                         student.status_message = RegistrationStatus.get_status_girls()
@@ -482,9 +482,9 @@ def get_student_record_serialized(student, change_status=False):
             student.save()
 
         final_data['changed'] = changed
-        final_data['gov_id'] = student.username
+        final_data['gov_id'] = student.government_id
         final_data['student_full_name_ar'] = student.student_full_name_ar
-        final_data['status'] = student.status_message.status.status_en
+        final_data['status'] = student.status_message
         final_data['high_school_gpa'] = student.high_school_gpa
         final_data['qudrat'] = student.qudrat_score
         final_data['tahsili'] = student.tahsili_score
@@ -642,7 +642,7 @@ def fetch_all_moe_from_yesser():
 
     for student in students:
         time.sleep(0.2)
-        fetch_moe_data_from_yesser_and_write_to_file(student.username)
+        fetch_moe_data_from_yesser_and_write_to_file(student.government_id)
 
 
 def fetch_moe_data_from_yesser_and_write_to_file(government_id):
@@ -664,7 +664,7 @@ def fetch_all_mohe_from_yesser():
     for student in students:
         time.sleep(1)
         # print('========')
-        fetch_mohe_data_from_yesser_and_write_to_file(student.username)
+        fetch_mohe_data_from_yesser_and_write_to_file(student.government_id)
 
 
 def fetch_mohe_data_from_yesser_and_write_to_file(government_id):
