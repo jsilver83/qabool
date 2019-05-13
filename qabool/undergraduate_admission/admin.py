@@ -156,8 +156,8 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                        'show_yesser_tahsili_data_dump', 'request_date', 'phase2_re_upload_date', )
     search_fields = ['user__username', 'kfupm_id', 'mobile', 'user__email',
                      'nationality', 'student_full_name_ar', 'student_full_name_en', ]
-    list_filter = ('semester', 'high_school_graduation_year', 'gender', 'status_message__general_status',
-                   'status_message', 'nationality',)
+    list_filter = ('semester', 'high_school_graduation_year', 'high_school_system', 'gender', 'status_message__general_status',
+                   'status_message', )
     actions = ['yesser_update']
     resource_class = StudentResource
 
@@ -336,8 +336,10 @@ class ImportantDateSidebarAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 class LookupAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ('lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
+    list_display = ('edit_link', 'lookup_type', 'lookup_value_ar', 'lookup_value_en', 'show', 'display_order')
     list_filter = ('lookup_type',)
+    list_editable = ('lookup_type', 'lookup_value_ar', 'show', 'display_order', )
+    list_display_links = ('edit_link', )
     resource_class = LookupResource
 
 

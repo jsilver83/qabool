@@ -60,6 +60,9 @@ class Lookup(models.Model):
     def __str__(self):
         return self.lookup_value
 
+    def edit_link(self):
+        return _('Edit')
+
     @staticmethod
     def get_lookup_choices(lookup_type, add_dashes=True):
         try:
