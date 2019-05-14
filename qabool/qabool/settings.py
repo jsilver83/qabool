@@ -177,6 +177,7 @@ COUNTRIES_OVERRIDE = {
     'SA': _('Saudi Arabia'),
     'IL': None,  # ISRAEL
     'IR': None,  # IRAN
+    'XX': _('Moqeem'),
 }
 
 
