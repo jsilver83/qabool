@@ -39,7 +39,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
 
     fieldsets = (
         (None, {
-            'fields': (('user', 'semester', 'gender', ),
+            'fields': (('user', 'semester', 'gender', 'email', ),
                        ('status_message', ),
                        ('first_name_ar', 'second_name_ar', 'third_name_ar', 'family_name_ar'),
                        ('first_name_en', 'second_name_en', 'third_name_en', 'family_name_en'),
@@ -150,7 +150,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
     )
     autocomplete_fields = ('user', )
     date_hierarchy = 'request_date'
-    readonly_fields = ('id', 'government_id', 'student_type', 'admission_total', 'phase2_submit_date',
+    readonly_fields = ('id', 'government_id', 'email', 'student_type', 'admission_total', 'phase2_submit_date',
                        'phase3_submit_date', 'admission_letter_print_date', 'medical_report_print_date',
                        'show_docs_links', 'show_yesser_high_school_data_dump', 'show_yesser_qudrat_data_dump',
                        'show_yesser_tahsili_data_dump', 'request_date', 'phase2_re_upload_date', )
