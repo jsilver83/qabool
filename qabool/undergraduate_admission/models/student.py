@@ -539,6 +539,13 @@ class AdmissionRequest(models.Model):
     def is_phase2_confirmation_expired(self):
         return False if AdmissionSemester.get_phase2_active_semester(self) else True
 
+    def email(self):
+        try:
+            return self.user.email
+        except:
+            return 'N/A'
+    email.short_description = _('Email')
+
     @property
     def government_id(self):
         try:
