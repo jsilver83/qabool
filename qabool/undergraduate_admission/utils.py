@@ -19,7 +19,7 @@ from undergraduate_admission.models import Agreement, AdmissionSemester, Registr
 class Email(object):
     email_messages = {
         'registration_success':
-            _('Dear %(student_name)s,<br>Your request has been successfully submitted and the Admission results <br>'
+            _('Dear %(student_name)s,<br>Your request has been successfully submitted<br>'
               '<h4>Registration Details</h4><hr>'
               # 'Registration ID: %(user_id)s<br>'
               'Name: %(student_name)s<br>'
