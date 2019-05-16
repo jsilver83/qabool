@@ -556,7 +556,7 @@ class AdmissionRequest(models.Model):
     # region the can's and cant's
     def can_confirm(self):
         return ((self.status_message == RegistrationStatus.get_status_partially_admitted() or
-                 # self.status_message == RegistrationStatus.get_status_partially_admitted_non_saudi or
+                 self.status_message == RegistrationStatus.get_status_partially_admitted_non_saudi or
                  self.status_message == RegistrationStatus.get_status_partially_admitted_transfer())
                 and AdmissionSemester.get_phase2_active_semester(self))
 
