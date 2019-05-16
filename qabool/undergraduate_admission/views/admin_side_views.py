@@ -458,6 +458,10 @@ def get_student_record_serialized(student, change_status=False):
                     if change_status:
                         student.status_message = RegistrationStatus.get_status_girls()
 
+            if hs_data['StudentNameEn']:
+                print(hs_data['StudentNameEn'])
+                pass  # put ur logic takkkfa ya bassam al maaesh almohababa
+
             student.government_id_type = hs_data['MoeIdentifierTypeDesc']
             student.birthday = hs_data['GregorianDate']
             student.birthday_ah = hs_data['HijriDate']
@@ -483,7 +487,6 @@ def get_student_record_serialized(student, change_status=False):
 
         final_data['changed'] = changed
         final_data['gov_id'] = student.government_id
-        final_data['student_full_name_ar'] = student.student_full_name_ar
         final_data['status'] = student.status_message
         final_data['high_school_gpa'] = student.high_school_gpa
         final_data['qudrat'] = student.qudrat_score
@@ -566,6 +569,7 @@ def get_high_school_from_yesser(gov_id):
             data['CertificationHijriYear'] = result.getHighSchoolCertificateResponseDetailObject. \
                 CertificationDetails.CertificationHijriYear
             data['Gender'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.Gender
+            data['StudentNameEn'] = result.getHighSchoolCertificateResponseDetailObject.StudentBasicInfo.StudentNameEn.PersonFullName
             data['SchoolID'] = result.getHighSchoolCertificateResponseDetailObject.SchoolInfo.SchoolID
             data['SchoolNameAr'] = result.getHighSchoolCertificateResponseDetailObject. \
                 SchoolInfo.SchoolNameAr
@@ -600,6 +604,7 @@ def get_high_school_from_yesser(gov_id):
             data['MoeIdentifierTypeDesc'] = ''
             data['CertificationHijriYear'] = ''
             data['Gender'] = ''
+            data['StudentNameEn'] = ''
             data['SchoolID'] = ''
             data['SchoolNameAr'] = ''
             data['SchoolNameEn'] = ''
@@ -619,6 +624,7 @@ def get_high_school_from_yesser(gov_id):
         data['MoeIdentifierTypeDesc'] = ''
         data['CertificationHijriYear'] = ''
         data['Gender'] = ''
+        data['StudentNameEn'] = ''
         data['SchoolID'] = ''
         data['SchoolNameAr'] = ''
         data['SchoolNameEn'] = ''
