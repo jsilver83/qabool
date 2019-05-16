@@ -130,6 +130,9 @@
                 $(".select2").select2();{% endif %}
         } catch (e) {
         }
+        $('.nocopy').bind('copy paste cut', function (e) {
+            e.preventDefault(); //disable cut,copy,paste
+        });
     });
 </script>
 
