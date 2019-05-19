@@ -13,7 +13,7 @@ from markdown2 import Markdown
 from zeep import Client
 from zeep import Transport
 
-from undergraduate_admission.models import Agreement, AdmissionSemester, RegistrationStatus
+from undergraduate_admission.models import *
 
 
 class Email(object):
@@ -303,3 +303,17 @@ def add_validators_to_arabic_and_english_names(fields):
                 ), ]
             if len(field.validators) > 2:
                 field.validators.pop(len(field.validators) - 1)
+
+
+def concatenate_names(*args, allow_hyphen=False, trim_spaces=True):
+    concatenated_names = ''
+    for name in args:
+        if name and name.strip() == '-' and not allow_hyphen:
+            continue
+        if name:
+            if trim_spaces:
+                concatenated_names += name.strip() + ' '
+            else:
+                concatenated_names += name + ' '
+
+    return concatenated_names[:len(concatenated_names) -1]
