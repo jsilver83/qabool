@@ -403,7 +403,7 @@ def get_student_record_serialized(student, change_status=False):
                                      GraduationYear.GraduationYearTypes.LAST_YEAR] \
                             and student.status_message == RegistrationStatus.get_status_old_high_school():
                         if change_status:
-                            if student.nationality.nationality_en != 'Saudi Arabia' and not student.saudi_mother:
+                            if student.nationality != 'SA' and not student.saudi_mother:
                                 student.status_message = RegistrationStatus.get_status_applied_non_saudi()
                             else:
                                 student.status_message = RegistrationStatus.get_status_applied()
@@ -475,7 +475,7 @@ def get_student_record_serialized(student, change_status=False):
                 hs_data['StudentNameEn'] = hs_data['StudentNameEn'].replace('-', '')
 
                 english_name_split = hs_data['StudentNameEn'].split()
-                print(english_name_split)
+
                 if english_name_split:
                     student.first_name_en = english_name_split[0]
                     if len(english_name_split) == 2:
