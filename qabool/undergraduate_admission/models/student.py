@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 
@@ -12,6 +12,7 @@ from undergraduate_admission.media_handlers import upload_location_govid, upload
     upload_location_picture, upload_location_courses, upload_location_withdrawal_proof, \
     upload_location_driving_license, upload_location_vehicle_registration, upload_bank_account_identification
 from undergraduate_admission.validators import validate_file_extension, validate_image_extension
+from ..utils import concatenate_names
 from .supporting_models import AdmissionSemester, RegistrationStatus, VerificationIssues
 
 User = settings.AUTH_USER_MODEL
@@ -462,12 +463,27 @@ class AdmissionRequest(models.Model):
 
     get_verification_status.short_description = _('Issues With Uploaded Docs')
 
+    def get_student_full_name_ar(self):
+        return concatenate_names(self.first_name_ar, self.second_name_ar,
+                                 self.third_name_ar, self.family_name_ar)
+
+    def get_student_full_name_en(self):
+        return concatenate_names(self.first_name_en, self.second_name_en,
+                                 self.third_name_en, self.family_name_en)
+
     def get_student_full_name(self):
-        if self.first_name_ar or self.second_name_ar or self.family_name_ar:
-            return '%s %s %s %s' % (self.first_name_ar,
-                                    self.second_name_ar, self.third_name_ar, self.family_name_ar)
-        elif self.student_full_name_ar:
+        lang = translation.get_language()
+        if lang == "ar":
+            full_name = self.get_student_full_name_ar()
+        else:
+            full_name = self.get_student_full_name_en()
+
+        if full_name:
+            return full_name
+        elif self.student_full_name_ar and lang == 'ar':
             return self.student_full_name_ar
+        elif self.student_full_name_en and lang == 'en':
+            return self.student_full_name_en
         else:
             return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
 
@@ -475,8 +491,7 @@ class AdmissionRequest(models.Model):
 
     def get_student_full_name_and_source(self):
         if self.first_name_ar or self.second_name_ar or self.family_name_ar:
-            return '(Yesser) %s %s %s %s' % (self.first_name_ar, self.second_name_ar,
-                                             self.third_name_ar, self.family_name_ar)
+            return '(Yesser) %s' % (self.get_student_full_name_ar())
         elif self.student_full_name_ar:
             return '(Student) %s' % self.student_full_name_ar
         else:
@@ -555,9 +570,9 @@ class AdmissionRequest(models.Model):
 
     # region the can's and cant's
     def can_confirm(self):
-        return ((self.status_message == RegistrationStatus.get_status_partially_admitted() or
-                 self.status_message == RegistrationStatus.get_status_partially_admitted_non_saudi or
-                 self.status_message == RegistrationStatus.get_status_partially_admitted_transfer())
+        return (self.status_message in [RegistrationStatus.get_status_partially_admitted(),
+                                         RegistrationStatus.get_status_partially_admitted_non_saudi(),
+                                         RegistrationStatus.get_status_partially_admitted_transfer()]
                 and AdmissionSemester.get_phase2_active_semester(self))
 
     def can_see_result(self):
