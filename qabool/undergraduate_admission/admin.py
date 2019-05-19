@@ -386,7 +386,8 @@ class AdmissionSemesterAdmin(admin.ModelAdmin):
 
 
 class GraduationYearAdmin(admin.ModelAdmin):
-    list_display = ('graduation_year_ar', 'graduation_year_en', 'description', 'show', 'display_order',)
+    list_display = ('graduation_year_ar', 'graduation_year_en', 'description',
+                    'type','show', 'display_order',)
 
 
 class TarifiReceptionDateAdmin(admin.ModelAdmin):
