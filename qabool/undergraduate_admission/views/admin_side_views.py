@@ -356,10 +356,15 @@ def get_student_record_serialized(student, change_status=False):
             student.yesser_qudrat_data_dump = 'Fetched On %s<br>%s' % (timezone.now(),
                                                                        qudrat_data['all_data'],)
 
-            student.first_name_ar = qudrat_data['FirstName']
-            student.second_name_ar = qudrat_data['SecondName']
-            student.third_name_ar = qudrat_data['ThirdName']
-            student.family_name_ar = qudrat_data['LastName']
+            if qudrat_data['FirstName'] != '-':
+                student.first_name_ar = qudrat_data['FirstName']
+            if qudrat_data['SecondName'] != '-':
+                student.second_name_ar = qudrat_data['SecondName']
+            if qudrat_data['ThirdName'] != '-':
+                student.third_name_ar = qudrat_data['ThirdName']
+            if qudrat_data['LastName'] != '-':
+                student.family_name_ar = qudrat_data['LastName']
+
             student.qudrat_score = qudrat_data['qudrat']
 
         final_data['tahsili_before'] = student.tahsili_score
@@ -459,8 +464,30 @@ def get_student_record_serialized(student, change_status=False):
                         student.status_message = RegistrationStatus.get_status_girls()
 
             if hs_data['StudentNameEn']:
-                print(hs_data['StudentNameEn'])
-                pass  # put ur logic takkkfa ya bassam al maaesh almohababa
+                # hs_data['StudentNameEn'] = 'Test name please'
+
+                student.first_name_en = ''
+                student.second_name_en = ''
+                student.third_name_en = ''
+                student.family_name_en = ''
+
+                # remove all hyphen beforehand
+                hs_data['StudentNameEn'] = hs_data['StudentNameEn'].replace('-', '')
+
+                english_name_split = hs_data['StudentNameEn'].split()
+                print(english_name_split)
+                if english_name_split:
+                    student.first_name_en = english_name_split[0]
+                    if len(english_name_split) == 2:
+                        student.family_name_en = english_name_split[1]
+                    if len(english_name_split) == 3:
+                        student.second_name_en = english_name_split[1]
+                        student.family_name_en = english_name_split[2]
+                    if len(english_name_split) > 3:
+                        student.second_name_en = english_name_split[1]
+                        student.third_name_en = english_name_split[2]
+                        student.family_name_en = \
+                            concatenate_names(english_name_split[3:])
 
             student.government_id_type = hs_data['MoeIdentifierTypeDesc']
             student.birthday = hs_data['GregorianDate']
