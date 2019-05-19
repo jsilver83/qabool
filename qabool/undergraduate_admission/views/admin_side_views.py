@@ -487,7 +487,7 @@ def get_student_record_serialized(student, change_status=False):
                         student.second_name_en = english_name_split[1]
                         student.third_name_en = english_name_split[2]
                         student.family_name_en = \
-                            concatenate_names(english_name_split[3:])
+                            concatenate_names(*english_name_split[3:])
 
             student.government_id_type = hs_data['MoeIdentifierTypeDesc']
             student.birthday = hs_data['GregorianDate']
