@@ -1,3 +1,4 @@
+import logging
 import json
 import time
 
@@ -23,6 +24,9 @@ from undergraduate_admission.filters import AdmissionRequestListFilter
 from undergraduate_admission.forms.admin_side_forms import *
 from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatus
 from undergraduate_admission.utils import try_parse_float
+
+
+logger = logging.getLogger(__name__)
 
 YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
 YESSER_MOHE_WSDL = settings.YESSER_MOHE_WSDL
@@ -576,6 +580,7 @@ def get_student_record_serialized(student, change_status=False):
         final_data['log'] = ''  # special_cases_log
         final_data['error'] = False
     except:
+        logger.exception("Something bad happened while syncing student %".format(student))
         pass
 
     return final_data
@@ -604,6 +609,8 @@ def get_qudrat_from_yesser(gov_id):
             data['ThirdName'] = ''
             data['LastName'] = ''
     except:
+        logger.exception("Something bad happened while fetching qudrat data for student %".format(gov_id))
+
         data['q_error'] = 'general error'  # Client request message schema validation failure'
         data['all_data'] = ''
         data['qudrat'] = 0
@@ -629,6 +636,8 @@ def get_tahsili_from_yesser(gov_id):
             data['all_data'] = ''
             data['tahsili'] = 0
     except:
+        logger.exception("Something bad happened while fetching tahsili data for student %".format(gov_id))
+
         data['t_error'] = 'general error'
         data['all_data'] = ''
         data['tahsili'] = 0
@@ -700,6 +709,8 @@ def get_high_school_from_yesser(gov_id):
             data['MajorTypeAr'] = ''
             data['MajorTypeEn'] = ''
     except:
+        logger.exception("Something bad happened while fetching high school data for student %".format(gov_id))
+
         data['hs_error'] = 'general error'
         data['all_data'] = ''
         data['high_school_gpa'] = 0
