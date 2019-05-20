@@ -488,14 +488,7 @@ def get_student_record_serialized(student, change_status=False):
                         special_cases_log += \
                             '{%s} was marked as applied but he actually has old hs in MOE<br>' % student.government_id
                 else:
-                    try:
-                        student.high_school_graduation_year = \
-                            GraduationYear.objects.get(description__contains='Other')
-                    except ObjectDoesNotExist:
-                        other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
-                                                    description='Other', show=True, display_order=100000)
-                        other_year.save()
-                        student.high_school_graduation_year = other_year
+                    student.high_school_graduation_year = GraduationYear.get_other_graduation_year()
 
                     if student.status_message != RegistrationStatus.get_status_old_high_school() and change_status:
                         student.status_message = RegistrationStatus.get_status_old_high_school()
@@ -509,13 +502,7 @@ def get_student_record_serialized(student, change_status=False):
                 this a case of a student with no CertificationHijriYear from yesser
                 """
             else:
-                try:
-                    student.high_school_graduation_year = GraduationYear.objects.get(description__contains='Other')
-                except ObjectDoesNotExist:
-                    other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
-                                                description='Other', show=True, display_order=100000)
-                    other_year.save()
-                    student.high_school_graduation_year = other_year
+                student.high_school_graduation_year = GraduationYear.get_other_graduation_year()
 
                 if student.status_message != RegistrationStatus.get_status_old_high_school() and change_status:
                     student.status_message = RegistrationStatus.get_status_old_high_school()
