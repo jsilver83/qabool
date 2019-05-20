@@ -27,6 +27,8 @@ urlpatterns = [
     # path('admin/student-gender/', admin_side_views.StudentGenderView.as_view(), name='student_gender'),
     path('admin/verify/<int:pk>/', admin_side_views.VerifyStudent.as_view(), name='verify_student'),
     path('admin/verify-list/', admin_side_views.VerifyList.as_view(), name='verify_list'),
+    path('admin/verify-list/pending', admin_side_views.VerifyListPendingWithStudent.as_view(), name='verify_list_with_student'),
+    path('admin/verify-list/corrected', admin_side_views.VerifyListCorrectedByStudent.as_view(), name='verify_list_corrected_by_student'),
     path('admin/cutoff-point/', admin_side_views.CutOffPointView.as_view(), name='cut_off_point'),
     path('admin/distribute-committee/', admin_side_views.DistributeStudentsOnVerifiersView.as_view(),
          name='distribute_committee'),

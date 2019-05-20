@@ -4,41 +4,46 @@
 {% load floppyforms %}
 
 {% block subcontent %}
-	{% if students %}
-		<div class="row">
-			<br><br>
-			<table class="table table-striped">
-				<tr>
-					<th></th>
-					<th>{% trans 'Government ID' %}</th>
-					<th>{% trans 'Student Full Name' %}</th>
-{#					<th>{% trans 'Status' %}</th>#}
-					<th>{% trans 'Student Type' %}</th>
-					<th>{% trans 'Verification Issues' %}</th>
-					<th>{% trans 'Last Update Date' %}</th>
-				</tr>
-				{% for student in students %}
-					{% if student.phase2_start_date %}
-						<tr class="warning">
-							{% else %}
-						<tr>
-					{% endif %}
-				<td><img style="width: 150px;" src="{% url 'download_user_file_admin' 'personal_picture' student.pk %}"></td>
-				<td><a target="_blank" href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student.government_id }}</a></td>
-				<td><a target="_blank" href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student }}</a></td>
-{#				<td>{{ student.status_message }}</td>#}
-				<td>{{ student.student_type }}</td>
-				<td{% if student.verification_issues %} class="danger"{% endif %}>
-					{{ student.verification_issues.all.count }}
-					{% include 'undergraduate_admission/_render_student_issues.html' with issues=student.verification_issues.all %}
-				</td>
-				<td>{{ student.phase2_submit_date|timesince }}</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
-	{% endif %}
-	<br>
-	<hr><br>
-	{% include 'snippets/pagination.html' %}
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="{% if active_menu == 'new' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list' %}">New</a></li>
+        <li role="presentation" class="{% if active_menu == 'pending' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_with_student' %}">Pending </a></li>
+        <li role="presentation" class="{% if active_menu == 'corrected' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_corrected_by_student' %}">Corrected</a></li>
+    </ul>
+    {% if students %}
+        <div class="row">
+            <br><br>
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>{% trans 'Government ID' %}</th>
+                    <th>{% trans 'Student Full Name' %}</th>
+                    {#					<th>{% trans 'Status' %}</th>#}
+                    <th>{% trans 'Student Type' %}</th>
+                    <th>{% trans 'Verification Issues' %}</th>
+                    <th>{% trans 'Last Update Date' %}</th>
+                </tr>
+                {% for student in students %}
+                    {% if student.phase2_start_date %}
+                        <tr class="warning">
+                            {% else %}
+                        <tr>
+                    {% endif %}
+                <td><img style="width: 150px;" src="{% url 'download_user_file_admin' 'personal_picture' student.pk %}"></td>
+                <td><a target="_blank" href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student.government_id }}</a></td>
+                <td><a target="_blank" href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student }}</a></td>
+                {#				<td>{{ student.status_message }}</td>#}
+                <td>{{ student.student_type }}</td>
+                <td{% if student.verification_issues %} class="danger"{% endif %}>
+                    {{ student.verification_issues.all.count }}
+                    {% include 'undergraduate_admission/_render_student_issues.html' with issues=student.verification_issues.all %}
+                </td>
+                <td>{{ student.phase2_submit_date|timesince }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+    <br>
+    <hr><br>
+    {% include 'snippets/pagination.html' %}
 {% endblock subcontent %}
