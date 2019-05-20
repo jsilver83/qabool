@@ -5,6 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
@@ -152,7 +153,15 @@ class PersonalPictureView(BaseStudentInfoUpdateView):
         return context
 
 
-class PersonalPictureUnacceptableView(StudentMixin, UpdateView):
+class ReUploadMixin:
+
+    def form_valid(self, form):
+        saved = form.save(commit=False)
+        saved.phase2_re_upload_date = timezone.now()
+        return super().form_valid(form)
+
+
+class PersonalPictureUnacceptableView(StudentMixin, ReUploadMixin, UpdateView):
     form_class = PersonalPhotoForm
     success_message = _('Personal picture was uploaded successfully...')
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
@@ -217,10 +226,12 @@ class CompareNamesView(BaseStudentInfoUpdateView):
         return super().form_valid(form)
 
 
-class UploadMissingDocumentsView(StudentMixin, UpdateView):
+class UploadMissingDocumentsView(SuccessMessageMixin, StudentMixin, ReUploadMixin, UpdateView):
     template_name = 'undergraduate_admission/phase2/plain_form.html'
     form_class = MissingDocumentsForm
     success_url = reverse_lazy('undergraduate_admission:student_area')
+    success_message = _('Documents were uploaded successfully. We will verify your information and '
+                        'get back to you soon...')
 
     def get_object(self):
         return self.admission_request
@@ -228,16 +239,6 @@ class UploadMissingDocumentsView(StudentMixin, UpdateView):
     def test_func(self):
         original_test_result = super(UploadMissingDocumentsView, self).test_func()
         return original_test_result and self.get_object().can_re_upload_docs()
-
-    def form_valid(self, form):
-        saved = form.save()
-        if saved:
-            messages.success(self.request, _('Documents were uploaded successfully. We will verify your information '
-                                             'and get back to you soon...'))
-        else:
-            messages.error(self.request, _('Error saving info. Try again later!'))
-
-        return super(UploadMissingDocumentsView, self).form_valid(form)
 
 
 class UploadWithdrawalProofView(StudentMixin, SuccessMessageMixin, UpdateView):

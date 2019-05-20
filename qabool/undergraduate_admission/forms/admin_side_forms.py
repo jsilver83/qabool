@@ -3,6 +3,7 @@ import base64
 from django import forms
 import re
 
+from django.contrib.auth import get_user_model
 from django.forms import CheckboxSelectMultiple
 from django.utils import timezone
 
@@ -13,6 +14,9 @@ from ..models import *
 from django.utils.translation import ugettext_lazy as _, get_language
 
 from undergraduate_admission.utils import SMS
+
+
+User = get_user_model()
 
 
 class CutOffForm(BaseCrispyForm, forms.ModelForm):
@@ -59,7 +63,7 @@ class CutOffForm(BaseCrispyForm, forms.ModelForm):
         # self.fields['high_school_graduation_year'].required = False
 
 
-class DistributeForm(forms.ModelForm):
+class DistributeForm(BaseCrispyForm, forms.ModelForm):
     STUDENT_TYPES = (
         ('S', _('Saudi')),
         ('M', _('Saudi Mother')),
@@ -80,16 +84,16 @@ class DistributeForm(forms.ModelForm):
 
 
 # TODO: To be reworked along with the view
-class SelectCommitteeMemberForm(forms.Form):
+class SelectCommitteeMemberForm(BaseCrispyForm, forms.Form):
     members = forms.CharField(required=False, label=_('Select Member(s)'))
 
     def __init__(self, *args, **kwargs):
         super(SelectCommitteeMemberForm, self).__init__(*args, **kwargs)
-        # choices = User.objects.filter(is_staff=True,
-        #                               groups__name__in=['Verifying Committee', ])
+        choices = User.objects.filter(is_staff=True,
+                                      groups__name__in=['Verifying Committee', ])
 
-        # ch = [(o.username, o.username) for o in choices]
-        # self.fields['members'].widget = forms.CheckboxSelectMultiple(choices=ch)
+        ch = [(o.username, o.username) for o in choices]
+        self.fields['members'].widget = forms.CheckboxSelectMultiple(choices=ch)
 
 
 class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
