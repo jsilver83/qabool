@@ -220,7 +220,7 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
         return redirect('undergraduate_admission:distribute_committee')
 
 
-class VerifyList(StaffBaseView, ListView):
+class BaseVerifyList(StaffBaseView, ListView):
     template_name = 'undergraduate_admission/admin/verify_list.html'
     model = AdmissionRequest
     context_object_name = 'students'
@@ -231,58 +231,86 @@ class VerifyList(StaffBaseView, ListView):
         status = [RegistrationStatus.get_status_confirmed(),
                   RegistrationStatus.get_status_confirmed_non_saudi()]
         semester = AdmissionSemester.get_active_semester()
+
         if self.request.user.is_superuser:
             students_to_verified = AdmissionRequest.objects.filter(
-                # status_message__in=status,
-                semester=semester) \
-                .order_by('-phase2_submit_date')
+                semester=semester)
         else:
             students_to_verified = AdmissionRequest.objects.filter(
-                Q(verification_issues=None),
-                phase2_re_upload_date__isnull=True,
                 status_message__in=status,
                 semester=semester,
-                verification_committee_member=logged_in_username) \
-                .order_by('-phase2_submit_date')
-        return students_to_verified
+                verification_committee_member=logged_in_username)
+
+        return students_to_verified.order_by('-phase2_submit_date')
+
+
+class VerifyListNew(BaseVerifyList):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            Q(verification_issues=None),
+            phase2_re_upload_date__isnull=True, )
 
     def get_context_data(self, **kwargs):
-        context = super(VerifyList, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['active_menu'] = 'new'
         return context
 
 
-class VerifyListPendingWithStudent(StaffBaseView, ListView):
-    template_name = 'undergraduate_admission/admin/verify_list.html'
-    model = AdmissionRequest
-    context_object_name = 'students'
-    paginate_by = 25
+class VerifyListPendingWithStudent(BaseVerifyList):
 
     def get_queryset(self):
-        return AdmissionRequest.objects.filter(~Q(verification_issues=None),
-                                               phase2_re_upload_date__isnull=True)
+        return super().get_queryset().filter(~Q(verification_issues=None),
+                                             phase2_re_upload_date__isnull=True)
 
     def get_context_data(self, **kwargs):
-        context = super(VerifyListPendingWithStudent, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['active_menu'] = 'pending'
-        # context['count_pending'] = self.get_queryset().count()
         return context
 
 
-class VerifyListCorrectedByStudent(StaffBaseView, ListView):
-    template_name = 'undergraduate_admission/admin/verify_list.html'
-    model = AdmissionRequest
-    context_object_name = 'students'
-    paginate_by = 25
+class VerifyListCorrectedByStudent(BaseVerifyList):
 
     def get_queryset(self):
-        return AdmissionRequest.objects.filter(~Q(verification_issues=None),
-                                               phase2_re_upload_date__isnull=False)
+        return super().get_queryset().filter(~Q(verification_issues=None),
+                                             phase2_re_upload_date__isnull=False)
 
     def get_context_data(self, **kwargs):
         context = super(VerifyListCorrectedByStudent, self).get_context_data(**kwargs)
         context['active_menu'] = 'corrected'
         return context
+
+
+# class VerifyList(StaffBaseView, ListView):
+#     template_name = 'undergraduate_admission/admin/verify_list.html'
+#     model = AdmissionRequest
+#     context_object_name = 'students'
+#     paginate_by = 25
+#
+#     def get_queryset(self):
+#         logged_in_username = self.request.user.username
+#         status = [RegistrationStatus.get_status_confirmed(),
+#                   RegistrationStatus.get_status_confirmed_non_saudi()]
+#         semester = AdmissionSemester.get_active_semester()
+#         if self.request.user.is_superuser:
+#             students_to_verified = AdmissionRequest.objects.filter(
+#                 # status_message__in=status,
+#                 semester=semester) \
+#                 .order_by('-phase2_submit_date')
+#         else:
+#             students_to_verified = AdmissionRequest.objects.filter(
+#                 Q(verification_issues=None),
+#                 phase2_re_upload_date__isnull=True,
+#                 status_message__in=status,
+#                 semester=semester,
+#                 verification_committee_member=logged_in_username) \
+#                 .order_by('-phase2_submit_date')
+#         return students_to_verified
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(VerifyList, self).get_context_data(**kwargs)
+#         context['active_menu'] = 'new'
+#         return context
 
 
 class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
