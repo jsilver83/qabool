@@ -148,12 +148,12 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
                                                   queryset=AdmissionRequest.objects.filter(
                                                       verification_committee_member__isnull=True))
 
-        filtered_with_properties = filtered.qs.select_related('semester', 'nationality') \
+        filtered_with_properties = filtered.qs.select_related('semester') \
             .annotate(
             admission_percent=F('semester__high_school_gpa_weight') * F('high_school_gpa') / 100
                               + F('semester__qudrat_score_weight') * F('qudrat_score') / 100
                               + F('semester__tahsili_score_weight') * F('tahsili_score') / 100,
-            student_nationality_type=Case(When(nationality__nationality_en__icontains='Saudi', then=Value('S')),
+            student_nationality_type=Case(When(nationality='SA', then=Value('S')),
                                           When(~ Q(nationality='SA')
                                                & Q(nationality__isnull=False)
                                                & Q(saudi_mother=True),
@@ -241,7 +241,7 @@ class BaseVerifyList(StaffBaseView, ListView):
                 semester=semester,
                 verification_committee_member=logged_in_username)
 
-        return students_to_verified.order_by('-phase2_submit_date')
+        return students_to_verified.order_by('-phase2_re_upload_date', '-phase2_submit_date')
 
 
 class VerifyListNew(BaseVerifyList):
