@@ -5,7 +5,7 @@
 
 {% block subcontent %}
     <ul class="nav nav-tabs">
-        <li role="presentation" class="{% if active_menu == 'new' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list' %}">New</a></li>
+        <li role="presentation" class="{% if active_menu == 'new' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_new' %}">New</a></li>
         <li role="presentation" class="{% if active_menu == 'pending' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_with_student' %}">Pending </a></li>
         <li role="presentation" class="{% if active_menu == 'corrected' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_corrected_by_student' %}">Corrected</a></li>
     </ul>
@@ -35,7 +35,7 @@
                 <td>{{ student.student_type }}</td>
                 <td{% if student.verification_issues %} class="danger"{% endif %}>
                     {{ student.verification_issues.all.count }}
-                    {% include 'undergraduate_admission/_render_student_issues.html' with issues=student.verification_issues.all %}
+{#                    {% include 'undergraduate_admission/_render_student_issues.html' with issues=student.verification_issues.all %}#}
                 </td>
                 <td>{{ student.phase2_submit_date|timesince }}</td>
                 </tr>
