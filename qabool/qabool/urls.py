@@ -20,6 +20,9 @@ from django.contrib import admin
 from django.contrib.auth import views
 from django.urls import path
 
+from . import settings
+from django.conf.urls.static import static
+
 from undergraduate_admission.views import phase2_views
 
 urlpatterns = i18n_patterns(
@@ -41,3 +44,6 @@ urlpatterns += [
          phase2_views.UserFileView.as_view(),
          name='download_user_file_admin'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
