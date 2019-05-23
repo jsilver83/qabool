@@ -18,9 +18,9 @@ from .models import *
 class StudentResource(resources.ModelResource):
     class Meta:
         model = AdmissionRequest
-        exclude = ('id',)
-        # import_id_fields = ('username',)
-        fields = ('semester', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
+        # exclude = ('id',)
+        import_id_fields = ('id',)
+        fields = ('id', 'user__username', 'semester', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',

@@ -8,4 +8,14 @@
 	<p>We received some of the information below from Ministry of Education and Qiyas.</p>
 	{% endblocktrans %}
 </div>
+    <div class="form-group row">
+        <label class="control-label col-lg-4 col-md-5 col-xs-5">
+            {% trans 'Student Full Name (Arabic)' %} </label>
+        <div class="controls col-lg-8 col-md-7 col-xs-7">{{ form.instance.get_student_full_name_ar }}</div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-lg-4 col-md-5 col-xs-5">
+            {% trans 'Student Full Name (English)' %} </label>
+        <div class="controls col-lg-8 col-md-7 col-xs-7">{{ form.instance.get_student_full_name_en }}</div>
+    </div>
 {% endblock form-notes %}

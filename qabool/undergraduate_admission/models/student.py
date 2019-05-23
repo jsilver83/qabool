@@ -464,12 +464,18 @@ class AdmissionRequest(models.Model):
     get_verification_status.short_description = _('Issues With Uploaded Docs')
 
     def get_student_full_name_ar(self):
-        return concatenate_names(self.first_name_ar, self.second_name_ar,
+        if self.first_name_ar:
+            return concatenate_names(self.first_name_ar, self.second_name_ar,
                                  self.third_name_ar, self.family_name_ar)
+        else:
+            return self.student_full_name_ar
 
     def get_student_full_name_en(self):
-        return concatenate_names(self.first_name_en, self.second_name_en,
-                                 self.third_name_en, self.family_name_en)
+        if self.first_name_en:
+            return concatenate_names(self.first_name_en, self.second_name_en,
+                                     self.third_name_en, self.family_name_en)
+        else:
+            return self.student_full_name_en
 
     def get_student_full_name(self):
         lang = translation.get_language()
@@ -480,10 +486,6 @@ class AdmissionRequest(models.Model):
 
         if full_name:
             return full_name
-        elif self.student_full_name_ar and lang == 'ar':
-            return self.student_full_name_ar
-        elif self.student_full_name_en and lang == 'en':
-            return self.student_full_name_en
         else:
             return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
 
