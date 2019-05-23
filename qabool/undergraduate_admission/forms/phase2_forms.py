@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.utils.translation import ugettext_lazy as _
 
+from shared_app.fields import CustomClearableFileInput
 from shared_app.base_forms import BaseCrispyForm
 from ..models import *
 from undergraduate_admission.utils import add_validators_to_arabic_and_english_names, parse_non_standard_numerals
@@ -163,6 +164,14 @@ class DocumentsForm(Phase2GenericForm):
                   'vehicle_registration_file', 'driving_license_file', ]
         widgets = {
             'have_a_vehicle': forms.RadioSelect(choices=YES_NO_CHOICES),
+            'high_school_certificate': CustomClearableFileInput,
+            'courses_certificate': CustomClearableFileInput,
+            'government_id_file': CustomClearableFileInput,
+            'passport_file': CustomClearableFileInput,
+            'mother_gov_id_file': CustomClearableFileInput,
+            'birth_certificate': CustomClearableFileInput,
+            'vehicle_registration_file': CustomClearableFileInput,
+            'driving_license_file': CustomClearableFileInput,
         }
 
     def __init__(self, *args, **kwargs):
