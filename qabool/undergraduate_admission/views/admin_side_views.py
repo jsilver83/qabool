@@ -1,3 +1,4 @@
+import logging
 import json
 import time
 
@@ -23,6 +24,9 @@ from undergraduate_admission.filters import AdmissionRequestListFilter
 from undergraduate_admission.forms.admin_side_forms import *
 from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatus
 from undergraduate_admission.utils import try_parse_float
+
+
+logger = logging.getLogger(__name__)
 
 YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
 YESSER_MOHE_WSDL = settings.YESSER_MOHE_WSDL
@@ -497,14 +501,7 @@ def get_student_record_serialized(student, change_status=False):
                         special_cases_log += \
                             '{%s} was marked as applied but he actually has old hs in MOE<br>' % student.government_id
                 else:
-                    try:
-                        student.high_school_graduation_year = \
-                            GraduationYear.objects.get(description__contains='Other')
-                    except ObjectDoesNotExist:
-                        other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
-                                                    description='Other', show=True, display_order=100000)
-                        other_year.save()
-                        student.high_school_graduation_year = other_year
+                    student.high_school_graduation_year = GraduationYear.get_other_graduation_year()
 
                     if student.status_message != RegistrationStatus.get_status_old_high_school() and change_status:
                         student.status_message = RegistrationStatus.get_status_old_high_school()
@@ -518,13 +515,7 @@ def get_student_record_serialized(student, change_status=False):
                 this a case of a student with no CertificationHijriYear from yesser
                 """
             else:
-                try:
-                    student.high_school_graduation_year = GraduationYear.objects.get(description__contains='Other')
-                except ObjectDoesNotExist:
-                    other_year = GraduationYear(graduation_year_ar='Other', graduation_year_en='Other',
-                                                description='Other', show=True, display_order=100000)
-                    other_year.save()
-                    student.high_school_graduation_year = other_year
+                student.high_school_graduation_year = GraduationYear.get_other_graduation_year()
 
                 if student.status_message != RegistrationStatus.get_status_old_high_school() and change_status:
                     student.status_message = RegistrationStatus.get_status_old_high_school()
@@ -598,6 +589,7 @@ def get_student_record_serialized(student, change_status=False):
         final_data['log'] = ''  # special_cases_log
         final_data['error'] = False
     except:
+        logger.exception("Something bad happened while syncing student %".format(student))
         pass
 
     return final_data
@@ -626,6 +618,8 @@ def get_qudrat_from_yesser(gov_id):
             data['ThirdName'] = ''
             data['LastName'] = ''
     except:
+        logger.exception("Something bad happened while fetching qudrat data for student %".format(gov_id))
+
         data['q_error'] = 'general error'  # Client request message schema validation failure'
         data['all_data'] = ''
         data['qudrat'] = 0
@@ -651,6 +645,8 @@ def get_tahsili_from_yesser(gov_id):
             data['all_data'] = ''
             data['tahsili'] = 0
     except:
+        logger.exception("Something bad happened while fetching tahsili data for student %".format(gov_id))
+
         data['t_error'] = 'general error'
         data['all_data'] = ''
         data['tahsili'] = 0
@@ -722,6 +718,8 @@ def get_high_school_from_yesser(gov_id):
             data['MajorTypeAr'] = ''
             data['MajorTypeEn'] = ''
     except:
+        logger.exception("Something bad happened while fetching high school data for student %".format(gov_id))
+
         data['hs_error'] = 'general error'
         data['all_data'] = ''
         data['high_school_gpa'] = 0
