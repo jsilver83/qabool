@@ -338,6 +338,21 @@ class GraduationYear(models.Model):
         except ObjectDoesNotExist:
             return None
 
+    @staticmethod
+    def get_other_graduation_year():
+        year, created = GraduationYear.objects.get_or_create(description__icontains='other')
+
+        if created:
+            year.graduation_year_ar = 'Other'
+            year.graduation_year_en = 'Other'
+            year.description = 'Other'
+            year.show = True
+            year.display_order = 1000
+            year.save()
+
+        return year
+
+
     @property
     def graduation_year(self):
         lang = translation.get_language()
