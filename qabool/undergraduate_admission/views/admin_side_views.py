@@ -256,6 +256,9 @@ class VerifyListNew(BaseVerifyList):
         context['active_menu'] = 'new'
         return context
 
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('undergraduate_admission:verify_list_new')
+
 
 class VerifyListPendingWithStudent(BaseVerifyList):
 
@@ -268,6 +271,9 @@ class VerifyListPendingWithStudent(BaseVerifyList):
         context['active_menu'] = 'pending'
         return context
 
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('undergraduate_admission:verify_list_with_student')
+
 
 class VerifyListCorrectedByStudent(BaseVerifyList):
 
@@ -279,6 +285,9 @@ class VerifyListCorrectedByStudent(BaseVerifyList):
         context = super(VerifyListCorrectedByStudent, self).get_context_data(**kwargs)
         context['active_menu'] = 'corrected'
         return context
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('undergraduate_admission:verify_list_corrected_by_student')
 
 
 # class VerifyList(StaffBaseView, ListView):
@@ -320,7 +329,7 @@ class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
     success_message = _('Verification submitted successfully!!!!')
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('undergraduate_admission:verify_list')
+        return reverse_lazy('undergraduate_admission:verify_list_new')
 
 
 class YesserDataUpdate(AdminBaseView, TemplateView):

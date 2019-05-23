@@ -4,11 +4,11 @@
 {% load floppyforms %}
 
 {% block subcontent %}
-    <ul class="nav nav-tabs">
-        <li role="presentation" class="{% if active_menu == 'new' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_new' %}">New</a></li>
-        <li role="presentation" class="{% if active_menu == 'pending' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_with_student' %}">Pending </a></li>
-        <li role="presentation" class="{% if active_menu == 'corrected' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_corrected_by_student' %}">Corrected</a></li>
-    </ul>
+    <ul class="nav nav-tabs" style="float: right;">
+        <li role="presentation" style="float: right;" class="{% if active_menu == 'new' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_new' %}">{% trans 'New Application' %}</a></li>
+        <li role="presentation" style="float: right;" class="{% if active_menu == 'pending' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_with_student' %}">{% trans 'Pending with Student' %}</a></li>
+        <li role="presentation" class="{% if active_menu == 'corrected' %}active{% endif %}"><a href="{% url 'undergraduate_admission:verify_list_corrected_by_student' %}">{% trans 'Corrected by Student' %}</a></li>
+    </ul><br>
     {% if students %}
         <div class="row">
             <br><br>
