@@ -186,11 +186,34 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
     success_message = _('Documents were uploaded successfully. We will verify your information and get back to '
                         'you soon...')
     template_name = 'undergraduate_admission/phase2/form-uploads.html'
-    success_url = reverse_lazy('undergraduate_admission:compare_names')
+    success_url = reverse_lazy('undergraduate_admission:student_area')
     required_session_variable = ''
     affected_session_variable = 'upload_docs_completed'
     previous_step_url = reverse_lazy('undergraduate_admission:personal_picture')
     current_step_no = 'step5'
+
+    def form_valid(self, form):
+        if self.admission_request.status_message == RegistrationStatus.get_status_partially_admitted_transfer():
+            reg_msg = RegistrationStatus.get_status_admitted_transfer_final()
+        elif self.admission_request.student_type == 'N':
+            reg_msg = RegistrationStatus.get_status_confirmed_non_saudi()
+        else:
+            reg_msg = RegistrationStatus.get_status_confirmed()
+
+        saved_user = form.save(commit=False)
+        saved_user.status_message = reg_msg
+        saved_user.save()
+
+        if self.admission_request.status_message in [
+            RegistrationStatus.get_status_confirmed_non_saudi(),
+            RegistrationStatus.get_status_confirmed()]:
+            SMS.send_sms_confirmed(self.admission_request.mobile)
+
+        if not saved_user:
+            messages.error(self.request,
+                           _('Error saving info. Try again later!'))
+
+        return super().form_valid(form)
 
 
 class CompareNamesView(BaseStudentInfoUpdateView):
