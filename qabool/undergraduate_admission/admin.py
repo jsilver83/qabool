@@ -34,7 +34,7 @@ class StudentResource(resources.ModelResource):
 
 
 class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
-    list_display = ('government_id', 'kfupm_id', 'get_student_full_name_and_source', 'student_type', 'admission_total',
+    list_display = ('government_id', 'kfupm_id', 'has_all_data', 'get_student_full_name_and_source', 'student_type', 'admission_total',
                     'mobile', 'status_message', 'semester', )
 
     fieldsets = (
@@ -160,6 +160,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                    'status_message', )
     actions = ['yesser_update']
     resource_class = StudentResource
+    list_per_page = 300
 
     def make_yesser_data_dump_readable(self, obj, which_dump):
         attr = getattr(obj, which_dump)
@@ -284,6 +285,14 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
 
     def get_queryset(self, request):
         return self.model.objects.all().order_by('request_date')
+
+    def has_all_data(self, obj):
+        if obj.admission_total:
+            return True
+        else:
+            return False
+
+    has_all_data.boolean = True
 
 
 class StatusMessagesInline(admin.TabularInline):
