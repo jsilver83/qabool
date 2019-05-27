@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -22,6 +22,25 @@ from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, Documen
     MissingDocumentsForm, CompareNamesForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, AdmissionRequest
 from undergraduate_admission.utils import SMS
+
+
+# NOTE: a router for the auto link in the widget to the user file
+@method_decorator(never_cache, name='dispatch')
+class UserFileRouterView(LoginRequiredMixin, UserPassesTestMixin, View):
+    raise_exception = True  # PermissionDenied
+    admission_request = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.admission_request = AdmissionRequest.get_admission_request(
+            semester_name=self.kwargs['semester_name'],
+            gov_id=self.kwargs['gov_id'],
+        )
+
+        if self.admission_request is not None:
+            return redirect(reverse('download_user_file', kwargs={
+                'filetype': self.kwargs['filetype'],
+                'pk': self.admission_request.pk,
+            }))
 
 
 @method_decorator(never_cache, name='dispatch')

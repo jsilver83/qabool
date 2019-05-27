@@ -666,6 +666,16 @@ class AdmissionRequest(models.Model):
         except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
 
+    @staticmethod
+    def get_admission_request(gov_id, semester_name):
+        admission_request = AdmissionRequest.objects.filter(
+            user__username__iexact=gov_id,
+            semester__semester_name__iexact=semester_name,
+        )
+
+        if admission_request:
+            return admission_request.first()
+
     def __str__(self):
         return self.get_student_full_name()
 

@@ -46,20 +46,3 @@ class GroupedModelMultipleChoiceField(ModelMultipleChoiceField):
             raise TypeError('choices_groupby must either be a str or a callable accepting a single argument')
         self.iterator = partial(GroupedModelChoiceIterator, groupby=choices_groupby)
         super().__init__(*args, **kwargs)
-
-
-class CustomClearableFileInput(ClearableFileInput):
-    template_name = 'bootstrap3/layout/clearable_file_input.html'
-    link = ''
-    link_text = _('Uploaded File')
-
-    def __init__(self, attrs=None):
-        super().__init__(attrs)
-
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
-        context['widget'].update({
-            'link': self.link,
-            'link_text': self.link_text,
-        })
-        return context
