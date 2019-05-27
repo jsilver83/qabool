@@ -1,8 +1,10 @@
+from django.utils.translation import ugettext_lazy as _
+
 from functools import partial
 from itertools import groupby
 from operator import attrgetter
 
-from django.forms import CheckboxSelectMultiple
+from django.forms import CheckboxSelectMultiple, ClearableFileInput
 from django.forms.models import ModelChoiceIterator, ModelChoiceField, ModelMultipleChoiceField
 
 
@@ -23,6 +25,7 @@ class GroupedModelChoiceIterator(ModelChoiceIterator):
 
     def is_grouped(self):
         return True
+
 
 
 class GroupedModelChoiceField(ModelChoiceField):

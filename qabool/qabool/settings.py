@@ -237,6 +237,8 @@ CAPTCHA_LETTER_ROTATION = (-10,10)
 CSRF_FAILURE_VIEW = 'undergraduate_admission.views.general_views.csrf_failure'
 
 MEDIA_URL = '/uploaded_docs/'
+MEDIA_ROOT = os.path.join('/uploaded_docs')
+
 # File permission settings
 FILE_UPLOAD_PERMISSIONS = 0o644
 

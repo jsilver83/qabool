@@ -18,9 +18,9 @@ from .models import *
 class StudentResource(resources.ModelResource):
     class Meta:
         model = AdmissionRequest
-        exclude = ('id',)
-        # import_id_fields = ('username',)
-        fields = ('semester', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
+        # exclude = ('id',)
+        import_id_fields = ('id',)
+        fields = ('id', 'user__username', 'semester', 'high_school_gpa', 'qudrat_score', 'tahsili_score', 'status_message',
                   'birthday', 'birthday_ah', 'high_school_graduation_year', 'kfupm_id', 'first_name_ar',
                   'second_name_ar', 'third_name_ar', 'family_name_ar', 'first_name_en', 'second_name_en',
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
@@ -34,7 +34,7 @@ class StudentResource(resources.ModelResource):
 
 
 class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
-    list_display = ('government_id', 'kfupm_id', 'get_student_full_name_and_source', 'student_type', 'admission_total',
+    list_display = ('government_id', 'kfupm_id', 'has_all_data', 'get_student_full_name_and_source', 'student_type', 'admission_total',
                     'mobile', 'status_message', 'semester', )
 
     fieldsets = (
@@ -160,6 +160,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                    'status_message', )
     actions = ['yesser_update']
     resource_class = StudentResource
+    list_per_page = 300
 
     def make_yesser_data_dump_readable(self, obj, which_dump):
         attr = getattr(obj, which_dump)
@@ -284,6 +285,14 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
 
     def get_queryset(self, request):
         return self.model.objects.all().order_by('request_date')
+
+    def has_all_data(self, obj):
+        if obj.admission_total:
+            return True
+        else:
+            return False
+
+    has_all_data.boolean = True
 
 
 class StatusMessagesInline(admin.TabularInline):
