@@ -20,6 +20,9 @@ from django.contrib import admin
 from django.contrib.auth import views
 from django.urls import path
 
+from . import settings
+from django.conf.urls.static import static
+
 from undergraduate_admission.views import phase2_views
 
 urlpatterns = i18n_patterns(
@@ -33,6 +36,10 @@ urlpatterns = i18n_patterns(
 urlpatterns += [
     path('captcha/', include(captcha.urls)),
 
+    path('uploaded_docs/<slug:filetype>/<str:semester_name>/<str:gov_id>.<str:extension>/',
+         phase2_views.UserFileRouterView.as_view(),
+         name='user_file'),
+
     path('files/<slug:filetype>/<int:pk>/',
          phase2_views.UserFileView.as_view(),
          name='download_user_file'),
@@ -41,3 +48,6 @@ urlpatterns += [
          phase2_views.UserFileView.as_view(),
          name='download_user_file_admin'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

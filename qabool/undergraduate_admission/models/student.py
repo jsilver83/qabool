@@ -464,12 +464,18 @@ class AdmissionRequest(models.Model):
     get_verification_status.short_description = _('Issues With Uploaded Docs')
 
     def get_student_full_name_ar(self):
-        return concatenate_names(self.first_name_ar, self.second_name_ar,
+        if self.first_name_ar:
+            return concatenate_names(self.first_name_ar, self.second_name_ar,
                                  self.third_name_ar, self.family_name_ar)
+        else:
+            return self.student_full_name_ar
 
     def get_student_full_name_en(self):
-        return concatenate_names(self.first_name_en, self.second_name_en,
-                                 self.third_name_en, self.family_name_en)
+        if self.first_name_en:
+            return concatenate_names(self.first_name_en, self.second_name_en,
+                                     self.third_name_en, self.family_name_en)
+        else:
+            return self.student_full_name_en
 
     def get_student_full_name(self):
         lang = translation.get_language()
@@ -480,10 +486,6 @@ class AdmissionRequest(models.Model):
 
         if full_name:
             return full_name
-        elif self.student_full_name_ar and lang == 'ar':
-            return self.student_full_name_ar
-        elif self.student_full_name_en and lang == 'en':
-            return self.student_full_name_en
         else:
             return 'ERROR: You do NOT have a name. Contact the admins about this ASAP'
 
@@ -663,6 +665,16 @@ class AdmissionRequest(models.Model):
             return ch
         except:  # was OperationalError and happened when db doesn't exist yet but later changed it to general except to catch an weird exceptions like ProgrammingError
             return [('--', '--')]
+
+    @staticmethod
+    def get_admission_request(gov_id, semester_name):
+        admission_request = AdmissionRequest.objects.filter(
+            user__username__iexact=gov_id,
+            semester__semester_name__iexact=semester_name,
+        )
+
+        if admission_request:
+            return admission_request.first()
 
     def __str__(self):
         return self.get_student_full_name()

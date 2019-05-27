@@ -38,7 +38,7 @@ class Phase2GenericForm(BaseCrispyForm, forms.ModelForm):
 class PersonalInfoForm(Phase2GenericForm):
     class Meta:
         model = AdmissionRequest
-        fields = ['student_full_name_ar', 'student_full_name_en', 'phone',
+        fields = ['phone',
                   'high_school_name', 'high_school_province', 'high_school_city',
                   'birthday_ah', 'birthday', 'birth_place',
                   'government_id_expiry', 'government_id_place',
