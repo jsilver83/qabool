@@ -18,5 +18,5 @@ class StudentMixin(LoginRequiredMixin, UserPassesTestMixin):
 
         if request.user.is_authenticated:
             if request.user.is_superuser:
-                return redirect('undergraduate_admission:verify_list')
+                return redirect('undergraduate_admission:verify_list_new')
         return super(StudentMixin, self).dispatch(request, *args, **kwargs)
