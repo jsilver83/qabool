@@ -21,7 +21,8 @@ from undergraduate_admission.forms.phase2_forms import PersonalInfoForm, Documen
     RelativeContactForm, WithdrawalForm, WithdrawalProofForm, PersonalPhotoForm, TransferForm, \
     MissingDocumentsForm, CompareNamesForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, AdmissionRequest
-from undergraduate_admission.utils import SMS
+from undergraduate_admission.utils import SMS, \
+    get_field_field_name_from_short_type
 
 
 # NOTE: a router for the auto link in the widget to the user file
@@ -31,14 +32,29 @@ class UserFileRouterView(LoginRequiredMixin, UserPassesTestMixin, View):
     admission_request = None
 
     def dispatch(self, request, *args, **kwargs):
-        self.admission_request = AdmissionRequest.get_admission_request(
-            semester_name=self.kwargs['semester_name'],
-            gov_id=self.kwargs['gov_id'],
+        student_admission_request = get_current_admission_request_for_logged_in_user(
+            request)
+
+        if student_admission_request:
+            self.admission_request = student_admission_request
+        else:
+            self.admission_request = AdmissionRequest.get_admission_request(
+                semester_name=self.kwargs['semester_name'],
+                gov_id=self.kwargs['gov_id'],
+            )
+
+        file_field_name = get_field_field_name_from_short_type(
+            self.kwargs['short_file_type']
         )
 
-        if self.admission_request is not None:
+        if student_admission_request:
             return redirect(reverse('download_user_file', kwargs={
-                'filetype': self.kwargs['filetype'],
+                'filetype': file_field_name,
+                'pk': self.admission_request.pk,
+            }))
+        else:
+            return redirect(reverse('download_user_file_admin', kwargs={
+                'filetype': file_field_name,
                 'pk': self.admission_request.pk,
             }))
 

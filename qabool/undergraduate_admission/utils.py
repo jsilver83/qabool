@@ -317,3 +317,19 @@ def concatenate_names(*args, allow_hyphen=False, trim_spaces=True):
                 concatenated_names += name + ' '
 
     return concatenated_names[:len(concatenated_names) -1]
+
+
+def get_field_field_name_from_short_type(short_file_type):
+    return {
+        'withdrawal_proof': 'withdrawal_proof',
+        'govid': 'government_id_file',
+        'birth': 'birth_certificate',
+        'mother_govid': 'mother_gov_id_file',
+        'passport': 'passport_file',
+        'certificate': 'high_school_certificate',
+        'certificate/courses': 'courses_certificate',
+        'picture': 'personal_picture',
+        'driving_license': 'driving_license_file',
+        'vehicle_registration': 'vehicle_registration_file',
+        'bank_account': 'bank_account_identification_file',
+    }[short_file_type]
