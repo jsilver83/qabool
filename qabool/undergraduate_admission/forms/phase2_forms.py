@@ -300,8 +300,8 @@ class PersonalPhotoForm(BaseCrispyForm, forms.ModelForm):
             })
         }
 
-    def save(self):
-        photo = super(PersonalPhotoForm, self).save()
+    def save(self, commit=True):
+        photo = super(PersonalPhotoForm, self).save(commit)
 
         data_uri = self.cleaned_data.get('data_uri')
         img_str = re.search(r'base64,(.*)', data_uri).group(1)
