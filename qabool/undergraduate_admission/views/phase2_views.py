@@ -196,7 +196,7 @@ class ReUploadMixin:
         return super().form_valid(form)
 
 
-class PersonalPictureUnacceptableView(StudentMixin, ReUploadMixin, UpdateView):
+class PersonalPictureUnacceptableView(SuccessMessageMixin, StudentMixin, ReUploadMixin, UpdateView):
     form_class = PersonalPhotoForm
     success_message = _('Personal picture was uploaded successfully...')
     template_name = 'undergraduate_admission/phase2/form-personal-picture.html'
