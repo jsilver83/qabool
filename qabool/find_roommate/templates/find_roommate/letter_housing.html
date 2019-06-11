@@ -47,11 +47,11 @@
 <center>
 	<h2>عقد ترخيص بالسكن</h2>
 </center>
-<!--<div><strong>{% trans 'Dear Student' %}/ </strong>{{ user.get_student_full_name }}</div>
+<!--<div><strong>{% trans 'Dear Student' %}/ </strong>{{ student.get_student_full_name }}</div>
 			<div>
 				<strong>
-					{% if user.kfupm_id %}
-					{% trans 'KFUPM ID' %} / {{ user.kfupm_id }}
+					{% if student.kfupm_id %}
+					{% trans 'KFUPM ID' %} / {{ student.kfupm_id }}
 					{% else %}
 					<strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
 					{% endif %}
@@ -64,10 +64,10 @@
 <strong>أولاً: جامعة الملك فهد للبترول والمعادن – عمادة شؤون الطلاب ( صندوق الطلاب )</strong>
 <strong>( المالك ويشار إليه بالطرف الأول )</strong>
 <p>
-	<strong>ثانياً : الطالب / </strong> {{ user.get_student_full_name }}&nbsp;&nbsp;<strong>رقم البطاقة الجامعية /</strong> {{ user.kfupm_id }} <strong>{% trans 'Government ID' %}</strong> / {{ user.username }}
+	<strong>ثانياً : الطالب / </strong> {{ student.get_student_full_name }}&nbsp;&nbsp;<strong>رقم البطاقة الجامعية /</strong> {{ student.kfupm_id }} <strong>{% trans 'Government ID' %}</strong> / {{ student.government_id }}
 </p>
 <p>عنوانه بالجامعة : ص .ب :.......................................
-	هاتف الجوال : {{ user.mobile }}
+	هاتف الجوال : {{ student.mobile }}
 	( الطالب ويشار إليه بالطرف الثاني ) </p>
 <p>بموجب هذا العقد والتراضي فقد رخص الطرف الأول للطرف الثاني السكن في الغرفة رقم :
 	<strong>{{ assigned_room.room }}</strong> بالوحدة السكنية رقم :
