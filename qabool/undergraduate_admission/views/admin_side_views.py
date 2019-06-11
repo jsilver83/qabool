@@ -99,7 +99,11 @@ class CutOffPointView(AdminBaseView, View):
 
     def get(self, request, *args, **kwargs):
         form = CutOffForm(request.GET or None)
-        filtered = self.get_students_matching(request)
+
+        filtered = AdmissionRequest.objects.none().order_by('id')
+        if request.GET:
+            filtered = self.get_students_matching(request)
+
         form2 = ApplyStatusForm()
         show_detailed_results = request.GET.get('show_detailed_results', '')
 
@@ -178,7 +182,11 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
 
     def get(self, request, *args, **kwargs):
         form = DistributeForm(request.GET or None)
-        filtered = self.get_students_matching(request)
+
+        filtered = AdmissionRequest.objects.none().order_by('id')
+        if request.GET:
+            filtered = self.get_students_matching(request)
+
         form2 = SelectCommitteeMemberForm()
         show_detailed_results = request.GET.get('show_detailed_results', '')
 
