@@ -348,8 +348,8 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        manual_update = request.GET.get('manual_update', 1)
-        overwrite_update = request.GET.get('overwrite_update', 0)
+        manual_update = self.kwargs.get('manual_update', 1)
+        overwrite_update = self.kwargs.get('overwrite_update', 0)
 
         if manual_update:
             sem = AdmissionSemester.get_active_semester()
