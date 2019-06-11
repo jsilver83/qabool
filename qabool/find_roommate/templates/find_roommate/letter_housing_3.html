@@ -49,10 +49,10 @@
 </center>
 <div width=45% style="text-align:right;">التاريخ : <strong>{{ date }}</strong></div>
 <br/>
-<div><strong>{% trans 'Dear Student' %}/</strong> {{ user.get_student_full_name }}</div>
+<div><strong>{% trans 'Dear Student' %}/</strong> {{ student.get_student_full_name }}</div>
 <div>
-    {% if user.kfupm_id %}
-        <strong>{% trans 'KFUPM ID' %} /</strong> {{ user.kfupm_id }}
+    {% if student.kfupm_id %}
+        <strong>{% trans 'KFUPM ID' %} /</strong> {{ student.kfupm_id }}
     {% else %}
         <strong style="color:red">ERROR: You do NOT have an ID. Contact admins about this ASAP</strong>
     {% endif %}
