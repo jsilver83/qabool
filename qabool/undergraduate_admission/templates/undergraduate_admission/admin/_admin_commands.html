@@ -37,6 +37,15 @@
 		<a href="{% url 'undergraduate_admission:distribute_committee' %}" class="list-group-item">
 			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Distribute' %}
 		</a>
+        <a href="{% url 'undergraduate_admission:yesser_update' 1 0 %}" class="list-group-item">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Sync with Yesser (Only Missing)' %}
+		</a>
+        <a href="{% url 'undergraduate_admission:yesser_update' 1 1 %}" class="list-group-item">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Sync with Yesser' %}
+		</a>
+        <a href="http://feedback.kfupm.edu.sa/nreport.aspx?reportid=2c469c20c9045f4957197ac8db791f6" target="_blank" class="list-group-item">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Feedback' %}
+		</a>
 	{% endif %}
 	<hr>
 	<a href="{% url 'logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}

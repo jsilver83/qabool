@@ -187,6 +187,7 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
             student.status_message = status
             student.phase2_start_date = timezone.now()
             student.phase2_end_date = timezone.now() + timezone.timedelta(days=1)
+            student.phase2_re_upload_date = None
         else:
             if student.student_type in ('S', 'M'):
                 status = RegistrationStatus.get_status_admitted()

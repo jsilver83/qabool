@@ -99,7 +99,11 @@ class CutOffPointView(AdminBaseView, View):
 
     def get(self, request, *args, **kwargs):
         form = CutOffForm(request.GET or None)
-        filtered = self.get_students_matching(request)
+
+        filtered = AdmissionRequest.objects.none().order_by('id')
+        if request.GET:
+            filtered = self.get_students_matching(request)
+
         form2 = ApplyStatusForm()
         show_detailed_results = request.GET.get('show_detailed_results', '')
 
@@ -178,7 +182,10 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
 
     def get(self, request, *args, **kwargs):
         form = DistributeForm(request.GET or None)
-        filtered = self.get_students_matching(request)
+        filtered = AdmissionRequest.objects.none().order_by('id')
+        if request.GET:
+            filtered = self.get_students_matching(request)
+
         form2 = SelectCommitteeMemberForm()
         show_detailed_results = request.GET.get('show_detailed_results', '')
 
@@ -348,14 +355,17 @@ class YesserDataUpdate(AdminBaseView, TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        manual_update = request.GET.get('manual_update', 0)
+        manual_update = self.kwargs.get('manual_update', 1)
+        overwrite_update = self.kwargs.get('overwrite_update', 0)
 
         if manual_update:
             sem = AdmissionSemester.get_active_semester()
             students = AdmissionRequest.objects.filter(semester=sem)
             for student in students:
-                time.sleep(0.2)
-                serialized_data = get_student_record_serialized(student, change_status=True)
+                time.sleep(0.3)
+                get_student_record_serialized(student, change_status=True, overwrite=overwrite_update)
+
+            return redirect(reverse_lazy('undergraduate_admission:verify_list_new'))
 
         return super(YesserDataUpdate, self).get(request, *args, **kwargs)
 
@@ -402,7 +412,7 @@ class SendMassSMSView(AdminBaseView, FormView):
         print(students_criteria)
 
 
-def get_student_record_serialized(student, change_status=False):
+def get_student_record_serialized(student, change_status=False, overwrite=False):
     final_data = {
         'changed': False,
         'gov_id': '',
@@ -423,15 +433,22 @@ def get_student_record_serialized(student, change_status=False):
         special_cases_log = ''
         changed = False
 
-        qudrat_data = get_qudrat_from_yesser(student.government_id)
-        tahsili_data = get_tahsili_from_yesser(student.government_id)
-        hs_data = get_high_school_from_yesser(student.government_id)
+        qudrat_data = None
+        if overwrite or (not overwrite and student.yesser_qudrat_data_dump is None):
+            qudrat_data = get_qudrat_from_yesser(student.government_id)
+
+        tahsili_data = None
+        if overwrite or (not overwrite and student.yesser_tahsili_data_dump is None):
+            tahsili_data = get_tahsili_from_yesser(student.government_id)
+
+        hs_data = None
+        if overwrite or (not overwrite and student.yesser_high_school_data_dump is None):
+            hs_data = get_high_school_from_yesser(student.government_id)
 
         final_data['status_before'] = student.status_message
 
         final_data['qudrat_before'] = student.qudrat_score
-
-        if not qudrat_data['q_error']:
+        if qudrat_data and not qudrat_data['q_error']:
             changed = True
 
             student.yesser_qudrat_data_dump = 'Fetched On %s<br>%s' % (timezone.now(),
@@ -449,7 +466,7 @@ def get_student_record_serialized(student, change_status=False):
             student.qudrat_score = qudrat_data['qudrat']
 
         final_data['tahsili_before'] = student.tahsili_score
-        if not tahsili_data['t_error']:
+        if tahsili_data and not tahsili_data['t_error']:
             changed = True
 
             student.yesser_tahsili_data_dump = 'Fetched On %s<br>%s' % (timezone.now(),
@@ -458,7 +475,7 @@ def get_student_record_serialized(student, change_status=False):
             student.tahsili_score = tahsili_data['tahsili']
 
         final_data['high_school_gpa_before'] = student.high_school_gpa
-        if not hs_data['hs_error']:
+        if hs_data and not hs_data['hs_error']:
             changed = True
 
             student.yesser_high_school_data_dump = 'Fetched On %s<br>%s' % (timezone.now(),
@@ -572,10 +589,6 @@ def get_student_record_serialized(student, change_status=False):
             student.high_school_major_code = hs_data['MajorCode']
             student.high_school_major_name = hs_data['MajorTypeAr']
             student.high_school_major_name_en = hs_data['MajorTypeEn']
-
-        # TODO: handle students with missing data
-        if not (qudrat_data['qudrat'] and tahsili_data['tahsili'] and hs_data['high_school_gpa']):
-            pass
 
         if changed:
             student.save()
