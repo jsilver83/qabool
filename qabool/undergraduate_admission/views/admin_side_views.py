@@ -182,7 +182,6 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
 
     def get(self, request, *args, **kwargs):
         form = DistributeForm(request.GET or None)
-
         filtered = AdmissionRequest.objects.none().order_by('id')
         if request.GET:
             filtered = self.get_students_matching(request)
