@@ -36,7 +36,7 @@ urlpatterns = i18n_patterns(
 urlpatterns += [
     path('captcha/', include(captcha.urls)),
 
-    path('uploaded_docs/<slug:filetype>/<str:semester_name>/<str:gov_id>.<str:extension>/',
+    path('uploaded_docs/<slug:short_file_type>/<str:semester_name>/<str:gov_id>.<str:extension>/',
          phase2_views.UserFileRouterView.as_view(),
          name='user_file'),
 

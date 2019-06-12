@@ -371,6 +371,7 @@ class HousingSearch(HousingBaseView, FormView):
 class BaseHousingLetter(HousingBaseView, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BaseHousingLetter, self).get_context_data(**kwargs)
+        context['student'] = self.admission_request
         context['assigned_room'] = Room.get_assigned_room(self.admission_request)
         context['date'] = RoommateRequest.objects.filter(Q(requesting_user=self.admission_request) |
                                                          Q(requested_user=self.admission_request),
