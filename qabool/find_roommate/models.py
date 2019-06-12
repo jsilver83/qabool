@@ -82,10 +82,16 @@ class RoommateRequest(models.Model):
     updated_on = models.DateTimeField(null=True, blank=False, auto_now=True, verbose_name=_('Updated On'), )
 
     def requesting_user__kfupm_id(self):
-        return self.requesting_user.kfupm_id
+        try:
+            return self.requesting_user.kfupm_id
+        except AttributeError:
+            pass
 
     def requested_user__kfupm_id(self):
-        return self.requested_user.kfupm_id
+        try:
+            return self.requested_user.kfupm_id
+        except AttributeError:
+            pass
 
     def __str__(self):
         if self.requesting_user and self.requested_user:
