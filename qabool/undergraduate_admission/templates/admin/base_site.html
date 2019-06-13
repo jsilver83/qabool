@@ -1,4 +1,5 @@
 {% extends "admin/base.html" %}
+{% load i18n %}
 {% load static from staticfiles %} # This might be just {% load static %} in your ENV
 
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
@@ -13,4 +14,28 @@
 {% endblock %}
 
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+    <style>
+        .custom-menu {
+            background-color: #4CAF50;
+            padding: 7px;
+            margin: 0 3px;
+            border-radius: 12px;
+        }
+    </style>
+		<a href="{% url 'undergraduate_admission:cut_off_point' %}" class="custom-menu" target="_blank">
+			<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Cut-off Point' %}
+		</a>
+		<a href="{% url 'undergraduate_admission:distribute_committee' %}" class="custom-menu" target="_blank">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Distribute' %}
+		</a>
+        <a href="{% url 'undergraduate_admission:yesser_update' 1 0 %}" class="custom-menu">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Sync with Yesser (Only Missing)' %}
+		</a>
+        <a href="{% url 'undergraduate_admission:yesser_update' 1 1 %}" class="custom-menu">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Sync with Yesser' %}
+		</a>
+        <a href="http://feedback.kfupm.edu.sa/nreport.aspx?reportid=2c469c20c9045f4957197ac8db791f6" target="_blank" class="custom-menu">
+			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Feedback' %}
+		</a>
+{% endblock %}
