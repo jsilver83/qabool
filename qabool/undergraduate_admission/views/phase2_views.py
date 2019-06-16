@@ -227,6 +227,11 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
     previous_step_url = reverse_lazy('undergraduate_admission:personal_picture')
     current_step_no = 'step5'
 
+    def get(self, request, *args, **kwargs):
+        if not self.admission_request.personal_picture:
+            return redirect(self.previous_step_url)
+        return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
         if self.admission_request.status_message == RegistrationStatus.get_status_partially_admitted_transfer():
             reg_msg = RegistrationStatus.get_status_admitted_transfer_final()
