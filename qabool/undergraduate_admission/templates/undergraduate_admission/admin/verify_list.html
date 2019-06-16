@@ -29,8 +29,8 @@
                         <tr>
                     {% endif %}
                 <td><img style="width: 150px;" src="{% url 'download_user_file_admin' 'personal_picture' student.pk %}"></td>
-                <td><a target="_blank" href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student.government_id }}</a></td>
-                <td><a target="_blank" href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student }}</a></td>
+                <td><a href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student.government_id }}</a></td>
+                <td><a href="{% url 'undergraduate_admission:verify_student' student.pk %}">{{ student }}</a></td>
                 {#				<td>{{ student.status_message }}</td>#}
                 <td>{{ student.student_type }}</td>
                 <td{% if student.verification_issues %} class="danger"{% endif %}>
