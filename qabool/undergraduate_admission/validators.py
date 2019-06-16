@@ -22,11 +22,14 @@ def size_format(b):
         return '%.1f' % float(b / 1000000000000) + ' TB'
 
 
+valid_file_extensions = ['.pdf', '.bmp', '.gif', '.png', '.jpg', '.jpeg']
+
+
 # validates file extensions for uploaded documents
 def validate_file_extension(value):
     ext = os.path.splitext(value.name)[1].lower()
-    valid_extensions = ['.pdf', '.bmp', '.gif', '.png', '.jpg', '.jpeg']
-    if ext not in valid_extensions:
+
+    if ext not in valid_file_extensions:
         raise ValidationError(
             _('File extension (%(ext)s) not allowed!'),
             params={'ext': ext},
@@ -40,11 +43,14 @@ def validate_file_extension(value):
         )
 
 
+valid_image_extensions = ['.bmp', '.gif', '.png', '.jpg', '.jpeg']
+
+
 # validates image extensions for uploaded personal pictures
 def validate_image_extension(value):
     ext = os.path.splitext(value.name)[1].lower()
-    valid_extensions = ['.bmp', '.gif', '.png', '.jpg', '.jpeg']
-    if ext not in valid_extensions:
+
+    if ext not in valid_image_extensions:
         raise ValidationError(
             _('File extension (%(ext)s) not allowed!'),
             params={'ext': ext},
@@ -56,3 +62,16 @@ def validate_image_extension(value):
             _('Image size {} is larger than {}!'.format(size_format(value.size), size_format(MAX_IMAGE_UPLOAD_SIZE))),
             code='size_not_allowed',
         )
+
+
+def get_accepted_extensions(file_type='IMAGE'):
+    if file_type == 'IMAGE':
+        valid_extensions = valid_image_extensions
+    else:
+        valid_extensions = valid_file_extensions
+
+    accepted_extensions = ''
+    for ext in valid_extensions:
+        accepted_extensions += ext + ','
+
+    return accepted_extensions

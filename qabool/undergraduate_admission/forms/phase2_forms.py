@@ -8,6 +8,7 @@ from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.utils.translation import ugettext_lazy as _
 
 from shared_app.base_forms import BaseCrispyForm
+from ..validators import get_accepted_extensions
 from ..models import *
 from undergraduate_admission.utils import add_validators_to_arabic_and_english_names, parse_non_standard_numerals
 
@@ -187,6 +188,11 @@ class DocumentsForm(Phase2GenericForm):
                              'vehicle_registration_file', 'driving_license_file', ]:
                 self.fields[field].required = True
 
+            if field in ['high_school_certificate', 'courses_certificate', 'government_id_file',
+                         'mother_gov_id_file', 'passport_file', 'birth_certificate',
+                         'vehicle_registration_file', 'driving_license_file', ]:
+                self.fields[field].widget.attrs.update({'accept': get_accepted_extensions('FILE')})
+
     def clean(self):
         cleaned_data = super().clean()
         have_a_vehicle = cleaned_data.get('have_a_vehicle')
@@ -299,6 +305,11 @@ class PersonalPhotoForm(BaseCrispyForm, forms.ModelForm):
                 'accept': 'image/*'
             })
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['personal_picture'].widget.attrs.update({'accept': get_accepted_extensions('IMAGE')})
 
     def save(self, commit=True):
         photo = super(PersonalPhotoForm, self).save(commit)
