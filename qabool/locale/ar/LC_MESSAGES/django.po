@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-11 12:08+0300\n"
-"PO-Revision-Date: 2019-06-11 12:10+0300\n"
+"PO-Revision-Date: 2019-06-16 10:40+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -2286,7 +2286,7 @@ msgstr "المشاكل"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:10
 msgid "Corrected by Student"
-msgstr "المصححة"
+msgstr "المصححة من قبل الطالب"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_list.html:23
 msgid "Last Update Date"
