@@ -754,3 +754,7 @@ th {
 }
 
 /* end of add by joud */
+
+ul li label {
+    width: 100%!important;
+}
