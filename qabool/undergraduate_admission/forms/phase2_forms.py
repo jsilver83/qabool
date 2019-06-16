@@ -236,15 +236,8 @@ class MissingDocumentsForm(DocumentsForm):
             self.initial[field] = None
 
     def clean(self):
-        cleaned_data = super(MissingDocumentsForm, self).clean()
-        have_a_vehicle = self.instance.have_a_vehicle
-        if have_a_vehicle:
-            vehicle_registration_file = cleaned_data.get('vehicle_registration_file')
-            driving_license_file = cleaned_data.get('driving_license_file')
-            if not (vehicle_registration_file and driving_license_file):
-                raise forms.ValidationError(_('Vehicle info is required.'))
-
-        return cleaned_data
+        # dont call the clean in the super class since it does vehicle validation that is unneeded here
+        pass
 
 
 class WithdrawalProofForm(Phase2GenericForm):
