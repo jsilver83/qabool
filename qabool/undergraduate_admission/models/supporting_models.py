@@ -396,7 +396,7 @@ class VerificationIssues(models.Model):
 
     class Meta:
         verbose_name_plural = _('Verification Issues')
-        ordering = ['related_field', '-display_order']
+        ordering = ['-related_field', '-display_order']
 
     @property
     def verification_issue(self):

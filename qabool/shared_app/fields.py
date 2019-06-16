@@ -27,7 +27,6 @@ class GroupedModelChoiceIterator(ModelChoiceIterator):
         return True
 
 
-
 class GroupedModelChoiceField(ModelChoiceField):
     def __init__(self, *args, choices_groupby, **kwargs):
         if isinstance(choices_groupby, str):
