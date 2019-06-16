@@ -333,3 +333,15 @@ def get_field_field_name_from_short_type(short_file_type):
         'vehicle_registration': 'vehicle_registration_file',
         'bank_account': 'bank_account_identification_file',
     }[short_file_type]
+
+
+def get_fields_for_re_upload(student_type):
+    fields = ['government_id_file', 'personal_picture', 'high_school_certificate', 'courses_certificate', ]
+
+    if student_type in ['M', 'N']:
+        fields.append('passport_file')
+
+    if student_type == 'M':
+        fields.extend(['mother_gov_id_file', 'birth_certificate', ])
+
+    return fields

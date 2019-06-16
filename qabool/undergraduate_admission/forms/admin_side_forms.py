@@ -5,16 +5,13 @@ import re
 
 from django.contrib.auth import get_user_model
 from django.forms import CheckboxSelectMultiple
-from django.utils import timezone
 
 from shared_app.base_forms import BaseCrispyForm
 from shared_app.fields import GroupedModelMultipleChoiceField
-from .phase2_forms import YES_NO_CHOICES
 from ..models import *
-from django.utils.translation import ugettext_lazy as _, get_language
+from django.utils.translation import ugettext_lazy as _
 
-from undergraduate_admission.utils import SMS
-
+from ..utils import SMS, get_fields_for_re_upload
 
 User = get_user_model()
 
@@ -99,7 +96,7 @@ class SelectCommitteeMemberForm(BaseCrispyForm, forms.Form):
 class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
     data_uri = forms.CharField(widget=forms.HiddenInput, required=False)
     verification_issues = GroupedModelMultipleChoiceField(
-        queryset=VerificationIssues.objects.all(),
+        queryset=VerificationIssues.objects.none(),
         choices_groupby='get_related_field_display',
         widget=CheckboxSelectMultiple,
         required=False,
@@ -172,6 +169,10 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
                 self.fields[field].widget.attrs.update({'class': 'n-ar'})
             elif field in ['first_name_en', 'second_name_en', 'third_name_en', 'family_name_en', ]:
                 self.fields[field].widget.attrs.update({'class': 'n-en'})
+
+        self.fields['verification_issues'].queryset = VerificationIssues.objects.filter(
+            related_field__in=get_fields_for_re_upload(self.instance.student_type),
+        )
 
         # self.fields['vehicle_owner'].widget = forms.Select(choices=Lookup.get_lookup_choices('VEHICLE_OWNER'))
 
