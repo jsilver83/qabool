@@ -232,6 +232,9 @@ class MissingDocumentsForm(DocumentsForm):
         for field_to_be_deleted in fields_to_be_removed:
             del self.fields[field_to_be_deleted]
 
+        for field in self.fields:
+            self.initial[field] = None
+
     def clean(self):
         cleaned_data = super(MissingDocumentsForm, self).clean()
         have_a_vehicle = self.instance.have_a_vehicle
@@ -310,6 +313,8 @@ class PersonalPhotoForm(BaseCrispyForm, forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields['personal_picture'].widget.attrs.update({'accept': get_accepted_extensions('IMAGE')})
+
+        self.initial['personal_picture'] = None
 
     def save(self, commit=True):
         photo = super(PersonalPhotoForm, self).save(commit)
