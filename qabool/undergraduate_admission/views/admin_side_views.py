@@ -23,7 +23,7 @@ from zeep.transports import Transport
 from undergraduate_admission.filters import AdmissionRequestListFilter
 from undergraduate_admission.forms.admin_side_forms import *
 from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatus
-from undergraduate_admission.utils import try_parse_float
+from undergraduate_admission.utils import try_parse_float, concatenate_names
 
 
 logger = logging.getLogger(__name__)

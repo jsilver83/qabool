@@ -95,25 +95,25 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
         ('Phase 2 Fields - Personal Information', {
             'classes': ('collapse',),
             'fields': (
-                       ('government_id_type', 'government_id_issue', 'government_id_expiry', 'government_id_place', ),
-                       ('passport_number', 'passport_place', 'passport_expiry', ),
-                       ('birthday', 'birthday_ah', 'birth_place', ),
-                       ('high_school_id', 'high_school_name', 'high_school_name_en', ),
-                       ('high_school_province_code', 'high_school_province', 'high_school_province_en', ),
-                       ('high_school_city_code', 'high_school_city', 'high_school_city_en', ),
-                       ('high_school_major_code', 'high_school_major_name', 'high_school_major_name_en', ),
-                       ('blood_type', 'student_address', ),
-                       ('social_status', 'kids_no', ),
-                       ('is_employed', 'employer_name', ),
-                       ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
-                       ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
-                       ),
+                ('government_id_type', 'government_id_issue', 'government_id_expiry', 'government_id_place', ),
+                ('passport_number', 'passport_place', 'passport_expiry', ),
+                ('birthday', 'birthday_ah', 'birth_place', ),
+                ('high_school_id', 'high_school_name', 'high_school_name_en', ),
+                ('high_school_province_code', 'high_school_province', 'high_school_province_en', ),
+                ('high_school_city_code', 'high_school_city', 'high_school_city_en', ),
+                ('high_school_major_code', 'high_school_major_name', 'high_school_major_name_en', ),
+                ('blood_type', 'student_address', ),
+                ('social_status', 'kids_no', ),
+                ('is_employed', 'employer_name', ),
+                ('is_disabled', 'disability_needs', 'disability_needs_notes', ),
+                ('is_diseased', 'chronic_diseases', 'chronic_diseases_notes', ),
+            ),
         }),
         ('Phase 2 Fields - Vehicle Info', {
             'classes': ('collapse',),
             'fields': (
-                       'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
-                       ('driving_license_file', 'vehicle_registration_file')
+                'have_a_vehicle', 'vehicle_owner', 'vehicle_plate_no',
+                ('driving_license_file', 'vehicle_registration_file')
             ),
         }),
         ('Phase 2 Fields - Guardian Information', {
@@ -158,7 +158,7 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
                      'nationality', 'student_full_name_ar', 'student_full_name_en', ]
     list_filter = ('semester', 'high_school_graduation_year', 'high_school_system', 'gender', 'status_message__general_status',
                    'status_message', )
-    actions = ['yesser_update']
+    actions = ['yesser_update', 'yesser_update_no_overwrite']
     resource_class = StudentResource
     list_per_page = 300
 
@@ -267,21 +267,24 @@ class AdmissionRequestAdmin(ImportExportMixin, VersionAdmin):
 
         return formfield
 
-    # Update selected students and sync them with Yesser
     def yesser_update(self, request, queryset):
-        log = ''
-        changed_students = 0
-        for student in queryset:
-            time.sleep(0.2)
-            result = get_student_record_serialized(student, True)
-            if result['changed']:
-                changed_students += 1
-            # if result['log']:
-            #     log += '<br>' + result['log']
-
-        self.message_user(request, "%d student(s) were successfully sync'd with yesser." % changed_students)
-
+        return self.yesser_update_call(request, queryset)
     yesser_update.short_description = _("Sync with Yesser")
+
+    def yesser_update_no_overwrite(self, request, queryset):
+        return self.yesser_update_call(request, queryset, change_status=True, overwrite=False)
+    yesser_update_no_overwrite.short_description = _("Sync with Yesser (Only Missing)")
+
+    # Update selected students and sync them with Yesser
+    def yesser_update_call(self, request, queryset, change_status=True, overwrite=True):
+        changed_applicants = 0
+        for applicant in queryset:
+            time.sleep(0.2)
+            result = get_student_record_serialized(applicant, change_status, overwrite)
+            if result['changed']:
+                changed_applicants += 1
+
+        self.message_user(request, "%d student(s) were successfully sync'd with yesser." % changed_applicants)
 
     def get_queryset(self, request):
         return self.model.objects.all().order_by('request_date')
