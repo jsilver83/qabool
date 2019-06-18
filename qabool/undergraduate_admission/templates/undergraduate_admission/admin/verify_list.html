@@ -34,8 +34,8 @@
                 {#				<td>{{ student.status_message }}</td>#}
                 <td>{{ student.student_type }}</td>
                 <td{% if student.verification_issues %} class="danger"{% endif %}>
-                    {{ student.verification_issues.all.count }}
-{#                    {% include 'undergraduate_admission/_render_student_issues.html' with issues=student.verification_issues.all %}#}
+{#                    {{ student.verification_issues.all.count }}#}
+                    {% include 'undergraduate_admission/_render_student_issues.html' with issues=student.verification_issues.all %}
                 </td>
                 <td>{{ student.phase2_submit_date|timesince }}</td>
                 </tr>
