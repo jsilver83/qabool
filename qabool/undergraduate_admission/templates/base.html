@@ -133,6 +133,13 @@
         $('.nocopy').bind('copy paste cut', function (e) {
             e.preventDefault(); //disable cut,copy,paste
         });
+        $('input[type=file]').bind('change', function() {
+            var size = this.files[0].size/1024/1024;
+            if (size > 2.0) {
+                alert('File size is larger than 2.0 MB');
+                $(this).val('');
+            }
+        });
     });
 </script>
 
