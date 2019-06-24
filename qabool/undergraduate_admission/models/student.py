@@ -573,8 +573,8 @@ class AdmissionRequest(models.Model):
     # region the can's and cant's
     def can_confirm(self):
         return (self.status_message in [RegistrationStatus.get_status_partially_admitted(),
-                                         RegistrationStatus.get_status_partially_admitted_non_saudi(),
-                                         RegistrationStatus.get_status_partially_admitted_transfer()]
+                                        RegistrationStatus.get_status_partially_admitted_non_saudi(),
+                                        RegistrationStatus.get_status_partially_admitted_transfer()]
                 and AdmissionSemester.get_phase2_active_semester(self))
 
     def can_see_result(self):
@@ -619,12 +619,12 @@ class AdmissionRequest(models.Model):
             return False
 
     def can_re_upload_picture(self):
-        return (self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
+        return (self.can_confirm()  # self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
                 and self.verification_issues.filter(
                     related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
     def can_re_upload_docs(self):
-        return (self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
+        return (self.can_confirm()  # self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
                 and self.verification_issues.exclude(
                     related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
