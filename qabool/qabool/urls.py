@@ -47,6 +47,8 @@ urlpatterns += [
     path('admin_files/<slug:filetype>/<int:pk>/',
          phase2_views.UserFileView.as_view(),
          name='download_user_file_admin'),
+
+    path('session_security/', include('session_security.urls')),
 ]
 
 if settings.DEBUG:
