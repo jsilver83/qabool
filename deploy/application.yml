@@ -12,6 +12,8 @@
     django_project_admin_username: almaaesh
     django_project_admin_email: almaaesh@kfupm.edu.sa
     django_project_package_name: qabool
+    buildbot_autobuild: false
+    ssl_cert_path: "/etc/ssl/certs"
 
     apache_authn: cas
     apache_auth:
@@ -55,51 +57,55 @@
 
   # tasks to be performed before role tasks, if any
   pre_tasks:
+
+    - pause:
+        prompt: Your Active Directory username
+      when: not buildbot_autobuild
+      register: ad_username
+      connection: local
+
+    - pause:
+        prompt: Your Active Directory password
+        echo: no
+      when: not buildbot_autobuild
+      register: ad_password
+      connection: local
+
     - name: Vault authentication
       uri:
-        url: "{{ vault_url }}/v1/auth/ldap/login/{{ ad_username }}"
+        url: "{{ vault_url }}/v1/auth/ldap/login/{{ ad_username.user_input }}"
         method: POST
-        body: {"password": "{{ ad_password }}"}
+        body: {"password": "{{ ad_password.user_input }}"}
         body_format: json
       connection: local
       become: no
       register: auth
+      when: not buildbot_autobuild
+
+    - name: set token
+      set_fact:
+        vault_access_token: "{{ auth.json.auth.client_token }}"
+      when: not buildbot_autobuild
 
     - name: Retrieve secret key from Vault
-      uri:
-        url: "{{ vault_url }}/v1/secret/{{ env }}/operations/apps/qabool/secret_key"
-        headers:
-          X-Vault-Token: "{{ auth.json.auth.client_token }}"
+      set_fact:
+        secret_key: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/operations/apps/qabool/secret_key:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
       connection: local
-      become: no
-      register: secret_key
 
-    - name: Retrieve database password from Vault
-      uri:
-        url: "{{ vault_url }}/v1/secret/{{ env }}/database/apps/qabool/database_password"
-        headers:
-          X-Vault-Token: "{{ auth.json.auth.client_token }}"
+    - name: Retrieve database password from vault
+      set_fact:
+        database_password: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/database/apps/qabool/database_password:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
       connection: local
-      become: no
-      register: database_password
 
-    - name: Retrieve email password from Vault
-      uri:
-        url: "{{ vault_url }}/v1/secret/{{ env }}/email/apps/qabool/email_password"
-        headers:
-          X-Vault-Token: "{{ auth.json.auth.client_token }}"
+    - name: Retrieve email password from vault
+      set_fact:
+        email_password: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/email/apps/qabool/email_password:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
       connection: local
-      become: no
-      register: email_password
 
     - name: Retrieve sms gateway app sid from Vault
-      uri:
-        url: "{{ vault_url }}/v1/secret/{{ env }}/operations/apps/qabool/sms_gateway_app_sid"
-        headers:
-          X-Vault-Token: "{{ auth.json.auth.client_token }}"
+      set_fact:
+        sms_gateway_app_sid: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/email/apps/qabool/sms_gateway_app_sid:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
       connection: local
-      become: no
-      register: sms_gateway_app_sid
 
     - name: Generate local settings
       set_fact:
