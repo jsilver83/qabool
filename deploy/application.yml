@@ -104,7 +104,7 @@
 
     - name: Retrieve sms gateway app sid from Vault
       set_fact:
-        sms_gateway_app_sid: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/email/apps/qabool/sms_gateway_app_sid:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
+        sms_gateway_app_sid: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/operations/apps/qabool/sms_gateway_app_sid:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
       connection: local
 
     - name: Generate local settings
