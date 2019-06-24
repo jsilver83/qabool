@@ -109,7 +109,7 @@ class Confirm(Phase2BaseView, FormView):
         return context
 
 
-class BaseStudentInfoUpdateView(SuccessMessageMixin, StudentMixin, UpdateView):
+class BaseStudentInfoUpdateView(SuccessMessageMixin, Phase2BaseView, StudentMixin, UpdateView):
     form_class = None
     success_message = None
     template_name = None
