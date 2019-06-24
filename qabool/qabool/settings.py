@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'session_security',
+
     # 'debug_toolbar',
 ]
 
@@ -65,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'session_security.middleware.SessionSecurityMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -241,6 +244,10 @@ MEDIA_ROOT = os.path.join('/uploaded_docs')
 
 # File permission settings
 FILE_UPLOAD_PERMISSIONS = 0o644
+
+SESSION_SECURITY_WARN_AFTER = 300
+SESSION_SECURITY_EXPIRE_AFTER = 315
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Override settings using environment-specific settings, if any
 try:
