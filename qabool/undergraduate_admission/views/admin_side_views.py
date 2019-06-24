@@ -231,6 +231,7 @@ class DistributeStudentsOnVerifiersView(AdminBaseView, View):
         return redirect('undergraduate_admission:distribute_committee')
 
 
+# TODO: rework and use filters and search and add a tab that shows all
 class BaseVerifyList(StaffBaseView, ListView):
     template_name = 'undergraduate_admission/admin/verify_list.html'
     model = AdmissionRequest
@@ -338,6 +339,8 @@ class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
     form_class = VerifyCommitteeForm
     model = AdmissionRequest
     success_message = _('Verification submitted successfully!!!!')
+
+    # TODO: check if the student can be verified
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('undergraduate_admission:verify_list_new')
