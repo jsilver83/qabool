@@ -405,7 +405,7 @@ class GraduationYearAdmin(admin.ModelAdmin):
 class TarifiReceptionDateAdmin(admin.ModelAdmin):
     list_display = ('semester', 'reception_date', 'slots', 'remaining_slots', 'slot_start_date', 'slot_end_date',
                     'show')
-    list_editable = ('reception_date', 'slots', 'slot_start_date', 'slot_end_date', 'show', )
+    list_editable = ('slots', 'show', )
     list_filter = ('semester',)
 
 
