@@ -619,12 +619,16 @@ class AdmissionRequest(models.Model):
             return False
 
     def can_re_upload_picture(self):
-        return (self.can_confirm()  # self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
+        return (self.status_message in [RegistrationStatus.get_status_confirmed(),
+                                        RegistrationStatus.get_status_confirmed_non_saudi(),
+                                        RegistrationStatus.get_status_confirmed_transfer()]
                 and self.verification_issues.filter(
                     related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
     def can_re_upload_docs(self):
-        return (self.can_confirm()  # self.get_student_phase() == RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED
+        return (self.status_message in [RegistrationStatus.get_status_confirmed(),
+                                        RegistrationStatus.get_status_confirmed_non_saudi(),
+                                        RegistrationStatus.get_status_confirmed_transfer()]
                 and self.verification_issues.exclude(
                     related_field=VerificationIssues.RelatedFields.PERSONAL_PICTURE).exists())
 
