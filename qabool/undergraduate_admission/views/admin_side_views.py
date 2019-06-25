@@ -302,38 +302,6 @@ class VerifyListCorrectedByStudent(BaseVerifyList):
         return reverse_lazy('undergraduate_admission:verify_list_corrected_by_student')
 
 
-# class VerifyList(StaffBaseView, ListView):
-#     template_name = 'undergraduate_admission/admin/verify_list.html'
-#     model = AdmissionRequest
-#     context_object_name = 'students'
-#     paginate_by = 25
-#
-#     def get_queryset(self):
-#         logged_in_username = self.request.user.username
-#         status = [RegistrationStatus.get_status_confirmed(),
-#                   RegistrationStatus.get_status_confirmed_non_saudi()]
-#         semester = AdmissionSemester.get_active_semester()
-#         if self.request.user.is_superuser:
-#             students_to_verified = AdmissionRequest.objects.filter(
-#                 # status_message__in=status,
-#                 semester=semester) \
-#                 .order_by('-phase2_submit_date')
-#         else:
-#             students_to_verified = AdmissionRequest.objects.filter(
-#                 Q(verification_issues=None),
-#                 phase2_re_upload_date__isnull=True,
-#                 status_message__in=status,
-#                 semester=semester,
-#                 verification_committee_member=logged_in_username) \
-#                 .order_by('-phase2_submit_date')
-#         return students_to_verified
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(VerifyList, self).get_context_data(**kwargs)
-#         context['active_menu'] = 'new'
-#         return context
-
-
 class VerifyStudent(StaffBaseView, SuccessMessageMixin, UpdateView):
     template_name = 'undergraduate_admission/admin/verify_committee.html'
     form_class = VerifyCommitteeForm
