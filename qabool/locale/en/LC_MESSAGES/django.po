@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-17 13:44+0300\n"
+"POT-Creation-Date: 2019-06-25 10:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgstr ""
 #: tarifi/admin.py:36 tarifi/forms.py:7 tarifi/models.py:251
 #: undergraduate_admission/forms/phase2_forms.py:333
 #: undergraduate_admission/models/student.py:150
-#: undergraduate_admission/models/student.py:693
+#: undergraduate_admission/models/student.py:697
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:75
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:77
@@ -398,8 +398,8 @@ msgstr ""
 #: undergraduate_admission/forms/general_forms.py:159
 #: undergraduate_admission/forms/phase1_forms.py:45
 #: undergraduate_admission/forms/phase2_forms.py:326
-#: undergraduate_admission/models/student.py:725
-#: undergraduate_admission/models/student.py:763
+#: undergraduate_admission/models/student.py:729
+#: undergraduate_admission/models/student.py:767
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:25
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:25
@@ -468,19 +468,19 @@ msgstr ""
 msgid "Error saving info. Try again later!"
 msgstr ""
 
-#: qabool/settings.py:165
+#: qabool/settings.py:168
 msgid "Arabic"
 msgstr ""
 
-#: qabool/settings.py:166
+#: qabool/settings.py:169
 msgid "English"
 msgstr ""
 
-#: qabool/settings.py:177
+#: qabool/settings.py:180
 msgid "Saudi Arabia"
 msgstr ""
 
-#: qabool/settings.py:180
+#: qabool/settings.py:183
 msgid "Moqeem"
 msgstr ""
 
@@ -524,7 +524,7 @@ msgstr ""
 msgid "English Level"
 msgstr ""
 
-#: tarifi/models.py:70 undergraduate_admission/models/student.py:784
+#: tarifi/models.py:70 undergraduate_admission/models/student.py:788
 msgid "Reception Date"
 msgstr ""
 
@@ -549,11 +549,11 @@ msgstr ""
 msgid "Semester"
 msgstr ""
 
-#: tarifi/models.py:165 undergraduate_admission/models/student.py:786
+#: tarifi/models.py:165 undergraduate_admission/models/student.py:790
 msgid "Start Date"
 msgstr ""
 
-#: tarifi/models.py:166 undergraduate_admission/models/student.py:787
+#: tarifi/models.py:166 undergraduate_admission/models/student.py:791
 msgid "End Date"
 msgstr ""
 
@@ -565,7 +565,7 @@ msgstr ""
 msgid "Location (English)"
 msgstr ""
 
-#: tarifi/models.py:169 undergraduate_admission/models/student.py:785
+#: tarifi/models.py:169 undergraduate_admission/models/student.py:789
 msgid "Slots"
 msgstr ""
 
@@ -586,7 +586,7 @@ msgstr ""
 #: undergraduate_admission/models/misc_models.py:87
 #: undergraduate_admission/models/misc_models.py:161
 #: undergraduate_admission/models/misc_models.py:189
-#: undergraduate_admission/models/student.py:788
+#: undergraduate_admission/models/student.py:792
 #: undergraduate_admission/models/supporting_models.py:314
 #: undergraduate_admission/models/supporting_models.py:394
 msgid "Show"
@@ -595,7 +595,7 @@ msgstr ""
 #: tarifi/models.py:182 undergraduate_admission/models/misc_models.py:46
 #: undergraduate_admission/models/misc_models.py:88
 #: undergraduate_admission/models/misc_models.py:190
-#: undergraduate_admission/models/student.py:789
+#: undergraduate_admission/models/student.py:793
 #: undergraduate_admission/models/supporting_models.py:315
 #: undergraduate_admission/models/supporting_models.py:395
 msgid "Display Order"
@@ -797,32 +797,32 @@ msgstr ""
 msgid "Admission Settings"
 msgstr ""
 
-#: undergraduate_admission/admin.py:433
+#: undergraduate_admission/admin.py:434
 msgid "Qabool"
 msgstr ""
 
-#: undergraduate_admission/admin.py:434
+#: undergraduate_admission/admin.py:435
 msgid "Qabool Administration"
 msgstr ""
 
-#: undergraduate_admission/admin.py:435
+#: undergraduate_admission/admin.py:436
 msgid "Administration"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:21
-#: undergraduate_admission/forms/admin_side_forms.py:230
+#: undergraduate_admission/forms/admin_side_forms.py:235
 msgid "Unknown"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:22
-#: undergraduate_admission/forms/admin_side_forms.py:231
+#: undergraduate_admission/forms/admin_side_forms.py:236
 #: undergraduate_admission/forms/phase1_forms.py:71
 #: undergraduate_admission/models/student.py:29
 msgid "Male"
 msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:23
-#: undergraduate_admission/forms/admin_side_forms.py:232
+#: undergraduate_admission/forms/admin_side_forms.py:237
 #: undergraduate_admission/forms/phase1_forms.py:72
 #: undergraduate_admission/models/student.py:30
 msgid "Female"
@@ -901,8 +901,8 @@ msgstr ""
 msgid "Verification Issues"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:225
-#: undergraduate_admission/forms/admin_side_forms.py:258
+#: undergraduate_admission/forms/admin_side_forms.py:230
+#: undergraduate_admission/forms/admin_side_forms.py:263
 #: undergraduate_admission/models/student.py:64
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:45
 #: undergraduate_admission/templates/undergraduate_admission/admin/yesser_update.html:46
@@ -910,19 +910,19 @@ msgstr ""
 msgid "Message Status"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:257
+#: undergraduate_admission/forms/admin_side_forms.py:262
 #: undergraduate_admission/models/student.py:56
-#: undergraduate_admission/models/student.py:690
+#: undergraduate_admission/models/student.py:694
 #: undergraduate_admission/models/supporting_models.py:30
 msgid "Admission Semester"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:259
+#: undergraduate_admission/forms/admin_side_forms.py:264
 #: undergraduate_admission/models/student.py:436
 msgid "Eligible For Housing"
 msgstr ""
 
-#: undergraduate_admission/forms/admin_side_forms.py:262
+#: undergraduate_admission/forms/admin_side_forms.py:267
 msgid "SMS Message To Be Sent"
 msgstr ""
 
@@ -1802,48 +1802,48 @@ msgstr ""
 msgid "Full Name and Source"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:696
+#: undergraduate_admission/models/student.py:700
 msgid "Registrar: KFUPM ID Pools"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:726
-#: undergraduate_admission/models/student.py:764
+#: undergraduate_admission/models/student.py:730
+#: undergraduate_admission/models/student.py:768
 msgid "Student Name"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:727
+#: undergraduate_admission/models/student.py:731
 msgid "Message"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:728
+#: undergraduate_admission/models/student.py:732
 msgid "University Code"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:737
+#: undergraduate_admission/models/student.py:741
 msgid "Last Trial Date"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:738
+#: undergraduate_admission/models/student.py:742
 msgid "Count Trial"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:741
+#: undergraduate_admission/models/student.py:745
 msgid "Admission: Denied Students"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:765
+#: undergraduate_admission/models/student.py:769
 msgid "City"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:766
+#: undergraduate_admission/models/student.py:770
 msgid "Attended"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:769
+#: undergraduate_admission/models/student.py:773
 msgid "Admission: Distinguished Students"
 msgstr ""
 
-#: undergraduate_admission/models/student.py:792
+#: undergraduate_admission/models/student.py:796
 msgid "Orientation Week: Schedule"
 msgstr ""
 
@@ -2067,6 +2067,14 @@ msgstr ""
 
 #: undergraduate_admission/templates/floppyforms/clearable_input.html:6
 msgid "Re-upload file"
+msgstr ""
+
+#: undergraduate_admission/templates/session_security/dialog.html:6
+msgid "Your session is about to expire"
+msgstr ""
+
+#: undergraduate_admission/templates/session_security/dialog.html:7
+msgid "Click or type to extend your session."
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/_important_dates.html:6
@@ -2810,7 +2818,7 @@ msgid ""
 "%(count)d students were distributed amongst following members %(all)s ..."
 msgstr ""
 
-#: undergraduate_admission/views/admin_side_views.py:340
+#: undergraduate_admission/views/admin_side_views.py:309
 msgid "Verification submitted successfully!!!!"
 msgstr ""
 
