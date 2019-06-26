@@ -92,6 +92,7 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
         context = super(ChooseTarifiTimeSlot, self).get_context_data(**kwargs)
         sem = AdmissionSemester.get_active_semester()
         context['agreement'] = get_object_or_404(Agreement,
+                                                 status_message=self.admission_request.status_message,
                                                  agreement_type=Agreement.AgreementTypes.AWARENESS_WEEK_AGREEMENT,
                                                  semester=sem)
 
