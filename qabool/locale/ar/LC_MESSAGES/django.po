@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-25 10:24+0300\n"
-"PO-Revision-Date: 2019-06-25 10:26+0300\n"
+"PO-Revision-Date: 2019-06-26 10:05+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -2668,7 +2668,7 @@ msgstr "طبـــــاعة<br>خطاب القبول"
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:65
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents_no_steps.html:19
 msgid "Print Admission Letter and Medical Checkup Letter"
-msgstr "طباعة خطاب القبول والكشف الطبي"
+msgstr "طباعة الخطابات"
 
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:66
 #: undergraduate_admission/templates/undergraduate_admission/phase3/print_documents.html:73
