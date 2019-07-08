@@ -41,6 +41,7 @@ class HousingLandingPage(HousingBaseView, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HousingLandingPage, self).get_context_data(**kwargs)
+        context['admission_request'] = self.admission_request
         context['sent_requests'] = RoommateRequest.objects.filter(requesting_user=self.admission_request)
         context['received_requests'] = RoommateRequest.objects.filter(requested_user=self.admission_request)
         context['can_make_a_new_request'] = \
@@ -163,14 +164,14 @@ def check_remaining_rooms_threshold():
 class AcceptRequest(HousingBaseView, FormView):
     template_name = 'find_roommate/accept_request.html'
     form_class = AgreementForm
-    agreement_type = 'HOUSING_AGREEMENT'
+    agreement_type = Agreement.AgreementTypes.HOUSING_AGREEMENT
     next_url = reverse_lazy('find_roommate:housing_landing_page')
 
     def get_context_data(self, **kwargs):
         context = super(AcceptRequest, self).get_context_data(**kwargs)
         sem = AdmissionSemester.get_phase4_active_semester()
         context['agreement'] = get_object_or_404(Agreement, agreement_type=self.agreement_type, semester=sem)
-        context['items'] = context['agreement'].items.filter(show=True)
+        context['admission_request'] = self.admission_request
         return context
 
     def form_valid(self, form):
