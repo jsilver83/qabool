@@ -297,6 +297,7 @@ class HousingSearch(HousingBaseView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['admission_request'] = self.admission_request
         context['students_count'] = self.students.count()
         return context
 
