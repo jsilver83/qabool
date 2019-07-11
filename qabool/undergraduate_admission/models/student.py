@@ -583,7 +583,8 @@ class AdmissionRequest(models.Model):
 
     def can_print_docs(self):
         return (self.status_message in [RegistrationStatus.get_status_admitted_final(),
-                                        RegistrationStatus.get_status_admitted_non_saudi_final()]
+                                        RegistrationStatus.get_status_admitted_non_saudi_final(),
+                                        RegistrationStatus.get_status_admitted_transfer_final()]
                 and self.tarifi_week_attendance_date)
 
     def can_withdraw(self):
@@ -597,7 +598,9 @@ class AdmissionRequest(models.Model):
 
     def can_finish_phase3(self):
         return (self.status_message in [RegistrationStatus.get_status_admitted(),
-                                        RegistrationStatus.get_status_admitted_non_saudi()]
+                                        RegistrationStatus.get_status_admitted_non_saudi(),
+                                        RegistrationStatus.get_status_admitted_transfer()
+                                        ]
                 and not self.tarifi_week_attendance_date
                 and AdmissionSemester.get_phase3_active_semester(self))
 
@@ -641,7 +644,9 @@ class AdmissionRequest(models.Model):
 
     def can_access_phase3(self):
         return (self.status_message in [RegistrationStatus.get_status_admitted(),
-                                        RegistrationStatus.get_status_admitted_non_saudi()]
+                                        RegistrationStatus.get_status_admitted_non_saudi(),
+                                        RegistrationStatus.get_status_admitted_transfer()
+                                        ]
                 and AdmissionSemester.get_phase3_active_semester(self))
 
     def can_edit_contact_info(self):
