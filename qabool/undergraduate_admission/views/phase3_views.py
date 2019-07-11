@@ -133,8 +133,11 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
         if not self.admission_request.medical_report_print_date:
             self.admission_request.medical_report_print_date = timezone.now()
 
-        if self.admission_request.student_type in ['S', 'M']:
+        if (self.admission_request.student_type in ['S', 'M']
+                and self.admission_request.status_message == RegistrationStatus.get_status_admitted()):
             status = RegistrationStatus.get_status_admitted_final()
+        elif self.admission_request.status_message == RegistrationStatus.get_status_confirmed_transfer():
+            status = RegistrationStatus.get_status_admitted_transfer()
         else:
             status = RegistrationStatus.get_status_admitted_non_saudi_final()
 

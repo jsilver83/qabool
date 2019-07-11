@@ -193,8 +193,11 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
             if student.phase2_re_upload_date:
                 student.phase2_re_upload_date = None
         else:
-            if student.student_type in ('S', 'M'):
+            if student.status_message == RegistrationStatus.get_status_confirmed() and student.student_type in ('S', 'M'):
                 status = RegistrationStatus.get_status_admitted()
+                student.status_message = status
+            elif student.status_message == RegistrationStatus.get_status_confirmed_transfer():
+                status = RegistrationStatus.get_status_admitted_transfer()
                 student.status_message = status
             else:
                 status = RegistrationStatus.get_status_admitted_non_saudi()
@@ -215,7 +218,8 @@ class VerifyCommitteeForm(BaseCrispyForm, forms.ModelForm):
             # pass
             SMS.send_sms_docs_issue_message(student.mobile)
             SMS.send_sms_docs_issue_message(student.guardian_mobile)
-        elif verification_issues is None and student.student_type in ('S', 'M'):
+        elif (verification_issues is None and student.student_type in ('S', 'M')
+              and student.status_message == RegistrationStatus.get_status_admitted()):
             # pass
             SMS.send_sms_admitted(student.mobile)
             SMS.send_sms_admitted(student.guardian_mobile)
