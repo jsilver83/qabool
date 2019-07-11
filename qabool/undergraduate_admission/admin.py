@@ -26,6 +26,7 @@ class StudentResource(resources.ModelResource):
                   'third_name_en', 'family_name_en', 'high_school_name', 'high_school_system',
                   'high_school_province', 'admission_note', 'admission_note2', 'admission_note3', 'government_id_place',
                   'government_id_expiry', 'birth_place', 'high_school_city', 'phase2_start_date', 'phase2_end_date',
+                  'phase3_start_date', 'phase3_end_date',
                   'eligible_for_housing', 'high_school_gpa_student_entry', 'student_full_name_ar',
                   'student_full_name_en', 'gender', 'verification_committee_member',
                   'email', 'mobile', 'nationality', 'guardian_mobile', 'student_notes', )

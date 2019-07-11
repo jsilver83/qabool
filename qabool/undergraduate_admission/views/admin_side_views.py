@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q, F, Case, When, Value, CharField
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -374,13 +374,58 @@ class QiyasDataUpdate(AdminBaseView, TemplateView):
         return HttpResponse(json.dumps(serialized_obj), content_type='application/json; charset=utf-8')
 
 
-class SendMassSMSView(AdminBaseView, FormView):
-    template_name = 'undergraduate_admission/admin/send_sms_notification.html'
-    form_class = SendMassSMSForm
+class TransferImportView(AdminBaseView, FormView):
+    template_name = 'undergraduate_admission/admin/transfer_import.html'
+    form_class = TransferImportForm
 
     def form_valid(self, form):
-        students_criteria = form.cleaned_data
-        print(students_criteria)
+        semester = get_object_or_404(AdmissionSemester, pk=form.cleaned_data.get('semester', 0))
+        status_message = get_object_or_404(RegistrationStatus, pk=form.cleaned_data.get('status_message', 0))
+        transfer_data = form.cleaned_data.get('transfer_data')
+
+        users_created = 0
+        requests_created = 0
+        already_existing_users = []
+        already_existing_requests = []
+        for line in transfer_data.splitlines():
+            # line = line.strip()
+            if line and len(line.split()) == 3:
+                student_id = line.split()[0]
+                mobile = line.split()[1]
+                nationality = line.split()[2]
+
+                if User.objects.filter(username=student_id).count() == 0:
+                    password = User.objects.make_random_password()
+                    user = User.objects.create_user(student_id, None, password)
+                    users_created += 1
+                else:
+                    user = User.objects.filter(username=student_id).first()
+                    already_existing_users.append(user)
+
+                request, created = AdmissionRequest.objects.get_or_create(user=user,
+                                                                          semester=semester)
+
+                if created:
+                    requests_created += 1
+                    request.nationality = nationality
+                    request.mobile = mobile
+                    request.status_message = status_message
+                    request.save()
+                else:
+                    already_existing_requests.append(request)
+
+        success_message = 'Import done successfully. {} new requests were created. {} new users were created.'\
+            .format(requests_created, users_created)
+
+        if already_existing_requests:
+            success_message = '{} {} are already existing requests'.format(success_message, already_existing_requests)
+
+        if already_existing_users:
+            success_message = '{} {} are already existing users'.format(success_message, already_existing_users)
+
+        messages.success(self.request, success_message)
+
+        return redirect(reverse_lazy('undergraduate_admission:transfer_import'))
 
 
 def get_student_record_serialized(student, change_status=False, overwrite=False):

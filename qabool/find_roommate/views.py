@@ -10,13 +10,17 @@ from django.views.generic import FormView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from django.views.generic import View
+from django_filters.views import FilterView
 
-from find_roommate.forms import HousingInfoUpdateForm, HousingSearchForm, RoommateRequestForm
-from find_roommate.models import HousingUser, RoommateRequest, Room
+from shared_app.base_forms import BaseCrispyForm
+from .filters import HousingUserFilter
+from .forms import HousingInfoUpdateForm, HousingSearchForm, RoommateRequestForm
+from .models import HousingUser, RoommateRequest, Room
 from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from undergraduate_admission.models import RegistrationStatus, AdmissionSemester, Agreement, AdmissionRequest
 from undergraduate_admission.utils import SMS
+
 
 allowed_statuses_for_housing = [RegistrationStatus.get_status_admitted_final(),
                                 RegistrationStatus.get_status_admitted_non_saudi_final(),
@@ -277,97 +281,19 @@ class HousingInfoUpdate(HousingBaseView, UpdateView):
         return redirect('undergraduate_admission:student_area')
 
 
-class HousingSearch(HousingBaseView, FormView):
+class HousingSearch(HousingBaseView, FilterView):
+    filterset_class = HousingUserFilter
     template_name = 'find_roommate/housinguser_list.html'
-    form_class = HousingSearchForm
-    students = None
-
-    def dispatch(self, request, *args, **kwargs):
-        self.students = HousingUser.objects \
-            .filter(user__status_message__in=allowed_statuses_for_housing,
-                    searchable=True,
-                    user__eligible_for_housing=True) \
-            .exclude(user__pk__in=RoommateRequest.objects.
-                     filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
-                     .values_list('requesting_user__pk', flat=True)) \
-            .exclude(user__pk__in=RoommateRequest.objects.
-                     filter(status=RoommateRequest.RequestStatuses.ACCEPTED)
-                     .values_list('requested_user__pk', flat=True))
-        return super().dispatch(request, *args, **kwargs)
+    paginate_by = 10
+    strict = False
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context['search_form'] = BaseCrispyForm
         context['admission_request'] = self.admission_request
-        context['students_count'] = self.students.count()
+
         return context
-
-    def get(self, request, *args, **kwargs):
-        # TODO: fix it using django-filters
-        form = HousingSearchForm(request.GET)
-        return super().get(request, *args, **kwargs)
-
-
-# @login_required()
-# @user_passes_test(is_eligible_for_roommate_search)
-# def housing_search(request):
-#
-#     is_search = False
-#
-#     if request.GET:
-#         form = HousingSearchForm(request.GET)
-#         if form.is_valid():
-#             try:
-#                 high_school_city = request.GET['high_school_city']
-#                 if high_school_city:
-#                     students = students.filter(
-#                         user__high_school_city__contains=high_school_city)
-#
-#                 high_school_name = request.GET['high_school_name']
-#                 if high_school_name:
-#                     students = students.filter(
-#                         user__high_school_name__contains=high_school_name)
-#
-#                 light = request.GET['light']
-#                 if light:
-#                     students = students.filter(light=light)
-#
-#                 room_temperature = request.GET['room_temperature']
-#                 if room_temperature:
-#                     students = students.filter(room_temperature=room_temperature)
-#
-#                 visits = request.GET['visits']
-#                 if visits:
-#                     students = students.filter(visits=visits)
-#
-#                 sleeping = request.GET['sleeping']
-#                 if sleeping:
-#                     students = students.filter(sleeping=sleeping)
-#
-#                 is_search = True
-#
-#             except MultiValueDictKeyError:
-#                 pass
-#
-#     else:
-#         form = HousingSearchForm()
-#
-#     students_count = students.count()
-#     paginator = Paginator(students, 10)
-#
-#     page = request.GET.get('page')
-#     try:
-#         objects = paginator.page(page)
-#     except PageNotAnInteger:
-#         # If page is not an integer, deliver first page.
-#         objects = paginator.page(1)
-#     except EmptyPage:
-#         # If page is out of range (e.g. 9999), deliver last page of results.
-#         objects = paginator.page(paginator.num_pages)
-#
-#     return render(request, 'find_roommate/housinguser_list.html', {'page_obj': objects,
-#                                                                    'form': form,
-#                                                                    'students_count': students_count,
-#                                                                    'is_search': is_search, })
 
 
 class BaseHousingLetter(HousingBaseView, TemplateView):
