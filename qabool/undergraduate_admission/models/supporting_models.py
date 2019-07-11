@@ -234,6 +234,10 @@ class RegistrationStatus(models.Model):
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'NON-SAUDI')
 
     @staticmethod
+    def get_status_admitted_transfer():
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'TRANSFER')
+
+    @staticmethod
     def get_status_admitted_final():
         return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'FINAL')
 
@@ -273,15 +277,16 @@ class RegistrationStatus(models.Model):
     @staticmethod
     def init_statuses():
         RegistrationStatus.get_status_applied()
-        RegistrationStatus.get_status_partially_admitted_transfer()
         RegistrationStatus.get_status_applied_non_saudi()
         RegistrationStatus.get_status_old_high_school()
         RegistrationStatus.get_status_girls()
         RegistrationStatus.get_status_withdrawn()
         RegistrationStatus.get_status_partially_admitted()
         RegistrationStatus.get_status_partially_admitted_non_saudi()
+        RegistrationStatus.get_status_partially_admitted_transfer()
         RegistrationStatus.get_status_admitted()
         RegistrationStatus.get_status_admitted_non_saudi()
+        RegistrationStatus.get_status_admitted_transfer()
         RegistrationStatus.get_status_admitted_final()
         RegistrationStatus.get_status_admitted_transfer_final()
         RegistrationStatus.get_status_admitted_non_saudi_final()

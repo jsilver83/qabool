@@ -234,7 +234,7 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
 
     def form_valid(self, form):
         if self.admission_request.status_message == RegistrationStatus.get_status_partially_admitted_transfer():
-            reg_msg = RegistrationStatus.get_status_admitted_transfer_final()
+            reg_msg = RegistrationStatus.get_status_confirmed_transfer()
         elif self.admission_request.student_type == 'N':
             reg_msg = RegistrationStatus.get_status_confirmed_non_saudi()
         else:
@@ -246,7 +246,9 @@ class UploadDocumentsView(BaseStudentInfoUpdateView):
 
         if self.admission_request.status_message in [
             RegistrationStatus.get_status_confirmed_non_saudi(),
-            RegistrationStatus.get_status_confirmed()]:
+            RegistrationStatus.get_status_confirmed(),
+            RegistrationStatus.get_status_confirmed_transfer(),
+        ]:
             SMS.send_sms_confirmed(self.admission_request.mobile)
 
         if not saved_user:

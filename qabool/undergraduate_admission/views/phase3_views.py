@@ -147,5 +147,9 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
         context = super(AdmissionLetters, self).get_context_data(**kwargs)
         context['user'] = self.admission_request
         context['show_admission_letter'] = self.admission_request.student_type in ['S', 'M']
+        '''
+        work on progress - Bassam
+        '''
+        context['show_medical_report'] = self.admission_request.status_message in ['']
 
         return context
