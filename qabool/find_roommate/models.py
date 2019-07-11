@@ -22,6 +22,9 @@ class HousingUser(models.Model):
                                              verbose_name=_('Interests And Hobbies'))
     searchable = models.NullBooleanField(verbose_name=_('Searchable'))
 
+    class Meta:
+        ordering = ('user__first_name_ar', )
+
     def __str__(self):
         return str(self.user)
 
