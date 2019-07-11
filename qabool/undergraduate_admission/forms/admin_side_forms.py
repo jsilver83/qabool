@@ -1,16 +1,14 @@
 import base64
-
-from django import forms
 import re
 
+from django import forms
 from django.contrib.auth import get_user_model
 from django.forms import CheckboxSelectMultiple
+from django.utils.translation import ugettext_lazy as _
 
 from shared_app.base_forms import BaseCrispyForm
 from shared_app.fields import GroupedModelMultipleChoiceField
 from ..models import *
-from django.utils.translation import ugettext_lazy as _
-
 from ..utils import SMS, get_fields_for_re_upload
 
 User = get_user_model()
@@ -258,16 +256,17 @@ class StudentGenderForm(forms.ModelForm):
             return instance
 
 
-class SendMassSMSForm(forms.Form):
+class TransferImportForm(BaseCrispyForm, forms.Form):
     semester = forms.IntegerField(required=True, label=_('Admission Semester'))
     status_message = forms.IntegerField(required=True, label=_('Message Status'))
-    eligible_for_housing = forms.NullBooleanField(label=_('Eligible For Housing'))
-    sms_message = forms.CharField(widget=forms.Textarea,
-                                  max_length=70,
-                                  required=True, label=_('SMS Message To Be Sent'))
+    transfer_data = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': '[Government ID] [Mobile] [Nationality Code(e.g. SA)]\n[Government ID] [Mobile] [National'
+                              'ity Code(e.g. SA)]\n[Government ID] [Mobile] [Nationality Code(e.g. SA)]',
+               'style': 'direction: ltr'}
+    ),required=True, label=_('Transfer Data'))
 
     def __init__(self, *args, **kwargs):
-        super(SendMassSMSForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['semester'].widget = forms.Select(choices=AdmissionSemester.get_semesters_choices())
         self.fields['status_message'].widget = \
             forms.Select(choices=RegistrationStatus.get_registration_status_choices())
