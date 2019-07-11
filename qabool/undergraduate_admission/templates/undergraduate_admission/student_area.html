@@ -94,7 +94,7 @@
 					</div>
 				{% endif %}
 
-				{% if admission_request.can_finish_phase3 %}
+				{% if admission_request.can_access_phase3 %}
 					<a href="{% url 'undergraduate_admission:student_agreement_1' %}" class="btn btn-success btn-lg btn-block">
 						<i class="fa fa-admission_request" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 				{% endif %}

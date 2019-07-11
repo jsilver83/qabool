@@ -596,14 +596,6 @@ class AdmissionRequest(models.Model):
     def can_print_withdrawal_letter(self):
         return self.get_student_phase() == RegistrationStatus.GeneralStatuses.WITHDRAWN
 
-    def can_finish_phase3(self):
-        return (self.status_message in [RegistrationStatus.get_status_admitted(),
-                                        RegistrationStatus.get_status_admitted_non_saudi(),
-                                        RegistrationStatus.get_status_admitted_transfer()
-                                        ]
-                and not self.tarifi_week_attendance_date
-                and AdmissionSemester.get_phase3_active_semester(self))
-
     def has_pic(self):
         return self.get_student_phase() in [RegistrationStatus.GeneralStatuses.PARTIALLY_ADMITTED,
                                             RegistrationStatus.GeneralStatuses.ADMITTED]
@@ -647,7 +639,20 @@ class AdmissionRequest(models.Model):
                                         RegistrationStatus.get_status_admitted_non_saudi(),
                                         RegistrationStatus.get_status_admitted_transfer()
                                         ]
+                and not self.tarifi_week_attendance_date
                 and AdmissionSemester.get_phase3_active_semester(self))
+
+    def can_print_admission_letter(self):
+        return (self.status_message == RegistrationStatus.get_status_admitted_final()
+                and self.tarifi_week_attendance_date
+                and self.kfupm_id)
+
+    def can_print_medical_report(self):
+        return (self.status_message in
+                [RegistrationStatus.get_status_admitted_final(),
+                 RegistrationStatus.get_status_admitted_non_saudi_final(),
+                 RegistrationStatus.get_status_admitted_transfer_final()]
+                and self.tarifi_week_attendance_date)
 
     def can_edit_contact_info(self):
         return self.get_student_phase() not in [
