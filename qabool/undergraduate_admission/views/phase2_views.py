@@ -387,11 +387,6 @@ class TransferView(SuccessMessageMixin, FormView):
     success_url = reverse_lazy('undergraduate_admission:login')
     success_message = _('Your transfer request was approved')
 
-    def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super(TransferView, self).get_form_kwargs()
-        kwargs['user'] = None
-        return kwargs
-
     def form_valid(self, form):
         form.save()
         return super(TransferView, self).form_valid(form)
