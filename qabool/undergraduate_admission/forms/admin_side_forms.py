@@ -260,8 +260,11 @@ class TransferImportForm(BaseCrispyForm, forms.Form):
     semester = forms.IntegerField(required=True, label=_('Admission Semester'))
     status_message = forms.IntegerField(required=True, label=_('Message Status'))
     transfer_data = forms.CharField(widget=forms.Textarea(
-        attrs={'placeholder': '[Government ID] [Mobile] [Nationality Code(e.g. SA)]\n[Government ID] [Mobile] [National'
-                              'ity Code(e.g. SA)]\n[Government ID] [Mobile] [Nationality Code(e.g. SA)]',
+        attrs={'placeholder': '[Government ID] [KFUPM ID] [Mobile] [Nationality Code(e.g. SA)]\n'
+                              '[Government ID] [KFUPM ID] [Mobile] [Nationality Code(e.g. SA)]\n'
+                              '[Government ID] [KFUPM ID] [Mobile] [Nationality Code(e.g. SA)]\n'
+                              '[Government ID] [KFUPM ID] [Mobile] [Nationality Code(e.g. SA)]\n'
+                              '[Government ID] [KFUPM ID] [Mobile] [Nationality Code(e.g. SA)]\n',
                'style': 'direction: ltr'}
     ),required=True, label=_('Transfer Data'))
 

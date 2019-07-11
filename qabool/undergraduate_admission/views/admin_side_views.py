@@ -389,10 +389,11 @@ class TransferImportView(AdminBaseView, FormView):
         already_existing_requests = []
         for line in transfer_data.splitlines():
             # line = line.strip()
-            if line and len(line.split()) == 3:
+            if line and len(line.split()) == 4:
                 student_id = line.split()[0]
-                mobile = line.split()[1]
-                nationality = line.split()[2]
+                kfupm_id = line.split()[1]
+                mobile = line.split()[2]
+                nationality = line.split()[3]
 
                 if User.objects.filter(username=student_id).count() == 0:
                     password = User.objects.make_random_password()
@@ -407,6 +408,7 @@ class TransferImportView(AdminBaseView, FormView):
 
                 if created:
                     requests_created += 1
+                    request.kfupm_id = kfupm_id
                     request.nationality = nationality
                     request.mobile = mobile
                     request.status_message = status_message
