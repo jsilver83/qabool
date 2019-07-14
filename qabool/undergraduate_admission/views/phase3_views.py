@@ -1,9 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -14,7 +11,6 @@ from shared_app.base_views import StudentMixin
 from undergraduate_admission.forms.phase1_forms import AgreementForm
 from undergraduate_admission.forms.phase3_forms import TarifiTimeSlotForm
 from undergraduate_admission.models import AdmissionSemester, Agreement, RegistrationStatus, KFUPMIDsPool
-from undergraduate_admission.utils import SMS
 
 
 class Phase3BaseView(StudentMixin):
@@ -133,16 +129,22 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
         if not self.admission_request.medical_report_print_date:
             self.admission_request.medical_report_print_date = timezone.now()
 
-        if (self.admission_request.student_type in ['S', 'M']
-                and self.admission_request.status_message == RegistrationStatus.get_status_admitted()):
-            status = RegistrationStatus.get_status_admitted_final()
-        elif self.admission_request.status_message == RegistrationStatus.get_status_confirmed_transfer():
-            status = RegistrationStatus.get_status_admitted_transfer()
-        else:
-            status = RegistrationStatus.get_status_admitted_non_saudi_final()
+        if self.admission_request.status_message in [RegistrationStatus.get_status_admitted_final(),
+                                                     RegistrationStatus.get_status_admitted_transfer_final(),
+                                                     RegistrationStatus.get_status_admitted_non_saudi_final()]:
+            pass
 
-        self.admission_request.status_message = status
-        self.admission_request.save()
+        else:
+            if (self.admission_request.student_type in ['S', 'M']
+                    and self.admission_request.status_message == RegistrationStatus.get_status_admitted()):
+                status = RegistrationStatus.get_status_admitted_final()
+            elif self.admission_request.status_message == RegistrationStatus.get_status_confirmed_transfer():
+                status = RegistrationStatus.get_status_admitted_transfer()
+            else:
+                status = RegistrationStatus.get_status_admitted_non_saudi_final()
+
+            self.admission_request.status_message = status
+            self.admission_request.save()
 
         return super(AdmissionLetters, self).dispatch(request, *args, **kwargs)
 
