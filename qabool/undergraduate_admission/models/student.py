@@ -527,6 +527,19 @@ class AdmissionRequest(models.Model):
         except:
             return RegistrationStatus.GeneralStatuses.REJECTED
 
+    def _get_translated_nationality_name(self, lang):
+        current_lang = translation.get_language()
+        translation.activate(lang)
+        translated_nationality = self.nationality.name
+        translation.activate(current_lang)
+        return translated_nationality
+
+    def arabic_nationality(self):
+        return self._get_translated_nationality_name('ar')
+
+    def english_nationality(self):
+        return self._get_translated_nationality_name('en')
+
     @property
     def student_type(self):
         student_type = 'S'

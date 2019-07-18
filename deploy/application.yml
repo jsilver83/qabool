@@ -107,6 +107,11 @@
         sms_gateway_app_sid: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/operations/apps/qabool/sms_gateway_app_sid:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
       connection: local
 
+    - name: Retrieve smart-card password from Vault
+      set_fact:
+        smart_card_password: "{{ lookup('hashi_vault', 'secret=secret/{{ env }}/operations/apps/qabool/smart_card_password:value token={{ vault_access_token }} url={{ vault_url }} cacert={{ ssl_cert_path }}') }}"
+      connection: local
+
     - name: Generate local settings
       set_fact:
         django_project_local_settings: "{{ lookup('template', 'local_settings.py.j2') }}"
