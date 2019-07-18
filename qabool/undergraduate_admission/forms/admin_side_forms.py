@@ -277,3 +277,14 @@ class TransferImportForm(BaseCrispyForm, forms.Form):
         self.fields['semester'].widget = forms.Select(choices=AdmissionSemester.get_semesters_choices())
         self.fields['status_message'].widget = \
             forms.Select(choices=RegistrationStatus.get_registration_status_choices())
+
+
+class SmartCardExportForm(BaseCrispyForm, forms.Form):
+    semester = forms.IntegerField(required=True, label=_('Admission Semester'))
+    status_message = forms.IntegerField(required=True, label=_('Message Status'))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['semester'].widget = forms.Select(choices=AdmissionSemester.get_semesters_choices())
+        self.fields['status_message'].widget = \
+            forms.Select(choices=RegistrationStatus.get_registration_status_choices())
