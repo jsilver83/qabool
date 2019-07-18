@@ -1,0 +1,41 @@
+{% extends 'undergraduate_admission/admin/base_admin_area.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block subcontent %}
+	<div class="row">
+		<form method="post">
+			{% csrf_token %}
+			{% crispy form %}
+			<button onclick="return confirm('{% trans 'Are you sure?' %}');" class="btn btn-primary {% trans 'btn-align' %}">
+				<i class="fa fa-plus"></i> {% trans 'Export Data' %}</button>
+		</form>
+	</div>
+	{% if exported_students %}
+	<br><br>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>{% trans "KFUPM ID" %}</th>
+						<th>{% trans "Government ID" %}</th>
+						<th>{% trans "Full Name" %}</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for student in exported_students %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ student.kfupm_id }}</td>
+						<td>{{ student.user.username }}</td>
+						<td>{{ student }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{% endif %}
+{% endblock subcontent %}
