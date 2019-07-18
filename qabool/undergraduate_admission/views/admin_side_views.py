@@ -1,36 +1,36 @@
-import logging
 import json
+import logging
 import time
+from datetime import datetime
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q, F, Case, When, Value, CharField
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView, View
-from zeep import Client
+from zeep import Client, Settings
 from zeep.transports import Transport
+from zeep.wsse import UsernameToken
 
 from undergraduate_admission.filters import AdmissionRequestListFilter
 from undergraduate_admission.forms.admin_side_forms import *
 from undergraduate_admission.models import AdmissionSemester, GraduationYear, RegistrationStatus
 from undergraduate_admission.utils import try_parse_float, concatenate_names
 
-
 logger = logging.getLogger(__name__)
 
 YESSER_MOE_WSDL = settings.YESSER_MOE_WSDL
 YESSER_MOHE_WSDL = settings.YESSER_MOHE_WSDL
 YESSER_QIYAS_WSDL = settings.YESSER_QIYAS_WSDL
+SMART_CARD_WSDL = settings.SMART_CARD_WSDL
 BASE_DIR = settings.BASE_DIR
 
 # setting soap client requests timeout
@@ -428,6 +428,81 @@ class TransferImportView(AdminBaseView, FormView):
         messages.success(self.request, success_message)
 
         return redirect(reverse_lazy('undergraduate_admission:transfer_import'))
+
+
+class SmartCardExportView(AdminBaseView, FormView):
+    template_name = 'undergraduate_admission/admin/smart-card-export.html'
+    form_class = SmartCardExportForm
+
+    def form_valid(self, form, **kwargs):
+        semester = get_object_or_404(AdmissionSemester, pk=form.cleaned_data.get('semester', 0))
+        status_message = get_object_or_404(RegistrationStatus, pk=form.cleaned_data.get('status_message', 0))
+
+        zeep_settings = Settings(strict=False, raw_response=False)
+        client = Client(
+            SMART_CARD_WSDL, transport=transport,
+            wsse=UsernameToken(settings.SMART_CARD_USERNAME, settings.SMART_CARD_PASSWORD),
+            settings=zeep_settings,
+        )
+
+        students_to_exported = AdmissionRequest.objects.filter(semester=semester, status_message=status_message)
+        total_students = students_to_exported.count()
+        exported_students = []
+        exported_students_count = 0
+
+        for student in students_to_exported:
+            residency_type = 'OnCampus' if student.eligible_for_housing else 'OffCampus'
+            gender = 'Male' if student.gender == AdmissionRequest.Gender.MALE else 'Female'
+
+            personal_picture_as_bytes = None
+            if student.personal_picture:
+                with student.personal_picture.open("rb") as image:
+                    f = image.read()
+                    personal_picture_as_bytes = bytearray(f)
+
+            try:
+                client.service.NewToken(
+                    TokenType='Student',
+                    GovID=student.user.username,
+                    KfupmID=student.kfupm_id,
+                    LastNameEng=student.family_name_en,
+                    FirstNamesEng=student.first_name_en,
+                    NameArab=student.get_student_full_name_ar(),
+                    NationalityArab=student.arabic_nationality(),
+                    NationalityEng=student.english_nationality(),
+                    BirthDateEnglish=student.birthday,
+                    BirthDateArabic=student.birthday_ah,
+                    CityOfBirthEng=student.birth_place,
+                    CityOfBirthArab=student.birth_place,
+                    BloodTypeEng=student.blood_type,
+                    OfficePhone=student.guardian_mobile,
+                    PhysicalDisabled=student.is_disabled,
+                    Email=student.user.email,
+                    MobilePhone=student.mobile,
+                    DepartmentUnitPosition='Undecided Major',
+                    ResidencyType=residency_type,
+                    Gender=gender,
+                    StartDate=datetime.today(),
+                    EndDate=None,
+                    StudentCategory='Preparatory',
+                    HomePhone=student.guardian_phone,
+                    DependentSequenceNumber=0,
+                    Photo=personal_picture_as_bytes
+                )
+                exported_students.append(student)
+                exported_students_count += 1
+            except Exception as e:
+                pass
+
+        success_message = '{} out of {} got exported to Smart-card server successfully'.format(
+            exported_students_count, total_students
+        )
+        messages.success(self.request, success_message)
+
+        context = self.get_context_data(**kwargs)
+        context['exported_students'] = exported_students
+
+        return self.render_to_response(context)
 
 
 def get_student_record_serialized(student, change_status=False, overwrite=False):
