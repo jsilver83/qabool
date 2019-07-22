@@ -446,8 +446,19 @@ class SmartCardExportView(AdminBaseView, FormView):
         )
 
         students_to_exported = AdmissionRequest.objects.filter(semester=semester, status_message=status_message)
+
+        kfupm_ids_text = form.cleaned_data.get('kfupm_ids')
+        if kfupm_ids_text:
+            kfupm_ids = re.split(',|, | ,| |\n', kfupm_ids_text)
+            kfupm_ids = [x for x in kfupm_ids if len(x)]
+            students_to_exported = students_to_exported.filter(kfupm_id__in=kfupm_ids)
+            print(kfupm_ids)
+
+        print(students_to_exported)
+
         total_students = students_to_exported.count()
         exported_students = []
+        failed_students = []
         exported_students_count = 0
 
         for student in students_to_exported:
@@ -492,7 +503,12 @@ class SmartCardExportView(AdminBaseView, FormView):
                 exported_students.append(student)
                 exported_students_count += 1
             except Exception as e:
-                pass
+                failed_students.append({'student': student, 'error': str(e)})
+                logger.exception(
+                    "Something bad happened while sending student {} data to smart-card. Error: {}".format(
+                        student, str(e)
+                    )
+                )
 
         success_message = '{} out of {} got exported to Smart-card server successfully'.format(
             exported_students_count, total_students
@@ -501,6 +517,7 @@ class SmartCardExportView(AdminBaseView, FormView):
 
         context = self.get_context_data(**kwargs)
         context['exported_students'] = exported_students
+        context['failed_students'] = failed_students
 
         return self.render_to_response(context)
 
@@ -694,9 +711,8 @@ def get_student_record_serialized(student, change_status=False, overwrite=False)
         final_data['tahsili'] = student.tahsili_score
         final_data['log'] = ''  # special_cases_log
         final_data['error'] = False
-    except:
-        logger.exception("Something bad happened while syncing student %".format(student))
-        pass
+    except Exception as e:
+        logger.exception("Something bad happened while syncing student {}. Error: {}.".format(student, str(e)))
 
     return final_data
 

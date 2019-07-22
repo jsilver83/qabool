@@ -12,30 +12,61 @@
 		</form>
 	</div>
 	{% if exported_students %}
-	<br><br>
-	<div class="row">
-		<div class="col-sm-12">
-			<table class="table table-condensed table-bordered">
-				<thead>
+		<br><br>
+		<h2>{% trans "Exported Students" %}</h2><hr>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-condensed table-bordered">
+					<thead>
 					<tr>
 						<th>#</th>
 						<th>{% trans "KFUPM ID" %}</th>
 						<th>{% trans "Government ID" %}</th>
 						<th>{% trans "Full Name" %}</th>
 					</tr>
-				</thead>
-				<tbody>
-				{% for student in exported_students %}
-					<tr>
-						<td>{{ forloop.counter }}</td>
-						<td>{{ student.kfupm_id }}</td>
-						<td>{{ student.user.username }}</td>
-						<td>{{ student }}</td>
-					</tr>
-				{% endfor %}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+					{% for student in exported_students %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ student.kfupm_id }}</td>
+							<td>{{ student.user.username }}</td>
+							<td>{{ student }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
+	{% endif %}
+	{% if failed_students %}
+		<br><br>
+		<h2>{% trans "Failed Exports" %}</h2><hr>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-condensed table-bordered">
+					<thead>
+					<tr>
+						<th>#</th>
+						<th>{% trans "KFUPM ID" %}</th>
+						<th>{% trans "Government ID" %}</th>
+						<th>{% trans "Full Name" %}</th>
+						<th>{% trans "Error" %}</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for fail in failed_students %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ fail.student.kfupm_id }}</td>
+							<td>{{ fail.student.user.username }}</td>
+							<td>{{ fail.student }}</td>
+							<td>{{ fail.error }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
 	{% endif %}
 {% endblock subcontent %}
