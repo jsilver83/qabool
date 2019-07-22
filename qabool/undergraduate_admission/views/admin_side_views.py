@@ -694,9 +694,8 @@ def get_student_record_serialized(student, change_status=False, overwrite=False)
         final_data['tahsili'] = student.tahsili_score
         final_data['log'] = ''  # special_cases_log
         final_data['error'] = False
-    except:
-        logger.exception("Something bad happened while syncing student %".format(student))
-        pass
+    except Exception as e:
+        logger.exception("Something bad happened while syncing student {}. Error: {}.".format(student, str(e)))
 
     return final_data
 
