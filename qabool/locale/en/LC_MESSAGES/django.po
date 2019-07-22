@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-18 16:52+0300\n"
+"POT-Creation-Date: 2019-07-22 16:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,8 @@ msgstr ""
 #: undergraduate_admission/models/student.py:150
 #: undergraduate_admission/models/student.py:720
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:19
-#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:22
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:23
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:51
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:75
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:77
 msgid "KFUPM ID"
@@ -388,7 +389,8 @@ msgstr ""
 #: undergraduate_admission/templates/undergraduate_admission/_student_info_commands.html:16
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:25
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:25
-#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:23
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:24
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:52
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:22
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:50
@@ -907,6 +909,14 @@ msgstr ""
 
 #: undergraduate_admission/forms/admin_side_forms.py:273
 msgid "Transfer Data"
+msgstr ""
+
+#: undergraduate_admission/forms/admin_side_forms.py:285
+msgid "KFUPM IDs"
+msgstr ""
+
+#: undergraduate_admission/forms/admin_side_forms.py:286
+msgid "comma-separated or space-separated (OPTIONAL)"
 msgstr ""
 
 #: undergraduate_admission/forms/general_forms.py:24
@@ -1787,7 +1797,8 @@ msgid "Issues With Uploaded Docs"
 msgstr ""
 
 #: undergraduate_admission/models/student.py:492
-#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:24
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:25
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:53
 msgid "Full Name"
 msgstr ""
 
@@ -2176,6 +2187,18 @@ msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:11
 msgid "Export Data"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:16
+msgid "Exported Students"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:44
+msgid "Failed Exports"
+msgstr ""
+
+#: undergraduate_admission/templates/undergraduate_admission/admin/smart-card-export.html:54
+msgid "Error"
 msgstr ""
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/student_gender.html:52
