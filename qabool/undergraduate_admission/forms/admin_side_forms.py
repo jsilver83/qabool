@@ -282,6 +282,9 @@ class TransferImportForm(BaseCrispyForm, forms.Form):
 class SmartCardExportForm(BaseCrispyForm, forms.Form):
     semester = forms.IntegerField(required=True, label=_('Admission Semester'))
     status_message = forms.IntegerField(required=True, label=_('Message Status'))
+    kfupm_ids = forms.CharField(required=False, label=_('KFUPM IDs'), max_length=1000,
+                                help_text=_('comma-separated or space-separated (OPTIONAL)'),
+                                widget=forms.Textarea(attrs={'style': 'direction: ltr'}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
