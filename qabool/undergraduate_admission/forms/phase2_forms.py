@@ -410,15 +410,6 @@ class TransferForm(BaseCrispyForm, forms.Form):
         username = parse_non_standard_numerals(self.cleaned_data.get("username"))
         return username
 
-    def save(self, commit=True):
-        # admission_request = super(TransferForm, self).save(commit=False)
-        self.admission_request.student_notes = self.cleaned_data.get('student_notes', '')
-        password = self.cleaned_data["password1"]
-        self.admission_request.user.set_password(password)
-        if commit:
-            self.admission_request.save()
-        return self.admission_request
-
 
 class CompareNamesForm(Phase2GenericForm):
     class Meta:
