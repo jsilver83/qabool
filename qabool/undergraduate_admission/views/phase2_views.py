@@ -388,5 +388,9 @@ class TransferView(SuccessMessageMixin, FormView):
     success_message = _('Your transfer request was approved')
 
     def form_valid(self, form):
-        form.save()
+        form.admission_request.student_notes = form.cleaned_data.get('student_notes', '')
+        password = form.cleaned_data["password1"]
+        form.admission_request.save()
+        form.admission_request.user.set_password(password)
+        form.admission_request.user.save()
         return super(TransferView, self).form_valid(form)
