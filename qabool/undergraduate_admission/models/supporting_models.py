@@ -235,7 +235,7 @@ class RegistrationStatus(models.Model):
 
     @staticmethod
     def get_status_admitted_transfer():
-        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'TRANSFER')
+        return RegistrationStatus.get_status(RegistrationStatus.GeneralStatuses.ADMITTED, 'ADMITTED-TRANSFER')
 
     @staticmethod
     def get_status_admitted_final():
