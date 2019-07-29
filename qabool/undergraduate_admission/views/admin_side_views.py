@@ -403,30 +403,35 @@ class TransferImportView(AdminBaseView, FormView):
                     user = User.objects.filter(username=student_id).first()
                     already_existing_users.append(user)
 
-                request, created = AdmissionRequest.objects.get_or_create(user=user,
+                admission_request, created = AdmissionRequest.objects.get_or_create(user=user,
                                                                           semester=semester)
+
+                admission_request.kfupm_id = kfupm_id
+                admission_request.nationality = nationality
+                admission_request.mobile = mobile
+                admission_request.status_message = status_message
+                admission_request.save()
+
+                get_student_record_serialized(admission_request,
+                                              change_status=False,
+                                              overwrite=True)
 
                 if created:
                     requests_created += 1
-                    request.kfupm_id = kfupm_id
-                    request.nationality = nationality
-                    request.mobile = mobile
-                    request.status_message = status_message
-                    request.save()
                 else:
-                    already_existing_requests.append(request)
+                    already_existing_requests.append(admission_request)
 
-        success_message = 'Import done successfully. {} new requests were created. {} new users were created.'\
+        success_message = 'Import done successfully. {} new requests were created. {} new users were created.' \
             .format(requests_created, users_created)
 
         if already_existing_requests:
-            success_message = '{} {} are already existing requests'.format(success_message, already_existing_requests)
+            success_message = '{} {} are already existing requests'.format(
+                success_message, already_existing_requests)
 
         if already_existing_users:
             success_message = '{} {} are already existing users'.format(success_message, already_existing_users)
 
         messages.success(self.request, success_message)
-
         return redirect(reverse_lazy('undergraduate_admission:transfer_import'))
 
 

@@ -100,7 +100,6 @@ class ChooseTarifiTimeSlot(Phase3BaseView, UpdateView):
     def form_valid(self, form):
         saved = form.save(commit=False)
         saved.phase3_submit_date = timezone.now()
-
         # if self.request.user.student_type in ['S', 'M']:
         kfupm_id = KFUPMIDsPool.get_next_available_id(self.admission_request)
 
@@ -138,8 +137,8 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
             if (self.admission_request.student_type in ['S', 'M']
                     and self.admission_request.status_message == RegistrationStatus.get_status_admitted()):
                 status = RegistrationStatus.get_status_admitted_final()
-            elif self.admission_request.status_message == RegistrationStatus.get_status_confirmed_transfer():
-                status = RegistrationStatus.get_status_admitted_transfer()
+            elif self.admission_request.status_message == RegistrationStatus.get_status_admitted_transfer():
+                status = RegistrationStatus.get_status_admitted_transfer_final()
             else:
                 status = RegistrationStatus.get_status_admitted_non_saudi_final()
 
