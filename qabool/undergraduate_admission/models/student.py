@@ -655,6 +655,9 @@ class AdmissionRequest(models.Model):
                 and not self.tarifi_week_attendance_date
                 and AdmissionSemester.get_phase3_active_semester(self))
 
+    def can_access_phase3_without_agreement(self):
+        return self.can_access_phase3() and self.status_message == RegistrationStatus.get_status_admitted_transfer()
+
     def can_print_admission_letter(self):
         return (self.status_message == RegistrationStatus.get_status_admitted_final()
                 and self.tarifi_week_attendance_date
