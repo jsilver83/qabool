@@ -452,9 +452,6 @@ class SmartCardExportView(AdminBaseView, FormView):
             kfupm_ids = re.split(',|, | ,| |\n', kfupm_ids_text)
             kfupm_ids = [x for x in kfupm_ids if len(x)]
             students_to_exported = students_to_exported.filter(kfupm_id__in=kfupm_ids)
-            print(kfupm_ids)
-
-        print(students_to_exported)
 
         total_students = students_to_exported.count()
         exported_students = []
