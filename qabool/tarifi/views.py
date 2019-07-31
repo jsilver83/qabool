@@ -28,6 +28,7 @@ class TarifiMixin(UserPassesTestMixin, LoginRequiredMixin):
                or self.request.user.is_superuser
 
 
+# TODO: use it to assign tarifi activities to all admitted students
 class TarifiSimulation(TarifiMixin, TemplateView):
     template_name = 'find_roommate/landing_page.html'
 
