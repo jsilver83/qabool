@@ -24,17 +24,17 @@ class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = TarifiActivitySlotResource
 
 
-class TarifiUserAdmin(admin.ModelAdmin):
-    list_display = ('user', 'user__kfupm_id', 'preparation_course_slot', 'english_placement_test_slot',
+class TarifiDataAdmin(admin.ModelAdmin):
+    list_display = ('admission_request', 'admission_request__kfupm_id', 'preparation_course_slot', 'english_placement_test_slot',
                     'get_english_speaking_test_date_time',
                     'received_by', 'creation_date')
-    list_filter = ('user__semester', 'user__status_message',)
-    search_fields = ['user__username', 'user__kfupm_id']
+    list_filter = ('admission_request__semester', 'admission_request__status_message',)
+    search_fields = ['admission_request__user__username', 'admission_request__kfupm_id']
 
-    def user__kfupm_id(self, obj):
-        return obj.user.kfupm_id
-    user__kfupm_id.short_description = _('KFUPM ID')
-    user__kfupm_id.admin_order_field = 'user__kfupm_id'
+    def admission_request__kfupm_id(self, obj):
+        return obj.admission_request.kfupm_id
+    admission_request__kfupm_id.short_description = _('KFUPM ID')
+    admission_request__kfupm_id.admin_order_field = 'admission_request__kfupm_id'
 
 
 class BoxesForIDRangesResource(resources.ModelResource):
@@ -67,7 +67,7 @@ class StudentIssueAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = StudentIssueResource
 
 
-admin.site.register(TarifiUser, TarifiUserAdmin)
+admin.site.register(TarifiData, TarifiDataAdmin)
 admin.site.register(TarifiActivitySlot, TarifiActivitySlotAdmin)
 admin.site.register(BoxesForIDRanges, BoxesForIDRangesAdmin)
 admin.site.register(StudentIssue, StudentIssueAdmin)

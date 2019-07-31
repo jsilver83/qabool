@@ -84,7 +84,7 @@
 					التاريخ:
 				</td>
 				<td>
-					{{ tarifi_user.creation_date }}
+					{{ tarifi_data.creation_date }}
 				</td>
 			</tr>
 			<tr>
@@ -131,8 +131,8 @@
 					الاختبار التحريري :
 				</td>
 				<td>
-					{{ tarifi_user.english_placement_test_slot.location }}&nbsp;-&nbsp;
-					{{ tarifi_user.english_placement_test_slot.slot_start_date }}
+					{{ tarifi_data.english_placement_test_slot.location }}&nbsp;-&nbsp;
+					{{ tarifi_data.english_placement_test_slot.slot_start_date }}
 				</td>
 			</tr>
 			<tr style="border-bottom:double">
@@ -140,8 +140,8 @@
 					الاختبار الشفهي :
 				</td>
 				<td>
-					{{ tarifi_user.english_speaking_test_slot.location }}&nbsp;-&nbsp;
-					{{ tarifi_user.english_speaking_test_start_time }}
+					{{ tarifi_data.english_speaking_test_slot.location }}&nbsp;-&nbsp;
+					{{ tarifi_data.english_speaking_test_start_time }}
 				</td>
 			</tr>
 			<tr>
@@ -149,8 +149,8 @@
 					موعد دورة التهيؤ:
 				</td>
 				<td>
-					{{ tarifi_user.preparation_course_slot.location }}&nbsp;-&nbsp;
-					{{ tarifi_user.preparation_course_slot.slot_start_date }}
+					{{ tarifi_data.preparation_course_slot.location }}&nbsp;-&nbsp;
+					{{ tarifi_data.preparation_course_slot.slot_start_date }}
 				</td>
 			</tr>
 			{% if issues %}
