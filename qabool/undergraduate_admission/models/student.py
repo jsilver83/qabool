@@ -535,9 +535,13 @@ class AdmissionRequest(models.Model):
         return translated_nationality
 
     def arabic_nationality(self):
+        if self.nationality == 'SA':
+            return 'سعودي'
         return self._get_translated_nationality_name('ar')
 
     def english_nationality(self):
+        if self.nationality == 'SA':
+            return 'Saudi'
         return self._get_translated_nationality_name('en')
 
     @property
