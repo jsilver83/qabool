@@ -29,7 +29,7 @@ urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('undergraduate_admission.urls')),
     path('roommate/', include('find_roommate.urls')),
-    # path('admin/tarifi/', include('tarifi.urls')),
+    path('admin/tarifi/', include('tarifi.urls')),
     path('logout/', views.LogoutView.as_view(), {'template_name': 'logout.html'}, name='logout'),
 )
 

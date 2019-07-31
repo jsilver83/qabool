@@ -9,8 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, FormView
 
 from find_roommate.models import Room
-from undergraduate_admission.models import AdmissionRequest
 from tarifi.forms import TarifiSearchForm
+from undergraduate_admission.models import AdmissionRequest
 from .models import *
 
 allowed_statuses_for_tarifi_week = [RegistrationStatus.get_status_admitted_final(),
@@ -32,12 +32,12 @@ class TarifiSimulation(TarifiMixin, TemplateView):
     template_name = 'find_roommate/landing_page.html'
 
     def get(self, *args, **kwargs):
-        users = AdmissionRequest.objects.filter(status_message=RegistrationStatus.get_status_admitted_final())[:200]
+        admission_request = AdmissionRequest.objects.all() # filter(status_message=RegistrationStatus.get_status_admitted_final())[:200]
         counter = 0
-        for user in users:
+        for admission_request in admission_request:
             print(counter)
-            tarifi_user, d = TarifiUser.objects.get_or_create(user=user)
-            TarifiUser.assign_tarifi_activities(tarifi_user, self.request.user)
+            tarifi_data, d = TarifiData.objects.get_or_create(admission_request=admission_request)
+            TarifiData.assign_tarifi_activities(tarifi_data, self.request.user)
             counter += 1
             print(d)
 
@@ -53,17 +53,17 @@ class TarifiLandingPage(TarifiMixin, FormView):
         try:
             now = timezone.now()
 
-            user = AdmissionRequest.objects.get(kfupm_id=self.request.GET.get('kfupm_id', -1),
-                                                status_message__in=allowed_statuses_for_tarifi_week)
+            admission_request = AdmissionRequest.objects.get(kfupm_id=self.request.GET.get('kfupm_id', -1),
+                                                             status_message__in=allowed_statuses_for_tarifi_week)
             semester = AdmissionSemester.get_active_semester()
-            if semester and user:
-                context['student'] = user
+            if semester and admission_request:
+                context['student'] = admission_request
                 context['show_result'] = True
 
-            context['can_print'] = (user.tarifi_week_attendance_date.slot_start_date <= now <=
-                                    user.tarifi_week_attendance_date.slot_end_date) \
-                                   or self.request.user.is_superuser \
-                                   or self.request.user.groups.filter(name='Tarifi Super Admin').exists()
+            context['can_print'] = ((admission_request.tarifi_week_attendance_date.slot_start_date <= now <=
+                                    admission_request.tarifi_week_attendance_date.slot_end_date)
+                                    or self.request.user.is_superuser
+                                    or self.request.user.groups.filter(name='Tarifi Super Admin').exists())
         except ObjectDoesNotExist:  # the student is not admitted
             if self.request.GET.get('kfupm_id', None):
                 context['show_result'] = True
@@ -89,14 +89,14 @@ class StudentPrintPage(TarifiMixin, TemplateView):
                                              status_message__in=allowed_statuses_for_tarifi_week)
             context['student'] = student
 
-            tarifi_user, d = TarifiUser.objects.get_or_create(user=student)
+            tarifi_data, d = TarifiData.objects.get_or_create(admission_request=student)
 
-            if tarifi_user.preparation_course_slot is None \
-                    or tarifi_user.english_placement_test_slot is None \
-                    or tarifi_user.english_speaking_test_slot is None:
-                TarifiUser.assign_tarifi_activities(tarifi_user, self.request.user)
+            if tarifi_data.preparation_course_slot is None \
+                    or tarifi_data.english_placement_test_slot is None \
+                    or tarifi_data.english_speaking_test_slot is None:
+                TarifiData.assign_tarifi_activities(tarifi_data, self.request.user)
 
-            context['tarifi_user'] = tarifi_user
+            context['tarifi_data'] = tarifi_data
             context['reception_box'] = BoxesForIDRanges.objects.filter(from_kfupm_id__lte=student.kfupm_id,
                                                                        to_kfupm_id__gte=student.kfupm_id).first()
             context['issues'] = StudentIssue.objects.filter(kfupm_id=student.kfupm_id,
@@ -135,10 +135,12 @@ class CourseAttendance(TarifiMixin, FormView):
             if kfupm_id != -1:
                 context['student_entered'] = True
                 try:
-                    student = TarifiUser.objects.get(user__kfupm_id=kfupm_id,
-                                                     user__semester=semester,
-                                                     user__status_message__in=allowed_statuses_for_tarifi_week,
-                                                     preparation_course_slot=context['slot'], )
+                    student = TarifiData.objects.get(
+                        admission_request__kfupm_id=kfupm_id,
+                        admission_request__semester=semester,
+                        admission_request__status_message__in=allowed_statuses_for_tarifi_week,
+                        preparation_course_slot=context['slot'],
+                    )
 
                     context['student'] = student
                     student.preparation_course_attendance = now
@@ -158,9 +160,11 @@ class CourseAttendance(TarifiMixin, FormView):
                 context['student_entered'] = True
 
                 try:
-                    student = TarifiUser.objects.get(user__kfupm_id=kfupm_id,
-                                                     user__semester=semester,
-                                                     user__status_message__in=allowed_statuses_for_tarifi_week, )
+                    student = TarifiData.objects.get(
+                        admission_request__kfupm_id=kfupm_id,
+                        admission_request__semester=semester,
+                        admission_request__status_message__in=allowed_statuses_for_tarifi_week,
+                    )
                     context['student'] = student
                     context['slot'] = student.preparation_course_slot
                     context['early_or_late'] = \

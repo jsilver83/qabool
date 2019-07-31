@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'shared_app.apps.SharedAppConfig',
     'undergraduate_admission.apps.UndergraduateAdmissionConfig',
     'find_roommate.apps.FindRoommateConfig',
-    # 'tarifi.apps.TarifiConfig',
+    'tarifi.apps.TarifiConfig',
     'reversion',
     'captcha',
     'floppyforms',

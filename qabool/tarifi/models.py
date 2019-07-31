@@ -3,19 +3,23 @@ from django.db import models
 from django.utils import timezone
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from undergraduate_admission.models import RegistrationStatus, AdmissionSemester
 from undergraduate_admission.utils import format_date_time, format_date, format_time
 
 
-class TarifiUser(models.Model):
-    user = models.OneToOneField(
-        'undergraduate_admission.User',
+User = settings.AUTH_USER_MODEL
+
+
+class TarifiData(models.Model):
+    admission_request = models.OneToOneField(
+        'undergraduate_admission.AdmissionRequest',
         on_delete=models.CASCADE,
         primary_key=True,
-        related_name='tarifi_user',
+        related_name='tarifi_data',
     )
-    received_by = models.ForeignKey('undergraduate_admission.User',
+    received_by = models.ForeignKey(User,
                                     verbose_name=_('Received By'),
                                     on_delete=models.SET_NULL,
                                     null=True,
@@ -32,7 +36,7 @@ class TarifiUser(models.Model):
     preparation_course_attendance = models.DateTimeField(_('Preparation Course Attendance Date'),
                                                          null=True,
                                                          blank=True, )
-    preparation_course_attended_by = models.ForeignKey('undergraduate_admission.User',
+    preparation_course_attended_by = models.ForeignKey(User,
                                                        verbose_name=_('Preparation Course Attended By'),
                                                        on_delete=models.SET_NULL,
                                                        null=True,
@@ -71,7 +75,7 @@ class TarifiUser(models.Model):
     updated_on = models.DateTimeField(null=True, blank=True, auto_now=True, verbose_name=_('Updated On'), )
 
     def __str__(self):
-        return str(self.user)
+        return str(self.admission_request)
 
     def get_english_speaking_test_date_time(self):
         try:
@@ -90,9 +94,9 @@ class TarifiUser(models.Model):
             return ''
         
     @staticmethod
-    def assign_tarifi_activities(tarifi_user, receiving_user):
-        if tarifi_user.received_by is None:
-            tarifi_user.received_by = receiving_user
+    def assign_tarifi_activities(tarifi_data, receiving_user):
+        if tarifi_data.received_by is None:
+            tarifi_data.received_by = receiving_user
 
         current_date = timezone.now() + timezone.timedelta(minutes=30)
 
@@ -103,7 +107,7 @@ class TarifiUser(models.Model):
         course_slot = None
         for course_slot in available_course_slots:
             if course_slot.remaining_slots > 0:
-                tarifi_user.preparation_course_slot = course_slot
+                tarifi_data.preparation_course_slot = course_slot
                 break
 
         if course_slot:
@@ -116,7 +120,7 @@ class TarifiUser(models.Model):
             written_slot = None
             for written_slot in available_written_slots:
                 if written_slot.remaining_slots > 0:
-                    tarifi_user.english_placement_test_slot = written_slot
+                    tarifi_data.english_placement_test_slot = written_slot
                     break
 
             if written_slot:
@@ -129,15 +133,15 @@ class TarifiUser(models.Model):
                             location_en=written_slot.location_en)
                 for oral_slot in available_oral_slots:
                     if oral_slot.remaining_slots > 0:
-                        tarifi_user.english_speaking_test_slot = oral_slot
+                        tarifi_data.english_speaking_test_slot = oral_slot
                         time_offset = (timezone.localtime(oral_slot.slot_end_date)
                                        - timezone.localtime(oral_slot.slot_start_date)).seconds / oral_slot.slots \
                                       * (oral_slot.slots - oral_slot.remaining_slots)
-                        tarifi_user.english_speaking_test_start_time = timezone.localtime(oral_slot.slot_start_date) \
+                        tarifi_data.english_speaking_test_start_time = timezone.localtime(oral_slot.slot_start_date) \
                                                                        + timezone.timedelta(seconds=time_offset)
                         break
 
-        tarifi_user.save()
+        tarifi_data.save()
 
 
 class TarifiActivitySlot(models.Model):
@@ -170,7 +174,7 @@ class TarifiActivitySlot(models.Model):
     type = models.CharField(max_length=30, null=True, blank=False,
                             verbose_name=_('Slot Type'),
                             choices=TarifiActivitySlotTypes.choices())
-    attender = models.ForeignKey('undergraduate_admission.User',
+    attender = models.ForeignKey(User,
                                  verbose_name=_('Attender'),
                                  null=True,
                                  blank=True,
@@ -217,17 +221,17 @@ class TarifiActivitySlot(models.Model):
     @property
     def remaining_slots(self):
         if self.type == 'PREPARATION_COURSE':
-            return self.slots - TarifiUser.objects.filter(
+            return self.slots - TarifiData.objects.filter(
                 preparation_course_slot=self.pk,
-                user__status_message=RegistrationStatus.get_status_admitted_final()).count()
+                admission_request__status_message=RegistrationStatus.get_status_admitted_final()).count()
         elif self.type == 'ENGLISH_PLACEMENT_TEST':
-            return self.slots - TarifiUser.objects.filter(
+            return self.slots - TarifiData.objects.filter(
                 english_placement_test_slot=self.pk,
-                user__status_message=RegistrationStatus.get_status_admitted_final()).count()
+                admission_request__status_message=RegistrationStatus.get_status_admitted_final()).count()
         elif self.type == 'ENGLISH_SPEAKING_TEST':
-            return self.slots - TarifiUser.objects.filter(
+            return self.slots - TarifiData.objects.filter(
                 english_speaking_test_slot=self.pk,
-                user__status_message=RegistrationStatus.get_status_admitted_final()).count()
+                admission_request__status_message=RegistrationStatus.get_status_admitted_final()).count()
 
     @property
     def slot_attendance_start_date(self):
