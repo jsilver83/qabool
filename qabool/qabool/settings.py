@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'tarifi.apps.TarifiConfig',
     'reversion',
     'captcha',
-    'floppyforms',
     'crispy_forms',
     'pagedown',
     'markdown_deux',
