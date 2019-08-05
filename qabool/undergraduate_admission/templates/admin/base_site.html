@@ -23,6 +23,8 @@
             border-radius: 12px;
         }
     </style>
+
+    {% if user.is_superuser %}
 		<a href="{% url 'undergraduate_admission:cut_off_point' %}" class="custom-menu" target="_blank">
 			<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Cut-off Point' %}
 		</a>
@@ -38,4 +40,5 @@
         <a href="http://feedback.kfupm.edu.sa/nreport.aspx?reportid=2c469c20c9045f4957197ac8db791f6" target="_blank" class="custom-menu">
 			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Feedback' %}
 		</a>
+    {% endif %}
 {% endblock %}
