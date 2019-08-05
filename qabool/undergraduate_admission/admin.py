@@ -29,7 +29,7 @@ class StudentResource(resources.ModelResource):
                   'phase3_start_date', 'phase3_end_date',
                   'eligible_for_housing', 'high_school_gpa_student_entry', 'student_full_name_ar',
                   'student_full_name_en', 'gender', 'verification_committee_member',
-                  'email', 'mobile', 'nationality', 'guardian_mobile', 'student_notes', )
+                  'email', 'mobile', 'nationality', 'guardian_mobile', 'student_notes', 'tarifi_week_attendance_date', )
         skip_unchanged = True
         report_skipped = True
 
@@ -403,7 +403,7 @@ class GraduationYearAdmin(admin.ModelAdmin):
                     'type','show', 'display_order',)
 
 
-class TarifiReceptionDateAdmin(admin.ModelAdmin):
+class TarifiReceptionDateAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'reception_date', 'slots', 'remaining_slots', 'slot_start_date', 'slot_end_date',
                     'show')
     list_editable = ('slots', 'show', )
