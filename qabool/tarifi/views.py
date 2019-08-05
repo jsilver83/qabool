@@ -32,12 +32,15 @@ class TarifiSimulation(TarifiMixin, TemplateView):
     template_name = 'find_roommate/landing_page.html'
 
     def get(self, *args, **kwargs):
-        admission_request = AdmissionRequest.objects.all() # filter(status_message=RegistrationStatus.get_status_admitted_final())[:200]
+        admission_request = AdmissionRequest.objects.filter(
+            status_message__in=allowed_statuses_for_tarifi_week,
+            semester__active=True,
+        )[:200]
         counter = 0
         for admission_request in admission_request:
             print(counter)
             tarifi_data, d = TarifiData.objects.get_or_create(admission_request=admission_request)
-            TarifiData.assign_tarifi_activities(tarifi_data, self.request.user)
+            tarifi_data.receive(self.request.user, use_current_timing=True, reschedule=True)
             counter += 1
             print(d)
 
