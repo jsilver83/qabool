@@ -1,7 +1,7 @@
 {% extends 'find_roommate/base_housing.html' %}
 {% load i18n %}
-{% load floppyforms %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 {% load markdown_deux_tags %}
 
 {% block subcontent %}
@@ -27,7 +27,7 @@
             </label>
         </div>
 		<br>&nbsp;<br>
-		{% formrow form.gov_id_or_kfupm_id using "floppyforms/rows/bootstrap3-horizontal.html" %}
+		{{ form.gov_id_or_kfupm_id|as_crispy_field }}
 		<br>&nbsp;<br>
 		<input type="submit" class="btn btn-primary {% trans 'btn-align' %}" value="{% trans 'Send Request' %}"/>
 	</form>

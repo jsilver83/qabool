@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load l10n %}
 {% load static %}
-{% load floppyforms %}
+{% load crispy_forms_tags %}
 
 {% block subcontent %}
 
@@ -26,7 +26,7 @@
 					{% trans 'Withdrawing from King Fahd University of Petroleum and Minerals' %}</label>
 			</div>
 		</div>
-		{% form form using 'floppyforms/layouts/bootstrap3-horizontal.html' %}
+		{% crispy form %}
 		<div class="checkbox form-group">
 			<div class="col-sm-5">&nbsp;</div>
 			<label class="col-sm-7" style="color:red!important">
