@@ -25,14 +25,19 @@ class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 class TarifiDataAdmin(admin.ModelAdmin):
-    list_display = ('admission_request', 'admission_request__kfupm_id', 'preparation_course_slot', 'english_placement_test_slot',
-                    'get_english_speaking_test_date_time',
-                    'received_by', 'creation_date')
-    list_filter = ('admission_request__semester', 'admission_request__status_message',)
+    list_display = ('admission_request', 'admission_request__kfupm_id', 'admission_request__semester',
+                    'preparation_course_slot', 'english_placement_test_slot',
+                    'get_english_speaking_test_date_time', 'desk_no',
+                    'received_by', 'created_on')
+    list_filter = ('admission_request__semester', 'admission_request__status_message', 'admission_request__semester', )
     search_fields = ['admission_request__user__username', 'admission_request__kfupm_id']
+
+    def admission_request__semester(self, obj):
+        return obj.admission_request.semester
 
     def admission_request__kfupm_id(self, obj):
         return obj.admission_request.kfupm_id
+
     admission_request__kfupm_id.short_description = _('KFUPM ID')
     admission_request__kfupm_id.admin_order_field = 'admission_request__kfupm_id'
 
