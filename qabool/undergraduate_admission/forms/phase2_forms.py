@@ -256,7 +256,7 @@ class WithdrawalProofForm(Phase2GenericForm):
                   'jpg, jpeg, png, bmp, gif. Max Size: 2 MB')
 
 
-class WithdrawalForm(forms.ModelForm):
+class WithdrawalForm(BaseCrispyForm, forms.ModelForm):
     class Meta:
         model = AdmissionRequest
 
