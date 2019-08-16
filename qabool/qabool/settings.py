@@ -250,6 +250,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 TARIFI_NO_OF_DESKS_IN_RECEPTION = 12
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000
+
 # Override settings using environment-specific settings, if any
 try:
     from qabool.local_settings import *
