@@ -301,14 +301,19 @@ class TarifiData(models.Model):
 
                 # only assign a reception desk if the student doesnt have it assigned already; otherwise, keep it as is
                 if created or tarifi_data.desk_no is None:
-                    tarifi_data.desk_no = counter
-                    print(counter)
-                    tarifi_data.save()
-                    counter += 1
-                    if counter > settings.TARIFI_NO_OF_DESKS_IN_RECEPTION:
-                        counter = 1
+                    # NOTE: put non saudis to a specific desk who is instructed to deal with them
+                    if (admission_request.status_message == RegistrationStatus.get_status_admitted_final()
+                            and admission_request.student_type == 'M'):
+                        tarifi_data.desk_no = 1
+                    else:
+                        tarifi_data.desk_no = counter
+                        counter += 1
+                        if counter > settings.TARIFI_NO_OF_DESKS_IN_RECEPTION:
+                            counter = 1
 
-                tarifi_data.assign_tarifi_activities(use_current_timing=False)
+                    tarifi_data.save()
+
+                tarifi_data.assign_tarifi_activities(use_current_timing=use_current_timing)
 
                 if send_sms:
                     # TODO: implement
