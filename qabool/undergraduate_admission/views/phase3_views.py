@@ -154,3 +154,20 @@ class AdmissionLetters(Phase3BaseView, TemplateView):
         context['show_medical_report'] = self.admission_request.can_print_medical_report()
 
         return context
+
+
+class PrintTarifiSchedule(StudentMixin, TemplateView):
+    template_name = 'tarifi/student_print_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['student'] = self.admission_request
+
+        context['tarifi_data'] = getattr(self.admission_request, 'tarifi_data', None)
+        # context['issues'] = StudentIssue.objects.filter(kfupm_id=student.kfupm_id,
+        #                                                 show=True)
+
+        from find_roommate.models import Room
+        context['room'] = Room.get_assigned_room(self.admission_request)
+
+        return context

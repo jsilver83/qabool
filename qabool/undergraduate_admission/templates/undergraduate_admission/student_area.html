@@ -102,8 +102,52 @@
 						<i class="fa fa-admission_request" aria-hidden="true"></i> {% trans 'Print Documents' %}</a>
 				{% endif %}
 
-
 			</div>
 		</div>
+		{% if tarifi_data %}
+			<br><br><br>
+			<div class="alert alert-warning" role="alert">
+				<h3>مواعيد البرنامج التعريفي</h3>
+				<hr>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">{% trans 'Tarifi Week Attendance Date' %}</label>
+					<div class="col-sm-8"><p class="form-control-static">{{ admission_request.tarifi_week_attendance_date }}
+						<br><b>{% trans 'Reception Desk' %}: {{ tarifi_data.desk_no }}</b></p></div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">{% trans 'Preparation Course Slot' %}</label>
+					<div class="col-sm-8"><p class="form-control-static">{{ tarifi_data.preparation_course_slot.date_and_location }}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">{% trans 'English Placement Test Slot' %}</label>
+					<div class="col-sm-8"><p
+							class="form-control-static">{{ tarifi_data.english_placement_test_slot.date_and_location }}</p></div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">{% trans 'English Speaking Test Slot' %}</label>
+					<div class="col-sm-8"><p
+							class="form-control-static">{{ tarifi_data.english_speaking_test_slot.date_and_location }}</p></div>
+				</div>
+
+				<h3>مواعيد أخرى هامة</h3>
+				<hr>
+				<ul>
+
+					<li><b>حضور لقاء معالي مدير الجامعة</b>: الثلاثاء 26 ذوالحجة 1440هـ الموافق 27 أغسطس 2019م - الساعة 12:15 ظهراً (قاعة مبنى 70).
+					</li>
+					<li><b>حضور اللقاء المفتوح مع مسؤولي عمادة شؤون الطلاب وعمادة القبول والتسجيل وبرنامج السنة
+						التحضيرية</b>: الأربعاء 27 ذوالحجة 1440هـ الموافق 28 أغسطس 2019م - الساعة 12:15 ظهراً
+						(قاعة مبنى 70).
+					</li>
+					<li><b>استلام الكتب الدراسية</b>: السبت 1 محرم 1440هـ الموافق 31 أغسطس 2019م (مبنى57).</li>
+				</ul>
+				<br>
+				<div style="text-align: center;">
+					<a class="btn btn-success btn-lg " href="{% url 'undergraduate_admission:print_tarifi_schedule' %}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> {% trans "Print Tarifi Schedule" %}</a>
+				</div>
+				<br>
+			</div>
+		{% endif %}
 	</form>
 {% endblock subcontent %}

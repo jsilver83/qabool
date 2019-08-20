@@ -59,6 +59,14 @@ class StudentArea(StudentMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(StudentArea, self).get_context_data(**kwargs)
         context['admission_request'] = self.admission_request
+
+        try:
+            from tarifi.views import allowed_statuses_for_tarifi_week
+            if self.admission_request.status_message in allowed_statuses_for_tarifi_week:
+                context['tarifi_data'] = getattr(self.admission_request, 'tarifi_data', None)
+        except:
+            pass
+
         return context
 
 
