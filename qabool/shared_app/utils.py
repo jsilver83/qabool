@@ -7,3 +7,8 @@ def get_current_admission_request_for_logged_in_user(request):
 
         if admission_requests:
             return admission_requests.first()
+
+
+class UserGroups:
+    TARIFI_STAFF = 'Tarifi Staff'
+    TARIFI_ADMIN = 'Tarifi Admin'

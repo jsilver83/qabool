@@ -22,14 +22,14 @@
 		</a>
 	{% endif %}
 {# TODO: put back #}
-{#	{% if is_tarifi_admin %}#}
-{#		<a href="{% url 'tarifi:tarifi_landing_page' %}" class="list-group-item">#}
-{#			<i class="fa fa-search" aria-hidden="true"></i> {% trans 'Tarifi Reception' %}#}
-{#		</a>#}
-{#		<a href="{% url 'tarifi:preparation_course_attendance' %}" class="list-group-item">#}
-{#			<i class="fa fa-inbox" aria-hidden="true"></i> {% trans 'Preparation Course Attendance' %}#}
-{#		</a>#}
-{#	{% endif %}#}
+	{% if is_tarifi_admin or is_tarifi_staff %}
+		<a href="{% url 'tarifi:reception' %}" class="list-group-item">
+			<i class="fa fa-search" aria-hidden="true"></i> {% trans 'Tarifi Reception' %}
+		</a>
+		<a href="{% url 'tarifi:preparation_course_attendance' %}" class="list-group-item">
+			<i class="fa fa-inbox" aria-hidden="true"></i> {% trans 'Preparation Course Attendance' %}
+		</a>
+	{% endif %}
 	{% if is_superuser %}
 		<a href="{% url 'undergraduate_admission:cut_off_point' %}" class="list-group-item">
 			<i class="fa fa-user" aria-hidden="true"></i> {% trans 'Cut-off Point' %}

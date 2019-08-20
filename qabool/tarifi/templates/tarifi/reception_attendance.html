@@ -1,11 +1,16 @@
 {% extends 'undergraduate_admission/admin/base_admin_area.html' %}
-{#{% load bootstrap3 %}#}
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block subcontent %}
+	<div class="pull-left">
+		<h4>{% trans 'Desk Number' %}: {{ desk_no }}</h4>
+	</div>
+	<br><br><br>
 	<form method="get">
-		{{ form }}
-		<button>{% trans 'Search' %}</button>
+		{% crispy form %}
+		<br><br>
+		<button class="btn btn-primary pull-left"><i class="fa fa-search"></i> {% trans 'Search' %}</button>
 	</form>
 	<br><br>
 	{% if show_result %}
@@ -18,7 +23,7 @@
 				{% if can_print %}
 					<a class="btn btn-primary btn-lg"
 					   target="_blank"
-					   href="{% url 'student_print_page' student.pk %}">
+					   href="{% url 'tarifi:student_print_page' student.pk %}">
 						<span class="glyphicon glyphicon-print"></span>&nbsp;{% trans 'Print' %}</a>
 				{% else %}
 					<a href="#" class="btn btn-danger btn-lg disabled">

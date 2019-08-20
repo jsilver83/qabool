@@ -21,6 +21,7 @@ class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('semester', 'type', 'location_ar', 'location_en', 'slots', 'remaining_slots', 'slot_start_date',
                     'slot_end_date', 'show', 'display_order')
     list_filter = ('semester', 'type', 'location_ar', 'location_en')
+    search_fields = ['location_ar', 'location_en', 'type', ]
     resource_class = TarifiActivitySlotResource
 
 
@@ -31,6 +32,9 @@ class TarifiDataAdmin(admin.ModelAdmin):
                     'received_by', 'created_on')
     list_filter = ('admission_request__semester', 'admission_request__status_message', 'admission_request__semester', )
     search_fields = ['admission_request__user__username', 'admission_request__kfupm_id']
+    autocomplete_fields = ['admission_request', 'received_by', 'preparation_course_slot',
+                           'english_placement_test_slot', 'english_speaking_test_slot',
+                           'preparation_course_attended_by', ]
 
     def admission_request__semester(self, obj):
         return obj.admission_request.semester

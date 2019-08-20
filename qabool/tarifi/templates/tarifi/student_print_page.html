@@ -19,7 +19,7 @@
 	<link href="{% static 'css/rtl.css' %}" rel="stylesheet">
 	<style media="print">
 		* {
-			font-size: 94% !important;
+			font-size: 99% !important;
 		}
 
 		.noprint {
@@ -40,7 +40,6 @@
 				<i class="fa fa-print" aria-hidden="true"></i> </a>
 		</div>
 	</div>
-	<hr>
 </div>
 <img style="width: 85%; margin: 0 auto" class="img-responsive" src="{% static 'images/kfupm_hdr.jpg' %}">
 
@@ -48,54 +47,50 @@
 	<div class="row">
 		<table class="table table-condensed" dir="rtl">
 			<tr>
-				<td colspan="3" align="center">
-					<h2>
-						بطاقة التسجيل</h2>
+				<td colspan="3" style="text-align: center; vertical-align: middle; font-size: 18pt!important;">
+					<h1>نموذج الاستقبال</h1>
 				</td>
 			</tr>
 			<tr>
 				<td style="width:33%">
-					<h4 style="text-align:center;">
-						الرقم التسلسلي ( {{ student.pk }} )</h4>
+
 				</td>
 				<td style="width:33%">
 					<h4 style="text-align:center;">
-						رقم الاستقبال ( {{ reception_counter }} )</h4>
+						رقم مكتب الاستقبال (الكاونتر) ( {{ tarifi_data.desk_no }} )</h4>
 				</td>
 				<td style="width:33%">
-					<h4 style="text-align:center;">
-						الصندوق ( {{ reception_box }} )
-					</h4>
+
 				</td>
 			</tr>
 		</table>
 	</div>
 
 	<div class="row">
-		<table class="table table-bordered">
+		<table class="table table-bordered" style="table-layout: fixed">
 			<tr>
-				<td style="width:20%">
-					اسم الطالب:
+				<td style="width:15%">
+					اسم الطالب
 				</td>
-				<td style="width:40%">
+				<td style="width:35%">
 					{{ student }}
 				</td>
 				<td style="width:15%">
-					التاريخ:
+					التاريخ
 				</td>
-				<td>
-					{{ tarifi_data.creation_date }}
+				<td style="width:35%">
+					{{ tarifi_data.created_on }}
 				</td>
 			</tr>
 			<tr>
 				<td class="auto-style1">
-					الهوية الوطنية:
+					الهوية الوطنية
 				</td>
 				<td class="auto-style1">
 					{{ student.username }}
 				</td>
 				<td class="auto-style1">
-					نقطة الأصل:
+					نقطة الأصل
 				</td>
 				<td class="auto-style1">
 					{{ student.high_school_city }}
@@ -103,13 +98,13 @@
 			</tr>
 			<tr>
 				<td>
-					الرقم الجامعي:
+					الرقم الجامعي
 				</td>
 				<td>
 					{{ student.kfupm_id }}
 				</td>
 				<td>
-					السكن:
+					السكن
 				</td>
 				<td>
 					{{ student.eligible_for_housing|yesno }}
@@ -124,6 +119,15 @@
 				<td colspan="2" align="center">
 					<h4>
 						مواعيد اختبار اللغة الإنجليزية ودورة التهيؤ</h4>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					موعد دورة التهيؤ:
+				</td>
+				<td>
+					{{ tarifi_data.preparation_course_slot.location }}&nbsp;-&nbsp;
+					{{ tarifi_data.preparation_course_slot.slot_start_date }}
 				</td>
 			</tr>
 			<tr>
@@ -144,15 +148,6 @@
 					{{ tarifi_data.english_speaking_test_start_time }}
 				</td>
 			</tr>
-			<tr>
-				<td>
-					موعد دورة التهيؤ:
-				</td>
-				<td>
-					{{ tarifi_data.preparation_course_slot.location }}&nbsp;-&nbsp;
-					{{ tarifi_data.preparation_course_slot.slot_start_date }}
-				</td>
-			</tr>
 			{% if issues %}
 			<tr>
 				<td>
@@ -164,50 +159,21 @@
 			</tr>
 			{% endif %}
 		</table>
+		<br><br>
+		<h3>مواعيد أخرى هامة</h3>
+		<hr>
+		<ul>
 
-		<h4 style="text-align:center">إقرار وتعهد</h4>
-		<div style="text-align:right;">
-			<p>أنا الطالب الموقع أدناه، أقر بأني استلمت الملف الخاص بي من عمادة شؤون الطلاب والذي يحتوي على الآتي:</p>
-		</div>
-
-		<div style="width:45%; float:right; text-align:right;">
-			<p><span class="glyphicon glyphicon glyphicon-ok"> البطاقة الجامعية</span></p>
-			<p><span class="glyphicon glyphicon glyphicon-ok"> بطاقة صندوق بريد الجامعة</span></p>
-			<p><span class="glyphicon glyphicon glyphicon-ok"> النشرات التعريفية</span></p>
-		</div>
-
-		<div style="width:45%; float:left; text-align:right;">
-			<p><span class="glyphicon glyphicon glyphicon-ok"> بطاقة الصراف الآلي للمكافآت</span></p>
-			<p><span class="glyphicon glyphicon glyphicon-ok"> بطاقة خدماتي</span></p>
-		</div>
-		<div style="text-align:right;">
-
-			<h4 style="text-align:right; padding-top:100px; ">كما أقر بالموافقة على ما يلي:</h4>
-			<p style="direction:rtl; text-align: justify;">
-				<span class="glyphicon glyphicon glyphicon-ok"> </span> أتعهد بأنني في حال عدم استخدامي المكافأة أو في حال الإبقاء
-				على رصيد 990 ريالاً أو أكثـر لمدة 90 يوماً أو أكثـر فإني أفوض عمادة شؤون الطلاب بسحبـها وإرجاعها لحساب صندوق
-				الطلاب حسب اللائحة المنظمة لمكافآت الطلاب بشأن سقوط حق الطالب في المطالبة بالمكافأة الشهرية بعد مضي (90)
-				يوماً من تاريخ إيداع المكافأة في حساب الطالب. وعليه ليس لي حق الاعتـراض أو المطالبة بالمبلغ حال تحويله
-				، وإنـني أعلم أن هذه البطاقة لا تعتبـر حساباً شخصياً لي في البنك،
-				كما أتعهد بمراجعة مجموعة سامبا المالية لتفعيل بطاقة الصراف الآلي قبل استخدامها.</p>
-			<p><span class="glyphicon glyphicon glyphicon-ok"> </span>
-				أتعهد بالالتـزام بأنظمة وتعليمات الجامعة وإجراءات استخدام شبكة الحاسب الآلي والبريد الإلكتروني وفي حال مخالفتي لها أكون عرضة للعقوبات المنصوص عليها بالنظام.
-			</p>
-		</div>
-		<div style="float:left;">
-			<p style="padding-top:10px">_______________________________: توقيع الطالب</p>
-		</div>
-
-		<table width=100% dir=rtl style="font-size:small">
-			<tr>
-				<td align="center">ص.ب 1404 - الظهران 31261 - المملكة العربية السعودية <br/>
-					هاتف 2923-860 (03) - فاكس 1327-860 (03)
-				</td>
-				<td align="center">stufund@kfupm.edu.sa <br/>http://www.kfupm.edu.sa/studentaffairs</td>
-				<td align="center">P.O.Box 1404 - Dhahran 31261 Saudi Arabia
-					<br/>Phone (03) 860-2923 - Fax (03) 860-1327
-				</td>
-			</tr>
-		</table>
+			<li><b>حضور لقاء معالي مدير الجامعة</b>: الثلاثاء 26 ذوالحجة 1440هـ الموافق 27 أغسطس 2019م - الساعة 12:15 ظهراً (قاعة مبنى 70).
+			</li>
+			<li><b>حضور اللقاء المفتوح مع مسؤولي عمادة شؤون الطلاب وعمادة القبول والتسجيل وبرنامج السنة
+				التحضيرية</b>: الأربعاء 27 ذوالحجة 1440هـ الموافق 28 أغسطس 2019م - الساعة 12:15 ظهراً
+				(قاعة مبنى 70).
+			</li>
+			<li><b>استلام الكتب الدراسية</b>: السبت 1 محرم 1440هـ الموافق 31 أغسطس 2019م (مبنى57).</li>
+		</ul>
+		<br>
+	</div>
+</div>
 </body>
 </html>
