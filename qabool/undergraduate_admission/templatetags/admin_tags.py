@@ -2,6 +2,8 @@ from django import template
 from django.urls import reverse
 from django.utils.html import format_html
 
+from shared_app.utils import UserGroups
+
 register = template.Library()
 
 
@@ -9,15 +11,15 @@ register = template.Library()
 def admin_commands(context):
     user = context['request'].user
     is_verifier = 'Verifier' in user.groups.all() or user.is_superuser
-    is_tarifi_admin = user.is_superuser \
-                      or user.groups.filter(name='Tarifi Super Admin').exists()\
-                      or user.groups.filter(name='Tarifi Admin').exists()
+    is_tarifi_admin = user.is_superuser or user.groups.filter(name=UserGroups.TARIFI_ADMIN).exists()
+    is_tarifi_staff = user.is_superuser or user.groups.filter(name=UserGroups.TARIFI_STAFF).exists()
 
     return {
         'user': str(user),
         'is_superuser': user.is_superuser,
         'is_verifier': is_verifier,
         'is_tarifi_admin': is_tarifi_admin,
+        'is_tarifi_staff': is_tarifi_staff,
         'username': user.username,
         'groups': user.groups.all(),
     }

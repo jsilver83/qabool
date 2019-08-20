@@ -2,6 +2,12 @@ from django import forms
 
 from django.utils.translation import ugettext_lazy as _
 
+from shared_app.base_forms import BaseCrispyForm
 
-class TarifiSearchForm(forms.Form):
+
+class TarifiSearchForm(BaseCrispyForm, forms.Form):
     kfupm_id = forms.IntegerField(required=True, label=_('KFUPM ID'))
+
+
+class ReceptionDeskForm(BaseCrispyForm, forms.Form):
+    reception_desk = forms.IntegerField(required=True, label=_('Reception Desk'))

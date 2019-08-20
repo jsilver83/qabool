@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.models import RegistrationStatus, AdmissionSemester, TarifiReceptionDate
 from undergraduate_admission.utils import format_date_time, format_date, format_time
-from .views import allowed_statuses_for_tarifi_week
+
 
 User = settings.AUTH_USER_MODEL
 
@@ -82,8 +82,12 @@ class TarifiActivitySlot(models.Model):
         else:
             return self.location_en
 
+    def date_and_location(self):
+        return '{} - ({})'.format(format_date_time(self.slot_start_date), self.location)
+
     @property
     def remaining_slots(self):
+        from .views import allowed_statuses_for_tarifi_week
         if self.type == TarifiActivitySlot.TarifiActivitySlotTypes.PREPARATION_COURSE:
             return self.slots - TarifiData.objects.filter(
                 preparation_course_slot=self.pk,
@@ -284,6 +288,7 @@ class TarifiData(models.Model):
     @staticmethod
     def distribute_admission_requests_in_tarifi_slots(admission_semester, statuses=None,
                                                       use_current_timing=False, send_sms=False):
+        from .views import allowed_statuses_for_tarifi_week
         admission_requests = admission_semester.applicants.all()
         if statuses:
             admission_requests = admission_requests.filter(status_message__in=statuses)

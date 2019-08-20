@@ -22,6 +22,7 @@ urlpatterns = [
         PasswordChangeDoneView.as_view(template_name='undergraduate_admission/change_password_done.html'),
         name='password_change_done',
     ),
+    path('print-tarifi-schedule/', phase3_views.PrintTarifiSchedule.as_view(), name='print_tarifi_schedule'),
     path('choose-tarifi-time-slot/', phase3_views.ChooseTarifiTimeSlot.as_view(), name='choose_tarifi_time_slot'),
     # path('admin/send-mass-sms/', admin_side_views.SendMassSMSView.as_view(), name='send_mass_sms'),
     # path('admin/student-gender/', admin_side_views.StudentGenderView.as_view(), name='student_gender'),
