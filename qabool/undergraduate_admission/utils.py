@@ -1,4 +1,5 @@
 import random
+from itertools import islice
 
 import requests
 from django import forms
@@ -119,6 +120,10 @@ class SMS(object):
             _('Remaining rooms is 50'),
         'housing_rooms_threshold_10':
             _('Remaining rooms is 10'),
+        'sms_tarifi_week':
+            _('Dear Student:\nKindly login to https://qabool.kfupm.edu.sa to view your Tarifi Week schedule.\n'
+              'And You have to bring the printed schedule in addition to your admission letter'
+              '\nStudent Affairs\nKFUPM')
     }
 
     # using UNIFONIC gateway to send SMS
@@ -136,6 +141,26 @@ class SMS(object):
             return r
         except:  # usually TimeoutError but made it general so it will never raise an exception
             pass
+
+    @staticmethod
+    def send_mass_sms(mobiles, body):
+        if settings.DISABLE_SMS:
+            return None
+
+        mobiles_chunked = chunk(mobiles, 999)
+
+        for mobiles_chunk in mobiles_chunked:
+            recipients = list_to_comma_separated_string_value(mobiles_chunk)
+
+            try:
+                r = requests.post('http://api.unifonic.com/rest/Messages/SendBulk',
+                                  data={'AppSid': settings.UNIFONIC_APP_SID,
+                                        'Recipient': recipients,
+                                        'Body': body,
+                                        'SenderID': 'KFUPMQabool'})  # It was KFUPM-ADM
+                return r
+            except:  # usually TimeoutError but made it general so it will never raise an exception
+                pass
 
     # using Yesser Tarasol service to send SMS
     @staticmethod
@@ -209,6 +234,10 @@ class SMS(object):
     def send_sms_housing_rooms_threshold_10():
         SMS.send_sms('966505932317', '%s' % (SMS.sms_messages['housing_rooms_threshold_10']))
         SMS.send_sms('966569402303', '%s' % (SMS.sms_messages['housing_rooms_threshold_10']))
+
+    @staticmethod
+    def send_mass_sms_tarifi_week(mobiles):
+        SMS.send_mass_sms(mobiles, SMS.sms_messages['sms_tarifi_week'])
 
 
 # a custom function to generate 6-digit captcha codes
@@ -345,3 +374,12 @@ def get_fields_for_re_upload(student_type):
         fields.extend(['mother_gov_id_file', 'birth_certificate', ])
 
     return fields
+
+
+def list_to_comma_separated_string_value(list_to_converted):
+    return ','.join(map(str, list_to_converted))
+
+
+def chunk(it, size):
+    it = iter(it)
+    return iter(lambda: tuple(islice(it, size)), ())

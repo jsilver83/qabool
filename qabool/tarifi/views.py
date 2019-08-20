@@ -1,17 +1,20 @@
 from datetime import timedelta
 
 import requests
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, FormView
 
+from undergraduate_admission.models import AdmissionRequest, RegistrationStatus, AdmissionSemester
 from find_roommate.models import Room
-from tarifi.forms import TarifiSearchForm
-from undergraduate_admission.models import AdmissionRequest
-from .models import *
+from shared_app.utils import UserGroups
+from .forms import *
+from .models import TarifiActivitySlot, TarifiData, StudentIssue
 
 allowed_statuses_for_tarifi_week = [RegistrationStatus.get_status_admitted_final(),
                                     RegistrationStatus.get_status_admitted_non_saudi_final(),
@@ -22,8 +25,8 @@ class TarifiMixin(UserPassesTestMixin, LoginRequiredMixin):
     login_url = reverse_lazy('admin:index')
 
     def test_func(self):
-        return ((self.request.user.groups.filter(name='Tarifi Staff').exists()
-                 or self.request.user.groups.filter(name='Tarifi Admin').exists())
+        return ((self.request.user.groups.filter(name=UserGroups.TARIFI_STAFF).exists()
+                 or self.request.user.groups.filter(name=UserGroups.TARIFI_STAFF).exists())
                 and self.request.user.is_staff) \
                or self.request.user.is_superuser
 
@@ -47,35 +50,58 @@ class TarifiSimulation(TarifiMixin, TemplateView):
         return redirect('undergraduate_admission:student_area')
 
 
-class TarifiLandingPage(TarifiMixin, FormView):
-    template_name = 'tarifi/landing_page.html'
+class ReceptionLanding(TarifiMixin, FormView):
+    template_name = 'tarifi/reception_landing.html'
+    form_class = ReceptionDeskForm
+    success_url = reverse_lazy('tarifi:reception')
+
+    def form_valid(self, form):
+        self.request.session['reception_desk'] = form.cleaned_data.get('reception_desk', 0)
+        messages.success(self.request, _('Desk number specified successfully...'))
+        return super().form_valid(form)
+
+
+class ReceptionAttendance(TarifiMixin, FormView):
+    template_name = 'tarifi/reception_attendance.html'
     form_class = TarifiSearchForm
+    login_url = reverse_lazy('tarifi:reception_landing')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not(super().test_func() and self.request.session.get('reception_desk', 0)):
+            return redirect(self.login_url)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(TarifiLandingPage, self).get_context_data(**kwargs)
-        try:
-            now = timezone.now()
+        context = super().get_context_data(**kwargs)
+        context['desk_no'] = self.request.session.get('reception_desk', 0)
+        # try:
+        now = timezone.now()
 
-            admission_request = AdmissionRequest.objects.get(kfupm_id=self.request.GET.get('kfupm_id', -1),
-                                                             status_message__in=allowed_statuses_for_tarifi_week)
-            semester = AdmissionSemester.get_active_semester()
-            if semester and admission_request:
-                context['student'] = admission_request
-                context['show_result'] = True
+        admission_request = AdmissionRequest.objects.get(kfupm_id=self.request.GET.get('kfupm_id', -1),
+                                                         semester=AdmissionSemester.get_active_semester() or -1,
+                                                         status_message__in=allowed_statuses_for_tarifi_week)
+        if admission_request:
+            context['student'] = admission_request
+            TarifiData.objects.filter(admission_request=admission_request)
+            # print(tarifi_data)
+            # context['tarifi_data'] = admission_request.tarifi_data
+            context['show_result'] = True
 
-            context['can_print'] = ((admission_request.tarifi_week_attendance_date.slot_start_date <= now <=
-                                    admission_request.tarifi_week_attendance_date.slot_end_date)
-                                    or self.request.user.is_superuser
-                                    or self.request.user.groups.filter(name='Tarifi Super Admin').exists())
-        except ObjectDoesNotExist:  # the student is not admitted
-            if self.request.GET.get('kfupm_id', None):
-                context['show_result'] = True
-            else:
-                context['show_result'] = False
-        except AttributeError:  # the student doesnt have a tarifi week attendance date
-            context['can_print'] = False
-        finally:
-            return context
+        print(context)
+
+        context['can_print'] = ((admission_request.tarifi_week_attendance_date.slot_start_date <= now <=
+                                admission_request.tarifi_week_attendance_date.slot_end_date)
+                                or self.request.user.is_superuser
+                                or self.request.user.groups.filter(name='Tarifi Super Admin').exists())
+        # except ObjectDoesNotExist:  # the student is not admitted
+        #     if self.request.GET.get('kfupm_id', None):
+        #         context['show_result'] = True
+        #     else:
+        #         context['show_result'] = False
+        # except AttributeError:  # the student doesnt have a tarifi week attendance date
+        #     context['can_print'] = False
+        # finally:
+        return context
 
     def get_form(self, form_class=None):
         return self.form_class(self.request.GET or None)
@@ -86,30 +112,21 @@ class StudentPrintPage(TarifiMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(StudentPrintPage, self).get_context_data(**kwargs)
-        try:
-            student = \
-                AdmissionRequest.objects.get(pk=self.kwargs['pk'],
-                                             status_message__in=allowed_statuses_for_tarifi_week)
-            context['student'] = student
 
-            tarifi_data, d = TarifiData.objects.get_or_create(admission_request=student)
+        student = get_object_or_404(
+            AdmissionRequest,
+            pk=self.kwargs['pk'],
+            status_message__in=allowed_statuses_for_tarifi_week
+        )
+        context['student'] = student
 
-            if tarifi_data.preparation_course_slot is None \
-                    or tarifi_data.english_placement_test_slot is None \
-                    or tarifi_data.english_speaking_test_slot is None:
-                TarifiData.assign_tarifi_activities(tarifi_data, self.request.user)
+        context['tarifi_data'] = getattr(student, 'tarifi_data')
 
-            context['tarifi_data'] = tarifi_data
-            context['reception_box'] = BoxesForIDRanges.objects.filter(from_kfupm_id__lte=student.kfupm_id,
-                                                                       to_kfupm_id__gte=student.kfupm_id).first()
-            context['issues'] = StudentIssue.objects.filter(kfupm_id=student.kfupm_id,
-                                                            show=True)
-            context['reception_counter'] = str(student.kfupm_id)[5]
-            context['room'] = Room.get_assigned_room(student)
-        except ObjectDoesNotExist:
-            pass
-        finally:
-            return context
+        context['issues'] = StudentIssue.objects.filter(kfupm_id=student.kfupm_id,
+                                                        show=True)
+        context['room'] = Room.get_assigned_room(student)
+
+        return context
 
 
 class CourseAttendance(TarifiMixin, FormView):
