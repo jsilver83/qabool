@@ -138,7 +138,7 @@
 				الاختبار الشفهي:
 				</td>
 				<td>
-					<span style="direction: ltr">{{ tarifi_data.english_speaking_test_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.english_speaking_test_slot.location }})</span>
+					<span style="direction: ltr">{{ tarifi_data.english_speaking_test_slot.slot_start_date|date:"d M Y م" }} {{ tarifi_data.english_speaking_test_start_time|date:"h:i A" }} - ({{ tarifi_data.english_speaking_test_slot.location }})</span>
 				</td>
 			</tr>
 			{% endif %}
