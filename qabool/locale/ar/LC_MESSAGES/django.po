@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-21 12:12+0300\n"
-"PO-Revision-Date: 2019-08-21 12:26+0300\n"
+"PO-Revision-Date: 2019-08-21 14:15+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -502,7 +502,7 @@ msgstr "رقم مكتب الاستقبال (الكاونتر)"
 
 #: tarifi/models.py:23 tarifi/models.py:140
 msgid "Preparation Course Attendance Date"
-msgstr "تاريخ حضور البرنامج التعريفي"
+msgstr "تاريخ حضور دورة التهيؤ"
 
 #: tarifi/models.py:24
 msgid "English Placement Test Date"
@@ -2265,7 +2265,7 @@ msgstr "استقبال البرنامج التعريفي"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:30
 msgid "Preparation Course Attendance"
-msgstr "حضور محاضرة البرنامج التعريفي"
+msgstr "حضور محاضرة دورة التهيؤ"
 
 #: undergraduate_admission/templates/undergraduate_admission/admin/_admin_commands.html:47
 msgid "Import Transfer Data"

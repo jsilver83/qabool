@@ -388,3 +388,16 @@ def list_to_comma_separated_string_value(list_to_converted):
 def chunk(it, size):
     it = iter(it)
     return iter(lambda: tuple(islice(it, size)), ())
+
+
+def check_overlap_between_two_date_ranges(range1_start, range1_end, range2_start, range2_end):
+    from collections import namedtuple
+    Range = namedtuple('Range', ['start', 'end'])
+
+    r1 = Range(start=range1_start, end=range1_end)
+    r2 = Range(start=range2_start, end=range2_end)
+    latest_start = max(r1.start, r2.start)
+    earliest_end = min(r1.end, r2.end)
+    delta = (earliest_end - latest_start).days + 1
+    overlap = max(0, delta)
+    return overlap > 0
