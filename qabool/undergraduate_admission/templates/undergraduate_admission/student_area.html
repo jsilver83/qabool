@@ -131,7 +131,7 @@
 				<div class="form-group">
 					<label class="col-sm-4 control-label">{% trans 'English Speaking Test Slot' %}</label>
 					<div class="col-sm-8"><p
-							class="form-control-static">{{ tarifi_data.english_speaking_test_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.english_speaking_test_slot.location }})</p></div>
+							class="form-control-static">{{ tarifi_data.english_speaking_test_slot.slot_start_date|date:"d M Y م" }} {{ tarifi_data.english_speaking_test_start_time|date:"h:i A" }} - ({{ tarifi_data.english_speaking_test_slot.location }})</p></div>
 				</div>
 
 				<h3>مواعيد أخرى هامة</h3>
