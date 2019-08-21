@@ -131,3 +131,5 @@ class Room(models.Model):
                                                  status=RoommateRequest.RequestStatuses.ACCEPTED).first()
         if request:
             return request.assigned_room
+        else:
+            return _('Room Not specified')

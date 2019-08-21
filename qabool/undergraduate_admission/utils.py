@@ -237,6 +237,7 @@ class SMS(object):
 
     @staticmethod
     def send_mass_sms_tarifi_week(mobiles):
+        print(SMS.sms_messages['sms_tarifi_week'])
         SMS.send_mass_sms(mobiles, SMS.sms_messages['sms_tarifi_week'])
 
 
@@ -301,6 +302,10 @@ class PlainTextWidget(forms.Widget):
 
 def format_date_time(date_time):
     return timezone.localtime(date_time).strftime('%d-%m-%Y %I:%M %p')
+
+
+def format_date_time_verbose(date_time):
+    return timezone.localtime(date_time).strftime('%d %B %Y %I:%M %p')
 
 
 def format_date(date_time):

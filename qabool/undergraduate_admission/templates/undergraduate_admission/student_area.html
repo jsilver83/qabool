@@ -106,28 +106,32 @@
 		</div>
 		{% if tarifi_data %}
 			<br><br><br>
+			<div style="text-align: left;">
+				<a class="btn btn-success btn-lg " href="{% url 'undergraduate_admission:print_tarifi_schedule' %}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> {% trans "Print Tarifi Schedule" %}</a>
+			</div>
+			<br>
 			<div class="alert alert-warning" role="alert">
 				<h3>مواعيد البرنامج التعريفي</h3>
 				<hr>
 				<div class="form-group">
 					<label class="col-sm-4 control-label">{% trans 'Tarifi Week Attendance Date' %}</label>
 					<div class="col-sm-8"><p class="form-control-static">{{ admission_request.tarifi_week_attendance_date }}
-						<br><b>{% trans 'Reception Desk' %}: {{ tarifi_data.desk_no }}</b></p></div>
+						<br><b>{% trans 'Reception Desk' %}: ({{ tarifi_data.desk_no }})</b></p></div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-4 control-label">{% trans 'Preparation Course Slot' %}</label>
-					<div class="col-sm-8"><p class="form-control-static">{{ tarifi_data.preparation_course_slot.date_and_location }}</p>
+					<div class="col-sm-8"><p class="form-control-static">{{ tarifi_data.preparation_course_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.preparation_course_slot.location }})</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-4 control-label">{% trans 'English Placement Test Slot' %}</label>
 					<div class="col-sm-8"><p
-							class="form-control-static">{{ tarifi_data.english_placement_test_slot.date_and_location }}</p></div>
+							class="form-control-static">{{ tarifi_data.english_placement_test_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.english_placement_test_slot.location }})</p></div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-4 control-label">{% trans 'English Speaking Test Slot' %}</label>
 					<div class="col-sm-8"><p
-							class="form-control-static">{{ tarifi_data.english_speaking_test_slot.date_and_location }}</p></div>
+							class="form-control-static">{{ tarifi_data.english_speaking_test_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.english_speaking_test_slot.location }})</p></div>
 				</div>
 
 				<h3>مواعيد أخرى هامة</h3>
@@ -142,10 +146,6 @@
 					</li>
 					<li><b>استلام الكتب الدراسية</b>: السبت 1 محرم 1440هـ الموافق 31 أغسطس 2019م (مبنى57).</li>
 				</ul>
-				<br>
-				<div style="text-align: center;">
-					<a class="btn btn-success btn-lg " href="{% url 'undergraduate_admission:print_tarifi_schedule' %}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> {% trans "Print Tarifi Schedule" %}</a>
-				</div>
 				<br>
 			</div>
 		{% endif %}
