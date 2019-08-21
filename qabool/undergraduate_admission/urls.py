@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin/distribute-committee/', admin_side_views.DistributeStudentsOnVerifiersView.as_view(),
          name='distribute_committee'),
     path('admin/yesser-sync/<int:manual_update>/<int:overwrite_update>/', admin_side_views.YesserDataUpdate.as_view(), name='yesser_update'),
+    path('admin/distribute-tarifi/<int:send_sms>/', admin_side_views.TarifiDistributeView.as_view(), name='distribute_tarifi'),
     path('admin/qiyas-update/', admin_side_views.QiyasDataUpdate.as_view(), name='qiyas_update'),
     path('admin/transfer-import/', admin_side_views.TransferImportView.as_view(), name='transfer_import'),
     path('admin/smart-card-export/', admin_side_views.SmartCardExportView.as_view(), name='smart_card_export'),

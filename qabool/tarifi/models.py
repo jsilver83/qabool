@@ -6,8 +6,7 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.models import RegistrationStatus, AdmissionSemester, TarifiReceptionDate
-from undergraduate_admission.utils import format_date_time, format_date, format_time
-
+from undergraduate_admission.utils import format_date_time, format_date, format_time, SMS
 
 User = settings.AUTH_USER_MODEL
 
@@ -295,6 +294,11 @@ class TarifiData(models.Model):
         else:
             admission_requests = admission_requests.filter(status_message__in=allowed_statuses_for_tarifi_week)
 
+        send_sms_mobiles_list = []
+        distributed_count = 0
+        students_mobiles_count = 0
+        guardians_mobiles_count = 0
+
         reception_dates = TarifiReceptionDate.objects.filter(semester=admission_semester)
 
         for reception_date in reception_dates:
@@ -319,10 +323,24 @@ class TarifiData(models.Model):
                     tarifi_data.save()
 
                 tarifi_data.assign_tarifi_activities(use_current_timing=use_current_timing)
+                distributed_count += 1
 
                 if send_sms:
-                    # TODO: implement
-                    pass
+                    if admission_request.mobile:
+                        send_sms_mobiles_list.append(admission_request.mobile)
+                        students_mobiles_count += 1
+                    if admission_request.guardian_mobile:
+                        send_sms_mobiles_list.append(admission_request.guardian_mobile)
+                        guardians_mobiles_count += 1
+
+        if send_sms:
+            SMS.send_mass_sms_tarifi_week(send_sms_mobiles_list)
+            return '{} students were distributed. {} messages were sent to students and ' \
+                   '{} messages were sent to guardians'.format(distributed_count,
+                                                               students_mobiles_count,
+                                                               guardians_mobiles_count)
+        else:
+            return '{} students were distributed'.format(distributed_count)
 
 
 class BoxesForIDRanges(models.Model):

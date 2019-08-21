@@ -524,6 +524,74 @@ class SmartCardExportView(AdminBaseView, FormView):
         return self.render_to_response(context)
 
 
+class TarifiDistributeView(AdminBaseView, TemplateView):
+    template_name = 'undergraduate_admission/admin/base_admin_area.html'
+
+    def get(self, request, *args, **kwargs):
+        send_sms = kwargs.get('send_sms', 0)
+        semester = AdmissionSemester.get_active_semester()
+        from tarifi.models import TarifiData
+        summary_message = TarifiData.distribute_admission_requests_in_tarifi_slots(admission_semester=semester,
+                                                                                   send_sms=send_sms)
+        messages.success(self.request, summary_message)
+        return super().get(request, *args, **kwargs)
+
+
+# class TarifiDistributeView(AdminBaseView, FormView):
+#     template_name = 'undergraduate_admission/admin/smart-card-export.html'
+#     form_class = SmartCardExportForm
+#
+#     def form_valid(self, form, **kwargs):
+#         semester = get_object_or_404(AdmissionSemester, pk=form.cleaned_data.get('semester', 0))
+#         status_message = get_object_or_404(RegistrationStatus, pk=form.cleaned_data.get('status_message', 0))
+#
+#         students_to_distributed = AdmissionRequest.objects.filter(semester=semester, status_message=status_message)
+#
+#         kfupm_ids_text = form.cleaned_data.get('kfupm_ids')
+#         if kfupm_ids_text:
+#             kfupm_ids = re.split(',|, | ,| |\n', kfupm_ids_text)
+#             kfupm_ids = [x for x in kfupm_ids if len(x)]
+#             students_to_distributed = students_to_distributed.filter(kfupm_id__in=kfupm_ids)
+#
+#         total_students = students_to_distributed.count()
+#         exported_students = []
+#         failed_students = []
+#         exported_students_count = 0
+#
+#         for student in students_to_distributed:
+#             residency_type = 'OnCampus' if student.eligible_for_housing else 'OffCampus'
+#             gender = 'Male' if student.gender == AdmissionRequest.Gender.MALE else 'Female'
+#
+#             personal_picture_as_bytes = None
+#             if student.personal_picture:
+#                 with student.personal_picture.open("rb") as image:
+#                     f = image.read()
+#                     personal_picture_as_bytes = bytearray(f)
+#
+#             try:
+#
+#                 exported_students.append(student)
+#                 exported_students_count += 1
+#             except Exception as e:
+#                 failed_students.append({'student': student, 'error': str(e)})
+#                 logger.exception(
+#                     "Something bad happened while sending student {} data to smart-card. Error: {}".format(
+#                         student, str(e)
+#                     )
+#                 )
+#
+#         success_message = '{} out of {} got exported to Smart-card server successfully'.format(
+#             exported_students_count, total_students
+#         )
+#         messages.success(self.request, success_message)
+#
+#         context = self.get_context_data(**kwargs)
+#         context['exported_students'] = exported_students
+#         context['failed_students'] = failed_students
+#
+#         return self.render_to_response(context)
+
+
 def get_student_record_serialized(student, change_status=False, overwrite=False):
     final_data = {
         'changed': False,
