@@ -1,12 +1,14 @@
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.models import RegistrationStatus, AdmissionSemester, TarifiReceptionDate
-from undergraduate_admission.utils import format_date_time, format_date, format_time, SMS, format_date_time_verbose
+from undergraduate_admission.utils import format_date_time, format_date, format_time, SMS, format_date_time_verbose, \
+    check_overlap_between_two_date_ranges
 
 User = settings.AUTH_USER_MODEL
 
@@ -59,7 +61,7 @@ class TarifiActivitySlot(models.Model):
 
     class Meta:
         verbose_name_plural = _('Tarifi: Preparation Activity Slots')
-        ordering = ['display_order', 'slot_start_date']
+        ordering = ['slot_start_date']
 
     def __str__(self):
         if translation.get_language() == "ar":
@@ -107,6 +109,11 @@ class TarifiActivitySlot(models.Model):
     @property
     def slot_attendance_end_date(self):
         return self.slot_start_date + timezone.timedelta(minutes=30)
+
+    @staticmethod
+    def check_overlap_between_two_slots(slot1, slot2):
+        return check_overlap_between_two_date_ranges(slot1.slot_start_date, slot1.slot_end_date,
+                                                     slot2.slot_start_date, slot2.slot_end_date)
 
 
 class TarifiData(models.Model):
@@ -225,63 +232,69 @@ class TarifiData(models.Model):
 
     def assign_tarifi_activities(self, use_current_timing=False, reschedule=False):
         if use_current_timing:
-            reception_date = timezone.now() + timezone.timedelta(minutes=30)
+            acceptable_start_date = timezone.now() + timezone.timedelta(minutes=15)
         else:
             try:
-                reception_date = self.admission_request.tarifi_week_attendance_date.slot_end_date
+                acceptable_start_date = self.admission_request.tarifi_week_attendance_date.slot_end_date \
+                                 + timezone.timedelta(minutes=15)
             except:
                 return
+
+        if reschedule or self.english_placement_test_slot is None:
+            available_written_slots = TarifiActivitySlot.objects.filter(
+                type=TarifiActivitySlot.TarifiActivitySlotTypes.ENGLISH_PLACEMENT_TEST,
+                show=True,
+                slot_start_date__gt=acceptable_start_date,
+                semester=self.admission_request.semester,
+            )
+
+            for written_slot in available_written_slots:
+                if written_slot.remaining_slots > 0:
+                    self.english_placement_test_slot = written_slot
+                    break
+
+            if reschedule or self.english_speaking_test_slot is None:
+                if self.english_placement_test_slot:
+                    acceptable_oral_start_date = self.english_placement_test_slot.slot_end_date \
+                                                 + timezone.timedelta(minutes=15)
+                    available_oral_slots = TarifiActivitySlot.objects.filter(
+                        Q(slot_start_date__gt=acceptable_start_date)
+                        & Q(slot_start_date__gt=acceptable_oral_start_date),
+                        type=TarifiActivitySlot.TarifiActivitySlotTypes.ENGLISH_SPEAKING_TEST,
+                        show=True,
+                        location_en=self.english_placement_test_slot.location_en,
+                        semester=self.admission_request.semester,
+                    )
+                    for oral_slot in available_oral_slots:
+                        if oral_slot.remaining_slots > 0:
+                            self.english_speaking_test_slot = oral_slot
+                            time_offset = (timezone.localtime(oral_slot.slot_end_date)
+                                           - timezone.localtime(
+                                        oral_slot.slot_start_date)).seconds / oral_slot.slots \
+                                          * (oral_slot.slots - oral_slot.remaining_slots)
+                            self.english_speaking_test_start_time = timezone.localtime(oral_slot.slot_start_date) \
+                                                                    + timezone.timedelta(seconds=time_offset)
+                            break
 
         if reschedule or self.preparation_course_slot is None:
             available_course_slots = TarifiActivitySlot.objects.filter(
                 type=TarifiActivitySlot.TarifiActivitySlotTypes.PREPARATION_COURSE,
                 show=True,
-                slot_start_date__gt=reception_date,
+                slot_start_date__gt=acceptable_start_date,
                 semester=self.admission_request.semester,
             )
             for course_slot in available_course_slots:
                 if course_slot.remaining_slots > 0:
-                    self.preparation_course_slot = course_slot
-                    break
-
-        if reschedule or self.english_placement_test_slot is None:
-            if self.preparation_course_slot:
-                acceptable_written_start_date = self.preparation_course_slot.slot_end_date \
-                                                + timezone.timedelta(minutes=30)
-                available_written_slots = TarifiActivitySlot.objects.filter(
-                    type=TarifiActivitySlot.TarifiActivitySlotTypes.ENGLISH_PLACEMENT_TEST,
-                    show=True,
-                    slot_start_date__gt=acceptable_written_start_date,
-                    semester=self.admission_request.semester,
-                )
-
-                for written_slot in available_written_slots:
-                    if written_slot.remaining_slots > 0:
-                        self.english_placement_test_slot = written_slot
+                    if (TarifiActivitySlot.check_overlap_between_two_slots(course_slot,
+                                                                           self.english_placement_test_slot)
+                        or TarifiActivitySlot.check_overlap_between_two_slots(course_slot,
+                                                                              self.english_speaking_test_slot)):
+                        # print('{}, {}, {}'.format(course_slot, self.english_placement_test_slot,
+                        #                           self.english_speaking_test_slot))
+                        pass
+                    else:
+                        self.preparation_course_slot = course_slot
                         break
-
-                if reschedule or self.english_speaking_test_slot is None:
-                    if self.english_placement_test_slot:
-                        acceptable_oral_start_date = self.english_placement_test_slot.slot_end_date \
-                                                     + timezone.timedelta(minutes=30)
-                        available_oral_slots = TarifiActivitySlot.objects.filter(
-                            type=TarifiActivitySlot.TarifiActivitySlotTypes.ENGLISH_SPEAKING_TEST,
-                            show=True,
-                            slot_start_date__gt=acceptable_oral_start_date,
-                            location_en=self.english_placement_test_slot.location_en,
-                            semester=self.admission_request.semester,
-                        )
-                        for oral_slot in available_oral_slots:
-                            if oral_slot.remaining_slots > 0:
-                                self.english_speaking_test_slot = oral_slot
-                                time_offset = (timezone.localtime(oral_slot.slot_end_date)
-                                               - timezone.localtime(
-                                            oral_slot.slot_start_date)).seconds / oral_slot.slots \
-                                              * (oral_slot.slots - oral_slot.remaining_slots)
-                                self.english_speaking_test_start_time = timezone.localtime(oral_slot.slot_start_date) \
-                                                                        + timezone.timedelta(seconds=time_offset)
-                                break
-
         self.save()
 
     @staticmethod
