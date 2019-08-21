@@ -6,7 +6,7 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 
 from undergraduate_admission.models import RegistrationStatus, AdmissionSemester, TarifiReceptionDate
-from undergraduate_admission.utils import format_date_time, format_date, format_time, SMS
+from undergraduate_admission.utils import format_date_time, format_date, format_time, SMS, format_date_time_verbose
 
 User = settings.AUTH_USER_MODEL
 
@@ -70,7 +70,7 @@ class TarifiActivitySlot(models.Model):
         return _('%(slot_type)s (%(location)s) %(start_date)s') % {
             'slot_type': self.get_type_display(),
             'location': location,
-            'start_date': format_date_time(self.slot_start_date),
+            'start_date': format_date_time_verbose(self.slot_start_date),
             # 'end_date': format_date_time(self.slot_end_date),
         }
 
@@ -82,7 +82,7 @@ class TarifiActivitySlot(models.Model):
             return self.location_en
 
     def date_and_location(self):
-        return '{} - ({})'.format(format_date_time(self.slot_start_date), self.location)
+        return '{} - ({})'.format(format_date_time_verbose(self.slot_start_date), self.location)
 
     @property
     def remaining_slots(self):

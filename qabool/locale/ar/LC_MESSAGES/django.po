@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-20 14:14+0300\n"
-"PO-Revision-Date: 2019-08-20 14:15+0300\n"
+"POT-Creation-Date: 2019-08-21 12:12+0300\n"
+"PO-Revision-Date: 2019-08-21 12:26+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -103,7 +103,7 @@ msgstr "موعد النوم"
 #: find_roommate/templates/find_roommate/letter_housing.html:194
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
-#: tarifi/admin.py:45 tarifi/forms.py:9 tarifi/models.py:336
+#: tarifi/admin.py:45 tarifi/forms.py:9 tarifi/models.py:356
 #: undergraduate_admission/forms/phase2_forms.py:332
 #: undergraduate_admission/models/student.py:150
 #: undergraduate_admission/models/student.py:727
@@ -202,6 +202,10 @@ msgstr "الغرفة"
 #: find_roommate/models.py:109
 msgid "Available"
 msgstr "متوفرة"
+
+#: find_roommate/models.py:135
+msgid "Room Not specified"
+msgstr "غير محدد"
 
 #: find_roommate/templates/find_roommate/__request.html:7
 #: undergraduate_admission/templates/undergraduate_admission/phase3/choose_roommate.html:16
@@ -494,57 +498,57 @@ msgstr "مقيم (قبائل نازحة)"
 #: tarifi/forms.py:13
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:115
 msgid "Reception Desk"
-msgstr "رقم الاستقبال"
+msgstr "رقم مكتب الاستقبال (الكاونتر)"
 
-#: tarifi/models.py:24 tarifi/models.py:140
+#: tarifi/models.py:23 tarifi/models.py:140
 msgid "Preparation Course Attendance Date"
 msgstr "تاريخ حضور البرنامج التعريفي"
 
-#: tarifi/models.py:25
+#: tarifi/models.py:24
 msgid "English Placement Test Date"
 msgstr "تاريخ اختبار اللغة اﻻنجليزية التحريري"
 
-#: tarifi/models.py:26
+#: tarifi/models.py:25
 msgid "English Speaking Test Date"
-msgstr "تاريخ اختبار اللغة اﻻنجليزية الشفوي"
+msgstr "تاريخ اختبار اللغة اﻻنجليزية الشفهي"
 
-#: tarifi/models.py:35
+#: tarifi/models.py:34
 msgid "Semester"
 msgstr "فصل القبول"
 
-#: tarifi/models.py:37 undergraduate_admission/models/student.py:820
+#: tarifi/models.py:36 undergraduate_admission/models/student.py:820
 msgid "Start Date"
 msgstr "تاريخ البداية"
 
-#: tarifi/models.py:38 undergraduate_admission/models/student.py:821
+#: tarifi/models.py:37 undergraduate_admission/models/student.py:821
 msgid "End Date"
 msgstr "تاريخ الانتهاء"
 
-#: tarifi/models.py:39
+#: tarifi/models.py:38
 msgid "Location (Arabic)"
 msgstr "مكان الفعالية ( بالعربي )"
 
-#: tarifi/models.py:40
+#: tarifi/models.py:39
 msgid "Location (English)"
 msgstr "مكان الفعالية ( بالانجليزي )"
 
-#: tarifi/models.py:41 undergraduate_admission/models/student.py:819
+#: tarifi/models.py:40 undergraduate_admission/models/student.py:819
 msgid "Slots"
 msgstr "العدد المتاح"
 
-#: tarifi/models.py:43 tarifi/templates/tarifi/course_attendance.html:10
+#: tarifi/models.py:42 tarifi/templates/tarifi/course_attendance.html:10
 msgid "Slot Type"
 msgstr "نوع الفعالية"
 
-#: tarifi/models.py:51 tarifi/templates/tarifi/course_attendance.html:19
+#: tarifi/models.py:50 tarifi/templates/tarifi/course_attendance.html:19
 msgid "Attender"
 msgstr "المشرف"
 
-#: tarifi/models.py:57 undergraduate_admission/models/supporting_models.py:316
+#: tarifi/models.py:56 undergraduate_admission/models/supporting_models.py:316
 msgid "Description"
 msgstr "شرح"
 
-#: tarifi/models.py:58 tarifi/models.py:338
+#: tarifi/models.py:57 tarifi/models.py:358
 #: undergraduate_admission/models/misc_models.py:45
 #: undergraduate_admission/models/misc_models.py:87
 #: undergraduate_admission/models/misc_models.py:161
@@ -555,7 +559,7 @@ msgstr "شرح"
 msgid "Show"
 msgstr "اظهر"
 
-#: tarifi/models.py:59 undergraduate_admission/models/misc_models.py:46
+#: tarifi/models.py:58 undergraduate_admission/models/misc_models.py:46
 #: undergraduate_admission/models/misc_models.py:88
 #: undergraduate_admission/models/misc_models.py:190
 #: undergraduate_admission/models/student.py:823
@@ -564,11 +568,11 @@ msgstr "اظهر"
 msgid "Display Order"
 msgstr "عرض الترتيب"
 
-#: tarifi/models.py:62
+#: tarifi/models.py:61
 msgid "Tarifi: Preparation Activity Slots"
 msgstr "البرنامج التعريفي: أنشطة البرنامج التعريفي"
 
-#: tarifi/models.py:71
+#: tarifi/models.py:70
 #, python-format
 msgid "%(slot_type)s (%(location)s) %(start_date)s"
 msgstr "%(slot_type)s (%(location)s) - %(start_date)s"
@@ -598,11 +602,11 @@ msgstr "اختبار اللغة اﻻنجليزية التحريري"
 #: tarifi/models.py:166
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:128
 msgid "English Speaking Test Slot"
-msgstr "اختبار اللغة اﻻنجليزية الشفوي"
+msgstr "اختبار اللغة اﻻنجليزية الشفهي"
 
 #: tarifi/models.py:174
 msgid "English Speaking Test Time"
-msgstr "وقت اختبار اللغة اﻻنجليزية الشفوي"
+msgstr "وقت اختبار اللغة اﻻنجليزية الشفهي"
 
 #: tarifi/models.py:182
 msgid "English Placement Test Score"
@@ -610,7 +614,7 @@ msgstr "نتيجة اختبار اللغة اﻻنجليزية التحريري"
 
 #: tarifi/models.py:189
 msgid "English Speaking Test Score"
-msgstr "درجة اختبار اللغة اﻻنجليزية الشفوي"
+msgstr "درجة اختبار اللغة اﻻنجليزية الشفهي"
 
 #: tarifi/models.py:193
 msgid "English Level"
@@ -627,17 +631,17 @@ msgstr "%(slot_type)s (%(location)s) - %(start_date)s %(start_time)s"
 
 #: tarifi/models.py:209
 msgid "English Speaking Test"
-msgstr "اختبار اللغة اﻻنجليزية الشفوي"
+msgstr "اختبار اللغة اﻻنجليزية الشفهي"
 
-#: tarifi/models.py:327
+#: tarifi/models.py:347
 msgid "From KFUPM ID"
 msgstr "بداية الأرقام الجامعية"
 
-#: tarifi/models.py:328
+#: tarifi/models.py:348
 msgid "To KFUPM ID"
 msgstr "نهاية الأرقام الجامعية"
 
-#: tarifi/models.py:329 tarifi/models.py:337
+#: tarifi/models.py:349 tarifi/models.py:357
 msgid "Box No"
 msgstr "رقم الصندوق"
 
@@ -691,15 +695,21 @@ msgstr "ﻻ يمكن الطباعة"
 msgid "Select"
 msgstr "اختيــــار"
 
-#: tarifi/views.py:59
+#: tarifi/templates/tarifi/student_print_page.html:56
+#: undergraduate_admission/models/student.py:438
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:113
+msgid "Tarifi Week Attendance Date"
+msgstr "تاريخ حضور البرنامج التعريفي"
+
+#: tarifi/views.py:60
 msgid "Desk number specified successfully..."
 msgstr "لقد تم تحديد رقم الاستقبال بنجاح"
 
-#: tarifi/views.py:199
+#: tarifi/views.py:191
 msgid "Early"
 msgstr "مبكر"
 
-#: tarifi/views.py:199
+#: tarifi/views.py:191
 msgid "Late"
 msgstr "متأخر"
 
@@ -1840,11 +1850,6 @@ msgstr "ملاحظات (المسؤول عند التأكد)"
 msgid "Eligible For Housing"
 msgstr "يستحق السكن"
 
-#: undergraduate_admission/models/student.py:438
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:113
-msgid "Tarifi Week Attendance Date"
-msgstr "تاريخ حضور البرنامج التعريفي"
-
 #: undergraduate_admission/models/student.py:452
 msgid "Admission Request"
 msgstr "طلب قبول"
@@ -2892,7 +2897,7 @@ msgstr "رفع إخلاء الطرف"
 
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:147
 msgid "Print Tarifi Schedule"
-msgstr "طباعة مواعيد البرنامج التعريفي"
+msgstr "طباعة نموذج الاستقبال"
 
 #: undergraduate_admission/utils.py:23
 #, python-format
@@ -3071,11 +3076,11 @@ msgstr ""
 "عمادة شؤون الطلاب\n"
 "جامعة الملك فهد للبترول والمعادن"
 
-#: undergraduate_admission/utils.py:321
+#: undergraduate_admission/utils.py:326
 msgid "Use English alphabet only! You can also use the dot, hyphen and spaces"
 msgstr "استخدم الحروف الانجليزية فقط"
 
-#: undergraduate_admission/utils.py:331
+#: undergraduate_admission/utils.py:336
 msgid ""
 "Use Arabic alphabet only! You can also use spaces and diacritics (tashkil)"
 msgstr "استخدم الحروف العربية فقط"
