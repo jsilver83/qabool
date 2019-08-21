@@ -52,16 +52,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width:33%">
+				<td colspan="3" style="width:33%; text-align: center">
+					<h4 style="text-align:center;">{% trans 'Tarifi Week Attendance Date' %}: <b>{{ student.tarifi_week_attendance_date }}</b><br>
+						رقم مكتب الاستقبال (الكاونتر) <span>({{ tarifi_data.desk_no }})</span></h4>
+				</td>
 
-				</td>
-				<td style="width:33%">
-					<h4 style="text-align:center;">
-						رقم مكتب الاستقبال (الكاونتر) ( {{ tarifi_data.desk_no }} )</h4>
-				</td>
-				<td style="width:33%">
-
-				</td>
 			</tr>
 		</table>
 	</div>
@@ -76,18 +71,18 @@
 					{{ student }}
 				</td>
 				<td style="width:15%">
-					التاريخ
+					الهوية الوطنية
 				</td>
 				<td style="width:35%">
-					{{ tarifi_data.created_on }}
+					{{ student.government_id }}
 				</td>
 			</tr>
 			<tr>
 				<td class="auto-style1">
-					الهوية الوطنية
+					الرقم الجامعي
 				</td>
 				<td class="auto-style1">
-					{{ student.username }}
+					{{ student.kfupm_id }}
 				</td>
 				<td class="auto-style1">
 					نقطة الأصل
@@ -98,56 +93,56 @@
 			</tr>
 			<tr>
 				<td>
-					الرقم الجامعي
-				</td>
-				<td>
-					{{ student.kfupm_id }}
-				</td>
-				<td>
 					السكن
 				</td>
-				<td>
+				<td colspan="3">
 					{{ student.eligible_for_housing|yesno }}
 					{% if student.eligible_for_housing %}&nbsp;-&nbsp;{{ room }}{% endif %}
 				</td>
 			</tr>
 		</table>
 
-
 		<table class="table table-striped">
 			<tr>
 				<td colspan="2" align="center">
 					<h4>
-						مواعيد اختبار اللغة الإنجليزية ودورة التهيؤ</h4>
+						مواعيد دورة التهيؤ و اختبارات اللغة الإنجليزية</h4>
 				</td>
 			</tr>
+
+			{% if tarifi_data.preparation_course_slot %}
 			<tr>
 				<td>
-					موعد دورة التهيؤ:
+					دورة التهيؤ:
 				</td>
 				<td>
-					{{ tarifi_data.preparation_course_slot.location }}&nbsp;-&nbsp;
-					{{ tarifi_data.preparation_course_slot.slot_start_date }}
+					<span style="direction: rtl">{{ tarifi_data.preparation_course_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.preparation_course_slot.location }})</span>
 				</td>
 			</tr>
+			{% endif %}
+
+			{% if tarifi_data.english_placement_test_slot %}
 			<tr>
 				<td>
-					الاختبار التحريري :
+					الاختبار التحريري:
 				</td>
 				<td>
-					{{ tarifi_data.english_placement_test_slot.location }}&nbsp;-&nbsp;
-					{{ tarifi_data.english_placement_test_slot.slot_start_date }}
+					<span style="direction: ltr">{{ tarifi_data.english_placement_test_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.english_placement_test_slot.location }})</span>
 				</td>
 			</tr>
+			{% endif %}
+
+			{% if tarifi_data.english_speaking_test_slot %}
 			<tr style="border-bottom:double">
 				<td>
-					الاختبار الشفهي :
+				الاختبار الشفهي:
 				</td>
 				<td>
-					{{ tarifi_data.english_speaking_test_slot.location }}&nbsp;-&nbsp;
-					{{ tarifi_data.english_speaking_test_start_time }}
+					<span style="direction: ltr">{{ tarifi_data.english_speaking_test_slot.slot_start_date|date:"d M Y م h:i A" }} - ({{ tarifi_data.english_speaking_test_slot.location }})</span>
 				</td>
 			</tr>
+			{% endif %}
+
 			{% if issues %}
 			<tr>
 				<td>
