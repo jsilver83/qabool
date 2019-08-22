@@ -9,7 +9,8 @@ class UserHousingAdmin(admin.ModelAdmin):
     list_display = ('user', 'facebook', 'twitter', 'sleeping', 'light',
                     'room_temperature', 'visits', 'searchable')
 
-    list_filter = ('searchable', 'user__eligible_for_housing',)
+    list_filter = ('searchable', 'user__eligible_for_housing', )
+    autocomplete_fields = ['user', ]
 
 
 class RoomResource(resources.ModelResource):
@@ -34,6 +35,7 @@ class RoommateRequestAdmin(admin.ModelAdmin):
     list_filter = ('status', )
 
     search_fields = ['requesting_user__kfupm_id', 'requested_user__kfupm_id']
+    autocomplete_fields = ['requesting_user', 'requested_user', ]
 
 
 admin.site.register(HousingUser, UserHousingAdmin)
