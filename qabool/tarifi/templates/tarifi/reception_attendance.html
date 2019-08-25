@@ -4,7 +4,8 @@
 
 {% block subcontent %}
 	<div class="pull-left">
-		<h4>{% trans 'Desk Number' %}: {{ desk_no }}</h4>
+		<h4>{% trans 'Desk Number' %}: <b>{{ desk_no }}</b>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{% url 'tarifi:reception_landing' %}"><i class="fa fa-edit"></i> {% trans "Change" %}</a>
+		</h4>
 	</div>
 	<br><br><br>
 	<form method="get">
