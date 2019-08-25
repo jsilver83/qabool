@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-21 12:12+0300\n"
+"POT-Creation-Date: 2019-08-25 10:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,7 +99,8 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing.html:194
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
-#: tarifi/admin.py:45 tarifi/forms.py:9 tarifi/models.py:356
+#: tarifi/admin.py:45 tarifi/models.py:369
+#: tarifi/templates/tarifi/reception_attendance.html:21
 #: undergraduate_admission/forms/phase2_forms.py:332
 #: undergraduate_admission/models/student.py:150
 #: undergraduate_admission/models/student.py:727
@@ -183,7 +184,7 @@ msgid "Request Date"
 msgstr ""
 
 #: find_roommate/models.py:85
-#: find_roommate/templates/find_roommate/__request.html:21 tarifi/models.py:196
+#: find_roommate/templates/find_roommate/__request.html:21 tarifi/models.py:203
 msgid "Updated On"
 msgstr ""
 
@@ -224,6 +225,7 @@ msgid "Reject"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/__request.html:46
+#: tarifi/templates/tarifi/reception_attendance.html:39
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:206
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:138
@@ -356,7 +358,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing.html:45
 #: find_roommate/templates/find_roommate/letter_housing_2.html:39
 #: find_roommate/templates/find_roommate/letter_housing_3.html:39
-#: tarifi/templates/tarifi/reception_attendance.html:27
+#: tarifi/templates/tarifi/reception_attendance.html:45
 #: tarifi/templates/tarifi/student_print_page.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:35
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:45
@@ -383,6 +385,7 @@ msgid "Dear Student"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/letter_housing.html:75
+#: tarifi/templates/tarifi/reception_attendance.html:22
 #: undergraduate_admission/forms/general_forms.py:135
 #: undergraduate_admission/forms/general_forms.py:138
 #: undergraduate_admission/forms/general_forms.py:159
@@ -476,60 +479,64 @@ msgstr ""
 msgid "Moqeem"
 msgstr ""
 
-#: tarifi/forms.py:13
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:115
+#: tarifi/forms.py:9
+msgid "KFUPM ID or Government ID"
+msgstr ""
+
+#: tarifi/forms.py:13 tarifi/templates/tarifi/reception_attendance.html:28
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:119
 msgid "Reception Desk"
 msgstr ""
 
-#: tarifi/models.py:23 tarifi/models.py:140
+#: tarifi/models.py:25 tarifi/models.py:147
 msgid "Preparation Course Attendance Date"
 msgstr ""
 
-#: tarifi/models.py:24
+#: tarifi/models.py:26
 msgid "English Placement Test Date"
 msgstr ""
 
-#: tarifi/models.py:25
+#: tarifi/models.py:27
 msgid "English Speaking Test Date"
 msgstr ""
 
-#: tarifi/models.py:34
+#: tarifi/models.py:36
 msgid "Semester"
 msgstr ""
 
-#: tarifi/models.py:36 undergraduate_admission/models/student.py:820
+#: tarifi/models.py:38 undergraduate_admission/models/student.py:820
 msgid "Start Date"
 msgstr ""
 
-#: tarifi/models.py:37 undergraduate_admission/models/student.py:821
+#: tarifi/models.py:39 undergraduate_admission/models/student.py:821
 msgid "End Date"
 msgstr ""
 
-#: tarifi/models.py:38
+#: tarifi/models.py:40
 msgid "Location (Arabic)"
 msgstr ""
 
-#: tarifi/models.py:39
+#: tarifi/models.py:41
 msgid "Location (English)"
 msgstr ""
 
-#: tarifi/models.py:40 undergraduate_admission/models/student.py:819
+#: tarifi/models.py:42 undergraduate_admission/models/student.py:819
 msgid "Slots"
 msgstr ""
 
-#: tarifi/models.py:42 tarifi/templates/tarifi/course_attendance.html:10
+#: tarifi/models.py:44 tarifi/templates/tarifi/course_attendance.html:10
 msgid "Slot Type"
 msgstr ""
 
-#: tarifi/models.py:50 tarifi/templates/tarifi/course_attendance.html:19
+#: tarifi/models.py:52 tarifi/templates/tarifi/course_attendance.html:19
 msgid "Attender"
 msgstr ""
 
-#: tarifi/models.py:56 undergraduate_admission/models/supporting_models.py:316
+#: tarifi/models.py:58 undergraduate_admission/models/supporting_models.py:316
 msgid "Description"
 msgstr ""
 
-#: tarifi/models.py:57 tarifi/models.py:358
+#: tarifi/models.py:59 tarifi/models.py:371
 #: undergraduate_admission/models/misc_models.py:45
 #: undergraduate_admission/models/misc_models.py:87
 #: undergraduate_admission/models/misc_models.py:161
@@ -540,7 +547,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: tarifi/models.py:58 undergraduate_admission/models/misc_models.py:46
+#: tarifi/models.py:60 undergraduate_admission/models/misc_models.py:46
 #: undergraduate_admission/models/misc_models.py:88
 #: undergraduate_admission/models/misc_models.py:190
 #: undergraduate_admission/models/student.py:823
@@ -549,80 +556,80 @@ msgstr ""
 msgid "Display Order"
 msgstr ""
 
-#: tarifi/models.py:61
+#: tarifi/models.py:63
 msgid "Tarifi: Preparation Activity Slots"
 msgstr ""
 
-#: tarifi/models.py:70
+#: tarifi/models.py:72
 #, python-format
 msgid "%(slot_type)s (%(location)s) %(start_date)s"
 msgstr ""
 
-#: tarifi/models.py:120
+#: tarifi/models.py:127
 msgid "Desk No"
 msgstr ""
 
-#: tarifi/models.py:123
+#: tarifi/models.py:130
 msgid "Received By"
 msgstr ""
 
-#: tarifi/models.py:132
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:118
+#: tarifi/models.py:139
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:122
 msgid "Preparation Course Slot"
 msgstr ""
 
-#: tarifi/models.py:146
+#: tarifi/models.py:153
 msgid "Preparation Course Attended By"
 msgstr ""
 
-#: tarifi/models.py:156
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:123
+#: tarifi/models.py:163
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:127
 msgid "English Placement Test Slot"
 msgstr ""
 
-#: tarifi/models.py:166
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:128
+#: tarifi/models.py:173
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:132
 msgid "English Speaking Test Slot"
 msgstr ""
 
-#: tarifi/models.py:174
+#: tarifi/models.py:181
 msgid "English Speaking Test Time"
 msgstr ""
 
-#: tarifi/models.py:182
+#: tarifi/models.py:189
 msgid "English Placement Test Score"
 msgstr ""
 
-#: tarifi/models.py:189
+#: tarifi/models.py:196
 msgid "English Speaking Test Score"
 msgstr ""
 
-#: tarifi/models.py:193
+#: tarifi/models.py:200
 msgid "English Level"
 msgstr ""
 
-#: tarifi/models.py:195
+#: tarifi/models.py:202
 msgid "Created On"
 msgstr ""
 
-#: tarifi/models.py:208
+#: tarifi/models.py:215
 #, python-format
 msgid "%(slot_type)s (%(location)s) %(start_date)s %(start_time)s"
 msgstr ""
 
-#: tarifi/models.py:209
+#: tarifi/models.py:216
 msgid "English Speaking Test"
 msgstr ""
 
-#: tarifi/models.py:347
+#: tarifi/models.py:360
 msgid "From KFUPM ID"
 msgstr ""
 
-#: tarifi/models.py:348
+#: tarifi/models.py:361
 msgid "To KFUPM ID"
 msgstr ""
 
-#: tarifi/models.py:349 tarifi/models.py:357
+#: tarifi/models.py:362 tarifi/models.py:370
 msgid "Box No"
 msgstr ""
 
@@ -640,6 +647,7 @@ msgid "Capacity"
 msgstr ""
 
 #: tarifi/templates/tarifi/course_attendance.html:29
+#: tarifi/templates/tarifi/reception_attendance.html:36
 msgid "Attend"
 msgstr ""
 
@@ -652,7 +660,7 @@ msgid "Attend Anyways"
 msgstr ""
 
 #: tarifi/templates/tarifi/course_attendance.html:60
-#: tarifi/templates/tarifi/reception_attendance.html:37
+#: tarifi/templates/tarifi/reception_attendance.html:58
 msgid "This student DOES NOT exist. Try a differnt ID!"
 msgstr ""
 
@@ -666,8 +674,16 @@ msgstr ""
 msgid "Desk Number"
 msgstr ""
 
-#: tarifi/templates/tarifi/reception_attendance.html:30
+#: tarifi/templates/tarifi/reception_attendance.html:48
 msgid "Can NOT Print"
+msgstr ""
+
+#: tarifi/templates/tarifi/reception_attendance.html:49
+msgid "Wrong desk"
+msgstr ""
+
+#: tarifi/templates/tarifi/reception_attendance.html:49
+msgid "Not on time"
 msgstr ""
 
 #: tarifi/templates/tarifi/reception_landing.html:9
@@ -676,19 +692,27 @@ msgstr ""
 
 #: tarifi/templates/tarifi/student_print_page.html:56
 #: undergraduate_admission/models/student.py:438
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:113
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:117
 msgid "Tarifi Week Attendance Date"
 msgstr ""
 
-#: tarifi/views.py:60
+#: tarifi/views.py:61
 msgid "Desk number specified successfully..."
 msgstr ""
 
-#: tarifi/views.py:191
+#: tarifi/views.py:123
+msgid "{} was attended successfully"
+msgstr ""
+
+#: tarifi/views.py:125
+msgid "You chose to cancel attending {}"
+msgstr ""
+
+#: tarifi/views.py:213
 msgid "Early"
 msgstr ""
 
-#: tarifi/views.py:191
+#: tarifi/views.py:213
 msgid "Late"
 msgstr ""
 
@@ -2744,7 +2768,7 @@ msgstr ""
 msgid "Upload Withdrawal Proof"
 msgstr ""
 
-#: undergraduate_admission/templates/undergraduate_admission/student_area.html:147
+#: undergraduate_admission/templates/undergraduate_admission/student_area.html:110
 msgid "Print Tarifi Schedule"
 msgstr ""
 
