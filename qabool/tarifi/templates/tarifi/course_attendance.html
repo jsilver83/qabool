@@ -1,5 +1,5 @@
 {% extends 'undergraduate_admission/admin/base_admin_area.html' %}
-{#{% load bootstrap3 %}#}
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block subcontent %}
@@ -23,37 +23,30 @@
 		<hr>
 	{% endif %}
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-5">
 				<form>
-					{{ form }}
-					<button>{% trans 'Attend' %}</button>
+					{% crispy form %}<br>
+					<button class="btn btn-primary btn-block"><span class="glyphicon glyphicon-calendar"></span>&nbsp;{% trans 'Attend' %}</button>
 				</form>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-7">
 				{% if student_entered %}
 					{% if student %}
-						{% if student.preparation_course_attendance %}
-						<div class="alert alert-success">
+						<div class="alert alert-{% if attended %}success{% else %}danger{% endif %}">
 							<h4>
-								<span class="glyphicon glyphicon-ok"></span>&nbsp;
+								<span class="glyphicon glyphicon-{% if attended %}ok{% else %}remove{% endif %}"></span>&nbsp;
 								{{ student }}&nbsp;<small><strong>{{ student.kfupm_id }}</strong></small>
 							</h4>
-							<h6>
-								{{ student.preparation_course_attendance }}</h6>
-						</div>
-						{% else %}
+							{% if student.preparation_course_attendance %}<p><b>{% trans "Attendance Date:" %}</b> {{ student.preparation_course_attendance }}</p>{% endif %}
+							{% if student.preparation_course_attended_by %}<p><b>{% trans "Attended By:" %}</b> {{ student.preparation_course_attended_by }}</p>{% endif %}
+							<p><b>{% trans 'Slot Period' %}:</b> {{ student.preparation_course_slot.slot_start_date }} - {{ student.preparation_course_slot.slot_end_date|time }}</p>
 							{% if early_or_late %}
-							<div class="alert alert-danger">
-								<b>{% trans 'Slot Period' %}: {{ slot.slot_start_date }} - {{ slot.slot_end_date|time }}</b>
-								<h6>{% trans 'This student is' %}&nbsp;{{ early_or_late }}</h6>
-								{% if enable_attendance_anyways %}
-								<a class="btn btn-success"
-								   href="{% url 'preparation_course_attendance' %}?attend_anyways=1&{{ request.GET.urlencode }}">
-									{% trans 'Attend Anyways' %}</a>
-								{% endif %}
-							</div>
+								<br>
+								<div class="alert alert-warning">
+									<h6>{% trans 'This student is' %}&nbsp;{{ early_or_late }}</h6>
+								</div>
 							{% endif %}
-						{% endif %}
+						</div>
 					{% else %}
 						<div class="alert alert-danger">
 							<span class="glyphicon glyphicon-remove"></span>&nbsp;

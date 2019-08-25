@@ -153,7 +153,7 @@ class StudentPrintPage(TarifiMixin, TemplateView):
 
 class CourseAttendance(TarifiMixin, FormView):
     template_name = 'tarifi/course_attendance.html'
-    form_class = TarifiSearchForm
+    form_class = CourseAttendanceSearchForm
 
     def get_context_data(self, **kwargs):
         context = super(CourseAttendance, self).get_context_data(**kwargs)
@@ -169,57 +169,42 @@ class CourseAttendance(TarifiMixin, FormView):
                                                  type=TarifiActivitySlot.TarifiActivitySlotTypes.PREPARATION_COURSE,
                                                  show=True,
                                                  semester=semester).first()
+        context['slot'] = slot
 
-        kfupm_id = self.request.GET.get('kfupm_id', -1)
-        if slot:
-            context['slot'] = slot
+        kfupm_id = self.request.GET.get('kfupm_id', 0)
 
-            if kfupm_id != -1:
-                context['student_entered'] = True
+        if kfupm_id:
+            context['student_entered'] = True
+
+            try:
+                student = TarifiData.objects.get(
+                    admission_request__kfupm_id=kfupm_id,
+                    admission_request__semester=semester,
+                    admission_request__status_message__in=allowed_statuses_for_tarifi_week,
+                )
+
+                context['student'] = student
+
+                if (student.preparation_course_slot == context['slot'] or self.request.user.is_superuser
+                        or self.request.user.groups.filter(name=UserGroups.TARIFI_ADMIN).exists()):
+                    if student.preparation_course_attendance is None or student.preparation_course_attended_by is None:
+                        student.preparation_course_attendance = now
+                        student.preparation_course_attended_by = self.request.user
+                        student.save()
+                    context['attended'] = True
+                else:
+                    context['attended'] = False
+
+                context['early_or_late'] = \
+                        _('Early') if now < student.preparation_course_slot.slot_start_date else _('Late')
+
+                # TODO: make the student attended in Hussain Almuslim bookstore system
                 try:
-                    student = TarifiData.objects.get(
-                        admission_request__kfupm_id=kfupm_id,
-                        admission_request__semester=semester,
-                        admission_request__status_message__in=allowed_statuses_for_tarifi_week,
-                        preparation_course_slot=context['slot'],
-                    )
-
-                    context['student'] = student
-                    student.preparation_course_attendance = now
-                    student.preparation_course_attended_by = self.request.user
-                    student.save()
-
-                    # TODO: make the student attended in Hussain Almuslim bookstore system
-                    try:
-                        request_link = 'http://10.142.5.182:1345/api/bookstore-update/%s' % kfupm_id
-                        requests.get(request_link, timeout=(3, 1))
-                    except:  # usually TimeoutError but made it general so it will never raise an exception
-                        pass
-                except ObjectDoesNotExist:
+                    request_link = 'http://10.142.5.182:1345/api/bookstore-update/%s' % kfupm_id
+                    requests.get(request_link, timeout=(3, 1))
+                except:  # usually TimeoutError but made it general so it will never raise an exception
                     pass
-        else:
-            if kfupm_id != -1:
-                context['student_entered'] = True
-
-                try:
-                    student = TarifiData.objects.get(
-                        admission_request__kfupm_id=kfupm_id,
-                        admission_request__semester=semester,
-                        admission_request__status_message__in=allowed_statuses_for_tarifi_week,
-                    )
-                    context['student'] = student
-                    context['slot'] = student.preparation_course_slot
-                    context['early_or_late'] = \
-                        _('Early') if now < student.preparation_course_slot.slot_attendance_start_date else _('Late')
-
-                    attend_anyways = self.request.GET.get('attend_anyways', 0)
-                    if self.request.user.is_superuser or self.request.user.groups.filter(name='Tarifi Admin').exists():
-                        context['enable_attendance_anyways'] = True
-                        if attend_anyways:
-                            student.preparation_course_attendance = now
-                            student.preparation_course_attended_by = self.request.user
-                            student.save()
-                except ObjectDoesNotExist:
-                    pass
+            except ObjectDoesNotExist:
+                pass
 
         return context

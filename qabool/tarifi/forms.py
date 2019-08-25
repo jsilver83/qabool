@@ -11,3 +11,7 @@ class TarifiSearchForm(BaseCrispyForm, forms.Form):
 
 class ReceptionDeskForm(BaseCrispyForm, forms.Form):
     reception_desk = forms.IntegerField(required=True, label=_('Reception Desk'))
+
+
+class CourseAttendanceSearchForm(BaseCrispyForm, forms.Form):
+    kfupm_id = forms.IntegerField(required=True, label=_('KFUPM ID'))
