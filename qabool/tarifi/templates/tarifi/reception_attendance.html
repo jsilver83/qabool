@@ -16,20 +16,41 @@
 	{% if show_result %}
 		{% if student %}
 			<div class="alert alert-success">
-				<strong>{{ student.kfupm_id }}</strong><br>
-				<h4>{{ student }}</h4>
-				<small>{{ student.tarifi_week_attendance_date }}</small>
-				<hr>
-				{% if can_print %}
-					<a class="btn btn-primary btn-lg"
-					   target="_blank"
-					   href="{% url 'tarifi:student_print_page' student.pk %}">
-						<span class="glyphicon glyphicon-print"></span>&nbsp;{% trans 'Print' %}</a>
-				{% else %}
-					<a href="#" class="btn btn-danger btn-lg disabled">
-						<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;{% trans 'Can NOT Print' %}
-					</a>
-				{% endif %}
+				<div class="row">
+					<div class="col-md-9">
+						{% trans "KFUPM ID" %}: <strong>{{ student.kfupm_id }}</strong><br>
+						{% trans "Government ID" %}: <strong>{{ student.government_id }}</strong><br>
+						<h4>{{ student }}</h4>
+						<div class="alert alert-info" role="alert">
+							<h4>{{ student.get_student_phase_display }} - {{ student.student_type }}</h4>
+							<strong>{{ student.get_student_status_display|safe|linebreaksbr }}</strong><br>
+						</div>
+						<small>{{ student.tarifi_week_attendance_date }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>[{% trans "Reception Desk" %}: {{ tarifi_data.desk_no }}]</b></small>
+						<hr>
+					</div>
+					<div class="col-md-3">
+						{% if can_print %}
+							<form method="post">
+								{% csrf_token %}
+								<button class="btn btn-primary btn-lg btn-block" name="attend">
+									<span class="glyphicon glyphicon-ok"></span>&nbsp;{% trans 'Attend' %}
+								</button><br>
+								<button class="btn btn-danger btn-lg btn-block" name="cancel">
+									<span class="glyphicon glyphicon-remove"></span>&nbsp;{% trans 'Cancel' %}
+								</button><br>
+							</form>
+							<a class="btn btn-warning btn-lg btn-block"
+							   target="_blank"
+							   href="{% url 'tarifi:student_print_page' student.pk %}">
+								<span class="glyphicon glyphicon-print"></span>&nbsp;{% trans 'Print' %}</a>
+						{% else %}
+							<a href="#" class="btn btn-danger btn-lg disabled">
+								<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;{% trans 'Can NOT Print' %}&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-left"></span><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;&nbsp;<b>{% if wrong_desk %}
+								{% trans "Wrong desk" %}{% else %}{% trans "Not on time" %}{% endif %}</b>
+							</a>
+						{% endif %}
+					</div>
+				</div>
 			</div>
 		{% else %}
 			<div class="alert alert-danger">
@@ -43,14 +64,14 @@
 {% block scripts %}
 	<script type="application/javascript">
 		$(function(){
-			$("#id_kfupm_id").focus(function() { $(this).select(); } );
+			$("#id_kfupm_id_gov_id").focus(function() { $(this).select(); } );
 
-			$("#id_kfupm_id").focus().bind('blur', function() {
+			$("#id_kfupm_id_gov_id").focus().bind('blur', function() {
 		        $(this).focus();
 		    });
 
 		    $("html").click(function() {
-		        $("#id_kfupm_id").val($("#id_kfupm_id").val()).focus();
+		        $("#id_kfupm_id_gov_id").val($("#id_kfupm_id_gov_id").val()).focus();
 		    });
 
 		    //disable the tab key

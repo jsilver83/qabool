@@ -6,7 +6,7 @@ from shared_app.base_forms import BaseCrispyForm
 
 
 class TarifiSearchForm(BaseCrispyForm, forms.Form):
-    kfupm_id = forms.IntegerField(required=True, label=_('KFUPM ID'))
+    kfupm_id_gov_id = forms.IntegerField(required=True, label=_('KFUPM ID or Government ID'))
 
 
 class ReceptionDeskForm(BaseCrispyForm, forms.Form):
