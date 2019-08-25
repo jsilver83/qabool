@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-import requests
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
@@ -100,11 +99,14 @@ class ReceptionAttendance(TarifiMixin, FormView):
 
                     context['wrong_desk'] = context['desk_no'] != (tarifi_data.desk_no or 0)
 
-                    context['can_print'] = ((admission_request.tarifi_week_attendance_date.slot_start_date <= now <=
-                                            admission_request.tarifi_week_attendance_date.slot_end_date
-                                             and not context['wrong_desk'])
-                                            or self.request.user.is_superuser
-                                            or self.request.user.groups.filter(name=UserGroups.TARIFI_ADMIN).exists())
+                    context['can_receive'] = (
+                            (admission_request.tarifi_week_attendance_date.slot_start_date + timedelta(minutes=-120)
+                             <= now <=
+                             admission_request.tarifi_week_attendance_date.slot_end_date
+                             and not context['wrong_desk'])
+                            or self.request.user.is_superuser
+                            or self.request.user.groups.filter(name=UserGroups.TARIFI_ADMIN).exists()
+                    )
             except ObjectDoesNotExist:  # the student is not admitted
                 pass
             except AttributeError:  # the student doesnt have a tarifi week attendance date
@@ -197,13 +199,6 @@ class CourseAttendance(TarifiMixin, FormView):
 
                 context['early_or_late'] = \
                         _('Early') if now < student.preparation_course_slot.slot_start_date else _('Late')
-
-                # TODO: make the student attended in Hussain Almuslim bookstore system
-                try:
-                    request_link = 'http://10.142.5.182:1345/api/bookstore-update/%s' % kfupm_id
-                    requests.get(request_link, timeout=(3, 1))
-                except:  # usually TimeoutError but made it general so it will never raise an exception
-                    pass
             except ObjectDoesNotExist:
                 pass
 
