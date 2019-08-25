@@ -27,7 +27,7 @@ class TarifiMixin(UserPassesTestMixin, LoginRequiredMixin):
 
     def test_func(self):
         return ((self.request.user.groups.filter(name=UserGroups.TARIFI_STAFF).exists()
-                 or self.request.user.groups.filter(name=UserGroups.TARIFI_STAFF).exists())
+                 or self.request.user.groups.filter(name=UserGroups.TARIFI_ADMIN).exists())
                 and self.request.user.is_staff) \
                or self.request.user.is_superuser
 
