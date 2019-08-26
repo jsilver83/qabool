@@ -198,7 +198,10 @@ class CourseAttendance(TarifiMixin, FormView):
                     context['attended'] = False
 
                 context['early_or_late'] = \
-                        _('Early') if now < student.preparation_course_slot.slot_start_date else _('Late')
+                    _('Early') if now < student.preparation_course_slot.slot_start_date - timedelta(minutes=15) else ''
+
+                context['early_or_late'] = \
+                    _('Late') if now > student.preparation_course_slot.slot_start_date + timedelta(minutes=15) else context['early_or_late']
             except ObjectDoesNotExist:
                 pass
 
