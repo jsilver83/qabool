@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-25 10:20+0300\n"
-"PO-Revision-Date: 2019-08-25 10:21+0300\n"
+"POT-Creation-Date: 2019-08-26 13:38+0300\n"
+"PO-Revision-Date: 2019-08-26 13:39+0300\n"
 "Last-Translator: Abdullah Joud <abd.jod2004@gmail.com>\n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -103,8 +103,8 @@ msgstr "موعد النوم"
 #: find_roommate/templates/find_roommate/letter_housing.html:194
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
-#: tarifi/admin.py:45 tarifi/models.py:369
-#: tarifi/templates/tarifi/reception_attendance.html:21
+#: tarifi/admin.py:45 tarifi/forms.py:17 tarifi/models.py:369
+#: tarifi/templates/tarifi/reception_attendance.html:22
 #: undergraduate_admission/forms/phase2_forms.py:332
 #: undergraduate_admission/models/student.py:150
 #: undergraduate_admission/models/student.py:727
@@ -229,7 +229,7 @@ msgid "Reject"
 msgstr "غير موافق"
 
 #: find_roommate/templates/find_roommate/__request.html:46
-#: tarifi/templates/tarifi/reception_attendance.html:39
+#: tarifi/templates/tarifi/reception_attendance.html:40
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:206
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:138
@@ -297,7 +297,7 @@ msgstr "عدد الطلاب الفرادى الذين يبحثون عن زميل
 
 #: find_roommate/templates/find_roommate/housinguser_list.html:17
 #: find_roommate/templates/find_roommate/housinguser_list.html:25
-#: tarifi/templates/tarifi/reception_attendance.html:13
+#: tarifi/templates/tarifi/reception_attendance.html:14
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:11
 msgid "Search"
@@ -375,7 +375,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing.html:45
 #: find_roommate/templates/find_roommate/letter_housing_2.html:39
 #: find_roommate/templates/find_roommate/letter_housing_3.html:39
-#: tarifi/templates/tarifi/reception_attendance.html:45
+#: tarifi/templates/tarifi/reception_attendance.html:46
 #: tarifi/templates/tarifi/student_print_page.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:35
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:45
@@ -402,7 +402,7 @@ msgid "Dear Student"
 msgstr "عزيزي الطالب"
 
 #: find_roommate/templates/find_roommate/letter_housing.html:75
-#: tarifi/templates/tarifi/reception_attendance.html:22
+#: tarifi/templates/tarifi/reception_attendance.html:23
 #: undergraduate_admission/forms/general_forms.py:135
 #: undergraduate_admission/forms/general_forms.py:138
 #: undergraduate_admission/forms/general_forms.py:159
@@ -477,8 +477,8 @@ msgstr "لقد تم رفض الطلب بنجاح"
 msgid "Request was cancelled as per your request..."
 msgstr "تم إلغاء الطلب بناء على رغبتك"
 
-#: find_roommate/views.py:280 undergraduate_admission/views/phase2_views.py:256
-#: undergraduate_admission/views/phase2_views.py:289
+#: find_roommate/views.py:280 undergraduate_admission/views/phase2_views.py:260
+#: undergraduate_admission/views/phase2_views.py:293
 msgid "Error saving info. Try again later!"
 msgstr "حدث خطأ عند تعديل بياناتك ، الرجاء المحاولة مرة أخرى!"
 
@@ -502,7 +502,7 @@ msgstr "مقيم (قبائل نازحة)"
 msgid "KFUPM ID or Government ID"
 msgstr "الهوية الوطنية أو الرقم الجامعي"
 
-#: tarifi/forms.py:13 tarifi/templates/tarifi/reception_attendance.html:28
+#: tarifi/forms.py:13 tarifi/templates/tarifi/reception_attendance.html:29
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:119
 msgid "Reception Desk"
 msgstr "رقم مكتب الاستقبال (الكاونتر)"
@@ -653,7 +653,7 @@ msgid "Box No"
 msgstr "رقم الصندوق"
 
 #: tarifi/templates/tarifi/course_attendance.html:12
-#: tarifi/templates/tarifi/course_attendance.html:47
+#: tarifi/templates/tarifi/course_attendance.html:42
 msgid "Slot Period"
 msgstr "فترة الفعالية"
 
@@ -666,24 +666,28 @@ msgid "Capacity"
 msgstr "السعة"
 
 #: tarifi/templates/tarifi/course_attendance.html:29
-#: tarifi/templates/tarifi/reception_attendance.html:36
+#: tarifi/templates/tarifi/reception_attendance.html:37
 msgid "Attend"
 msgstr "حضر"
 
-#: tarifi/templates/tarifi/course_attendance.html:48
+#: tarifi/templates/tarifi/course_attendance.html:40
+msgid "Attendance Date:"
+msgstr "تاريخ الحضور:"
+
+#: tarifi/templates/tarifi/course_attendance.html:41
+msgid "Attended By:"
+msgstr "تم التحضير بواسطة:"
+
+#: tarifi/templates/tarifi/course_attendance.html:46
 msgid "This student is"
 msgstr "هذا الطالب"
 
-#: tarifi/templates/tarifi/course_attendance.html:52
-msgid "Attend Anyways"
-msgstr "حضر الطالب على أي حال"
-
-#: tarifi/templates/tarifi/course_attendance.html:60
-#: tarifi/templates/tarifi/reception_attendance.html:58
+#: tarifi/templates/tarifi/course_attendance.html:53
+#: tarifi/templates/tarifi/reception_attendance.html:59
 msgid "This student DOES NOT exist. Try a differnt ID!"
 msgstr "هذا الطالب غير موجود، ادخل رقم آخر!"
 
-#: tarifi/templates/tarifi/course_attendance.html:88
+#: tarifi/templates/tarifi/course_attendance.html:81
 msgid ""
 "Attendance will open 10 minutes prior to the course start time and will "
 "close in 40 minutes"
@@ -695,15 +699,19 @@ msgstr ""
 msgid "Desk Number"
 msgstr "رقم الاستقبال"
 
-#: tarifi/templates/tarifi/reception_attendance.html:48
+#: tarifi/templates/tarifi/reception_attendance.html:7
+msgid "Change"
+msgstr "تغيير"
+
+#: tarifi/templates/tarifi/reception_attendance.html:49
 msgid "Can NOT Print"
 msgstr "ﻻ يمكن الطباعة"
 
-#: tarifi/templates/tarifi/reception_attendance.html:49
+#: tarifi/templates/tarifi/reception_attendance.html:50
 msgid "Wrong desk"
-msgstr "hg;h,kjv hgo'H"
+msgstr "رقم الكاونتر غلط"
 
-#: tarifi/templates/tarifi/reception_attendance.html:49
+#: tarifi/templates/tarifi/reception_attendance.html:50
 msgid "Not on time"
 msgstr "خارج الوقت المحدد"
 
@@ -717,23 +725,25 @@ msgstr "اختيــــار"
 msgid "Tarifi Week Attendance Date"
 msgstr "تاريخ حضور البرنامج التعريفي"
 
-#: tarifi/views.py:61
+#: tarifi/views.py:60
 msgid "Desk number specified successfully..."
 msgstr "لقد تم تحديد رقم الاستقبال بنجاح"
 
-#: tarifi/views.py:123
-msgid "{} was attended successfully"
-msgstr "لقد تم تحضير الطالب {} بنجاح"
-
 #: tarifi/views.py:125
-msgid "You chose to cancel attending {}"
-msgstr "لقد ألغيت تحضير الطالب {}"
+#, python-brace-format
+msgid "{student} was attended successfully"
+msgstr "لقد تم تحضير الطالب {student} بنجاح"
 
-#: tarifi/views.py:213
+#: tarifi/views.py:127
+#, python-brace-format
+msgid "You chose to cancel attending {student}"
+msgstr "لقد ألغيت تحضير الطالب {student}"
+
+#: tarifi/views.py:201
 msgid "Early"
 msgstr "مبكر"
 
-#: tarifi/views.py:213
+#: tarifi/views.py:201
 msgid "Late"
 msgstr "متأخر"
 
@@ -3163,32 +3173,32 @@ msgstr "لقد قمت بالتسجيل لهذا العام  ..."
 msgid "Info was updated successfully..."
 msgstr "لقد تم حفظ البيانات بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:143
+#: undergraduate_admission/views/phase2_views.py:147
 msgid "Personal Info was saved successfully..."
 msgstr "لقد تم حفظ البيانات الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:154
+#: undergraduate_admission/views/phase2_views.py:158
 msgid "Guardian Contact Info was saved successfully..."
 msgstr "لقد تم حفظ بيانات ولي اﻷمر بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:165
+#: undergraduate_admission/views/phase2_views.py:169
 msgid "Relative Info was saved successfully..."
 msgstr "لقد تم حفظ معلومات القريب بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:176
-#: undergraduate_admission/views/phase2_views.py:201
+#: undergraduate_admission/views/phase2_views.py:180
+#: undergraduate_admission/views/phase2_views.py:205
 msgid "Personal picture was uploaded successfully..."
 msgstr "لقد تم حفظ الصورة الشخصية بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:221
-#: undergraduate_admission/views/phase2_views.py:298
+#: undergraduate_admission/views/phase2_views.py:225
+#: undergraduate_admission/views/phase2_views.py:302
 msgid ""
 "Documents were uploaded successfully. We will verify your information and "
 "get back to you soon..."
 msgstr ""
 "لقد تم حفظ المستندات بنجاح. وسوف يتم التأكد من جميع المعلومات والمستندات."
 
-#: undergraduate_admission/views/phase2_views.py:263
+#: undergraduate_admission/views/phase2_views.py:267
 msgid ""
 "Your application was submitted successfully. We will verify your information "
 "and get back to you soon..."
@@ -3196,15 +3206,15 @@ msgstr ""
 "لقد تم حفظ معلومات التقديم بنجاح. وسوف يتم التأكد من جميع المعلومات "
 "والمستندات."
 
-#: undergraduate_admission/views/phase2_views.py:313
+#: undergraduate_admission/views/phase2_views.py:317
 msgid "Documents were uploaded successfully..."
 msgstr "لقد تم حفظ المستندات المرفوعة بنجاح"
 
-#: undergraduate_admission/views/phase2_views.py:327
+#: undergraduate_admission/views/phase2_views.py:331
 msgid "You have withdrawn from the university successfully..."
 msgstr "لقد انسحبت من الجامعة بنجاح..."
 
-#: undergraduate_admission/views/phase2_views.py:388
+#: undergraduate_admission/views/phase2_views.py:392
 msgid "Your transfer request was approved"
 msgstr "تم قبول طلب التحويل الخاص بك"
 
@@ -3217,6 +3227,9 @@ msgid "Tarifi time slot was chosen successfully..."
 msgstr ""
 "تم اختيار الموعد بنجاح. وعليك طباعة الخطابات و الالتزام بجميع المواعيد "
 "المحددة لك."
+
+#~ msgid "Attend Anyways"
+#~ msgstr "حضر الطالب على أي حال"
 
 #~ msgid "English Placement Test"
 #~ msgstr "اختبار اللغة اﻻنجليزية"
