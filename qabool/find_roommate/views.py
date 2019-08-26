@@ -275,7 +275,7 @@ class HousingInfoUpdate(HousingBaseView, UpdateView):
             if saved.searchable:
                 return redirect('find_roommate:housing_search')
             else:
-                return redirect('find_roommate:student_area')
+                return redirect('undergraduate_admission:student_area')
         else:
             messages.error(self.request, _('Error saving info. Try again later!'))
         return redirect('undergraduate_admission:student_area')
