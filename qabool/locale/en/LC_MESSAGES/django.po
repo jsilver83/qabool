@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 13:38+0300\n"
+"POT-Creation-Date: 2019-08-26 15:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,8 +99,8 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing.html:194
 #: find_roommate/templates/find_roommate/letter_housing_2.html:55
 #: find_roommate/templates/find_roommate/letter_housing_3.html:55
-#: tarifi/admin.py:45 tarifi/forms.py:17 tarifi/models.py:369
-#: tarifi/templates/tarifi/reception_attendance.html:22
+#: tarifi/admin.py:46 tarifi/forms.py:17 tarifi/models.py:369
+#: tarifi/templates/tarifi/reception_attendance.html:49
 #: undergraduate_admission/forms/phase2_forms.py:332
 #: undergraduate_admission/models/student.py:150
 #: undergraduate_admission/models/student.py:727
@@ -225,7 +225,7 @@ msgid "Reject"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/__request.html:46
-#: tarifi/templates/tarifi/reception_attendance.html:40
+#: tarifi/templates/tarifi/reception_attendance.html:31
 #: undergraduate_admission/templates/undergraduate_admission/admin/verify_committee.html:206
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:66
 #: undergraduate_admission/templates/undergraduate_admission/phase2/form-personal-picture.html:138
@@ -293,7 +293,7 @@ msgstr ""
 
 #: find_roommate/templates/find_roommate/housinguser_list.html:17
 #: find_roommate/templates/find_roommate/housinguser_list.html:25
-#: tarifi/templates/tarifi/reception_attendance.html:14
+#: tarifi/templates/tarifi/reception_attendance.html:15
 #: undergraduate_admission/templates/undergraduate_admission/admin/cutoff.html:11
 #: undergraduate_admission/templates/undergraduate_admission/admin/distribute_committee.html:11
 msgid "Search"
@@ -358,7 +358,7 @@ msgstr ""
 #: find_roommate/templates/find_roommate/letter_housing.html:45
 #: find_roommate/templates/find_roommate/letter_housing_2.html:39
 #: find_roommate/templates/find_roommate/letter_housing_3.html:39
-#: tarifi/templates/tarifi/reception_attendance.html:46
+#: tarifi/templates/tarifi/reception_attendance.html:36
 #: tarifi/templates/tarifi/student_print_page.html:39
 #: undergraduate_admission/templates/undergraduate_admission/phase2/letter_withdrawal.html:35
 #: undergraduate_admission/templates/undergraduate_admission/phase3/letter_admission.html:45
@@ -385,7 +385,7 @@ msgid "Dear Student"
 msgstr ""
 
 #: find_roommate/templates/find_roommate/letter_housing.html:75
-#: tarifi/templates/tarifi/reception_attendance.html:23
+#: tarifi/templates/tarifi/reception_attendance.html:50
 #: undergraduate_admission/forms/general_forms.py:135
 #: undergraduate_admission/forms/general_forms.py:138
 #: undergraduate_admission/forms/general_forms.py:159
@@ -483,7 +483,7 @@ msgstr ""
 msgid "KFUPM ID or Government ID"
 msgstr ""
 
-#: tarifi/forms.py:13 tarifi/templates/tarifi/reception_attendance.html:29
+#: tarifi/forms.py:13 tarifi/templates/tarifi/reception_attendance.html:56
 #: undergraduate_admission/templates/undergraduate_admission/student_area.html:119
 msgid "Reception Desk"
 msgstr ""
@@ -647,16 +647,17 @@ msgid "Capacity"
 msgstr ""
 
 #: tarifi/templates/tarifi/course_attendance.html:29
-#: tarifi/templates/tarifi/reception_attendance.html:37
+#: tarifi/templates/tarifi/reception_attendance.html:28
 msgid "Attend"
 msgstr ""
 
 #: tarifi/templates/tarifi/course_attendance.html:40
-msgid "Attendance Date:"
+msgid "Attendance Date"
 msgstr ""
 
 #: tarifi/templates/tarifi/course_attendance.html:41
-msgid "Attended By:"
+#: tarifi/templates/tarifi/reception_attendance.html:52
+msgid "Attended By"
 msgstr ""
 
 #: tarifi/templates/tarifi/course_attendance.html:46
@@ -664,7 +665,7 @@ msgid "This student is"
 msgstr ""
 
 #: tarifi/templates/tarifi/course_attendance.html:53
-#: tarifi/templates/tarifi/reception_attendance.html:59
+#: tarifi/templates/tarifi/reception_attendance.html:64
 msgid "This student DOES NOT exist. Try a differnt ID!"
 msgstr ""
 
@@ -682,15 +683,15 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: tarifi/templates/tarifi/reception_attendance.html:49
+#: tarifi/templates/tarifi/reception_attendance.html:40
 msgid "Can NOT Print"
 msgstr ""
 
-#: tarifi/templates/tarifi/reception_attendance.html:50
+#: tarifi/templates/tarifi/reception_attendance.html:41
 msgid "Wrong desk"
 msgstr ""
 
-#: tarifi/templates/tarifi/reception_attendance.html:50
+#: tarifi/templates/tarifi/reception_attendance.html:41
 msgid "Not on time"
 msgstr ""
 
@@ -722,7 +723,7 @@ msgstr ""
 msgid "Early"
 msgstr ""
 
-#: tarifi/views.py:201
+#: tarifi/views.py:204
 msgid "Late"
 msgstr ""
 

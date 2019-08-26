@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="col-sm-5">
 				<form>
-					{% crispy form %}<br>
+					{{ form }}<br>
 					<button class="btn btn-primary btn-block"><span class="glyphicon glyphicon-calendar"></span>&nbsp;{% trans 'Attend' %}</button>
 				</form>
 			</div>
@@ -37,8 +37,8 @@
 								<span class="glyphicon glyphicon-{% if attended %}ok{% else %}remove{% endif %}"></span>&nbsp;
 								{{ student }}&nbsp;<small><strong>{{ student.kfupm_id }}</strong></small>
 							</h4>
-							{% if student.preparation_course_attendance %}<p><b>{% trans "Attendance Date:" %}</b> {{ student.preparation_course_attendance }}</p>{% endif %}
-							{% if student.preparation_course_attended_by %}<p><b>{% trans "Attended By:" %}</b> {{ student.preparation_course_attended_by }}</p>{% endif %}
+							{% if student.preparation_course_attendance %}<p><b>{% trans "Attendance Date" %}:</b> {{ student.preparation_course_attendance }}</p>{% endif %}
+							{% if student.preparation_course_attended_by %}<p><b>{% trans "Attended By" %}:</b> {{ student.preparation_course_attended_by }}</p>{% endif %}
 							<p><b>{% trans 'Slot Period' %}:</b> {{ student.preparation_course_slot.slot_start_date }} - {{ student.preparation_course_slot.slot_end_date|time }}</p>
 							{% if early_or_late %}
 								<br>
