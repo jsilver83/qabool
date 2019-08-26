@@ -122,9 +122,9 @@ class ReceptionAttendance(TarifiMixin, FormView):
         if 'attend' in self.request.POST:
             admission_request.tarifi_data.received_by = self.request.user
             admission_request.tarifi_data.save()
-            messages.success(self.request, _('{} was attended successfully'.format(admission_request)))
+            messages.success(self.request, _('{student} was attended successfully').format(student=admission_request))
         elif 'cancel' in self.request.POST:
-            messages.warning(self.request, _('You chose to cancel attending {}'.format(admission_request)))
+            messages.warning(self.request, _('You chose to cancel attending {student}').format(student=admission_request))
         return super().form_valid(form)
 
     def get_form(self, form_class=None):
