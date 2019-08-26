@@ -66,8 +66,12 @@ class UserFileView(LoginRequiredMixin, UserPassesTestMixin, View):
 
     def dispatch(self, request, *args, **kwargs):
         self.admission_request = get_current_admission_request_for_logged_in_user(request)
+
         if self.admission_request is None:
             self.admission_request = get_object_or_404(AdmissionRequest, pk=self.kwargs['pk'])
+
+        elif self.admission_request.id != int(self.kwargs['pk']) and self.admission_request.can_search_in_housing():
+            self.admission_request = get_object_or_404(AdmissionRequest, pk=int(self.kwargs['pk']))
 
         return super().dispatch(request, *args, **kwargs)
 
