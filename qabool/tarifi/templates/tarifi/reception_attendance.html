@@ -6,60 +6,67 @@
 	<div class="pull-left">
 		<h4>{% trans 'Desk Number' %}: <b>{{ desk_no }}</b>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{% url 'tarifi:reception_landing' %}"><i class="fa fa-edit"></i> {% trans "Change" %}</a>
 		</h4>
-	</div>
-	<br><br><br>
-	<form method="get">
-		{% crispy form %}
-		<br><br>
-		<button class="btn btn-primary pull-left"><i class="fa fa-search"></i> {% trans 'Search' %}</button>
-	</form>
-	<br><br>
-	{% if show_result %}
-		{% if student %}
-			<div class="alert alert-success">
-				<div class="row">
-					<div class="col-md-9">
-						{% trans "KFUPM ID" %}: <strong>{{ student.kfupm_id }}</strong><br>
-						{% trans "Government ID" %}: <strong>{{ student.government_id }}</strong><br>
-						<h4>{{ student }}</h4>
-						<div class="alert alert-info" role="alert">
-							<h4>{{ student.get_student_phase_display }} - {{ student.student_type }}</h4>
-							<strong>{{ student.get_student_status_display|safe|linebreaksbr }}</strong><br>
+	</div><br><br>
+	<div class="row">
+		<div class="col-xs-3">
+			<form method="get">
+				{{ form }}
+				<br><br>
+				<button class="btn btn-primary btn-block pull-left"><i class="fa fa-search"></i> {% trans 'Search' %}</button>
+			</form>
+		</div>
+		<div class="col-xs-9">
+			{% if show_result %}
+				{% if student %}
+					<div class="alert alert-success">
+						<div class="row">
+							<div class="col-md-12">
+								{% if can_receive %}
+									<form method="post">
+										{% csrf_token %}
+										<button class="btn btn-success btn-lg" name="attend">
+											<span class="glyphicon glyphicon-ok"></span>&nbsp;{% trans 'Attend' %}
+										</button>&nbsp;&nbsp;
+										<button class="btn btn-danger btn-lg" name="cancel">
+											<span class="glyphicon glyphicon-remove"></span>&nbsp;{% trans 'Cancel' %}
+										</button>&nbsp;&nbsp;
+										<a class="btn btn-warning btn-lg"
+										   target="_blank"
+										   href="{% url 'tarifi:student_print_page' student.pk %}">
+											<span class="glyphicon glyphicon-print"></span>&nbsp;{% trans 'Print' %}</a>
+									</form>
+								{% else %}
+									<a href="#" class="btn btn-danger btn-lg disabled">
+										<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;{% trans 'Can NOT Print' %}&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-left"></span><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;&nbsp;<b>{% if wrong_desk %}
+										{% trans "Wrong desk" %}{% else %}{% trans "Not on time" %}{% endif %}</b>
+									</a>
+								{% endif %}
+							</div>
 						</div>
-						<small>{{ student.tarifi_week_attendance_date }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>[{% trans "Reception Desk" %}: {{ tarifi_data.desk_no }}]</b></small>
-						<hr>
+						<br>
+						<div class="row">
+							<div class="col-md-12">
+								{% trans "KFUPM ID" %}: <strong>{{ student.kfupm_id }}</strong><br>
+								{% trans "Government ID" %}: <strong>{{ student.government_id }}</strong><br>
+								<strong>{{ student }}</strong><br>
+								{% trans "Attended By" %}: <strong>{{ tarifi_data.received_by }}</strong><br>
+								<div class="alert alert-info" role="alert">
+									<h4>{{ student.get_student_phase_display }} - {{ student.student_type }}</h4>
+								</div>
+								<small>{{ student.tarifi_week_attendance_date }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>[{% trans "Reception Desk" %}: {{ tarifi_data.desk_no }}]</b></small>
+								<hr>
+							</div>
+						</div>
 					</div>
-					<div class="col-md-3">
-						{% if can_receive %}
-							<form method="post">
-								{% csrf_token %}
-								<button class="btn btn-primary btn-lg btn-block" name="attend">
-									<span class="glyphicon glyphicon-ok"></span>&nbsp;{% trans 'Attend' %}
-								</button><br>
-								<button class="btn btn-danger btn-lg btn-block" name="cancel">
-									<span class="glyphicon glyphicon-remove"></span>&nbsp;{% trans 'Cancel' %}
-								</button><br>
-							</form>
-							<a class="btn btn-warning btn-lg btn-block"
-							   target="_blank"
-							   href="{% url 'tarifi:student_print_page' student.pk %}">
-								<span class="glyphicon glyphicon-print"></span>&nbsp;{% trans 'Print' %}</a>
-						{% else %}
-							<a href="#" class="btn btn-danger btn-lg disabled">
-								<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;{% trans 'Can NOT Print' %}&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-left"></span><span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;&nbsp;<b>{% if wrong_desk %}
-								{% trans "Wrong desk" %}{% else %}{% trans "Not on time" %}{% endif %}</b>
-							</a>
-						{% endif %}
+				{% else %}
+					<div class="alert alert-danger">
+						<span class="glyphicon glyphicon-remove"></span>&nbsp;
+						{% trans 'This student DOES NOT exist. Try a differnt ID!' %}
 					</div>
-				</div>
-			</div>
-		{% else %}
-			<div class="alert alert-danger">
-				<span class="glyphicon glyphicon-remove"></span>&nbsp;
-				{% trans 'This student DOES NOT exist. Try a differnt ID!' %}
-			</div>
-		{% endif %}
-	{% endif %}
+				{% endif %}
+			{% endif %}
+		</div>
+	</div>
 {% endblock subcontent %}
 
 {% block scripts %}
