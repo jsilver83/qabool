@@ -934,6 +934,16 @@ def get_high_school_from_yesser(gov_id):
     return data
 
 
+def get_admission_mohe_from_yesser(gov_id):
+    try:
+        client = Client(YESSER_MOHE_WSDL, transport=transport)
+        result = client.service.GetStudentAdmissionStatusByNationalID(gov_id, 'NationalID')
+
+        return result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[0].University.UniversityID
+    except:
+        pass
+
+
 ####################################
 ####### OPERATIONAL CODE ###########
 ####################################
@@ -968,20 +978,51 @@ def fetch_all_mohe_from_yesser():
 
 
 def fetch_mohe_data_from_yesser_and_write_to_file(government_id):
-    # print(government_id)
     try:
         client = Client(YESSER_MOHE_WSDL, transport=transport)
         result = client.service.GetStudentAdmissionStatusByNationalID(government_id, 'NationalID')
 
         file = open('fetched_from_yesser/all.csv', 'a')
-        # print(result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[0].University.UniversityID)
+        university = result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[0].University.UniversityID
         file.write(
             str("%s,%s\n" % (
-                government_id,
-                result.GetStudentAdmissionStatusByNationalIDResponseDetailObject.StudentAdmission[
-                    0].University.UniversityID
+                government_id, university
             ))
         )
         file.close()
     except:
         pass
+
+
+def operational_script(input_file, output_file):
+    """
+    :param input_file:  '2019_Hs_pt2.txt'
+    :param output_file: 'students_data_pt2.csv'
+    :return:
+    """
+    import csv
+    with open(output_file, 'a+', newline='') as csv_file:
+        students_data = csv.writer(csv_file, quoting=csv.QUOTE_MINIMAL)
+        students_data.writerow(['#', 'Gov ID', 'HS', 'Qudrat', 'Tahsili', 'GPA', 'Univ'])
+
+    counter = 1
+
+    with open(input_file, 'r') as f:
+        gov_id = f.readline().strip()
+        while gov_id:
+            high_school_gpa = float(get_high_school_from_yesser(gov_id).get('high_school_gpa', 0.0))
+            qudrat = float(get_qudrat_from_yesser(gov_id).get('qudrat', 0.0))
+            tahsili = float(get_tahsili_from_yesser(gov_id).get('tahsili', 0.0))
+            gpa = (high_school_gpa * 0.20) + (qudrat * 0.30) + (tahsili * 0.50)
+
+            if gpa > 90:
+                univ = get_admission_mohe_from_yesser(gov_id)
+            else:
+                univ = ''
+
+            with open(output_file, 'a+', newline='') as csv_file:
+                students_data = csv.writer(csv_file, quoting=csv.QUOTE_MINIMAL)
+                students_data.writerow([counter, gov_id, high_school_gpa, qudrat, tahsili, gpa, univ])
+
+            gov_id = f.readline().strip()
+            counter += 1
