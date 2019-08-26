@@ -97,7 +97,7 @@ class ReceptionAttendance(TarifiMixin, FormView):
                     context['tarifi_data'] = tarifi_data
                     context['show_result'] = True
 
-                    context['wrong_desk'] = context['desk_no'] != (tarifi_data.desk_no or 0)
+                    context['wrong_desk'] = float(context['desk_no']) != float(tarifi_data.desk_no or 0)
 
                     context['can_receive'] = (
                             (admission_request.tarifi_week_attendance_date.slot_start_date + timedelta(minutes=-120)
