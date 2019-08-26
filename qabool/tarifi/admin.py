@@ -23,6 +23,7 @@ class TarifiActivitySlotAdmin(ImportExportMixin, admin.ModelAdmin):
     list_filter = ('semester', 'type', 'location_ar', 'location_en')
     search_fields = ['location_ar', 'location_en', 'type', ]
     resource_class = TarifiActivitySlotResource
+    autocomplete_fields = ['attender', ]
 
 
 class TarifiDataAdmin(admin.ModelAdmin):
