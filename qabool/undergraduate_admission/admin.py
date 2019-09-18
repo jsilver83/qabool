@@ -393,7 +393,7 @@ class AdmissionSemesterAdmin(admin.ModelAdmin):
             'fields': (('high_school_gpa_weight', 'qudrat_score_weight', 'tahsili_score_weight', 'cutoff_point',),)
         }),
         (_('Admission Settings'), {
-            'fields': (('active', 'withdrawal_deadline',), ),
+            'fields': (('semester_name', 'active', 'withdrawal_deadline',), ),
         }),
     )
 
