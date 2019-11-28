@@ -38,6 +38,7 @@ urlpatterns = [
     path('admin/qiyas-update/', admin_side_views.QiyasDataUpdate.as_view(), name='qiyas_update'),
     path('admin/transfer-import/', admin_side_views.TransferImportView.as_view(), name='transfer_import'),
     path('admin/smart-card-export/', admin_side_views.SmartCardExportView.as_view(), name='smart_card_export'),
+    path('admin/yesser-data-fetch/', admin_side_views.YesserDataFetchView.as_view(), name='yesser_data_fetch'),
     path('withdrawal-letter/', phase2_views.WithdrawalLetterView.as_view(), name='withdrawal_letter'),
     path('withdraw/', phase2_views.WithdrawView.as_view(), name='withdraw'),
     path('medical-letter/', phase3_views.AdmissionLetters.as_view(), name='medical_letter'),

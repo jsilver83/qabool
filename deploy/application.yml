@@ -7,8 +7,8 @@
   # for environment-specific variables, see:
   # environments/<env-name>/group_vars/all/vars.yml
   vars:
-    django_project_name: qabool
     vault_url: https://vault.itc.kfupm.edu.sa
+    django_project_name: qabool
     django_project_admin_username: almaaesh
     django_project_admin_email: almaaesh@kfupm.edu.sa
     django_project_package_name: qabool

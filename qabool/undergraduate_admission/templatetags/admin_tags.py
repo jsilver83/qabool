@@ -17,6 +17,7 @@ def admin_commands(context):
     return {
         'user': str(user),
         'is_superuser': user.is_superuser,
+        'is_staff': user.is_staff,
         'is_verifier': is_verifier,
         'is_tarifi_admin': is_tarifi_admin,
         'is_tarifi_staff': is_tarifi_staff,

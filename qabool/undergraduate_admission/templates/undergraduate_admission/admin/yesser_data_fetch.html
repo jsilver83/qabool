@@ -1,0 +1,41 @@
+{% extends 'undergraduate_admission/admin/base_admin_area.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block subcontent %}
+	<div class="row">
+		<form method="post">
+			{% csrf_token %}
+			{% crispy form %}
+			<button class="btn btn-primary {% trans 'btn-align' %}">
+				<i class="fa fa-search"></i> {% trans 'Fetch Data From Yesser' %}</button>
+		</form>
+		{% if data %}
+			<br>
+			<hr>
+			<br>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>{% trans "Government ID" %}</th>
+						<th>{% trans "Student Name" %}</th>
+						<th>{% trans "Qudrat Score" %}</th>
+						<th>{% trans "Tahsili Score" %}</th>
+						<th>{% trans "Highschool GPA Score" %}</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for student in data %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						{% for data_piece in student %}
+							<td>{{ data_piece }}</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock subcontent %}
