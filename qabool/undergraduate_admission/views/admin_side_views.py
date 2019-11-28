@@ -2,6 +2,7 @@ import json
 import logging
 import time
 from datetime import datetime
+from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -9,7 +10,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q, F, Case, When, Value, CharField
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -535,6 +536,41 @@ class TarifiDistributeView(AdminBaseView, TemplateView):
                                                                                    send_sms=send_sms)
         messages.success(self.request, summary_message)
         return super().get(request, *args, **kwargs)
+
+
+class YesserDataFetchView(StaffBaseView, FormView):
+    template_name = 'undergraduate_admission/admin/yesser_data_fetch.html'
+    form_class = YesserDataFetchForm
+
+    def form_valid(self, form, *args, **kwargs):
+        students_government_id = form.cleaned_data.get('students_government_id')
+
+        data = []
+
+        for government_id in students_government_id.splitlines():
+            government_id = government_id.strip()
+            qudrat_data = get_qudrat_from_yesser(government_id)
+            tahsili_data = get_tahsili_from_yesser(government_id)
+            hs_data = get_high_school_from_yesser(government_id)
+
+            data.append(
+                [
+                    government_id,
+                    '{} {}'.format(qudrat_data.get('FirstName', ''), qudrat_data.get('LastName', '')),
+                    qudrat_data.get('qudrat', Decimal(0.00)),
+                    tahsili_data.get('tahsili', Decimal(0.00)), hs_data
+                    .get('high_school_gpa', Decimal('0.00')),
+                ]
+            )
+
+        if data:
+            context = self.get_context_data(**kwargs)
+            context['data'] = data
+            messages.success(self.request, _('Data fetched successfully successfully.'))
+            return self.render_to_response(context)
+
+        messages.error(self.request, _('Data could NOT be fetched.'))
+        return redirect(reverse_lazy('undergraduate_admission:yesser_data_fetch'))
 
 
 # class TarifiDistributeView(AdminBaseView, FormView):

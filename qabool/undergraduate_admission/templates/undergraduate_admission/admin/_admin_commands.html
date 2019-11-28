@@ -53,6 +53,11 @@
 			<i class="fa fa-table" aria-hidden="true"></i> {% trans 'Feedback' %}
 		</a>
 	{% endif %}
+	{% if is_staff %}
+		<a href="{% url 'undergraduate_admission:yesser_data_fetch' %}" class="list-group-item">
+			<i class="fa fa-search" aria-hidden="true"></i> {% trans 'Tesser Data Fetch' %}
+		</a>
+	{% endif %}
 	<hr>
 	<a href="{% url 'logout' %}" class="btn btn-withdraw btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
 	</a>

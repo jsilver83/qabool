@@ -279,6 +279,17 @@ class TransferImportForm(BaseCrispyForm, forms.Form):
             forms.Select(choices=RegistrationStatus.get_registration_status_choices())
 
 
+class YesserDataFetchForm(BaseCrispyForm, forms.Form):
+    students_government_id = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': '[Government ID]\n'
+                              '[Government ID]\n'
+                              '[Government ID]\n'
+                              '[Government ID]\n'
+                              '[Government ID]\n',
+               'style': 'direction: ltr'}
+    ), required=True, label=_('Students Government IDs'))
+
+
 class SmartCardExportForm(BaseCrispyForm, forms.Form):
     semester = forms.IntegerField(required=True, label=_('Admission Semester'))
     status_message = forms.IntegerField(required=True, label=_('Message Status'))
